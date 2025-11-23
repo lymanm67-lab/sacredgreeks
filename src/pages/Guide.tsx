@@ -1,45 +1,53 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ProgressStepper } from "@/components/ui/progress-stepper";
-import { ArrowLeft, ArrowRight, Home } from "lucide-react";
-import { ComplianceStep1 } from "@/components/compliance/ComplianceStep1";
-import { ComplianceStep2 } from "@/components/compliance/ComplianceStep2";
-import { ComplianceResults } from "@/components/compliance/ComplianceResults";
-import { ComplianceAnswers } from "@/types/assessment";
-import { calculateComplianceScores } from "@/lib/scoring";
+import { Home } from "lucide-react";
+import { SacredGreeksStep1 } from "@/components/sacred-greeks/SacredGreeksStep1";
+import { SacredGreeksStep2 } from "@/components/sacred-greeks/SacredGreeksStep2";
+import { SacredGreeksResults } from "@/components/sacred-greeks/SacredGreeksResults";
+import { SacredGreeksAnswers } from "@/types/assessment";
+import { calculateSacredGreeksScores } from "@/lib/scoring";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 const steps = [
   { label: "Scenario", description: "Choose your situation" },
-  { label: "Questions", description: "Answer key questions" },
-  { label: "Results", description: "Get your guidance" },
+  { label: "Questions", description: "Share your story" },
+  { label: "P.R.O.O.F.", description: "Receive guidance" },
 ];
 
-const Compliance = () => {
+const Guide = () => {
+  const [searchParams] = useSearchParams();
   const [currentStep, setCurrentStep] = useState(1);
-  const [answers, setAnswers] = useState<Partial<ComplianceAnswers>>({});
+  const [answers, setAnswers] = useState<Partial<SacredGreeksAnswers>>({});
   const [resultData, setResultData] = useState<any>(null);
-  const navigate = useNavigate();
   const { toast } = useToast();
+
+  useEffect(() => {
+    const scenarioParam = searchParams.get('scenario');
+    if (scenarioParam && ['clip', 'pressure', 'event'].includes(scenarioParam)) {
+      setAnswers({ scenario: scenarioParam });
+      setCurrentStep(2);
+    }
+  }, [searchParams]);
 
   const handleStep1Complete = (scenario: string) => {
     setAnswers({ ...answers, scenario });
     setCurrentStep(2);
   };
 
-  const handleStep2Complete = async (stepAnswers: Partial<ComplianceAnswers>) => {
-    const fullAnswers = { ...answers, ...stepAnswers } as ComplianceAnswers;
+  const handleStep2Complete = async (stepAnswers: Partial<SacredGreeksAnswers>) => {
+    const fullAnswers = { ...answers, ...stepAnswers } as SacredGreeksAnswers;
     setAnswers(fullAnswers);
 
     // Calculate scores
-    const { scores, resultType } = calculateComplianceScores(fullAnswers);
+    const { scores, resultType } = calculateSacredGreeksScores(fullAnswers);
 
     // Save to database
     try {
       const { error } = await supabase.from('assessment_submissions').insert({
-        track: 'compliance' as const,
+        track: 'sacred_greeks' as const,
         scenario: fullAnswers.scenario,
         answers_json: fullAnswers as any,
         scores_json: scores as any,
@@ -77,8 +85,8 @@ const Compliance = () => {
               <span className="text-sm font-medium">Home</span>
             </Link>
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-compliance"></div>
-              <h1 className="text-lg font-semibold text-foreground">FDCA Compliance Checker</h1>
+              <div className="w-3 h-3 rounded-full bg-sacred"></div>
+              <h1 className="text-lg font-semibold text-foreground">Sacred Greeks Guide</h1>
             </div>
           </div>
         </div>
@@ -95,11 +103,11 @@ const Compliance = () => {
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-3xl mx-auto">
           {currentStep === 1 && (
-            <ComplianceStep1 onComplete={handleStep1Complete} />
+            <SacredGreeksStep1 onComplete={handleStep1Complete} />
           )}
           
           {currentStep === 2 && answers.scenario && (
-            <ComplianceStep2
+            <SacredGreeksStep2
               scenario={answers.scenario}
               onComplete={handleStep2Complete}
               onBack={() => setCurrentStep(1)}
@@ -107,7 +115,7 @@ const Compliance = () => {
           )}
 
           {currentStep === 3 && resultData && (
-            <ComplianceResults
+            <SacredGreeksResults
               resultType={resultData.resultType}
               scores={resultData.scores}
               answers={resultData.answers}
@@ -120,4 +128,4 @@ const Compliance = () => {
   );
 };
 
-export default Compliance;
+export default Guide;

@@ -1,73 +1,218 @@
-# Welcome to your Lovable project
+# Sacred Greeks Decision Guide
 
-## Project info
+A production-ready web application that helps Christians in Black Greek Letter Organizations process difficult decisions and pressure using the P.R.O.O.F. framework from "Sacred, Not Sinful."
 
-**URL**: https://lovable.dev/projects/18c6b720-8ab3-4377-aee9-d6e25c399d20
+## Features
 
-## How can I edit this code?
+- **Three Guided Scenarios**: Clip/sermon response, pressure to denounce, or planning faith-based events
+- **Multi-Step Assessment**: Role identification, emotional state, and scenario-specific questions
+- **P.R.O.O.F. Framework Results**: Personalized guidance using Process, Rituals, Oaths, Obscurity, and Founding
+- **5 Persona Types Integration**: Link to external assessment for understanding pressure responses
+- **Email Capture**: Users can receive their reflection via email
+- **Mobile Responsive**: Clean, calm design optimized for all devices
+- **Admin Dashboard**: Simple password-protected view of submissions
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+- **Frontend**: React 18 + TypeScript + Vite
+- **Styling**: Tailwind CSS with custom design system
+- **Backend**: Supabase (via Lovable Cloud)
+- **Routing**: React Router v6
+- **UI Components**: Shadcn UI + Radix UI primitives
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/18c6b720-8ab3-4377-aee9-d6e25c399d20) and start prompting.
+## Local Development
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js 18+ or Bun
+- Supabase account (provided via Lovable Cloud)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+```bash
+# Install dependencies
+npm install
+# or
+bun install
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
+# or
+bun dev
 ```
 
-**Edit a file directly in GitHub**
+The app will be available at `http://localhost:5173`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Environment Variables
 
-**Use GitHub Codespaces**
+Environment variables are automatically configured via Lovable Cloud:
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_PUBLISHABLE_KEY`
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Project Structure
 
-## What technologies are used for this project?
+```
+src/
+├── components/
+│   ├── sacred-greeks/
+│   │   ├── SacredGreeksStep1.tsx    # Scenario selection
+│   │   ├── SacredGreeksStep2.tsx    # Questions and emotions
+│   │   └── SacredGreeksResults.tsx  # P.R.O.O.F. framework results
+│   └── ui/                          # Reusable UI components
+├── lib/
+│   └── scoring.ts                   # Scoring logic and result determination
+├── pages/
+│   ├── Index.tsx                    # Landing page with scenario cards
+│   ├── Guide.tsx                    # Main assessment flow
+│   └── Admin.tsx                    # Admin dashboard
+├── types/
+│   └── assessment.ts                # TypeScript interfaces
+└── integrations/
+    └── supabase/                    # Auto-generated Supabase client
+```
 
-This project is built with:
+## Customization Guide
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Updating Questions
 
-## How can I deploy this project?
+**Step 2 Common Questions** (all scenarios):
+Edit `src/components/sacred-greeks/SacredGreeksStep2.tsx`:
+- Lines 11-18: `roles` array
+- Lines 20-30: `emotions` array
 
-Simply open [Lovable](https://lovable.dev/projects/18c6b720-8ab3-4377-aee9-d6e25c399d20) and click on Share -> Publish.
+**Scenario-Specific Questions**:
+Same file, lines 137-243:
+- Lines 137-169: "clip" scenario questions
+- Lines 171-209: "pressure" scenario questions  
+- Lines 211-243: "event" scenario questions
 
-## Can I connect a custom domain to my Lovable project?
+### Adjusting Scoring Logic
 
-Yes, you can!
+Edit `src/lib/scoring.ts`, function `calculateSacredGreeksScores`:
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+**Internal Scores** (lines 103-109):
+- `biblicalClarity`: 1-5, higher = clearer biblical understanding
+- `consciencePeace`: 1-5, higher = more peace
+- `relationalRisk`: 1-5, higher = more relational pressure
+- `symbolRisk`: 1-5, higher = more concern about symbols/rituals
+- `emotionalPressure`: 1-5, higher = more emotional stress
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+**Scoring Rules** (lines 112-144):
+- Lines 112-128: Emotion-based scoring
+- Lines 131-144: Scenario-specific adjustments
+
+**Result Type Thresholds** (lines 152-160):
+```typescript
+if (scores.emotionalPressure >= 4 || scores.relationalRisk >= 4) {
+  resultType = 'high_pressure';
+} else if (answers.scenario === 'event') {
+  resultType = 'ministry_idea';
+} else {
+  resultType = 'steady_language';
+}
+```
+
+### Updating Result Page Content
+
+Edit `src/components/sacred-greeks/SacredGreeksResults.tsx`:
+
+**Intro Text** (lines 15-24):
+```typescript
+const getIntro = () => {
+  switch (resultType) {
+    case 'high_pressure': return "Your message here...";
+    case 'ministry_idea': return "Your message here...";
+    default: return "Your message here...";
+  }
+};
+```
+
+**P.R.O.O.F. Section Content** (lines 26-61):
+Each section has:
+- `title`: The P.R.O.O.F. principle
+- `content`: Conditional content based on `resultType`
+
+**External Links** (lines 90-140):
+- Line 102: Visit Sacred Greeks
+- Line 112: Start Here anchor
+- Line 122: Sacred, Not Sinful book
+- Line 132: Study Guide
+- Line 142: Podcast (placeholder)
+
+### Changing Colors and Branding
+
+**Primary Colors** (`src/index.css`):
+```css
+--primary: 221 83% 53%;           /* Royal Blue */
+--primary-foreground: 0 0% 100%;  /* White text on blue */
+--sacred: 221 83% 53%;            /* Same as primary */
+--sacred-foreground: 0 0% 100%;   /* White text */
+```
+
+**Tailwind Config** (`tailwind.config.ts`):
+```typescript
+sacred: {
+  DEFAULT: "hsl(var(--sacred))",
+  foreground: "hsl(var(--sacred-foreground))",
+},
+```
+
+### Admin Access
+
+**Password Protection** (`src/pages/Admin.tsx`, line 12):
+```typescript
+const ADMIN_PASSWORD = "admin123"; // Change this!
+```
+
+For production, use environment variables:
+```typescript
+const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD;
+```
+
+## Database Schema
+
+Table: `assessment_submissions`
+
+| Column | Type | Description |
+|--------|------|-------------|
+| id | uuid | Primary key |
+| track | text | Always "sacred_greeks" |
+| scenario | text | "clip", "pressure", or "event" |
+| answers_json | jsonb | All user responses |
+| scores_json | jsonb | Internal scoring values |
+| result_type | text | "steady_language", "high_pressure", or "ministry_idea" |
+| email | text | Optional email for follow-up |
+| consent_to_contact | boolean | Email opt-in status |
+| created_at | timestamp | Submission timestamp |
+| updated_at | timestamp | Last modified timestamp |
+
+## Deployment
+
+This app is designed to be deployed via Lovable:
+
+1. Click **Publish** in the Lovable interface
+2. Your app is automatically deployed with backend infrastructure
+3. Database migrations run automatically
+4. No additional configuration needed
+
+## External Integrations
+
+- **Sacred Greeks Website**: https://sacredgreeks.com/
+- **5 Persona Types Assessment**: https://drlymanmontgomery.involve.me/fmmpa
+- **Study Guide**: https://gamma.app/docs/Christian-Greek-Life-Study-Guide-ihr8fq0g089n32t
+
+## Future Enhancements
+
+- [ ] Implement email sending for result delivery
+- [ ] Add user authentication for saved assessments
+- [ ] PDF export of results
+- [ ] Analytics dashboard for admin
+- [ ] Multilingual support
+
+## License
+
+Proprietary - All rights reserved
+
+## Support
+
+For questions or support, visit [SacredGreeks.com](https://sacredgreeks.com/)

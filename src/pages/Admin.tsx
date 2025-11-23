@@ -47,6 +47,7 @@ const Admin = () => {
       const { data, error } = await supabase
         .from('assessment_submissions')
         .select('*')
+        .eq('track', 'sacred_greeks')
         .order('created_at', { ascending: false })
         .limit(50);
 
@@ -106,7 +107,7 @@ const Admin = () => {
               <Home className="w-4 h-4" />
               <span className="text-sm font-medium">Home</span>
             </Link>
-            <h1 className="text-lg font-semibold text-foreground">Admin Dashboard</h1>
+            <h1 className="text-lg font-semibold text-foreground">Sacred Greeks Admin</h1>
             <Button variant="outline" size="sm" onClick={() => setIsAuthenticated(false)}>
               Logout
             </Button>
@@ -134,8 +135,8 @@ const Admin = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
+                      <TableHead>ID</TableHead>
                       <TableHead>Date</TableHead>
-                      <TableHead>Track</TableHead>
                       <TableHead>Scenario</TableHead>
                       <TableHead>Result</TableHead>
                       <TableHead>Email</TableHead>
@@ -144,20 +145,9 @@ const Admin = () => {
                   <TableBody>
                     {submissions.map((submission) => (
                       <TableRow key={submission.id}>
+                        <TableCell className="font-mono text-xs">{submission.id.slice(0, 8)}...</TableCell>
                         <TableCell className="text-sm">
                           {new Date(submission.created_at).toLocaleDateString()}
-                        </TableCell>
-                        <TableCell>
-                          <Badge
-                            variant="outline"
-                            className={
-                              submission.track === 'compliance'
-                                ? 'border-compliance text-compliance'
-                                : 'border-sacred text-sacred'
-                            }
-                          >
-                            {submission.track === 'compliance' ? 'FDCA' : 'Sacred Greeks'}
-                          </Badge>
                         </TableCell>
                         <TableCell className="text-sm">{submission.scenario}</TableCell>
                         <TableCell>

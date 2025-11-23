@@ -17,8 +17,8 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 215 25% 15%;
 
-    --primary: 215 28% 17%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 215 28% 17%;
@@ -39,13 +39,8 @@ All colors MUST be HSL.
     --radius: 0.75rem;
     
     /* Track-specific colors */
-    --compliance: 187 85% 43%;
-    --compliance-foreground: 0 0% 100%;
-    --compliance-light: 187 85% 95%;
-    
-    --sacred: 43 96% 56%;
-    --sacred-foreground: 215 28% 17%;
-    --sacred-light: 43 96% 95%;
+    --sacred: 221 83% 53%;
+    --sacred-foreground: 0 0% 100%;
     
     /* Status colors */
     --status-high: 0 84% 60%;
@@ -53,9 +48,7 @@ All colors MUST be HSL.
     --status-low: 142 71% 45%;
     
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(215 28% 17%) 0%, hsl(215 20% 25%) 100%);
-    --gradient-compliance: linear-gradient(135deg, hsl(187 85% 43%) 0%, hsl(187 75% 50%) 100%);
-    --gradient-sacred: linear-gradient(135deg, hsl(43 96% 56%) 0%, hsl(43 96% 65%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(221 83% 53%) 0%, hsl(221 83% 65%) 100%);
 
     --sidebar-background: 0 0% 98%;
 
