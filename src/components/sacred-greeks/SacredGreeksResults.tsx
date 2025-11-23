@@ -87,10 +87,34 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart }: 
         </Card>
       ))}
 
+      {/* 5 Persona Types Integration - Show for high_pressure or all results */}
+      {(resultType === 'high_pressure' || true) && (
+        <Card className="bg-muted/50 border-2">
+          <CardHeader>
+            <CardTitle className="text-lg">Understand how you show up under pressure</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <p className="text-muted-foreground">
+              Want to better understand how you naturally respond in conflict and pressure situations? 
+              Take the 5 Persona Types Architecture Assessment.
+            </p>
+            <Button
+              className="w-full bg-sacred hover:bg-sacred/90 text-sacred-foreground"
+              asChild
+            >
+              <a href="https://drlymanmontgomery.involve.me/fmmpa" target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="w-4 h-4 mr-2" />
+                Take the 5 Persona Types Assessment
+              </a>
+            </Button>
+          </CardContent>
+        </Card>
+      )}
+
       {/* CTAs */}
       <Card className="bg-sacred/5">
         <CardHeader>
-          <CardTitle>Learn More with Sacred Greeks</CardTitle>
+          <CardTitle>Continue Your Journey</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-3">
@@ -124,7 +148,53 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart }: 
                 Read "Sacred, Not Sinful"
               </a>
             </Button>
+            <Button
+              variant="outline"
+              className="justify-start"
+              asChild
+            >
+              <a href="https://gamma.app/docs/Christian-Greek-Life-Study-Guide-ihr8fq0g089n32t" target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="w-4 h-4 mr-2" />
+                Use the Christian Greek Life Study Guide
+              </a>
+            </Button>
+            <Button
+              variant="outline"
+              className="justify-start"
+              asChild
+            >
+              <a href="https://sacredgreeks.com/" target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="w-4 h-4 mr-2" />
+                Listen to the Sacred Greeks Podcast
+              </a>
+            </Button>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Email Capture */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">Send this reflection to my email</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form className="space-y-3" onSubmit={(e) => {
+            e.preventDefault();
+            const email = (e.target as any).email.value;
+            // TODO: Implement email sending and update submission
+            console.log('Email capture:', email);
+          }}>
+            <input
+              type="email"
+              name="email"
+              placeholder="your.email@example.com"
+              className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-sacred"
+              required
+            />
+            <Button type="submit" className="w-full bg-sacred hover:bg-sacred/90 text-sacred-foreground">
+              Send me a copy
+            </Button>
+          </form>
         </CardContent>
       </Card>
 

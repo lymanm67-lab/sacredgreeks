@@ -1,113 +1,117 @@
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, Heart, Scale } from "lucide-react";
+import { Heart, Video, Users, Sparkles } from "lucide-react";
+
+const scenarios = [
+  {
+    id: "clip",
+    title: "I saw a clip or sermon attacking BGLOs",
+    description: "Process what you've heard and find biblical clarity",
+    icon: Video,
+  },
+  {
+    id: "pressure",
+    title: "Someone is pressuring me to denounce or resign",
+    description: "Navigate pressure with wisdom and peace",
+    icon: Users,
+  },
+  {
+    id: "event",
+    title: "I want to plan a faith-based event in my org",
+    description: "Design ministry initiatives with confidence",
+    icon: Sparkles,
+  },
+];
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border">
-        <div className="container mx-auto px-4 py-6">
-          <h1 className="text-2xl font-bold text-foreground">Focused Driven Decision Lab</h1>
-        </div>
-      </header>
-
+    <div className="min-h-screen bg-gradient-to-b from-background to-muted">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-12 md:py-20">
-        <div className="max-w-3xl mx-auto text-center space-y-6">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
-            Expert Guidance for Your Next Move
-          </h2>
-          <p className="text-lg md:text-xl text-muted-foreground">
-            Answer a few questions and get expert-level guidance for your next move, whether you lead a DODD agency or you are a Christian in Greek Life.
+      <div className="container mx-auto px-4 py-16 md:py-24">
+        <div className="max-w-4xl mx-auto text-center space-y-6">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-sacred/10 mb-4">
+            <Heart className="w-10 h-10 text-sacred" />
+          </div>
+          
+          <h1 className="text-4xl md:text-6xl font-bold text-foreground">
+            Sacred Greeks Decision Guide
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-muted-foreground font-medium">
+            You love Jesus. You love your letters. You can seek clarity without pressure.
+          </p>
+          
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            This guide helps Christians in Black Greek Letter Organizations process difficult
+            questions and decisions using the P.R.O.O.F. framework from "Sacred, Not Sinful."
+            Take a few minutes to reflect on your situation and receive biblical, pastoral guidance
+            for your next steps.
           </p>
         </div>
-      </section>
 
-      {/* Assessment Cards */}
-      <section className="container mx-auto px-4 pb-20">
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {/* FDCA Compliance Card */}
-          <Card className="border-compliance/20 hover:border-compliance/40 transition-all hover:shadow-lg">
-            <CardHeader>
-              <div className="w-12 h-12 rounded-lg bg-compliance/10 flex items-center justify-center mb-4">
-                <Scale className="w-6 h-6 text-compliance" />
-              </div>
-              <CardTitle className="text-2xl">FDCA Compliance Idea Checker</CardTitle>
-              <CardDescription className="text-base">
-                For DODD agency leaders, Directors of Operations, and compliance professionals
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-muted-foreground">
-                Quickly see if your proposed change is compliant, realistic, and worth pursuing. Get clear guidance on compliance risk, operational capacity, and leadership impact.
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2 text-sm">
-                  <CheckCircle className="w-5 h-5 text-compliance flex-shrink-0 mt-0.5" />
-                  <span>Assess compliance risk before launching</span>
-                </li>
-                <li className="flex items-start gap-2 text-sm">
-                  <CheckCircle className="w-5 h-5 text-compliance flex-shrink-0 mt-0.5" />
-                  <span>Evaluate staffing and operational capacity</span>
-                </li>
-                <li className="flex items-start gap-2 text-sm">
-                  <CheckCircle className="w-5 h-5 text-compliance flex-shrink-0 mt-0.5" />
-                  <span>Get actionable recommendations</span>
-                </li>
-              </ul>
-              <Link to="/compliance" className="block">
-                <Button className="w-full bg-compliance hover:bg-compliance/90 text-compliance-foreground">
-                  Start Compliance Checker
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
-
-          {/* Sacred Greeks Card */}
-          <Card className="border-sacred/20 hover:border-sacred/40 transition-all hover:shadow-lg">
-            <CardHeader>
-              <div className="w-12 h-12 rounded-lg bg-sacred/10 flex items-center justify-center mb-4">
-                <Heart className="w-6 h-6 text-sacred" />
-              </div>
-              <CardTitle className="text-2xl">Sacred Greeks Decision Guide</CardTitle>
-              <CardDescription className="text-base">
-                For Christians in Black Greek Letter Organizations, pastors, and family members
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-muted-foreground">
-                You love Jesus. You love your letters. You can seek clarity without pressure. Process intense questions using the P.R.O.O.F. framework from "Sacred, Not Sinful."
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2 text-sm">
-                  <CheckCircle className="w-5 h-5 text-sacred flex-shrink-0 mt-0.5" />
-                  <span>Navigate pressure with biblical clarity</span>
-                </li>
-                <li className="flex items-start gap-2 text-sm">
-                  <CheckCircle className="w-5 h-5 text-sacred flex-shrink-0 mt-0.5" />
-                  <span>Plan faith-based events with confidence</span>
-                </li>
-                <li className="flex items-start gap-2 text-sm">
-                  <CheckCircle className="w-5 h-5 text-sacred flex-shrink-0 mt-0.5" />
-                  <span>Process emotions in a safe space</span>
-                </li>
-              </ul>
-              <Link to="/sacred-greeks" className="block">
-                <Button className="w-full bg-sacred hover:bg-sacred/90 text-sacred-foreground">
-                  Start Sacred Greeks Guide
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
+        {/* Scenario Cards */}
+        <div className="max-w-5xl mx-auto mt-16 grid gap-6 md:grid-cols-3">
+          {scenarios.map((scenario) => (
+            <Link key={scenario.id} to={`/guide?scenario=${scenario.id}`}>
+              <Card className="h-full transition-all hover:shadow-lg hover:scale-105 border-2 hover:border-sacred/50 cursor-pointer group">
+                <CardHeader className="space-y-4">
+                  <div className="w-16 h-16 rounded-full bg-sacred/10 flex items-center justify-center group-hover:bg-sacred/20 transition-colors">
+                    <scenario.icon className="w-8 h-8 text-sacred" />
+                  </div>
+                  <CardTitle className="text-xl leading-tight">
+                    {scenario.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-base">
+                    {scenario.description}
+                  </CardDescription>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
         </div>
-      </section>
+      </div>
 
       {/* Footer */}
-      <footer className="border-t border-border bg-muted/30">
-        <div className="container mx-auto px-4 py-8 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Focused Driven Decision Lab. All rights reserved.</p>
+      <footer className="border-t border-border bg-card mt-16">
+        <div className="container mx-auto px-4 py-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex flex-wrap justify-center gap-6 text-sm">
+              <a
+                href="https://sacredgreeks.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-sacred transition-colors"
+              >
+                SacredGreeks.com
+              </a>
+              <a
+                href="https://sacredgreeks.com/#card-mwywcoy7nqn2if3"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-sacred transition-colors"
+              >
+                Start Here
+              </a>
+              <a
+                href="https://sacredgreeks.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-sacred transition-colors"
+              >
+                Sacred, Not Sinful Book
+              </a>
+              <a
+                href="https://gamma.app/docs/Christian-Greek-Life-Study-Guide-ihr8fq0g089n32t"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-sacred transition-colors"
+              >
+                Study Guide
+              </a>
+            </div>
+          </div>
         </div>
       </footer>
     </div>

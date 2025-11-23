@@ -4,8 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
-import Compliance from "./pages/Compliance";
-import SacredGreeks from "./pages/SacredGreeks";
+import Guide from "./pages/Guide";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
@@ -19,8 +18,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/compliance" element={<Compliance />} />
-          <Route path="/sacred-greeks" element={<SacredGreeks />} />
+          <Route path="/guide" element={<Guide />} />
           <Route path="/admin" element={<Admin />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
