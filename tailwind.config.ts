@@ -47,6 +47,21 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        compliance: {
+          DEFAULT: "hsl(var(--compliance))",
+          foreground: "hsl(var(--compliance-foreground))",
+          light: "hsl(var(--compliance-light))",
+        },
+        sacred: {
+          DEFAULT: "hsl(var(--sacred))",
+          foreground: "hsl(var(--sacred-foreground))",
+          light: "hsl(var(--sacred-light))",
+        },
+        status: {
+          high: "hsl(var(--status-high))",
+          medium: "hsl(var(--status-medium))",
+          low: "hsl(var(--status-low))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
