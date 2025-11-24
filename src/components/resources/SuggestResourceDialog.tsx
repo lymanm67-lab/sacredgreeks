@@ -23,7 +23,7 @@ const suggestionSchema = z.object({
   description: z.string().trim().min(10, 'Description must be at least 10 characters').max(500, 'Description must be less than 500 characters'),
   url: z.string().trim().url('Must be a valid URL'),
   resourceType: z.enum(['essential', 'chapter'], { required_error: 'Please select a resource type' }),
-  category: z.string().trim().min(1, 'Category is required').max(100, 'Category must be less than 100 characters'),
+  category: z.enum(['Faith', 'Leadership', 'Prayer', 'Service'], { required_error: 'Please select a category' }),
 });
 
 interface SuggestResourceDialogProps {
@@ -188,13 +188,20 @@ export const SuggestResourceDialog = ({ defaultType }: SuggestResourceDialogProp
 
           <div>
             <Label htmlFor="category">Category *</Label>
-            <Input
-              id="category"
+            <Select
               value={formData.category}
-              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-              placeholder="e.g., Study Guide, Meeting Guide, Prayer Resource"
-              className={errors.category ? 'border-destructive' : ''}
-            />
+              onValueChange={(value) => setFormData({ ...formData, category: value })}
+            >
+              <SelectTrigger className={errors.category ? 'border-destructive' : ''}>
+                <SelectValue placeholder="Select a category" />
+              </SelectTrigger>
+              <SelectContent className="bg-card border-border z-50">
+                <SelectItem value="Faith">Faith</SelectItem>
+                <SelectItem value="Leadership">Leadership</SelectItem>
+                <SelectItem value="Prayer">Prayer</SelectItem>
+                <SelectItem value="Service">Service</SelectItem>
+              </SelectContent>
+            </Select>
             {errors.category && <p className="text-xs text-destructive mt-1">{errors.category}</p>}
           </div>
 

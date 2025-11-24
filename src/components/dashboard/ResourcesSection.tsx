@@ -13,29 +13,29 @@ const resources = [
     description: "Comprehensive biblical framework for navigating faith and fraternity by Dr. Lyman Montgomery",
     url: "https://gamma.app/docs/Christian-Greek-Life-Study-Guide-ihr8fq0g089n32t",
     icon: BookOpen,
-    type: "Study Guide"
+    category: "Faith"
   },
   {
     title: "Sacred Greeks Biblical Guide",
     description: "FREE guide with insights to thrive as a Christian in your Divine Nine journey",
     url: "https://sacredgreeks.com/#card-r83oyur3vnn26i6",
     icon: Download,
-    type: "Free Download"
+    category: "Faith"
   }
 ];
 
 export const ResourcesSection = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState('a-z');
 
-  const resourceTypes = Array.from(new Set(resources.map(r => r.type)));
+  const categories = ['Faith', 'Leadership', 'Prayer', 'Service'];
 
   const filteredResources = resources.filter(resource => {
     const matchesSearch = resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          resource.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesType = !selectedType || resource.type === selectedType;
-    return matchesSearch && matchesType;
+    const matchesCategory = !selectedCategory || resource.category === selectedCategory;
+    return matchesSearch && matchesCategory;
   });
 
   const sortedResources = [...filteredResources].sort((a, b) => {
@@ -85,20 +85,20 @@ export const ResourcesSection = () => {
           
           <div className="flex flex-wrap gap-2">
             <Badge
-              variant={selectedType === null ? "default" : "outline"}
+              variant={selectedCategory === null ? "default" : "outline"}
               className="cursor-pointer hover:bg-sacred/20"
-              onClick={() => setSelectedType(null)}
+              onClick={() => setSelectedCategory(null)}
             >
               All
             </Badge>
-            {resourceTypes.map(type => (
+            {categories.map(category => (
               <Badge
-                key={type}
-                variant={selectedType === type ? "default" : "outline"}
+                key={category}
+                variant={selectedCategory === category ? "default" : "outline"}
                 className="cursor-pointer hover:bg-sacred/20"
-                onClick={() => setSelectedType(type)}
+                onClick={() => setSelectedCategory(category)}
               >
-                {type}
+                {category}
               </Badge>
             ))}
           </div>
@@ -123,7 +123,7 @@ export const ResourcesSection = () => {
                     <div className="flex items-center gap-2 mb-1">
                       <h3 className="font-semibold text-sm">{resource.title}</h3>
                       <span className="text-xs px-2 py-0.5 rounded bg-sacred/10 text-sacred">
-                        {resource.type}
+                        {resource.category}
                       </span>
                     </div>
                     <p className="text-xs text-muted-foreground mb-3 line-clamp-2">
