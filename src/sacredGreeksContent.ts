@@ -1170,6 +1170,11 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
         title: "The Circle of Promise: Origins of the Wedding Ring",
         url: "https://youtu.be/CN11FQ7tanU",
         description: "Exploring the pagan origins of wedding rings and how Christians embrace this tradition"
+      },
+      {
+        title: "The Strange Secrets Behind Old Wedding Traditions",
+        url: "https://youtu.be/9qLofoqskHk",
+        description: "Uncovering the surprising pagan and cultural origins of modern wedding customs"
       }
     ],
     items: [
@@ -1191,6 +1196,11 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
         title: "What Do Wreaths at Funerals Really Mean?",
         url: "https://youtu.be/oN_DDjKjVCo",
         description: "Uncovering the ancient pagan origins of funeral wreaths and memorial traditions"
+      },
+      {
+        title: "This Will Change How You See Funerals Forever",
+        url: "https://youtu.be/G14XXWLKq5Q",
+        description: "Exploring the surprising history and symbolism of modern funeral practices"
       }
     ],
     items: [
