@@ -23,6 +23,13 @@ const chapterResources = [
     category: "Leadership"
   },
   {
+    title: "Servant Leadership in Greek Life: How to Run Your Chapter and Serve",
+    description: "Biblical principles for servant leadership in Greek organizations",
+    url: "https://gamma.app/docs/Servant-Leadership-in-Greek-Life-How-to-Run-Your-Chapter-and-Serv-roah3o2oby0g55s",
+    icon: Users,
+    category: "Leadership"
+  },
+  {
     title: "Sacred Comfort: Prayer Guide for Greek Life",
     description: "How to pray for and walk with fraternity and sorority members during challenging times",
     url: "https://gamma.app/docs/Sacred-Comfort-How-To-Pray-For-And-Walk-With-Fraternity-And-Soror-ccgepyu7je8fpav",
