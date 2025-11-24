@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Heart, Video, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2 } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
+import { MobileQRCode } from "@/components/MobileQRCode";
 import logo from "@/assets/sacred-greeks-logo.png";
 
 const features = [
@@ -76,6 +77,7 @@ const Index = () => {
               </div>
             </div>
             <div className="flex items-center gap-3">
+              <MobileQRCode />
               {user ? (
                 <Link to="/dashboard">
                   <Button className="bg-sacred hover:bg-sacred/90 text-sacred-foreground">
