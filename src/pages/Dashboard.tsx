@@ -174,11 +174,11 @@ const Dashboard = () => {
 
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-7xl mx-auto space-y-8">
-          {/* Welcome Video */}
-          <WelcomeVideo />
-          
-          {/* Hero Section */}
-          <HeroSection />
+          {/* Two-column layout: Video + Hero */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-in">
+            <WelcomeVideo />
+            <HeroSection />
+          </div>
 
           {/* Stats Grid */}
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
