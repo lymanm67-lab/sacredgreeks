@@ -35,8 +35,8 @@ const App = () => (
           <Toaster />
           <Sonner />
           <InstallPrompt />
-          <CookieConsent />
           <BrowserRouter>
+            <CookieConsent />
             <AnalyticsProvider>
               <Routes>
               <Route path="/" element={<Index />} />
