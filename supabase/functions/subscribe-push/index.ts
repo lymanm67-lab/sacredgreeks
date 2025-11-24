@@ -1,10 +1,26 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
+
+// SECURITY FIX #3: Input validation schema
+const subscriptionSchema = z.object({
+  subscription: z.object({
+    endpoint: z.string().url().max(2000),
+    keys: z.object({
+      auth: z.string().min(1).max(500),
+      p256dh: z.string().min(1).max(500)
+    })
+  }),
+  preferences: z.object({
+    devotionalReminders: z.boolean().optional(),
+    prayerReminderSchedule: z.string().max(50).optional()
+  }).optional()
+})
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -30,14 +46,19 @@ serve(async (req) => {
       )
     }
 
-    const { subscription, preferences } = await req.json()
-
-    if (!subscription?.endpoint || !subscription?.keys) {
+    const requestBody = await req.json()
+    
+    // SECURITY FIX #3: Server-side validation
+    const validation = subscriptionSchema.safeParse(requestBody)
+    if (!validation.success) {
+      console.error('Validation error:', validation.error.errors)
       return new Response(
         JSON.stringify({ error: 'Invalid subscription data' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
+
+    const { subscription, preferences } = validation.data
 
     // Upsert subscription
     const { error } = await supabaseClient
@@ -60,9 +81,10 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
+    // SECURITY FIX #4: Log detailed errors server-side, return generic message to client
+    console.error('Subscribe push error:', error)
     return new Response(
-      JSON.stringify({ error: errorMessage }),
+      JSON.stringify({ error: 'Failed to save subscription. Please try again.' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   }
