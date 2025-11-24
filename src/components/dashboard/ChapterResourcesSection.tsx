@@ -13,36 +13,36 @@ const chapterResources = [
     description: "Practical guidance for sharing your faith with brothers and sisters in your organization using the Romans Road",
     url: "https://gamma.app/docs/Sacred-Conversations-Leading-Greek-Members-to-Christ-Using-the-Ro-ekkmlx5d1615hlv",
     icon: Heart,
-    type: "Faith Guide"
+    category: "Faith"
   },
   {
     title: "How to Use Roberts Rules of Order in Chapter Meetings",
     description: "Parliamentary procedure guide for conducting effective and orderly chapter meetings",
     url: "https://gamma.app/docs/How-To-Use-Roberts-Rules-of-Order-in-Chapter-Meetings-viytfotsasvx46d",
     icon: Users,
-    type: "Meeting Guide"
+    category: "Leadership"
   },
   {
     title: "Sacred Comfort: Prayer Guide for Greek Life",
     description: "How to pray for and walk with fraternity and sorority members during challenging times",
     url: "https://gamma.app/docs/Sacred-Comfort-How-To-Pray-For-And-Walk-With-Fraternity-And-Soror-ccgepyu7je8fpav",
     icon: BookOpen,
-    type: "Prayer Resource"
+    category: "Prayer"
   }
 ];
 
 export const ChapterResourcesSection = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState('a-z');
 
-  const resourceTypes = Array.from(new Set(chapterResources.map(r => r.type)));
+  const categories = ['Faith', 'Leadership', 'Prayer', 'Service'];
 
   const filteredResources = chapterResources.filter(resource => {
     const matchesSearch = resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          resource.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesType = !selectedType || resource.type === selectedType;
-    return matchesSearch && matchesType;
+    const matchesCategory = !selectedCategory || resource.category === selectedCategory;
+    return matchesSearch && matchesCategory;
   });
 
   const sortedResources = [...filteredResources].sort((a, b) => {
@@ -92,20 +92,20 @@ export const ChapterResourcesSection = () => {
           
           <div className="flex flex-wrap gap-2">
             <Badge
-              variant={selectedType === null ? "default" : "outline"}
+              variant={selectedCategory === null ? "default" : "outline"}
               className="cursor-pointer hover:bg-warm-blue/20"
-              onClick={() => setSelectedType(null)}
+              onClick={() => setSelectedCategory(null)}
             >
               All
             </Badge>
-            {resourceTypes.map(type => (
+            {categories.map(category => (
               <Badge
-                key={type}
-                variant={selectedType === type ? "default" : "outline"}
+                key={category}
+                variant={selectedCategory === category ? "default" : "outline"}
                 className="cursor-pointer hover:bg-warm-blue/20"
-                onClick={() => setSelectedType(type)}
+                onClick={() => setSelectedCategory(category)}
               >
-                {type}
+                {category}
               </Badge>
             ))}
           </div>
@@ -130,7 +130,7 @@ export const ChapterResourcesSection = () => {
                     <div className="flex items-center gap-2 mb-1">
                       <h3 className="font-semibold text-sm">{resource.title}</h3>
                       <span className="text-xs px-2 py-0.5 rounded bg-warm-blue/10 text-warm-blue">
-                        {resource.type}
+                        {resource.category}
                       </span>
                     </div>
                     <p className="text-xs text-muted-foreground mb-3 line-clamp-2">
