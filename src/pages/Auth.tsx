@@ -9,6 +9,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Heart, Home, Eye, EyeOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { z } from 'zod';
+
+const authSchema = z.object({
+  email: z.string().email('Invalid email address').max(255, 'Email must be less than 255 characters'),
+  password: z.string().min(8, 'Password must be at least 8 characters').max(100, 'Password must be less than 100 characters'),
+  fullName: z.string().min(1, 'Name is required').max(100, 'Name must be less than 100 characters').optional()
+});
 
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -36,20 +43,32 @@ const Auth = () => {
     const password = formData.get('password') as string;
     const fullName = formData.get('fullName') as string;
 
-    const { error } = await signUp(email, password, fullName);
+    try {
+      const validated = authSchema.parse({ email, password, fullName });
 
-    if (error) {
-      toast({
-        title: 'Error signing up',
-        description: error.message,
-        variant: 'destructive',
-      });
-    } else {
-      toast({
-        title: 'Welcome!',
-        description: 'Your account has been created successfully.',
-      });
-      navigate('/dashboard');
+      const { error } = await signUp(validated.email, validated.password, validated.fullName);
+
+      if (error) {
+        toast({
+          title: 'Error signing up',
+          description: error.message,
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'Welcome!',
+          description: 'Your account has been created successfully.',
+        });
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        toast({
+          title: 'Validation Error',
+          description: error.errors[0].message,
+          variant: 'destructive',
+        });
+      }
     }
 
     setIsLoading(false);
@@ -63,20 +82,32 @@ const Auth = () => {
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
 
-    const { error } = await signIn(email, password);
+    try {
+      const validated = authSchema.parse({ email, password });
 
-    if (error) {
-      toast({
-        title: 'Error signing in',
-        description: error.message,
-        variant: 'destructive',
-      });
-    } else {
-      toast({
-        title: 'Welcome back!',
-        description: 'You have been signed in successfully.',
-      });
-      navigate('/dashboard');
+      const { error } = await signIn(validated.email, validated.password);
+
+      if (error) {
+        toast({
+          title: 'Error signing in',
+          description: error.message,
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'Welcome back!',
+          description: 'You have been signed in successfully.',
+        });
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        toast({
+          title: 'Validation Error',
+          description: error.errors[0].message,
+          variant: 'destructive',
+        });
+      }
     }
 
     setIsLoading(false);
