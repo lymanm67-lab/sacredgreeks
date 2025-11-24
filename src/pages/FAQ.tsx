@@ -150,28 +150,6 @@ const FAQ = () => {
               ))}
             </CardContent>
           </Card>
-
-          <Card className="bg-sacred/5 border-sacred/20">
-            <CardHeader>
-              <CardTitle>Still Have Questions?</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-muted-foreground">
-                Can't find what you're looking for? Visit our main website for more resources and support.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <a href="https://sacredgreeks.com/" target="_blank" rel="noopener noreferrer">
-                  <Button variant="outline">Visit SacredGreeks.com</Button>
-                </a>
-                <a href="https://a.co/d/5a6Yt9t" target="_blank" rel="noopener noreferrer">
-                  <Button variant="outline">Get the Book</Button>
-                </a>
-                <a href="https://sacredgreeks.jellypod.ai/" target="_blank" rel="noopener noreferrer">
-                  <Button variant="outline">Listen to Podcast</Button>
-                </a>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </main>
     </div>
