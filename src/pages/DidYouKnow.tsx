@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
+import { ArrowLeft, ChevronDown, ChevronUp, Volume2, VolumeX, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { didYouKnowCategories } from "@/sacredGreeksContent";
+import { useTextToSpeech } from "@/hooks/use-text-to-speech";
 
 const DidYouKnow = () => {
   const [openCategories, setOpenCategories] = useState<Set<string>>(new Set());
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());
+  const { speak, isPlaying, isLoading } = useTextToSpeech();
 
   const toggleCategory = (categoryId: string) => {
     setOpenCategories((prev) => {
@@ -32,6 +34,18 @@ const DidYouKnow = () => {
       }
       return newSet;
     });
+  };
+
+  const handleListen = (item: any) => {
+    const textToSpeak = `${item.title}. 
+    
+    Pagan Origin: ${item.origin}
+    
+    Used Today: ${item.today}
+    
+    Reflection: ${item.reflection}`;
+    
+    speak(textToSpeak, item.id);
   };
 
   return (
@@ -115,15 +129,35 @@ const DidYouKnow = () => {
                               onOpenChange={() => toggleItem(item.id)}
                             >
                               <CollapsibleTrigger className="w-full">
-                                <div className="flex items-center justify-between">
-                                  <CardTitle className="text-base text-left">
+                                <div className="flex items-center justify-between gap-2">
+                                  <CardTitle className="text-base text-left flex-1">
                                     {item.title}
                                   </CardTitle>
-                                  {openItems.has(item.id) ? (
-                                    <ChevronUp className="h-4 w-4 text-muted-foreground flex-shrink-0 ml-4" />
-                                  ) : (
-                                    <ChevronDown className="h-4 w-4 text-muted-foreground flex-shrink-0 ml-4" />
-                                  )}
+                                  <div className="flex items-center gap-2 flex-shrink-0">
+                                    <Button
+                                      size="sm"
+                                      variant="ghost"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleListen(item);
+                                      }}
+                                      disabled={isLoading === item.id}
+                                      className="h-8 w-8 p-0"
+                                    >
+                                      {isLoading === item.id ? (
+                                        <Loader2 className="h-4 w-4 animate-spin" />
+                                      ) : isPlaying === item.id ? (
+                                        <VolumeX className="h-4 w-4" />
+                                      ) : (
+                                        <Volume2 className="h-4 w-4" />
+                                      )}
+                                    </Button>
+                                    {openItems.has(item.id) ? (
+                                      <ChevronUp className="h-4 w-4 text-muted-foreground" />
+                                    ) : (
+                                      <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                                    )}
+                                  </div>
                                 </div>
                               </CollapsibleTrigger>
 
