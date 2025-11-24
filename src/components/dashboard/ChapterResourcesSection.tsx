@@ -9,23 +9,23 @@ import { Users, Heart, BookOpen, ExternalLink, Search, ArrowUpDown } from 'lucid
 
 const chapterResources = [
   {
-    title: "Roberts Rules of Order Guide",
-    description: "Parliamentary procedure guide for conducting effective and orderly chapter meetings",
-    url: "https://www.boardeffect.com/blog/roberts-rules-of-order-cheat-sheet/",
-    icon: Users,
-    type: "Meeting Guide"
-  },
-  {
-    title: "How to Witness to Your Chapter",
-    description: "Practical guidance for sharing your faith with brothers and sisters in your organization",
-    url: "https://www.cru.org/us/en/train-and-grow/share-the-gospel/how-to-share-your-faith.html",
+    title: "Sacred Conversations: Leading Greek Members to Christ",
+    description: "Practical guidance for sharing your faith with brothers and sisters in your organization using the Romans Road",
+    url: "https://gamma.app/docs/Sacred-Conversations-Leading-Greek-Members-to-Christ-Using-the-Ro-ekkmlx5d1615hlv",
     icon: Heart,
     type: "Faith Guide"
   },
   {
-    title: "Prayers for Life Events",
-    description: "A collection of prayers for important moments in Greek life and personal milestones",
-    url: "https://www.lords-prayer-words.com/times_of_need/prayer_for_friends.html",
+    title: "How to Use Roberts Rules of Order in Chapter Meetings",
+    description: "Parliamentary procedure guide for conducting effective and orderly chapter meetings",
+    url: "https://gamma.app/docs/How-To-Use-Roberts-Rules-of-Order-in-Chapter-Meetings-viytfotsasvx46d",
+    icon: Users,
+    type: "Meeting Guide"
+  },
+  {
+    title: "Sacred Comfort: Prayer Guide for Greek Life",
+    description: "How to pray for and walk with fraternity and sorority members during challenging times",
+    url: "https://gamma.app/docs/Sacred-Comfort-How-To-Pray-For-And-Walk-With-Fraternity-And-Soror-ccgepyu7je8fpav",
     icon: BookOpen,
     type: "Prayer Resource"
   }
