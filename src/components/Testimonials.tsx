@@ -27,6 +27,12 @@ const testimonials = [
     initials: 'DF',
     text: 'Sacred Greeks provides practical tools and theological depth that help members of Black Greek Letter Organizations reconcile their cultural heritage with Christian faith in their daily lives.',
   },
+  {
+    name: 'Pastor Demetrius Logwood',
+    org: 'Charity Missionary Baptist Church',
+    initials: 'DL',
+    text: 'This rigorous research bridges the gap between Black Greek Letter Organizations and the church community. Sacred Greeks reminds us that spreading the gospel takes on many forms and that faith and commitment can honor both Christ and BGLOs.',
+  },
 ];
 
 export const Testimonials = () => {
