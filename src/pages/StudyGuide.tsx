@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { ArrowLeft, BookOpen, MessageCircle, CheckCircle, Check, Edit3, Share2, Award } from "lucide-react";
+import { ArrowLeft, BookOpen, MessageCircle, CheckCircle, Check, Edit3, Share2, Award, ShoppingCart } from "lucide-react";
 import { studyGuideSessions } from "@/sacredGreeksContent";
 import { useStudyProgress } from "@/hooks/use-study-progress";
 import { Progress } from "@/components/ui/progress";
@@ -335,10 +335,31 @@ const StudyGuide = () => {
                   )}
                 </Accordion>
 
-                <div className="mt-6 pt-6 border-t border-border">
+                <div className="mt-6 pt-6 border-t border-border space-y-4">
                   <p className="text-sm text-muted-foreground italic">
                     {session.readMoreNote}
                   </p>
+                  <div className="bg-gradient-to-br from-sacred/5 to-sacred/10 border border-sacred/20 rounded-lg p-4">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                      <div className="flex-1">
+                        <p className="font-semibold text-foreground mb-1">Ready to Go Deeper?</p>
+                        <p className="text-sm text-muted-foreground">
+                          Get the complete Sacred, Not Sinful book for in-depth teaching and guidance
+                        </p>
+                      </div>
+                      <a
+                        href="https://a.co/d/elm89y1"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-shrink-0"
+                      >
+                        <Button className="bg-sacred hover:bg-sacred/90 text-sacred-foreground w-full sm:w-auto">
+                          <ShoppingCart className="w-4 h-4 mr-2" />
+                          Buy Book
+                        </Button>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
