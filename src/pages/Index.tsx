@@ -3,7 +3,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Video, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Heart, Video, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
 import { MobileQRCode } from "@/components/MobileQRCode";
 import logo from "@/assets/sacred-greeks-logo.png";
@@ -154,6 +154,15 @@ const Index = () => {
               </Button>
             </Link>
           )}
+        </div>
+
+        {/* Mobile Install CTA */}
+        <div className="mt-8 text-center">
+          <Link to="/install" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-sacred transition-colors">
+            <Smartphone className="w-4 h-4" />
+            Install on your phone for the best experience
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </div>
 

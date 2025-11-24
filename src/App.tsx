@@ -26,6 +26,7 @@ import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import Progress from "./pages/Progress";
 import SharedResult from "./pages/SharedResult";
+import Install from "./pages/Install";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ const App = () => (
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/privacy" element={<Privacy />} />
+              <Route path="/install" element={<Install />} />
               <Route path="/shared/:token" element={<SharedResult />} />
               <Route
                 path="/guide"
