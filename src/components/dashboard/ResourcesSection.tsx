@@ -57,6 +57,13 @@ const resources = [
     url: "https://sacredgreeks.com/#card-r83oyur3vnn26i6",
     icon: Download,
     category: "Faith"
+  },
+  {
+    title: "Sacred Service: Planning Community Projects with Your Chapter",
+    description: "Comprehensive guide for organizing impactful community service projects with biblical principles",
+    url: "https://gamma.app/docs/Sacred-Service-Planning-Community-Projects-with-Your-Chapter-28f7a9bc5w5jghb",
+    icon: HandHeart,
+    category: "Service"
   }
 ];
 
