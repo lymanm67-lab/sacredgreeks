@@ -38,6 +38,7 @@ export interface DidYouKnowCategory {
   title: string;
   description: string;
   items: DidYouKnowItem[];
+  videos?: VideoItem[];
 }
 
 export interface ResultContent {
@@ -941,6 +942,13 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
     id: "medicine-pharmacy",
     title: "Medicine & Pharmacy",
     description: "Modern healthcare practices rooted in Greek mythology and pagan symbolism",
+    videos: [
+      {
+        title: "Medical Symbols and Their Pagan Origins",
+        url: "https://youtu.be/QsvD9LDmUEU",
+        description: "Educational video exploring how modern medicine uses symbols from Greek mythology"
+      }
+    ],
     items: [
       {
         id: "caduceus",
@@ -969,6 +977,13 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
     id: "calendar-holidays",
     title: "Calendar & Holidays",
     description: "Times and seasons we observe with clear pagan origins",
+    videos: [
+      {
+        title: "Pagan Origins of Days and Months",
+        url: "https://youtu.be/CN11FQ7tanU",
+        description: "Discover how our calendar is filled with references to Roman and Norse gods"
+      }
+    ],
     items: [
       {
         id: "days-of-week",
@@ -1004,6 +1019,13 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
     id: "architecture-symbols",
     title: "Architecture & Church Symbols",
     description: "Building designs and imagery with pagan heritage",
+    videos: [
+      {
+        title: "Pagan Architecture in Churches",
+        url: "https://youtu.be/G14XXWLKq5Q",
+        description: "How Greek and Roman temple designs became standard for Christian buildings"
+      }
+    ],
     items: [
       {
         id: "greek-columns",
@@ -1032,6 +1054,13 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
     id: "education-institutions",
     title: "Education & Institutions",
     description: "Academic traditions with Greek and pagan roots",
+    videos: [
+      {
+        title: "Greek Influence in Modern Education",
+        url: "https://youtu.be/9qLofoqskHk",
+        description: "Exploring how pagan traditions shaped academic ceremonies and symbols"
+      }
+    ],
     items: [
       {
         id: "university-names",
@@ -1060,6 +1089,13 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
     id: "language-names",
     title: "Language & Common Names",
     description: "Everyday words and names with mythological origins",
+    videos: [
+      {
+        title: "Mythology in Everyday Language",
+        url: "https://youtu.be/oN_DDjKjVCo",
+        description: "How mythological references permeate our daily vocabulary and names"
+      }
+    ],
     items: [
       {
         id: "planet-names",
@@ -1088,6 +1124,13 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
     id: "civic-patriotic",
     title: "Civic & Patriotic Symbols",
     description: "Government and national imagery with pagan roots",
+    videos: [
+      {
+        title: "Pagan Symbols in American Patriotism",
+        url: "https://youtu.be/031_jOt2Vmw",
+        description: "Understanding the goddess imagery in American civic symbols"
+      }
+    ],
     items: [
       {
         id: "lady-liberty",

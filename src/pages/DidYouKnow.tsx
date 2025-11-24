@@ -120,8 +120,39 @@ const DidYouKnow = () => {
                   </CollapsibleTrigger>
 
                   <CollapsibleContent>
-                    <div className="mt-4 space-y-3">
-                      {category.items.map((item) => (
+                    <div className="mt-4 space-y-4">
+                      {/* Video Section */}
+                      {category.videos && category.videos.length > 0 && (
+                        <div className="space-y-3 pb-4 border-b border-border">
+                          <h3 className="font-semibold text-lg px-6">📺 Educational Videos</h3>
+                          <div className="px-6 grid gap-4">
+                            {category.videos.map((video, idx) => (
+                              <div key={idx} className="space-y-2">
+                                <div className="aspect-video rounded-lg overflow-hidden border-2 border-primary/20">
+                                  <iframe
+                                    width="100%"
+                                    height="100%"
+                                    src={`https://www.youtube.com/embed/${video.url.split('/').pop()}`}
+                                    title={video.title}
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                    className="w-full h-full"
+                                  />
+                                </div>
+                                <div className="space-y-1">
+                                  <h4 className="font-medium text-sm">{video.title}</h4>
+                                  <p className="text-xs text-muted-foreground">{video.description}</p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      
+                      {/* Items Section */}
+                      <div className="space-y-3">
+                        {category.items.map((item) => (
                         <Card key={item.id} className="border-l-4 border-l-primary">
                           <CardHeader className="pb-3">
                             <Collapsible
@@ -194,7 +225,8 @@ const DidYouKnow = () => {
                             </Collapsible>
                           </CardHeader>
                         </Card>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   </CollapsibleContent>
                 </Collapsible>
