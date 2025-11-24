@@ -61,7 +61,7 @@ export const HeroSection = () => {
               <p className="text-foreground text-lg leading-relaxed mb-3 italic font-medium">
                 {dailyScripture.text}"
               </p>
-              <p className="text-sacred font-semibold">
+              <p className="text-sacred-dark font-semibold">
                 — {dailyScripture.reference}
               </p>
             </div>
