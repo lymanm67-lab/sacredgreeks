@@ -9,6 +9,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
+import { chapterMeetingSchema } from '@/lib/validation';
 
 interface MeetingNote {
   id: string;
@@ -54,21 +55,31 @@ export const ChapterMeetingNotes = () => {
       if (error) throw error;
       setNotes(data || []);
     } catch (error) {
-      console.error('Error loading notes:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to load meeting notes',
+        variant: 'destructive',
+      });
     } finally {
       setLoading(false);
     }
   };
 
   const addNote = async () => {
-    if (!user || !formData.title.trim() || !formData.meeting_date) return;
+    if (!user) return;
 
     try {
+      const validated = chapterMeetingSchema.parse(formData);
+
       const { error } = await supabase
         .from('chapter_meeting_notes')
         .insert({
           user_id: user.id,
-          ...formData
+          title: validated.title,
+          meeting_date: validated.meeting_date,
+          notes: validated.notes || null,
+          attendees: validated.attendees || null,
+          action_items: validated.action_items || null
         });
 
       if (error) throw error;
@@ -87,12 +98,19 @@ export const ChapterMeetingNotes = () => {
         description: 'Meeting notes saved successfully',
       });
     } catch (error) {
-      console.error('Error adding note:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to save meeting notes',
-        variant: 'destructive',
-      });
+      if (error instanceof Error) {
+        toast({
+          title: 'Validation Error',
+          description: error.message,
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'Error',
+          description: 'Failed to save meeting notes',
+          variant: 'destructive',
+        });
+      }
     }
   };
 

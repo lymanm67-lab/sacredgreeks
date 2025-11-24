@@ -10,6 +10,7 @@ import { SacredGreeksAnswers } from "@/types/assessment";
 import { calculateSacredGreeksScores } from "@/lib/scoring";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 const steps = [
   { label: "Scenario", description: "Choose your situation" },
@@ -23,6 +24,7 @@ const Guide = () => {
   const [answers, setAnswers] = useState<Partial<SacredGreeksAnswers>>({});
   const [resultData, setResultData] = useState<any>(null);
   const { toast } = useToast();
+  const { user } = useAuth();
 
   useEffect(() => {
     const scenarioParam = searchParams.get('scenario');
@@ -46,12 +48,22 @@ const Guide = () => {
 
     // Save to database
     try {
+      if (!user) {
+        toast({
+          title: "Authentication required",
+          description: "Please sign in to save your assessment.",
+          variant: "destructive",
+        });
+        return;
+      }
+
       const { error } = await supabase.from('assessment_submissions').insert({
         track: 'sacred_greeks' as const,
         scenario: fullAnswers.scenario,
         answers_json: fullAnswers as any,
         scores_json: scores as any,
         result_type: resultType,
+        user_id: user.id,
       });
 
       if (error) throw error;
@@ -59,7 +71,6 @@ const Guide = () => {
       setResultData({ scores, resultType, answers: fullAnswers });
       setCurrentStep(3);
     } catch (error) {
-      console.error('Error saving submission:', error);
       toast({
         title: "Error",
         description: "Failed to save your assessment. Please try again.",
