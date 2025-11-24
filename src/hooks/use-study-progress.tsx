@@ -75,8 +75,37 @@ export const useStudyProgress = () => {
     },
   });
 
+  const saveNotesMutation = useMutation({
+    mutationFn: async ({ sessionId, notes }: { sessionId: number; notes: string }) => {
+      if (!user) throw new Error("Must be logged in");
+
+      const { error } = await supabase
+        .from("study_session_progress")
+        .upsert({
+          user_id: user.id,
+          session_id: sessionId,
+          notes,
+          completed: isSessionComplete(sessionId),
+          completed_at: isSessionComplete(sessionId) ? new Date().toISOString() : null,
+        });
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["study-progress"] });
+      toast.success("Notes saved successfully!");
+    },
+    onError: (error) => {
+      toast.error("Failed to save notes: " + error.message);
+    },
+  });
+
   const isSessionComplete = (sessionId: number) => {
     return progress.some((p) => p.session_id === sessionId && p.completed);
+  };
+
+  const getSessionNotes = (sessionId: number) => {
+    return progress.find((p) => p.session_id === sessionId)?.notes || "";
   };
 
   const completedCount = progress.filter((p) => p.completed).length;
@@ -87,7 +116,10 @@ export const useStudyProgress = () => {
     progress,
     isLoading,
     toggleSession: toggleSessionMutation.mutate,
+    saveNotes: saveNotesMutation.mutate,
+    isSavingNotes: saveNotesMutation.isPending,
     isSessionComplete,
+    getSessionNotes,
     completedCount,
     totalSessions,
     progressPercentage,
