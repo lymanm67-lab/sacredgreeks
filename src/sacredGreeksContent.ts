@@ -977,6 +977,13 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
     id: "calendar-holidays",
     title: "Calendar & Holidays",
     description: "Times and seasons we observe with clear pagan origins",
+    videos: [
+      {
+        title: "Story of Birthday Cakes",
+        url: "https://youtu.be/rr639o9Gev0",
+        description: "The ancient pagan origins of birthday celebrations and cake traditions"
+      }
+    ],
     items: [
       {
         id: "days-of-week",
