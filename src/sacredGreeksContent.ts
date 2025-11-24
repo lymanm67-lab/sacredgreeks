@@ -147,8 +147,8 @@ export const sacredGreeksResults: Record<
 
       videos: [
         {
-          title: "Sacred Greeks Video 1",
-          url: "https://youtu.be/PLQG1lOu-48",
+          title: "Sacred, Not Sinful: Can Faith and Greek Life Coexist?",
+          url: "https://youtu.be/_3C9q8ZmLnk",
           description:
             "Short Sacred Greeks teaching that helps you think clearly about Greek life and faith when you see denouncement content.",
         },
