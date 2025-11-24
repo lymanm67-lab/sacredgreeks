@@ -10,7 +10,7 @@ interface StatsCardProps {
   delay?: string;
 }
 
-export const StatsCard = ({ title, value, subtitle, icon: Icon, gradient = "from-sacred to-sacred-light", delay = "0s" }: StatsCardProps) => {
+export const StatsCard = ({ title, value, subtitle, icon: Icon, gradient = "from-sacred to-warm-blue", delay = "0s" }: StatsCardProps) => {
   return (
     <Card 
       className="relative overflow-hidden group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-scale-in border-2"

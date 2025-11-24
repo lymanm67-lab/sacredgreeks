@@ -151,7 +151,7 @@ const Dashboard = () => {
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group">
               <Heart className="w-5 h-5 text-sacred group-hover:scale-110 transition-transform" />
-              <span className="font-semibold bg-gradient-to-r from-sacred to-warm-purple bg-clip-text text-transparent">
+              <span className="font-semibold bg-gradient-to-r from-sacred to-warm-blue bg-clip-text text-transparent">
                 Sacred Greeks
               </span>
             </Link>
@@ -183,7 +183,7 @@ const Dashboard = () => {
               value={stats.assessmentCount}
               subtitle="Total completed"
               icon={FileText}
-              gradient="from-sacred to-warm-purple"
+              gradient="from-sacred to-warm-blue"
               delay="0.1s"
             />
             <StatsCard
@@ -191,7 +191,7 @@ const Dashboard = () => {
               value={stats.prayerCount}
               subtitle="In your journal"
               icon={MessageSquare}
-              gradient="from-warm-purple to-accent"
+              gradient="from-warm-blue to-accent"
               delay="0.2s"
             />
             <StatsCard
@@ -223,7 +223,7 @@ const Dashboard = () => {
                 description="Process a new decision with biblical guidance"
                 icon={Heart}
                 href="/guide"
-                gradient="from-sacred to-warm-purple"
+                gradient="from-sacred to-warm-blue"
                 delay="0.1s"
               />
               <QuickActionCard
@@ -231,7 +231,7 @@ const Dashboard = () => {
                 description="Read today's reflection and scripture"
                 icon={BookOpen}
                 href="/devotional"
-                gradient="from-warm-purple to-accent"
+                gradient="from-warm-blue to-accent"
                 delay="0.2s"
               />
               <QuickActionCard
@@ -289,9 +289,9 @@ const Dashboard = () => {
                   {recentAssessments.map((assessment) => (
                     <div key={assessment.id} className="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-muted/50 transition-colors border border-border/50">
                       <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-lg bg-gradient-to-br from-sacred to-warm-purple">
-                          <Calendar className="w-4 h-4 text-white" />
-                        </div>
+                      <div className="p-2 rounded-lg bg-gradient-to-br from-sacred to-warm-blue">
+                        <Calendar className="w-4 h-4 text-white" />
+                      </div>
                         <div>
                           <p className="text-sm font-medium capitalize">
                             {assessment.scenario.replace('_', ' ')}
