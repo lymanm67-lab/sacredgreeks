@@ -1,6 +1,7 @@
 import React from 'react';
 import { Shield, ShieldAlert, ShieldCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { PasswordRequirements } from '@/components/PasswordRequirements';
 
 interface PasswordStrengthIndicatorProps {
   password: string;
@@ -100,6 +101,8 @@ export const PasswordStrengthIndicator: React.FC<PasswordStrengthIndicatorProps>
           Excellent! Your password is strong
         </p>
       )}
+      
+      <PasswordRequirements password={password} />
     </div>
   );
 };
