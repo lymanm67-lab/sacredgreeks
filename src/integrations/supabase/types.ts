@@ -257,6 +257,27 @@ export type Database = {
         }
         Relationships: []
       }
+      rate_limits: {
+        Row: {
+          created_at: string
+          endpoint: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          endpoint: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          endpoint?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_progress: {
         Row: {
           assessments_count: number | null
@@ -313,6 +334,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      cleanup_old_rate_limits: { Args: never; Returns: undefined }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

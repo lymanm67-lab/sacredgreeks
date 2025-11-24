@@ -9,6 +9,7 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { CookieConsent } from "@/components/CookieConsent";
+import { AnalyticsProvider } from "@/components/AnalyticsProvider";
 import Index from "./pages/Index";
 import Privacy from "./pages/Privacy";
 import Auth from "./pages/Auth";
@@ -36,7 +37,8 @@ const App = () => (
           <InstallPrompt />
           <CookieConsent />
           <BrowserRouter>
-            <Routes>
+            <AnalyticsProvider>
+              <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/reset-password" element={<ResetPassword />} />
@@ -108,6 +110,7 @@ const App = () => (
               />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            </AnalyticsProvider>
           </BrowserRouter>
         </TooltipProvider>
       </AuthProvider>
