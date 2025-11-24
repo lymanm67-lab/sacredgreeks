@@ -21,6 +21,7 @@ import { MobileQRCode } from '@/components/MobileQRCode';
 import { StudyGuideWidget } from '@/components/dashboard/StudyGuideWidget';
 import { StudyRecommendations } from '@/components/StudyRecommendations';
 import { GamificationBar } from '@/components/GamificationBar';
+import { useFavorites } from '@/hooks/use-favorites';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -33,6 +34,7 @@ const Dashboard = () => {
   const { user, signOut } = useAuth();
   const { toast } = useToast();
   const { showOnboarding, completeOnboarding, isChecking } = useOnboarding();
+  const { toggleFavorite, isFavorite } = useFavorites();
   const [stats, setStats] = useState<DashboardStats>({
     assessmentCount: 0,
     prayerCount: 0,
@@ -142,6 +144,81 @@ const Dashboard = () => {
     });
   };
 
+  // Define quick actions
+  const quickActions = [
+    {
+      id: 'new-assessment',
+      title: 'New Assessment',
+      description: 'Process a new decision with biblical guidance',
+      icon: Heart,
+      href: '/guide',
+      gradient: 'from-sacred to-warm-blue',
+    },
+    {
+      id: 'daily-devotional',
+      title: 'Daily Devotional',
+      description: 'Read today\'s reflection and scripture',
+      icon: BookOpen,
+      href: '/devotional',
+      gradient: 'from-warm-blue to-accent',
+    },
+    {
+      id: 'prayer-journal',
+      title: 'Prayer Journal',
+      description: 'Track your prayers and answered requests',
+      icon: MessageSquare,
+      href: '/prayer-journal',
+      gradient: 'from-sacred to-secondary',
+    },
+    {
+      id: 'bible-study',
+      title: 'Bible Study',
+      description: 'Search Scripture and explore reading plans',
+      icon: Book,
+      href: '/bible-study',
+      gradient: 'from-accent to-sacred',
+    },
+    {
+      id: 'bookmarks',
+      title: 'Bookmarks',
+      description: 'Access your saved resources',
+      icon: Bookmark,
+      href: '/bookmarks',
+      gradient: 'from-warm-blue to-status-low',
+    },
+    {
+      id: 'service-hours',
+      title: 'Service Hours',
+      description: 'Track community service activities',
+      icon: Clock,
+      href: '/service-tracker',
+      gradient: 'from-secondary to-accent',
+    },
+    {
+      id: 'achievements',
+      title: 'Achievements',
+      description: 'View your progress and unlocked badges',
+      icon: TrendingUp,
+      href: '/achievements',
+      gradient: 'from-accent to-warm-blue',
+    },
+    {
+      id: 'did-you-know',
+      title: 'Did You Know?',
+      description: 'Discover Christian practices with pagan roots and educational videos',
+      icon: Lightbulb,
+      href: '/did-you-know',
+      gradient: 'from-warm-blue to-sacred',
+    },
+  ];
+
+  // Sort actions: favorites first, then the rest
+  const sortedActions = [...quickActions].sort((a, b) => {
+    const aFav = isFavorite(a.id) ? 1 : 0;
+    const bFav = isFavorite(b.id) ? 1 : 0;
+    return bFav - aFav;
+  });
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -244,70 +321,20 @@ const Dashboard = () => {
               Quick Actions
             </h2>
             <div className="grid gap-4 grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
-              <CompactQuickAction
-                title="New Assessment"
-                description="Process a new decision with biblical guidance"
-                icon={Heart}
-                href="/guide"
-                gradient="from-sacred to-warm-blue"
-                delay="0.1s"
-              />
-              <CompactQuickAction
-                title="Daily Devotional"
-                description="Read today's reflection and scripture"
-                icon={BookOpen}
-                href="/devotional"
-                gradient="from-warm-blue to-accent"
-                delay="0.2s"
-              />
-              <CompactQuickAction
-                title="Prayer Journal"
-                description="Track your prayers and answered requests"
-                icon={MessageSquare}
-                href="/prayer-journal"
-                gradient="from-sacred to-secondary"
-                delay="0.3s"
-              />
-              <CompactQuickAction
-                title="Bible Study"
-                description="Search Scripture and explore reading plans"
-                icon={Book}
-                href="/bible-study"
-                gradient="from-accent to-sacred"
-                delay="0.4s"
-              />
-              <CompactQuickAction
-                title="Bookmarks"
-                description="Access your saved resources"
-                icon={Bookmark}
-                href="/bookmarks"
-                gradient="from-warm-blue to-status-low"
-                delay="0.5s"
-              />
-              <CompactQuickAction
-                title="Service Hours"
-                description="Track community service activities"
-                icon={Clock}
-                href="/service-tracker"
-                gradient="from-secondary to-accent"
-                delay="0.6s"
-              />
-              <CompactQuickAction
-                title="Achievements"
-                description="View your progress and unlocked badges"
-                icon={TrendingUp}
-                href="/achievements"
-                gradient="from-accent to-warm-blue"
-                delay="0.7s"
-              />
-              <CompactQuickAction
-                title="Did You Know?"
-                description="Discover Christian practices with pagan roots and educational videos"
-                icon={Lightbulb}
-                href="/did-you-know"
-                gradient="from-warm-blue to-sacred"
-                delay="0.8s"
-              />
+              {sortedActions.map((action, index) => (
+                <CompactQuickAction
+                  key={action.id}
+                  id={action.id}
+                  title={action.title}
+                  description={action.description}
+                  icon={action.icon}
+                  href={action.href}
+                  gradient={action.gradient}
+                  delay={`${(index + 1) * 0.1}s`}
+                  isFavorite={isFavorite(action.id)}
+                  onToggleFavorite={toggleFavorite}
+                />
+              ))}
             </div>
           </div>
 
