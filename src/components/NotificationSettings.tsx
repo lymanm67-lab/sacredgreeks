@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Bell, BellOff } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -10,7 +11,7 @@ import { useToast } from '@/hooks/use-toast';
 
 interface NotificationPreferences {
   devotionalReminders: boolean;
-  prayerReminders: boolean;
+  prayerReminderSchedule: 'none' | 'daily' | 'weekly';
 }
 
 export const NotificationSettings = () => {
@@ -21,7 +22,7 @@ export const NotificationSettings = () => {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [preferences, setPreferences] = useState<NotificationPreferences>({
     devotionalReminders: true,
-    prayerReminders: true,
+    prayerReminderSchedule: 'none',
   });
   const [loading, setLoading] = useState(false);
 
@@ -44,14 +45,15 @@ export const NotificationSettings = () => {
         // Get current preferences from database
         const { data } = await supabase
           .from('push_subscriptions')
-          .select('devotional_reminders, prayer_reminders')
+          .select('devotional_reminders, prayer_reminder_schedule')
           .eq('endpoint', subscription.endpoint)
           .maybeSingle();
 
         if (data) {
+          const schedule = data.prayer_reminder_schedule as 'none' | 'daily' | 'weekly';
           setPreferences({
             devotionalReminders: data.devotional_reminders,
-            prayerReminders: data.prayer_reminders,
+            prayerReminderSchedule: schedule || 'none',
           });
         }
       }
@@ -272,22 +274,30 @@ export const NotificationSettings = () => {
               />
             </div>
 
-            <div className="flex items-center justify-between">
-              <Label htmlFor="prayer-reminders" className="flex-1">
+            <div className="space-y-2">
+              <Label htmlFor="prayer-reminder-schedule">
                 <div>
-                  <p className="font-medium">Prayer Journal</p>
+                  <p className="font-medium">Prayer Journal Reminders</p>
                   <p className="text-sm text-muted-foreground">
-                    Get updates about your prayer journal
+                    Choose how often you want prayer reminders
                   </p>
                 </div>
               </Label>
-              <Switch
-                id="prayer-reminders"
-                checked={preferences.prayerReminders}
-                onCheckedChange={(checked) =>
-                  updatePreferences({ prayerReminders: checked })
+              <Select
+                value={preferences.prayerReminderSchedule}
+                onValueChange={(value: 'none' | 'daily' | 'weekly') =>
+                  updatePreferences({ prayerReminderSchedule: value })
                 }
-              />
+              >
+                <SelectTrigger id="prayer-reminder-schedule">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">No reminders</SelectItem>
+                  <SelectItem value="daily">Daily (8 AM)</SelectItem>
+                  <SelectItem value="weekly">Weekly (Monday 8 AM)</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <Button
