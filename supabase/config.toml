@@ -29,3 +29,6 @@ verify_jwt = false
 
 [functions.study-recommendations]
 verify_jwt = true
+
+[functions.check-achievements]
+verify_jwt = false

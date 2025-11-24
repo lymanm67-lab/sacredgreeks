@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { SocialShareDialog } from '@/components/SocialShareDialog';
 import { AchievementBadgeDialog } from '@/components/AchievementBadgeDialog';
+import { useGamification } from '@/hooks/use-gamification';
 
 interface Devotional {
   id: string;
@@ -25,6 +26,7 @@ interface Devotional {
 
 const Devotional = () => {
   const { user } = useAuth();
+  const { awardPoints } = useGamification();
   const [devotional, setDevotional] = useState<Devotional | null>(null);
   const [completed, setCompleted] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -99,6 +101,15 @@ const Devotional = () => {
       if (error) throw error;
 
       setCompleted(true);
+
+      // Award points and check achievements
+      awardPoints({ points: 10, actionType: 'devotional' });
+
+      // Check for achievements via edge function
+      await supabase.functions.invoke('check-achievements', {
+        body: { userId: user.id, actionType: 'devotional' }
+      });
+
       toast({
         title: 'Devotional completed!',
         description: 'Keep up your daily spiritual discipline.',

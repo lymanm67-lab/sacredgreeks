@@ -20,6 +20,7 @@ import { useOnboarding } from '@/hooks/use-onboarding';
 import { MobileQRCode } from '@/components/MobileQRCode';
 import { StudyGuideWidget } from '@/components/dashboard/StudyGuideWidget';
 import { StudyRecommendations } from '@/components/StudyRecommendations';
+import { GamificationBar } from '@/components/GamificationBar';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -188,6 +189,9 @@ const Dashboard = () => {
             <HeroSection />
           </div>
 
+          {/* Gamification Bar */}
+          <GamificationBar />
+
           {/* Stats Grid */}
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             <StatsCard
@@ -287,6 +291,14 @@ const Dashboard = () => {
                 href="/service-tracker"
                 gradient="from-secondary to-accent"
                 delay="0.6s"
+              />
+              <QuickActionCard
+                title="Achievements"
+                description="View your progress and unlocked badges"
+                icon={TrendingUp}
+                href="/achievements"
+                gradient="from-accent to-warm-blue"
+                delay="0.7s"
               />
             </div>
           </div>

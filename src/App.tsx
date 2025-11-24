@@ -32,6 +32,7 @@ import BibleStudy from "./pages/BibleStudy";
 import ServiceTracker from "./pages/ServiceTracker";
 import StudyGuide from "./pages/StudyGuide";
 import Podcast from "./pages/Podcast";
+import Achievements from "./pages/Achievements";
 
 const queryClient = new QueryClient();
 
@@ -57,6 +58,14 @@ const App = () => (
               <Route path="/shared/:token" element={<SharedResult />} />
               <Route path="/study" element={<StudyGuide />} />
               <Route path="/podcast" element={<Podcast />} />
+              <Route
+                path="/achievements"
+                element={
+                  <ProtectedRoute>
+                    <Achievements />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="/guide"
                 element={

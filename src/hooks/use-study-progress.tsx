@@ -62,8 +62,27 @@ export const useStudyProgress = () => {
         if (error) throw error;
       }
     },
-    onSuccess: (_, variables) => {
+    onSuccess: async (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["study-progress"] });
+      
+      if (variables.completed) {
+        // Award points for completing study session
+        try {
+          await supabase.rpc("award_points", {
+            _user_id: user?.id,
+            _points: 15,
+            _action_type: "study",
+          });
+
+          // Check for achievements
+          await supabase.functions.invoke('check-achievements', {
+            body: { userId: user?.id, actionType: 'study' }
+          });
+        } catch (error) {
+          console.error("Error awarding points:", error);
+        }
+      }
+
       toast.success(
         variables.completed
           ? "Session marked as complete!"
