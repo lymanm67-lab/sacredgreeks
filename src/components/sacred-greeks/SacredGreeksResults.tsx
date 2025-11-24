@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { useState } from "react";
 import { SocialShareDialog } from "@/components/SocialShareDialog";
+import { AchievementBadgeDialog } from "@/components/AchievementBadgeDialog";
 
 interface SacredGreeksResultsProps {
   resultType: ResultType;
@@ -386,16 +387,16 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
 
       {/* Social Share & Private Link */}
       {!isSharedView && (
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-3 gap-4">
           {/* Social Media Share */}
           <Card>
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <Share2 className="w-5 h-5 text-sacred" />
-                Share on Social Media
+                Share on Social
               </CardTitle>
               <CardDescription>
-                Inspire your community by sharing your spiritual journey
+                Inspire your community
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -406,7 +407,33 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
                 trigger={
                   <Button className="w-full bg-sacred hover:bg-sacred/90">
                     <Share2 className="w-4 h-4 mr-2" />
-                    Share Your Journey
+                    Share Journey
+                  </Button>
+                }
+              />
+            </CardContent>
+          </Card>
+
+          {/* Achievement Badge */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Share2 className="w-5 h-5 text-sacred" />
+                Get Badge
+              </CardTitle>
+              <CardDescription>
+                Download achievement badge
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <AchievementBadgeDialog
+                type="assessment"
+                title="Sacred Greeks Assessment"
+                subtitle={`${scenario} - ${resultType}`}
+                trigger={
+                  <Button className="w-full" variant="outline">
+                    <Share2 className="w-4 h-4 mr-2" />
+                    Get Badge
                   </Button>
                 }
               />
@@ -421,7 +448,7 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
                 Share with Mentor
               </CardTitle>
               <CardDescription>
-                Generate a private link for your accountability partner
+                Private link for accountability
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -438,12 +465,12 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
                     {copied ? (
                       <>
                         <Check className="w-4 h-4 mr-2" />
-                        Link Copied!
+                        Copied!
                       </>
                     ) : (
                       <>
                         <Share2 className="w-4 h-4 mr-2" />
-                        Copy Link Again
+                        Copy Again
                       </>
                     )}
                   </Button>
@@ -454,7 +481,7 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
                   className="w-full bg-sacred hover:bg-sacred/90"
                 >
                   <Share2 className="w-4 h-4 mr-2" />
-                  Generate Share Link
+                  Generate Link
                 </Button>
               )}
             </CardContent>
