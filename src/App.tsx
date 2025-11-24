@@ -28,6 +28,7 @@ import Progress from "./pages/Progress";
 import SharedResult from "./pages/SharedResult";
 import Install from "./pages/Install";
 import BibleStudy from "./pages/BibleStudy";
+import ServiceTracker from "./pages/ServiceTracker";
 
 const queryClient = new QueryClient();
 
@@ -111,6 +112,14 @@ const App = () => (
                 element={
                   <ProtectedRoute>
                     <BibleStudy />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/service-tracker"
+                element={
+                  <ProtectedRoute>
+                    <ServiceTracker />
                   </ProtectedRoute>
                 }
               />
