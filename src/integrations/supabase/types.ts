@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      achievements: {
+        Row: {
+          achievement_key: string
+          achievement_type: string
+          created_at: string
+          description: string
+          icon: string
+          id: string
+          points_required: number
+          title: string
+        }
+        Insert: {
+          achievement_key: string
+          achievement_type: string
+          created_at?: string
+          description: string
+          icon: string
+          id?: string
+          points_required: number
+          title: string
+        }
+        Update: {
+          achievement_key?: string
+          achievement_type?: string
+          created_at?: string
+          description?: string
+          icon?: string
+          id?: string
+          points_required?: number
+          title?: string
+        }
+        Relationships: []
+      }
       assessment_submissions: {
         Row: {
           answers_json: Json
@@ -439,6 +472,62 @@ export type Database = {
         }
         Relationships: []
       }
+      user_achievements: {
+        Row: {
+          achievement_id: string
+          earned_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          achievement_id: string
+          earned_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          achievement_id?: string
+          earned_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_achievements_achievement_id_fkey"
+            columns: ["achievement_id"]
+            isOneToOne: false
+            referencedRelation: "achievements"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_gamification: {
+        Row: {
+          created_at: string
+          current_level: number
+          id: string
+          total_points: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          current_level?: number
+          id?: string
+          total_points?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          current_level?: number
+          id?: string
+          total_points?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_progress: {
         Row: {
           assessments_count: number | null
@@ -498,6 +587,11 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      award_points: {
+        Args: { _action_type: string; _points: number; _user_id: string }
+        Returns: Json
+      }
+      calculate_level: { Args: { points: number }; Returns: number }
       can_view_shared_result: {
         Args: { _share_token: string }
         Returns: boolean
