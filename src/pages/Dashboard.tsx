@@ -4,7 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar } from 'lucide-react';
+import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface DashboardStats {
@@ -148,8 +148,13 @@ const Dashboard = () => {
                 <span className="font-semibold">Sacred Greeks</span>
               </Link>
             </div>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-muted-foreground hidden md:block">{user?.email}</span>
+            <div className="flex items-center gap-2">
+              <Link to="/profile">
+                <Button variant="ghost" size="sm">
+                  <User className="w-4 h-4 mr-2" />
+                  Profile
+                </Button>
+              </Link>
               <Button variant="outline" size="sm" onClick={handleSignOut}>
                 <LogOut className="w-4 h-4 mr-2" />
                 Sign Out
@@ -223,7 +228,7 @@ const Dashboard = () => {
           </div>
 
           {/* Quick Actions */}
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-4">
             <Link to="/guide">
               <Card className="h-full hover:shadow-lg hover:border-sacred/50 transition-all cursor-pointer">
                 <CardHeader>
@@ -231,7 +236,7 @@ const Dashboard = () => {
                     <Heart className="w-6 h-6 text-sacred" />
                   </div>
                   <CardTitle>New Assessment</CardTitle>
-                  <p className="text-sm text-muted-foreground">Process a new decision or situation</p>
+                  <p className="text-sm text-muted-foreground">Process a new decision</p>
                 </CardHeader>
               </Card>
             </Link>
@@ -243,7 +248,7 @@ const Dashboard = () => {
                     <BookOpen className="w-6 h-6 text-sacred" />
                   </div>
                   <CardTitle>Daily Devotional</CardTitle>
-                  <p className="text-sm text-muted-foreground">Read today's reflection</p>
+                  <p className="text-sm text-muted-foreground">Today's reflection</p>
                 </CardHeader>
               </Card>
             </Link>
@@ -255,7 +260,19 @@ const Dashboard = () => {
                     <MessageSquare className="w-6 h-6 text-sacred" />
                   </div>
                   <CardTitle>Prayer Journal</CardTitle>
-                  <p className="text-sm text-muted-foreground">Record and track prayers</p>
+                  <p className="text-sm text-muted-foreground">Track your prayers</p>
+                </CardHeader>
+              </Card>
+            </Link>
+
+            <Link to="/bookmarks">
+              <Card className="h-full hover:shadow-lg hover:border-sacred/50 transition-all cursor-pointer">
+                <CardHeader>
+                  <div className="w-12 h-12 rounded-full bg-sacred/10 flex items-center justify-center mb-2">
+                    <Bookmark className="w-6 h-6 text-sacred" />
+                  </div>
+                  <CardTitle>Bookmarks</CardTitle>
+                  <p className="text-sm text-muted-foreground">Saved items</p>
                 </CardHeader>
               </Card>
             </Link>
