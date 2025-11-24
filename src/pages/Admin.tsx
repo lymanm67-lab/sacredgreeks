@@ -1,45 +1,55 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Home, Lock } from "lucide-react";
+import { Home } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
-const ADMIN_PASSWORD = "admin123"; // In production, use environment variable
-
 const Admin = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [password, setPassword] = useState("");
+  const { user, loading: authLoading } = useAuth();
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [checkingAdmin, setCheckingAdmin] = useState(true);
   const [submissions, setSubmissions] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
-    if (isAuthenticated) {
+    const checkAdminStatus = async () => {
+      if (!user) {
+        setCheckingAdmin(false);
+        return;
+      }
+
+      try {
+        const { data, error } = await supabase
+          .from('user_roles')
+          .select('role')
+          .eq('user_id', user.id)
+          .eq('role', 'admin')
+          .maybeSingle();
+
+        if (error) throw error;
+        setIsAdmin(!!data);
+      } catch (error) {
+        console.error('Error checking admin status:', error);
+        setIsAdmin(false);
+      } finally {
+        setCheckingAdmin(false);
+      }
+    };
+
+    checkAdminStatus();
+  }, [user]);
+
+  useEffect(() => {
+    if (isAdmin) {
       loadSubmissions();
     }
-  }, [isAuthenticated]);
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (password === ADMIN_PASSWORD) {
-      setIsAuthenticated(true);
-      toast({
-        title: "Access granted",
-        description: "Welcome to the admin dashboard",
-      });
-    } else {
-      toast({
-        title: "Access denied",
-        description: "Incorrect password",
-        variant: "destructive",
-      });
-    }
-  };
+  }, [isAdmin]);
 
   const loadSubmissions = async () => {
     setLoading(true);
@@ -65,37 +75,19 @@ const Admin = () => {
     }
   };
 
-  if (!isAuthenticated) {
+  if (authLoading || checkingAdmin) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <Card className="w-full max-w-md">
-          <CardHeader>
-            <div className="flex items-center gap-3 mb-2">
-              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                <Lock className="w-6 h-6 text-primary" />
-              </div>
-              <CardTitle>Admin Access</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div className="space-y-2">
-                <Input
-                  type="password"
-                  placeholder="Enter admin password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-              <Button type="submit" className="w-full">
-                Login
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="w-16 h-16 border-4 border-sacred border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="text-muted-foreground">Checking permissions...</p>
+        </div>
       </div>
     );
+  }
+
+  if (!user || !isAdmin) {
+    return <Navigate to="/auth" replace />;
   }
 
   return (
@@ -108,9 +100,11 @@ const Admin = () => {
               <span className="text-sm font-medium">Home</span>
             </Link>
             <h1 className="text-lg font-semibold text-foreground">Sacred Greeks Admin</h1>
-            <Button variant="outline" size="sm" onClick={() => setIsAuthenticated(false)}>
-              Logout
-            </Button>
+            <Link to="/dashboard">
+              <Button variant="outline" size="sm">
+                Dashboard
+              </Button>
+            </Link>
           </div>
         </div>
       </header>
