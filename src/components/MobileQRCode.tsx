@@ -1,9 +1,9 @@
-import { useState } from 'react';
 import QRCode from 'react-qr-code';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Smartphone, X } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Smartphone, ArrowRight } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
+import { Link } from 'react-router-dom';
 
 export function MobileQRCode() {
   const appUrl = window.location.origin;
@@ -37,6 +37,14 @@ export function MobileQRCode() {
             </p>
           </div>
         </div>
+        <DialogFooter className="sm:justify-center">
+          <Link to="/install">
+            <Button variant="outline" className="gap-2">
+              View Full Instructions
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+          </Link>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
