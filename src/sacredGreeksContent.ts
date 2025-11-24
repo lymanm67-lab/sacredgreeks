@@ -1252,6 +1252,34 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
     ]
   },
   {
+    id: "fashion-cosmetics",
+    title: "Fashion & Cosmetics",
+    description: "Beauty practices and fashion with Egyptian origins and deity connections",
+    items: [
+      {
+        id: "eye-makeup",
+        title: "Eyeliner & Eye Makeup",
+        origin: "Ancient Egyptians created kohl eyeliner to honor and invoke the protection of the Eye of Horus (Wadjet) and the Eye of Ra. The almond-shaped eye design was meant to channel the power of these solar deities. The goddess Iris was also associated with eye beauty and the rainbow, connecting vision to divine favor.",
+        today: "Christians wear eyeliner, mascara, and eyeshadow daily. Makeup tutorials and beauty brands celebrate 'Egyptian eye' looks. False eyelashes and dramatic eye makeup are standard in church services, weddings, and everyday life.",
+        reflection: "If we can enhance our eyes with makeup techniques rooted in Egyptian deity worship—literally drawing symbols meant to invoke Horus and Ra—why are Greek letters problematic? Both have ancient religious origins but modern secular use."
+      },
+      {
+        id: "eyeshadow",
+        title: "Eyeshadow & Eye Color",
+        origin: "Egyptians used green eyeshadow (malachite) to represent fertility and rebirth, associated with Horus and Osiris. Blue eyeshadow (lapis lazuli) symbolized the heavens and was connected to Ra and Nut, the sky goddess. Eye makeup was spiritual armor and a way to become 'god-like.'",
+        today: "Modern cosmetic companies sell eyeshadow palettes in these same colors. Christians apply them for beauty without any thought of Egyptian gods or spiritual transformation rituals.",
+        reflection: "Eyeshadow colors were literally chosen to embody specific Egyptian deities and spiritual powers. Yet no one suggests makeup is demonic. Context changed; so can Greek letters."
+      },
+      {
+        id: "wigs",
+        title: "Wigs & Hair Extensions",
+        origin: "Ancient Egyptians wore elaborate wigs as status symbols and religious expressions. The wigs represented the Nile River's life-giving flow—straight, dark hair symbolized the river itself. High priests and pharaohs wore wigs in temple ceremonies to embody divine authority and connection to the gods.",
+        today: "Christians—especially in Black churches—embrace wigs, weaves, and hair extensions as expressions of beauty and style. Pastors preach in them, choir members sing in them, and church fashion celebrates them.",
+        reflection: "If wigs that literally symbolized the Nile River and priestly connection to Egyptian gods can be worn in church without spiritual concern, why are Greek organizations—also using symbols in new contexts—treated as dangerous?"
+      }
+    ]
+  },
+  {
     id: "oaths-allegiances",
     title: "Oaths & Allegiances",
     description: "Ceremonial pledges and vows with ancient origins",
