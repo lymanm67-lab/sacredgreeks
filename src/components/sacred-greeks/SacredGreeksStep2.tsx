@@ -108,7 +108,13 @@ export function SacredGreeksStep2({ scenario, onComplete, onBack }: SacredGreeks
               id="situation"
               value={formData.situation}
               onChange={(e) => setFormData({ ...formData, situation: e.target.value })}
-              placeholder="Share your current situation..."
+              placeholder={
+                scenario === "clip"
+                  ? "Example: I watched a sermon that said all BGLOs are demonic and now I'm questioning everything about my membership."
+                  : scenario === "pressure"
+                  ? "Example: My pastor told me I need to publicly denounce my letters or I'm not truly saved."
+                  : "Example: I want to host a Bible study for believers in my chapter but I'm worried about mixing faith and Greek life."
+              }
               rows={3}
               required
             />
