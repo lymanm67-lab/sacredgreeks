@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Home, User } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
+import { NotificationSettings } from '@/components/NotificationSettings';
 
 const profileSchema = z.object({
   full_name: z.string().min(1, 'Name is required').max(100, 'Name must be less than 100 characters'),
@@ -170,6 +171,8 @@ const Profile = () => {
               </form>
             </CardContent>
           </Card>
+
+          <NotificationSettings />
 
           <Card>
             <CardHeader>
