@@ -4,7 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark } from 'lucide-react';
+import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark, Book } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { HeroSection } from '@/components/dashboard/HeroSection';
 import { WelcomeVideo } from '@/components/dashboard/WelcomeVideo';
@@ -253,12 +253,20 @@ const Dashboard = () => {
                 delay="0.3s"
               />
               <QuickActionCard
+                title="Bible Study"
+                description="Search Scripture and explore reading plans"
+                icon={Book}
+                href="/bible-study"
+                gradient="from-accent to-sacred"
+                delay="0.4s"
+              />
+              <QuickActionCard
                 title="Bookmarks"
                 description="Access your saved resources"
                 icon={Bookmark}
                 href="/bookmarks"
                 gradient="from-warm-blue to-status-low"
-                delay="0.4s"
+                delay="0.5s"
               />
             </div>
           </div>

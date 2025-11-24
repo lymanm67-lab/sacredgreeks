@@ -27,6 +27,7 @@ import NotFound from "./pages/NotFound";
 import Progress from "./pages/Progress";
 import SharedResult from "./pages/SharedResult";
 import Install from "./pages/Install";
+import BibleStudy from "./pages/BibleStudy";
 
 const queryClient = new QueryClient();
 
@@ -102,6 +103,14 @@ const App = () => (
                 element={
                   <ProtectedRoute>
                     <Bookmarks />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/bible-study"
+                element={
+                  <ProtectedRoute>
+                    <BibleStudy />
                   </ProtectedRoute>
                 }
               />
