@@ -10,6 +10,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { CookieConsent } from "@/components/CookieConsent";
 import { AnalyticsProvider } from "@/components/AnalyticsProvider";
+import { AIAssistantWidget } from "@/components/AIAssistantWidget";
 import Index from "./pages/Index";
 import Privacy from "./pages/Privacy";
 import Auth from "./pages/Auth";
@@ -42,6 +43,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <InstallPrompt />
+          <AIAssistantWidget />
           <BrowserRouter>
             <CookieConsent />
             <AnalyticsProvider>
