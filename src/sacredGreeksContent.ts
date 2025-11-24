@@ -970,6 +970,13 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
     id: "calendar-holidays",
     title: "Calendar & Holidays",
     description: "Times and seasons we observe with clear pagan origins",
+    videos: [
+      {
+        title: "From Pagan feasts to Holidays",
+        url: "https://youtu.be/ZJ-sDBR2mCU",
+        description: "Tracing the journey from ancient pagan celebrations to modern holiday traditions"
+      }
+    ],
     items: [
       {
         id: "days-of-week",
