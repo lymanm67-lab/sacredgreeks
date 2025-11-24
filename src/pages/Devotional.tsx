@@ -8,6 +8,7 @@ import { Home, BookOpen, Check, FileText } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { SocialShareDialog } from '@/components/SocialShareDialog';
 
 interface Devotional {
   id: string;
@@ -282,9 +283,9 @@ const Devotional = () => {
             </Card>
           )}
 
-          {/* Complete Button */}
+          {/* Actions Row */}
           {user && (
-            <div className="flex justify-center pt-4">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
               <Button
                 onClick={markComplete}
                 disabled={completed}
@@ -300,6 +301,19 @@ const Devotional = () => {
                   'Mark as Complete'
                 )}
               </Button>
+              
+              {completed && devotional && (
+                <SocialShareDialog
+                  title={`Today's Devotional: ${devotional.title}`}
+                  description={`Just completed today's devotional on ${devotional.proof_focus}. Growing in faith daily! 📖✨`}
+                  hashtags={["SacredGreeks", "Devotional", "Faith", "DailyBread"]}
+                  trigger={
+                    <Button variant="outline" size="lg">
+                      Share Devotional
+                    </Button>
+                  }
+                />
+              )}
             </div>
           )}
         </div>
