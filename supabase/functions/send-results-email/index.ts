@@ -41,7 +41,24 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Verify JWT token is present (verify_jwt=true handles validation)
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: 'Authorization required' }),
+        { status: 401, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
     const { email, resultType, scenario, content }: EmailRequest = await req.json();
+    
+    // Validate required fields
+    if (!email || !resultType || !scenario || !content) {
+      return new Response(
+        JSON.stringify({ error: 'Missing required fields' }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
 
     // Build the email HTML
     const scriptureToolkitHtml = content.scriptureToolkit

@@ -414,6 +414,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_view_shared_result: {
+        Args: { _share_token: string }
+        Returns: boolean
+      }
       cleanup_old_rate_limits: { Args: never; Returns: undefined }
       has_role: {
         Args: {
