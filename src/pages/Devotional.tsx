@@ -1,0 +1,236 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Home, BookOpen, Check } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+
+interface Devotional {
+  id: string;
+  date: string;
+  title: string;
+  scripture_ref: string;
+  scripture_text: string;
+  reflection: string;
+  proof_focus: string;
+  application: string;
+  prayer: string;
+}
+
+const Devotional = () => {
+  const { user } = useAuth();
+  const [devotional, setDevotional] = useState<Devotional | null>(null);
+  const [completed, setCompleted] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    loadDevotional();
+  }, []);
+
+  const loadDevotional = async () => {
+    try {
+      const today = new Date().toISOString().split('T')[0];
+      
+      const { data, error } = await supabase
+        .from('daily_devotionals')
+        .select('*')
+        .eq('date', today)
+        .maybeSingle();
+
+      if (error) throw error;
+      
+      if (data) {
+        setDevotional(data);
+      }
+
+      // Check if user completed today's devotional
+      if (user) {
+        const { data: progressData } = await supabase
+          .from('user_progress')
+          .select('devotional_completed')
+          .eq('user_id', user.id)
+          .eq('date', today)
+          .maybeSingle();
+
+        if (progressData?.devotional_completed) {
+          setCompleted(true);
+        }
+      }
+    } catch (error) {
+      console.error('Error loading devotional:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to load today\'s devotional',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const markComplete = async () => {
+    if (!user) return;
+
+    try {
+      const today = new Date().toISOString().split('T')[0];
+      
+      const { error } = await supabase
+        .from('user_progress')
+        .upsert({
+          user_id: user.id,
+          date: today,
+          devotional_completed: true,
+        }, {
+          onConflict: 'user_id,date'
+        });
+
+      if (error) throw error;
+
+      setCompleted(true);
+      toast({
+        title: 'Devotional completed!',
+        description: 'Keep up your daily spiritual discipline.',
+      });
+    } catch (error) {
+      console.error('Error marking complete:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to mark devotional as complete',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="w-16 h-16 border-4 border-sacred border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="text-muted-foreground">Loading devotional...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!devotional) {
+    return (
+      <div className="min-h-screen bg-background">
+        <header className="border-b border-border bg-card">
+          <div className="container mx-auto px-4 py-4">
+            <Link to="/dashboard" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
+              <Home className="w-4 h-4" />
+              <span className="text-sm font-medium">Dashboard</span>
+            </Link>
+          </div>
+        </header>
+        <div className="container mx-auto px-4 py-16 text-center">
+          <BookOpen className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
+          <h1 className="text-2xl font-bold mb-2">No Devotional Today</h1>
+          <p className="text-muted-foreground">Check back tomorrow for a new reflection</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      <header className="border-b border-border bg-card">
+        <div className="container mx-auto px-4 py-4">
+          <Link to="/dashboard" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
+            <Home className="w-4 h-4" />
+            <span className="text-sm font-medium">Dashboard</span>
+          </Link>
+        </div>
+      </header>
+
+      <main className="container mx-auto px-4 py-8">
+        <div className="max-w-3xl mx-auto space-y-6">
+          {/* Header */}
+          <div className="text-center space-y-2">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sacred/10 mb-4">
+              <BookOpen className="w-8 h-8 text-sacred" />
+            </div>
+            <p className="text-sm text-muted-foreground">
+              {new Date(devotional.date).toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}
+            </p>
+            <h1 className="text-4xl font-bold">{devotional.title}</h1>
+            <p className="text-xl text-sacred font-medium">
+              P.R.O.O.F. Focus: {devotional.proof_focus}
+            </p>
+          </div>
+
+          {/* Scripture */}
+          <Card className="border-2 border-sacred/20">
+            <CardHeader>
+              <CardTitle className="text-lg">{devotional.scripture_ref}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-lg leading-relaxed italic">{devotional.scripture_text}</p>
+            </CardContent>
+          </Card>
+
+          {/* Reflection */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Reflection</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="leading-relaxed">{devotional.reflection}</p>
+            </CardContent>
+          </Card>
+
+          {/* Application */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Today's Application</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="leading-relaxed">{devotional.application}</p>
+            </CardContent>
+          </Card>
+
+          {/* Prayer */}
+          <Card className="bg-sacred/5 border-sacred/20">
+            <CardHeader>
+              <CardTitle>Prayer</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="leading-relaxed italic">{devotional.prayer}</p>
+            </CardContent>
+          </Card>
+
+          {/* Complete Button */}
+          {user && (
+            <div className="flex justify-center pt-4">
+              <Button
+                onClick={markComplete}
+                disabled={completed}
+                className="bg-sacred hover:bg-sacred/90"
+                size="lg"
+              >
+                {completed ? (
+                  <>
+                    <Check className="w-5 h-5 mr-2" />
+                    Completed
+                  </>
+                ) : (
+                  'Mark as Complete'
+                )}
+              </Button>
+            </div>
+          )}
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default Devotional;

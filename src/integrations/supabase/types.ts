@@ -26,6 +26,7 @@ export type Database = {
           scores_json: Json
           track: string
           updated_at: string
+          user_id: string | null
         }
         Insert: {
           answers_json?: Json
@@ -38,6 +39,7 @@ export type Database = {
           scores_json?: Json
           track: string
           updated_at?: string
+          user_id?: string | null
         }
         Update: {
           answers_json?: Json
@@ -50,6 +52,163 @@ export type Database = {
           scores_json?: Json
           track?: string
           updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      bookmarks: {
+        Row: {
+          bookmark_type: string
+          content_json: Json
+          created_at: string | null
+          id: string
+          notes: string | null
+          user_id: string
+        }
+        Insert: {
+          bookmark_type: string
+          content_json: Json
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          user_id: string
+        }
+        Update: {
+          bookmark_type?: string
+          content_json?: Json
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      daily_devotionals: {
+        Row: {
+          application: string
+          created_at: string | null
+          date: string
+          id: string
+          prayer: string
+          proof_focus: string
+          reflection: string
+          scripture_ref: string
+          scripture_text: string
+          title: string
+        }
+        Insert: {
+          application: string
+          created_at?: string | null
+          date: string
+          id?: string
+          prayer: string
+          proof_focus: string
+          reflection: string
+          scripture_ref: string
+          scripture_text: string
+          title: string
+        }
+        Update: {
+          application?: string
+          created_at?: string | null
+          date?: string
+          id?: string
+          prayer?: string
+          proof_focus?: string
+          reflection?: string
+          scripture_ref?: string
+          scripture_text?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      prayer_journal: {
+        Row: {
+          answered: boolean | null
+          answered_at: string | null
+          content: string | null
+          created_at: string | null
+          id: string
+          prayer_type: string | null
+          title: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          answered?: boolean | null
+          answered_at?: string | null
+          content?: string | null
+          created_at?: string | null
+          id?: string
+          prayer_type?: string | null
+          title: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          answered?: boolean | null
+          answered_at?: string | null
+          content?: string | null
+          created_at?: string | null
+          id?: string
+          prayer_type?: string | null
+          title?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string | null
+          email: string | null
+          full_name: string | null
+          id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email?: string | null
+          full_name?: string | null
+          id: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      user_progress: {
+        Row: {
+          assessments_count: number | null
+          created_at: string | null
+          date: string
+          devotional_completed: boolean | null
+          id: string
+          journal_entries_count: number | null
+          user_id: string
+        }
+        Insert: {
+          assessments_count?: number | null
+          created_at?: string | null
+          date: string
+          devotional_completed?: boolean | null
+          id?: string
+          journal_entries_count?: number | null
+          user_id: string
+        }
+        Update: {
+          assessments_count?: number | null
+          created_at?: string | null
+          date?: string
+          devotional_completed?: boolean | null
+          id?: string
+          journal_entries_count?: number | null
+          user_id?: string
         }
         Relationships: []
       }
