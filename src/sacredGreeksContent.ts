@@ -942,13 +942,6 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
     id: "medicine-pharmacy",
     title: "Medicine & Pharmacy",
     description: "Modern healthcare practices rooted in Greek mythology and pagan symbolism",
-    videos: [
-      {
-        title: "Medical Symbols and Their Pagan Origins",
-        url: "https://youtu.be/QsvD9LDmUEU",
-        description: "Educational video exploring how modern medicine uses symbols from Greek mythology"
-      }
-    ],
     items: [
       {
         id: "caduceus",
