@@ -1,4 +1,3 @@
-import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -35,7 +34,8 @@ const App = () => (
       <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
         <AuthProvider>
           <TooltipProvider>
-            <Toaster />
+            {/* Shadcn Toaster temporarily disabled to avoid hook issues */}
+            {/* <Toaster /> */}
             <Sonner />
             <InstallPrompt />
             <BrowserRouter>
