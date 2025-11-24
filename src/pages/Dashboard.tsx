@@ -14,6 +14,7 @@ import { VideoSection } from '@/components/dashboard/VideoSection';
 import { CommunityServiceChecklist } from '@/components/dashboard/CommunityServiceChecklist';
 import { ChapterMeetingNotes } from '@/components/dashboard/ChapterMeetingNotes';
 import { ResourcesSection } from '@/components/dashboard/ResourcesSection';
+import { ChapterResourcesSection } from '@/components/dashboard/ChapterResourcesSection';
 import { Onboarding } from '@/components/Onboarding';
 import { useOnboarding } from '@/hooks/use-onboarding';
 
@@ -283,6 +284,11 @@ const Dashboard = () => {
           {/* Essential Resources */}
           <div className="animate-fade-in" style={{ animationDelay: '0.5s' }}>
             <ResourcesSection />
+          </div>
+
+          {/* Chapter Resources */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.55s' }}>
+            <ChapterResourcesSection />
           </div>
 
           {/* Videos Section */}
