@@ -939,30 +939,78 @@ export const studyGuideSessions: StudySession[] = [
 
 export const didYouKnowCategories: DidYouKnowCategory[] = [
   {
-    id: "medicine-pharmacy",
-    title: "Medicine & Pharmacy",
-    description: "Modern healthcare practices rooted in Greek mythology and pagan symbolism",
+    id: "american-traditions",
+    title: "American Traditions",
+    description: "Everyday American customs and celebrations with surprising origins",
+    videos: [
+      {
+        title: "Story of Birthday Cakes",
+        url: "https://youtu.be/rr639o9Gev0",
+        description: "The ancient pagan origins of birthday celebrations and cake traditions"
+      },
+      {
+        title: "The Circle of Promise: Origins of the Wedding Ring",
+        url: "https://youtu.be/CN11FQ7tanU",
+        description: "Exploring the pagan origins of wedding rings and how Christians embrace this tradition"
+      },
+      {
+        title: "The Strange Secrets Behind Old Wedding Traditions",
+        url: "https://youtu.be/9qLofoqskHk",
+        description: "Uncovering the surprising pagan and cultural origins of modern wedding customs"
+      },
+      {
+        title: "Baby Podcast Reveals Family Secrets! | Fraternities, Greek Gods & Birthday Candles",
+        url: "https://youtu.be/031_jOt2Vmw",
+        description: "Exploring the hidden connections between everyday traditions, Greek mythology, and fraternities"
+      },
+      {
+        title: "From Pagan feasts to Holidays",
+        url: "https://youtu.be/ZJ-sDBR2mCU",
+        description: "Tracing the journey from ancient pagan celebrations to modern holiday traditions"
+      }
+    ],
     items: [
       {
-        id: "caduceus",
-        title: "The Caduceus Medical Symbol",
-        origin: "The caduceus (staff with two snakes) is the symbol of Hermes, Greek god of commerce and thieves. The similar Rod of Asclepius (one snake) represents Asclepius, Greek god of healing. Both are pagan religious symbols still used in modern medicine.",
-        today: "Major medical organizations, hospitals, pharmacies, and healthcare institutions worldwide use these symbols. The American Medical Association, U.S. military medical corps, and countless healthcare brands display them prominently.",
-        reflection: "If Christians can work in hospitals displaying pagan god symbols, prescribe medications from pharmacies with Greek god imagery, and attend medical schools using these emblems, why is wearing Greek letters different?"
+        id: "birthday-celebrations",
+        title: "Birthday Celebrations",
+        origin: "Birthday celebrations originated in ancient pagan cultures. Greeks offered moon-shaped cakes to Artemis, and Romans celebrated birthdays with candles believing smoke carried prayers to the gods.",
+        today: "Christians celebrate birthdays with cakes, candles, and parties. Churches host birthday celebrations and pastors pray for birthday blessings without concern for pagan origins.",
+        reflection: "If birthday traditions rooted in pagan moon goddess worship are acceptable for Christian celebration, why are Greek organizations with historical references held to a different standard?"
+      }
+    ]
+  },
+  {
+    id: "architecture-symbols",
+    title: "Architecture & Church Symbols",
+    description: "Building designs and imagery with pagan heritage",
+    videos: [
+      {
+        title: "Pagan Architecture in Churches",
+        url: "https://youtu.be/G14XXWLKq5Q",
+        description: "How Greek and Roman temple designs became standard for Christian buildings"
+      }
+    ],
+    items: [
+      {
+        id: "greek-columns",
+        title: "Greek & Roman Architecture",
+        origin: "Columns, domes, and classical architecture were designed for pagan temples dedicated to Zeus, Jupiter, Athena, and other gods. These styles emerged from idol worship contexts.",
+        today: "Countless church buildings use Greek columns, Roman domes, and classical architecture. The U.S. Supreme Court, Capitol Building, and many churches feature these 'pagan temple' designs.",
+        reflection: "If building style with pagan origins is acceptable for churches and government, why are Greek letters—also historical references—considered uniquely problematic?"
       },
       {
-        id: "pharmacy-bowl",
-        title: "Bowl of Hygieia",
-        origin: "Hygieia was the Greek goddess of health and cleanliness, daughter of Asclepius. The Bowl of Hygieia (snake wrapped around a chalice) is her symbol and represents pharmaceutical practice.",
-        today: "The American Pharmacists Association and pharmacy schools worldwide use this as their official symbol. It appears on pharmacy signs, diplomas, and professional materials.",
-        reflection: "Christians trust pharmacists who operate under a goddess symbol. They take medications from buildings marked with pagan imagery. Yet BGLOs face scrutiny for far less obvious mythological connections."
+        id: "steeples",
+        title: "Church Steeples",
+        origin: "Scholars trace steeples to ancient obelisks used in sun worship and fertility cults. The spire pointing to the sky has roots in pagan symbolism for connecting earth and heavens.",
+        today: "Most traditional churches have steeples. They're seen as Christian symbols pointing to God, despite questionable origins.",
+        reflection: "Intent and current use transformed pagan architectural elements into Christian symbols. Why isn't the same grace given to those who wear letters with service and community in mind?"
       },
       {
-        id: "hippocratic-oath",
-        title: "The Hippocratic Oath",
-        origin: "The original oath begins: 'I swear by Apollo the physician, and Asclepius, and Hygieia, and Panacea, and all the gods and goddesses...' It was literally a vow sworn to pagan deities.",
-        today: "Modern medical students still take versions of this oath, though the god references are usually removed. The tradition and name remain tied to its pagan origins.",
-        reflection: "Christian doctors take an oath named after pagan practices without controversy. The medical field's foundation in Greek paganism is accepted as history, not demonic. Why different standards for BGLOs?"
+        id: "wedding-rings",
+        title: "Wedding Rings",
+        origin: "Ancient Egyptians, Romans, and Greeks exchanged rings in pagan marriage ceremonies, believing circles held magical protective powers. The ring tradition predates Christianity.",
+        today: "Christian weddings universally include ring exchanges. Pastors bless them. Couples treasure them as symbols of covenant before God.",
+        reflection: "We don't reject wedding rings because pagans used them first. We understand symbols can be redeemed and repurposed. Greek letters can represent service and sisterhood/brotherhood without occult meaning."
       }
     ]
   },
@@ -1009,37 +1057,42 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
     ]
   },
   {
-    id: "architecture-symbols",
-    title: "Architecture & Church Symbols",
-    description: "Building designs and imagery with pagan heritage",
+    id: "civic-patriotic",
+    title: "Civic & Patriotic Symbols",
+    description: "Government and national imagery with pagan roots",
     videos: [
       {
-        title: "Pagan Architecture in Churches",
-        url: "https://youtu.be/G14XXWLKq5Q",
-        description: "How Greek and Roman temple designs became standard for Christian buildings"
+        title: "Pagan Symbols in American Patriotism",
+        url: "https://youtu.be/031_jOt2Vmw",
+        description: "Understanding the goddess imagery in American civic symbols"
+      },
+      {
+        title: "History of Oaths and Allegiance",
+        url: "https://youtu.be/GbaqBExsqbs",
+        description: "Exploring the ancient roots of oaths, pledges, and civic allegiance ceremonies"
       }
     ],
     items: [
       {
-        id: "greek-columns",
-        title: "Greek & Roman Architecture",
-        origin: "Columns, domes, and classical architecture were designed for pagan temples dedicated to Zeus, Jupiter, Athena, and other gods. These styles emerged from idol worship contexts.",
-        today: "Countless church buildings use Greek columns, Roman domes, and classical architecture. The U.S. Supreme Court, Capitol Building, and many churches feature these 'pagan temple' designs.",
-        reflection: "If building style with pagan origins is acceptable for churches and government, why are Greek letters—also historical references—considered uniquely problematic?"
+        id: "lady-liberty",
+        title: "Statue of Liberty",
+        origin: "Lady Liberty's design is based on Libertas, the Roman goddess of freedom. The torch, crown, and overall imagery echo pagan goddess worship.",
+        today: "Christians celebrate the Statue of Liberty as an American symbol. Churches display it in patriotic services. It's on currency and government documents.",
+        reflection: "America's most iconic symbol is literally modeled after a pagan goddess, yet Christians embrace it as representing freedom. Context and intent matter."
       },
       {
-        id: "steeples",
-        title: "Church Steeples",
-        origin: "Scholars trace steeples to ancient obelisks used in sun worship and fertility cults. The spire pointing to the sky has roots in pagan symbolism for connecting earth and heavens.",
-        today: "Most traditional churches have steeples. They're seen as Christian symbols pointing to God, despite questionable origins.",
-        reflection: "Intent and current use transformed pagan architectural elements into Christian symbols. Why isn't the same grace given to those who wear letters with service and community in mind?"
+        id: "lady-justice",
+        title: "Lady Justice",
+        origin: "The blindfolded woman with scales is Themis/Justitia, Greco-Roman goddess of justice. She appears on courthouses worldwide.",
+        today: "Christians serve as judges and lawyers under this imagery. The legal system operates with a goddess symbol, and believers participate without spiritual conflict.",
+        reflection: "If legal professionals can work under goddess imagery, using it to represent justice rather than worship, Greek organizations can use historical symbols for service."
       },
       {
-        id: "wedding-rings",
-        title: "Wedding Rings",
-        origin: "Ancient Egyptians, Romans, and Greeks exchanged rings in pagan marriage ceremonies, believing circles held magical protective powers. The ring tradition predates Christianity.",
-        today: "Christian weddings universally include ring exchanges. Pastors bless them. Couples treasure them as symbols of covenant before God.",
-        reflection: "We don't reject wedding rings because pagans used them first. We understand symbols can be redeemed and repurposed. Greek letters can represent service and sisterhood/brotherhood without occult meaning."
+        id: "olympic-torch",
+        title: "Olympic Flame",
+        origin: "The Olympic torch ceremony comes from ancient Greek Olympic games held to honor Zeus. The flame was lit on an altar to him. The modern ceremony intentionally recreates this pagan ritual.",
+        today: "Christian athletes compete in Olympics. Churches celebrate Olympic medalists. The opening ceremony literally recreates a Greek pagan religious ritual on global TV.",
+        reflection: "The Olympics are openly rooted in Greek religious practices, yet participation is celebrated. Why aren't BGLOs, with far less direct religious ties, given the same grace?"
       }
     ]
   },
@@ -1084,6 +1137,34 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
     ]
   },
   {
+    id: "fashion-cosmetics",
+    title: "Fashion & Cosmetics",
+    description: "Beauty practices and fashion with Egyptian origins and deity connections",
+    items: [
+      {
+        id: "eye-makeup",
+        title: "Eyeliner & Eye Makeup",
+        origin: "Ancient Egyptians created kohl eyeliner to honor and invoke the protection of the Eye of Horus (Wadjet) and the Eye of Ra. The almond-shaped eye design was meant to channel the power of these solar deities. The goddess Iris was also associated with eye beauty and the rainbow, connecting vision to divine favor.",
+        today: "Christians wear eyeliner, mascara, and eyeshadow daily. Makeup tutorials and beauty brands celebrate 'Egyptian eye' looks. False eyelashes and dramatic eye makeup are standard in church services, weddings, and everyday life.",
+        reflection: "If we can enhance our eyes with makeup techniques rooted in Egyptian deity worship—literally drawing symbols meant to invoke Horus and Ra—why are Greek letters problematic? Both have ancient religious origins but modern secular use."
+      },
+      {
+        id: "eyeshadow",
+        title: "Eyeshadow & Eye Color",
+        origin: "Egyptians used green eyeshadow (malachite) to represent fertility and rebirth, associated with Horus and Osiris. Blue eyeshadow (lapis lazuli) symbolized the heavens and was connected to Ra and Nut, the sky goddess. Eye makeup was spiritual armor and a way to become 'god-like.'",
+        today: "Modern cosmetic companies sell eyeshadow palettes in these same colors. Christians apply them for beauty without any thought of Egyptian gods or spiritual transformation rituals.",
+        reflection: "Eyeshadow colors were literally chosen to embody specific Egyptian deities and spiritual powers. Yet no one suggests makeup is demonic. Context changed; so can Greek letters."
+      },
+      {
+        id: "wigs",
+        title: "Wigs & Hair Extensions",
+        origin: "Ancient Egyptians wore elaborate wigs as status symbols and religious expressions. The wigs represented the Nile River's life-giving flow—straight, dark hair symbolized the river itself. High priests and pharaohs wore wigs in temple ceremonies to embody divine authority and connection to the gods.",
+        today: "Christians—especially in Black churches—embrace wigs, weaves, and hair extensions as expressions of beauty and style. Pastors preach in them, choir members sing in them, and church fashion celebrates them.",
+        reflection: "If wigs that literally symbolized the Nile River and priestly connection to Egyptian gods can be worn in church without spiritual concern, why are Greek organizations—also using symbols in new contexts—treated as dangerous?"
+      }
+    ]
+  },
+  {
     id: "language-names",
     title: "Language & Common Names",
     description: "Everyday words and names with mythological origins",
@@ -1124,83 +1205,51 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
     ]
   },
   {
-    id: "civic-patriotic",
-    title: "Civic & Patriotic Symbols",
-    description: "Government and national imagery with pagan roots",
+    id: "logos-symbols",
+    title: "Logos & Symbols",
+    description: "Corporate and brand symbols with mythological origins",
     videos: [
       {
-        title: "Pagan Symbols in American Patriotism",
-        url: "https://youtu.be/031_jOt2Vmw",
-        description: "Understanding the goddess imagery in American civic symbols"
-      },
-      {
-        title: "History of Oaths and Allegiance",
-        url: "https://youtu.be/GbaqBExsqbs",
-        description: "Exploring the ancient roots of oaths, pledges, and civic allegiance ceremonies"
+        title: "The Secret Power Behind Famous Logos!",
+        url: "https://youtu.be/QsvD9LDmUEU",
+        description: "Exploring the mythological symbols hidden in corporate logos and brand names"
       }
     ],
     items: [
       {
-        id: "lady-liberty",
-        title: "Statue of Liberty",
-        origin: "Lady Liberty's design is based on Libertas, the Roman goddess of freedom. The torch, crown, and overall imagery echo pagan goddess worship.",
-        today: "Christians celebrate the Statue of Liberty as an American symbol. Churches display it in patriotic services. It's on currency and government documents.",
-        reflection: "America's most iconic symbol is literally modeled after a pagan goddess, yet Christians embrace it as representing freedom. Context and intent matter."
-      },
-      {
-        id: "lady-justice",
-        title: "Lady Justice",
-        origin: "The blindfolded woman with scales is Themis/Justitia, Greco-Roman goddess of justice. She appears on courthouses worldwide.",
-        today: "Christians serve as judges and lawyers under this imagery. The legal system operates with a goddess symbol, and believers participate without spiritual conflict.",
-        reflection: "If legal professionals can work under goddess imagery, using it to represent justice rather than worship, Greek organizations can use historical symbols for service."
-      },
-      {
-        id: "olympic-torch",
-        title: "Olympic Flame",
-        origin: "The Olympic torch ceremony comes from ancient Greek Olympic games held to honor Zeus. The flame was lit on an altar to him. The modern ceremony intentionally recreates this pagan ritual.",
-        today: "Christian athletes compete in Olympics. Churches celebrate Olympic medalists. The opening ceremony literally recreates a Greek pagan religious ritual on global TV.",
-        reflection: "The Olympics are openly rooted in Greek religious practices, yet participation is celebrated. Why aren't BGLOs, with far less direct religious ties, given the same grace?"
+        id: "corporate-mythology",
+        title: "Mythological Brand Symbols",
+        origin: "Major corporations use mythological symbols: Nike (goddess of victory), Starbucks (Greek siren), Versace (Medusa), Amazon (warrior women), and countless others draw from pagan mythology.",
+        today: "Christians work for these companies, buy their products, and wear their logos daily. We understand these are just brand identities, not religious worship.",
+        reflection: "If we can wear Nike shoes and drink Starbucks coffee without spiritual concern despite their mythological symbols, Greek letters deserve the same contextual understanding."
       }
     ]
   },
   {
-    id: "american-traditions",
-    title: "American Traditions",
-    description: "Everyday American customs and celebrations with surprising origins",
-    videos: [
-      {
-        title: "Story of Birthday Cakes",
-        url: "https://youtu.be/rr639o9Gev0",
-        description: "The ancient pagan origins of birthday celebrations and cake traditions"
-      },
-      {
-        title: "The Circle of Promise: Origins of the Wedding Ring",
-        url: "https://youtu.be/CN11FQ7tanU",
-        description: "Exploring the pagan origins of wedding rings and how Christians embrace this tradition"
-      },
-      {
-        title: "The Strange Secrets Behind Old Wedding Traditions",
-        url: "https://youtu.be/9qLofoqskHk",
-        description: "Uncovering the surprising pagan and cultural origins of modern wedding customs"
-      },
-      {
-        title: "Baby Podcast Reveals Family Secrets! | Fraternities, Greek Gods & Birthday Candles",
-        url: "https://youtu.be/031_jOt2Vmw",
-        description: "Exploring the hidden connections between everyday traditions, Greek mythology, and fraternities"
-      },
-      {
-        title: "From Pagan feasts to Holidays",
-        url: "https://youtu.be/ZJ-sDBR2mCU",
-        description: "Tracing the journey from ancient pagan celebrations to modern holiday traditions"
-      }
-    ],
+    id: "medicine-pharmacy",
+    title: "Medicine & Pharmacy",
+    description: "Modern healthcare practices rooted in Greek mythology and pagan symbolism",
     items: [
       {
-        id: "birthday-celebrations",
-        title: "Birthday Celebrations",
-        origin: "Birthday celebrations originated in ancient pagan cultures. Greeks offered moon-shaped cakes to Artemis, and Romans celebrated birthdays with candles believing smoke carried prayers to the gods.",
-        today: "Christians celebrate birthdays with cakes, candles, and parties. Churches host birthday celebrations and pastors pray for birthday blessings without concern for pagan origins.",
-        reflection: "If birthday traditions rooted in pagan moon goddess worship are acceptable for Christian celebration, why are Greek organizations with historical references held to a different standard?"
+        id: "caduceus",
+        title: "The Caduceus Medical Symbol",
+        origin: "The caduceus (staff with two snakes) is the symbol of Hermes, Greek god of commerce and thieves. The similar Rod of Asclepius (one snake) represents Asclepius, Greek god of healing. Both are pagan religious symbols still used in modern medicine.",
+        today: "Major medical organizations, hospitals, pharmacies, and healthcare institutions worldwide use these symbols. The American Medical Association, U.S. military medical corps, and countless healthcare brands display them prominently.",
+        reflection: "If Christians can work in hospitals displaying pagan god symbols, prescribe medications from pharmacies with Greek god imagery, and attend medical schools using these emblems, why is wearing Greek letters different?"
+      },
+      {
+        id: "pharmacy-bowl",
+        title: "Bowl of Hygieia",
+        origin: "Hygieia was the Greek goddess of health and cleanliness, daughter of Asclepius. The Bowl of Hygieia (snake wrapped around a chalice) is her symbol and represents pharmaceutical practice.",
+        today: "The American Pharmacists Association and pharmacy schools worldwide use this as their official symbol. It appears on pharmacy signs, diplomas, and professional materials.",
+        reflection: "Christians trust pharmacists who operate under a goddess symbol. They take medications from buildings marked with pagan imagery. Yet BGLOs face scrutiny for far less obvious mythological connections."
+      },
+      {
+        id: "hippocratic-oath",
+        title: "The Hippocratic Oath",
+        origin: "The original oath begins: 'I swear by Apollo the physician, and Asclepius, and Hygieia, and Panacea, and all the gods and goddesses...' It was literally a vow sworn to pagan deities.",
+        today: "Modern medical students still take versions of this oath, though the god references are usually removed. The tradition and name remain tied to its pagan origins.",
+        reflection: "Christian doctors take an oath named after pagan practices without controversy. The medical field's foundation in Greek paganism is accepted as history, not demonic. Why different standards for BGLOs?"
       }
     ]
   },
@@ -1227,55 +1276,6 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
         origin: "Wreaths originated in ancient Greek and Roman cultures as symbols of victory and eternal life. They were placed on graves and used in pagan funeral rites to honor the dead and gods of the underworld.",
         today: "Christians place wreaths at funerals, cemeteries, and memorial services. Churches display them during services without concern for pagan origins.",
         reflection: "If funeral wreaths rooted in pagan death rituals can be redeemed for Christian memorial purposes, why can't Greek organization symbols be understood in their current context?"
-      }
-    ]
-  },
-  {
-    id: "logos-symbols",
-    title: "Logos & Symbols",
-    description: "Corporate and brand symbols with mythological origins",
-    videos: [
-      {
-        title: "The Secret Power Behind Famous Logos!",
-        url: "https://youtu.be/QsvD9LDmUEU",
-        description: "Exploring the mythological symbols hidden in corporate logos and brand names"
-      }
-    ],
-    items: [
-      {
-        id: "corporate-mythology",
-        title: "Mythological Brand Symbols",
-        origin: "Major corporations use mythological symbols: Nike (goddess of victory), Starbucks (Greek siren), Versace (Medusa), Amazon (warrior women), and countless others draw from pagan mythology.",
-        today: "Christians work for these companies, buy their products, and wear their logos daily. We understand these are just brand identities, not religious worship.",
-        reflection: "If we can wear Nike shoes and drink Starbucks coffee without spiritual concern despite their mythological symbols, Greek letters deserve the same contextual understanding."
-      }
-    ]
-  },
-  {
-    id: "fashion-cosmetics",
-    title: "Fashion & Cosmetics",
-    description: "Beauty practices and fashion with Egyptian origins and deity connections",
-    items: [
-      {
-        id: "eye-makeup",
-        title: "Eyeliner & Eye Makeup",
-        origin: "Ancient Egyptians created kohl eyeliner to honor and invoke the protection of the Eye of Horus (Wadjet) and the Eye of Ra. The almond-shaped eye design was meant to channel the power of these solar deities. The goddess Iris was also associated with eye beauty and the rainbow, connecting vision to divine favor.",
-        today: "Christians wear eyeliner, mascara, and eyeshadow daily. Makeup tutorials and beauty brands celebrate 'Egyptian eye' looks. False eyelashes and dramatic eye makeup are standard in church services, weddings, and everyday life.",
-        reflection: "If we can enhance our eyes with makeup techniques rooted in Egyptian deity worship—literally drawing symbols meant to invoke Horus and Ra—why are Greek letters problematic? Both have ancient religious origins but modern secular use."
-      },
-      {
-        id: "eyeshadow",
-        title: "Eyeshadow & Eye Color",
-        origin: "Egyptians used green eyeshadow (malachite) to represent fertility and rebirth, associated with Horus and Osiris. Blue eyeshadow (lapis lazuli) symbolized the heavens and was connected to Ra and Nut, the sky goddess. Eye makeup was spiritual armor and a way to become 'god-like.'",
-        today: "Modern cosmetic companies sell eyeshadow palettes in these same colors. Christians apply them for beauty without any thought of Egyptian gods or spiritual transformation rituals.",
-        reflection: "Eyeshadow colors were literally chosen to embody specific Egyptian deities and spiritual powers. Yet no one suggests makeup is demonic. Context changed; so can Greek letters."
-      },
-      {
-        id: "wigs",
-        title: "Wigs & Hair Extensions",
-        origin: "Ancient Egyptians wore elaborate wigs as status symbols and religious expressions. The wigs represented the Nile River's life-giving flow—straight, dark hair symbolized the river itself. High priests and pharaohs wore wigs in temple ceremonies to embody divine authority and connection to the gods.",
-        today: "Christians—especially in Black churches—embrace wigs, weaves, and hair extensions as expressions of beauty and style. Pastors preach in them, choir members sing in them, and church fashion celebrates them.",
-        reflection: "If wigs that literally symbolized the Nile River and priestly connection to Egyptian gods can be worn in church without spiritual concern, why are Greek organizations—also using symbols in new contexts—treated as dangerous?"
       }
     ]
   },
