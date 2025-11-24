@@ -3,21 +3,37 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { ArrowLeft, BookOpen, MessageCircle, CheckCircle, Check } from "lucide-react";
+import { ArrowLeft, BookOpen, MessageCircle, CheckCircle, Check, Edit3 } from "lucide-react";
 import { studyGuideSessions } from "@/sacredGreeksContent";
 import { useStudyProgress } from "@/hooks/use-study-progress";
 import { Progress } from "@/components/ui/progress";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
 
 const StudyGuide = () => {
   const {
     isSessionComplete,
     toggleSession,
+    saveNotes,
+    isSavingNotes,
+    getSessionNotes,
     completedCount,
     totalSessions,
     progressPercentage,
     isAuthenticated,
   } = useStudyProgress();
+
+  const [notesState, setNotesState] = useState<Record<number, string>>({});
+
+  const handleNotesChange = (sessionId: number, value: string) => {
+    setNotesState((prev) => ({ ...prev, [sessionId]: value }));
+  };
+
+  const handleSaveNotes = (sessionId: number) => {
+    const notes = notesState[sessionId] ?? getSessionNotes(sessionId);
+    saveNotes({ sessionId, notes });
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-muted/30 to-background">
@@ -185,6 +201,41 @@ const StudyGuide = () => {
                       </div>
                     </AccordionContent>
                   </AccordionItem>
+
+                  {isAuthenticated && (
+                    <AccordionItem value="notes" className="border-0">
+                      <AccordionTrigger className="text-base font-semibold hover:text-sacred">
+                        <div className="flex items-center gap-2">
+                          <Edit3 className="w-4 h-4" />
+                          Personal Notes & Reflections
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="space-y-4">
+                          <p className="text-sm text-muted-foreground">
+                            Write your personal thoughts, insights, and reflections from this session. Your notes are private and saved automatically.
+                          </p>
+                          <Textarea
+                            placeholder="Share your reflections, questions, or key takeaways from this session..."
+                            className="min-h-[200px] resize-none"
+                            value={
+                              notesState[session.id] !== undefined
+                                ? notesState[session.id]
+                                : getSessionNotes(session.id)
+                            }
+                            onChange={(e) => handleNotesChange(session.id, e.target.value)}
+                          />
+                          <Button
+                            onClick={() => handleSaveNotes(session.id)}
+                            disabled={isSavingNotes}
+                            className="bg-sacred hover:bg-sacred/90 text-sacred-foreground"
+                          >
+                            {isSavingNotes ? "Saving..." : "Save Notes"}
+                          </Button>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  )}
                 </Accordion>
 
                 <div className="mt-6 pt-6 border-t border-border">
