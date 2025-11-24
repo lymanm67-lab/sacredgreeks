@@ -8,7 +8,9 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { InstallPrompt } from "@/components/InstallPrompt";
+import { CookieConsent } from "@/components/CookieConsent";
 import Index from "./pages/Index";
+import Privacy from "./pages/Privacy";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import Devotional from "./pages/Devotional";
@@ -32,12 +34,14 @@ const App = () => (
           <Toaster />
           <Sonner />
           <InstallPrompt />
+          <CookieConsent />
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/faq" element={<FAQ />} />
+              <Route path="/privacy" element={<Privacy />} />
               <Route
                 path="/guide"
                 element={
