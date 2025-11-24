@@ -5,19 +5,25 @@ Sacred Greeks now supports background audio playback, allowing devotionals and o
 
 ## Features
 
-### 1. Media Session API Integration
+### 1. In-App Audio Controls
+- **Play Button**: Start audio playback (speaker icon)
+- **Pause Button**: Pause current audio without losing position
+- **Resume Button**: Continue from where you paused (play icon)
+- **Stop Button**: Completely stop and reset audio (square icon)
+
+### 2. Media Session API Integration
 - **Lock Screen Controls**: Play, pause, and stop controls appear on the device lock screen
 - **Notification Controls**: Media controls in the notification shade (Android) or Control Center (iOS)
 - **Metadata Display**: Shows title, artist (Sacred Greeks), and app icon during playback
 
-### 2. Supported Actions
-- **Play/Pause**: Control playback from lock screen or notification
-- **Stop**: Completely stop audio playback
+### 3. Supported Actions
+- **Play/Pause**: Control playback from lock screen, notification, or in-app
+- **Stop**: Completely stop audio playback and reset position
 - **Seek Forward**: Skip ahead 10 seconds
 - **Seek Backward**: Go back 10 seconds
 - **Position Tracking**: Shows current position and duration in media controls
 
-### 3. Device Compatibility
+### 4. Device Compatibility
 - **iOS**: Full support with Control Center integration
 - **Android**: Full support with notification controls
 - **Progressive Web App (PWA)**: Works when installed to home screen
@@ -27,9 +33,11 @@ Sacred Greeks now supports background audio playback, allowing devotionals and o
 
 ### For Users
 1. **Start Audio**: Tap the speaker icon on any content (devotionals, Did You Know items, etc.)
-2. **Minimize App**: Press home button or switch to another app
-3. **Control Playback**: Use lock screen or notification controls to manage playback
-4. **Resume**: Open the app again to see current playback status
+2. **Pause/Resume**: When audio is playing, tap the pause button to pause, or play button to resume
+3. **Stop Audio**: Tap the stop (square) button to completely stop and reset playback
+4. **Minimize App**: Press home button or switch to another app - audio continues playing
+5. **Control Playback**: Use lock screen or notification controls to manage playback
+6. **Resume**: Open the app again to see current playback status and use in-app controls
 
 ### For Developers
 The `useBackgroundAudio` hook handles all Media Session API integration:

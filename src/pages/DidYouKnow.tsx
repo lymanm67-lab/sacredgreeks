@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ChevronDown, ChevronUp, Volume2, VolumeX, Loader2 } from "lucide-react";
+import { ArrowLeft, ChevronDown, ChevronUp, Volume2, Pause, Play, Square, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -12,7 +12,7 @@ const DidYouKnow = () => {
   const [openCategories, setOpenCategories] = useState<Set<string>>(new Set());
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());
   const [selectedVoice, setSelectedVoice] = useState<VoiceOption>("alloy");
-  const { speak, isPlaying, isLoading } = useTextToSpeech();
+  const { speak, pause, resume, stop, isPlaying, isPaused, isLoading } = useTextToSpeech();
 
   const toggleCategory = (categoryId: string) => {
     setOpenCategories((prev) => {
@@ -174,25 +174,61 @@ const DidYouKnow = () => {
                                   <CardTitle className="text-base text-left flex-1">
                                     {item.title}
                                   </CardTitle>
-                                  <div className="flex items-center gap-2 flex-shrink-0">
-                                    <Button
-                                      size="sm"
-                                      variant="ghost"
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleListen(item);
-                                      }}
-                                      disabled={isLoading === item.id}
-                                      className="h-8 w-8 p-0"
-                                    >
-                                      {isLoading === item.id ? (
-                                        <Loader2 className="h-4 w-4 animate-spin" />
-                                      ) : isPlaying === item.id ? (
-                                        <VolumeX className="h-4 w-4" />
-                                      ) : (
-                                        <Volume2 className="h-4 w-4" />
-                                      )}
-                                    </Button>
+                                  <div className="flex items-center gap-1 flex-shrink-0">
+                                    {isPlaying === item.id && !isLoading ? (
+                                      <>
+                                        <Button
+                                          size="sm"
+                                          variant="ghost"
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            if (isPaused) {
+                                              resume();
+                                            } else {
+                                              pause();
+                                            }
+                                          }}
+                                          className="h-8 w-8 p-0"
+                                          title={isPaused ? "Resume" : "Pause"}
+                                        >
+                                          {isPaused ? (
+                                            <Play className="h-4 w-4" />
+                                          ) : (
+                                            <Pause className="h-4 w-4" />
+                                          )}
+                                        </Button>
+                                        <Button
+                                          size="sm"
+                                          variant="ghost"
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            stop();
+                                          }}
+                                          className="h-8 w-8 p-0"
+                                          title="Stop"
+                                        >
+                                          <Square className="h-4 w-4" />
+                                        </Button>
+                                      </>
+                                    ) : (
+                                      <Button
+                                        size="sm"
+                                        variant="ghost"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          handleListen(item);
+                                        }}
+                                        disabled={isLoading === item.id}
+                                        className="h-8 w-8 p-0"
+                                        title="Play"
+                                      >
+                                        {isLoading === item.id ? (
+                                          <Loader2 className="h-4 w-4 animate-spin" />
+                                        ) : (
+                                          <Volume2 className="h-4 w-4" />
+                                        )}
+                                      </Button>
+                                    )}
                                     {openItems.has(item.id) ? (
                                       <ChevronUp className="h-4 w-4 text-muted-foreground" />
                                     ) : (
