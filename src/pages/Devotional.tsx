@@ -4,8 +4,10 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Home, BookOpen, Check } from 'lucide-react';
+import { Home, BookOpen, Check, FileText } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
 
 interface Devotional {
   id: string;
@@ -24,6 +26,8 @@ const Devotional = () => {
   const [devotional, setDevotional] = useState<Devotional | null>(null);
   const [completed, setCompleted] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [notes, setNotes] = useState('');
+  const [savingNotes, setSavingNotes] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -50,13 +54,16 @@ const Devotional = () => {
       if (user) {
         const { data: progressData } = await supabase
           .from('user_progress')
-          .select('devotional_completed')
+          .select('devotional_completed, devotional_notes')
           .eq('user_id', user.id)
           .eq('date', today)
           .maybeSingle();
 
         if (progressData?.devotional_completed) {
           setCompleted(true);
+        }
+        if (progressData?.devotional_notes) {
+          setNotes(progressData.devotional_notes);
         }
       }
     } catch (error) {
@@ -82,6 +89,7 @@ const Devotional = () => {
           user_id: user.id,
           date: today,
           devotional_completed: true,
+          devotional_notes: notes,
         }, {
           onConflict: 'user_id,date'
         });
@@ -99,6 +107,40 @@ const Devotional = () => {
         description: 'Failed to mark devotional as complete',
         variant: 'destructive',
       });
+    }
+  };
+
+  const saveNotes = async () => {
+    if (!user) return;
+
+    setSavingNotes(true);
+    try {
+      const today = new Date().toISOString().split('T')[0];
+      
+      const { error } = await supabase
+        .from('user_progress')
+        .upsert({
+          user_id: user.id,
+          date: today,
+          devotional_notes: notes,
+        }, {
+          onConflict: 'user_id,date'
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: 'Notes saved',
+        description: 'Your reflection notes have been saved.',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to save notes',
+        variant: 'destructive',
+      });
+    } finally {
+      setSavingNotes(false);
     }
   };
 
@@ -204,6 +246,41 @@ const Devotional = () => {
               <p className="leading-relaxed italic">{devotional.prayer}</p>
             </CardContent>
           </Card>
+
+          {/* Personal Notes */}
+          {user && (
+            <Card className="border-2 border-warm-blue/20">
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-warm-blue" />
+                  <CardTitle>My Notes</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label htmlFor="devotional-notes" className="text-sm text-muted-foreground">
+                    Write your personal reflections, prayers, or insights from today&apos;s devotional
+                  </Label>
+                  <Textarea
+                    id="devotional-notes"
+                    placeholder="What is God speaking to you today? How will you apply this to your life?"
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    rows={6}
+                    className="mt-2 resize-none"
+                  />
+                </div>
+                <Button
+                  onClick={saveNotes}
+                  disabled={savingNotes}
+                  variant="outline"
+                  className="w-full sm:w-auto"
+                >
+                  {savingNotes ? 'Saving...' : 'Save Notes'}
+                </Button>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Complete Button */}
           {user && (
