@@ -80,20 +80,20 @@ export const PasswordRequirements: React.FC<PasswordRequirementsProps> = ({
               >
                 <div
                   className={cn(
-                    'w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0',
-                    isMet ? 'bg-sacred text-sacred-foreground' : 'bg-muted border border-border'
+                    'w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300',
+                    isMet ? 'bg-sacred text-sacred-foreground scale-100' : 'bg-muted border border-border scale-95'
                   )}
                 >
                   {isMet ? (
-                    <Check className="w-3 h-3" />
+                    <Check className="w-3 h-3 animate-scale-in" />
                   ) : (
                     <X className="w-3 h-3 text-muted-foreground" />
                   )}
                 </div>
                 <span
                   className={cn(
-                    'transition-colors',
-                    isMet ? 'text-foreground' : 'text-muted-foreground'
+                    'transition-all duration-300',
+                    isMet ? 'text-foreground font-medium' : 'text-muted-foreground'
                   )}
                 >
                   {req.label}
@@ -103,9 +103,9 @@ export const PasswordRequirements: React.FC<PasswordRequirementsProps> = ({
           })}
 
           {allMet && (
-            <div className="pt-2 mt-2 border-t border-border">
+            <div className="pt-2 mt-2 border-t border-border animate-fade-in">
               <p className="text-xs text-sacred font-medium flex items-center gap-2">
-                <Check className="w-4 h-4" />
+                <Check className="w-4 h-4 animate-scale-in" />
                 All requirements met!
               </p>
             </div>
