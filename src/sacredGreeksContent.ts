@@ -1165,6 +1165,11 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
         title: "Story of Birthday Cakes",
         url: "https://youtu.be/rr639o9Gev0",
         description: "The ancient pagan origins of birthday celebrations and cake traditions"
+      },
+      {
+        title: "The Circle of Promise: Origins of the Wedding Ring",
+        url: "https://youtu.be/CN11FQ7tanU",
+        description: "Exploring the pagan origins of wedding rings and how Christians embrace this tradition"
       }
     ],
     items: [
@@ -1174,6 +1179,48 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
         origin: "Birthday celebrations originated in ancient pagan cultures. Greeks offered moon-shaped cakes to Artemis, and Romans celebrated birthdays with candles believing smoke carried prayers to the gods.",
         today: "Christians celebrate birthdays with cakes, candles, and parties. Churches host birthday celebrations and pastors pray for birthday blessings without concern for pagan origins.",
         reflection: "If birthday traditions rooted in pagan moon goddess worship are acceptable for Christian celebration, why are Greek organizations with historical references held to a different standard?"
+      }
+    ]
+  },
+  {
+    id: "memorials-funerals",
+    title: "Memorials & Funerals",
+    description: "Death rituals and memorial traditions with ancient roots",
+    videos: [
+      {
+        title: "What Do Wreaths at Funerals Really Mean?",
+        url: "https://youtu.be/oN_DDjKjVCo",
+        description: "Uncovering the ancient pagan origins of funeral wreaths and memorial traditions"
+      }
+    ],
+    items: [
+      {
+        id: "funeral-wreaths",
+        title: "Funeral Wreaths",
+        origin: "Wreaths originated in ancient Greek and Roman cultures as symbols of victory and eternal life. They were placed on graves and used in pagan funeral rites to honor the dead and gods of the underworld.",
+        today: "Christians place wreaths at funerals, cemeteries, and memorial services. Churches display them during services without concern for pagan origins.",
+        reflection: "If funeral wreaths rooted in pagan death rituals can be redeemed for Christian memorial purposes, why can't Greek organization symbols be understood in their current context?"
+      }
+    ]
+  },
+  {
+    id: "logos-symbols",
+    title: "Logos & Symbols",
+    description: "Corporate and brand symbols with mythological origins",
+    videos: [
+      {
+        title: "The Secret Power Behind Famous Logos!",
+        url: "https://youtu.be/QsvD9LDmUEU",
+        description: "Exploring the mythological symbols hidden in corporate logos and brand names"
+      }
+    ],
+    items: [
+      {
+        id: "corporate-mythology",
+        title: "Mythological Brand Symbols",
+        origin: "Major corporations use mythological symbols: Nike (goddess of victory), Starbucks (Greek siren), Versace (Medusa), Amazon (warrior women), and countless others draw from pagan mythology.",
+        today: "Christians work for these companies, buy their products, and wear their logos daily. We understand these are just brand identities, not religious worship.",
+        reflection: "If we can wear Nike shoes and drink Starbucks coffee without spiritual concern despite their mythological symbols, Greek letters deserve the same contextual understanding."
       }
     ]
   },
