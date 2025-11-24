@@ -1180,6 +1180,11 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
         title: "Baby Podcast Reveals Family Secrets! | Fraternities, Greek Gods & Birthday Candles",
         url: "https://youtu.be/031_jOt2Vmw",
         description: "Exploring the hidden connections between everyday traditions, Greek mythology, and fraternities"
+      },
+      {
+        title: "From Pagan feasts to Holidays",
+        url: "https://youtu.be/ZJ-sDBR2mCU",
+        description: "Tracing the journey from ancient pagan celebrations to modern holiday traditions"
       }
     ],
     items: [
