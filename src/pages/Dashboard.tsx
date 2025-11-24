@@ -4,7 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark, Book } from 'lucide-react';
+import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark, Book, Clock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { HeroSection } from '@/components/dashboard/HeroSection';
 import { WelcomeVideo } from '@/components/dashboard/WelcomeVideo';
@@ -267,6 +267,14 @@ const Dashboard = () => {
                 href="/bookmarks"
                 gradient="from-warm-blue to-status-low"
                 delay="0.5s"
+              />
+              <QuickActionCard
+                title="Service Hours"
+                description="Track community service activities"
+                icon={Clock}
+                href="/service-tracker"
+                gradient="from-secondary to-accent"
+                delay="0.6s"
               />
             </div>
           </div>
