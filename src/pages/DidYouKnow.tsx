@@ -6,10 +6,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { didYouKnowCategories } from "@/sacredGreeksContent";
 import { useTextToSpeech } from "@/hooks/use-text-to-speech";
+import { VoiceSelector, type VoiceOption } from "@/components/VoiceSelector";
 
 const DidYouKnow = () => {
   const [openCategories, setOpenCategories] = useState<Set<string>>(new Set());
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());
+  const [selectedVoice, setSelectedVoice] = useState<VoiceOption>("alloy");
   const { speak, isPlaying, isLoading } = useTextToSpeech();
 
   const toggleCategory = (categoryId: string) => {
@@ -45,7 +47,7 @@ const DidYouKnow = () => {
     
     Reflection: ${item.reflection}`;
     
-    speak(textToSpeak, item.id);
+    speak(textToSpeak, item.id, selectedVoice);
   };
 
   return (
@@ -69,6 +71,14 @@ const DidYouKnow = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8 max-w-5xl">
+        {/* Voice Selector */}
+        <div className="mb-6">
+          <VoiceSelector 
+            onVoiceChange={setSelectedVoice} 
+            defaultVoice={selectedVoice}
+          />
+        </div>
+
         {/* Introduction */}
         <Card className="mb-8 border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-secondary/5">
           <CardHeader>
