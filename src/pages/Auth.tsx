@@ -17,6 +17,14 @@ const authSchema = z.object({
   fullName: z.string().min(1, 'Name is required').max(100, 'Name must be less than 100 characters').optional()
 });
 
+const passwordResetSchema = z.object({
+  password: z.string().min(8, 'Password must be at least 8 characters').max(100, 'Password must be less than 100 characters'),
+  confirmPassword: z.string().min(8, 'Password must be at least 8 characters').max(100, 'Password must be less than 100 characters'),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
+});
+
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchParams] = useSearchParams();
@@ -121,31 +129,33 @@ const Auth = () => {
     const password = formData.get('password') as string;
     const confirmPassword = formData.get('confirmPassword') as string;
 
-    if (password !== confirmPassword) {
-      toast({
-        title: 'Passwords do not match',
-        description: 'Please make sure both passwords are the same.',
-        variant: 'destructive',
-      });
-      setIsLoading(false);
-      return;
-    }
+    try {
+      const validated = passwordResetSchema.parse({ password, confirmPassword });
 
-    const { error } = await supabase.auth.updateUser({ password });
+      const { error } = await supabase.auth.updateUser({ password: validated.password });
 
-    if (error) {
-      toast({
-        title: 'Error updating password',
-        description: error.message,
-        variant: 'destructive',
-      });
-    } else {
-      toast({
-        title: 'Password updated!',
-        description: 'Your password has been updated successfully.',
-      });
-      setIsResetMode(false);
-      navigate('/dashboard');
+      if (error) {
+        toast({
+          title: 'Error updating password',
+          description: error.message,
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'Password updated!',
+          description: 'Your password has been updated successfully.',
+        });
+        setIsResetMode(false);
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        toast({
+          title: 'Validation Error',
+          description: error.errors[0].message,
+          variant: 'destructive',
+        });
+      }
     }
 
     setIsLoading(false);
