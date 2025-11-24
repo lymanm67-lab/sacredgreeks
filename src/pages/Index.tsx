@@ -3,7 +3,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Video, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone } from "lucide-react";
+import { Heart, Video, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
 import { MobileQRCode } from "@/components/MobileQRCode";
 import logo from "@/assets/sacred-greeks-logo.png";
@@ -15,6 +15,13 @@ const features = [
     icon: BookOpen,
     link: "/study",
     color: "text-sacred",
+  },
+  {
+    title: "Podcast",
+    description: "Listen to study guide sessions and teachings on the go with the Sacred Greeks podcast",
+    icon: Headphones,
+    link: "/podcast",
+    color: "text-purple-500",
   },
   {
     title: "Daily Devotionals",

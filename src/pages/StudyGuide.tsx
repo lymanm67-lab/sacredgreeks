@@ -287,6 +287,29 @@ const StudyGuide = () => {
         <div className="max-w-4xl mx-auto mt-12 space-y-6">
           {isAuthenticated && <StudyReminderSettings />}
           
+          {/* Podcast CTA */}
+          <Card className="bg-gradient-to-br from-sacred/5 to-sacred/10 border-sacred/20">
+            <CardHeader className="text-center space-y-4">
+              <div className="inline-flex items-center justify-center mx-auto bg-sacred/10 rounded-full p-3">
+                <MessageCircle className="w-8 h-8 text-sacred" />
+              </div>
+              <CardTitle className="text-2xl md:text-3xl">
+                Prefer to Listen?
+              </CardTitle>
+              <CardDescription className="text-base">
+                Access the Sacred Greeks podcast and listen to study guide sessions on the go.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/podcast">
+                <Button className="bg-sacred hover:bg-sacred/90 text-sacred-foreground">
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  Listen to Podcast
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+          
           <Card className="bg-gradient-to-br from-sacred/5 to-sacred/10 border-sacred/20">
             <CardHeader className="text-center space-y-4">
               <CardTitle className="text-2xl md:text-3xl">
