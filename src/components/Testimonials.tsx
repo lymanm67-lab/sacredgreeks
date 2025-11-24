@@ -4,28 +4,28 @@ import { Quote } from 'lucide-react';
 
 const testimonials = [
   {
-    name: 'M.J.',
-    org: 'Omega Psi Phi',
-    initials: 'MJ',
-    text: 'Sacred Greeks helped me process difficult conversations about faith and Greek life. The P.R.O.O.F. framework gave me biblical clarity when I needed it most.',
+    name: 'L.L.',
+    org: 'Sigma Gamma Rho Sorority, Inc.',
+    initials: 'LL',
+    text: 'This book reassures us that our membership does not make us less Christian, but can actually strengthen our witness as salt and light in spaces the church often overlooks.',
   },
   {
-    name: 'T.W.',
-    org: 'Delta Sigma Theta',
-    initials: 'TW',
-    text: 'I was torn between my faith and my letters. This guide helped me see I don\'t have to choose - I can honor both when I put Christ first.',
+    name: 'Dr. L.H.',
+    org: 'Delta Sigma Theta Sorority Inc.',
+    initials: 'LH',
+    text: 'Sacred, Not Sinful is a powerful and much-needed contribution to the ongoing dialogue about faith, culture, and Black Greek Letter Organizations. Dr. Montgomery writes with both theological depth and heartfelt conviction, offering clarity where there has often been confusion.',
   },
   {
-    name: 'D.A.',
-    org: 'Alpha Phi Alpha',
-    initials: 'DA',
-    text: 'The daily devotionals keep me grounded. It\'s refreshing to have Christian content specifically for Greek life that doesn\'t condemn but guides.',
+    name: 'A.A.',
+    org: 'Zeta Phi Beta Sorority, Inc.',
+    initials: 'AA',
+    text: 'Ignorance has had the mic too long, and this book finally cuts it off. Sacred, Not Sinful gives you receipts, clarity, and confidence to walk boldly in your calling without apology.',
   },
   {
-    name: 'J.C.',
-    org: 'Zeta Phi Beta',
-    initials: 'JC',
-    text: 'When pressure came to denounce my org, Sacred Greeks gave me a biblical framework to respond with grace and wisdom. Forever grateful!',
+    name: 'Rev. Dr. D.F.',
+    org: 'Phi Beta Sigma Fraternity, Inc.',
+    initials: 'DF',
+    text: 'Sacred, Not Sinful is a scholarly examination of the cultural significance and theological implications of Black Greek Letters Organizations (BGLOs), advocating for a balanced understanding that reconciles cultural heritage with Christian faith.',
   },
 ];
 
