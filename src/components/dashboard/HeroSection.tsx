@@ -56,7 +56,7 @@ export const HeroSection = () => {
         {/* Daily Scripture */}
         <div className="glass-effect rounded-2xl p-6 max-w-3xl animate-scale-in" style={{ animationDelay: '0.3s' }}>
           <div className="flex items-start gap-4">
-            <div className="text-4xl text-gold">"</div>
+            <div className="text-4xl text-foreground">"</div>
             <div className="flex-1">
               <p className="text-foreground text-lg leading-relaxed mb-3 italic font-medium">
                 {dailyScripture.text}
