@@ -1,13 +1,70 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useBackgroundAudio } from "./use-background-audio";
 
 export const useTextToSpeech = () => {
   const [isPlaying, setIsPlaying] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<string | null>(null);
+  const [currentTitle, setCurrentTitle] = useState<string>("");
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const speak = async (text: string, itemId: string, voice: string = "alloy") => {
+  const { setAudioRef, updatePlaybackState, updatePositionState } = useBackgroundAudio({
+    title: currentTitle || "Sacred Greeks Audio",
+    artist: "Sacred Greeks",
+    onPlay: () => {
+      if (audioRef.current && audioRef.current.paused) {
+        audioRef.current.play().catch(console.error);
+      }
+    },
+    onPause: () => {
+      if (audioRef.current && !audioRef.current.paused) {
+        audioRef.current.pause();
+      }
+    },
+    onStop: () => {
+      stop();
+    },
+    onSeekBackward: () => {
+      if (audioRef.current) {
+        audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime - 10);
+      }
+    },
+    onSeekForward: () => {
+      if (audioRef.current) {
+        audioRef.current.currentTime = Math.min(
+          audioRef.current.duration,
+          audioRef.current.currentTime + 10
+        );
+      }
+    },
+  });
+
+  // Update position state periodically
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio || !isPlaying) return;
+
+    const updatePosition = () => {
+      if (audio.duration && !isNaN(audio.duration)) {
+        updatePositionState(audio.duration, audio.currentTime);
+      }
+    };
+
+    audio.addEventListener("timeupdate", updatePosition);
+    audio.addEventListener("durationchange", updatePosition);
+
+    return () => {
+      audio.removeEventListener("timeupdate", updatePosition);
+      audio.removeEventListener("durationchange", updatePosition);
+    };
+  }, [isPlaying, updatePositionState]);
+
+  const speak = async (text: string, itemId: string, voice: string = "alloy", title?: string) => {
+    // Set title for media session
+    if (title) {
+      setCurrentTitle(title);
+    }
     // Stop any currently playing audio
     if (audioRef.current) {
       audioRef.current.pause();
@@ -45,9 +102,11 @@ export const useTextToSpeech = () => {
 
       const audio = new Audio(audioUrl);
       audioRef.current = audio;
+      setAudioRef(audio);
 
       audio.onended = () => {
         setIsPlaying(null);
+        updatePlaybackState("none");
         URL.revokeObjectURL(audioUrl);
       };
 
@@ -66,6 +125,7 @@ export const useTextToSpeech = () => {
         if (playPromise !== undefined) {
           await playPromise;
           setIsPlaying(itemId);
+          updatePlaybackState("playing");
         }
       } catch (playError) {
         console.error("Play error:", playError);
@@ -96,6 +156,7 @@ export const useTextToSpeech = () => {
       audioRef.current = null;
     }
     setIsPlaying(null);
+    updatePlaybackState("none");
   };
 
   return {
