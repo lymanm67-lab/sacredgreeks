@@ -1097,6 +1097,11 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
         title: "Mythology in Everyday Language",
         url: "https://youtu.be/oN_DDjKjVCo",
         description: "How mythological references permeate our daily vocabulary and names"
+      },
+      {
+        title: "The Secret Power Behind Famous Logos!",
+        url: "https://youtu.be/QsvD9LDmUEU",
+        description: "Exploring the mythological symbols hidden in corporate logos and brand names"
       }
     ],
     items: [
