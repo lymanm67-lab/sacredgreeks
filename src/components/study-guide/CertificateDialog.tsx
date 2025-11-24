@@ -9,9 +9,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Award, Download } from "lucide-react";
-import { downloadCertificate } from "./CertificateGenerator";
+import { Award, Printer } from "lucide-react";
 import { toast } from "sonner";
+import { format } from "date-fns";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
@@ -45,10 +45,187 @@ export const CertificateDialog = ({ open, onOpenChange, completionDate }: Certif
 
   const displayName = customName || profile?.full_name || user?.email?.split("@")[0] || "Student";
 
-  const handleDownload = () => {
+  const handlePrint = () => {
     try {
-      downloadCertificate(displayName, completionDate);
-      toast.success("Certificate downloaded successfully! 🎉");
+      const printWindow = window.open('', '_blank');
+      if (!printWindow) {
+        toast.error("Please allow pop-ups to print your certificate");
+        return;
+      }
+
+      const formattedDate = format(new Date(completionDate), "MMMM dd, yyyy");
+      const certificateId = `SG-${Date.now().toString(36).toUpperCase()}`;
+
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>Certificate of Completion - ${displayName}</title>
+            <style>
+              @page { size: landscape; margin: 0; }
+              * { margin: 0; padding: 0; box-sizing: border-box; }
+              body {
+                font-family: 'Georgia', serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                background: white;
+              }
+              .certificate {
+                width: 297mm;
+                height: 210mm;
+                padding: 40px;
+                border: 8px solid #8B5CF6;
+                border-radius: 8px;
+                position: relative;
+                background: white;
+              }
+              .certificate::before {
+                content: '';
+                position: absolute;
+                top: 50px;
+                left: 50px;
+                right: 50px;
+                bottom: 50px;
+                border: 2px solid #8B5CF6;
+                border-radius: 4px;
+              }
+              .corner { position: absolute; width: 12px; height: 12px; background: #8B5CF6; border-radius: 50%; }
+              .corner.tl { top: 50px; left: 50px; }
+              .corner.tr { top: 50px; right: 50px; }
+              .corner.bl { bottom: 50px; left: 50px; }
+              .corner.br { bottom: 50px; right: 50px; }
+              .content {
+                position: relative;
+                z-index: 1;
+                text-align: center;
+                padding: 60px 80px;
+              }
+              h1 { font-size: 48px; color: #8B5CF6; margin-bottom: 20px; }
+              .subtitle { font-size: 18px; color: #666; margin-bottom: 30px; }
+              .name {
+                font-size: 42px;
+                color: #000;
+                font-weight: bold;
+                margin: 30px 0;
+                border-bottom: 2px solid #8B5CF6;
+                display: inline-block;
+                padding-bottom: 10px;
+              }
+              .achievement {
+                font-size: 18px;
+                color: #666;
+                margin: 20px 0;
+                line-height: 1.6;
+              }
+              .program { font-size: 28px; color: #8B5CF6; font-weight: bold; margin: 20px 0; }
+              .description { font-size: 16px; color: #666; font-style: italic; margin-bottom: 30px; }
+              .stats {
+                background: #F9FAFB;
+                border: 1px solid #E5E7EB;
+                border-radius: 8px;
+                padding: 20px;
+                margin: 30px auto;
+                max-width: 400px;
+              }
+              .stats-title { font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+              .stats-list { font-size: 13px; color: #666; line-height: 1.8; text-align: left; }
+              .signature-section {
+                display: flex;
+                justify-content: space-around;
+                margin-top: 60px;
+                padding: 0 80px;
+              }
+              .signature {
+                text-align: center;
+              }
+              .signature-line {
+                border-top: 1px solid #666;
+                width: 200px;
+                margin: 0 auto 10px;
+                padding-top: 30px;
+              }
+              .signature-name {
+                font-size: 24px;
+                font-style: italic;
+                color: #8B5CF6;
+                margin-bottom: 5px;
+              }
+              .signature-title {
+                font-size: 11px;
+                color: #666;
+              }
+              .footer {
+                position: absolute;
+                bottom: 30px;
+                left: 0;
+                right: 0;
+                text-align: center;
+                font-size: 10px;
+                color: #999;
+              }
+              @media print {
+                body { background: white; }
+                .no-print { display: none; }
+              }
+            </style>
+          </head>
+          <body>
+            <div class="certificate">
+              <div class="corner tl"></div>
+              <div class="corner tr"></div>
+              <div class="corner bl"></div>
+              <div class="corner br"></div>
+              
+              <div class="content">
+                <h1>Certificate of Completion</h1>
+                <p class="subtitle">This certifies that</p>
+                <div class="name">${displayName}</div>
+                <p class="achievement">has successfully completed all five sessions of the</p>
+                <div class="program">Sacred, Not Sinful Study Guide</div>
+                <p class="description">A comprehensive biblical journey exploring faith and Greek life</p>
+                
+                <div class="stats">
+                  <p class="stats-title">Achievement Summary</p>
+                  <div class="stats-list">
+                    ✓ Sessions Completed: 5/5<br>
+                    ✓ Study Hours: 10+ hours<br>
+                    ✓ Completion Date: ${formattedDate}
+                  </div>
+                </div>
+              </div>
+              
+              <div class="signature-section">
+                <div class="signature">
+                  <div class="signature-line">
+                    <div class="signature-name">Dr. Lyman</div>
+                  </div>
+                  <div class="signature-title">Dr. Lyman, Author</div>
+                  <div class="signature-title">Sacred, Not Sinful</div>
+                </div>
+                <div class="signature">
+                  <div class="signature-line">
+                    <div class="signature-name">${formattedDate}</div>
+                  </div>
+                  <div class="signature-title">Date</div>
+                </div>
+              </div>
+              
+              <div class="footer">
+                SacredGreeks.com | Based on Sacred, Not Sinful by Dr. Lyman<br>
+                Certificate ID: ${certificateId}
+              </div>
+            </div>
+          </body>
+        </html>
+      `);
+
+      printWindow.document.close();
+      setTimeout(() => {
+        printWindow.print();
+        toast.success("Certificate ready to print! 🎉");
+      }, 250);
     } catch (error) {
       console.error("Error generating certificate:", error);
       toast.error("Failed to generate certificate");
@@ -111,17 +288,17 @@ export const CertificateDialog = ({ open, onOpenChange, completionDate }: Certif
             </ul>
           </div>
 
-          {/* Download Button */}
+          {/* Print Button */}
           <Button
-            onClick={handleDownload}
+            onClick={handlePrint}
             className="w-full bg-sacred hover:bg-sacred/90 text-sacred-foreground"
           >
-            <Download className="w-4 h-4 mr-2" />
-            Download Certificate (PDF)
+            <Printer className="w-4 h-4 mr-2" />
+            Print Certificate
           </Button>
 
           <p className="text-xs text-center text-muted-foreground">
-            Your certificate will be downloaded as a PDF file that you can print or share.
+            Your certificate will open in a new window ready to print or save as PDF.
           </p>
         </div>
       </DialogContent>
