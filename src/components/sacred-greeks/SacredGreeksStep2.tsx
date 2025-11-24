@@ -7,6 +7,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { SacredGreeksAnswers } from "@/types/assessment";
+import { assessmentStep2Schema } from "@/lib/validation";
+import { useToast } from "@/hooks/use-toast";
 
 const roles = [
   "Active BGLO member",
@@ -36,6 +38,7 @@ interface SacredGreeksStep2Props {
 }
 
 export function SacredGreeksStep2({ scenario, onComplete, onBack }: SacredGreeksStep2Props) {
+  const { toast } = useToast();
   const [formData, setFormData] = useState<{
     role: string;
     situation: string;
@@ -50,7 +53,19 @@ export function SacredGreeksStep2({ scenario, onComplete, onBack }: SacredGreeks
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onComplete(formData);
+    
+    try {
+      assessmentStep2Schema.parse(formData);
+      onComplete(formData);
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({
+          title: 'Validation Error',
+          description: error.message,
+          variant: 'destructive',
+        });
+      }
+    }
   };
 
   const toggleEmotion = (emotion: string) => {

@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Home, Plus, Check, Trash2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { prayerJournalSchema } from '@/lib/validation';
 
 interface Prayer {
   id: string;
@@ -46,7 +47,11 @@ const PrayerJournal = () => {
       if (error) throw error;
       if (data) setPrayers(data);
     } catch (error) {
-      console.error('Error loading prayers:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to load prayers',
+        variant: 'destructive',
+      });
     } finally {
       setLoading(false);
     }
@@ -62,13 +67,19 @@ const PrayerJournal = () => {
     const prayerType = formData.get('prayer_type') as string;
 
     try {
+      const validated = prayerJournalSchema.parse({
+        title,
+        content,
+        prayer_type: prayerType
+      });
+
       const { error } = await supabase
         .from('prayer_journal')
         .insert({
           user_id: user.id,
-          title,
-          content,
-          prayer_type: prayerType,
+          title: validated.title,
+          content: validated.content,
+          prayer_type: validated.prayer_type,
         });
 
       if (error) throw error;
@@ -82,12 +93,19 @@ const PrayerJournal = () => {
       loadPrayers();
       (e.target as HTMLFormElement).reset();
     } catch (error) {
-      console.error('Error adding prayer:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to add prayer',
-        variant: 'destructive',
-      });
+      if (error instanceof Error) {
+        toast({
+          title: 'Validation Error',
+          description: error.message,
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'Error',
+          description: 'Failed to add prayer',
+          variant: 'destructive',
+        });
+      }
     }
   };
 
@@ -110,7 +128,11 @@ const PrayerJournal = () => {
 
       loadPrayers();
     } catch (error) {
-      console.error('Error updating prayer:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to mark prayer as answered',
+        variant: 'destructive',
+      });
     }
   };
 
@@ -130,7 +152,11 @@ const PrayerJournal = () => {
 
       loadPrayers();
     } catch (error) {
-      console.error('Error deleting prayer:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to delete prayer',
+        variant: 'destructive',
+      });
     }
   };
 

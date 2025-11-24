@@ -7,6 +7,7 @@ import { Plus, CheckCircle2, Clock } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { communityServiceSchema } from '@/lib/validation';
 
 interface ServiceItem {
   id: string;
@@ -43,22 +44,31 @@ export const CommunityServiceChecklist = () => {
       if (error) throw error;
       setItems(data || []);
     } catch (error) {
-      console.error('Error loading service items:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to load service items',
+        variant: 'destructive',
+      });
     } finally {
       setLoading(false);
     }
   };
 
   const addItem = async () => {
-    if (!user || !newItem.trim()) return;
+    if (!user) return;
 
     try {
+      const validated = communityServiceSchema.parse({
+        title: newItem,
+        hours: parseFloat(newHours) || 0
+      });
+
       const { error } = await supabase
         .from('community_service_items')
         .insert({
           user_id: user.id,
-          title: newItem,
-          hours: parseFloat(newHours) || 0,
+          title: validated.title,
+          hours: validated.hours,
           completed: false
         });
 
@@ -72,12 +82,19 @@ export const CommunityServiceChecklist = () => {
         description: 'Service item added to your checklist',
       });
     } catch (error) {
-      console.error('Error adding item:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to add service item',
-        variant: 'destructive',
-      });
+      if (error instanceof Error) {
+        toast({
+          title: 'Validation Error',
+          description: error.message,
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'Error',
+          description: 'Failed to add service item',
+          variant: 'destructive',
+        });
+      }
     }
   };
 
@@ -94,7 +111,11 @@ export const CommunityServiceChecklist = () => {
       if (error) throw error;
       loadItems();
     } catch (error) {
-      console.error('Error updating item:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to update service item',
+        variant: 'destructive',
+      });
     }
   };
 
