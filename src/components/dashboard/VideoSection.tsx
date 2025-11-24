@@ -4,17 +4,17 @@ import { Video } from 'lucide-react';
 const videos = [
   {
     title: "Living Out Your Faith in Greek Life",
-    url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    url: "https://www.youtube.com/embed/qtDlvE0a9Ok",
     description: "Practical tips for maintaining your Christian walk in Greek organizations"
   },
   {
     title: "Navigating Difficult Conversations",
-    url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    url: "https://www.youtube.com/embed/ICyKY7z7E5M",
     description: "How to address faith-based concerns with chapter members"
   },
   {
     title: "Building Biblical Community",
-    url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    url: "https://www.youtube.com/embed/PLQG1lOu-48",
     description: "Creating meaningful fellowship within your organization"
   }
 ];
