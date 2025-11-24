@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { ArrowLeft, BookOpen, MessageCircle, CheckCircle, Check, Edit3 } from "lucide-react";
+import { ArrowLeft, BookOpen, MessageCircle, CheckCircle, Check, Edit3, Share2 } from "lucide-react";
 import { studyGuideSessions } from "@/sacredGreeksContent";
 import { useStudyProgress } from "@/hooks/use-study-progress";
 import { Progress } from "@/components/ui/progress";
@@ -11,6 +11,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { StudyReminderSettings } from "@/components/StudyReminderSettings";
+import { ShareCompletionDialog } from "@/components/study-guide/ShareCompletionDialog";
 
 const StudyGuide = () => {
   const {
@@ -26,6 +27,9 @@ const StudyGuide = () => {
   } = useStudyProgress();
 
   const [notesState, setNotesState] = useState<Record<number, string>>({});
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
+
+  const isAllComplete = completedCount === totalSessions;
 
   const handleNotesChange = (sessionId: number, value: string) => {
     setNotesState((prev) => ({ ...prev, [sessionId]: value }));
@@ -84,10 +88,20 @@ const StudyGuide = () => {
                     </div>
                     <Progress value={progressPercentage} className="h-2" />
                     <p className="text-xs text-center text-muted-foreground">
-                      {completedCount === totalSessions
+                      {isAllComplete
                         ? "🎉 Congratulations! You've completed all sessions!"
                         : "Mark sessions as complete to track your journey"}
                     </p>
+                    {isAllComplete && (
+                      <Button
+                        onClick={() => setShareDialogOpen(true)}
+                        className="w-full bg-sacred hover:bg-sacred/90 text-sacred-foreground"
+                        size="sm"
+                      >
+                        <Share2 className="w-4 h-4 mr-2" />
+                        Share Your Achievement
+                      </Button>
+                    )}
                   </div>
                 </CardContent>
               </Card>
@@ -299,6 +313,9 @@ const StudyGuide = () => {
           </div>
         </div>
       </footer>
+
+      {/* Share Dialog */}
+      <ShareCompletionDialog open={shareDialogOpen} onOpenChange={setShareDialogOpen} />
     </div>
   );
 };
