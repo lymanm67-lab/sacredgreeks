@@ -7,25 +7,25 @@ const testimonials = [
     name: 'Lyn Lanier',
     org: 'Sigma Gamma Rho Sorority, Inc.',
     initials: 'LL',
-    text: 'This app reassures us that our membership does not make us less Christian, but can actually strengthen our witness as salt and light in spaces the church often overlooks.',
+    text: 'This resource reassures us that our membership does not make us less Christian, but can actually strengthen our witness as salt and light in spaces the church often overlooks.',
   },
   {
     name: 'Dr. Le-Ann M. Harris',
     org: 'Delta Sigma Theta Sorority Inc.',
     initials: 'LH',
-    text: 'Sacred Greeks Life App is a powerful resource for the ongoing dialogue about faith, culture, and Black Greek Letter Organizations. The daily devotionals and P.R.O.O.F. framework offer clarity where there has often been confusion.',
+    text: 'Sacred Greeks provides powerful support for the ongoing dialogue about faith, culture, and Black Greek Letter Organizations. The daily guidance and P.R.O.O.F. framework offer clarity where there has often been confusion.',
   },
   {
     name: 'Alexis Allen',
     org: 'Zeta Phi Beta Sorority, Inc.',
     initials: 'AA',
-    text: 'Ignorance has had the mic too long, and this app finally cuts it off. Sacred Greeks gives you biblical guidance, clarity, and confidence to walk boldly in your calling without apology.',
+    text: 'Ignorance has had the mic too long, and Sacred Greeks finally cuts it off. You get biblical guidance, clarity, and confidence to walk boldly in your calling without apology.',
   },
   {
     name: 'Rev. Dr. David Fox',
     org: 'Phi Beta Sigma Fraternity, Inc.',
     initials: 'DF',
-    text: 'Sacred Greeks Life App provides practical tools and theological depth that help members of Black Greek Letter Organizations reconcile their cultural heritage with Christian faith in their daily lives.',
+    text: 'Sacred Greeks provides practical tools and theological depth that help members of Black Greek Letter Organizations reconcile their cultural heritage with Christian faith in their daily lives.',
   },
 ];
 
