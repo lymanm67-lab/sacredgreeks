@@ -3,7 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Users, Heart, BookOpen, ExternalLink, Search } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Users, Heart, BookOpen, ExternalLink, Search, ArrowUpDown } from 'lucide-react';
 
 const chapterResources = [
   {
@@ -32,6 +33,7 @@ const chapterResources = [
 export const ChapterResourcesSection = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [sortBy, setSortBy] = useState('a-z');
 
   const resourceTypes = Array.from(new Set(chapterResources.map(r => r.type)));
 
@@ -40,6 +42,15 @@ export const ChapterResourcesSection = () => {
                          resource.description.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesType = !selectedType || resource.type === selectedType;
     return matchesSearch && matchesType;
+  });
+
+  const sortedResources = [...filteredResources].sort((a, b) => {
+    if (sortBy === 'a-z') {
+      return a.title.localeCompare(b.title);
+    } else if (sortBy === 'z-a') {
+      return b.title.localeCompare(a.title);
+    }
+    return 0;
   });
 
   return (
@@ -52,14 +63,27 @@ export const ChapterResourcesSection = () => {
         
         {/* Search and Filter */}
         <div className="space-y-3">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <Input
-              placeholder="Search chapter resources..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9"
-            />
+          <div className="flex gap-2">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input
+                placeholder="Search chapter resources..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-9"
+              />
+            </div>
+            
+            <Select value={sortBy} onValueChange={setSortBy}>
+              <SelectTrigger className="w-[140px]">
+                <ArrowUpDown className="w-4 h-4 mr-2" />
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-card border-border z-50">
+                <SelectItem value="a-z">A-Z</SelectItem>
+                <SelectItem value="z-a">Z-A</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
           
           <div className="flex flex-wrap gap-2">
@@ -84,13 +108,13 @@ export const ChapterResourcesSection = () => {
         </div>
       </CardHeader>
       <CardContent>
-        {filteredResources.length === 0 ? (
+        {sortedResources.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
             No resources found matching your search.
           </div>
         ) : (
           <div className="grid gap-4 md:grid-cols-3">
-          {filteredResources.map((resource, index) => {
+          {sortedResources.map((resource, index) => {
             const Icon = resource.icon;
             return (
               <div key={index} className="p-4 border rounded-lg hover:bg-muted/50 transition-colors">
