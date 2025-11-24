@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart, Video, Users, Sparkles } from "lucide-react";
+import { Heart, Video, Users, Sparkles, LogIn, LayoutDashboard } from "lucide-react";
 
 const scenarios = [
   {
@@ -24,8 +26,39 @@ const scenarios = [
 ];
 
 const Index = () => {
+  const { user } = useAuth();
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted">
+      {/* Header with Auth */}
+      <header className="border-b border-border bg-card/50 backdrop-blur">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Heart className="w-6 h-6 text-sacred" />
+              <span className="font-semibold">Sacred Greeks</span>
+            </div>
+            <div>
+              {user ? (
+                <Link to="/dashboard">
+                  <Button variant="outline" size="sm">
+                    <LayoutDashboard className="w-4 h-4 mr-2" />
+                    Dashboard
+                  </Button>
+                </Link>
+              ) : (
+                <Link to="/auth">
+                  <Button variant="outline" size="sm">
+                    <LogIn className="w-4 h-4 mr-2" />
+                    Sign In
+                  </Button>
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+      </header>
+
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="max-w-4xl mx-auto text-center space-y-6">
@@ -87,7 +120,7 @@ const Index = () => {
                 SacredGreeks.com
               </a>
               <a
-                href="https://sacredgreeks.com/#card-mwywcoy7nqn2if3"
+                href="https://sacredgreeks.com/#card-xr13vgv4m5slqey"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-sacred transition-colors"
@@ -95,12 +128,20 @@ const Index = () => {
                 Start Here
               </a>
               <a
-                href="https://sacredgreeks.com/"
+                href="https://a.co/d/5a6Yt9t"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-sacred transition-colors"
               >
                 Sacred, Not Sinful Book
+              </a>
+              <a
+                href="https://sacredgreeks.jellypod.ai/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-sacred transition-colors"
+              >
+                Podcast
               </a>
               <a
                 href="https://gamma.app/docs/Christian-Greek-Life-Study-Guide-ihr8fq0g089n32t"

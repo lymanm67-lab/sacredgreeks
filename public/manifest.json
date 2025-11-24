@@ -1,0 +1,43 @@
+{
+  "name": "Sacred Greeks Decision Guide",
+  "short_name": "Sacred Greeks",
+  "description": "Help Christians in Greek Life process decisions using biblical wisdom",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#8B5CF6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["lifestyle", "education", "books"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "New Assessment",
+      "url": "/guide",
+      "description": "Start a new decision guide"
+    },
+    {
+      "name": "Daily Devotional",
+      "url": "/devotional",
+      "description": "Read today's devotional"
+    },
+    {
+      "name": "Prayer Journal",
+      "url": "/prayer-journal",
+      "description": "Access your prayer journal"
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { ProgressStepper } from "@/components/ui/progress-stepper";
 import { Home } from "lucide-react";
@@ -18,6 +19,7 @@ const steps = [
 ];
 
 const SacredGreeks = () => {
+  const { user } = useAuth();
   const [currentStep, setCurrentStep] = useState(1);
   const [answers, setAnswers] = useState<Partial<SacredGreeksAnswers>>({});
   const [resultData, setResultData] = useState<any>(null);
@@ -43,6 +45,7 @@ const SacredGreeks = () => {
         answers_json: fullAnswers as any,
         scores_json: scores as any,
         result_type: resultType,
+        user_id: user?.id || null,
       });
 
       if (error) throw error;
