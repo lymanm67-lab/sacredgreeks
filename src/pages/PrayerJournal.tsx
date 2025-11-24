@@ -19,7 +19,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Home, Plus, Check, Trash2 } from 'lucide-react';
+import { Home, Plus, Check, Trash2, Search, Download } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { prayerJournalSchema } from '@/lib/validation';
 
@@ -36,6 +36,8 @@ interface Prayer {
 const PrayerJournal = () => {
   const { user } = useAuth();
   const [prayers, setPrayers] = useState<Prayer[]>([]);
+  const [filteredPrayers, setFilteredPrayers] = useState<Prayer[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -44,6 +46,22 @@ const PrayerJournal = () => {
   useEffect(() => {
     loadPrayers();
   }, [user]);
+
+  useEffect(() => {
+    // Filter prayers based on search query
+    if (!searchQuery.trim()) {
+      setFilteredPrayers(prayers);
+    } else {
+      const query = searchQuery.toLowerCase();
+      const filtered = prayers.filter(
+        (prayer) =>
+          prayer.title.toLowerCase().includes(query) ||
+          prayer.content?.toLowerCase().includes(query) ||
+          prayer.prayer_type.toLowerCase().includes(query)
+      );
+      setFilteredPrayers(filtered);
+    }
+  }, [searchQuery, prayers]);
 
   const loadPrayers = async () => {
     if (!user) return;
@@ -56,7 +74,10 @@ const PrayerJournal = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      if (data) setPrayers(data);
+      if (data) {
+        setPrayers(data);
+        setFilteredPrayers(data);
+      }
     } catch (error) {
       toast({
         title: 'Error',
@@ -194,6 +215,22 @@ const PrayerJournal = () => {
     return colors[type] || 'bg-gray-100 text-gray-800';
   };
 
+  const handleExport = () => {
+    const dataStr = JSON.stringify(prayers, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `prayer-journal-${new Date().toISOString().split('T')[0]}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+
+    toast({
+      title: 'Export successful',
+      description: 'Your prayer journal has been downloaded.',
+    });
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -219,18 +256,23 @@ const PrayerJournal = () => {
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto space-y-6">
           {/* Header */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
               <h1 className="text-4xl font-bold">Prayer Journal</h1>
               <p className="text-muted-foreground mt-2">Record your prayers and see God's faithfulness</p>
             </div>
-            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-              <DialogTrigger asChild>
-                <Button className="bg-sacred hover:bg-sacred/90">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add Prayer
-                </Button>
-              </DialogTrigger>
+            <div className="flex gap-2">
+              <Button variant="outline" onClick={handleExport} disabled={prayers.length === 0}>
+                <Download className="w-4 h-4 mr-2" />
+                Export
+              </Button>
+              <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button className="bg-sacred hover:bg-sacred/90">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Prayer
+                  </Button>
+                </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>Add New Prayer</DialogTitle>
@@ -275,10 +317,25 @@ const PrayerJournal = () => {
                 </form>
               </DialogContent>
             </Dialog>
+            </div>
           </div>
 
+          {/* Search */}
+          {prayers.length > 0 && (
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Search prayers by title, content, or type..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+          )}
+
           {/* Prayers List */}
-          {prayers.length === 0 ? (
+          {filteredPrayers.length === 0 && prayers.length === 0 ? (
             <Card>
               <CardContent className="text-center py-12">
                 <p className="text-muted-foreground mb-4">No prayers yet. Start your prayer journal today!</p>
@@ -288,9 +345,15 @@ const PrayerJournal = () => {
                 </Button>
               </CardContent>
             </Card>
+          ) : filteredPrayers.length === 0 ? (
+            <Card>
+              <CardContent className="text-center py-12">
+                <p className="text-muted-foreground">No prayers match your search. Try different keywords.</p>
+              </CardContent>
+            </Card>
           ) : (
             <div className="space-y-4">
-              {prayers.map((prayer) => (
+              {filteredPrayers.map((prayer) => (
                 <Card key={prayer.id} className={prayer.answered ? 'border-green-500/50 bg-green-50/50' : ''}>
                   <CardHeader>
                     <div className="flex items-start justify-between">

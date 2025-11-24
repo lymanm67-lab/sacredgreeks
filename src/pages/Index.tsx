@@ -3,6 +3,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Heart, Video, Users, Sparkles, LogIn, LayoutDashboard } from "lucide-react";
+import { Testimonials } from "@/components/Testimonials";
 
 const scenarios = [
   {
@@ -105,6 +106,9 @@ const Index = () => {
           ))}
         </div>
       </div>
+
+      {/* Testimonials */}
+      <Testimonials />
 
       {/* Footer */}
       <footer className="border-t border-border bg-card mt-16">

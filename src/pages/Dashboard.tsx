@@ -260,6 +260,26 @@ const Dashboard = () => {
             </div>
           </div>
 
+          {/* Progress Link */}
+          <Card className="bg-gradient-to-r from-sacred/10 to-warm-blue/10 border-sacred/20">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between flex-wrap gap-4">
+                <div>
+                  <h3 className="text-xl font-bold mb-1">Track Your Growth</h3>
+                  <p className="text-muted-foreground">
+                    View charts and insights about your spiritual journey
+                  </p>
+                </div>
+                <Link to="/progress">
+                  <Button variant="outline" className="hover:bg-sacred/10 hover:text-sacred hover:border-sacred">
+                    <TrendingUp className="w-4 h-4 mr-2" />
+                    View Progress
+                  </Button>
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Essential Resources */}
           <div className="animate-fade-in" style={{ animationDelay: '0.5s' }}>
             <ResourcesSection />

@@ -317,6 +317,47 @@ export type Database = {
         }
         Relationships: []
       }
+      shared_results: {
+        Row: {
+          assessment_id: string
+          created_at: string
+          expires_at: string | null
+          id: string
+          last_viewed_at: string | null
+          share_token: string
+          shared_by: string
+          view_count: number
+        }
+        Insert: {
+          assessment_id: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          last_viewed_at?: string | null
+          share_token: string
+          shared_by: string
+          view_count?: number
+        }
+        Update: {
+          assessment_id?: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          last_viewed_at?: string | null
+          share_token?: string
+          shared_by?: string
+          view_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shared_results_assessment_id_fkey"
+            columns: ["assessment_id"]
+            isOneToOne: false
+            referencedRelation: "assessment_submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_progress: {
         Row: {
           assessments_count: number | null

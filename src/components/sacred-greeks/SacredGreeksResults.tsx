@@ -1,20 +1,26 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart, ExternalLink, RefreshCw, BookOpen, MessageSquare, Video } from "lucide-react";
+import { Heart, ExternalLink, RefreshCw, BookOpen, MessageSquare, Video, Share2, Check } from "lucide-react";
 import { SacredGreeksAnswers, SacredGreeksScores, ResultType } from "@/types/assessment";
 import { sacredGreeksResults, type Scenario } from "@/sacredGreeksContent";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { useState } from "react";
 
 interface SacredGreeksResultsProps {
   resultType: ResultType;
   scores: SacredGreeksScores;
   answers: SacredGreeksAnswers;
-  onRestart: () => void;
+  onRestart?: () => void;
+  isSharedView?: boolean;
 }
 
-export function SacredGreeksResults({ resultType, scores, answers, onRestart }: SacredGreeksResultsProps) {
+export function SacredGreeksResults({ resultType, scores, answers, onRestart, isSharedView = false }: SacredGreeksResultsProps) {
   const { toast } = useToast();
+  const { user } = useAuth();
+  const [copied, setCopied] = useState(false);
+  const [shareUrl, setShareUrl] = useState<string | null>(null);
   const scenario = answers.scenario as Scenario;
   const content = sacredGreeksResults[scenario]?.[resultType];
 
@@ -59,6 +65,72 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart }: 
       toast({
         title: "Error",
         description: "Failed to send email. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleShare = async () => {
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please sign in to share your results.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      // Find the assessment ID by matching answers
+      const { data: assessment } = await supabase
+        .from('assessment_submissions')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('result_type', resultType)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (!assessment) {
+        toast({
+          title: "Error",
+          description: "Could not find assessment to share.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Generate unique token
+      const token = crypto.randomUUID();
+
+      // Create share record
+      const { error } = await supabase
+        .from('shared_results')
+        .insert({
+          assessment_id: assessment.id,
+          share_token: token,
+          shared_by: user.id,
+        });
+
+      if (error) throw error;
+
+      const url = `${window.location.origin}/shared/${token}`;
+      setShareUrl(url);
+
+      // Copy to clipboard
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 3000);
+
+      toast({
+        title: "Link copied!",
+        description: "Share this link with your mentor or accountability partner.",
+      });
+    } catch (error) {
+      console.error('Share error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to create share link.",
         variant: "destructive",
       });
     }
@@ -311,13 +383,64 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart }: 
         </CardContent>
       </Card>
 
+      {/* Share Results */}
+      {!isSharedView && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2">
+              <Share2 className="w-5 h-5 text-sacred" />
+              Share with Mentor or Accountability Partner
+            </CardTitle>
+            <CardDescription>
+              Generate a private link to share your results with someone you trust
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {shareUrl ? (
+              <div className="space-y-3">
+                <div className="p-3 bg-muted rounded-md break-all text-sm">
+                  {shareUrl}
+                </div>
+                <Button
+                  onClick={handleShare}
+                  variant="outline"
+                  className="w-full"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="w-4 h-4 mr-2" />
+                      Link Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Share2 className="w-4 h-4 mr-2" />
+                      Copy Link Again
+                    </>
+                  )}
+                </Button>
+              </div>
+            ) : (
+              <Button
+                onClick={handleShare}
+                className="w-full bg-sacred hover:bg-sacred/90"
+              >
+                <Share2 className="w-4 h-4 mr-2" />
+                Generate Share Link
+              </Button>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
       {/* Restart */}
-      <div className="flex justify-center pt-4">
-        <Button variant="outline" onClick={onRestart}>
-          <RefreshCw className="w-4 h-4 mr-2" />
-          Start Over
-        </Button>
-      </div>
+      {!isSharedView && onRestart && (
+        <div className="flex justify-center pt-4">
+          <Button variant="outline" onClick={onRestart}>
+            <RefreshCw className="w-4 h-4 mr-2" />
+            Start Over
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

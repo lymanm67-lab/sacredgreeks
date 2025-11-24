@@ -5,7 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Home, Calendar, FileText } from 'lucide-react';
+import { Home, Calendar, FileText, Download } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface Assessment {
@@ -73,6 +73,22 @@ const AssessmentHistory = () => {
     );
   };
 
+  const handleExport = () => {
+    const dataStr = JSON.stringify(assessments, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `assessment-history-${new Date().toISOString().split('T')[0]}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+
+    toast({
+      title: 'Export successful',
+      description: 'Your assessment history has been downloaded.',
+    });
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -97,14 +113,22 @@ const AssessmentHistory = () => {
 
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto space-y-6">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-sacred/10 flex items-center justify-center">
-              <FileText className="w-6 h-6 text-sacred" />
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-sacred/10 flex items-center justify-center">
+                <FileText className="w-6 h-6 text-sacred" />
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold">Assessment History</h1>
+                <p className="text-muted-foreground">Review your past Sacred Greeks assessments</p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-3xl font-bold">Assessment History</h1>
-              <p className="text-muted-foreground">Review your past Sacred Greeks assessments</p>
-            </div>
+            {assessments.length > 0 && (
+              <Button variant="outline" onClick={handleExport}>
+                <Download className="w-4 h-4 mr-2" />
+                Export
+              </Button>
+            )}
           </div>
 
           {assessments.length === 0 ? (
