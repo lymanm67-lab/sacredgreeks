@@ -34,7 +34,6 @@ import StudyGuide from "./pages/StudyGuide";
 import Podcast from "./pages/Podcast";
 import Achievements from "./pages/Achievements";
 import DidYouKnow from "./pages/DidYouKnow";
-import VideoGallery from "./pages/VideoGallery";
 
 const queryClient = new QueryClient();
 
@@ -61,7 +60,6 @@ const App = () => (
               <Route path="/study" element={<StudyGuide />} />
               <Route path="/podcast" element={<Podcast />} />
               <Route path="/did-you-know" element={<DidYouKnow />} />
-              <Route path="/videos" element={<VideoGallery />} />
               <Route
                 path="/achievements"
                 element={
