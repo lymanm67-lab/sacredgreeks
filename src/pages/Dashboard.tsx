@@ -6,6 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { HeroSection } from '@/components/dashboard/HeroSection';
+import { StatsCard } from '@/components/dashboard/StatsCard';
+import { QuickActionCard } from '@/components/dashboard/QuickActionCard';
 import { VideoSection } from '@/components/dashboard/VideoSection';
 import { CommunityServiceChecklist } from '@/components/dashboard/CommunityServiceChecklist';
 import { ChapterMeetingNotes } from '@/components/dashboard/ChapterMeetingNotes';
@@ -142,24 +145,24 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b border-border bg-card">
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
+      <header className="border-b border-border/50 bg-card/50 backdrop-blur-lg sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
-                <Heart className="w-5 h-5 text-sacred" />
-                <span className="font-semibold">Sacred Greeks</span>
-              </Link>
-            </div>
+            <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group">
+              <Heart className="w-5 h-5 text-sacred group-hover:scale-110 transition-transform" />
+              <span className="font-semibold bg-gradient-to-r from-sacred to-warm-purple bg-clip-text text-transparent">
+                Sacred Greeks
+              </span>
+            </Link>
             <div className="flex items-center gap-2">
               <Link to="/profile">
-                <Button variant="ghost" size="sm">
+                <Button variant="ghost" size="sm" className="hover:bg-sacred/10">
                   <User className="w-4 h-4 mr-2" />
                   Profile
                 </Button>
               </Link>
-              <Button variant="outline" size="sm" onClick={handleSignOut}>
+              <Button variant="outline" size="sm" onClick={handleSignOut} className="hover:bg-destructive/10 hover:text-destructive hover:border-destructive">
                 <LogOut className="w-4 h-4 mr-2" />
                 Sign Out
               </Button>
@@ -169,148 +172,126 @@ const Dashboard = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto space-y-8">
-          {/* Welcome Section */}
-          <div>
-            <h1 className="text-4xl font-bold mb-2">Welcome back!</h1>
-            <p className="text-xl text-muted-foreground">Continue your spiritual journey</p>
-          </div>
+        <div className="max-w-7xl mx-auto space-y-8">
+          {/* Hero Section */}
+          <HeroSection />
 
           {/* Stats Grid */}
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Assessments</CardTitle>
-                <FileText className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{stats.assessmentCount}</div>
-                <p className="text-xs text-muted-foreground">
-                  Total completed
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Prayers</CardTitle>
-                <MessageSquare className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{stats.prayerCount}</div>
-                <p className="text-xs text-muted-foreground">
-                  In your journal
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Today's Devotional</CardTitle>
-                <BookOpen className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{stats.devotionalCompleted ? '✓' : '○'}</div>
-                <p className="text-xs text-muted-foreground">
-                  {stats.devotionalCompleted ? 'Completed today' : 'Not yet completed'}
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium">Current Streak</CardTitle>
-                <TrendingUp className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{stats.currentStreak}</div>
-                <p className="text-xs text-muted-foreground">
-                  Days in a row
-                </p>
-              </CardContent>
-            </Card>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <StatsCard
+              title="Assessments"
+              value={stats.assessmentCount}
+              subtitle="Total completed"
+              icon={FileText}
+              gradient="from-sacred to-warm-purple"
+              delay="0.1s"
+            />
+            <StatsCard
+              title="Prayers"
+              value={stats.prayerCount}
+              subtitle="In your journal"
+              icon={MessageSquare}
+              gradient="from-warm-purple to-accent"
+              delay="0.2s"
+            />
+            <StatsCard
+              title="Today's Devotional"
+              value={stats.devotionalCompleted ? '✓' : '○'}
+              subtitle={stats.devotionalCompleted ? 'Completed today' : 'Not yet completed'}
+              icon={BookOpen}
+              gradient="from-gold to-secondary"
+              delay="0.3s"
+            />
+            <StatsCard
+              title="Current Streak"
+              value={stats.currentStreak}
+              subtitle="Days in a row"
+              icon={TrendingUp}
+              gradient="from-status-low to-warm-blue"
+              delay="0.4s"
+            />
           </div>
 
           {/* Quick Actions */}
-          <div className="grid gap-4 md:grid-cols-4">
-            <Link to="/guide">
-              <Card className="h-full hover:shadow-lg hover:border-sacred/50 transition-all cursor-pointer">
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-full bg-sacred/10 flex items-center justify-center mb-2">
-                    <Heart className="w-6 h-6 text-sacred" />
-                  </div>
-                  <CardTitle>New Assessment</CardTitle>
-                  <p className="text-sm text-muted-foreground">Process a new decision</p>
-                </CardHeader>
-              </Card>
-            </Link>
-
-            <Link to="/devotional">
-              <Card className="h-full hover:shadow-lg hover:border-sacred/50 transition-all cursor-pointer">
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-full bg-sacred/10 flex items-center justify-center mb-2">
-                    <BookOpen className="w-6 h-6 text-sacred" />
-                  </div>
-                  <CardTitle>Daily Devotional</CardTitle>
-                  <p className="text-sm text-muted-foreground">Today's reflection</p>
-                </CardHeader>
-              </Card>
-            </Link>
-
-            <Link to="/prayer-journal">
-              <Card className="h-full hover:shadow-lg hover:border-sacred/50 transition-all cursor-pointer">
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-full bg-sacred/10 flex items-center justify-center mb-2">
-                    <MessageSquare className="w-6 h-6 text-sacred" />
-                  </div>
-                  <CardTitle>Prayer Journal</CardTitle>
-                  <p className="text-sm text-muted-foreground">Track your prayers</p>
-                </CardHeader>
-              </Card>
-            </Link>
-
-            <Link to="/bookmarks">
-              <Card className="h-full hover:shadow-lg hover:border-sacred/50 transition-all cursor-pointer">
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-full bg-sacred/10 flex items-center justify-center mb-2">
-                    <Bookmark className="w-6 h-6 text-sacred" />
-                  </div>
-                  <CardTitle>Bookmarks</CardTitle>
-                  <p className="text-sm text-muted-foreground">Saved items</p>
-                </CardHeader>
-              </Card>
-            </Link>
+          <div>
+            <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+              Quick Actions
+            </h2>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              <QuickActionCard
+                title="New Assessment"
+                description="Process a new decision with biblical guidance"
+                icon={Heart}
+                href="/guide"
+                gradient="from-sacred to-warm-purple"
+                delay="0.1s"
+              />
+              <QuickActionCard
+                title="Daily Devotional"
+                description="Read today's reflection and scripture"
+                icon={BookOpen}
+                href="/devotional"
+                gradient="from-warm-purple to-accent"
+                delay="0.2s"
+              />
+              <QuickActionCard
+                title="Prayer Journal"
+                description="Track your prayers and answered requests"
+                icon={MessageSquare}
+                href="/prayer-journal"
+                gradient="from-gold to-secondary"
+                delay="0.3s"
+              />
+              <QuickActionCard
+                title="Bookmarks"
+                description="Access your saved resources"
+                icon={Bookmark}
+                href="/bookmarks"
+                gradient="from-warm-blue to-status-low"
+                delay="0.4s"
+              />
+            </div>
           </div>
 
           {/* Essential Resources */}
-          <ResourcesSection />
+          <div className="animate-fade-in" style={{ animationDelay: '0.5s' }}>
+            <ResourcesSection />
+          </div>
 
           {/* Videos Section */}
-          <VideoSection />
+          <div className="animate-fade-in" style={{ animationDelay: '0.6s' }}>
+            <VideoSection />
+          </div>
 
-          {/* Community Service Checklist */}
-          <CommunityServiceChecklist />
-
-          {/* Chapter Meeting Notes */}
-          <ChapterMeetingNotes />
+          {/* Community Service and Notes */}
+          <div className="grid gap-6 lg:grid-cols-2 animate-fade-in" style={{ animationDelay: '0.7s' }}>
+            <CommunityServiceChecklist />
+            <ChapterMeetingNotes />
+          </div>
 
           {/* Recent Assessments */}
           {recentAssessments.length > 0 && (
-            <Card>
+            <Card className="animate-fade-in border-2 hover:shadow-xl transition-all" style={{ animationDelay: '0.8s' }}>
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle>Recent Assessments</CardTitle>
+                  <CardTitle className="text-2xl bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+                    Recent Assessments
+                  </CardTitle>
                   <Link to="/assessment-history">
-                    <Button variant="outline" size="sm">View All</Button>
+                    <Button variant="outline" size="sm" className="hover:bg-sacred/10 hover:text-sacred hover:border-sacred">
+                      View All
+                    </Button>
                   </Link>
                 </div>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {recentAssessments.map((assessment) => (
-                    <div key={assessment.id} className="flex items-center justify-between py-2 border-b last:border-0">
+                    <div key={assessment.id} className="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-muted/50 transition-colors border border-border/50">
                       <div className="flex items-center gap-3">
-                        <Calendar className="w-4 h-4 text-muted-foreground" />
+                        <div className="p-2 rounded-lg bg-gradient-to-br from-sacred to-warm-purple">
+                          <Calendar className="w-4 h-4 text-white" />
+                        </div>
                         <div>
                           <p className="text-sm font-medium capitalize">
                             {assessment.scenario.replace('_', ' ')}
@@ -320,7 +301,7 @@ const Dashboard = () => {
                           </p>
                         </div>
                       </div>
-                      <span className={`text-xs px-2 py-1 rounded ${
+                      <span className={`text-xs px-3 py-1 rounded-full font-medium ${
                         assessment.result_type === 'high_risk' ? 'bg-status-high/10 text-status-high' :
                         assessment.result_type === 'medium_risk' ? 'bg-status-medium/10 text-status-medium' :
                         'bg-status-low/10 text-status-low'

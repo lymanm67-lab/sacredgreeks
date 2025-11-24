@@ -8,47 +8,58 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 215 25% 15%;
+    --background: 250 50% 98%;
+    --foreground: 260 30% 20%;
 
     --card: 0 0% 100%;
-    --card-foreground: 215 25% 15%;
+    --card-foreground: 260 30% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 25% 15%;
+    --popover-foreground: 260 30% 20%;
 
-    --primary: 221 83% 53%;
+    --primary: 265 85% 58%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 215 28% 17%;
+    --secondary: 45 95% 65%;
+    --secondary-foreground: 260 30% 20%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 250 30% 95%;
+    --muted-foreground: 260 20% 50%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 215 28% 17%;
+    --accent: 280 75% 65%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 214 31% 91%;
-    --input: 214 31% 91%;
-    --ring: 215 28% 17%;
+    --border: 250 30% 90%;
+    --input: 250 30% 90%;
+    --ring: 265 85% 58%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
     
     /* Track-specific colors */
-    --sacred: 221 83% 53%;
+    --sacred: 265 85% 58%;
     --sacred-foreground: 0 0% 100%;
+    --sacred-light: 265 75% 75%;
+    --sacred-dark: 265 85% 45%;
     
     /* Status colors */
     --status-high: 0 84% 60%;
     --status-medium: 43 96% 56%;
     --status-low: 142 71% 45%;
     
+    /* Warm accent colors */
+    --gold: 45 95% 65%;
+    --gold-foreground: 260 30% 20%;
+    --warm-blue: 210 100% 65%;
+    --warm-purple: 280 75% 65%;
+    
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(221 83% 53%) 0%, hsl(221 83% 65%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(265 85% 58%) 0%, hsl(280 75% 65%) 50%, hsl(45 95% 65%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(250 50% 98%) 100%);
+    --gradient-sacred: linear-gradient(135deg, hsl(265 85% 58%) 0%, hsl(265 75% 75%) 100%);
+    --gradient-warm: linear-gradient(135deg, hsl(280 75% 65%) 0%, hsl(45 95% 65%) 100%);
 
     --sidebar-background: 0 0% 98%;
 
@@ -68,33 +79,42 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 215 28% 10%;
+    --background: 260 40% 8%;
     --foreground: 0 0% 98%;
 
-    --card: 215 28% 13%;
+    --card: 260 35% 12%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 215 28% 13%;
+    --popover: 260 35% 12%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 0 0% 98%;
-    --primary-foreground: 215 28% 17%;
+    --primary: 265 85% 68%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 217 32% 17%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 45 85% 60%;
+    --secondary-foreground: 260 30% 20%;
 
-    --muted: 217 32% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 260 30% 18%;
+    --muted-foreground: 250 20% 70%;
 
-    --accent: 217 32% 17%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 280 70% 60%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 217 32% 17%;
-    --input: 217 32% 17%;
-    --ring: 212 26% 83%;
+    --border: 260 30% 20%;
+    --input: 260 30% 20%;
+    --ring: 265 85% 68%;
+    
+    --gold: 45 85% 60%;
+    --warm-blue: 210 90% 60%;
+    --warm-purple: 280 70% 60%;
+    
+    --gradient-hero: linear-gradient(135deg, hsl(265 85% 48%) 0%, hsl(280 75% 55%) 50%, hsl(45 85% 55%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(260 35% 12%) 0%, hsl(260 40% 15%) 100%);
+    --gradient-sacred: linear-gradient(135deg, hsl(265 85% 58%) 0%, hsl(265 75% 65%) 100%);
+    --gradient-warm: linear-gradient(135deg, hsl(280 75% 55%) 0%, hsl(45 85% 55%) 100%);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -113,5 +133,62 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.4s ease-out;
+  }
+  
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .dark .glass-effect {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
