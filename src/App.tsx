@@ -11,6 +11,7 @@ import { InstallPrompt } from "@/components/InstallPrompt";
 import { CookieConsent } from "@/components/CookieConsent";
 import { AnalyticsProvider } from "@/components/AnalyticsProvider";
 import { AIAssistantWidget } from "@/components/AIAssistantWidget";
+import { OfflineIndicator } from "@/components/ui/OfflineIndicator";
 import Index from "./pages/Index";
 import Privacy from "./pages/Privacy";
 import Auth from "./pages/Auth";
@@ -34,6 +35,7 @@ import StudyGuide from "./pages/StudyGuide";
 import Podcast from "./pages/Podcast";
 import Achievements from "./pages/Achievements";
 import DidYouKnow from "./pages/DidYouKnow";
+import OfflineSettings from "./pages/OfflineSettings";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +47,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <InstallPrompt />
+          <OfflineIndicator />
           <AIAssistantWidget />
           <BrowserRouter>
             <CookieConsent />
@@ -129,6 +132,14 @@ const App = () => (
                 element={
                   <ProtectedRoute>
                     <BibleStudy />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/offline-settings"
+                element={
+                  <ProtectedRoute>
+                    <OfflineSettings />
                   </ProtectedRoute>
                 }
               />
