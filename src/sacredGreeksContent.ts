@@ -153,8 +153,8 @@ export const sacredGreeksResults: Record<
             "Short Sacred Greeks teaching that helps you think clearly about Greek life and faith when you see denouncement content.",
         },
         {
-          title: "Sacred Greeks Video 2",
-          url: "https://youtu.be/_3C9q8ZmLnk",
+          title: "Top 10 Faith Questions About Greek Life Answered!",
+          url: "https://youtu.be/PLQG1lOu-48",
           description:
             "Follow up teaching that reinforces how to respond to clips and sermons without panic.",
         },
