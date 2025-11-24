@@ -808,7 +808,7 @@ export const sacredGreeksResults: Record<
   },
 };
 
-// Study Guide Content
+// Study Guide Content - 5 Session Starter Guide
 export interface StudySession {
   id: number;
   title: string;
