@@ -17,6 +17,7 @@ import { ResourcesSection } from '@/components/dashboard/ResourcesSection';
 import { ChapterResourcesSection } from '@/components/dashboard/ChapterResourcesSection';
 import { Onboarding } from '@/components/Onboarding';
 import { useOnboarding } from '@/hooks/use-onboarding';
+import { MobileQRCode } from '@/components/MobileQRCode';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -161,6 +162,7 @@ const Dashboard = () => {
               </span>
             </Link>
             <div className="flex items-center gap-2">
+              <MobileQRCode />
               <Link to="/profile">
                 <Button variant="ghost" size="sm" className="hover:bg-sacred/10">
                   <User className="w-4 h-4 mr-2" />
