@@ -5,6 +5,7 @@ import { useBackgroundAudio } from "./use-background-audio";
 
 export const useTextToSpeech = () => {
   const [isPlaying, setIsPlaying] = useState<string | null>(null);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<string | null>(null);
   const [currentTitle, setCurrentTitle] = useState<string>("");
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -150,19 +151,43 @@ export const useTextToSpeech = () => {
     }
   };
 
+  const pause = () => {
+    if (audioRef.current && !audioRef.current.paused) {
+      audioRef.current.pause();
+      setIsPaused(true);
+      updatePlaybackState("paused");
+    }
+  };
+
+  const resume = () => {
+    if (audioRef.current && audioRef.current.paused) {
+      audioRef.current.play().catch((error) => {
+        console.error("Resume error:", error);
+        toast.error("Failed to resume playback");
+      });
+      setIsPaused(false);
+      updatePlaybackState("playing");
+    }
+  };
+
   const stop = () => {
     if (audioRef.current) {
       audioRef.current.pause();
+      audioRef.current.currentTime = 0;
       audioRef.current = null;
     }
     setIsPlaying(null);
+    setIsPaused(false);
     updatePlaybackState("none");
   };
 
   return {
     speak,
+    pause,
+    resume,
     stop,
     isPlaying,
+    isPaused,
     isLoading,
   };
 };
