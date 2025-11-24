@@ -6,6 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { VideoSection } from '@/components/dashboard/VideoSection';
+import { CommunityServiceChecklist } from '@/components/dashboard/CommunityServiceChecklist';
+import { ChapterMeetingNotes } from '@/components/dashboard/ChapterMeetingNotes';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -277,6 +280,15 @@ const Dashboard = () => {
               </Card>
             </Link>
           </div>
+
+          {/* Videos Section */}
+          <VideoSection />
+
+          {/* Community Service Checklist */}
+          <CommunityServiceChecklist />
+
+          {/* Chapter Meeting Notes */}
+          <ChapterMeetingNotes />
 
           {/* Recent Assessments */}
           {recentAssessments.length > 0 && (
