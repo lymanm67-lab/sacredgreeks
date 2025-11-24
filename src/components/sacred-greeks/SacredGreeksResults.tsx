@@ -273,6 +273,16 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart }: 
                 Listen to the Sacred Greeks Podcast
               </a>
             </Button>
+            <Button
+              variant="outline"
+              className="justify-start"
+              asChild
+            >
+              <a href="https://drlymanmontgomery.involve.me/fmmpa" target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="w-4 h-4 mr-2" />
+                Take 5 Persona Type Assessment
+              </a>
+            </Button>
           </div>
         </CardContent>
       </Card>
