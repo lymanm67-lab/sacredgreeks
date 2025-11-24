@@ -15,6 +15,7 @@ import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import { cn } from '@/lib/utils';
+import { communityServiceSchema } from '@/lib/validation';
 
 interface ServiceActivity {
   id: string;
@@ -74,22 +75,19 @@ export default function ServiceTracker() {
 
     try {
       const hoursNum = parseFloat(hours);
-      if (isNaN(hoursNum) || hoursNum <= 0) {
-        toast({
-          title: 'Invalid Hours',
-          description: 'Please enter a valid number of hours',
-          variant: 'destructive',
-        });
-        return;
-      }
+      
+      const validated = communityServiceSchema.parse({
+        title: title.trim(),
+        hours: hoursNum
+      });
 
       const { error } = await supabase
         .from('community_service_items')
         .insert({
           user_id: user.id,
-          title: title.trim(),
+          title: validated.title,
           description: description.trim() || null,
-          hours: hoursNum,
+          hours: validated.hours,
           event_date: eventDate ? format(eventDate, 'yyyy-MM-dd') : null,
           completed: true,
           completed_at: new Date().toISOString(),
@@ -109,11 +107,19 @@ export default function ServiceTracker() {
         description: 'Service activity logged successfully',
       });
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to add service activity',
-        variant: 'destructive',
-      });
+      if (error instanceof Error) {
+        toast({
+          title: 'Validation Error',
+          description: error.message,
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'Error',
+          description: 'Failed to add service activity',
+          variant: 'destructive',
+        });
+      }
     }
   };
 
