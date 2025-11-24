@@ -1,6 +1,6 @@
+import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Play } from 'lucide-react';
-import { useState } from 'react';
 
 export const WelcomeVideo = () => {
   const [isPlaying, setIsPlaying] = useState(false);
