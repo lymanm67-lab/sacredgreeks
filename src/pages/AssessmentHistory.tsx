@@ -40,7 +40,6 @@ const AssessmentHistory = () => {
       if (error) throw error;
       setAssessments(data || []);
     } catch (error) {
-      console.error('Error loading assessments:', error);
       toast({
         title: 'Error',
         description: 'Failed to load assessment history',

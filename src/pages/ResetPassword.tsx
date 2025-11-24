@@ -48,7 +48,6 @@ const ResetPassword = () => {
           variant: 'destructive',
         });
       } else {
-        console.error('Error sending reset email:', error);
         toast({
           title: 'Error',
           description: 'Failed to send reset email. Please try again.',

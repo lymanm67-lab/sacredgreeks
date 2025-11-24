@@ -14,6 +14,8 @@ import { VideoSection } from '@/components/dashboard/VideoSection';
 import { CommunityServiceChecklist } from '@/components/dashboard/CommunityServiceChecklist';
 import { ChapterMeetingNotes } from '@/components/dashboard/ChapterMeetingNotes';
 import { ResourcesSection } from '@/components/dashboard/ResourcesSection';
+import { Onboarding } from '@/components/Onboarding';
+import { useOnboarding } from '@/hooks/use-onboarding';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -25,6 +27,7 @@ interface DashboardStats {
 const Dashboard = () => {
   const { user, signOut } = useAuth();
   const { toast } = useToast();
+  const { showOnboarding, completeOnboarding, isChecking } = useOnboarding();
   const [stats, setStats] = useState<DashboardStats>({
     assessmentCount: 0,
     prayerCount: 0,
@@ -320,6 +323,8 @@ const Dashboard = () => {
           )}
         </div>
       </main>
+
+      <Onboarding open={showOnboarding && !isChecking} onComplete={completeOnboarding} />
     </div>
   );
 };
