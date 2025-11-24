@@ -12,6 +12,10 @@ import Dashboard from "./pages/Dashboard";
 import Devotional from "./pages/Devotional";
 import PrayerJournal from "./pages/PrayerJournal";
 import AssessmentHistory from "./pages/AssessmentHistory";
+import Profile from "./pages/Profile";
+import ResetPassword from "./pages/ResetPassword";
+import FAQ from "./pages/FAQ";
+import Bookmarks from "./pages/Bookmarks";
 import Guide from "./pages/Guide";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
@@ -49,6 +53,18 @@ const App = () => (
                 <AssessmentHistory />
               </ProtectedRoute>
             } />
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            } />
+            <Route path="/bookmarks" element={
+              <ProtectedRoute>
+                <Bookmarks />
+              </ProtectedRoute>
+            } />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/faq" element={<FAQ />} />
             <Route path="/guide" element={<Guide />} />
             <Route path="/admin" element={
               <ProtectedRoute>

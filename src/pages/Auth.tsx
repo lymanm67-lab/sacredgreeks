@@ -132,6 +132,15 @@ const Auth = () => {
                     >
                       {isLoading ? 'Signing in...' : 'Sign In'}
                     </Button>
+
+                    <div className="text-center">
+                      <Link
+                        to="/reset-password"
+                        className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        Forgot password?
+                      </Link>
+                    </div>
                   </form>
                 </CardContent>
               </Card>
