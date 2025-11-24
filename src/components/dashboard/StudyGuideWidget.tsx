@@ -1,11 +1,12 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { BookOpen, ArrowRight, CheckCircle2, Share2 } from "lucide-react";
+import { BookOpen, ArrowRight, CheckCircle2, Share2, Award } from "lucide-react";
 import { useStudyProgress } from "@/hooks/use-study-progress";
 import { Link } from "react-router-dom";
 import { studyGuideSessions } from "@/sacredGreeksContent";
 import { ShareCompletionDialog } from "@/components/study-guide/ShareCompletionDialog";
+import { CertificateDialog } from "@/components/study-guide/CertificateDialog";
 import { useState } from "react";
 
 export const StudyGuideWidget = () => {
@@ -18,6 +19,13 @@ export const StudyGuideWidget = () => {
   } = useStudyProgress();
 
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [certificateDialogOpen, setCertificateDialogOpen] = useState(false);
+
+  // Get the most recent completion date
+  const completionDate = progress
+    .filter((p) => p.completed)
+    .sort((a, b) => new Date(b.completed_at).getTime() - new Date(a.completed_at).getTime())[0]
+    ?.completed_at || new Date().toISOString();
 
   if (!isAuthenticated) {
     return (
@@ -93,18 +101,26 @@ export const StudyGuideWidget = () => {
                 You've completed all 5 sessions of the Sacred, Not Sinful study guide. Consider going deeper with the full book or explore coaching with Dr. Lyman.
               </p>
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-3 gap-2">
               <Button
                 onClick={() => setShareDialogOpen(true)}
                 className="bg-sacred hover:bg-sacred/90 text-sacred-foreground"
+                size="sm"
               >
-                <Share2 className="w-4 h-4 mr-2" />
+                <Share2 className="w-3 h-3 mr-1" />
                 Share
               </Button>
+              <Button
+                onClick={() => setCertificateDialogOpen(true)}
+                variant="outline"
+                size="sm"
+              >
+                <Award className="w-3 h-3 mr-1" />
+                Cert
+              </Button>
               <Link to="/study" className="w-full">
-                <Button variant="outline" className="w-full">
-                  Review
-                  <ArrowRight className="w-4 h-4 ml-2" />
+                <Button variant="outline" className="w-full" size="sm">
+                  View
                 </Button>
               </Link>
             </div>
@@ -145,6 +161,11 @@ export const StudyGuideWidget = () => {
       </CardContent>
 
       <ShareCompletionDialog open={shareDialogOpen} onOpenChange={setShareDialogOpen} />
+      <CertificateDialog 
+        open={certificateDialogOpen} 
+        onOpenChange={setCertificateDialogOpen}
+        completionDate={completionDate}
+      />
     </Card>
   );
 };
