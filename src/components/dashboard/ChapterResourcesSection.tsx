@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Users, Heart, BookOpen, ExternalLink } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Users, Heart, BookOpen, ExternalLink, Search } from 'lucide-react';
 
 const chapterResources = [
   {
@@ -27,17 +30,67 @@ const chapterResources = [
 ];
 
 export const ChapterResourcesSection = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedType, setSelectedType] = useState<string | null>(null);
+
+  const resourceTypes = Array.from(new Set(chapterResources.map(r => r.type)));
+
+  const filteredResources = chapterResources.filter(resource => {
+    const matchesSearch = resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         resource.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesType = !selectedType || resource.type === selectedType;
+    return matchesSearch && matchesType;
+  });
+
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 mb-4">
           <Users className="w-5 h-5 text-warm-blue" />
           <CardTitle>Chapter Resources</CardTitle>
         </div>
+        
+        {/* Search and Filter */}
+        <div className="space-y-3">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              placeholder="Search chapter resources..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-9"
+            />
+          </div>
+          
+          <div className="flex flex-wrap gap-2">
+            <Badge
+              variant={selectedType === null ? "default" : "outline"}
+              className="cursor-pointer hover:bg-warm-blue/20"
+              onClick={() => setSelectedType(null)}
+            >
+              All
+            </Badge>
+            {resourceTypes.map(type => (
+              <Badge
+                key={type}
+                variant={selectedType === type ? "default" : "outline"}
+                className="cursor-pointer hover:bg-warm-blue/20"
+                onClick={() => setSelectedType(type)}
+              >
+                {type}
+              </Badge>
+            ))}
+          </div>
+        </div>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-4 md:grid-cols-3">
-          {chapterResources.map((resource, index) => {
+        {filteredResources.length === 0 ? (
+          <div className="text-center py-8 text-muted-foreground">
+            No resources found matching your search.
+          </div>
+        ) : (
+          <div className="grid gap-4 md:grid-cols-3">
+          {filteredResources.map((resource, index) => {
             const Icon = resource.icon;
             return (
               <div key={index} className="p-4 border rounded-lg hover:bg-muted/50 transition-colors">
@@ -77,6 +130,7 @@ export const ChapterResourcesSection = () => {
             );
           })}
         </div>
+        )}
       </CardContent>
     </Card>
   );
