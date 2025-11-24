@@ -103,12 +103,11 @@ export const NotificationSettings = () => {
       // Get service worker registration
       const registration = await navigator.serviceWorker.ready;
 
-      // Subscribe to push notifications
-      // Note: You'll need to generate VAPID keys for production
+      // Subscribe to push notifications using VAPID keys
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(
-          'BEl62iUYgUivxIkv69yViEuiBIa-Ib37J8-fTnkgq7Z-D3yzm_kTv8MsNlYJsNqO3mjfKh2rYl2Kb2nRqDXVqeM'
+          'BIlS2Jw3IDwM_GCSFdDo62G6QBZFnVhbMmhHeu1Cmmog_ZkM_j_JPzhpMlBgU2etR-0kqJptbEZ5PgTV3PGLAUM'
         ),
       });
 
