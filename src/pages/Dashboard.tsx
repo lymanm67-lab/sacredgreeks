@@ -199,7 +199,7 @@ const Dashboard = () => {
               value={stats.devotionalCompleted ? '✓' : '○'}
               subtitle={stats.devotionalCompleted ? 'Completed today' : 'Not yet completed'}
               icon={BookOpen}
-              gradient="from-gold to-secondary"
+              gradient="from-sacred to-secondary"
               delay="0.3s"
             />
             <StatsCard
@@ -239,7 +239,7 @@ const Dashboard = () => {
                 description="Track your prayers and answered requests"
                 icon={MessageSquare}
                 href="/prayer-journal"
-                gradient="from-gold to-secondary"
+                gradient="from-sacred to-secondary"
                 delay="0.3s"
               />
               <QuickActionCard
