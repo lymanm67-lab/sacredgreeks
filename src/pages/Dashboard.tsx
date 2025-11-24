@@ -243,7 +243,7 @@ const Dashboard = () => {
             <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
               Quick Actions
             </h2>
-            <div className="grid gap-4 grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+            <div className="grid gap-4 grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
               <CompactQuickAction
                 title="New Assessment"
                 description="Process a new decision with biblical guidance"
