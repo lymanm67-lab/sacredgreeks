@@ -58,5 +58,8 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+    // Ensure only a single React instance is used to avoid
+    // "Cannot read properties of null (reading 'useState/useContext')" errors.
+    dedupe: ["react", "react-dom"],
   },
 }));
