@@ -4,7 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark, Book, Clock, Lightbulb } from 'lucide-react';
+import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark, Book, Clock, Lightbulb, Video } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { HeroSection } from '@/components/dashboard/HeroSection';
 import { WelcomeVideo } from '@/components/dashboard/WelcomeVideo';
@@ -307,6 +307,14 @@ const Dashboard = () => {
                 href="/did-you-know"
                 gradient="from-warm-blue to-sacred"
                 delay="0.8s"
+              />
+              <QuickActionCard
+                title="Video Gallery"
+                description="Educational videos organized by topic"
+                icon={Video}
+                href="/videos"
+                gradient="from-sacred to-status-low"
+                delay="0.9s"
               />
             </div>
           </div>
