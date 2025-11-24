@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { useState } from "react";
+import { SocialShareDialog } from "@/components/SocialShareDialog";
 
 interface SacredGreeksResultsProps {
   resultType: ResultType;
@@ -383,53 +384,82 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
         </CardContent>
       </Card>
 
-      {/* Share Results */}
+      {/* Social Share & Private Link */}
       {!isSharedView && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Share2 className="w-5 h-5 text-sacred" />
-              Share with Mentor or Accountability Partner
-            </CardTitle>
-            <CardDescription>
-              Generate a private link to share your results with someone you trust
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {shareUrl ? (
-              <div className="space-y-3">
-                <div className="p-3 bg-muted rounded-md break-all text-sm">
-                  {shareUrl}
+        <div className="grid md:grid-cols-2 gap-4">
+          {/* Social Media Share */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Share2 className="w-5 h-5 text-sacred" />
+                Share on Social Media
+              </CardTitle>
+              <CardDescription>
+                Inspire your community by sharing your spiritual journey
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <SocialShareDialog
+                title="I just completed the Sacred Greeks Guide! 🙏"
+                description={`Received biblical guidance for ${scenario}. Growing in wisdom and faith through Christian Greek life.`}
+                hashtags={["SacredGreeks", "GreekLife", "Faith", "ChristianLeadership"]}
+                trigger={
+                  <Button className="w-full bg-sacred hover:bg-sacred/90">
+                    <Share2 className="w-4 h-4 mr-2" />
+                    Share Your Journey
+                  </Button>
+                }
+              />
+            </CardContent>
+          </Card>
+
+          {/* Private Share Link */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Share2 className="w-5 h-5 text-sacred" />
+                Share with Mentor
+              </CardTitle>
+              <CardDescription>
+                Generate a private link for your accountability partner
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {shareUrl ? (
+                <div className="space-y-3">
+                  <div className="p-3 bg-muted rounded-md break-all text-sm">
+                    {shareUrl}
+                  </div>
+                  <Button
+                    onClick={handleShare}
+                    variant="outline"
+                    className="w-full"
+                  >
+                    {copied ? (
+                      <>
+                        <Check className="w-4 h-4 mr-2" />
+                        Link Copied!
+                      </>
+                    ) : (
+                      <>
+                        <Share2 className="w-4 h-4 mr-2" />
+                        Copy Link Again
+                      </>
+                    )}
+                  </Button>
                 </div>
+              ) : (
                 <Button
                   onClick={handleShare}
-                  variant="outline"
-                  className="w-full"
+                  className="w-full bg-sacred hover:bg-sacred/90"
                 >
-                  {copied ? (
-                    <>
-                      <Check className="w-4 h-4 mr-2" />
-                      Link Copied!
-                    </>
-                  ) : (
-                    <>
-                      <Share2 className="w-4 h-4 mr-2" />
-                      Copy Link Again
-                    </>
-                  )}
+                  <Share2 className="w-4 h-4 mr-2" />
+                  Generate Share Link
                 </Button>
-              </div>
-            ) : (
-              <Button
-                onClick={handleShare}
-                className="w-full bg-sacred hover:bg-sacred/90"
-              >
-                <Share2 className="w-4 h-4 mr-2" />
-                Generate Share Link
-              </Button>
-            )}
-          </CardContent>
-        </Card>
+              )}
+            </CardContent>
+          </Card>
+        </div>
       )}
 
       {/* Restart */}
