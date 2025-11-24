@@ -161,13 +161,12 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart }: 
           </CardHeader>
           <CardContent className="space-y-3">
             {content.videos.map((video, index) => (
-              <Button
-                key={index}
-                variant="outline"
-                className="w-full justify-start h-auto py-3 px-4"
-                asChild
-              >
-                <a href={video.url} target="_blank" rel="noopener noreferrer">
+              <div key={index} className="space-y-2">
+                <Button
+                  variant="outline"
+                  className="w-full justify-start h-auto py-3 px-4"
+                  onClick={() => window.open(video.url, '_blank', 'noopener,noreferrer')}
+                >
                   <div className="flex flex-col items-start gap-1 text-left">
                     <span className="font-medium">{video.title}</span>
                     <span className="text-xs text-muted-foreground font-normal">
@@ -175,8 +174,16 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart }: 
                     </span>
                   </div>
                   <ExternalLink className="w-4 h-4 ml-auto flex-shrink-0" />
+                </Button>
+                <a 
+                  href={video.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-xs text-muted-foreground hover:text-sacred transition-colors block px-4"
+                >
+                  {video.url}
                 </a>
-              </Button>
+              </div>
             ))}
           </CardContent>
         </Card>
