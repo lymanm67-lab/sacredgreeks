@@ -1144,6 +1144,11 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
         title: "Pagan Symbols in American Patriotism",
         url: "https://youtu.be/031_jOt2Vmw",
         description: "Understanding the goddess imagery in American civic symbols"
+      },
+      {
+        title: "History of Oaths and Allegiance",
+        url: "https://youtu.be/GbaqBExsqbs",
+        description: "Exploring the ancient roots of oaths, pledges, and civic allegiance ceremonies"
       }
     ],
     items: [
