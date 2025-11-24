@@ -4,7 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark, Book, Clock } from 'lucide-react';
+import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark, Book, Clock, Lightbulb } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { HeroSection } from '@/components/dashboard/HeroSection';
 import { WelcomeVideo } from '@/components/dashboard/WelcomeVideo';
@@ -299,6 +299,14 @@ const Dashboard = () => {
                 href="/achievements"
                 gradient="from-accent to-warm-blue"
                 delay="0.7s"
+              />
+              <QuickActionCard
+                title="Did You Know?"
+                description="Discover Christian practices with pagan roots"
+                icon={Lightbulb}
+                href="/did-you-know"
+                gradient="from-warm-blue to-sacred"
+                delay="0.8s"
               />
             </div>
           </div>

@@ -25,6 +25,21 @@ export interface VideoItem {
   description: string;
 }
 
+export interface DidYouKnowItem {
+  id: string;
+  title: string;
+  origin: string;
+  today: string;
+  reflection: string;
+}
+
+export interface DidYouKnowCategory {
+  id: string;
+  title: string;
+  description: string;
+  items: DidYouKnowItem[];
+}
+
 export interface ResultContent {
   headline: string;
   intro: string;
@@ -920,3 +935,182 @@ export const studyGuideSessions: StudySession[] = [
       "Want to go deeper, read Chapter 5 in Sacred, Not Sinful. Need personal guidance, tap here to explore coaching with Dr. Lyman.",
   },
 ];
+
+export const didYouKnowCategories: DidYouKnowCategory[] = [
+  {
+    id: "medicine-pharmacy",
+    title: "Medicine & Pharmacy",
+    description: "Modern healthcare practices rooted in Greek mythology and pagan symbolism",
+    items: [
+      {
+        id: "caduceus",
+        title: "The Caduceus Medical Symbol",
+        origin: "The caduceus (staff with two snakes) is the symbol of Hermes, Greek god of commerce and thieves. The similar Rod of Asclepius (one snake) represents Asclepius, Greek god of healing. Both are pagan religious symbols still used in modern medicine.",
+        today: "Major medical organizations, hospitals, pharmacies, and healthcare institutions worldwide use these symbols. The American Medical Association, U.S. military medical corps, and countless healthcare brands display them prominently.",
+        reflection: "If Christians can work in hospitals displaying pagan god symbols, prescribe medications from pharmacies with Greek god imagery, and attend medical schools using these emblems, why is wearing Greek letters different?"
+      },
+      {
+        id: "pharmacy-bowl",
+        title: "Bowl of Hygieia",
+        origin: "Hygieia was the Greek goddess of health and cleanliness, daughter of Asclepius. The Bowl of Hygieia (snake wrapped around a chalice) is her symbol and represents pharmaceutical practice.",
+        today: "The American Pharmacists Association and pharmacy schools worldwide use this as their official symbol. It appears on pharmacy signs, diplomas, and professional materials.",
+        reflection: "Christians trust pharmacists who operate under a goddess symbol. They take medications from buildings marked with pagan imagery. Yet BGLOs face scrutiny for far less obvious mythological connections."
+      },
+      {
+        id: "hippocratic-oath",
+        title: "The Hippocratic Oath",
+        origin: "The original oath begins: 'I swear by Apollo the physician, and Asclepius, and Hygieia, and Panacea, and all the gods and goddesses...' It was literally a vow sworn to pagan deities.",
+        today: "Modern medical students still take versions of this oath, though the god references are usually removed. The tradition and name remain tied to its pagan origins.",
+        reflection: "Christian doctors take an oath named after pagan practices without controversy. The medical field's foundation in Greek paganism is accepted as history, not demonic. Why different standards for BGLOs?"
+      }
+    ]
+  },
+  {
+    id: "calendar-holidays",
+    title: "Calendar & Holidays",
+    description: "Times and seasons we observe with clear pagan origins",
+    items: [
+      {
+        id: "days-of-week",
+        title: "Days of the Week",
+        origin: "Monday (Moon's day), Tuesday (Tiw/Mars), Wednesday (Woden/Mercury), Thursday (Thor/Jupiter), Friday (Frigg/Venus), Saturday (Saturn), Sunday (Sun). Each day is named after Roman or Norse deities.",
+        today: "Christians use these pagan names every single day. Church services happen on 'Sunday' (Sun worship day). Businesses, schools, and calendars universally use these terms.",
+        reflection: "We don't rename the weekdays to avoid pagan associations. We understand they're just names now. Why can't Greek letters be understood the same way—historical references that don't determine our worship?"
+      },
+      {
+        id: "months",
+        title: "Months of the Year",
+        origin: "January (Janus, god of beginnings), March (Mars, god of war), May (Maia, goddess of spring), June (Juno, queen of gods). These are direct references to Roman deities.",
+        today: "Birth certificates, legal documents, and church bulletins all use these pagan month names. Christians celebrate birthdays and anniversaries using deity-named months without concern.",
+        reflection: "If naming something after a god automatically makes it demonic, our entire calendar system would be problematic. Context and intent matter."
+      },
+      {
+        id: "christmas-tree",
+        title: "Christmas Trees & Yule Traditions",
+        origin: "Evergreen trees were sacred in pagan winter solstice celebrations. Yule logs, wreaths, and decorating trees were Germanic and Celtic pagan practices to honor nature spirits and ensure spring's return.",
+        today: "Churches proudly display Christmas trees. Christian families decorate them, exchange gifts under them, and post photos. This is seen as celebrating Christ, despite pagan roots.",
+        reflection: "Christians redeemed pagan winter traditions for Christ's birth celebration. The church said intent matters more than origin. Why isn't that grace extended to Greek organizations with historical ties?"
+      },
+      {
+        id: "easter-traditions",
+        title: "Easter Eggs & Spring Symbols",
+        origin: "Eggs and rabbits were fertility symbols in pagan spring festivals honoring Eostre (Germanic goddess) and similar deities. These predated Christian Easter celebrations.",
+        today: "Churches hold Easter egg hunts. Christian families dye eggs, buy chocolate bunnies, and celebrate with these symbols. Few question the pagan origins because the focus is on resurrection.",
+        reflection: "The church transformed pagan spring symbols to point to new life in Christ. If we can Christianize eggs and bunnies, why can't individuals redeem their membership in service organizations?"
+      }
+    ]
+  },
+  {
+    id: "architecture-symbols",
+    title: "Architecture & Church Symbols",
+    description: "Building designs and imagery with pagan heritage",
+    items: [
+      {
+        id: "greek-columns",
+        title: "Greek & Roman Architecture",
+        origin: "Columns, domes, and classical architecture were designed for pagan temples dedicated to Zeus, Jupiter, Athena, and other gods. These styles emerged from idol worship contexts.",
+        today: "Countless church buildings use Greek columns, Roman domes, and classical architecture. The U.S. Supreme Court, Capitol Building, and many churches feature these 'pagan temple' designs.",
+        reflection: "If building style with pagan origins is acceptable for churches and government, why are Greek letters—also historical references—considered uniquely problematic?"
+      },
+      {
+        id: "steeples",
+        title: "Church Steeples",
+        origin: "Scholars trace steeples to ancient obelisks used in sun worship and fertility cults. The spire pointing to the sky has roots in pagan symbolism for connecting earth and heavens.",
+        today: "Most traditional churches have steeples. They're seen as Christian symbols pointing to God, despite questionable origins.",
+        reflection: "Intent and current use transformed pagan architectural elements into Christian symbols. Why isn't the same grace given to those who wear letters with service and community in mind?"
+      },
+      {
+        id: "wedding-rings",
+        title: "Wedding Rings",
+        origin: "Ancient Egyptians, Romans, and Greeks exchanged rings in pagan marriage ceremonies, believing circles held magical protective powers. The ring tradition predates Christianity.",
+        today: "Christian weddings universally include ring exchanges. Pastors bless them. Couples treasure them as symbols of covenant before God.",
+        reflection: "We don't reject wedding rings because pagans used them first. We understand symbols can be redeemed and repurposed. Greek letters can represent service and sisterhood/brotherhood without occult meaning."
+      }
+    ]
+  },
+  {
+    id: "education-institutions",
+    title: "Education & Institutions",
+    description: "Academic traditions with Greek and pagan roots",
+    items: [
+      {
+        id: "university-names",
+        title: "College & University Names",
+        origin: "Harvard's motto 'Veritas' and seal originally included 'Christo et Ecclesiae' but also used Latin and classical references. Many Christian colleges are named after saints—a practice with Catholic/pagan saint veneration roots.",
+        today: "Christian students attend universities with Latin mottos, Greek letters in math and science, and classical references everywhere. No one calls these schools demonic.",
+        reflection: "Education is full of Greek language, mythology references, and classical traditions. We distinguish between using something historically and worshiping it. BGLOs deserve the same nuance."
+      },
+      {
+        id: "academic-regalia",
+        title: "Caps & Gowns",
+        origin: "Academic robes and mortarboards trace back to medieval clergy and ancient scholarly traditions that included pagan influences. The graduation ceremony itself has ritualistic elements.",
+        today: "Christian colleges hold graduation ceremonies with robes, processionals, and ceremonial traditions. Churches celebrate these 'rituals' as rites of passage.",
+        reflection: "Academic ceremonies are full of tradition and symbolism, yet we see them as honoring achievement. Greek probates and traditions can similarly honor service and community."
+      },
+      {
+        id: "greek-alphabet",
+        title: "Greek Alphabet in Academics",
+        origin: "The Greek alphabet itself comes from ancient Greece where these letters were used in pagan texts, mythology, and idol worship contexts.",
+        today: "Math, science, and theology all use Greek letters (Alpha, Beta, Delta, Pi, Omega). Christian scholars study Greek to read the New Testament. Seminaries require it.",
+        reflection: "If Greek letters are acceptable for Bible study and calculus, why are they demonic when used for fraternity/sorority identity? It's the same alphabet, different context."
+      }
+    ]
+  },
+  {
+    id: "language-names",
+    title: "Language & Common Names",
+    description: "Everyday words and names with mythological origins",
+    items: [
+      {
+        id: "planet-names",
+        title: "Planets & Space",
+        origin: "Mercury, Venus, Mars, Jupiter, Saturn, Neptune, Uranus—all named after Roman gods. Pluto is the god of the underworld. We teach these to children.",
+        today: "Christians study astronomy, NASA missions, and space science using these pagan god names. Churches hold VBS programs teaching kids about planets without renaming them.",
+        reflection: "We accept that planet names don't promote worship of Roman gods. They're just names. Greek organization names can be understood the same way."
+      },
+      {
+        id: "common-names",
+        title: "Popular Christian Names",
+        origin: "Diana (Roman moon goddess), Alexander (means 'defender of man'—Greek), Jason (Greek hero from mythology), Daphne (Greek nymph), Iris (Greek goddess), Penelope (Odysseus's wife).",
+        today: "Christian parents name children these names, knowing the origins but choosing them for beauty or family significance. The pagan connection doesn't transfer.",
+        reflection: "If we can name our children after mythological figures because we like the sound or meaning, why can't Greek organizations be joined for service and community despite mythological names?"
+      },
+      {
+        id: "brand-names",
+        title: "Corporate & Brand Names",
+        origin: "Nike (Greek goddess of victory), Amazon (warrior women of mythology), Pandora (first woman in Greek mythology who released evil), Muse (Greek goddesses of arts).",
+        today: "Christians buy from these companies, wear their products, and work for them without spiritual concern. We separate the mythology from the modern business.",
+        reflection: "Commerce freely uses mythological names and imagery. Christians don't avoid these brands. Why are BGLOs held to a different standard?"
+      }
+    ]
+  },
+  {
+    id: "civic-patriotic",
+    title: "Civic & Patriotic Symbols",
+    description: "Government and national imagery with pagan roots",
+    items: [
+      {
+        id: "lady-liberty",
+        title: "Statue of Liberty",
+        origin: "Lady Liberty's design is based on Libertas, the Roman goddess of freedom. The torch, crown, and overall imagery echo pagan goddess worship.",
+        today: "Christians celebrate the Statue of Liberty as an American symbol. Churches display it in patriotic services. It's on currency and government documents.",
+        reflection: "America's most iconic symbol is literally modeled after a pagan goddess, yet Christians embrace it as representing freedom. Context and intent matter."
+      },
+      {
+        id: "lady-justice",
+        title: "Lady Justice",
+        origin: "The blindfolded woman with scales is Themis/Justitia, Greco-Roman goddess of justice. She appears on courthouses worldwide.",
+        today: "Christians serve as judges and lawyers under this imagery. The legal system operates with a goddess symbol, and believers participate without spiritual conflict.",
+        reflection: "If legal professionals can work under goddess imagery, using it to represent justice rather than worship, Greek organizations can use historical symbols for service."
+      },
+      {
+        id: "olympic-torch",
+        title: "Olympic Flame",
+        origin: "The Olympic torch ceremony comes from ancient Greek Olympic games held to honor Zeus. The flame was lit on an altar to him. The modern ceremony intentionally recreates this pagan ritual.",
+        today: "Christian athletes compete in Olympics. Churches celebrate Olympic medalists. The opening ceremony literally recreates a Greek pagan religious ritual on global TV.",
+        reflection: "The Olympics are openly rooted in Greek religious practices, yet participation is celebrated. Why aren't BGLOs, with far less direct religious ties, given the same grace?"
+      }
+    ]
+  }
+];
+
