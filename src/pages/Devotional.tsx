@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Home, BookOpen, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import logo from "@/assets/sacred-greeks-logo.png";
 
 interface Devotional {
   id: string;
@@ -119,15 +118,10 @@ const Devotional = () => {
       <div className="min-h-screen bg-background">
         <header className="border-b border-border bg-card">
           <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
-              <Link to="/dashboard" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
-                <Home className="w-4 h-4" />
-                <span className="text-sm font-medium">Dashboard</span>
-              </Link>
-              <div className="bg-blue-600 rounded-lg p-1.5">
-                <img src={logo} alt="Sacred Greeks" className="h-4 w-auto brightness-0 invert" />
-              </div>
-            </div>
+            <Link to="/dashboard" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
+              <Home className="w-4 h-4" />
+              <span className="text-sm font-medium">Dashboard</span>
+            </Link>
           </div>
         </header>
         <div className="container mx-auto px-4 py-16 text-center">
@@ -143,15 +137,10 @@ const Devotional = () => {
     <div className="min-h-screen bg-background">
       <header className="border-b border-border bg-card">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link to="/dashboard" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
-              <Home className="w-4 h-4" />
-              <span className="text-sm font-medium">Dashboard</span>
-            </Link>
-            <div className="bg-blue-600 rounded-lg p-1.5">
-              <img src={logo} alt="Sacred Greeks" className="h-4 w-auto brightness-0 invert" />
-            </div>
-          </div>
+          <Link to="/dashboard" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
+            <Home className="w-4 h-4" />
+            <span className="text-sm font-medium">Dashboard</span>
+          </Link>
         </div>
       </header>
 

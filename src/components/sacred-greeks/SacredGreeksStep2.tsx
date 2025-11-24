@@ -35,10 +35,9 @@ interface SacredGreeksStep2Props {
   scenario: string;
   onComplete: (answers: Partial<SacredGreeksAnswers>) => void;
   onBack: () => void;
-  isSubmitting?: boolean;
 }
 
-export function SacredGreeksStep2({ scenario, onComplete, onBack, isSubmitting = false }: SacredGreeksStep2Props) {
+export function SacredGreeksStep2({ scenario, onComplete, onBack }: SacredGreeksStep2Props) {
   const { toast } = useToast();
   const [formData, setFormData] = useState<{
     role: string;
@@ -63,6 +62,7 @@ export function SacredGreeksStep2({ scenario, onComplete, onBack, isSubmitting =
     // Honeypot spam detection
     if (honeypot || website) {
       // Bot detected - silently fail
+      console.log("Spam detected");
       return;
     }
 
@@ -313,20 +313,11 @@ export function SacredGreeksStep2({ scenario, onComplete, onBack, isSubmitting =
             </Button>
             <Button
               type="submit"
-              disabled={!isFormValid() || isSubmitting}
+              disabled={!isFormValid()}
               className="bg-sacred hover:bg-sacred/90 text-sacred-foreground"
             >
-              {isSubmitting ? (
-                <>
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                  Saving...
-                </>
-              ) : (
-                <>
-                  See P.R.O.O.F. Guidance
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </>
-              )}
+              See P.R.O.O.F. Guidance
+              <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </div>
         </form>

@@ -9,7 +9,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Heart, Home, Eye, EyeOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import logo from "@/assets/sacred-greeks-logo.png";
 
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -136,8 +135,8 @@ const Auth = () => {
         <div className="flex-1 flex items-center justify-center p-4">
           <div className="w-full max-w-md">
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center mb-4 bg-blue-50 rounded-full p-6">
-                <img src={logo} alt="Sacred Greeks" className="h-16 w-auto" style={{ filter: 'brightness(0) saturate(100%) invert(38%) sepia(98%) saturate(3032%) hue-rotate(207deg) brightness(98%) contrast(97%)' }} />
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sacred/10 mb-4">
+                <Heart className="w-8 h-8 text-sacred" />
               </div>
               <h1 className="text-3xl font-bold mb-2">Reset Password</h1>
               <p className="text-muted-foreground">Enter your new password</p>
@@ -222,8 +221,8 @@ const Auth = () => {
       <div className="flex-1 flex items-center justify-center p-4">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center mb-4 bg-blue-50 rounded-full p-6">
-              <img src={logo} alt="Sacred Greeks" className="h-16 w-auto" style={{ filter: 'brightness(0) saturate(100%) invert(38%) sepia(98%) saturate(3032%) hue-rotate(207deg) brightness(98%) contrast(97%)' }} />
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sacred/10 mb-4">
+              <Heart className="w-8 h-8 text-sacred" />
             </div>
             <h1 className="text-3xl font-bold mb-2">Sacred Greeks</h1>
             <p className="text-muted-foreground">Sign in to save your journey and access daily devotionals</p>
