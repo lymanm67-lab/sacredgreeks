@@ -9,6 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 import { VideoSection } from '@/components/dashboard/VideoSection';
 import { CommunityServiceChecklist } from '@/components/dashboard/CommunityServiceChecklist';
 import { ChapterMeetingNotes } from '@/components/dashboard/ChapterMeetingNotes';
+import { ResourcesSection } from '@/components/dashboard/ResourcesSection';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -280,6 +281,9 @@ const Dashboard = () => {
               </Card>
             </Link>
           </div>
+
+          {/* Essential Resources */}
+          <ResourcesSection />
 
           {/* Videos Section */}
           <VideoSection />
