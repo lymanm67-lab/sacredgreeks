@@ -24,6 +24,13 @@ const resources = [
     category: "Prayer"
   },
   {
+    title: "Servant Leadership in Greek Life: How to Run Your Chapter and Serve",
+    description: "Biblical principles for servant leadership in Greek organizations",
+    url: "https://gamma.app/docs/Servant-Leadership-in-Greek-Life-How-to-Run-Your-Chapter-and-Serv-roah3o2oby0g55s",
+    icon: Users,
+    category: "Leadership"
+  },
+  {
     title: "YouVersion Bible App",
     description: "Free Bible app with reading plans, audio Bibles, and devotionals for daily spiritual growth",
     url: "https://www.bible.com/",
