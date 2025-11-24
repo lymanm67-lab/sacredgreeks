@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { ArrowLeft, BookOpen, MessageCircle, CheckCircle, Check, Edit3, Share2 } from "lucide-react";
+import { ArrowLeft, BookOpen, MessageCircle, CheckCircle, Check, Edit3, Share2, Award } from "lucide-react";
 import { studyGuideSessions } from "@/sacredGreeksContent";
 import { useStudyProgress } from "@/hooks/use-study-progress";
 import { Progress } from "@/components/ui/progress";
@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { StudyReminderSettings } from "@/components/StudyReminderSettings";
 import { ShareCompletionDialog } from "@/components/study-guide/ShareCompletionDialog";
+import { CertificateDialog } from "@/components/study-guide/CertificateDialog";
 
 const StudyGuide = () => {
   const {
@@ -24,12 +25,20 @@ const StudyGuide = () => {
     totalSessions,
     progressPercentage,
     isAuthenticated,
+    progress,
   } = useStudyProgress();
 
   const [notesState, setNotesState] = useState<Record<number, string>>({});
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [certificateDialogOpen, setCertificateDialogOpen] = useState(false);
 
   const isAllComplete = completedCount === totalSessions;
+
+  // Get the most recent completion date
+  const completionDate = progress
+    .filter((p) => p.completed)
+    .sort((a, b) => new Date(b.completed_at).getTime() - new Date(a.completed_at).getTime())[0]
+    ?.completed_at || new Date().toISOString();
 
   const handleNotesChange = (sessionId: number, value: string) => {
     setNotesState((prev) => ({ ...prev, [sessionId]: value }));
@@ -93,14 +102,24 @@ const StudyGuide = () => {
                         : "Mark sessions as complete to track your journey"}
                     </p>
                     {isAllComplete && (
-                      <Button
-                        onClick={() => setShareDialogOpen(true)}
-                        className="w-full bg-sacred hover:bg-sacred/90 text-sacred-foreground"
-                        size="sm"
-                      >
-                        <Share2 className="w-4 h-4 mr-2" />
-                        Share Your Achievement
-                      </Button>
+                      <div className="grid grid-cols-2 gap-2 mt-2">
+                        <Button
+                          onClick={() => setShareDialogOpen(true)}
+                          className="bg-sacred hover:bg-sacred/90 text-sacred-foreground"
+                          size="sm"
+                        >
+                          <Share2 className="w-4 h-4 mr-2" />
+                          Share
+                        </Button>
+                        <Button
+                          onClick={() => setCertificateDialogOpen(true)}
+                          variant="outline"
+                          size="sm"
+                        >
+                          <Award className="w-4 h-4 mr-2" />
+                          Certificate
+                        </Button>
+                      </div>
                     )}
                   </div>
                 </CardContent>
@@ -316,6 +335,13 @@ const StudyGuide = () => {
 
       {/* Share Dialog */}
       <ShareCompletionDialog open={shareDialogOpen} onOpenChange={setShareDialogOpen} />
+      
+      {/* Certificate Dialog */}
+      <CertificateDialog 
+        open={certificateDialogOpen} 
+        onOpenChange={setCertificateDialogOpen}
+        completionDate={completionDate}
+      />
     </div>
   );
 };
