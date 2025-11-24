@@ -18,6 +18,7 @@ import { ChapterResourcesSection } from '@/components/dashboard/ChapterResources
 import { Onboarding } from '@/components/Onboarding';
 import { useOnboarding } from '@/hooks/use-onboarding';
 import { MobileQRCode } from '@/components/MobileQRCode';
+import { StudyGuideWidget } from '@/components/dashboard/StudyGuideWidget';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -220,6 +221,11 @@ const Dashboard = () => {
               gradient="from-status-low to-warm-blue"
               delay="0.4s"
             />
+          </div>
+
+          {/* Study Guide Widget */}
+          <div className="mb-8">
+            <StudyGuideWidget />
           </div>
 
           {/* Quick Actions */}
