@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { SuggestResourceDialog } from '@/components/resources/SuggestResourceDialog';
-import { Users, Heart, BookOpen, ExternalLink, Search, ArrowUpDown } from 'lucide-react';
+import { Users, Heart, BookOpen, ExternalLink, Search, ArrowUpDown, HandHeart } from 'lucide-react';
 
 const chapterResources = [
   {
@@ -35,6 +35,13 @@ export const ChapterResourcesSection = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState('a-z');
+
+  const categoryIcons: Record<string, any> = {
+    'Faith': Heart,
+    'Leadership': Users,
+    'Prayer': BookOpen,
+    'Service': HandHeart,
+  };
 
   const categories = ['Faith', 'Leadership', 'Prayer', 'Service'];
 
@@ -98,16 +105,20 @@ export const ChapterResourcesSection = () => {
             >
               All
             </Badge>
-            {categories.map(category => (
-              <Badge
-                key={category}
-                variant={selectedCategory === category ? "default" : "outline"}
-                className="cursor-pointer hover:bg-warm-blue/20"
-                onClick={() => setSelectedCategory(category)}
-              >
-                {category}
-              </Badge>
-            ))}
+            {categories.map(category => {
+              const CategoryIcon = categoryIcons[category];
+              return (
+                <Badge
+                  key={category}
+                  variant={selectedCategory === category ? "default" : "outline"}
+                  className="cursor-pointer hover:bg-warm-blue/20 flex items-center gap-1.5"
+                  onClick={() => setSelectedCategory(category)}
+                >
+                  <CategoryIcon className="w-3 h-3" />
+                  {category}
+                </Badge>
+              );
+            })}
           </div>
         </div>
       </CardHeader>
