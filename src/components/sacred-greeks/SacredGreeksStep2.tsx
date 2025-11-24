@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -51,8 +51,31 @@ export function SacredGreeksStep2({ scenario, onComplete, onBack }: SacredGreeks
     scenarioSpecific: {},
   });
 
+  // Honeypot spam protection
+  const [honeypot, setHoneypot] = useState("");
+  const [startTime] = useState(Date.now());
+  const [website, setWebsite] = useState(""); // Another honeypot field
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Honeypot spam detection
+    if (honeypot || website) {
+      // Bot detected - silently fail
+      console.log("Spam detected");
+      return;
+    }
+
+    // Timing check - real users take at least 3 seconds
+    const timeSpent = Date.now() - startTime;
+    if (timeSpent < 3000) {
+      toast({
+        title: 'Too Fast',
+        description: 'Please take your time to fill out the form.',
+        variant: 'destructive',
+      });
+      return;
+    }
     
     try {
       assessmentStep2Schema.parse(formData);
@@ -101,6 +124,26 @@ export function SacredGreeksStep2({ scenario, onComplete, onBack }: SacredGreeks
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Honeypot fields - hidden from real users */}
+          <div style={{ position: 'absolute', left: '-9999px', opacity: 0, pointerEvents: 'none' }} aria-hidden="true">
+            <input
+              type="text"
+              name="contact_info"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+            />
+            <input
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+            />
+          </div>
+
           <div className="space-y-2">
             <Label htmlFor="role">Which best describes you?</Label>
             <Select value={formData.role} onValueChange={(value) => setFormData({ ...formData, role: value })}>
