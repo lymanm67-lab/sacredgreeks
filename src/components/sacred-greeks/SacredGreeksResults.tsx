@@ -268,7 +268,7 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart }: 
               className="justify-start"
               asChild
             >
-              <a href="https://sacredgreeks.com/" target="_blank" rel="noopener noreferrer">
+              <a href="https://sacredgreeks.jellypod.ai/" target="_blank" rel="noopener noreferrer">
                 <ExternalLink className="w-4 h-4 mr-2" />
                 Listen to the Sacred Greeks Podcast
               </a>
