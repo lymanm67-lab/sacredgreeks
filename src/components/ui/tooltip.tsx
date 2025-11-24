@@ -1,27 +1,29 @@
-import * as React from "react";
+import { forwardRef } from "react";
+import type { ElementRef, ComponentPropsWithoutRef } from "react";
+import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 
-// Simplified tooltip implementation to avoid invalid hook issues from Radix.
-// This preserves the component API shape but currently renders children
-// without advanced tooltip behavior.
+import { cn } from "@/lib/utils";
 
-const TooltipProvider: React.FC<any> = ({ children }) => <>{children}</>;
+const TooltipProvider = TooltipPrimitive.Provider;
 
-const Tooltip: React.FC<any> = ({ children }) => <>{children}</>;
+const Tooltip = TooltipPrimitive.Root;
 
-const TooltipTrigger: React.FC<any> = ({ children, ...props }) => (
-  <button type={props.type ?? "button"} {...props}>
-    {children}
-  </button>
-);
+const TooltipTrigger = TooltipPrimitive.Trigger;
 
-const TooltipContent = React.forwardRef<HTMLDivElement, any>(
-  ({ children, className, ...props }, ref) => (
-    <div ref={ref} className={className} {...props}>
-      {children}
-    </div>
-  ),
-);
-
-TooltipContent.displayName = "TooltipContent";
+const TooltipContent = forwardRef<
+  ElementRef<typeof TooltipPrimitive.Content>,
+  ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
+>(({ className, sideOffset = 4, ...props }, ref) => (
+  <TooltipPrimitive.Content
+    ref={ref}
+    sideOffset={sideOffset}
+    className={cn(
+      "z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      className,
+    )}
+    {...props}
+  />
+));
+TooltipContent.displayName = TooltipPrimitive.Content.displayName;
 
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };
