@@ -4,28 +4,28 @@ import { Quote } from 'lucide-react';
 
 const testimonials = [
   {
-    name: 'L.L.',
+    name: 'Lyn Lanier',
     org: 'Sigma Gamma Rho Sorority, Inc.',
     initials: 'LL',
-    text: 'This book reassures us that our membership does not make us less Christian, but can actually strengthen our witness as salt and light in spaces the church often overlooks.',
+    text: 'This app reassures us that our membership does not make us less Christian, but can actually strengthen our witness as salt and light in spaces the church often overlooks.',
   },
   {
-    name: 'Dr. L.H.',
+    name: 'Dr. Le-Ann M. Harris',
     org: 'Delta Sigma Theta Sorority Inc.',
     initials: 'LH',
-    text: 'Sacred, Not Sinful is a powerful and much-needed contribution to the ongoing dialogue about faith, culture, and Black Greek Letter Organizations. Dr. Montgomery writes with both theological depth and heartfelt conviction, offering clarity where there has often been confusion.',
+    text: 'Sacred Greeks Life App is a powerful resource for the ongoing dialogue about faith, culture, and Black Greek Letter Organizations. The daily devotionals and P.R.O.O.F. framework offer clarity where there has often been confusion.',
   },
   {
-    name: 'A.A.',
+    name: 'Alexis Allen',
     org: 'Zeta Phi Beta Sorority, Inc.',
     initials: 'AA',
-    text: 'Ignorance has had the mic too long, and this book finally cuts it off. Sacred, Not Sinful gives you receipts, clarity, and confidence to walk boldly in your calling without apology.',
+    text: 'Ignorance has had the mic too long, and this app finally cuts it off. Sacred Greeks gives you biblical guidance, clarity, and confidence to walk boldly in your calling without apology.',
   },
   {
-    name: 'Rev. Dr. D.F.',
+    name: 'Rev. Dr. David Fox',
     org: 'Phi Beta Sigma Fraternity, Inc.',
     initials: 'DF',
-    text: 'Sacred, Not Sinful is a scholarly examination of the cultural significance and theological implications of Black Greek Letters Organizations (BGLOs), advocating for a balanced understanding that reconciles cultural heritage with Christian faith.',
+    text: 'Sacred Greeks Life App provides practical tools and theological depth that help members of Black Greek Letter Organizations reconcile their cultural heritage with Christian faith in their daily lives.',
   },
 ];
 
