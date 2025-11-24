@@ -6,7 +6,7 @@ export const WelcomeVideo = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   
   // Replace this URL with your actual welcome video URL
-  const videoUrl = "https://www.youtube.com/embed/qtDlvE0a9Ok";
+  const videoUrl = "https://www.youtube.com/embed/dslPmKSDJ50";
   
   return (
     <Card className="overflow-hidden border-2 shadow-xl h-full flex flex-col">
