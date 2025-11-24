@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { HeroSection } from '@/components/dashboard/HeroSection';
+import { WelcomeVideo } from '@/components/dashboard/WelcomeVideo';
 import { StatsCard } from '@/components/dashboard/StatsCard';
 import { QuickActionCard } from '@/components/dashboard/QuickActionCard';
 import { VideoSection } from '@/components/dashboard/VideoSection';
@@ -173,6 +174,9 @@ const Dashboard = () => {
 
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-7xl mx-auto space-y-8">
+          {/* Welcome Video */}
+          <WelcomeVideo />
+          
           {/* Hero Section */}
           <HeroSection />
 
