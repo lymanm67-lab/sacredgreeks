@@ -9,6 +9,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useState } from "react";
 import { SocialShareDialog } from "@/components/SocialShareDialog";
 import { AchievementBadgeDialog } from "@/components/AchievementBadgeDialog";
+import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
+import { useExternalLinks } from "@/hooks/use-external-links";
 
 interface SacredGreeksResultsProps {
   resultType: ResultType;
@@ -21,6 +23,7 @@ interface SacredGreeksResultsProps {
 export function SacredGreeksResults({ resultType, scores, answers, onRestart, isSharedView = false }: SacredGreeksResultsProps) {
   const { toast } = useToast();
   const { user } = useAuth();
+  const { openExternalLink } = useExternalLinks();
   const [copied, setCopied] = useState(false);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const scenario = answers.scenario as Scenario;
@@ -246,35 +249,43 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
               <CardTitle className="text-xl">Recommended Videos</CardTitle>
             </div>
             <CardDescription>
-              Click to watch on YouTube. If a video doesn't open, copy the link below and paste it into your browser.
+              Watch these videos to deepen your understanding. Click to view in-app or open in YouTube.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            {content.videos.map((video, index) => (
-              <div key={index} className="space-y-2">
-                <Button
-                  variant="outline"
-                  className="w-full justify-start h-auto py-3 px-4"
-                  onClick={() => window.open(video.url, '_blank', 'noopener,noreferrer')}
-                >
-                  <div className="flex flex-col items-start gap-1 text-left">
-                    <span className="font-medium">{video.title}</span>
-                    <span className="text-xs text-muted-foreground font-normal">
-                      {video.description}
-                    </span>
-                  </div>
-                  <ExternalLink className="w-4 h-4 ml-auto flex-shrink-0" />
-                </Button>
-                <a 
-                  href={video.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-xs text-muted-foreground hover:text-sacred transition-colors block px-4"
-                >
-                  {video.url}
-                </a>
-              </div>
-            ))}
+            {content.videos.map((video, index) => {
+              // Convert YouTube URL to embed format
+              const videoId = video.url.includes('youtu.be') 
+                ? video.url.split('/').pop() 
+                : video.url.split('v=')[1]?.split('&')[0];
+              const embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}` : video.url;
+              
+              return (
+                <ExternalContentModal
+                  key={index}
+                  url={embedUrl}
+                  title={video.title}
+                  description={video.description}
+                  trigger={
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start h-auto py-3 px-4"
+                    >
+                      <div className="flex items-center gap-3 w-full">
+                        <Video className="w-5 h-5 text-sacred flex-shrink-0" />
+                        <div className="flex flex-col items-start gap-1 text-left flex-1">
+                          <span className="font-medium">{video.title}</span>
+                          <span className="text-xs text-muted-foreground font-normal">
+                            {video.description}
+                          </span>
+                        </div>
+                        <ExternalLink className="w-4 h-4 flex-shrink-0 text-muted-foreground" />
+                      </div>
+                    </Button>
+                  }
+                />
+              );
+            })}
           </CardContent>
         </Card>
       )}
@@ -292,12 +303,10 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
             </p>
             <Button
               className="w-full bg-sacred hover:bg-sacred/90 text-sacred-foreground"
-              asChild
+              onClick={() => openExternalLink('https://drlymanmontgomery.involve.me/fmmpa')}
             >
-              <a href="https://drlymanmontgomery.involve.me/fmmpa" target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="w-4 h-4 mr-2" />
-                Take the 5 Persona Types Assessment
-              </a>
+              <ExternalLink className="w-4 h-4 mr-2" />
+              Take the 5 Persona Types Assessment
             </Button>
           </CardContent>
         </Card>
@@ -313,52 +322,42 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
             <Button
               variant="outline"
               className="justify-start"
-              asChild
+              onClick={() => openExternalLink('https://sacredgreeks.com/')}
             >
-              <a href="https://sacredgreeks.com/" target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="w-4 h-4 mr-2" />
-                Visit Sacred Greeks
-              </a>
+              <ExternalLink className="w-4 h-4 mr-2" />
+              Visit Sacred Greeks
             </Button>
             <Button
               variant="outline"
               className="justify-start"
-              asChild
+              onClick={() => openExternalLink('https://sacredgreeks.com/#card-xr13vgv4m5slqey')}
             >
-              <a href="https://sacredgreeks.com/#card-xr13vgv4m5slqey" target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="w-4 h-4 mr-2" />
-                Start Here
-              </a>
+              <ExternalLink className="w-4 h-4 mr-2" />
+              Start Here
             </Button>
             <Button
               variant="outline"
               className="justify-start"
-              asChild
+              onClick={() => openExternalLink('https://a.co/d/5a6Yt9t')}
             >
-              <a href="https://a.co/d/5a6Yt9t" target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="w-4 h-4 mr-2" />
-                Read "Sacred, Not Sinful"
-              </a>
+              <ExternalLink className="w-4 h-4 mr-2" />
+              Read "Sacred, Not Sinful"
             </Button>
             <Button
               variant="outline"
               className="justify-start"
-              asChild
+              onClick={() => openExternalLink('https://gamma.app/docs/Christian-Greek-Life-Study-Guide-ihr8fq0g089n32t')}
             >
-              <a href="https://gamma.app/docs/Christian-Greek-Life-Study-Guide-ihr8fq0g089n32t" target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="w-4 h-4 mr-2" />
-                Use the Christian Greek Life Study Guide
-              </a>
+              <ExternalLink className="w-4 h-4 mr-2" />
+              Use the Christian Greek Life Study Guide
             </Button>
             <Button
               variant="outline"
               className="justify-start"
-              asChild
+              onClick={() => openExternalLink('https://sacredgreeks.jellypod.ai/')}
             >
-              <a href="https://sacredgreeks.jellypod.ai/" target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="w-4 h-4 mr-2" />
-                Listen to the Sacred Greeks Podcast
-              </a>
+              <ExternalLink className="w-4 h-4 mr-2" />
+              Listen to the Sacred Greeks Podcast
             </Button>
           </div>
         </CardContent>

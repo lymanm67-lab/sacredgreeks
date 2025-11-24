@@ -9,6 +9,8 @@ import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Heart, Search, Book, BookOpen, Calendar, ArrowLeft, ExternalLink, Loader2, Sparkles } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { ExternalContentModal } from '@/components/ui/ExternalContentModal';
+import { useExternalLinks } from '@/hooks/use-external-links';
 
 const readingPlans = [
   {
@@ -43,6 +45,7 @@ const readingPlans = [
 const BibleStudy = () => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { openExternalLink } = useExternalLinks();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -278,24 +281,39 @@ const BibleStudy = () => {
                   <div className="pt-4 border-t">
                     <p className="text-sm font-semibold mb-3">External Bible Resources:</p>
                     <div className="grid sm:grid-cols-3 gap-2">
-                      <Button variant="outline" size="sm" asChild>
-                        <a href="https://www.biblegateway.com/" target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="w-3 h-3 mr-2" />
-                          Bible Gateway
-                        </a>
-                      </Button>
-                      <Button variant="outline" size="sm" asChild>
-                        <a href="https://www.bible.com/" target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="w-3 h-3 mr-2" />
-                          YouVersion
-                        </a>
-                      </Button>
-                      <Button variant="outline" size="sm" asChild>
-                        <a href="https://www.blueletterbible.org/" target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="w-3 h-3 mr-2" />
-                          Blue Letter Bible
-                        </a>
-                      </Button>
+                      <ExternalContentModal
+                        url="https://www.biblegateway.com/"
+                        title="Bible Gateway"
+                        description="Search and read the Bible in multiple translations"
+                        trigger={
+                          <Button variant="outline" size="sm" className="w-full">
+                            <ExternalLink className="w-3 h-3 mr-2" />
+                            Bible Gateway
+                          </Button>
+                        }
+                      />
+                      <ExternalContentModal
+                        url="https://www.bible.com/"
+                        title="YouVersion Bible"
+                        description="Read the Bible and access reading plans"
+                        trigger={
+                          <Button variant="outline" size="sm" className="w-full">
+                            <ExternalLink className="w-3 h-3 mr-2" />
+                            YouVersion
+                          </Button>
+                        }
+                      />
+                      <ExternalContentModal
+                        url="https://www.blueletterbible.org/"
+                        title="Blue Letter Bible"
+                        description="Study the Bible with original language tools"
+                        trigger={
+                          <Button variant="outline" size="sm" className="w-full">
+                            <ExternalLink className="w-3 h-3 mr-2" />
+                            Blue Letter Bible
+                          </Button>
+                        }
+                      />
                     </div>
                   </div>
                 </CardContent>
