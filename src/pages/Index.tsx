@@ -86,14 +86,13 @@ const Index = () => {
               ) : (
                 <>
                   <Link to="/auth">
-                    <Button variant="ghost" size="sm" className="hidden sm:inline-flex">
+                    <Button variant="ghost" size="sm">
                       Sign In
                     </Button>
                   </Link>
                   <Link to="/auth">
-                    <Button className="bg-sacred hover:bg-sacred/90 text-sacred-foreground">
-                      Get Started Free
-                      <ArrowRight className="w-4 h-4 ml-2" />
+                    <Button className="bg-sacred hover:bg-sacred/90 text-sacred-foreground" size="sm">
+                      Sign Up
                     </Button>
                   </Link>
                 </>
