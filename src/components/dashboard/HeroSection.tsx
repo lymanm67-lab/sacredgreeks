@@ -58,10 +58,10 @@ export const HeroSection = () => {
           <div className="flex items-start gap-4">
             <div className="text-4xl text-gold">"</div>
             <div className="flex-1">
-              <p className="text-white text-lg leading-relaxed mb-3 italic">
+              <p className="text-foreground text-lg leading-relaxed mb-3 italic font-medium">
                 {dailyScripture.text}
               </p>
-              <p className="text-gold font-semibold">
+              <p className="text-sacred font-semibold">
                 — {dailyScripture.reference}
               </p>
             </div>
