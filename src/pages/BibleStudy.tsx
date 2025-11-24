@@ -11,6 +11,8 @@ import { Heart, Search, Book, BookOpen, Calendar, ArrowLeft, ExternalLink, Loade
 import { useToast } from '@/hooks/use-toast';
 import { ExternalContentModal } from '@/components/ui/ExternalContentModal';
 import { useExternalLinks } from '@/hooks/use-external-links';
+import { usePullToRefresh } from '@/hooks/use-pull-to-refresh';
+import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
 
 const readingPlans = [
   {
@@ -51,6 +53,19 @@ const BibleStudy = () => {
   const [loading, setLoading] = useState(false);
   const [dailyVerse, setDailyVerse] = useState<any>(null);
   const [loadingVerse, setLoadingVerse] = useState(true);
+
+  // Pull to refresh
+  const handleRefresh = async () => {
+    await fetchDailyVerse();
+    toast({
+      title: 'Bible Study refreshed',
+      description: 'Daily verse updated',
+    });
+  };
+
+  const { isPulling, isRefreshing, pullDistance, canRefresh } = usePullToRefresh({
+    onRefresh: handleRefresh
+  });
 
   // Fetch daily verse on component mount
   useEffect(() => {
@@ -122,6 +137,12 @@ const BibleStudy = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
+      <PullToRefreshIndicator 
+        isPulling={isPulling}
+        isRefreshing={isRefreshing}
+        pullDistance={pullDistance}
+        canRefresh={canRefresh}
+      />
       {/* Header */}
       <header className="border-b border-border/50 bg-card/50 backdrop-blur-lg sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">

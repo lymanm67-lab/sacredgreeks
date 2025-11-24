@@ -23,6 +23,8 @@ import { Home, Plus, Check, Trash2, Search, Download } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { prayerJournalSchema } from '@/lib/validation';
 import { useGamification } from '@/hooks/use-gamification';
+import { usePullToRefresh } from '@/hooks/use-pull-to-refresh';
+import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
 
 interface Prayer {
   id: string;
@@ -44,6 +46,19 @@ const PrayerJournal = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const { toast } = useToast();
+
+  // Pull to refresh
+  const handleRefresh = async () => {
+    await loadPrayers();
+    toast({
+      title: 'Prayers refreshed',
+      description: 'Your prayer journal has been updated',
+    });
+  };
+
+  const { isPulling, isRefreshing, pullDistance, canRefresh } = usePullToRefresh({
+    onRefresh: handleRefresh
+  });
 
   useEffect(() => {
     loadPrayers();
@@ -254,6 +269,12 @@ const PrayerJournal = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <PullToRefreshIndicator 
+        isPulling={isPulling}
+        isRefreshing={isRefreshing}
+        pullDistance={pullDistance}
+        canRefresh={canRefresh}
+      />
       <header className="border-b border-border bg-card">
         <div className="container mx-auto px-4 py-4">
           <Link to="/dashboard" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">

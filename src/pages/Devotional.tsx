@@ -11,6 +11,8 @@ import { Label } from '@/components/ui/label';
 import { SocialShareDialog } from '@/components/SocialShareDialog';
 import { AchievementBadgeDialog } from '@/components/AchievementBadgeDialog';
 import { useGamification } from '@/hooks/use-gamification';
+import { usePullToRefresh } from '@/hooks/use-pull-to-refresh';
+import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
 
 interface Devotional {
   id: string;
@@ -33,6 +35,19 @@ const Devotional = () => {
   const [notes, setNotes] = useState('');
   const [savingNotes, setSavingNotes] = useState(false);
   const { toast } = useToast();
+
+  // Pull to refresh
+  const handleRefresh = async () => {
+    await loadDevotional();
+    toast({
+      title: 'Devotional refreshed',
+      description: 'Latest content loaded',
+    });
+  };
+
+  const { isPulling, isRefreshing, pullDistance, canRefresh } = usePullToRefresh({
+    onRefresh: handleRefresh
+  });
 
   useEffect(() => {
     loadDevotional();
@@ -190,6 +205,12 @@ const Devotional = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <PullToRefreshIndicator 
+        isPulling={isPulling}
+        isRefreshing={isRefreshing}
+        pullDistance={pullDistance}
+        canRefresh={canRefresh}
+      />
       <header className="border-b border-border bg-card">
         <div className="container mx-auto px-4 py-4">
           <Link to="/dashboard" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
