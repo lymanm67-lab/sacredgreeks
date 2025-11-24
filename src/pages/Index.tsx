@@ -10,9 +10,16 @@ import logo from "@/assets/sacred-greeks-logo.png";
 
 const features = [
   {
+    title: "Study Guide",
+    description: "5-session biblical study guide on faith and Greek life perfect for groups or personal reflection",
+    icon: BookOpen,
+    link: "/study",
+    color: "text-sacred",
+  },
+  {
     title: "Daily Devotionals",
     description: "Start each day with Scripture-based reflections focused on the P.R.O.O.F. framework",
-    icon: BookOpen,
+    icon: Calendar,
     link: "/devotional",
     color: "text-blue-500",
   },
