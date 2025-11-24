@@ -55,9 +55,20 @@ serve(async (req) => {
   }
 
   try {
+    // Validate service role key to prevent unauthorized access
+    const authHeader = req.headers.get('Authorization')
+    const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+    
+    if (!authHeader || !authHeader.includes(serviceRoleKey || '')) {
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized. Service role key required.' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+      serviceRoleKey ?? ''
     )
 
     const { type, userId, title, body, icon, data } = await req.json()
