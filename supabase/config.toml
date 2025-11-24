@@ -2,3 +2,12 @@ project_id = "mrwbbwdvtndgaewwwdko"
 
 [functions.send-results-email]
 verify_jwt = false
+
+[functions.subscribe-push]
+verify_jwt = true
+
+[functions.send-push-notification]
+verify_jwt = false
+
+[functions.daily-devotional-reminder]
+verify_jwt = false

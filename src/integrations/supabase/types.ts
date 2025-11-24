@@ -257,6 +257,42 @@ export type Database = {
         }
         Relationships: []
       }
+      push_subscriptions: {
+        Row: {
+          auth_key: string
+          created_at: string
+          devotional_reminders: boolean
+          endpoint: string
+          id: string
+          p256dh_key: string
+          prayer_reminders: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          auth_key: string
+          created_at?: string
+          devotional_reminders?: boolean
+          endpoint: string
+          id?: string
+          p256dh_key: string
+          prayer_reminders?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          auth_key?: string
+          created_at?: string
+          devotional_reminders?: boolean
+          endpoint?: string
+          id?: string
+          p256dh_key?: string
+          prayer_reminders?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       rate_limits: {
         Row: {
           created_at: string
