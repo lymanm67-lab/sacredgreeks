@@ -265,6 +265,7 @@ export type Database = {
           endpoint: string
           id: string
           p256dh_key: string
+          prayer_reminder_schedule: string | null
           prayer_reminders: boolean
           updated_at: string
           user_id: string
@@ -276,6 +277,7 @@ export type Database = {
           endpoint: string
           id?: string
           p256dh_key: string
+          prayer_reminder_schedule?: string | null
           prayer_reminders?: boolean
           updated_at?: string
           user_id: string
@@ -287,6 +289,7 @@ export type Database = {
           endpoint?: string
           id?: string
           p256dh_key?: string
+          prayer_reminder_schedule?: string | null
           prayer_reminders?: boolean
           updated_at?: string
           user_id?: string

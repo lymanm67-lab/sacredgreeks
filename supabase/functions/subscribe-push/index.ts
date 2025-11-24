@@ -48,7 +48,7 @@ serve(async (req) => {
         auth_key: subscription.keys.auth,
         p256dh_key: subscription.keys.p256dh,
         devotional_reminders: preferences?.devotionalReminders ?? true,
-        prayer_reminders: preferences?.prayerReminders ?? true,
+        prayer_reminder_schedule: preferences?.prayerReminderSchedule ?? 'none',
       }, {
         onConflict: 'endpoint'
       })

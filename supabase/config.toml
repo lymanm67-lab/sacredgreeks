@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.daily-devotional-reminder]
 verify_jwt = false
+
+[functions.prayer-journal-reminder]
+verify_jwt = false
