@@ -9,7 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 import { HeroSection } from '@/components/dashboard/HeroSection';
 import { WelcomeVideo } from '@/components/dashboard/WelcomeVideo';
 import { StatsCard } from '@/components/dashboard/StatsCard';
-import { QuickActionCard } from '@/components/dashboard/QuickActionCard';
+import { CompactQuickAction } from '@/components/dashboard/CompactQuickAction';
 import { VideoSection } from '@/components/dashboard/VideoSection';
 import { CommunityServiceChecklist } from '@/components/dashboard/CommunityServiceChecklist';
 import { ChapterMeetingNotes } from '@/components/dashboard/ChapterMeetingNotes';
@@ -243,8 +243,8 @@ const Dashboard = () => {
             <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
               Quick Actions
             </h2>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              <QuickActionCard
+            <div className="grid gap-4 grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+              <CompactQuickAction
                 title="New Assessment"
                 description="Process a new decision with biblical guidance"
                 icon={Heart}
@@ -252,7 +252,7 @@ const Dashboard = () => {
                 gradient="from-sacred to-warm-blue"
                 delay="0.1s"
               />
-              <QuickActionCard
+              <CompactQuickAction
                 title="Daily Devotional"
                 description="Read today's reflection and scripture"
                 icon={BookOpen}
@@ -260,7 +260,7 @@ const Dashboard = () => {
                 gradient="from-warm-blue to-accent"
                 delay="0.2s"
               />
-              <QuickActionCard
+              <CompactQuickAction
                 title="Prayer Journal"
                 description="Track your prayers and answered requests"
                 icon={MessageSquare}
@@ -268,7 +268,7 @@ const Dashboard = () => {
                 gradient="from-sacred to-secondary"
                 delay="0.3s"
               />
-              <QuickActionCard
+              <CompactQuickAction
                 title="Bible Study"
                 description="Search Scripture and explore reading plans"
                 icon={Book}
@@ -276,7 +276,7 @@ const Dashboard = () => {
                 gradient="from-accent to-sacred"
                 delay="0.4s"
               />
-              <QuickActionCard
+              <CompactQuickAction
                 title="Bookmarks"
                 description="Access your saved resources"
                 icon={Bookmark}
@@ -284,7 +284,7 @@ const Dashboard = () => {
                 gradient="from-warm-blue to-status-low"
                 delay="0.5s"
               />
-              <QuickActionCard
+              <CompactQuickAction
                 title="Service Hours"
                 description="Track community service activities"
                 icon={Clock}
@@ -292,7 +292,7 @@ const Dashboard = () => {
                 gradient="from-secondary to-accent"
                 delay="0.6s"
               />
-              <QuickActionCard
+              <CompactQuickAction
                 title="Achievements"
                 description="View your progress and unlocked badges"
                 icon={TrendingUp}
@@ -300,7 +300,7 @@ const Dashboard = () => {
                 gradient="from-accent to-warm-blue"
                 delay="0.7s"
               />
-              <QuickActionCard
+              <CompactQuickAction
                 title="Did You Know?"
                 description="Discover Christian practices with pagan roots and educational videos"
                 icon={Lightbulb}
