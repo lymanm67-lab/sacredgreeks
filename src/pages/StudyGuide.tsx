@@ -10,6 +10,7 @@ import { Progress } from "@/components/ui/progress";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
+import { StudyReminderSettings } from "@/components/StudyReminderSettings";
 
 const StudyGuide = () => {
   const {
@@ -250,7 +251,9 @@ const StudyGuide = () => {
         </div>
 
         {/* CTA Section */}
-        <div className="max-w-4xl mx-auto mt-12">
+        <div className="max-w-4xl mx-auto mt-12 space-y-6">
+          {isAuthenticated && <StudyReminderSettings />}
+          
           <Card className="bg-gradient-to-br from-sacred/5 to-sacred/10 border-sacred/20">
             <CardHeader className="text-center space-y-4">
               <CardTitle className="text-2xl md:text-3xl">
