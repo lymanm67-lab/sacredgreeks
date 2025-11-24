@@ -43,9 +43,9 @@ export const Testimonials = () => {
             </p>
           </div>
 
-          {/* Video Testimonial */}
-          <div className="mb-12 animate-fade-in max-w-3xl mx-auto">
-            <Card className="overflow-hidden border-2 border-sacred/20">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
+            {/* Video Testimonial */}
+            <Card className="overflow-hidden border-2 border-sacred/20 animate-fade-in">
               <CardContent className="p-0">
                 <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                   <iframe
@@ -62,9 +62,7 @@ export const Testimonials = () => {
                 </div>
               </CardContent>
             </Card>
-          </div>
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
             {testimonials.map((testimonial, index) => (
               <Card
                 key={index}
