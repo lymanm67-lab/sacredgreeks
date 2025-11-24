@@ -10,6 +10,7 @@ import { Heart, Home, Eye, EyeOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { z } from 'zod';
+import { PasswordStrengthIndicator } from '@/components/PasswordStrengthIndicator';
 
 const authSchema = z.object({
   email: z.string().email('Invalid email address').max(255, 'Email must be less than 255 characters'),
@@ -31,6 +32,8 @@ const Auth = () => {
   const [isResetMode, setIsResetMode] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [signupPassword, setSignupPassword] = useState('');
+  const [resetPassword, setResetPassword] = useState('');
   const { signUp, signIn } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -198,9 +201,11 @@ const Auth = () => {
                         name="password"
                         type={showPassword ? "text" : "password"}
                         placeholder="••••••••"
-                        minLength={6}
+                        minLength={8}
                         required
                         className="pr-10"
+                        value={resetPassword}
+                        onChange={(e) => setResetPassword(e.target.value)}
                       />
                       <button
                         type="button"
@@ -210,6 +215,7 @@ const Auth = () => {
                         {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                       </button>
                     </div>
+                    <PasswordStrengthIndicator password={resetPassword} />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="confirmPassword">Confirm Password</Label>
@@ -370,9 +376,11 @@ const Auth = () => {
                           name="password"
                           type={showPassword ? "text" : "password"}
                           placeholder="••••••••"
-                          minLength={6}
+                          minLength={8}
                           required
                           className="pr-10"
+                          value={signupPassword}
+                          onChange={(e) => setSignupPassword(e.target.value)}
                         />
                         <button
                           type="button"
@@ -382,6 +390,7 @@ const Auth = () => {
                           {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                         </button>
                       </div>
+                      <PasswordStrengthIndicator password={signupPassword} />
                     </div>
                     <Button
                       type="submit"
