@@ -977,13 +977,6 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
     id: "calendar-holidays",
     title: "Calendar & Holidays",
     description: "Times and seasons we observe with clear pagan origins",
-    videos: [
-      {
-        title: "Story of Birthday Cakes",
-        url: "https://youtu.be/rr639o9Gev0",
-        description: "The ancient pagan origins of birthday celebrations and cake traditions"
-      }
-    ],
     items: [
       {
         id: "days-of-week",
@@ -1024,11 +1017,6 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
         title: "Pagan Architecture in Churches",
         url: "https://youtu.be/G14XXWLKq5Q",
         description: "How Greek and Roman temple designs became standard for Christian buildings"
-      },
-      {
-        title: "The Circle of Promise: Origins of the Wedding Ring",
-        url: "https://youtu.be/CN11FQ7tanU",
-        description: "Exploring the pagan origins of wedding rings and how Christians embrace this tradition"
       }
     ],
     items: [
