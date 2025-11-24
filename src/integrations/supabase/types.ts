@@ -412,6 +412,7 @@ export type Database = {
           created_at: string | null
           date: string
           devotional_completed: boolean | null
+          devotional_notes: string | null
           id: string
           journal_entries_count: number | null
           user_id: string
@@ -421,6 +422,7 @@ export type Database = {
           created_at?: string | null
           date: string
           devotional_completed?: boolean | null
+          devotional_notes?: string | null
           id?: string
           journal_entries_count?: number | null
           user_id: string
@@ -430,6 +432,7 @@ export type Database = {
           created_at?: string | null
           date?: string
           devotional_completed?: boolean | null
+          devotional_notes?: string | null
           id?: string
           journal_entries_count?: number | null
           user_id?: string
