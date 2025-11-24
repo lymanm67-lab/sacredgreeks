@@ -67,22 +67,22 @@ export const Testimonials = () => {
               <Card
                 key={index}
                 className="relative hover:shadow-xl transition-all duration-300 border-2 hover:border-sacred/30 hover:scale-105 animate-fade-in"
-                style={{ animationDelay: `${index * 0.15}s` }}
+                style={{ animationDelay: `${(index + 1) * 0.15}s` }}
               >
-                <CardContent className="pt-6">
-                  <Quote className="w-10 h-10 text-sacred/20 mb-4 transition-transform duration-300 hover:scale-110" />
-                  <p className="text-lg mb-6 leading-relaxed italic">
+                <CardContent className="pt-4 pb-4">
+                  <Quote className="w-8 h-8 text-sacred/20 mb-3 transition-transform duration-300 hover:scale-110" />
+                  <p className="text-base mb-4 leading-relaxed italic">
                     "{testimonial.text}"
                   </p>
                   <div className="flex items-center gap-3">
-                    <Avatar className="w-12 h-12 bg-sacred/10 transition-transform duration-300 hover:scale-110">
-                      <AvatarFallback className="bg-sacred/20 text-sacred font-semibold">
+                    <Avatar className="w-10 h-10 bg-sacred/10 transition-transform duration-300 hover:scale-110">
+                      <AvatarFallback className="bg-sacred/20 text-sacred font-semibold text-sm">
                         {testimonial.initials}
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="font-semibold">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="font-semibold text-sm">{testimonial.name}</p>
+                      <p className="text-xs text-muted-foreground">
                         {testimonial.org}
                       </p>
                     </div>
