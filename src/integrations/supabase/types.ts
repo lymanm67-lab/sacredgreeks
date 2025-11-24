@@ -406,6 +406,39 @@ export type Database = {
           },
         ]
       }
+      study_session_progress: {
+        Row: {
+          completed: boolean
+          completed_at: string
+          created_at: string
+          id: string
+          notes: string | null
+          session_id: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean
+          completed_at?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          session_id: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed?: boolean
+          completed_at?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          session_id?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_progress: {
         Row: {
           assessments_count: number | null

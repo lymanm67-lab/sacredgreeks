@@ -3,10 +3,22 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { ArrowLeft, BookOpen, MessageCircle, CheckCircle } from "lucide-react";
+import { ArrowLeft, BookOpen, MessageCircle, CheckCircle, Check } from "lucide-react";
 import { studyGuideSessions } from "@/sacredGreeksContent";
+import { useStudyProgress } from "@/hooks/use-study-progress";
+import { Progress } from "@/components/ui/progress";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const StudyGuide = () => {
+  const {
+    isSessionComplete,
+    toggleSession,
+    completedCount,
+    totalSessions,
+    progressPercentage,
+    isAuthenticated,
+  } = useStudyProgress();
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-muted/30 to-background">
       {/* Header */}
@@ -42,6 +54,29 @@ const StudyGuide = () => {
             Perfect for personal study, small groups, or chapter discussions.
           </p>
 
+          {isAuthenticated && (
+            <div className="max-w-md mx-auto mb-8">
+              <Card className="bg-card/50 backdrop-blur border-sacred/20">
+                <CardContent className="pt-6">
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">Your Progress</span>
+                      <span className="font-semibold text-sacred">
+                        {completedCount} / {totalSessions} Sessions
+                      </span>
+                    </div>
+                    <Progress value={progressPercentage} className="h-2" />
+                    <p className="text-xs text-center text-muted-foreground">
+                      {completedCount === totalSessions
+                        ? "🎉 Congratulations! You've completed all sessions!"
+                        : "Mark sessions as complete to track your journey"}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
           <div className="flex flex-wrap justify-center gap-4 pt-4">
             <div className="flex items-center gap-2 text-muted-foreground">
               <CheckCircle className="w-5 h-5 text-sacred" />
@@ -64,11 +99,41 @@ const StudyGuide = () => {
             <Card key={session.id} className="border-2 hover:border-sacred/50 transition-all animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
               <CardHeader>
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-sacred text-sacred-foreground flex items-center justify-center font-bold text-lg flex-shrink-0">
-                    {session.id}
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0 transition-all ${
+                    isSessionComplete(session.id)
+                      ? "bg-sacred text-sacred-foreground"
+                      : "bg-muted text-muted-foreground"
+                  }`}>
+                    {isSessionComplete(session.id) ? (
+                      <Check className="w-6 h-6" />
+                    ) : (
+                      session.id
+                    )}
                   </div>
                   <div className="flex-1">
-                    <CardTitle className="text-2xl mb-2">{session.title}</CardTitle>
+                    <div className="flex items-start justify-between gap-4 mb-2">
+                      <CardTitle className="text-2xl">{session.title}</CardTitle>
+                      {isAuthenticated && (
+                        <div className="flex items-center gap-2 pt-1">
+                          <Checkbox
+                            id={`session-${session.id}`}
+                            checked={isSessionComplete(session.id)}
+                            onCheckedChange={(checked) =>
+                              toggleSession({
+                                sessionId: session.id,
+                                completed: checked as boolean,
+                              })
+                            }
+                          />
+                          <label
+                            htmlFor={`session-${session.id}`}
+                            className="text-sm text-muted-foreground cursor-pointer select-none"
+                          >
+                            Complete
+                          </label>
+                        </div>
+                      )}
+                    </div>
                     <CardDescription className="text-base italic">
                       Theme: {session.theme}
                     </CardDescription>
