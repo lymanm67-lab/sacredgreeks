@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Heart, Home, Eye, EyeOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -34,6 +35,8 @@ const Auth = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [signupPassword, setSignupPassword] = useState('');
   const [resetPassword, setResetPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+  const [savedEmail, setSavedEmail] = useState('');
   const { signUp, signIn } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -42,6 +45,13 @@ const Auth = () => {
     const mode = searchParams.get('mode');
     if (mode === 'reset') {
       setIsResetMode(true);
+    }
+    
+    // Load saved email from localStorage
+    const savedEmailValue = localStorage.getItem('rememberedEmail');
+    if (savedEmailValue) {
+      setSavedEmail(savedEmailValue);
+      setRememberMe(true);
     }
   }, [searchParams]);
 
@@ -95,6 +105,13 @@ const Auth = () => {
 
     try {
       const validated = authSchema.parse({ email, password });
+
+      // Save or remove email based on "Remember me" checkbox
+      if (rememberMe) {
+        localStorage.setItem('rememberedEmail', validated.email);
+      } else {
+        localStorage.removeItem('rememberedEmail');
+      }
 
       const { error } = await signIn(validated.email, validated.password);
 
@@ -296,6 +313,7 @@ const Auth = () => {
                         name="email"
                         type="email"
                         placeholder="you@example.com"
+                        defaultValue={savedEmail}
                         required
                       />
                     </div>
@@ -318,6 +336,19 @@ const Auth = () => {
                           {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                         </button>
                       </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="remember-me"
+                        checked={rememberMe}
+                        onCheckedChange={(checked) => setRememberMe(checked as boolean)}
+                      />
+                      <Label
+                        htmlFor="remember-me"
+                        className="text-sm font-normal cursor-pointer"
+                      >
+                        Remember my email
+                      </Label>
                     </div>
                     <Button
                       type="submit"
