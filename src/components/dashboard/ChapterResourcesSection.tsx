@@ -35,6 +35,13 @@ const chapterResources = [
     url: "https://gamma.app/docs/Sacred-Comfort-How-To-Pray-For-And-Walk-With-Fraternity-And-Soror-ccgepyu7je8fpav",
     icon: BookOpen,
     category: "Prayer"
+  },
+  {
+    title: "Sacred Service: Planning Community Projects with Your Chapter",
+    description: "Comprehensive guide for organizing impactful community service projects with biblical principles",
+    url: "https://gamma.app/docs/Sacred-Service-Planning-Community-Projects-with-Your-Chapter-28f7a9bc5w5jghb",
+    icon: HandHeart,
+    category: "Service"
   }
 ];
 
