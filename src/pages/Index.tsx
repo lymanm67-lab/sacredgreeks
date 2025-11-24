@@ -122,9 +122,6 @@ const Index = () => {
               >
                 SacredGreeks.com
               </a>
-              <Link to="/faq" className="text-muted-foreground hover:text-sacred transition-colors">
-                FAQ
-              </Link>
               <Link to="/privacy" className="text-muted-foreground hover:text-sacred transition-colors">
                 Privacy Policy
               </Link>
