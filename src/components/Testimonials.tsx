@@ -43,6 +43,27 @@ export const Testimonials = () => {
             </p>
           </div>
 
+          {/* Video Testimonial */}
+          <div className="mb-12 animate-fade-in">
+            <Card className="overflow-hidden border-2 border-sacred/20">
+              <CardContent className="p-0">
+                <div className="aspect-video">
+                  <iframe
+                    className="w-full h-full"
+                    src="https://www.youtube.com/embed/EoE-zwi0Mgw"
+                    title="Chris Reed Testimonial"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+                <div className="p-6 bg-card">
+                  <p className="font-semibold text-lg mb-1">Chris Reed</p>
+                  <p className="text-sm text-muted-foreground">Video Testimonial</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
             {testimonials.map((testimonial, index) => (
               <Card
