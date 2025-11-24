@@ -11,6 +11,7 @@ import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import Devotional from "./pages/Devotional";
 import PrayerJournal from "./pages/PrayerJournal";
+import AssessmentHistory from "./pages/AssessmentHistory";
 import Guide from "./pages/Guide";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
@@ -43,8 +44,17 @@ const App = () => (
                 <PrayerJournal />
               </ProtectedRoute>
             } />
+            <Route path="/assessment-history" element={
+              <ProtectedRoute>
+                <AssessmentHistory />
+              </ProtectedRoute>
+            } />
             <Route path="/guide" element={<Guide />} />
-            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin" element={
+              <ProtectedRoute>
+                <Admin />
+              </ProtectedRoute>
+            } />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

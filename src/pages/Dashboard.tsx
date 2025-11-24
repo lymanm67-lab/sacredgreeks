@@ -3,68 +3,116 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Home, BookOpen, Heart, Calendar, TrendingUp, LogOut } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
-interface AssessmentHistory {
-  id: string;
-  scenario: string;
-  result_type: string;
-  created_at: string;
-}
-
-interface TodaysDevotional {
-  id: string;
-  title: string;
-  scripture_ref: string;
-  proof_focus: string;
+interface DashboardStats {
+  assessmentCount: number;
+  prayerCount: number;
+  devotionalCompleted: boolean;
+  currentStreak: number;
 }
 
 const Dashboard = () => {
   const { user, signOut } = useAuth();
-  const [assessments, setAssessments] = useState<AssessmentHistory[]>([]);
-  const [devotional, setDevotional] = useState<TodaysDevotional | null>(null);
-  const [prayerCount, setPrayerCount] = useState(0);
-  const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const [stats, setStats] = useState<DashboardStats>({
+    assessmentCount: 0,
+    prayerCount: 0,
+    devotionalCompleted: false,
+    currentStreak: 0,
+  });
+  const [recentAssessments, setRecentAssessments] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadDashboardData();
+    if (user) {
+      loadDashboardData();
+    }
   }, [user]);
 
   const loadDashboardData = async () => {
     if (!user) return;
 
     try {
-      // Load recent assessments
-      const { data: assessmentsData } = await supabase
+      const today = new Date().toISOString().split('T')[0];
+
+      // Load assessment count
+      const { count: assessmentCount } = await supabase
         .from('assessment_submissions')
-        .select('id, scenario, result_type, created_at')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false })
-        .limit(5);
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user.id);
 
-      if (assessmentsData) setAssessments(assessmentsData);
-
-      // Load today's devotional
-      const { data: devotionalData } = await supabase
-        .from('daily_devotionals')
-        .select('id, title, scripture_ref, proof_focus')
-        .eq('date', new Date().toISOString().split('T')[0])
-        .maybeSingle();
-
-      if (devotionalData) setDevotional(devotionalData);
-
-      // Load prayer journal count
-      const { count } = await supabase
+      // Load prayer count
+      const { count: prayerCount } = await supabase
         .from('prayer_journal')
         .select('*', { count: 'exact', head: true })
         .eq('user_id', user.id);
 
-      if (count) setPrayerCount(count);
+      // Check today's devotional completion
+      const { data: progressData } = await supabase
+        .from('user_progress')
+        .select('devotional_completed')
+        .eq('user_id', user.id)
+        .eq('date', today)
+        .maybeSingle();
+
+      // Load recent assessments
+      const { data: assessments } = await supabase
+        .from('assessment_submissions')
+        .select('id, created_at, scenario, result_type')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(3);
+
+      // Calculate streak
+      const { data: progressHistory } = await supabase
+        .from('user_progress')
+        .select('date, devotional_completed')
+        .eq('user_id', user.id)
+        .eq('devotional_completed', true)
+        .order('date', { ascending: false })
+        .limit(30);
+
+      let streak = 0;
+      if (progressHistory && progressHistory.length > 0) {
+        const sortedDates = progressHistory.map(p => new Date(p.date));
+        const todayDate = new Date();
+        todayDate.setHours(0, 0, 0, 0);
+
+        for (let i = 0; i < sortedDates.length; i++) {
+          const checkDate = new Date(todayDate);
+          checkDate.setDate(checkDate.getDate() - i);
+          
+          const hasEntry = sortedDates.some(d => 
+            d.getFullYear() === checkDate.getFullYear() &&
+            d.getMonth() === checkDate.getMonth() &&
+            d.getDate() === checkDate.getDate()
+          );
+
+          if (hasEntry) {
+            streak++;
+          } else {
+            break;
+          }
+        }
+      }
+
+      setStats({
+        assessmentCount: assessmentCount || 0,
+        prayerCount: prayerCount || 0,
+        devotionalCompleted: progressData?.devotional_completed || false,
+        currentStreak: streak,
+      });
+      setRecentAssessments(assessments || []);
     } catch (error) {
-      console.error('Error loading dashboard:', error);
+      console.error('Error loading dashboard data:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to load dashboard data',
+        variant: 'destructive',
+      });
     } finally {
       setLoading(false);
     }
@@ -76,24 +124,6 @@ const Dashboard = () => {
       title: 'Signed out',
       description: 'You have been signed out successfully.',
     });
-  };
-
-  const getScenarioLabel = (scenario: string) => {
-    const labels: Record<string, string> = {
-      clip: 'Clip/Sermon',
-      pressure: 'Pressure',
-      event: 'Event Planning'
-    };
-    return labels[scenario] || scenario;
-  };
-
-  const getResultLabel = (resultType: string) => {
-    const labels: Record<string, string> = {
-      steady_language: 'Steady Language',
-      high_pressure: 'High Pressure',
-      ministry_idea: 'Ministry Idea'
-    };
-    return labels[resultType] || resultType;
   };
 
   if (loading) {
@@ -114,8 +144,8 @@ const Dashboard = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
-                <Home className="w-4 h-4" />
-                <span className="text-sm font-medium">Home</span>
+                <Heart className="w-5 h-5 text-sacred" />
+                <span className="font-semibold">Sacred Greeks</span>
               </Link>
             </div>
             <div className="flex items-center gap-4">
@@ -132,9 +162,64 @@ const Dashboard = () => {
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto space-y-8">
           {/* Welcome Section */}
-          <div className="text-center space-y-2">
-            <h1 className="text-4xl font-bold">Welcome back!</h1>
+          <div>
+            <h1 className="text-4xl font-bold mb-2">Welcome back!</h1>
             <p className="text-xl text-muted-foreground">Continue your spiritual journey</p>
+          </div>
+
+          {/* Stats Grid */}
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium">Assessments</CardTitle>
+                <FileText className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{stats.assessmentCount}</div>
+                <p className="text-xs text-muted-foreground">
+                  Total completed
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium">Prayers</CardTitle>
+                <MessageSquare className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{stats.prayerCount}</div>
+                <p className="text-xs text-muted-foreground">
+                  In your journal
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium">Today's Devotional</CardTitle>
+                <BookOpen className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{stats.devotionalCompleted ? '✓' : '○'}</div>
+                <p className="text-xs text-muted-foreground">
+                  {stats.devotionalCompleted ? 'Completed today' : 'Not yet completed'}
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium">Current Streak</CardTitle>
+                <TrendingUp className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{stats.currentStreak}</div>
+                <p className="text-xs text-muted-foreground">
+                  Days in a row
+                </p>
+              </CardContent>
+            </Card>
           </div>
 
           {/* Quick Actions */}
@@ -146,7 +231,7 @@ const Dashboard = () => {
                     <Heart className="w-6 h-6 text-sacred" />
                   </div>
                   <CardTitle>New Assessment</CardTitle>
-                  <CardDescription>Process a new decision or situation</CardDescription>
+                  <p className="text-sm text-muted-foreground">Process a new decision or situation</p>
                 </CardHeader>
               </Card>
             </Link>
@@ -158,9 +243,7 @@ const Dashboard = () => {
                     <BookOpen className="w-6 h-6 text-sacred" />
                   </div>
                   <CardTitle>Daily Devotional</CardTitle>
-                  <CardDescription>
-                    {devotional ? devotional.title : 'Read today\'s reflection'}
-                  </CardDescription>
+                  <p className="text-sm text-muted-foreground">Read today's reflection</p>
                 </CardHeader>
               </Card>
             </Link>
@@ -169,55 +252,54 @@ const Dashboard = () => {
               <Card className="h-full hover:shadow-lg hover:border-sacred/50 transition-all cursor-pointer">
                 <CardHeader>
                   <div className="w-12 h-12 rounded-full bg-sacred/10 flex items-center justify-center mb-2">
-                    <Calendar className="w-6 h-6 text-sacred" />
+                    <MessageSquare className="w-6 h-6 text-sacred" />
                   </div>
                   <CardTitle>Prayer Journal</CardTitle>
-                  <CardDescription>
-                    {prayerCount} {prayerCount === 1 ? 'prayer' : 'prayers'} recorded
-                  </CardDescription>
+                  <p className="text-sm text-muted-foreground">Record and track prayers</p>
                 </CardHeader>
               </Card>
             </Link>
           </div>
 
           {/* Recent Assessments */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
+          {recentAssessments.length > 0 && (
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
                   <CardTitle>Recent Assessments</CardTitle>
-                  <CardDescription>Your latest decision guides</CardDescription>
+                  <Link to="/assessment-history">
+                    <Button variant="outline" size="sm">View All</Button>
+                  </Link>
                 </div>
-                <TrendingUp className="w-5 h-5 text-sacred" />
-              </div>
-            </CardHeader>
-            <CardContent>
-              {assessments.length === 0 ? (
-                <p className="text-center text-muted-foreground py-8">
-                  No assessments yet. <Link to="/guide" className="text-sacred hover:underline">Take your first one!</Link>
-                </p>
-              ) : (
-                <div className="space-y-3">
-                  {assessments.map((assessment) => (
-                    <div
-                      key={assessment.id}
-                      className="flex items-center justify-between p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors"
-                    >
-                      <div>
-                        <p className="font-medium">{getScenarioLabel(assessment.scenario)}</p>
-                        <p className="text-sm text-muted-foreground">
-                          Result: {getResultLabel(assessment.result_type)}
-                        </p>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {recentAssessments.map((assessment) => (
+                    <div key={assessment.id} className="flex items-center justify-between py-2 border-b last:border-0">
+                      <div className="flex items-center gap-3">
+                        <Calendar className="w-4 h-4 text-muted-foreground" />
+                        <div>
+                          <p className="text-sm font-medium capitalize">
+                            {assessment.scenario.replace('_', ' ')}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {new Date(assessment.created_at).toLocaleDateString()}
+                          </p>
+                        </div>
                       </div>
-                      <p className="text-sm text-muted-foreground">
-                        {new Date(assessment.created_at).toLocaleDateString()}
-                      </p>
+                      <span className={`text-xs px-2 py-1 rounded ${
+                        assessment.result_type === 'high_risk' ? 'bg-status-high/10 text-status-high' :
+                        assessment.result_type === 'medium_risk' ? 'bg-status-medium/10 text-status-medium' :
+                        'bg-status-low/10 text-status-low'
+                      }`}>
+                        {assessment.result_type.replace('_', ' ')}
+                      </span>
                     </div>
                   ))}
                 </div>
-              )}
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </main>
     </div>
