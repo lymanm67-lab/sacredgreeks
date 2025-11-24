@@ -317,6 +317,54 @@ export type Database = {
         }
         Relationships: []
       }
+      resource_suggestions: {
+        Row: {
+          admin_notes: string | null
+          category: string
+          created_at: string
+          description: string
+          id: string
+          resource_type: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          title: string
+          updated_at: string
+          url: string
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          category: string
+          created_at?: string
+          description: string
+          id?: string
+          resource_type: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+          url: string
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          category?: string
+          created_at?: string
+          description?: string
+          id?: string
+          resource_type?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+          url?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       shared_results: {
         Row: {
           assessment_id: string

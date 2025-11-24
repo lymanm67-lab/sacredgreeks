@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { ResourceSuggestionsManager } from "@/components/admin/ResourceSuggestionsManager";
 import { Home } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -107,7 +108,7 @@ const Admin = () => {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 space-y-8">
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -167,6 +168,8 @@ const Admin = () => {
             )}
           </CardContent>
         </Card>
+
+        <ResourceSuggestionsManager />
       </main>
     </div>
   );

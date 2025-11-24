@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { SuggestResourceDialog } from '@/components/resources/SuggestResourceDialog';
 import { Users, Heart, BookOpen, ExternalLink, Search, ArrowUpDown } from 'lucide-react';
 
 const chapterResources = [
@@ -56,9 +57,12 @@ export const ChapterResourcesSection = () => {
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center gap-2 mb-4">
-          <Users className="w-5 h-5 text-warm-blue" />
-          <CardTitle>Chapter Resources</CardTitle>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <Users className="w-5 h-5 text-warm-blue" />
+            <CardTitle>Chapter Resources</CardTitle>
+          </div>
+          <SuggestResourceDialog defaultType="chapter" />
         </div>
         
         {/* Search and Filter */}
