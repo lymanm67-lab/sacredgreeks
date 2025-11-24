@@ -248,7 +248,7 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart }: 
               className="justify-start"
               asChild
             >
-              <a href="https://sacredgreeks.com/" target="_blank" rel="noopener noreferrer">
+              <a href="https://a.co/d/5a6Yt9t" target="_blank" rel="noopener noreferrer">
                 <ExternalLink className="w-4 h-4 mr-2" />
                 Read "Sacred, Not Sinful"
               </a>
