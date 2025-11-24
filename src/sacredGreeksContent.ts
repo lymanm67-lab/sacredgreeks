@@ -1157,6 +1157,27 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
     ]
   },
   {
+    id: "american-traditions",
+    title: "American Traditions",
+    description: "Everyday American customs and celebrations with surprising origins",
+    videos: [
+      {
+        title: "Story of Birthday Cakes",
+        url: "https://youtu.be/rr639o9Gev0",
+        description: "The ancient pagan origins of birthday celebrations and cake traditions"
+      }
+    ],
+    items: [
+      {
+        id: "birthday-celebrations",
+        title: "Birthday Celebrations",
+        origin: "Birthday celebrations originated in ancient pagan cultures. Greeks offered moon-shaped cakes to Artemis, and Romans celebrated birthdays with candles believing smoke carried prayers to the gods.",
+        today: "Christians celebrate birthdays with cakes, candles, and parties. Churches host birthday celebrations and pastors pray for birthday blessings without concern for pagan origins.",
+        reflection: "If birthday traditions rooted in pagan moon goddess worship are acceptable for Christian celebration, why are Greek organizations with historical references held to a different standard?"
+      }
+    ]
+  },
+  {
     id: "oaths-allegiances",
     title: "Oaths & Allegiances",
     description: "Ceremonial pledges and vows with ancient origins",
