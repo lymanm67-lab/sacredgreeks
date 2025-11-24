@@ -8,6 +8,16 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Home, Plus, Check, Trash2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -28,6 +38,7 @@ const PrayerJournal = () => {
   const [prayers, setPrayers] = useState<Prayer[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -136,27 +147,30 @@ const PrayerJournal = () => {
     }
   };
 
-  const deletePrayer = async (prayerId: string) => {
+  const deletePrayer = async () => {
+    if (!deleteId) return;
+
     try {
       const { error } = await supabase
         .from('prayer_journal')
         .delete()
-        .eq('id', prayerId);
+        .eq('id', deleteId);
 
       if (error) throw error;
 
+      setPrayers(prayers.filter(p => p.id !== deleteId));
       toast({
         title: 'Prayer deleted',
         description: 'Prayer has been removed from your journal.',
       });
-
-      loadPrayers();
     } catch (error) {
       toast({
         title: 'Error',
         description: 'Failed to delete prayer',
         variant: 'destructive',
       });
+    } finally {
+      setDeleteId(null);
     }
   };
 
@@ -307,9 +321,9 @@ const PrayerJournal = () => {
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => deletePrayer(prayer.id)}
+                          onClick={() => setDeleteId(prayer.id)}
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <Trash2 className="w-4 h-4 text-destructive" />
                         </Button>
                       </div>
                     </div>
@@ -329,6 +343,23 @@ const PrayerJournal = () => {
           )}
         </div>
       </main>
+
+      <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Prayer?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This prayer will be permanently removed from your journal.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={deletePrayer} className="bg-destructive hover:bg-destructive/90">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

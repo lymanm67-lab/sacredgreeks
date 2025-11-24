@@ -53,7 +53,6 @@ const Bookmarks = () => {
       if (error) throw error;
       setBookmarks(data || []);
     } catch (error) {
-      console.error('Error loading bookmarks:', error);
       toast({
         title: 'Error',
         description: 'Failed to load bookmarks',
@@ -81,7 +80,6 @@ const Bookmarks = () => {
         description: 'The bookmark has been removed.',
       });
     } catch (error) {
-      console.error('Error deleting bookmark:', error);
       toast({
         title: 'Error',
         description: 'Failed to delete bookmark',
@@ -110,7 +108,6 @@ const Bookmarks = () => {
         description: 'Your notes have been updated.',
       });
     } catch (error) {
-      console.error('Error saving notes:', error);
       toast({
         title: 'Error',
         description: 'Failed to save notes',

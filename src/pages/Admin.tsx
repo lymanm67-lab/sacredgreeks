@@ -35,7 +35,6 @@ const Admin = () => {
         if (error) throw error;
         setIsAdmin(!!data);
       } catch (error) {
-        console.error('Error checking admin status:', error);
         setIsAdmin(false);
       } finally {
         setCheckingAdmin(false);
@@ -64,7 +63,6 @@ const Admin = () => {
       if (error) throw error;
       setSubmissions(data || []);
     } catch (error) {
-      console.error('Error loading submissions:', error);
       toast({
         title: "Error",
         description: "Failed to load submissions",

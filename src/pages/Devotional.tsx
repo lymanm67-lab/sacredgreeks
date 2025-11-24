@@ -95,7 +95,6 @@ const Devotional = () => {
         description: 'Keep up your daily spiritual discipline.',
       });
     } catch (error) {
-      console.error('Error marking complete:', error);
       toast({
         title: 'Error',
         description: 'Failed to mark devotional as complete',
