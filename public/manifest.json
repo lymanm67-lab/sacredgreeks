@@ -1,7 +1,7 @@
 {
-  "name": "Sacred Greeks Life App",
+  "name": "Sacred Greeks",
   "short_name": "Sacred Greeks",
-  "description": "Your daily companion for navigating faith and Greek life with devotionals, guidance, and spiritual tools",
+  "description": "Navigate faith and Greek life with devotionals, guidance, and spiritual tools",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

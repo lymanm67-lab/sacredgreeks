@@ -71,10 +71,7 @@ const Index = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Heart className="w-6 h-6 text-sacred" />
-              <div>
-                <span className="font-bold text-lg">Sacred Greeks</span>
-                <span className="text-xs text-muted-foreground ml-2">Life App</span>
-              </div>
+              <span className="font-bold text-lg">Sacred Greeks</span>
             </div>
             <div className="flex items-center gap-3">
               {user ? (
@@ -116,7 +113,7 @@ const Index = () => {
           </div>
           
           <h1 className="text-5xl md:text-7xl font-bold text-foreground leading-tight animate-fade-in">
-            Sacred Greeks <span className="text-sacred">Life App</span>
+            <span className="text-sacred">Sacred Greeks</span>
           </h1>
           
           <p className="text-2xl md:text-3xl text-muted-foreground font-medium animate-fade-in">
@@ -125,16 +122,15 @@ const Index = () => {
           </p>
           
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Your daily companion for integrating faith and Greek life. Get devotionals, guidance, 
-            prayer tools, and progress tracking—all grounded in the P.R.O.O.F. framework from 
-            "Sacred, Not Sinful."
+            Your companion for integrating faith and Greek life. Get devotionals, guidance, 
+            prayer tools, and progress tracking—all grounded in the P.R.O.O.F. framework.
           </p>
 
           {!user && (
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
               <Link to="/auth">
                 <Button size="lg" className="bg-sacred hover:bg-sacred/90 text-sacred-foreground text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all">
-                  Start Your Journey Free
+                  Get Started Free
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
               </Link>
@@ -221,16 +217,16 @@ const Index = () => {
           <Card className="max-w-4xl mx-auto bg-gradient-to-br from-sacred/5 to-sacred/10 border-sacred/20">
             <CardHeader className="text-center space-y-4 pb-8">
               <CardTitle className="text-3xl md:text-4xl font-bold">
-                Ready to Navigate Faith and Greek Life with Confidence?
+                Ready to Navigate Faith & Greek Life?
               </CardTitle>
               <CardDescription className="text-lg">
-                Join Christians in Greek organizations who are growing spiritually while honoring their letters.
+                Join believers growing spiritually while honoring their letters.
               </CardDescription>
             </CardHeader>
             <CardContent className="flex justify-center pb-8">
               <Link to="/auth">
                 <Button size="lg" className="bg-sacred hover:bg-sacred/90 text-sacred-foreground text-lg px-10 py-6 shadow-lg hover:shadow-xl transition-all">
-                  Create Your Free Account
+                  Create Free Account
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
               </Link>
