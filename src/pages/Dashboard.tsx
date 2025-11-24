@@ -19,6 +19,7 @@ import { Onboarding } from '@/components/Onboarding';
 import { useOnboarding } from '@/hooks/use-onboarding';
 import { MobileQRCode } from '@/components/MobileQRCode';
 import { StudyGuideWidget } from '@/components/dashboard/StudyGuideWidget';
+import { StudyRecommendations } from '@/components/StudyRecommendations';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -226,6 +227,11 @@ const Dashboard = () => {
           {/* Study Guide Widget */}
           <div className="mb-8">
             <StudyGuideWidget />
+          </div>
+
+          {/* AI Recommendations */}
+          <div className="mb-8">
+            <StudyRecommendations />
           </div>
 
           {/* Quick Actions */}
