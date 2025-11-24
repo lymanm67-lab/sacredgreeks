@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/toaster";
-// Temporarily disable Sonner toaster and tooltip provider to resolve hook issues
-// import { Toaster as Sonner } from "@/components/ui/sonner";
+import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
@@ -32,15 +32,15 @@ const queryClient = new QueryClient();
 const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        {/* TooltipProvider kept as a no-op shim; Sonner disabled for now */}
-        <TooltipProvider>
-          <Toaster />
-          {/* <Sonner /> */}
-          <InstallPrompt />
-          <BrowserRouter>
-            <CookieConsent />
-            <AnalyticsProvider>
+      <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+        <AuthProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <InstallPrompt />
+            <BrowserRouter>
+              <CookieConsent />
+              <AnalyticsProvider>
               <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
@@ -122,10 +122,11 @@ const App = () => (
               />
               <Route path="*" element={<NotFound />} />
             </Routes>
-            </AnalyticsProvider>
-          </BrowserRouter>
-        </TooltipProvider>
-      </AuthProvider>
+              </AnalyticsProvider>
+            </BrowserRouter>
+          </TooltipProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   </ErrorBoundary>
 );
