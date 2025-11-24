@@ -44,7 +44,7 @@ export const Testimonials = () => {
           </div>
 
           {/* Video Testimonial */}
-          <div className="mb-12 animate-fade-in">
+          <div className="mb-12 animate-fade-in max-w-3xl mx-auto">
             <Card className="overflow-hidden border-2 border-sacred/20">
               <CardContent className="p-0">
                 <div className="aspect-video">
@@ -56,8 +56,8 @@ export const Testimonials = () => {
                     allowFullScreen
                   />
                 </div>
-                <div className="p-6 bg-card">
-                  <p className="font-semibold text-lg mb-1">Chris Reed</p>
+                <div className="p-4 bg-card">
+                  <p className="font-semibold">Chris Reed</p>
                   <p className="text-sm text-muted-foreground">Video Testimonial</p>
                 </div>
               </CardContent>
