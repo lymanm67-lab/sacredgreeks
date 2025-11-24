@@ -51,21 +51,42 @@ export const useTextToSpeech = () => {
         URL.revokeObjectURL(audioUrl);
       };
 
-      audio.onerror = () => {
+      audio.onerror = (e) => {
+        console.error("Audio playback error:", e);
         setIsPlaying(null);
-        toast.error("Failed to play audio");
+        toast.error("Failed to play audio. Please check your device settings.");
         URL.revokeObjectURL(audioUrl);
       };
 
-      await audio.play();
-      setIsPlaying(itemId);
+      // Mobile browser compatibility: ensure audio can play
+      try {
+        // Attempt to play - this requires user gesture on mobile
+        const playPromise = audio.play();
+        
+        if (playPromise !== undefined) {
+          await playPromise;
+          setIsPlaying(itemId);
+        }
+      } catch (playError) {
+        console.error("Play error:", playError);
+        // iOS/Mobile Safari often blocks autoplay
+        if (playError.name === "NotAllowedError") {
+          toast.error("Audio blocked. Please tap again to play.");
+        } else {
+          toast.error("Cannot play audio on this device.");
+        }
+        URL.revokeObjectURL(audioUrl);
+        audioRef.current = null;
+        throw playError;
+      }
     } catch (error) {
       console.error("Text-to-speech error:", error);
       toast.error(
         error instanceof Error ? error.message : "Failed to generate speech"
       );
+      setIsPlaying(null);
     } finally {
-      setIsLoading(itemId);
+      setIsLoading(null);
     }
   };
 
