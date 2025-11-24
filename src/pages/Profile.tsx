@@ -10,6 +10,7 @@ import { Home, User } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
 import { NotificationSettings } from '@/components/NotificationSettings';
+import { InviteFriendsDialog } from '@/components/InviteFriendsDialog';
 
 const profileSchema = z.object({
   full_name: z.string().min(1, 'Name is required').max(100, 'Name must be less than 100 characters'),
@@ -173,6 +174,18 @@ const Profile = () => {
           </Card>
 
           <NotificationSettings />
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Invite Friends</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground mb-4">
+                Share Sacred Greeks with your friends and help them grow in their leadership and faith journey.
+              </p>
+              <InviteFriendsDialog />
+            </CardContent>
+          </Card>
 
           <Card>
             <CardHeader>
