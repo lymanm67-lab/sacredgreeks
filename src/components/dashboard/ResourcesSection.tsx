@@ -5,9 +5,30 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { SuggestResourceDialog } from '@/components/resources/SuggestResourceDialog';
-import { BookOpen, ExternalLink, Download, Search, ArrowUpDown, Heart, Users, HandHeart } from 'lucide-react';
+import { BookOpen, ExternalLink, Download, Search, ArrowUpDown, Heart, Users, HandHeart, Book } from 'lucide-react';
 
 const resources = [
+  {
+    title: "Bible Gateway",
+    description: "Read the Bible online in multiple translations with powerful search and study tools",
+    url: "https://www.biblegateway.com/",
+    icon: Book,
+    category: "Prayer"
+  },
+  {
+    title: "YouVersion Bible App",
+    description: "Free Bible app with reading plans, audio Bibles, and devotionals for daily spiritual growth",
+    url: "https://www.bible.com/",
+    icon: Book,
+    category: "Prayer"
+  },
+  {
+    title: "Blue Letter Bible",
+    description: "In-depth Bible study tools with commentaries, concordances, and original language resources",
+    url: "https://www.blueletterbible.org/",
+    icon: Book,
+    category: "Prayer"
+  },
   {
     title: "Christian Greek Life Study Guide",
     description: "Comprehensive biblical framework for navigating faith and fraternity by Dr. Lyman Montgomery",
