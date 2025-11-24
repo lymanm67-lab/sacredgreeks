@@ -29,6 +29,7 @@ import SharedResult from "./pages/SharedResult";
 import Install from "./pages/Install";
 import BibleStudy from "./pages/BibleStudy";
 import ServiceTracker from "./pages/ServiceTracker";
+import StudyGuide from "./pages/StudyGuide";
 
 const queryClient = new QueryClient();
 
@@ -51,6 +52,7 @@ const App = () => (
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/install" element={<Install />} />
               <Route path="/shared/:token" element={<SharedResult />} />
+              <Route path="/study" element={<StudyGuide />} />
               <Route
                 path="/guide"
                 element={

@@ -399,72 +399,70 @@ export const sacredGreeksResults: Record<
         },
         {
           label: "Oaths",
-          text:
-            "You can honor commitments that align with Scripture and renegotiate those that do not.",
+          text: "Stand by promises that align with Christ. Release any that do not.",
         },
         {
           label: "Obscurity",
           text:
-            "Make sure your faith is visible. If people only see your letters and never see Jesus, something is off.",
+            "Do not hide your faith. But also do not hide your letters out of shame. Walk in the light.",
         },
         {
           label: "Founding",
           text:
-            "You do not have to defend everything your founders did. You can create a new legacy of faithfulness.",
+            "You did not create the organization, but you can shape how you live in it today.",
         },
       ],
 
       prayer:
-        "God, give me the right words. Help me speak truth in love. Protect me from pride and from fear. Let my life point to You. Amen.",
+        "Lord, give me clarity and courage to speak well. Help me honor You and respect others. Let my words be full of grace and truth. Amen.",
 
       videos: [
         {
           title: "How to Respond to Hard Questions",
-          url: "https://youtu.be/PLQG1lOu-48",
+          url: "https://youtu.be/_3C9q8ZmLnk",
           description:
-            "Practical examples of responding to common objections about BGLOs and faith.",
+            "Practical language for navigating tough conversations about faith and Greek life.",
         },
       ],
     },
 
     high_pressure: {
-      headline: "Pressure is not prophecy",
+      headline: "Pressure does not equal prophecy",
       intro:
-        "Someone is telling you that God has spoken and you must denounce immediately. But the Holy Spirit leads with peace, not panic. True conviction invites repentance. Manipulation demands compliance. Before you make any vow, slow down. Pray. Get wise counsel. God will not condemn you for taking time to seek Him well.",
+        "You are being told that your salvation or spiritual health depends on walking away right now. That is not how God works. Conviction from the Holy Spirit leads to repentance, not panic. If there is sin to confess, do that. But do not let anyone rush you into making a vow you are not ready to make.",
 
       scriptureToolkit: [
         {
-          ref: "1 John 4:1",
-          summary: "Test the spirits to see if they are from God.",
-          whenToUse:
-            "Use when you are being told 'God said' but something feels off.",
-        },
-        {
-          ref: "Isaiah 30:21",
-          summary: "Your ears will hear a voice behind you saying, 'This is the way, walk in it.'",
-          whenToUse:
-            "Use when you need reassurance that God's leading is clear and patient, not rushed and chaotic.",
+          ref: "1 Thessalonians 5:21",
+          summary: "Test everything. Hold on to what is good.",
+          whenToUse: "Use when you are being pressured to accept something without testing it first.",
         },
         {
           ref: "James 1:5",
-          summary: "If you lack wisdom, ask God, who gives generously.",
+          summary: "If any of you lacks wisdom, ask God.",
           whenToUse:
-            "Use when you need to make a decision and you do not have clarity yet.",
+            "Use when you need to remind yourself and others that you are seeking God's wisdom, not just responding to human pressure.",
+        },
+        {
+          ref: "Psalm 46:10",
+          summary: "Be still and know that I am God.",
+          whenToUse:
+            "Use when you need to slow down and center yourself in God's presence instead of reacting to someone else's timeline.",
         },
       ],
 
       sampleResponses: [
         {
-          label: "To someone claiming prophecy",
-          objection: "God told me you have to leave.",
+          label: "To a pastor or leader",
+          objection: "You are in rebellion if you do not denounce.",
           youCanSay:
-            "I respect that you believe God spoke to you. I am going to pray and seek God for myself. If He is truly calling me to leave, He will make that clear to me too.",
+            "I am not in rebellion. I am trying to be obedient to God's leading in my life. I will not make a vow out of fear or pressure. If God is calling me to leave, He will make that clear in His time, not yours.",
         },
         {
-          label: "Setting a boundary",
-          objection: "You need to decide now.",
+          label: "To family or friends",
+          objection: "We are all praying that you will just obey.",
           youCanSay:
-            "I will not make a vow under pressure. If this is truly from God, He will give me peace and clarity without rushing me.",
+            "I appreciate your prayers. I want to obey God too. But obedience does not mean rushing into a decision I am not convinced of. I am asking you to pray for wisdom and clarity, not just that I will do what you think is right.",
         },
       ],
 
@@ -472,230 +470,295 @@ export const sacredGreeksResults: Record<
         {
           label: "Process",
           text:
-            "Do not let fear drive your decisions. God does not lead through manipulation.",
+            "Take time to process. Fast, pray, and seek wise counsel from multiple mature believers.",
         },
         {
           label: "Rituals",
           text:
-            "If you need to step back from certain activities while you process, that is okay. You do not have to resign to take a break.",
+            "Do not make decisions about symbols and rituals under pressure. Examine them in peace.",
         },
         {
           label: "Oaths",
           text:
-            "Do not make new vows out of fear. And do not break old ones without deep prayer and counsel.",
+            "Do not break one vow out of fear, and do not make a new vow out of pressure.",
         },
         {
           label: "Obscurity",
           text:
-            "Your salvation is secure in Christ, not in resigning from anything. Walk in that freedom.",
+            "You do not have to broadcast your decision to satisfy others. Walk in the light before God.",
         },
         {
           label: "Founding",
           text:
-            "You are not responsible for every decision your founders made. You are responsible for how you follow Jesus today.",
+            "Your story is your story. Do not let someone else rewrite it for you.",
         },
       ],
 
       prayer:
-        "Jesus, I am scared and confused. Protect my heart from fear and manipulation. If I need to leave, show me. If I need to stay and be a witness, give me courage. I trust You. Amen.",
+        "Father, I feel overwhelmed. Protect me from fear and manipulation. Show me Your will clearly. Give me peace and courage to follow You, not human pressure. In Jesus' name, Amen.",
 
       videos: [
         {
-          title: "When Pressure Feels Prophetic",
+          title: "When Pressure Feels Like Prophecy",
           url: "https://youtu.be/PLQG1lOu-48",
           description:
-            "How to discern between godly conviction and human control.",
+            "How to discern between godly conviction and human manipulation.",
         },
       ],
     },
 
     ministry_idea: {
-      headline: "This is not pressure on you, this is you offering Christ to others",
+      headline: "You can honor Christ without compromising",
       intro:
-        "You are feeling pressure from others to denounce, but instead of reacting, you want to create a space where people can wrestle with faith and Greek life honestly. That is pastoral leadership. Focus on being faithful, not perfect. Trust God with the outcomes.",
-
-      scriptureToolkit: [
-        {
-          ref: "2 Timothy 2:24-25",
-          summary: "The Lord's servant must not be quarrelsome but kind, able to teach, patiently enduring evil, correcting with gentleness.",
-          whenToUse:
-            "Use when you want to lead conversations about faith without being combative.",
-        },
-      ],
-
-      sampleResponses: [],
-
-      proofPoints: [
-        {
-          label: "Process",
-          text:
-            "Your event is a discipleship opportunity. Make it about Jesus, not about defending Greek life.",
-        },
-        {
-          label: "Rituals",
-          text:
-            "Be thoughtful about symbols. Point to Christ clearly.",
-        },
-        {
-          label: "Oaths",
-          text:
-            "Do not water down the gospel to keep the peace.",
-        },
-        {
-          label: "Obscurity",
-          text:
-            "Let your light shine. This is your chance to show Christ in Greek spaces.",
-        },
-        {
-          label: "Founding",
-          text:
-            "You are creating a new legacy. Even if no one else joins you, be faithful.",
-        },
-      ],
-
-      prayer:
-        "Lord, use me. Give me wisdom, humility, and courage. Let this event point people to You. Amen.",
-
-      videos: [],
-    },
-  },
-
-  event: {
-    steady_language: {
-      headline: "You can plan something beautiful and faithful",
-      intro:
-        "You want to create space for Jesus in your organization. You are not trying to turn your chapter into a church, but you also do not want to hide your faith. That balance is possible. Here is how to plan an event that honors Christ, respects your org, and blesses your people.",
+        "You want to create space for faith in your organization. That is a beautiful desire. But you also want to do it well. This is not about being perfect or getting everyone's approval. It is about being faithful, prayerful, and wise as you create opportunities for Jesus to be seen.",
 
       scriptureToolkit: [
         {
           ref: "1 Corinthians 10:31",
           summary: "Whatever you do, do it all for the glory of God.",
           whenToUse:
-            "Use when you want to frame your event as an act of worship and service.",
+            "Use when you want to frame your event as an act of worship, not just a program.",
         },
         {
-          ref: "Colossians 3:17",
-          summary: "Do everything in the name of the Lord Jesus.",
+          ref: "Philippians 2:14-15",
+          summary: "Do everything without grumbling so you shine like stars.",
           whenToUse:
-            "Use when you want to make sure Christ is central to the event, not just mentioned.",
+            "Use when you want to model a joyful, faithful witness in how you serve and lead.",
+        },
+        {
+          ref: "2 Timothy 2:24-25",
+          summary: "The Lord's servant must not be quarrelsome but kind to everyone.",
+          whenToUse:
+            "Use when you want to lead with grace, even when people push back.",
         },
       ],
 
       sampleResponses: [
         {
-          label: "Pitching to leadership",
-          objection: "This might be too religious.",
+          label: "Proposing to leadership",
+          objection: "We do not want this to feel like church.",
           youCanSay:
-            "I understand the concern. My goal is not to make anyone uncomfortable. I want to create an optional space where people can reflect on faith, purpose, and service. It is open to everyone, but no one is required to come.",
+            "I understand. I am not trying to turn us into a church. I just want to create a space where people can explore faith and purpose in a way that is honest and respectful.",
+        },
+        {
+          label: "Inviting chapter members",
+          objection: "This is too serious.",
+          youCanSay:
+            "I get that. My goal is not to make it heavy or awkward. I just think it would be meaningful to talk about the things that really matter. It is optional, and I hope it can be a good experience for anyone who wants to come.",
         },
       ],
 
       proofPoints: [
         {
           label: "Process",
-          text:
-            "Design the event as a discipleship moment. What spiritual growth do you want to see?",
+          text: "Make discipleship the goal. How can this event help people grow in their faith?",
         },
         {
           label: "Rituals",
           text:
-            "If you use Greek symbols, make sure they point to Christ, not compete with Him.",
+            "Use symbols wisely. Make sure they point to Jesus, not away from Him.",
         },
         {
           label: "Oaths",
-          text:
-            "Be clear about the gospel. Do not dilute Jesus to make people comfortable.",
+          text: "Be clear about the gospel. Do not water it down to fit in.",
         },
         {
           label: "Obscurity",
           text:
-            "This is your opportunity to shine for Christ. Be bold but not obnoxious.",
+            "Shine your light. Do not be vague about who Jesus is or what He has done.",
         },
         {
           label: "Founding",
-          text:
-            "You are starting a new chapter of faithfulness. Trust God with the results.",
+          text: "You are starting something. Trust God to use it for His glory.",
         },
       ],
 
       prayer:
-        "God, guide me as I plan. Help me honor You and serve my people. Let someone see Jesus through this. Amen.",
+        "Lord, help me plan this event for Your glory. Give me wisdom, boldness, and grace. Let people see Jesus clearly. Amen.",
 
       videos: [
         {
-          title: "Faith-Based Event Planning",
+          title: "Planning Faith-Based Greek Events",
           url: "https://youtu.be/_3C9q8ZmLnk",
           description:
-            "How to plan Greek events that center Christ with wisdom and respect.",
+            "Practical tips for creating meaningful, Christ-centered events in Greek organizations.",
+        },
+      ],
+    },
+  },
+
+  event: {
+    steady_language: {
+      headline: "You can honor God in this moment",
+      intro:
+        "You are in a situation where Greek life and your faith feel like they are colliding. Maybe it is a ritual, a symbol, or a conversation that feels spiritually unclear. You do not have to panic, and you do not have to pretend everything is fine. You can ask questions, set boundaries, and walk in wisdom. Here is how to think through it.",
+
+      scriptureToolkit: [
+        {
+          ref: "1 Corinthians 10:31",
+          summary: "Do everything for God's glory.",
+          whenToUse:
+            "Use when you want to evaluate whether your actions in this moment honor God or distract from Him.",
+        },
+        {
+          ref: "Colossians 3:23",
+          summary: "Work as if working for the Lord.",
+          whenToUse:
+            "Use when you want to focus on serving with excellence and integrity, even in Greek life.",
+        },
+        {
+          ref: "Romans 14:23",
+          summary: "Everything that does not come from faith is sin.",
+          whenToUse:
+            "Use when you are unsure about something and need to check your conscience before moving forward.",
+        },
+      ],
+
+      sampleResponses: [
+        {
+          label: "In a ritual",
+          objection: "This feels spiritually unclear.",
+          youCanSay:
+            "I want to honor this moment, but I also want to honor God. Can you help me understand what we are doing and why, so I can participate with a clear conscience?",
+        },
+        {
+          label: "In a conversation",
+          objection: "Why do you keep bringing up Jesus?",
+          youCanSay:
+            "Because Jesus is the most important part of my life. I am not trying to be preachy, but I also cannot pretend He does not matter to me. He shapes how I think about everything, including Greek life.",
+        },
+      ],
+
+      proofPoints: [
+        {
+          label: "Process",
+          text: "Ask yourself: Is this moment helping me grow closer to Christ, or pulling me away?",
+        },
+        {
+          label: "Rituals",
+          text:
+            "Examine the symbols and rituals. If something feels unclear, it is okay to ask questions or set boundaries.",
+        },
+        {
+          label: "Oaths",
+          text:
+            "Do not make promises you cannot keep with a clear conscience. Let your yes be yes and your no be no.",
+        },
+        {
+          label: "Obscurity",
+          text:
+            "Do not hide your faith to fit in. Let your light shine, even in Greek spaces.",
+        },
+        {
+          label: "Founding",
+          text:
+            "You are part of a story. How you live today matters for the next chapter.",
+        },
+      ],
+
+      prayer:
+        "Lord, help me honor You in this moment. Give me wisdom, courage, and grace. Let my actions and words reflect Your love. Amen.",
+
+      videos: [
+        {
+          title: "Navigating Greek Life as a Christian",
+          url: "https://youtu.be/_3C9q8ZmLnk",
+          description:
+            "Practical guidance for honoring Christ in Greek life situations.",
         },
       ],
     },
 
     high_pressure: {
-      headline: "Do not let fear stop you from serving",
+      headline: "You do not have to decide right now",
       intro:
-        "You are facing criticism or skepticism about your event idea. Some people think you are being too churchy. Others think you are compromising. Do not let fear paralyze you. If God has called you to create this space, be faithful. Trust Him with the responses.",
+        "Something is happening right now, and you feel pressure to respond immediately. Maybe someone is asking you to make a vow, participate in something that feels spiritually unclear, or publicly take a side. You do not have to decide right now. It is okay to pause, pray, and seek wisdom. Rushing into a decision out of fear or pressure is not faithfulness.",
 
       scriptureToolkit: [
         {
-          ref: "2 Timothy 1:7",
-          summary: "God gave us a spirit not of fear but of power and love and self-control.",
+          ref: "Proverbs 29:25",
+          summary: "Fear of man is a trap, but trust in the Lord brings safety.",
           whenToUse:
-            "Use when fear of judgment is keeping you from moving forward.",
+            "Use when you feel pressure to conform or decide quickly to satisfy others.",
+        },
+        {
+          ref: "James 1:19",
+          summary: "Be quick to listen, slow to speak, slow to anger.",
+          whenToUse:
+            "Use when you need to slow down and think before responding.",
+        },
+        {
+          ref: "Psalm 27:14",
+          summary: "Wait for the Lord. Be strong and take heart.",
+          whenToUse:
+            "Use when you need to remind yourself that waiting is not weakness, it is wisdom.",
         },
       ],
 
-      sampleResponses: [],
+      sampleResponses: [
+        {
+          label: "In the moment",
+          objection: "You need to decide right now.",
+          youCanSay:
+            "I respect the urgency, but I do not want to make a decision I am not ready to make. I need time to pray and think this through. I will get back to you.",
+        },
+        {
+          label: "To peers",
+          objection: "Everyone else is doing it.",
+          youCanSay:
+            "I understand that, but I need to make sure I am following God, not just following the crowd. I am going to take time to process this before I decide.",
+        },
+      ],
 
       proofPoints: [
         {
           label: "Process",
           text:
-            "Focus on faithfulness, not outcomes. Plant seeds and trust God with the harvest.",
+            "Do not rush. Take time to pray, think, and talk to a trusted believer before you act.",
         },
         {
           label: "Rituals",
           text:
-            "Keep Christ central. Do not let symbols overshadow the gospel.",
+            "If a ritual or symbol feels unclear, it is okay to step back and ask questions before participating.",
         },
         {
           label: "Oaths",
-          text:
-            "Be clear and unapologetic about Jesus. Speak truth in love.",
+          text: "Do not make vows under pressure. Let your yes be yes and your no be no.",
         },
         {
           label: "Obscurity",
           text:
-            "Do not hide your light to avoid criticism. Let Jesus be seen.",
+            "You do not have to announce your decision to everyone. Walk in the light before God.",
         },
         {
           label: "Founding",
           text:
-            "You may be the first, but you will not be the last. Your faithfulness will inspire others.",
+            "Your story matters. Do not let someone else write this chapter for you.",
         },
       ],
 
       prayer:
-        "Lord, I am afraid of being judged. Give me courage. Use this event for Your glory. Amen.",
+        "Father, I feel pressure to decide right now. Help me slow down and seek Your wisdom. Protect me from fear and manipulation. Give me courage to wait on You. In Jesus' name, Amen.",
 
-      videos: [],
+      videos: [
+        {
+          title: "When Pressure Feels Like Prophecy",
+          url: "https://youtu.be/PLQG1lOu-48",
+          description:
+            "How to tell the difference between godly conviction and human manipulation.",
+        },
+      ],
     },
 
     ministry_idea: {
-      headline: "Design your event to point people to Jesus",
+      headline: "This is your moment to shine for Christ",
       intro:
-        "You are planning something faith-centered for your organization. This is your chance to create a moment where people can encounter Christ. Here is how to do it well: be clear, be gracious, be prayerful, and trust the Holy Spirit to do the work.",
+        "You have an opportunity to bring Jesus into a Greek space. That is exciting and a little scary. You want to do it well, without being preachy or compromising the gospel. The key is to be prayerful, intentional, and faithful. Here is how to think through it.",
 
       scriptureToolkit: [
         {
-          ref: "Matthew 5:16",
-          summary: "Let your light shine before others.",
-          whenToUse:
-            "Use as your guiding principle for the event. Make Jesus visible.",
-        },
-        {
-          ref: "John 12:32",
-          summary: "If I am lifted up, I will draw all people to myself.",
+          ref: "Matthew 5:14-16",
+          summary: "You are the light of the world. Let your light shine.",
           whenToUse:
             "Use when you want to focus on lifting up Jesus, not defending Greek life.",
         },
@@ -716,8 +779,7 @@ export const sacredGreeksResults: Record<
         },
         {
           label: "Oaths",
-          text:
-            "Do not water down the message. Be faithful to Scripture.",
+          text: "Do not water down the message. Be faithful to Scripture.",
         },
         {
           label: "Obscurity",
@@ -745,3 +807,76 @@ export const sacredGreeksResults: Record<
     },
   },
 };
+
+// Study Guide Content
+export interface StudySession {
+  id: number;
+  title: string;
+  theme: string;
+  scriptures: string[];
+  teaching: string;
+  questions: string[];
+  actionStep: string;
+  readMoreNote: string;
+}
+
+export const studyGuideSessions: StudySession[] = [
+  {
+    id: 1,
+    title: "Session 1: I Love Jesus And I Love My Letters",
+    theme: "Naming the real tension without shame.",
+    scriptures: ["Matthew 22:37", "Colossians 3:17"],
+    teaching:
+      "This session helps believers admit the real tension many have never been allowed to say out loud. You love Jesus, and you also love your letters. For some, Greek life opened doors to leadership, scholarship, and service. For others, certain moments in the process were confusing, painful, or spiritually unclear. Many Christians have been told that the only faithful answer is to pretend the tension does not exist or to cut off part of their story and never speak of it again. In this study, we start with honesty instead of hiding.\n\nMatthew 22:37 calls us to love the Lord our God with all our heart, soul, and mind. That means God is not asking for part time loyalty. At the same time, Colossians 3:17 invites us to do everything in the name of the Lord Jesus. That includes how we wear your letters, how we show up in chapter life, and how we respond when people question our involvement. The point is not to pretend Greek life does not matter to you. The point is to bring your whole story, including your org, under the Lordship of Christ.\n\nIn this session, you will name both your gratitude and your grief. You will thank God for the ways He has used your organization to bless you or others. You will also give yourself permission to admit where your conscience still feels unsettled. This is not about performing for other Christians. This is about telling the truth in the presence of God so that He can lead you forward with a clean heart.",
+    questions: [
+      "When you first think about your letters, what words or memories come to mind",
+      "In what ways has your organization helped you grow, serve, or find community",
+      "Are there moments in your Greek life story that still feel confusing, painful, or hard to talk about",
+      "How have churches or Christian voices spoken about BGLOs in your life so far",
+      "What do Matthew 22:37 and Colossians 3:17 say to you personally about loving God and living as a Christian Greek",
+    ],
+    actionStep:
+      "Share a short version of your Greek life story with one trusted believer this week. Include both what you are grateful for and what still troubles you.",
+    readMoreNote:
+      "Want to go deeper, read Chapter 1 in Sacred, Not Sinful. Need personal guidance, tap here to explore coaching with Dr. Lyman.",
+  },
+  {
+    id: 2,
+    title: "Session 2: Myths, Trauma, And Truth About BGLOs",
+    theme: "Separate internet panic from actual theology.",
+    scriptures: ["John 8:32", "Proverbs 18:13"],
+    teaching:
+      "This session focuses on the stories and sound bites that shape how people talk about BGLOs. Many believers have heard phrases like All Greek life is demonic or You cannot be saved and Greek. Some have watched dramatic denouncement videos online that stir fear and confusion without context. Others carry real church hurt or trauma from things that happened on campus or in ministry.\n\nJohn 8:32 tells us that the truth will make us free. That means freedom comes from Christ and from a clear understanding of what God has actually said, not from panic or pressure. Proverbs 18:13 warns against answering a matter before hearing it. When people condemn every Greek letter, color, and symbol without listening to real stories or learning the history, they are violating this wisdom.\n\nIn this study, you will take one common myth at a time and test it against Scripture. You will also begin to separate three things that often get tangled together: myths spread online, trauma from how people behaved, and what the Bible actually teaches about idolatry, vows, and Christian freedom. The aim is not to defend everything that has ever been done in Greek life. The goal is to tell the truth with a clear head and a tender heart so that you can follow Jesus without being ruled by fear.",
+    questions: [
+      "What are some things you heard growing up or online about BGLOs and Christians",
+      "Which messages created the most fear or confusion in your heart",
+      "How does John 8:32 challenge the way you have seen people use fear to control decisions",
+      "Where have you seen people, on either side of the debate, answer before truly listening, like Proverbs 18:13 warns",
+      "Make two columns. In one, list messages you have heard about Greek life. In the other, write what you actually see in Scripture about idolatry, vows, conscience, and Christian freedom.",
+    ],
+    actionStep:
+      "Make a simple chart with two lists: What I heard about BGLOs and What I see in Scripture. Bring that chart to prayer this week and ask God to show you where myth, trauma, and truth have been mixed together.",
+    readMoreNote:
+      "Want to go deeper, read Chapter 2 in Sacred, Not Sinful. Need personal guidance, tap here to explore coaching with Dr. Lyman.",
+  },
+  {
+    id: 3,
+    title: "Session 3: Trauma, Tradition, And Theology",
+    theme: "Sorting your story, your church background, and what the Bible truly teaches.",
+    scriptures: ["Psalm 34:18", "Mark 7:8"],
+    teaching:
+      "In this session, you begin to untangle three powerful forces in your story: trauma, tradition, and theology. Trauma includes painful experiences, harsh words, spiritual abuse, hazing, or betrayal that still echo in your body and memory. Tradition includes the habits and church cultures you grew up in, some healthy and some not. Theology is what Scripture actually teaches when read in context.\n\nPsalm 34:18 promises that the Lord is close to the brokenhearted and saves those who are crushed in spirit. If your experience with Greek life or with church leaders around this topic has left you feeling crushed, God is not standing far off with folded arms. He draws near. At the same time, Mark 7:8 warns about letting human traditions replace the commands of God. Some people grew up in churches where certain rules about clothes, music, or organizations were treated as if they were straight from Scripture, even when they were not.\n\nThis study invites you to ask three simple but searching questions: Is this memory trauma Is this just tradition Is this truly what Jesus and the apostles taught If something is trauma, it needs healing and possibly boundaries, not denial. If something is only tradition, it can be honored, revised, or released, but it should not be confused with the gospel. If something is clear theology from Scripture, then all of us, Greek or not, are called to respond in obedience. Naming which category something belongs in will help you walk in truth instead of staying stuck in a swirl of emotion and confusion.",
+    questions: [
+      "When you think about Greek life and church conversations about it, what painful memories come up first",
+      "How have church traditions in your life shaped the way you think about what is holy or unholy",
+      "Can you name one example where a tradition was treated like Scripture in your background",
+      "Where do you sense there is real trauma that needs healing, apart from the Greek life debate itself",
+      "What helps you tell the difference between tradition and clear biblical teaching",
+      "How does knowing that God is close to the brokenhearted shape the way you want to move forward",
+    ],
+    actionStep:
+      "Choose one memory that still feels heavy. Write it out as honestly as you can. Then ask: Is this trauma Is this tradition Is this theology Bring that written memory to God in prayer and, if needed, to a trusted counselor or mentor.",
+    readMoreNote:
+      "Want to go deeper, read Chapter 3 in Sacred, Not Sinful. Need personal guidance, tap here to explore coaching with Dr. Lyman.",
+  },
+];
