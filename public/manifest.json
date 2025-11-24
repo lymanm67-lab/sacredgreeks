@@ -1,7 +1,7 @@
 {
-  "name": "Sacred Greeks Decision Guide",
+  "name": "Sacred Greeks Life App",
   "short_name": "Sacred Greeks",
-  "description": "Help Christians in Greek Life process decisions using biblical wisdom",
+  "description": "Your daily companion for navigating faith and Greek life with devotionals, guidance, and spiritual tools",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
