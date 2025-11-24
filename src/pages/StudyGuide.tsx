@@ -9,7 +9,7 @@ import { useStudyProgress } from "@/hooks/use-study-progress";
 import { Progress } from "@/components/ui/progress";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { StudyReminderSettings } from "@/components/StudyReminderSettings";
 import { ShareCompletionDialog } from "@/components/study-guide/ShareCompletionDialog";
 import { CertificateDialog } from "@/components/study-guide/CertificateDialog";
@@ -30,10 +30,30 @@ const StudyGuide = () => {
   } = useStudyProgress();
 
   const [notesState, setNotesState] = useState<Record<number, string>>({});
+  const [answersState, setAnswersState] = useState<Record<string, string>>({});
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [certificateDialogOpen, setCertificateDialogOpen] = useState(false);
 
   const isAllComplete = completedCount === totalSessions;
+
+  // Load answers from localStorage on mount
+  useEffect(() => {
+    const savedAnswers = localStorage.getItem("studyGuideAnswers");
+    if (savedAnswers) {
+      try {
+        setAnswersState(JSON.parse(savedAnswers));
+      } catch (e) {
+        console.error("Failed to load saved answers", e);
+      }
+    }
+  }, []);
+
+  // Save answers to localStorage whenever they change
+  useEffect(() => {
+    if (Object.keys(answersState).length > 0) {
+      localStorage.setItem("studyGuideAnswers", JSON.stringify(answersState));
+    }
+  }, [answersState]);
 
   // Get the most recent completion date
   const completionDate = progress
@@ -43,6 +63,11 @@ const StudyGuide = () => {
 
   const handleNotesChange = (sessionId: number, value: string) => {
     setNotesState((prev) => ({ ...prev, [sessionId]: value }));
+  };
+
+  const handleAnswerChange = (sessionId: number, questionIndex: number, value: string) => {
+    const key = `${sessionId}-${questionIndex}`;
+    setAnswersState((prev) => ({ ...prev, [key]: value }));
   };
 
   const handleSaveNotes = (sessionId: number) => {
@@ -229,11 +254,36 @@ const StudyGuide = () => {
                       Discussion Questions
                     </AccordionTrigger>
                     <AccordionContent>
-                      <ol className="space-y-3 list-decimal list-inside text-muted-foreground">
+                      <div className="space-y-6">
                         {session.questions.map((question, idx) => (
-                          <li key={idx} className="leading-relaxed">{question}?</li>
+                          <div key={idx} className="space-y-3">
+                            <p className="font-medium text-foreground">
+                              {idx + 1}. {question}?
+                            </p>
+                            {isAuthenticated ? (
+                              <Textarea
+                                placeholder="Write your answer here..."
+                                className="min-h-[120px] resize-none bg-muted/50"
+                                value={answersState[`${session.id}-${idx}`] || ""}
+                                onChange={(e) => handleAnswerChange(session.id, idx, e.target.value)}
+                              />
+                            ) : (
+                              <div className="bg-muted/30 border border-dashed border-muted-foreground/30 rounded-lg p-6 text-center">
+                                <p className="text-sm text-muted-foreground">
+                                  Sign in to write and save your answers
+                                </p>
+                              </div>
+                            )}
+                          </div>
                         ))}
-                      </ol>
+                        {isAuthenticated && (
+                          <div className="pt-4">
+                            <p className="text-xs text-muted-foreground mb-2">
+                              💡 Your answers are automatically saved as you type
+                            </p>
+                          </div>
+                        )}
+                      </div>
                     </AccordionContent>
                   </AccordionItem>
 
