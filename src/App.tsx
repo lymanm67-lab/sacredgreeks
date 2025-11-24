@@ -24,6 +24,8 @@ import Bookmarks from "./pages/Bookmarks";
 import Guide from "./pages/Guide";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
+import Progress from "./pages/Progress";
+import SharedResult from "./pages/SharedResult";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +46,7 @@ const App = () => (
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/privacy" element={<Privacy />} />
+              <Route path="/shared/:token" element={<SharedResult />} />
               <Route
                 path="/guide"
                 element={
@@ -97,6 +100,14 @@ const App = () => (
                 element={
                   <ProtectedRoute>
                     <Bookmarks />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/progress"
+                element={
+                  <ProtectedRoute>
+                    <Progress />
                   </ProtectedRoute>
                 }
               />
