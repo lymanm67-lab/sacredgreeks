@@ -28,24 +28,37 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart }: 
     const email = formData.get("email") as string;
 
     try {
-      const { error } = await supabase
+      // Save email to database
+      const { error: dbError } = await supabase
         .from("assessment_submissions")
         .update({ email, consent_to_contact: true })
         .eq("answers_json", answers as any)
         .eq("result_type", resultType);
 
-      if (error) throw error;
+      if (dbError) throw dbError;
+
+      // Send email with results
+      const { error: emailError } = await supabase.functions.invoke("send-results-email", {
+        body: {
+          email,
+          resultType,
+          scenario,
+          content,
+        },
+      });
+
+      if (emailError) throw emailError;
 
       toast({
-        title: "Email saved",
-        description: "We'll send you a copy of your reflection soon.",
+        title: "Email sent!",
+        description: "Check your inbox for your assessment results.",
       });
       (e.target as HTMLFormElement).reset();
     } catch (error) {
-      console.error("Error saving email:", error);
+      console.error("Error sending email:", error);
       toast({
         title: "Error",
-        description: "Failed to save email. Please try again.",
+        description: "Failed to send email. Please try again.",
         variant: "destructive",
       });
     }
