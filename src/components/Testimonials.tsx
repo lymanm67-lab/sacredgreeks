@@ -34,7 +34,7 @@ export const Testimonials = () => {
     <section className="py-16 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-12 animate-fade-in">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Stories from Christians in Greek Life
             </h2>
@@ -47,15 +47,16 @@ export const Testimonials = () => {
             {testimonials.map((testimonial, index) => (
               <Card
                 key={index}
-                className="relative hover:shadow-xl transition-all border-2 hover:border-sacred/30"
+                className="relative hover:shadow-xl transition-all duration-300 border-2 hover:border-sacred/30 hover:scale-105 animate-fade-in"
+                style={{ animationDelay: `${index * 0.15}s` }}
               >
                 <CardContent className="pt-6">
-                  <Quote className="w-10 h-10 text-sacred/20 mb-4" />
+                  <Quote className="w-10 h-10 text-sacred/20 mb-4 transition-transform duration-300 hover:scale-110" />
                   <p className="text-lg mb-6 leading-relaxed italic">
                     "{testimonial.text}"
                   </p>
                   <div className="flex items-center gap-3">
-                    <Avatar className="w-12 h-12 bg-sacred/10">
+                    <Avatar className="w-12 h-12 bg-sacred/10 transition-transform duration-300 hover:scale-110">
                       <AvatarFallback className="bg-sacred/20 text-sacred font-semibold">
                         {testimonial.initials}
                       </AvatarFallback>
