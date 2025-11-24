@@ -47,7 +47,7 @@ const DidYouKnow = () => {
     
     Reflection: ${item.reflection}`;
     
-    speak(textToSpeak, item.id, selectedVoice);
+    speak(textToSpeak, item.id, selectedVoice, item.title);
   };
 
   return (

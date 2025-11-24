@@ -13,6 +13,17 @@ const config: CapacitorConfig = {
       // Configure in-app browser for external links
       presentationStyle: 'popover'
     }
+  },
+  ios: {
+    // Enable background audio for iOS
+    backgroundMode: {
+      enabled: true,
+      types: ['audio']
+    }
+  },
+  android: {
+    // Enable background audio for Android
+    allowMixedContent: true
   }
 };
 
