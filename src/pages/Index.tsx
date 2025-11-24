@@ -71,7 +71,7 @@ const Index = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="bg-sacred rounded-lg p-2">
+              <div className="bg-blue-600 rounded-lg p-2">
                 <img src={logo} alt="Sacred Greeks" className="h-6 w-auto brightness-0 invert" />
               </div>
             </div>
@@ -110,8 +110,8 @@ const Index = () => {
             Trusted by Christians in Greek Life
           </Badge>
           
-          <div className="inline-flex items-center justify-center mb-4 animate-fade-in bg-sacred/10 rounded-full p-6">
-            <img src={logo} alt="Sacred Greeks" className="h-24 w-auto" style={{ filter: 'brightness(0) saturate(100%) invert(42%) sepia(93%) saturate(1352%) hue-rotate(237deg) brightness(96%) contrast(92%)' }} />
+          <div className="inline-flex items-center justify-center mb-4 animate-fade-in bg-blue-50 rounded-full p-6">
+            <img src={logo} alt="Sacred Greeks" className="h-24 w-auto" style={{ filter: 'brightness(0) saturate(100%) invert(38%) sepia(98%) saturate(3032%) hue-rotate(207deg) brightness(98%) contrast(97%)' }} />
           </div>
           
           <h1 className="text-5xl md:text-7xl font-bold text-foreground leading-tight animate-fade-in">
