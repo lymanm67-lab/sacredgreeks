@@ -9,21 +9,21 @@ export const WelcomeVideo = () => {
   const videoUrl = "https://www.youtube.com/embed/qtDlvE0a9Ok";
   
   return (
-    <Card className="overflow-hidden border-2 shadow-xl animate-fade-in">
-      <div className="relative">
+    <Card className="overflow-hidden border-2 shadow-xl h-full flex flex-col">
+      <div className="flex flex-col h-full">
         {/* Video Title/Header */}
         <div className="bg-gradient-to-r from-sacred to-warm-blue p-4">
-          <h2 className="text-2xl font-bold text-white">Welcome to Sacred Greeks</h2>
-          <p className="text-white/90 text-sm mt-1">A message from Dr. Lyman Montgomery</p>
+          <h2 className="text-xl md:text-2xl font-bold text-white">Welcome to Sacred Greeks</h2>
+          <p className="text-white/90 text-xs md:text-sm mt-1">A message from Dr. Lyman Montgomery</p>
         </div>
         
         {/* Video Container */}
-        <div className="relative aspect-video bg-muted">
+        <div className="relative aspect-video bg-muted flex-1">
           {!isPlaying ? (
             // Thumbnail with play button
             <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-sacred/20 to-warm-blue/20 cursor-pointer group" onClick={() => setIsPlaying(true)}>
-              <div className="w-20 h-20 rounded-full bg-white shadow-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <Play className="w-10 h-10 text-sacred ml-1" fill="currentColor" />
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <Play className="w-8 h-8 md:w-10 md:h-10 text-sacred ml-1" fill="currentColor" />
               </div>
               <div className="absolute inset-0 bg-black/20" />
             </div>

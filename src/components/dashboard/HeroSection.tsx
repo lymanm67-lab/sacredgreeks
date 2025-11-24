@@ -34,34 +34,34 @@ export const HeroSection = () => {
   const firstName = user?.user_metadata?.full_name?.split(' ')[0] || 'Friend';
 
   return (
-    <div className="relative overflow-hidden rounded-3xl bg-gradient-hero p-8 md:p-12 shadow-2xl animate-fade-in">
+    <div className="relative overflow-hidden rounded-3xl bg-gradient-hero p-6 md:p-8 shadow-2xl h-full flex flex-col justify-between">
       {/* Decorative elements */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-      <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+      <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <div className="absolute bottom-0 left-0 w-36 h-36 bg-white/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
       
       <div className="relative z-10">
-        <div className="flex items-center gap-2 mb-4 animate-slide-up">
-          <Sparkles className="w-6 h-6 text-gold animate-float" />
-          <span className="text-white/90 font-medium">{getGreeting()}</span>
+        <div className="flex items-center gap-2 mb-3 animate-slide-up">
+          <Sparkles className="w-5 h-5 text-white animate-float" />
+          <span className="text-white/90 font-medium text-sm">{getGreeting()}</span>
         </div>
         
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-2 animate-slide-up" style={{ animationDelay: '0.1s' }}>
+        <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 animate-slide-up" style={{ animationDelay: '0.1s' }}>
           Welcome back, {firstName}!
         </h1>
         
-        <p className="text-white/80 text-lg mb-8 max-w-2xl animate-slide-up" style={{ animationDelay: '0.2s' }}>
-          Continue your journey of faith and fellowship with confidence and purpose.
+        <p className="text-white/80 text-base mb-6 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          Continue your journey of faith and fellowship with confidence.
         </p>
         
         {/* Daily Scripture */}
-        <div className="glass-effect rounded-2xl p-6 max-w-3xl animate-scale-in" style={{ animationDelay: '0.3s' }}>
-          <div className="flex items-start gap-4">
-            <div className="text-4xl text-foreground">"</div>
+        <div className="glass-effect rounded-2xl p-4 animate-scale-in" style={{ animationDelay: '0.3s' }}>
+          <div className="flex items-start gap-3">
+            <div className="text-3xl text-foreground">"</div>
             <div className="flex-1">
-              <p className="text-foreground text-lg leading-relaxed mb-3 italic font-medium">
+              <p className="text-foreground text-sm md:text-base leading-relaxed mb-2 italic font-medium">
                 {dailyScripture.text}"
               </p>
-              <p className="text-sacred-dark font-semibold">
+              <p className="text-sacred-dark font-semibold text-sm">
                 — {dailyScripture.reference}
               </p>
             </div>
