@@ -1,10 +1,10 @@
-import type React from 'react';
+import { useAnalytics } from '@/hooks/use-analytics';
 
 interface AnalyticsProviderProps {
   children: React.ReactNode;
 }
 
-// Temporarily disabled analytics tracking to avoid hook issues
 export const AnalyticsProvider = ({ children }: AnalyticsProviderProps) => {
+  useAnalytics();
   return <>{children}</>;
 };

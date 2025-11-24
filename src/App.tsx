@@ -1,6 +1,8 @@
+// Sacred Greeks Life App - Admin Dashboard Enabled
+import React from "react";
+import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { ThemeProvider } from "@/components/ThemeProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
@@ -31,16 +33,14 @@ const queryClient = new QueryClient();
 const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-        <AuthProvider>
-          <TooltipProvider>
-            {/* Shadcn Toaster temporarily disabled to avoid hook issues */}
-            {/* <Toaster /> */}
-            <Sonner />
-            <InstallPrompt />
-            <BrowserRouter>
-              <CookieConsent />
-              <AnalyticsProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <InstallPrompt />
+          <BrowserRouter>
+            <CookieConsent />
+            <AnalyticsProvider>
               <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
@@ -122,11 +122,10 @@ const App = () => (
               />
               <Route path="*" element={<NotFound />} />
             </Routes>
-              </AnalyticsProvider>
-            </BrowserRouter>
-          </TooltipProvider>
-        </AuthProvider>
-      </ThemeProvider>
+            </AnalyticsProvider>
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
     </QueryClientProvider>
   </ErrorBoundary>
 );
