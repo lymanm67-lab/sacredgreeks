@@ -22,6 +22,8 @@ import { StudyGuideWidget } from '@/components/dashboard/StudyGuideWidget';
 import { StudyRecommendations } from '@/components/StudyRecommendations';
 import { GamificationBar } from '@/components/GamificationBar';
 import { useFavorites } from '@/hooks/use-favorites';
+import { usePullToRefresh } from '@/hooks/use-pull-to-refresh';
+import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -43,6 +45,20 @@ const Dashboard = () => {
   });
   const [recentAssessments, setRecentAssessments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Pull to refresh
+  const handleRefresh = async () => {
+    await loadDashboardData();
+    toast({
+      title: 'Dashboard refreshed',
+      description: 'Your data has been updated',
+    });
+  };
+
+  const { isPulling, isRefreshing, pullDistance, canRefresh } = usePullToRefresh({
+    onRefresh: handleRefresh,
+    enabled: !isChecking && !showOnboarding
+  });
 
   useEffect(() => {
     if (user) {
@@ -232,6 +248,12 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
+      <PullToRefreshIndicator 
+        isPulling={isPulling}
+        isRefreshing={isRefreshing}
+        pullDistance={pullDistance}
+        canRefresh={canRefresh}
+      />
       <header className="border-b border-border/50 bg-card/50 backdrop-blur-lg sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
