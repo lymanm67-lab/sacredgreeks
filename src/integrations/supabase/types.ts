@@ -83,6 +83,81 @@ export type Database = {
         }
         Relationships: []
       }
+      chapter_meeting_notes: {
+        Row: {
+          action_items: string | null
+          attendees: string | null
+          created_at: string
+          id: string
+          meeting_date: string
+          notes: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          action_items?: string | null
+          attendees?: string | null
+          created_at?: string
+          id?: string
+          meeting_date: string
+          notes?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          action_items?: string | null
+          attendees?: string | null
+          created_at?: string
+          id?: string
+          meeting_date?: string
+          notes?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      community_service_items: {
+        Row: {
+          completed: boolean
+          completed_at: string | null
+          created_at: string
+          description: string | null
+          event_date: string | null
+          hours: number | null
+          id: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          event_date?: string | null
+          hours?: number | null
+          id?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed?: boolean
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          event_date?: string | null
+          hours?: number | null
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       daily_devotionals: {
         Row: {
           application: string
