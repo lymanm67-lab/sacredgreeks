@@ -20,7 +20,7 @@ const StudyGuide = () => {
               </Button>
             </Link>
             <Badge className="bg-sacred/10 text-sacred hover:bg-sacred/20 border-sacred/20" variant="outline">
-              5-Session Study Guide
+              Complete 5-Session Study Guide
             </Badge>
           </div>
         </div>
@@ -131,18 +131,6 @@ const StudyGuide = () => {
             </Card>
           ))}
 
-          {/* Coming Soon Notice */}
-          <Card className="border-2 border-dashed border-muted-foreground/30">
-            <CardHeader>
-              <CardTitle className="text-xl text-muted-foreground flex items-center gap-2">
-                <MessageCircle className="w-5 h-5" />
-                Sessions 4-5 Coming Soon
-              </CardTitle>
-              <CardDescription>
-                Additional sessions covering the P.R.O.O.F. Framework and practical application will be added soon.
-              </CardDescription>
-            </CardHeader>
-          </Card>
         </div>
 
         {/* CTA Section */}

@@ -879,4 +879,44 @@ export const studyGuideSessions: StudySession[] = [
     readMoreNote:
       "Want to go deeper, read Chapter 3 in Sacred, Not Sinful. Need personal guidance, tap here to explore coaching with Dr. Lyman.",
   },
+  {
+    id: 4,
+    title: "Session 4: The P.R.O.O.F. Framework",
+    theme: "Using Process, Rituals, Oaths, Obscurity, and Founding to examine your story.",
+    scriptures: ["1 Thessalonians 5:21-22"],
+    teaching:
+      "This session walks you step by step through the P.R.O.O.F. framework so you can examine your Greek life involvement with honesty and hope. First, Process. Ask how your pledging and initiation shaped you. Did the process form Christlike discipline, humility, and service, or did it normalize cruelty, secrecy, and fear Some stories may hold both, and God can meet you in that tension.\n\nSecond, Rituals. Every community has rituals, from communion and baptism to graduation ceremonies and national holidays. The question is not whether a ritual exists, but what story it tells. Do your Greek rituals point you toward virtues like scholarship, service, and unity, or do they praise the flesh and mock what is holy If any ritual crosses a line in your conscience, you are free in Christ to step back, speak up, or refuse.\n\nThird, Oaths. Words matter. Jesus taught us to let our yes be yes and our no be no. P.R.O.O.F. invites you to review what you pledged. Where your words affirm truth, integrity, and service, live them out fully. Where any wording seems to elevate your org above Christ or ask for a loyalty that belongs only to God, bring that to Him in repentance and realignment.\n\nFourth, Obscurity. This asks whether you are hiding your faith to keep your letters or if you are willing to let your light shine as a Christian Greek. Finally, Founding. Every organization has a story that includes both beauty and brokenness. You cannot rewrite the past, but you can decide whether you will stay to influence the future or leave to walk in peace. P.R.O.O.F. does not assume you must stay or you must go. It gives you language and questions so that, whatever you decide, you move with a clean conscience before God.",
+    questions: [
+      "Looking back, how did your process form you for better or for worse",
+      "Which Greek rituals feel most meaningful to you, and what story do they tell",
+      "Are there any parts of your pledge or oaths that trouble your conscience today",
+      "Where have you been tempted to hide your faith in order to avoid conflict in your organization",
+      "When you think about the founding story of your org, what parts feel aligned with Christlike values and what parts do not",
+      "What does it mean to you to test everything and hold fast to what is good, like 1 Thessalonians 5:21-22 teaches",
+    ],
+    actionStep:
+      "Pick one letter from P.R.O.O.F. this week and act on it. That could mean having one honest conversation about your process, choosing to skip a ritual that violates your conscience, rewording an old vow in prayer before God, speaking more openly about your faith, or serving in a way that reflects the best of your founding values.",
+    readMoreNote:
+      "Want to go deeper, read Chapter 4 in Sacred, Not Sinful. Need personal guidance, tap here to explore coaching with Dr. Lyman.",
+  },
+  {
+    id: 5,
+    title: "Session 5: Lordship, Next Steps, And Living In Peace",
+    theme: "Letting Jesus lead your next move with a clean conscience.",
+    scriptures: ["Romans 12:1-2", "Colossians 1:18"],
+    teaching:
+      "This final session brings everything back to the Lordship of Jesus. Romans 12:1-2 calls us to present our bodies as a living sacrifice and to be transformed by the renewing of our minds. Colossians 1:18 declares that Christ must have the first place in everything. That includes your identity as a Christian, your connection to your organization, and the way you respond to pressure from church, family, or social media.\n\nThe goal of this journey is not simply to defend Greek life or to attack it. The goal is to follow Jesus with a clear conscience and a steady heart. For some believers, that may mean staying in their organization with new boundaries, a clearer witness, and a commitment to be salt and light. For others, it may mean leaving or denouncing membership in a way that is healthy, prayed through, and not driven by public stunts or fear of being exposed online.\n\nIn this session, you will ask: What is Jesus asking me to do right now Is He calling me to rededicate my life to Him Is He inviting me to have a calm talk with my pastor, parents, or spouse Is He asking me to set new boundaries inside my chapter about what I will and will not participate in Or is He leading me to step away from my letters as an act of obedience, not as a performance for people watching As you answer, remember that the same Christ who saves you is the Christ who walks with you into every next step. His goal is not to trap you but to lead you into peace.",
+    questions: [
+      "As you look back over the last four sessions, what has God highlighted most clearly to you",
+      "Where do you sense you have been living more to please people than to please Christ",
+      "What would it look like for Jesus to have first place in how you wear or do not wear your letters",
+      "Which next step feels most in line with faith and peace, even if it is also scary",
+      "Who do you need to talk to in order to move forward wisely, not in isolation",
+      "How would you explain your current conviction to someone who loves you but disagrees",
+    ],
+    actionStep:
+      "Write a simple prayer that answers this question: Lord Jesus, based on what You have shown me, this is the next step I believe You are asking me to take. Then share that step with one trusted believer who will pray with you and walk with you.",
+    readMoreNote:
+      "Want to go deeper, read Chapter 5 in Sacred, Not Sinful. Need personal guidance, tap here to explore coaching with Dr. Lyman.",
+  },
 ];
