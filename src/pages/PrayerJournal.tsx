@@ -22,6 +22,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Home, Plus, Check, Trash2, Search, Download } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { prayerJournalSchema } from '@/lib/validation';
+import { useGamification } from '@/hooks/use-gamification';
 
 interface Prayer {
   id: string;
@@ -35,6 +36,7 @@ interface Prayer {
 
 const PrayerJournal = () => {
   const { user } = useAuth();
+  const { awardPoints } = useGamification();
   const [prayers, setPrayers] = useState<Prayer[]>([]);
   const [filteredPrayers, setFilteredPrayers] = useState<Prayer[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -115,6 +117,14 @@ const PrayerJournal = () => {
         });
 
       if (error) throw error;
+
+      // Award points and check achievements
+      awardPoints({ points: 5, actionType: 'prayer' });
+
+      // Check for achievements via edge function
+      await supabase.functions.invoke('check-achievements', {
+        body: { userId: user.id, actionType: 'prayer' }
+      });
 
       toast({
         title: 'Prayer added',

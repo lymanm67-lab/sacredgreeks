@@ -68,6 +68,19 @@ const Guide = () => {
 
       if (error) throw error;
 
+      // Award points and check achievements
+      if (user) {
+        await supabase.rpc("award_points", {
+          _user_id: user.id,
+          _points: 20,
+          _action_type: "assessment",
+        });
+
+        await supabase.functions.invoke('check-achievements', {
+          body: { userId: user.id, actionType: 'assessment' }
+        });
+      }
+
       setResultData({ scores, resultType, answers: fullAnswers });
       setCurrentStep(3);
     } catch (error) {
