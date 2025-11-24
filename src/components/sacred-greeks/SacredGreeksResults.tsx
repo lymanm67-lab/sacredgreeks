@@ -238,7 +238,7 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart }: 
               className="justify-start"
               asChild
             >
-              <a href="https://sacredgreeks.com/#card-mwywcoy7nqn2if3" target="_blank" rel="noopener noreferrer">
+              <a href="https://sacredgreeks.com/#card-xr13vgv4m5slqey" target="_blank" rel="noopener noreferrer">
                 <ExternalLink className="w-4 h-4 mr-2" />
                 Start Here
               </a>
