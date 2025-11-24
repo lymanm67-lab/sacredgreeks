@@ -4,25 +4,25 @@ import { Quote } from 'lucide-react';
 
 const testimonials = [
   {
-    name: 'Marcus Johnson',
+    name: 'M.J.',
     org: 'Omega Psi Phi',
     initials: 'MJ',
     text: 'Sacred Greeks helped me process difficult conversations about faith and Greek life. The P.R.O.O.F. framework gave me biblical clarity when I needed it most.',
   },
   {
-    name: 'Tiffany Williams',
+    name: 'T.W.',
     org: 'Delta Sigma Theta',
     initials: 'TW',
     text: 'I was torn between my faith and my letters. This guide helped me see I don\'t have to choose - I can honor both when I put Christ first.',
   },
   {
-    name: 'David Anderson',
+    name: 'D.A.',
     org: 'Alpha Phi Alpha',
     initials: 'DA',
     text: 'The daily devotionals keep me grounded. It\'s refreshing to have Christian content specifically for Greek life that doesn\'t condemn but guides.',
   },
   {
-    name: 'Jasmine Carter',
+    name: 'J.C.',
     org: 'Zeta Phi Beta',
     initials: 'JC',
     text: 'When pressure came to denounce my org, Sacred Greeks gave me a biblical framework to respond with grace and wisdom. Forever grateful!',
