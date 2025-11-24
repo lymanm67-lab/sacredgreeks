@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Award, Printer } from "lucide-react";
 import { toast } from "sonner";
 import { format } from "date-fns";
+// Certificate generation with print functionality
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
