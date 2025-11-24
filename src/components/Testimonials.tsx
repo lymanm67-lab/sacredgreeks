@@ -47,10 +47,10 @@ export const Testimonials = () => {
           <div className="mb-12 animate-fade-in max-w-3xl mx-auto">
             <Card className="overflow-hidden border-2 border-sacred/20">
               <CardContent className="p-0">
-                <div className="aspect-video">
+                <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                   <iframe
-                    className="w-full h-full"
-                    src="https://www.youtube.com/embed/EoE-zwi0Mgw"
+                    className="absolute top-0 left-0 w-full h-full"
+                    src="https://www.youtube.com/embed/EoE-zwi0Mgw?rel=0"
                     title="Chris Reed Testimonial"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
