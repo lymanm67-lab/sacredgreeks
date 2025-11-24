@@ -11,6 +11,7 @@ import { calculateSacredGreeksScores } from "@/lib/scoring";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
+import logo from "@/assets/sacred-greeks-logo.png";
 
 const steps = [
   { label: "Scenario", description: "Choose your situation" },
@@ -23,6 +24,7 @@ const Guide = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [answers, setAnswers] = useState<Partial<SacredGreeksAnswers>>({});
   const [resultData, setResultData] = useState<any>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const { user } = useAuth();
 
@@ -42,6 +44,7 @@ const Guide = () => {
   const handleStep2Complete = async (stepAnswers: Partial<SacredGreeksAnswers>) => {
     const fullAnswers = { ...answers, ...stepAnswers } as SacredGreeksAnswers;
     setAnswers(fullAnswers);
+    setIsSubmitting(true);
 
     // Calculate scores
     const { scores, resultType } = calculateSacredGreeksScores(fullAnswers);
@@ -54,6 +57,7 @@ const Guide = () => {
           description: "Please sign in to save your assessment.",
           variant: "destructive",
         });
+        setIsSubmitting(false);
         return;
       }
 
@@ -76,6 +80,8 @@ const Guide = () => {
         description: "Failed to save your assessment. Please try again.",
         variant: "destructive",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -96,8 +102,9 @@ const Guide = () => {
               <span className="text-sm font-medium">Home</span>
             </Link>
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-sacred"></div>
-              <h1 className="text-lg font-semibold text-foreground">Sacred Greeks Guide</h1>
+              <div className="bg-blue-600 rounded-lg p-1.5">
+                <img src={logo} alt="Sacred Greeks" className="h-4 w-auto brightness-0 invert" />
+              </div>
             </div>
           </div>
         </div>
@@ -122,6 +129,7 @@ const Guide = () => {
               scenario={answers.scenario}
               onComplete={handleStep2Complete}
               onBack={() => setCurrentStep(1)}
+              isSubmitting={isSubmitting}
             />
           )}
 
