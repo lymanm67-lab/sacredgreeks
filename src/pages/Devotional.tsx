@@ -9,6 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { SocialShareDialog } from '@/components/SocialShareDialog';
+import { AchievementBadgeDialog } from '@/components/AchievementBadgeDialog';
 
 interface Devotional {
   id: string;
@@ -303,16 +304,29 @@ const Devotional = () => {
               </Button>
               
               {completed && devotional && (
-                <SocialShareDialog
-                  title={`Today's Devotional: ${devotional.title}`}
-                  description={`Just completed today's devotional on ${devotional.proof_focus}. Growing in faith daily! 📖✨`}
-                  hashtags={["SacredGreeks", "Devotional", "Faith", "DailyBread"]}
-                  trigger={
-                    <Button variant="outline" size="lg">
-                      Share Devotional
-                    </Button>
-                  }
-                />
+                <>
+                  <SocialShareDialog
+                    title={`Today's Devotional: ${devotional.title}`}
+                    description={`Just completed today's devotional on ${devotional.proof_focus}. Growing in faith daily! 📖✨`}
+                    hashtags={["SacredGreeks", "Devotional", "Faith", "DailyBread"]}
+                    trigger={
+                      <Button variant="outline" size="lg">
+                        Share Devotional
+                      </Button>
+                    }
+                  />
+                  <AchievementBadgeDialog
+                    type="devotional"
+                    title={devotional.title}
+                    subtitle="Daily Devotional"
+                    completionDate={new Date().toLocaleDateString()}
+                    trigger={
+                      <Button variant="outline" size="lg">
+                        Get Badge
+                      </Button>
+                    }
+                  />
+                </>
               )}
             </div>
           )}

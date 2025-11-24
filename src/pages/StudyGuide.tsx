@@ -13,6 +13,7 @@ import { useState } from "react";
 import { StudyReminderSettings } from "@/components/StudyReminderSettings";
 import { ShareCompletionDialog } from "@/components/study-guide/ShareCompletionDialog";
 import { CertificateDialog } from "@/components/study-guide/CertificateDialog";
+import { AchievementBadgeDialog } from "@/components/AchievementBadgeDialog";
 
 const StudyGuide = () => {
   const {
@@ -102,7 +103,7 @@ const StudyGuide = () => {
                         : "Mark sessions as complete to track your journey"}
                     </p>
                     {isAllComplete && (
-                      <div className="grid grid-cols-2 gap-2 mt-2">
+                      <div className="grid grid-cols-3 gap-2 mt-2">
                         <Button
                           onClick={() => setShareDialogOpen(true)}
                           className="bg-sacred hover:bg-sacred/90 text-sacred-foreground"
@@ -117,8 +118,20 @@ const StudyGuide = () => {
                           size="sm"
                         >
                           <Award className="w-4 h-4 mr-2" />
-                          Certificate
+                          Print
                         </Button>
+                        <AchievementBadgeDialog
+                          type="study_guide"
+                          title="Study Guide Complete"
+                          subtitle="5 Sessions Completed"
+                          completionDate={completionDate}
+                          trigger={
+                            <Button variant="outline" size="sm">
+                              <Award className="w-4 h-4 mr-2" />
+                              Badge
+                            </Button>
+                          }
+                        />
                       </div>
                     )}
                   </div>
