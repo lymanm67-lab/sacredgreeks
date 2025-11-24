@@ -8,41 +8,41 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 250 50% 98%;
-    --foreground: 260 30% 20%;
+    --background: 0 0% 100%;
+    --foreground: 225 60% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 260 30% 20%;
+    --card-foreground: 225 60% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 260 30% 20%;
+    --popover-foreground: 225 60% 15%;
 
-    --primary: 265 85% 58%;
+    --primary: 225 73% 57%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 45 95% 65%;
-    --secondary-foreground: 260 30% 20%;
+    --secondary: 43 96% 56%;
+    --secondary-foreground: 225 60% 15%;
 
-    --muted: 250 30% 95%;
-    --muted-foreground: 260 20% 50%;
+    --muted: 220 20% 96%;
+    --muted-foreground: 225 30% 45%;
 
-    --accent: 280 75% 65%;
+    --accent: 210 100% 50%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 250 30% 90%;
-    --input: 250 30% 90%;
-    --ring: 265 85% 58%;
+    --border: 220 20% 88%;
+    --input: 220 20% 88%;
+    --ring: 225 73% 57%;
 
     --radius: 1rem;
     
     /* Track-specific colors */
-    --sacred: 265 85% 58%;
+    --sacred: 225 73% 57%;
     --sacred-foreground: 0 0% 100%;
-    --sacred-light: 265 75% 75%;
-    --sacred-dark: 265 85% 45%;
+    --sacred-light: 225 60% 70%;
+    --sacred-dark: 225 73% 45%;
     
     /* Status colors */
     --status-high: 0 84% 60%;
@@ -50,16 +50,16 @@ All colors MUST be HSL.
     --status-low: 142 71% 45%;
     
     /* Warm accent colors */
-    --gold: 45 95% 65%;
-    --gold-foreground: 260 30% 20%;
+    --gold: 43 96% 56%;
+    --gold-foreground: 225 60% 15%;
     --warm-blue: 210 100% 65%;
-    --warm-purple: 280 75% 65%;
+    --warm-purple: 250 60% 65%;
     
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(265 85% 58%) 0%, hsl(280 75% 65%) 50%, hsl(45 95% 65%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(250 50% 98%) 100%);
-    --gradient-sacred: linear-gradient(135deg, hsl(265 85% 58%) 0%, hsl(265 75% 75%) 100%);
-    --gradient-warm: linear-gradient(135deg, hsl(280 75% 65%) 0%, hsl(45 95% 65%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(225 73% 57%) 0%, hsl(210 100% 65%) 50%, hsl(43 96% 56%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(220 50% 98%) 100%);
+    --gradient-sacred: linear-gradient(135deg, hsl(225 73% 57%) 0%, hsl(210 100% 65%) 100%);
+    --gradient-warm: linear-gradient(135deg, hsl(225 73% 57%) 0%, hsl(43 96% 56%) 100%);
 
     --sidebar-background: 0 0% 98%;
 
@@ -79,42 +79,42 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 260 40% 8%;
+    --background: 225 50% 8%;
     --foreground: 0 0% 98%;
 
-    --card: 260 35% 12%;
+    --card: 225 40% 12%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 260 35% 12%;
+    --popover: 225 40% 12%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 265 85% 68%;
+    --primary: 225 73% 67%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 45 85% 60%;
-    --secondary-foreground: 260 30% 20%;
+    --secondary: 43 96% 60%;
+    --secondary-foreground: 225 60% 15%;
 
-    --muted: 260 30% 18%;
-    --muted-foreground: 250 20% 70%;
+    --muted: 225 30% 18%;
+    --muted-foreground: 220 20% 70%;
 
-    --accent: 280 70% 60%;
+    --accent: 210 100% 60%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 260 30% 20%;
-    --input: 260 30% 20%;
-    --ring: 265 85% 68%;
+    --border: 225 30% 20%;
+    --input: 225 30% 20%;
+    --ring: 225 73% 67%;
     
-    --gold: 45 85% 60%;
+    --gold: 43 96% 60%;
     --warm-blue: 210 90% 60%;
-    --warm-purple: 280 70% 60%;
+    --warm-purple: 250 55% 60%;
     
-    --gradient-hero: linear-gradient(135deg, hsl(265 85% 48%) 0%, hsl(280 75% 55%) 50%, hsl(45 85% 55%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(260 35% 12%) 0%, hsl(260 40% 15%) 100%);
-    --gradient-sacred: linear-gradient(135deg, hsl(265 85% 58%) 0%, hsl(265 75% 65%) 100%);
-    --gradient-warm: linear-gradient(135deg, hsl(280 75% 55%) 0%, hsl(45 85% 55%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(225 73% 47%) 0%, hsl(210 100% 55%) 50%, hsl(43 96% 56%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(225 40% 12%) 0%, hsl(225 40% 15%) 100%);
+    --gradient-sacred: linear-gradient(135deg, hsl(225 73% 57%) 0%, hsl(210 100% 60%) 100%);
+    --gradient-warm: linear-gradient(135deg, hsl(225 73% 57%) 0%, hsl(43 96% 56%) 100%);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;

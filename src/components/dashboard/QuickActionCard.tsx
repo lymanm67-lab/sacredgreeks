@@ -12,7 +12,7 @@ interface QuickActionCardProps {
   delay?: string;
 }
 
-export const QuickActionCard = ({ title, description, icon: Icon, href, gradient = "from-sacred to-sacred-light", delay = "0s" }: QuickActionCardProps) => {
+export const QuickActionCard = ({ title, description, icon: Icon, href, gradient = "from-sacred to-warm-blue", delay = "0s" }: QuickActionCardProps) => {
   return (
     <Link to={href}>
       <Card 
