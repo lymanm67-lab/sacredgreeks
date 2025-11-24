@@ -158,6 +158,9 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart }: 
               <Video className="w-5 h-5 text-sacred" />
               <CardTitle className="text-xl">Recommended Videos</CardTitle>
             </div>
+            <CardDescription>
+              Click to watch on YouTube. If a video doesn't open, copy the link below and paste it into your browser.
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             {content.videos.map((video, index) => (
