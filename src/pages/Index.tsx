@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Heart, Video, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2 } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
+import logo from "@/assets/sacred-greeks-logo.png";
 
 const features = [
   {
@@ -70,11 +71,7 @@ const Index = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Heart className="w-6 h-6 text-sacred" />
-              <div>
-                <span className="font-bold text-lg">Sacred Greeks</span>
-                <span className="text-xs text-muted-foreground ml-2">Life App</span>
-              </div>
+              <img src={logo} alt="Sacred Greeks" className="h-10 w-auto" />
             </div>
             <div className="flex items-center gap-3">
               {user ? (
@@ -111,8 +108,8 @@ const Index = () => {
             Trusted by Christians in Greek Life
           </Badge>
           
-          <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-sacred/10 mb-4 animate-fade-in">
-            <Heart className="w-12 h-12 text-sacred" />
+          <div className="inline-flex items-center justify-center mb-4 animate-fade-in">
+            <img src={logo} alt="Sacred Greeks" className="h-32 w-auto" />
           </div>
           
           <h1 className="text-5xl md:text-7xl font-bold text-foreground leading-tight animate-fade-in">
