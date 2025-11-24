@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,6 +9,13 @@ import { SuggestResourceDialog } from '@/components/resources/SuggestResourceDia
 import { BookOpen, ExternalLink, Download, Search, ArrowUpDown, Heart, Users, HandHeart, Book } from 'lucide-react';
 
 const resources = [
+  {
+    title: "Bible Study Tool",
+    description: "Integrated scripture search, daily verses, and reading plans for spiritual growth",
+    url: "/bible-study",
+    icon: Book,
+    category: "Prayer"
+  },
   {
     title: "Bible Gateway",
     description: "Read the Bible online in multiple translations with powerful search and study tools",
@@ -167,15 +175,22 @@ export const ResourcesSection = () => {
                       asChild
                       className="w-full"
                     >
-                      <a 
-                        href={resource.url} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2"
-                      >
-                        Access Resource
-                        <ExternalLink className="w-3 h-3" />
-                      </a>
+                      {resource.url.startsWith('/') ? (
+                        <Link to={resource.url} className="flex items-center gap-2">
+                          Access Resource
+                          <ExternalLink className="w-3 h-3" />
+                        </Link>
+                      ) : (
+                        <a 
+                          href={resource.url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2"
+                        >
+                          Access Resource
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      )}
                     </Button>
                   </div>
                 </div>
