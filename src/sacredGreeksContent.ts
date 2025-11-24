@@ -1155,6 +1155,27 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
         reflection: "The Olympics are openly rooted in Greek religious practices, yet participation is celebrated. Why aren't BGLOs, with far less direct religious ties, given the same grace?"
       }
     ]
+  },
+  {
+    id: "oaths-allegiances",
+    title: "Oaths & Allegiances",
+    description: "Ceremonial pledges and vows with ancient origins",
+    videos: [
+      {
+        title: "History of Oaths and Allegiance",
+        url: "https://youtu.be/GbaqBExsqbs",
+        description: "Exploring the ancient roots of oaths, pledges, and civic allegiance ceremonies"
+      }
+    ],
+    items: [
+      {
+        id: "pledge-allegiance",
+        title: "Pledge of Allegiance",
+        origin: "The concept of pledging allegiance traces back to ancient oath-taking ceremonies in Greek and Roman societies, where citizens would swear loyalty to gods and state.",
+        today: "Americans recite the Pledge of Allegiance in schools, government ceremonies, and public events. Christians participate in this civic ritual without spiritual concern.",
+        reflection: "If Christians can pledge allegiance to a flag and nation using ceremonial language rooted in ancient practices, why are Greek organization pledges treated differently?"
+      }
+    ]
   }
 ];
 
