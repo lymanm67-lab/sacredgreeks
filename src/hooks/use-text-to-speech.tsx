@@ -7,7 +7,7 @@ export const useTextToSpeech = () => {
   const [isLoading, setIsLoading] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const speak = async (text: string, itemId: string) => {
+  const speak = async (text: string, itemId: string, voice: string = "alloy") => {
     // Stop any currently playing audio
     if (audioRef.current) {
       audioRef.current.pause();
@@ -24,7 +24,7 @@ export const useTextToSpeech = () => {
 
     try {
       const { data, error } = await supabase.functions.invoke("text-to-speech", {
-        body: { text, voice: "alloy" },
+        body: { text, voice },
       });
 
       if (error) throw error;
