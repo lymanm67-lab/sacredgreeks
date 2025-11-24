@@ -60,7 +60,6 @@ const Devotional = () => {
         }
       }
     } catch (error) {
-      console.error('Error loading devotional:', error);
       toast({
         title: 'Error',
         description: 'Failed to load today\'s devotional',
