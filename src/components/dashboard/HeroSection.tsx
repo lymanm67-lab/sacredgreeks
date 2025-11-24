@@ -59,7 +59,7 @@ export const HeroSection = () => {
             <div className="text-4xl text-foreground">"</div>
             <div className="flex-1">
               <p className="text-foreground text-lg leading-relaxed mb-3 italic font-medium">
-                {dailyScripture.text}
+                {dailyScripture.text}"
               </p>
               <p className="text-sacred font-semibold">
                 — {dailyScripture.reference}
