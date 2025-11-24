@@ -70,10 +70,10 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
-    console.error('Error sending daily devotional reminder:', errorMessage)
+    // SECURITY FIX #4: Log detailed errors server-side, return generic message to client
+    console.error('Error sending daily devotional reminder:', error)
     return new Response(
-      JSON.stringify({ error: errorMessage }),
+      JSON.stringify({ error: 'Failed to send reminders. Please try again.' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   }

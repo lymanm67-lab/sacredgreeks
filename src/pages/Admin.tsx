@@ -18,6 +18,30 @@ const Admin = () => {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
+  /**
+   * SECURITY DOCUMENTATION (#5): Client-Side Admin Check Pattern
+   * 
+   * This client-side admin check is for USER EXPERIENCE ONLY and does NOT provide security.
+   * 
+   * SECURITY MODEL:
+   * - Actual security is enforced by Row-Level Security (RLS) policies in the database
+   * - RLS policies use the has_role() security definer function to verify admin access
+   * - All admin operations (viewing submissions, managing resources) are protected server-side
+   * 
+   * CLIENT-SIDE CHECK PURPOSE:
+   * - Provides immediate feedback to non-admin users
+   * - Prevents unnecessary UI rendering for unauthorized users
+   * - Improves user experience by redirecting early
+   * 
+   * WHY THIS IS SAFE:
+   * - Even if a user modifies client code to bypass this check, they cannot access admin data
+   * - RLS policies on assessment_submissions, daily_devotionals, and resource_suggestions
+   *   will reject any unauthorized queries regardless of client-side state
+   * - The database enforces all authorization decisions
+   * 
+   * IMPORTANT: Never rely on client-side checks for security decisions. Always validate
+   * permissions server-side through RLS policies or edge function authorization checks.
+   */
   useEffect(() => {
     const checkAdminStatus = async () => {
       if (!user) {

@@ -1,9 +1,15 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
+
+// SECURITY FIX #3: Input validation schema
+const requestSchema = z.object({
+  schedule: z.enum(['daily', 'weekly'])
+});
 
 interface PushSubscription {
   id: string;
@@ -35,12 +41,19 @@ Deno.serve(async (req) => {
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Get the schedule type from request body (daily or weekly)
-    const { schedule } = await req.json();
+    // SECURITY FIX #3: Server-side validation
+    const requestBody = await req.json();
+    const validation = requestSchema.safeParse(requestBody);
     
-    if (!schedule || !['daily', 'weekly'].includes(schedule)) {
-      throw new Error('Invalid schedule type. Must be "daily" or "weekly"');
+    if (!validation.success) {
+      console.error('Validation error:', validation.error.errors);
+      return new Response(
+        JSON.stringify({ error: 'Invalid request data' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
+      );
     }
+
+    const { schedule } = validation.data;
 
     console.log(`Fetching ${schedule} prayer reminder subscriptions...`);
 
@@ -143,9 +156,10 @@ Deno.serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
     );
   } catch (error: any) {
+    // SECURITY FIX #4: Log detailed errors server-side, return generic message to client
     console.error('Error in prayer-journal-reminder function:', error);
     return new Response(
-      JSON.stringify({ error: error?.message || 'Unknown error' }),
+      JSON.stringify({ error: 'Failed to send reminders. Please try again.' }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
     );
   }

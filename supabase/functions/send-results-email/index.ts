@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "https://esm.sh/resend@4.0.0";
+import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts';
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -9,30 +10,31 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-interface EmailRequest {
-  email: string;
-  resultType: string;
-  scenario: string;
-  content: {
-    headline: string;
-    intro: string;
-    scriptureToolkit: Array<{
-      ref: string;
-      summary: string;
-      whenToUse: string;
-    }>;
-    sampleResponses: Array<{
-      label: string;
-      objection: string;
-      youCanSay: string;
-    }>;
-    proofPoints: Array<{
-      label: string;
-      text: string;
-    }>;
-    prayer: string;
-  };
-}
+// SECURITY FIX #3: Input validation schema
+const emailRequestSchema = z.object({
+  email: z.string().email().max(255),
+  resultType: z.string().min(1).max(100),
+  scenario: z.string().min(1).max(200),
+  content: z.object({
+    headline: z.string().max(500),
+    intro: z.string().max(2000),
+    scriptureToolkit: z.array(z.object({
+      ref: z.string().max(100),
+      summary: z.string().max(1000),
+      whenToUse: z.string().max(500)
+    })).max(20),
+    sampleResponses: z.array(z.object({
+      label: z.string().max(200),
+      objection: z.string().max(500),
+      youCanSay: z.string().max(1000)
+    })).max(20),
+    proofPoints: z.array(z.object({
+      label: z.string().max(200),
+      text: z.string().max(2000)
+    })).max(20),
+    prayer: z.string().max(2000)
+  })
+});
 
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
@@ -50,24 +52,36 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    const { email, resultType, scenario, content }: EmailRequest = await req.json();
+    const requestBody = await req.json();
     
-    // Validate required fields
-    if (!email || !resultType || !scenario || !content) {
+    // SECURITY FIX #3: Server-side validation
+    const validation = emailRequestSchema.safeParse(requestBody);
+    if (!validation.success) {
+      console.error('Validation error:', validation.error.errors);
       return new Response(
-        JSON.stringify({ error: 'Missing required fields' }),
+        JSON.stringify({ error: 'Invalid request data' }),
         { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
 
-    // Build the email HTML
+    const { email, resultType, scenario, content } = validation.data;
+
+    // Sanitize HTML content to prevent XSS
+    const escapeHtml = (unsafe: string) => unsafe
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+    // Build the email HTML with sanitized content
     const scriptureToolkitHtml = content.scriptureToolkit
       .map(
         (scripture) => `
         <div style="border-left: 4px solid #8B5CF6; padding-left: 16px; margin-bottom: 16px;">
-          <p style="font-weight: 600; margin-bottom: 4px;">${scripture.ref}</p>
-          <p style="font-size: 14px; color: #666; margin-bottom: 4px;">${scripture.summary}</p>
-          <p style="font-size: 14px; color: #666; font-style: italic;">When to use: ${scripture.whenToUse}</p>
+          <p style="font-weight: 600; margin-bottom: 4px;">${escapeHtml(scripture.ref)}</p>
+          <p style="font-size: 14px; color: #666; margin-bottom: 4px;">${escapeHtml(scripture.summary)}</p>
+          <p style="font-size: 14px; color: #666; font-style: italic;">When to use: ${escapeHtml(scripture.whenToUse)}</p>
         </div>
       `
       )
@@ -77,12 +91,12 @@ const handler = async (req: Request): Promise<Response> => {
       .map(
         (response) => `
         <div style="background-color: #f5f5f5; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
-          <p style="font-weight: 600; color: #8B5CF6; margin-bottom: 8px;">${response.label}</p>
+          <p style="font-weight: 600; color: #8B5CF6; margin-bottom: 8px;">${escapeHtml(response.label)}</p>
           <p style="font-size: 14px; margin-bottom: 8px;">
-            <span style="font-weight: 500;">Objection:</span> "${response.objection}"
+            <span style="font-weight: 500;">Objection:</span> "${escapeHtml(response.objection)}"
           </p>
           <p style="font-size: 14px;">
-            <span style="font-weight: 500;">You can say:</span> "${response.youCanSay}"
+            <span style="font-weight: 500;">You can say:</span> "${escapeHtml(response.youCanSay)}"
           </p>
         </div>
       `
@@ -93,8 +107,8 @@ const handler = async (req: Request): Promise<Response> => {
       .map(
         (point) => `
         <div style="margin-bottom: 16px;">
-          <h4 style="font-weight: 600; margin-bottom: 8px;">${point.label}</h4>
-          <p style="font-size: 14px; color: #666; line-height: 1.6;">${point.text}</p>
+          <h4 style="font-weight: 600; margin-bottom: 8px;">${escapeHtml(point.label)}</h4>
+          <p style="font-size: 14px; color: #666; line-height: 1.6;">${escapeHtml(point.text)}</p>
         </div>
       `
       )
@@ -193,9 +207,10 @@ const handler = async (req: Request): Promise<Response> => {
       },
     });
   } catch (error: any) {
+    // SECURITY FIX #4: Log detailed errors server-side, return generic message to client
     console.error("Error in send-results-email function:", error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: "Failed to send email. Please try again." }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },

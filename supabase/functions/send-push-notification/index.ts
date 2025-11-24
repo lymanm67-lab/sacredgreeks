@@ -1,10 +1,21 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
+
+// Input validation schema
+const requestSchema = z.object({
+  type: z.enum(['devotional', 'prayer']),
+  userId: z.string().uuid().optional(),
+  title: z.string().min(1).max(200),
+  body: z.string().min(1).max(500),
+  icon: z.string().url().optional(),
+  data: z.record(z.unknown()).optional()
+})
 
 // Web Push VAPID keys should be stored as secrets
 const VAPID_PUBLIC_KEY = Deno.env.get('VAPID_PUBLIC_KEY')
@@ -55,13 +66,31 @@ serve(async (req) => {
   }
 
   try {
-    // Validate service role key to prevent unauthorized access
+    // SECURITY FIX #2: Proper service role key validation with constant-time comparison
     const authHeader = req.headers.get('Authorization')
     const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
     
-    if (!authHeader || !authHeader.includes(serviceRoleKey || '')) {
+    if (!authHeader || !serviceRoleKey) {
+      console.error('Missing authorization credentials')
       return new Response(
-        JSON.stringify({ error: 'Unauthorized. Service role key required.' }),
+        JSON.stringify({ error: 'Unauthorized' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    // Extract bearer token and use constant-time comparison
+    const token = authHeader.replace('Bearer ', '')
+    
+    // Constant-time comparison to prevent timing attacks
+    let isValid = token.length === serviceRoleKey.length
+    for (let i = 0; i < token.length; i++) {
+      isValid = isValid && (token.charCodeAt(i) === serviceRoleKey.charCodeAt(i))
+    }
+    
+    if (!isValid) {
+      console.error('Invalid service role key')
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized' }),
         { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
@@ -71,14 +100,19 @@ serve(async (req) => {
       serviceRoleKey ?? ''
     )
 
-    const { type, userId, title, body, icon, data } = await req.json()
-
-    if (!type || !title || !body) {
+    // SECURITY FIX #3: Server-side input validation
+    const requestBody = await req.json()
+    const validation = requestSchema.safeParse(requestBody)
+    
+    if (!validation.success) {
+      console.error('Validation error:', validation.error.errors)
       return new Response(
-        JSON.stringify({ error: 'Missing required fields' }),
+        JSON.stringify({ error: 'Invalid request data' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
+
+    const { type, userId, title, body, icon, data } = validation.data
 
     // Get subscriptions based on type
     let query = supabase
@@ -140,9 +174,10 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
+    // SECURITY FIX #4: Log detailed errors server-side, return generic message to client
+    console.error('Push notification error:', error)
     return new Response(
-      JSON.stringify({ error: errorMessage }),
+      JSON.stringify({ error: 'Failed to send notifications. Please try again.' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   }
