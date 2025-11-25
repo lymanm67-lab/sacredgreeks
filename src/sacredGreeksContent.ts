@@ -983,6 +983,11 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
         title: "Pagan Architecture in Churches",
         url: "https://youtu.be/G14XXWLKq5Q",
         description: "How Greek and Roman temple designs became standard for Christian buildings"
+      },
+      {
+        title: "Your Church Looks Pagan - Here's Why",
+        url: "https://youtu.be/48I-fdTNg8c",
+        description: "Exploring why church architecture and symbols often resemble pagan temples and imagery"
       }
     ],
     items: [
