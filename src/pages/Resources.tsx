@@ -179,6 +179,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Are BGLOs Sinful? A Biblical Response",
+    description: "A biblical perspective addressing common concerns about Black Greek Letter Organizations",
+    url: "https://gamma.app/docs/Are-BGLOs-Sinful-A-Biblical-Response-for-Christians-qj85c0up8fdigh5",
+    icon: BookOpen,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
