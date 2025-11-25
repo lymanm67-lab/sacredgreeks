@@ -195,6 +195,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Greek Life, Social Justice, And Faith",
+    description: "How BGLOs can be Kingdom tools for advancing social justice and faith",
+    url: "https://gamma.app/docs/Greek-Life-Social-Justice-And-Faith-How-BGLOs-Can-Be-Kingdom-Tools-97rakhcw3n90dt0",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
