@@ -59,13 +59,14 @@ export const FeaturedActions = () => {
         <p className="text-muted-foreground">Choose an action to begin your spiritual journey today</p>
       </div>
       
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-5">
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 auto-rows-fr">
         {featuredActions.map((action, index) => (
           <motion.div
             key={action.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
+            className="h-full"
           >
             {action.isExternal && action.useModal ? (
               <ExternalContentModal
@@ -73,16 +74,16 @@ export const FeaturedActions = () => {
                 title={action.title}
                 description={action.description}
                 trigger={
-                  <div className="block cursor-pointer">
-                    <Card className="group relative overflow-hidden border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer h-full">
-                      <div className="p-6 space-y-4">
+                  <div className="h-full cursor-pointer">
+                    <Card className="group relative overflow-hidden border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer h-full flex flex-col">
+                      <div className="p-6 space-y-4 flex-1 flex flex-col">
                         {/* Icon */}
-                        <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${action.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                        <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${action.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0`}>
                           <action.icon className="w-7 h-7 text-white" />
                         </div>
                         
                         {/* Content */}
-                        <div className="space-y-2">
+                        <div className="space-y-2 flex-1">
                           <h3 className="text-lg font-bold group-hover:text-primary transition-colors">
                             {action.title}
                           </h3>
@@ -103,17 +104,17 @@ export const FeaturedActions = () => {
                 href={action.href} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="block"
+                className="block h-full"
               >
-                <Card className="group relative overflow-hidden border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer h-full">
-                  <div className="p-6 space-y-4">
+                <Card className="group relative overflow-hidden border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer h-full flex flex-col">
+                  <div className="p-6 space-y-4 flex-1 flex flex-col">
                     {/* Icon */}
-                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${action.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${action.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0`}>
                       <action.icon className="w-7 h-7 text-white" />
                     </div>
                     
                     {/* Content */}
-                    <div className="space-y-2">
+                    <div className="space-y-2 flex-1">
                       <h3 className="text-lg font-bold group-hover:text-primary transition-colors">
                         {action.title}
                       </h3>
@@ -128,16 +129,16 @@ export const FeaturedActions = () => {
                 </Card>
               </a>
             ) : (
-              <Link to={action.href}>
-                <Card className="group relative overflow-hidden border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer h-full">
-                  <div className="p-6 space-y-4">
+              <Link to={action.href} className="block h-full">
+                <Card className="group relative overflow-hidden border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer h-full flex flex-col">
+                  <div className="p-6 space-y-4 flex-1 flex flex-col">
                     {/* Icon */}
-                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${action.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${action.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0`}>
                       <action.icon className="w-7 h-7 text-white" />
                     </div>
                     
                     {/* Content */}
-                    <div className="space-y-2">
+                    <div className="space-y-2 flex-1">
                       <h3 className="text-lg font-bold group-hover:text-primary transition-colors">
                         {action.title}
                       </h3>
