@@ -276,6 +276,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "How to Be P.I.L.L.A.R. within Your Greek Organization",
+    description: "Framework for being a pillar of faith and leadership within your Greek letter organization",
+    url: "https://gamma.app/docs/How-to-Be-PILLAR-within-Your-Greek-Letter-Organization-ctdbb60tc09ez0e",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
