@@ -243,6 +243,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Should Members Take Oaths For BGLOs?",
+    description: "Christian guidance on taking oaths for Black Greek Letter Organizations",
+    url: "https://gamma.app/docs/Christian-Guidance-Should-Members-Take-Oaths-For-Black-Greek-Letter-y630omdzx2sp7z3",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
