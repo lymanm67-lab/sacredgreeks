@@ -308,6 +308,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Redeemed Greeks",
+    description: "A vision for redemption and renewal within Greek letter organizations through Christ",
+    url: "https://gamma.app/docs/Redeemed-Greeks-l28kd2r827ynm99",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
