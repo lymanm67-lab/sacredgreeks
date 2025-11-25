@@ -189,16 +189,16 @@ const Index = () => {
 
       {/* Benefits Section */}
       {!user && (
-        <div className="container mx-auto px-4 py-12 bg-muted/50">
+        <div className="container mx-auto px-4 py-16 bg-muted/50">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
               Everything You Need to Thrive
             </h2>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {benefits.map((benefit, index) => (
                 <div key={index} className="flex items-start gap-3 animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
                   <CheckCircle2 className="w-6 h-6 text-sacred flex-shrink-0 mt-1" />
-                  <p className="text-lg text-muted-foreground">{benefit}</p>
+                  <p className="text-base text-muted-foreground">{benefit}</p>
                 </div>
               ))}
             </div>
@@ -218,7 +218,7 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {features.map((feature, index) => {
               const isExternal = feature.isExternal || false;
               const requiresAuth = feature.requiresAuth || false;
