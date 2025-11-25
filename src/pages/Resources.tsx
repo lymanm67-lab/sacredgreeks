@@ -340,6 +340,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Redeem Your Letters",
+    description: "A powerful message about redeeming your Greek letters and bringing glory to God through your organization",
+    url: "https://gamma.app/docs/Redeem-Your-Letters-trkhw9krqh3l4cs",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
