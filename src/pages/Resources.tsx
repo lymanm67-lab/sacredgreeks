@@ -1,11 +1,10 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { useExternalLinks } from "@/hooks/use-external-links";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { 
   BookOpen, 
   Heart, 
@@ -117,8 +116,7 @@ const resources: ResourceItem[] = [
 
 const Resources = () => {
   const { user } = useAuth();
-  const [selectedUrl, setSelectedUrl] = useState<string | null>(null);
-  const [selectedTitle, setSelectedTitle] = useState<string>("");
+  const { openExternalLink } = useExternalLinks();
 
   const handleResourceClick = (resource: ResourceItem) => {
     if (resource.requiresAuth && !user) {
@@ -126,14 +124,9 @@ const Resources = () => {
       window.location.href = "/auth";
       return;
     }
-    setSelectedUrl(resource.url);
-    setSelectedTitle(resource.title);
-  };
-
-  const handleOpenExternal = () => {
-    if (selectedUrl) {
-      window.open(selectedUrl, "_blank", "noopener,noreferrer");
-    }
+    
+    // Open external links directly in new tab/browser
+    openExternalLink(resource.url);
   };
 
   const handleDownload = (e: React.MouseEvent, downloadUrl: string, title: string) => {
@@ -353,42 +346,6 @@ const Resources = () => {
         )}
       </main>
 
-      {/* Iframe Modal */}
-      <Dialog open={!!selectedUrl} onOpenChange={(open) => !open && setSelectedUrl(null)}>
-        <DialogContent className="max-w-5xl h-[85vh] flex flex-col p-0">
-          <DialogHeader className="px-6 pt-6 pb-2">
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1">
-                <DialogTitle className="text-xl">{selectedTitle}</DialogTitle>
-                <DialogDescription className="mt-1">
-                  Content from Sacred Greeks website
-                </DialogDescription>
-              </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleOpenExternal}
-                className="flex-shrink-0"
-              >
-                <ExternalLink className="w-4 h-4 mr-2" />
-                Open in New Tab
-              </Button>
-            </div>
-          </DialogHeader>
-          
-          <div className="flex-1 px-6 pb-6 overflow-hidden">
-            {selectedUrl && (
-              <iframe
-                src={selectedUrl}
-                title={selectedTitle}
-                className="w-full h-full rounded-md border bg-background"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };
