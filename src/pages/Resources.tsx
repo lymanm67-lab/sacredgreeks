@@ -76,6 +76,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Repentance, Repair & Renewal Checklist",
+    description: "A spiritual guide for aligning Greek life with devotion to Christ",
+    url: "https://gamma.app/docs/Christian-Black-Greek-Life-Repentance-Repair-and-Renewal-Checklis-12fobc2w0gro04i",
+    icon: FileText,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "https://www.sacredgreeks.com/faq",
