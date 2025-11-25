@@ -316,6 +316,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Why Some Call BGLOs Demonic",
+    description: "Understanding and addressing concerns about spiritual warfare claims regarding Black Greek Letter Organizations",
+    url: "https://gamma.app/docs/Why-Some-Call-Black-Greek-Letter-Organizations-Demonic-4exmqlq3k79oepv",
+    icon: BookOpen,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
