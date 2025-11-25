@@ -147,6 +147,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Cultural Reflection Devotional for the Holidays",
+    description: "Sacred Greeks devotional for reflecting on culture and faith during the holiday season",
+    url: "https://gamma.app/docs/Sacred-Greeks-Cultural-Reflection-Devotional-for-the-Holidays-uudch3osmv3ss77",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
