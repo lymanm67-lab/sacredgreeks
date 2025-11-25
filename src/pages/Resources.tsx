@@ -284,6 +284,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "How to Handle Tensions Within Your Greek Organization",
+    description: "Practical guidance for navigating and resolving conflicts within your Greek letter organization",
+    url: "https://gamma.app/docs/How-to-Handle-Tensions-Within-Your-Greek-Letter-Organization-hoaqqjovrxsxpve",
+    icon: FileText,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
