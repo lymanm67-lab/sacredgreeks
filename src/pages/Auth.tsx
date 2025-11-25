@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Heart, Home, Eye, EyeOff } from 'lucide-react';
+import { Heart, Home, Eye, EyeOff, CheckCircle2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { z } from 'zod';
@@ -283,14 +283,47 @@ const Auth = () => {
       </header>
 
       <div className="flex-1 flex items-center justify-center p-4">
-        <div className="w-full max-w-md">
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sacred/10 mb-4">
-              <Heart className="w-8 h-8 text-sacred" />
+        <div className="w-full max-w-4xl">
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
+            {/* Left Side - Benefits */}
+            <div className="text-center lg:text-left space-y-6 order-2 lg:order-1">
+              <div className="inline-flex lg:flex items-center justify-center lg:justify-start w-16 h-16 rounded-full bg-sacred/10 mb-4">
+                <Heart className="w-8 h-8 text-sacred" />
+              </div>
+              <div>
+                <h1 className="text-3xl md:text-4xl font-bold mb-3">Join Sacred Greeks</h1>
+                <p className="text-lg text-muted-foreground mb-6">
+                  Navigate faith and Greek life with daily devotionals, prayer tools, and biblical guidance
+                </p>
+              </div>
+              
+              <div className="space-y-3 text-left max-w-md mx-auto lg:mx-0">
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-sacred flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-semibold text-foreground">Daily Devotionals</p>
+                    <p className="text-sm text-muted-foreground">Scripture-based guidance grounded in P.R.O.O.F. framework</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-sacred flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-semibold text-foreground">Track Your Journey</p>
+                    <p className="text-sm text-muted-foreground">Monitor prayers, progress, and spiritual growth</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-sacred flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-semibold text-foreground">100% Free Forever</p>
+                    <p className="text-sm text-muted-foreground">No credit card required, full access to all features</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <h1 className="text-3xl font-bold mb-2">Sacred Greeks</h1>
-            <p className="text-muted-foreground">Sign in to save your journey and access daily devotionals</p>
-          </div>
+
+            {/* Right Side - Auth Forms */}
+            <div className="order-1 lg:order-2">
 
           <Tabs defaultValue="signin" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
@@ -435,6 +468,8 @@ const Auth = () => {
               </Card>
             </TabsContent>
           </Tabs>
+            </div>
+          </div>
         </div>
       </div>
     </div>
