@@ -155,6 +155,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "7-Days to Unshakeable Focus",
+    description: "A week-long devotional guide to develop spiritual focus and mental clarity",
+    url: "https://gamma.app/docs/7-Days-to-Unshakeable-Focus-3pebfj1ub3rqkue",
+    icon: CheckCircle,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
