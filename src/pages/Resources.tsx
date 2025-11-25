@@ -91,7 +91,7 @@ const resources: ResourceItem[] = [
   {
     title: "Integrity Under Pressure Playbook",
     description: "A practical ethics guide for hot moments on campus and in life using the P.R.O.O.F. framework",
-    url: "/resources/integrity-under-pressure-2.pdf",
+    url: "https://gamma.app/docs/Integrity-Under-Pressure-752n7nfkgl1wn7w",
     icon: BookOpen,
     requiresAuth: false,
     category: "articles",
