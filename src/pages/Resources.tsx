@@ -235,6 +235,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Symbolism in BGLO Rituals: Harmless or Spiritual Danger?",
+    description: "A guide for Christians and church leaders examining symbolism in Black Greek rituals",
+    url: "https://gamma.app/docs/Symbolism-in-BGLO-Rituals-Harmless-or-Spiritual-Danger-A-Guide-for-nftyg892145844a",
+    icon: BookOpen,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
