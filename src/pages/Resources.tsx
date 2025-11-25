@@ -268,6 +268,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "CROSS Guide for Greek Life",
+    description: "Comprehensive guide using the CROSS framework for Christian Greek life participation",
+    url: "https://gamma.app/docs/CROSS-Guide-for-Greek-Life-ug6sn2qq95613dg",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
