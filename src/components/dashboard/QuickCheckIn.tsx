@@ -7,6 +7,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Heart, BookOpen, HandHeart, CheckCircle2 } from 'lucide-react';
 import { useGamification } from '@/hooks/use-gamification';
 import { toast } from 'sonner';
+import { useAutoCompleteChallenge } from '@/hooks/use-auto-complete-challenge';
 
 interface CheckInData {
   prayed_today: boolean;
@@ -17,6 +18,7 @@ interface CheckInData {
 export function QuickCheckIn() {
   const { user } = useAuth();
   const { awardPoints } = useGamification();
+  const { completeChallenge } = useAutoCompleteChallenge();
   const [checkIn, setCheckIn] = useState<CheckInData>({
     prayed_today: false,
     read_bible: false,
@@ -84,6 +86,12 @@ export function QuickCheckIn() {
       if (value) {
         awardPoints({ points: 5, actionType: 'quick_check_in' });
         toast.success('Checked in! +5 points');
+        
+        // Check if all items are now checked and auto-complete check-in challenge
+        const allItemsChecked = Object.values(newCheckIn).every(Boolean);
+        if (allItemsChecked) {
+          await completeChallenge('check_in');
+        }
       }
     } catch (error) {
       console.error('Error updating check-in:', error);

@@ -21,6 +21,7 @@ import {
 } from '@/components/ui/select';
 import { toast } from 'sonner';
 import { useGamification } from '@/hooks/use-gamification';
+import { useAutoCompleteChallenge } from '@/hooks/use-auto-complete-challenge';
 
 interface CreatePrayerRequestDialogProps {
   open: boolean;
@@ -35,6 +36,7 @@ export function CreatePrayerRequestDialog({
 }: CreatePrayerRequestDialogProps) {
   const { user } = useAuth();
   const { awardPoints } = useGamification();
+  const { completeChallenge } = useAutoCompleteChallenge();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [requestType, setRequestType] = useState('general');
@@ -70,6 +72,9 @@ export function CreatePrayerRequestDialog({
 
       // Award points for sharing
       awardPoints({ points: 10, actionType: 'share_prayer_request' });
+
+      // Auto-complete prayer wall challenge
+      await completeChallenge('prayer_wall');
 
       // Reset form
       setTitle('');

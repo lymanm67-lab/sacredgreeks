@@ -25,6 +25,7 @@ import { prayerJournalSchema } from '@/lib/validation';
 import { useGamification } from '@/hooks/use-gamification';
 import { usePullToRefresh } from '@/hooks/use-pull-to-refresh';
 import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
+import { useAutoCompleteChallenge } from '@/hooks/use-auto-complete-challenge';
 
 interface Prayer {
   id: string;
@@ -39,6 +40,7 @@ interface Prayer {
 const PrayerJournal = () => {
   const { user } = useAuth();
   const { awardPoints } = useGamification();
+  const { completeChallenge } = useAutoCompleteChallenge();
   const [prayers, setPrayers] = useState<Prayer[]>([]);
   const [filteredPrayers, setFilteredPrayers] = useState<Prayer[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -135,6 +137,9 @@ const PrayerJournal = () => {
 
       // Award points and check achievements
       awardPoints({ points: 5, actionType: 'prayer' });
+
+      // Auto-complete prayer challenge
+      await completeChallenge('prayer');
 
       // Check for achievements via edge function
       await supabase.functions.invoke('check-achievements', {
