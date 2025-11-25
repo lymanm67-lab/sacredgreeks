@@ -37,6 +37,7 @@ import Podcast from "./pages/Podcast";
 import Achievements from "./pages/Achievements";
 import DidYouKnow from "./pages/DidYouKnow";
 import OfflineSettings from "./pages/OfflineSettings";
+import ArticleLibrary from "./pages/ArticleLibrary";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +65,7 @@ const App = () => (
               <Route path="/study" element={<StudyGuide />} />
               <Route path="/podcast" element={<Podcast />} />
               <Route path="/did-you-know" element={<DidYouKnow />} />
+              <Route path="/articles" element={<ArticleLibrary />} />
               <Route
                 path="/achievements"
                 element={
