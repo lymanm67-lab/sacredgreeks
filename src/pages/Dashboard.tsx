@@ -164,7 +164,7 @@ const Dashboard = () => {
     });
   };
 
-  // Define quick actions
+  // Define quick actions with distinct, vibrant colors
   const quickActions = [
     {
       id: 'new-assessment',
@@ -172,7 +172,8 @@ const Dashboard = () => {
       description: 'Process a new decision with biblical guidance',
       icon: Heart,
       href: '/guide',
-      gradient: 'from-sacred to-warm-blue',
+      iconColor: 'text-white',
+      iconBg: 'bg-gradient-to-br from-rose-500 to-pink-600',
     },
     {
       id: 'daily-devotional',
@@ -180,7 +181,8 @@ const Dashboard = () => {
       description: 'Read today\'s reflection and scripture',
       icon: BookOpen,
       href: '/devotional',
-      gradient: 'from-warm-blue to-accent',
+      iconColor: 'text-white',
+      iconBg: 'bg-gradient-to-br from-blue-500 to-indigo-600',
     },
     {
       id: 'prayer-journal',
@@ -188,7 +190,8 @@ const Dashboard = () => {
       description: 'Track your prayers and answered requests',
       icon: MessageSquare,
       href: '/prayer-journal',
-      gradient: 'from-sacred to-secondary',
+      iconColor: 'text-white',
+      iconBg: 'bg-gradient-to-br from-purple-500 to-violet-600',
     },
     {
       id: 'prayer-wall',
@@ -196,7 +199,8 @@ const Dashboard = () => {
       description: 'Share and support community prayer requests',
       icon: Heart,
       href: '/prayer-wall',
-      gradient: 'from-red-500 to-pink-500',
+      iconColor: 'text-white',
+      iconBg: 'bg-gradient-to-br from-red-500 to-rose-600',
     },
     {
       id: 'bible-study',
@@ -204,7 +208,8 @@ const Dashboard = () => {
       description: 'Search Scripture and explore reading plans',
       icon: Book,
       href: '/bible-study',
-      gradient: 'from-accent to-sacred',
+      iconColor: 'text-white',
+      iconBg: 'bg-gradient-to-br from-emerald-500 to-teal-600',
     },
     {
       id: 'bookmarks',
@@ -212,7 +217,8 @@ const Dashboard = () => {
       description: 'Access your saved resources',
       icon: Bookmark,
       href: '/bookmarks',
-      gradient: 'from-warm-blue to-status-low',
+      iconColor: 'text-white',
+      iconBg: 'bg-gradient-to-br from-amber-500 to-orange-600',
     },
     {
       id: 'service-hours',
@@ -220,7 +226,8 @@ const Dashboard = () => {
       description: 'Track community service activities',
       icon: Clock,
       href: '/service-tracker',
-      gradient: 'from-secondary to-accent',
+      iconColor: 'text-white',
+      iconBg: 'bg-gradient-to-br from-cyan-500 to-blue-600',
     },
     {
       id: 'achievements',
@@ -228,7 +235,8 @@ const Dashboard = () => {
       description: 'View your progress and unlocked badges',
       icon: TrendingUp,
       href: '/achievements',
-      gradient: 'from-accent to-warm-blue',
+      iconColor: 'text-white',
+      iconBg: 'bg-gradient-to-br from-yellow-500 to-amber-600',
     },
     {
       id: 'did-you-know',
@@ -236,7 +244,8 @@ const Dashboard = () => {
       description: 'Discover Christian practices with pagan roots and educational videos',
       icon: Lightbulb,
       href: '/did-you-know',
-      gradient: 'from-warm-blue to-sacred',
+      iconColor: 'text-white',
+      iconBg: 'bg-gradient-to-br from-fuchsia-500 to-pink-600',
     },
   ];
 
@@ -386,7 +395,8 @@ const Dashboard = () => {
                   description={action.description}
                   icon={action.icon}
                   href={action.href}
-                  gradient={action.gradient}
+                  iconColor={action.iconColor}
+                  iconBg={action.iconBg}
                   delay={`${(index + 1) * 0.1}s`}
                   isFavorite={isFavorite(action.id)}
                   onToggleFavorite={toggleFavorite}
