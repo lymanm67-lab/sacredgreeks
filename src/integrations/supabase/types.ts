@@ -191,6 +191,42 @@ export type Database = {
         }
         Relationships: []
       }
+      daily_challenges: {
+        Row: {
+          challenge_type: string
+          created_at: string
+          date: string
+          description: string
+          icon: string
+          id: string
+          points_reward: number
+          requirements_json: Json
+          title: string
+        }
+        Insert: {
+          challenge_type: string
+          created_at?: string
+          date: string
+          description: string
+          icon?: string
+          id?: string
+          points_reward?: number
+          requirements_json?: Json
+          title: string
+        }
+        Update: {
+          challenge_type?: string
+          created_at?: string
+          date?: string
+          description?: string
+          icon?: string
+          id?: string
+          points_reward?: number
+          requirements_json?: Json
+          title?: string
+        }
+        Relationships: []
+      }
       daily_devotionals: {
         Row: {
           application: string
@@ -227,6 +263,39 @@ export type Database = {
           scripture_ref?: string
           scripture_text?: string
           title?: string
+        }
+        Relationships: []
+      }
+      daily_verses: {
+        Row: {
+          created_at: string
+          date: string
+          id: string
+          image_url: string | null
+          reflection: string | null
+          theme: string
+          verse_ref: string
+          verse_text: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          id?: string
+          image_url?: string | null
+          reflection?: string | null
+          theme: string
+          verse_ref: string
+          verse_text: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: string
+          image_url?: string | null
+          reflection?: string | null
+          theme?: string
+          verse_ref?: string
+          verse_text?: string
         }
         Relationships: []
       }
@@ -500,6 +569,48 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      user_daily_check_ins: {
+        Row: {
+          challenges_completed: Json | null
+          created_at: string
+          date: string
+          grateful_for: string | null
+          id: string
+          prayed_today: boolean | null
+          quick_reflection: string | null
+          read_bible: boolean | null
+          served_others: boolean | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          challenges_completed?: Json | null
+          created_at?: string
+          date: string
+          grateful_for?: string | null
+          id?: string
+          prayed_today?: boolean | null
+          quick_reflection?: string | null
+          read_bible?: boolean | null
+          served_others?: boolean | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          challenges_completed?: Json | null
+          created_at?: string
+          date?: string
+          grateful_for?: string | null
+          id?: string
+          prayed_today?: boolean | null
+          quick_reflection?: string | null
+          read_bible?: boolean | null
+          served_others?: boolean | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       user_gamification: {
         Row: {

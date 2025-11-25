@@ -24,6 +24,10 @@ import { GamificationBar } from '@/components/GamificationBar';
 import { useFavorites } from '@/hooks/use-favorites';
 import { usePullToRefresh } from '@/hooks/use-pull-to-refresh';
 import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
+import { DailyChallengesWidget } from '@/components/dashboard/DailyChallengesWidget';
+import { VerseOfTheDay } from '@/components/dashboard/VerseOfTheDay';
+import { QuickCheckIn } from '@/components/dashboard/QuickCheckIn';
+import { WeeklyInsights } from '@/components/dashboard/WeeklyInsights';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -325,6 +329,29 @@ const Dashboard = () => {
               gradient="from-status-low to-warm-blue"
               delay="0.4s"
             />
+          </div>
+
+          {/* Quick Wins Section - Daily Engagement Features */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Verse of the Day */}
+            <div className="lg:col-span-2">
+              <VerseOfTheDay />
+            </div>
+            
+            {/* Quick Check-In */}
+            <div>
+              <QuickCheckIn />
+            </div>
+            
+            {/* Daily Challenges */}
+            <div className="lg:col-span-2">
+              <DailyChallengesWidget />
+            </div>
+            
+            {/* Weekly Insights */}
+            <div>
+              <WeeklyInsights />
+            </div>
           </div>
 
           {/* Study Guide Widget */}
