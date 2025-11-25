@@ -10,6 +10,7 @@ import { HeroSection } from '@/components/dashboard/HeroSection';
 import { StatsCard } from '@/components/dashboard/StatsCard';
 import { CompactQuickAction } from '@/components/dashboard/CompactQuickAction';
 import { VideoSection } from '@/components/dashboard/VideoSection';
+import { VideoTrainingLibrary } from '@/components/dashboard/VideoTrainingLibrary';
 import { CommunityServiceChecklist } from '@/components/dashboard/CommunityServiceChecklist';
 import { ChapterMeetingNotes } from '@/components/dashboard/ChapterMeetingNotes';
 import { ResourcesSection } from '@/components/dashboard/ResourcesSection';
@@ -632,6 +633,7 @@ const Dashboard = () => {
                 <ResourcesSection />
                 <ChapterResourcesSection />
                 <VideoSection />
+                <VideoTrainingLibrary />
                 <WeeklyInsights />
                 <div className="grid gap-6 lg:grid-cols-2">
                   <CommunityServiceChecklist />
