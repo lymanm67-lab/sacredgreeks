@@ -335,6 +335,115 @@ export type Database = {
         }
         Relationships: []
       }
+      prayer_request_comments: {
+        Row: {
+          comment: string
+          created_at: string
+          id: string
+          prayer_request_id: string
+          user_id: string
+        }
+        Insert: {
+          comment: string
+          created_at?: string
+          id?: string
+          prayer_request_id: string
+          user_id: string
+        }
+        Update: {
+          comment?: string
+          created_at?: string
+          id?: string
+          prayer_request_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prayer_request_comments_prayer_request_id_fkey"
+            columns: ["prayer_request_id"]
+            isOneToOne: false
+            referencedRelation: "prayer_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      prayer_requests: {
+        Row: {
+          answered: boolean | null
+          answered_at: string | null
+          answered_testimony: string | null
+          created_at: string
+          description: string | null
+          id: string
+          prayer_count: number | null
+          privacy_level: string
+          request_type: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          answered?: boolean | null
+          answered_at?: string | null
+          answered_testimony?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          prayer_count?: number | null
+          privacy_level?: string
+          request_type?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          answered?: boolean | null
+          answered_at?: string | null
+          answered_testimony?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          prayer_count?: number | null
+          privacy_level?: string
+          request_type?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      prayer_support: {
+        Row: {
+          encouragement_note: string | null
+          id: string
+          prayed_at: string
+          prayer_request_id: string
+          user_id: string
+        }
+        Insert: {
+          encouragement_note?: string | null
+          id?: string
+          prayed_at?: string
+          prayer_request_id: string
+          user_id: string
+        }
+        Update: {
+          encouragement_note?: string | null
+          id?: string
+          prayed_at?: string
+          prayer_request_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prayer_support_prayer_request_id_fkey"
+            columns: ["prayer_request_id"]
+            isOneToOne: false
+            referencedRelation: "prayer_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string | null
