@@ -1,20 +1,42 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { FileText, ExternalLink, ArrowRight } from "lucide-react";
+import { FileText, ExternalLink, ArrowRight, CheckCircle, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
+
+const featuredArticles = [
+  {
+    title: "Repentance, Repair & Renewal Checklist",
+    description: "A spiritual guide for members and leaders of Black Greek-letter organizations seeking to align their commitment to service with their devotion to Christ.",
+    url: "https://gamma.app/docs/Christian-Black-Greek-Life-Repentance-Repair-and-Renewal-Checklis-12fobc2w0gro04i",
+    category: "Spiritual Growth",
+    icon: CheckCircle,
+  },
+  {
+    title: "Integrity Under Pressure Playbook",
+    description: "A practical ethics guide for hot moments on campus and in life using the P.R.O.O.F. framework.",
+    url: "https://gamma.app/docs/Integrity-Under-Pressure-752n7nfkgl1wn7w",
+    category: "Ethics & Decision Making",
+    icon: BookOpen,
+  },
+];
 
 export const FeaturedArticle = () => {
   const [showArticle, setShowArticle] = useState(false);
   
-  const featuredArticle = {
-    title: "Repentance, Repair & Renewal Checklist",
-    description: "A spiritual guide for members and leaders of Black Greek-letter organizations seeking to align their commitment to service with their devotion to Christ.",
-    url: "https://gamma.app/docs/Christian-Black-Greek-Life-Repentance-Repair-and-Renewal-Checklis-12fobc2w0gro04i",
-    category: "Spiritual Growth"
-  };
+  // Rotate featured article weekly based on ISO week number
+  const featuredArticle = useMemo(() => {
+    const now = new Date();
+    const startOfYear = new Date(now.getFullYear(), 0, 1);
+    const daysSinceStartOfYear = Math.floor((now.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24));
+    const weekNumber = Math.floor(daysSinceStartOfYear / 7);
+    const index = weekNumber % featuredArticles.length;
+    return featuredArticles[index];
+  }, []);
+
+  const Icon = featuredArticle.icon;
 
   const handleOpenExternal = () => {
     window.open(featuredArticle.url, "_blank", "noopener,noreferrer");
@@ -29,7 +51,7 @@ export const FeaturedArticle = () => {
               Featured Article
             </Badge>
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-sacred to-warm-blue flex items-center justify-center group-hover:scale-110 transition-transform">
-              <FileText className="w-6 h-6 text-white" />
+              <Icon className="w-6 h-6 text-white" />
             </div>
           </div>
           <CardTitle className="text-xl group-hover:text-sacred transition-colors">

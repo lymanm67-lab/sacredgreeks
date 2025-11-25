@@ -15,7 +15,8 @@ import {
   ExternalLink,
   Home,
   Sparkles,
-  CheckCircle
+  CheckCircle,
+  Download
 } from "lucide-react";
 
 interface ResourceItem {
@@ -26,6 +27,7 @@ interface ResourceItem {
   requiresAuth?: boolean;
   badge?: string;
   category: "about" | "book" | "articles" | "testimonials";
+  downloadUrl?: string;
 }
 
 const resources: ResourceItem[] = [
@@ -91,6 +93,7 @@ const resources: ResourceItem[] = [
     icon: BookOpen,
     requiresAuth: false,
     category: "articles",
+    downloadUrl: "/resources/integrity-under-pressure.pdf",
   },
   {
     title: "FAQs",
@@ -133,6 +136,16 @@ const Resources = () => {
     }
   };
 
+  const handleDownload = (e: React.MouseEvent, downloadUrl: string, title: string) => {
+    e.stopPropagation();
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = title;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const ResourceCard = ({ resource }: { resource: ResourceItem }) => {
     const Icon = resource.icon;
     const isLocked = resource.requiresAuth && !user;
@@ -149,17 +162,19 @@ const Resources = () => {
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-sacred to-warm-blue flex items-center justify-center group-hover:scale-110 transition-transform">
               <Icon className="w-6 h-6 text-white" />
             </div>
-            {resource.badge && (
-              <Badge className="bg-sacred/10 text-sacred border-sacred/20">
-                {resource.badge}
-              </Badge>
-            )}
-            {isLocked && (
-              <Badge variant="outline" className="gap-1">
-                <Lock className="w-3 h-3" />
-                Members
-              </Badge>
-            )}
+            <div className="flex gap-2">
+              {resource.badge && (
+                <Badge className="bg-sacred/10 text-sacred border-sacred/20">
+                  {resource.badge}
+                </Badge>
+              )}
+              {isLocked && (
+                <Badge variant="outline" className="gap-1">
+                  <Lock className="w-3 h-3" />
+                  Members
+                </Badge>
+              )}
+            </div>
           </div>
           <CardTitle className="text-lg group-hover:text-sacred transition-colors">
             {resource.title}
@@ -169,17 +184,29 @@ const Resources = () => {
           <CardDescription className="text-sm leading-relaxed">
             {resource.description}
           </CardDescription>
-          <div className="mt-4 flex items-center gap-2 text-sacred text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-            {isLocked ? (
-              <>
-                <Lock className="w-4 h-4" />
-                <span>Sign in to view</span>
-              </>
-            ) : (
-              <>
-                <span>View content</span>
-                <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </>
+          <div className="mt-4 flex items-center justify-between">
+            <div className="flex items-center gap-2 text-sacred text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+              {isLocked ? (
+                <>
+                  <Lock className="w-4 h-4" />
+                  <span>Sign in to view</span>
+                </>
+              ) : (
+                <>
+                  <span>View content</span>
+                  <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
+            </div>
+            {resource.downloadUrl && !isLocked && (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="opacity-0 group-hover:opacity-100 transition-opacity"
+                onClick={(e) => handleDownload(e, resource.downloadUrl!, resource.title)}
+              >
+                <Download className="w-4 h-4" />
+              </Button>
             )}
           </div>
         </CardContent>
