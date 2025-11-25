@@ -13,6 +13,8 @@ import { ExternalContentModal } from '@/components/ui/ExternalContentModal';
 import { useExternalLinks } from '@/hooks/use-external-links';
 import { usePullToRefresh } from '@/hooks/use-pull-to-refresh';
 import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
 
 const readingPlans = [
   {
@@ -53,6 +55,8 @@ const BibleStudy = () => {
   const [loading, setLoading] = useState(false);
   const [dailyVerse, setDailyVerse] = useState<any>(null);
   const [loadingVerse, setLoadingVerse] = useState(true);
+  const [searchMode, setSearchMode] = useState<'reference' | 'phrase'>('reference');
+  const [phraseResults, setPhraseResults] = useState<any[]>([]);
 
   // Pull to refresh
   const handleRefresh = async () => {
@@ -109,29 +113,85 @@ const BibleStudy = () => {
     if (!searchQuery.trim()) return;
 
     setLoading(true);
-    try {
-      // Bible API format: book chapter:verse or book chapter
-      const response = await fetch(`https://bible-api.com/${encodeURIComponent(searchQuery)}?translation=kjv`);
-      
-      if (response.ok) {
-        const data = await response.json();
-        setSearchResults(data);
-      } else {
+    
+    if (searchMode === 'reference') {
+      try {
+        // Bible API format: book chapter:verse or book chapter
+        const response = await fetch(`https://bible-api.com/${encodeURIComponent(searchQuery)}?translation=kjv`);
+        
+        if (response.ok) {
+          const data = await response.json();
+          setSearchResults(data);
+          setPhraseResults([]);
+        } else {
+          toast({
+            title: 'Verse not found',
+            description: 'Try searching for a verse like "John 3:16" or "Psalm 23"',
+            variant: 'destructive'
+          });
+          setSearchResults(null);
+        }
+      } catch (error) {
         toast({
-          title: 'Verse not found',
-          description: 'Try searching for a verse like "John 3:16" or "Psalm 23"',
+          title: 'Search failed',
+          description: 'Please check your connection and try again',
           variant: 'destructive'
         });
-        setSearchResults(null);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      toast({
-        title: 'Search failed',
-        description: 'Please check your connection and try again',
-        variant: 'destructive'
-      });
-    } finally {
-      setLoading(false);
+    } else {
+      // Phrase search mode - search for keywords in curated verses
+      try {
+        const keyword = searchQuery.toLowerCase();
+        const verseDatabase = [
+          { ref: 'John 3:16', text: 'For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.', keywords: ['love', 'salvation', 'eternal life', 'believe', 'faith'] },
+          { ref: 'Romans 8:28', text: 'And we know that all things work together for good to them that love God, to them who are the called according to his purpose.', keywords: ['purpose', 'good', 'faith', 'trust', 'plan'] },
+          { ref: 'Philippians 4:13', text: 'I can do all things through Christ which strengtheneth me.', keywords: ['strength', 'power', 'overcome', 'ability', 'faith'] },
+          { ref: 'Psalm 23:1', text: 'The Lord is my shepherd; I shall not want.', keywords: ['shepherd', 'provision', 'care', 'trust', 'comfort'] },
+          { ref: 'Proverbs 3:5-6', text: 'Trust in the Lord with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths.', keywords: ['trust', 'guidance', 'direction', 'wisdom', 'faith'] },
+          { ref: 'Jeremiah 29:11', text: 'For I know the thoughts that I think toward you, saith the Lord, thoughts of peace, and not of evil, to give you an expected end.', keywords: ['hope', 'future', 'plans', 'peace', 'purpose'] },
+          { ref: 'Matthew 6:33', text: 'But seek ye first the kingdom of God, and his righteousness; and all these things shall be added unto you.', keywords: ['priority', 'kingdom', 'seek', 'provision', 'faith'] },
+          { ref: 'Isaiah 41:10', text: 'Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.', keywords: ['fear', 'courage', 'strength', 'help', 'support'] },
+          { ref: 'Romans 12:2', text: 'And be not conformed to this world: but be ye transformed by the renewing of your mind, that ye may prove what is that good, and acceptable, and perfect, will of God.', keywords: ['transformation', 'renew', 'mind', 'change', 'growth'] },
+          { ref: 'Joshua 1:9', text: 'Have not I commanded thee? Be strong and of a good courage; be not afraid, neither be thou dismayed: for the Lord thy God is with thee whithersoever thou goest.', keywords: ['courage', 'strength', 'fear', 'brave', 'confidence'] },
+          { ref: '2 Timothy 1:7', text: 'For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind.', keywords: ['fear', 'power', 'love', 'mind', 'courage'] },
+          { ref: 'Psalm 46:1', text: 'God is our refuge and strength, a very present help in trouble.', keywords: ['help', 'trouble', 'refuge', 'strength', 'support'] },
+          { ref: 'Matthew 11:28', text: 'Come unto me, all ye that labour and are heavy laden, and I will give you rest.', keywords: ['rest', 'burden', 'tired', 'peace', 'comfort'] },
+          { ref: 'Ephesians 2:8-9', text: 'For by grace are ye saved through faith; and that not of yourselves: it is the gift of God: Not of works, lest any man should boast.', keywords: ['grace', 'salvation', 'faith', 'saved', 'gift'] },
+          { ref: '1 Corinthians 13:4-7', text: 'Charity suffereth long, and is kind; charity envieth not; charity vaunteth not itself, is not puffed up, Doth not behave itself unseemly, seeketh not her own, is not easily provoked, thinketh no evil; Rejoiceth not in iniquity, but rejoiceth in the truth; Beareth all things, believeth all things, hopeth all things, endureth all things.', keywords: ['love', 'patient', 'kind', 'relationships', 'charity'] },
+          { ref: 'James 1:2-3', text: 'My brethren, count it all joy when ye fall into divers temptations; Knowing this, that the trying of your faith worketh patience.', keywords: ['trials', 'joy', 'patience', 'faith', 'perseverance'] },
+          { ref: 'Hebrews 11:1', text: 'Now faith is the substance of things hoped for, the evidence of things not seen.', keywords: ['faith', 'hope', 'belief', 'trust', 'confidence'] },
+          { ref: 'Galatians 5:22-23', text: 'But the fruit of the Spirit is love, joy, peace, longsuffering, gentleness, goodness, faith, Meekness, temperance: against such there is no law.', keywords: ['fruit', 'spirit', 'character', 'virtues', 'growth'] },
+          { ref: 'Psalm 119:105', text: 'Thy word is a lamp unto my feet, and a light unto my path.', keywords: ['guidance', 'word', 'direction', 'wisdom', 'light'] },
+          { ref: 'Romans 5:8', text: 'But God commendeth his love toward us, in that, while we were yet sinners, Christ died for us.', keywords: ['love', 'sacrifice', 'salvation', 'grace', 'mercy'] }
+        ];
+
+        const matches = verseDatabase.filter(verse => 
+          verse.keywords.some(kw => kw.includes(keyword)) || 
+          verse.text.toLowerCase().includes(keyword)
+        );
+
+        if (matches.length > 0) {
+          setPhraseResults(matches);
+          setSearchResults(null);
+        } else {
+          toast({
+            title: 'No verses found',
+            description: 'Try different keywords like "love", "strength", "faith", or "peace"',
+            variant: 'destructive'
+          });
+          setPhraseResults([]);
+        }
+      } catch (error) {
+        toast({
+          title: 'Search failed',
+          description: 'Please try again',
+          variant: 'destructive'
+        });
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -236,13 +296,33 @@ const BibleStudy = () => {
                     Search Scripture
                   </CardTitle>
                   <CardDescription>
-                    Enter a verse reference like "John 3:16" or "Psalm 23"
+                    Choose your search method below
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
+                  {/* Search Mode Selection */}
+                  <RadioGroup value={searchMode} onValueChange={(value: 'reference' | 'phrase') => {
+                    setSearchMode(value);
+                    setSearchResults(null);
+                    setPhraseResults([]);
+                  }} className="flex gap-4">
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="reference" id="reference" />
+                      <Label htmlFor="reference" className="font-medium cursor-pointer">
+                        Scripture Reference
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="phrase" id="phrase" />
+                      <Label htmlFor="phrase" className="font-medium cursor-pointer">
+                        Keyword/Phrase
+                      </Label>
+                    </div>
+                  </RadioGroup>
+
                   <form onSubmit={handleSearch} className="flex gap-2">
                     <Input
-                      placeholder="e.g., John 3:16 or Romans 8"
+                      placeholder={searchMode === 'reference' ? "e.g., John 3:16 or Romans 8" : "e.g., love, strength, faith, courage"}
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="flex-1"
@@ -259,7 +339,8 @@ const BibleStudy = () => {
                     </Button>
                   </form>
 
-                  {searchResults && (
+                  {/* Reference Search Results */}
+                  {searchResults && searchMode === 'reference' && (
                     <div className="space-y-4 animate-fade-in">
                       <div className="flex items-center justify-between">
                         <Badge className="bg-sacred/10 text-sacred border-sacred/20 text-sm">
@@ -288,12 +369,43 @@ const BibleStudy = () => {
                     </div>
                   )}
 
-                  {!searchResults && !loading && (
+                  {/* Phrase Search Results */}
+                  {phraseResults.length > 0 && searchMode === 'phrase' && (
+                    <div className="space-y-4 animate-fade-in">
+                      <div className="flex items-center justify-between">
+                        <Badge className="bg-sacred/10 text-sacred border-sacred/20 text-sm">
+                          {phraseResults.length} verse{phraseResults.length !== 1 ? 's' : ''} found
+                        </Badge>
+                      </div>
+                      <ScrollArea className="h-[500px] space-y-3">
+                        {phraseResults.map((verse, idx) => (
+                          <Card key={idx} className="mb-3 hover:shadow-md transition-shadow">
+                            <CardHeader className="pb-3">
+                              <Badge className="w-fit bg-sacred/10 text-sacred border-sacred/20">
+                                {verse.ref}
+                              </Badge>
+                            </CardHeader>
+                            <CardContent>
+                              <p className="text-sm leading-relaxed">{verse.text}</p>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </ScrollArea>
+                    </div>
+                  )}
+
+                  {!searchResults && !loading && phraseResults.length === 0 && (
                     <div className="text-center py-12 text-muted-foreground">
                       <Book className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                      <p>Enter a verse reference above to search Scripture</p>
-                      <p className="text-sm mt-2">
-                        Examples: "John 3:16", "Psalm 23", "Romans 8:28"
+                      <p className="mb-2">
+                        {searchMode === 'reference' 
+                          ? 'Enter a verse reference to search Scripture' 
+                          : 'Enter keywords to find relevant verses'}
+                      </p>
+                      <p className="text-sm">
+                        {searchMode === 'reference'
+                          ? 'Examples: "John 3:16", "Psalm 23", "Romans 8:28"'
+                          : 'Examples: "love", "strength", "faith", "courage", "peace"'}
                       </p>
                     </div>
                   )}
