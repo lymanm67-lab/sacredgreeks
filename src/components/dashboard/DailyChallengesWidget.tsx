@@ -5,9 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Trophy, Target, CheckCircle2, Flame, Star } from 'lucide-react';
+import { Trophy, Target, CheckCircle2, Flame, Star, ArrowRight } from 'lucide-react';
 import { useGamification } from '@/hooks/use-gamification';
 import { toast } from 'sonner';
+import { Link } from 'react-router-dom';
 
 interface Challenge {
   id: string;
@@ -136,6 +137,36 @@ export function DailyChallengesWidget() {
     return false;
   };
 
+  const getChallengeActionLink = (challengeType: string): string | null => {
+    const typeMap: Record<string, string> = {
+      'prayer': '/prayer-journal',
+      'prayer_journal': '/prayer-journal',
+      'devotional': '/devotional',
+      'bible_reading': '/bible-study',
+      'bible_study': '/bible-study',
+      'service': '/service-tracker',
+      'community_service': '/service-tracker',
+      'prayer_wall': '/prayer-wall',
+      'check_in': '#check-in',
+    };
+    return typeMap[challengeType.toLowerCase()] || null;
+  };
+
+  const getChallengeActionText = (challengeType: string): string => {
+    const textMap: Record<string, string> = {
+      'prayer': 'Go to Prayer Journal',
+      'prayer_journal': 'Go to Prayer Journal',
+      'devotional': 'Read Devotional',
+      'bible_reading': 'Go to Bible Study',
+      'bible_study': 'Go to Bible Study',
+      'service': 'Log Service Hours',
+      'community_service': 'Log Service Hours',
+      'prayer_wall': 'Visit Prayer Wall',
+      'check_in': 'Complete Check-In',
+    };
+    return textMap[challengeType.toLowerCase()] || 'Start Challenge';
+  };
+
   const completedCount = challenges.filter(c => isChallengeCompleted(c.id)).length;
   const totalPoints = challenges.reduce((sum, c) => 
     isChallengeCompleted(c.id) ? sum + c.points_reward : sum, 0
@@ -236,13 +267,28 @@ export function DailyChallengesWidget() {
                       )}
                     </div>
                     {!completed && (
-                      <Button
-                        size="sm"
-                        className="mt-3 w-full"
-                        onClick={() => completeChallenge(challenge.id, challenge.points_reward)}
-                      >
-                        Complete Challenge
-                      </Button>
+                      <div className="mt-3 flex gap-2">
+                        {getChallengeActionLink(challenge.challenge_type) && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="flex-1"
+                            asChild
+                          >
+                            <Link to={getChallengeActionLink(challenge.challenge_type)!}>
+                              {getChallengeActionText(challenge.challenge_type)}
+                              <ArrowRight className="ml-2 h-4 w-4" />
+                            </Link>
+                          </Button>
+                        )}
+                        <Button
+                          size="sm"
+                          className={getChallengeActionLink(challenge.challenge_type) ? 'flex-1' : 'w-full'}
+                          onClick={() => completeChallenge(challenge.id, challenge.points_reward)}
+                        >
+                          Mark as Done
+                        </Button>
+                      </div>
                     )}
                   </div>
                 </div>
