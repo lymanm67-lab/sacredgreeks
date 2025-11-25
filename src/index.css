@@ -137,9 +137,28 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
-  body {
-    @apply bg-background text-foreground;
+body {
+  @apply bg-background text-foreground;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Scroll animations for mobile */
+@media (max-width: 768px) {
+  .scroll-animate {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
   }
+
+  .scroll-animate.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 }
 
 @layer utilities {

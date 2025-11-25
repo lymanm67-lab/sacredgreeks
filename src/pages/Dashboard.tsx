@@ -25,6 +25,7 @@ import { useFavorites } from '@/hooks/use-favorites';
 import { usePullToRefresh } from '@/hooks/use-pull-to-refresh';
 import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
 import { DailyChallengesWidget } from '@/components/dashboard/DailyChallengesWidget';
+import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 import { VerseOfTheDay } from '@/components/dashboard/VerseOfTheDay';
 import { QuickCheckIn } from '@/components/dashboard/QuickCheckIn';
 import { WeeklyInsights } from '@/components/dashboard/WeeklyInsights';
@@ -67,6 +68,16 @@ const Dashboard = () => {
     onRefresh: handleRefresh,
     enabled: !isChecking && !showOnboarding
   });
+
+  // Scroll animation hooks for mobile sections
+  const heroScroll = useScrollAnimation({ triggerOnce: true });
+  const featuredScroll = useScrollAnimation({ triggerOnce: true });
+  const verseScroll = useScrollAnimation({ triggerOnce: true });
+  const checklistScroll = useScrollAnimation({ triggerOnce: true });
+  const statsScroll = useScrollAnimation({ triggerOnce: true });
+  const checkInScroll = useScrollAnimation({ triggerOnce: true });
+  const challengesScroll = useScrollAnimation({ triggerOnce: true });
+  const studyScroll = useScrollAnimation({ triggerOnce: true });
 
   useEffect(() => {
     if (user) {
@@ -319,22 +330,22 @@ const Dashboard = () => {
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-7xl mx-auto space-y-12">
           {/* Hero Section - Full Width */}
-          <div className="animate-fade-in">
+          <div ref={heroScroll.ref} className={`scroll-animate ${heroScroll.isVisible ? 'visible' : ''} animate-fade-in`}>
             <HeroSection />
           </div>
 
           {/* Featured Actions - Prominent */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
+          <div ref={featuredScroll.ref} className={`scroll-animate ${featuredScroll.isVisible ? 'visible' : ''} animate-fade-in`} style={{ animationDelay: '0.1s' }}>
             <FeaturedActions />
           </div>
 
           {/* Verse of the Day */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <div ref={verseScroll.ref} className={`scroll-animate ${verseScroll.isVisible ? 'visible' : ''} animate-fade-in`} style={{ animationDelay: '0.2s' }}>
             <VerseOfTheDay />
           </div>
 
           {/* Two Column: Getting Started + Gamification */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+          <div ref={checklistScroll.ref} className={`scroll-animate ${checklistScroll.isVisible ? 'visible' : ''} grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in`} style={{ animationDelay: '0.3s' }}>
             <div className="lg:col-span-2">
               <GettingStartedChecklist />
             </div>
@@ -344,7 +355,7 @@ const Dashboard = () => {
           </div>
 
           {/* Key Stats - Reduced to 3 most motivating */}
-          <div className="grid gap-6 md:grid-cols-3 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+          <div ref={statsScroll.ref} className={`scroll-animate ${statsScroll.isVisible ? 'visible' : ''} grid gap-6 md:grid-cols-3 animate-fade-in`} style={{ animationDelay: '0.4s' }}>
             <StatsCard
               title="Current Streak"
               value={stats.currentStreak}
@@ -372,17 +383,17 @@ const Dashboard = () => {
           </div>
 
           {/* Quick Check In */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.5s' }}>
+          <div ref={checkInScroll.ref} className={`scroll-animate ${checkInScroll.isVisible ? 'visible' : ''} animate-fade-in`} style={{ animationDelay: '0.5s' }}>
             <QuickCheckIn />
           </div>
 
           {/* Daily Challenges */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.6s' }}>
+          <div ref={challengesScroll.ref} className={`scroll-animate ${challengesScroll.isVisible ? 'visible' : ''} animate-fade-in`} style={{ animationDelay: '0.6s' }}>
             <DailyChallengesWidget />
           </div>
 
           {/* Study Recommendations */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.7s' }}>
+          <div ref={studyScroll.ref} className={`scroll-animate ${studyScroll.isVisible ? 'visible' : ''} animate-fade-in`} style={{ animationDelay: '0.7s' }}>
             <StudyRecommendations />
           </div>
 
