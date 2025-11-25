@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ExternalContentModal } from '@/components/ui/ExternalContentModal';
-import { Heart, BookOpen, AlertTriangle, Wrench, Star, Church, ArrowLeft, Search } from 'lucide-react';
+import { Heart, BookOpen, AlertTriangle, Wrench, Star, Church, ArrowLeft, Search, Bookmark, BookmarkCheck } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { useArticleBookmarks } from '@/hooks/use-article-bookmarks';
+import { cn } from '@/lib/utils';
 
 interface Article {
   id: string;
@@ -187,17 +189,22 @@ const categories = [
 export default function ArticleLibrary() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [showBookmarksOnly, setShowBookmarksOnly] = useState(false);
+  const { isBookmarked, toggleBookmark, loading: bookmarksLoading } = useArticleBookmarks();
 
   const filteredArticles = articles.filter(article => {
     const matchesSearch = article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          article.description.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = !selectedCategory || article.category === selectedCategory;
-    return matchesSearch && matchesCategory;
+    const matchesBookmark = !showBookmarksOnly || isBookmarked(article.id);
+    return matchesSearch && matchesCategory && matchesBookmark;
   });
 
   const getArticlesByCategory = (categoryId: string) => {
     return filteredArticles.filter(article => article.category === categoryId);
   };
+
+  const bookmarkedCount = articles.filter(article => isBookmarked(article.id)).length;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
@@ -251,17 +258,35 @@ export default function ArticleLibrary() {
           {/* Category Filter */}
           <div className="flex flex-wrap gap-3 justify-center animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <Button
-              variant={selectedCategory === null ? "default" : "outline"}
-              onClick={() => setSelectedCategory(null)}
+              variant={!selectedCategory && !showBookmarksOnly ? "default" : "outline"}
+              onClick={() => {
+                setSelectedCategory(null);
+                setShowBookmarksOnly(false);
+              }}
               className="rounded-full"
             >
               All Articles ({articles.length})
+            </Button>
+            <Button
+              variant={showBookmarksOnly ? "default" : "outline"}
+              onClick={() => {
+                setShowBookmarksOnly(!showBookmarksOnly);
+                setSelectedCategory(null);
+              }}
+              className="rounded-full"
+              disabled={bookmarksLoading}
+            >
+              <BookmarkCheck className="w-4 h-4 mr-2" />
+              Bookmarked ({bookmarkedCount})
             </Button>
             {categories.map((category) => (
               <Button
                 key={category.id}
                 variant={selectedCategory === category.id ? "default" : "outline"}
-                onClick={() => setSelectedCategory(category.id)}
+                onClick={() => {
+                  setSelectedCategory(category.id);
+                  setShowBookmarksOnly(false);
+                }}
                 className="rounded-full"
               >
                 <category.icon className="w-4 h-4 mr-2" />
@@ -297,39 +322,66 @@ export default function ArticleLibrary() {
 
                   {/* Articles Grid */}
                   <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                    {categoryArticles.map((article) => (
-                      <ExternalContentModal
-                        key={article.id}
-                        url={article.url}
-                        title={article.title}
-                        description={article.description}
-                        trigger={
-                          <Card className="group cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border-2 hover:border-primary/50 h-full">
-                            <CardHeader>
-                              <div className="flex items-start justify-between gap-2 mb-2">
-                                <CardTitle className="text-lg leading-tight group-hover:text-primary transition-colors">
-                                  {article.title}
-                                </CardTitle>
-                                {article.readTime && (
-                                  <Badge variant="secondary" className="flex-shrink-0">
-                                    {article.readTime}
-                                  </Badge>
-                                )}
-                              </div>
-                              <CardDescription className="line-clamp-3">
-                                {article.description}
-                              </CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                              <div className="flex items-center gap-2 text-sm text-primary font-medium">
-                                <span>Read Article</span>
-                                <span className="group-hover:translate-x-1 transition-transform">→</span>
-                              </div>
-                            </CardContent>
-                          </Card>
-                        }
-                      />
-                    ))}
+                    {categoryArticles.map((article) => {
+                      const bookmarked = isBookmarked(article.id);
+                      
+                      return (
+                        <div key={article.id} className="relative">
+                          {/* Bookmark Button */}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleBookmark(article);
+                            }}
+                            className={cn(
+                              "absolute top-3 right-3 z-10 p-2 rounded-full transition-all duration-200",
+                              "hover:scale-110 hover:shadow-lg",
+                              bookmarked 
+                                ? "bg-primary text-primary-foreground shadow-md" 
+                                : "bg-background/80 backdrop-blur-sm text-muted-foreground hover:bg-primary/10"
+                            )}
+                            aria-label={bookmarked ? "Remove bookmark" : "Add bookmark"}
+                          >
+                            {bookmarked ? (
+                              <BookmarkCheck className="w-5 h-5" />
+                            ) : (
+                              <Bookmark className="w-5 h-5" />
+                            )}
+                          </button>
+
+                          <ExternalContentModal
+                            url={article.url}
+                            title={article.title}
+                            description={article.description}
+                            trigger={
+                              <Card className="group cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border-2 hover:border-primary/50 h-full">
+                                <CardHeader>
+                                  <div className="flex items-start justify-between gap-2 mb-2">
+                                    <CardTitle className="text-lg leading-tight group-hover:text-primary transition-colors pr-10">
+                                      {article.title}
+                                    </CardTitle>
+                                    {article.readTime && (
+                                      <Badge variant="secondary" className="flex-shrink-0">
+                                        {article.readTime}
+                                      </Badge>
+                                    )}
+                                  </div>
+                                  <CardDescription className="line-clamp-3">
+                                    {article.description}
+                                  </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                  <div className="flex items-center gap-2 text-sm text-primary font-medium">
+                                    <span>Read Article</span>
+                                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+                                  </div>
+                                </CardContent>
+                              </Card>
+                            }
+                          />
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               );
@@ -338,18 +390,38 @@ export default function ArticleLibrary() {
 
           {/* No Results */}
           {filteredArticles.length === 0 && (
-            <div className="text-center py-16">
-              <p className="text-xl text-muted-foreground">No articles found matching your search.</p>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setSearchQuery('');
-                  setSelectedCategory(null);
-                }}
-                className="mt-4"
-              >
-                Clear Filters
-              </Button>
+            <div className="text-center py-16 space-y-4">
+              {showBookmarksOnly && bookmarkedCount === 0 ? (
+                <>
+                  <BookmarkCheck className="w-16 h-16 mx-auto text-muted-foreground/50" />
+                  <p className="text-xl text-muted-foreground">No bookmarked articles yet</p>
+                  <p className="text-muted-foreground">
+                    Start bookmarking articles to quickly access your favorites
+                  </p>
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowBookmarksOnly(false)}
+                    className="mt-4"
+                  >
+                    Browse Articles
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <p className="text-xl text-muted-foreground">No articles found matching your search.</p>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setSearchQuery('');
+                      setSelectedCategory(null);
+                      setShowBookmarksOnly(false);
+                    }}
+                    className="mt-4"
+                  >
+                    Clear Filters
+                  </Button>
+                </>
+              )}
             </div>
           )}
         </div>
