@@ -41,6 +41,7 @@ const features = [
     link: "/devotional",
     color: "text-blue-500",
     requiresAuth: true,
+    lockBadgeText: "Daily guidance delivered",
   },
   {
     title: "5 Persona Assessment",
@@ -59,6 +60,7 @@ const features = [
     link: "/prayer-journal",
     color: "text-purple-500",
     requiresAuth: true,
+    lockBadgeText: "Track answered prayers",
   },
   {
     title: "Progress Tracking",
@@ -67,6 +69,7 @@ const features = [
     link: "/progress",
     color: "text-green-500",
     requiresAuth: true,
+    lockBadgeText: "See your growth",
   },
   {
     title: "Community Service",
@@ -75,6 +78,7 @@ const features = [
     link: "/dashboard",
     color: "text-orange-500",
     requiresAuth: true,
+    lockBadgeText: "Organize your impact",
   },
   {
     title: "Chapter Notes",
@@ -83,6 +87,7 @@ const features = [
     link: "/dashboard",
     color: "text-cyan-500",
     requiresAuth: true,
+    lockBadgeText: "Stay organized",
   },
 ];
 
@@ -162,6 +167,33 @@ const Index = () => {
             prayer tools, and progress tracking, all grounded in the P.R.O.O.F. framework from 
             "Sacred, Not Sinful."
           </p>
+
+          {/* Inline Benefits */}
+          {!user && (
+            <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto pt-6">
+              <div className="flex items-start gap-3 p-4 rounded-xl bg-muted/50 border border-border/50">
+                <CheckCircle2 className="w-5 h-5 text-sacred flex-shrink-0 mt-0.5" />
+                <div className="text-left">
+                  <p className="font-semibold text-foreground text-sm">Daily Devotionals</p>
+                  <p className="text-xs text-muted-foreground">Scripture-based guidance</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 p-4 rounded-xl bg-muted/50 border border-border/50">
+                <CheckCircle2 className="w-5 h-5 text-sacred flex-shrink-0 mt-0.5" />
+                <div className="text-left">
+                  <p className="font-semibold text-foreground text-sm">Track Your Journey</p>
+                  <p className="text-xs text-muted-foreground">See your spiritual growth</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 p-4 rounded-xl bg-muted/50 border border-border/50">
+                <CheckCircle2 className="w-5 h-5 text-sacred flex-shrink-0 mt-0.5" />
+                <div className="text-left">
+                  <p className="font-semibold text-foreground text-sm">100% Free</p>
+                  <p className="text-xs text-muted-foreground">No credit card required</p>
+                </div>
+              </div>
+            </div>
+          )}
 
           {!user && (
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
@@ -306,9 +338,9 @@ const Index = () => {
                           <feature.icon className={`w-7 h-7 ${feature.color}`} />
                         </div>
                         {showLockBadge && (
-                          <Badge variant="secondary" className="bg-sacred/10 text-sacred border-sacred/20 flex items-center gap-1">
+                          <Badge variant="secondary" className="bg-sacred/10 text-sacred border-sacred/20 flex items-center gap-1 text-xs">
                             <Lock className="w-3 h-3" />
-                            Sign up
+                            {feature.lockBadgeText || "Sign up"}
                           </Badge>
                         )}
                       </div>
