@@ -260,6 +260,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Practical Frameworks & Checklists",
+    description: "Essential frameworks and checklists for navigating Greek life as a Christian",
+    url: "https://gamma.app/docs/Practical-Frameworks-Checklists-kvq0rliv8297moo",
+    icon: CheckCircle,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
