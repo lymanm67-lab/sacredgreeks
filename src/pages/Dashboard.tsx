@@ -28,6 +28,10 @@ import { DailyChallengesWidget } from '@/components/dashboard/DailyChallengesWid
 import { VerseOfTheDay } from '@/components/dashboard/VerseOfTheDay';
 import { QuickCheckIn } from '@/components/dashboard/QuickCheckIn';
 import { WeeklyInsights } from '@/components/dashboard/WeeklyInsights';
+import { FeaturedActions } from '@/components/dashboard/FeaturedActions';
+import { GettingStartedChecklist } from '@/components/dashboard/GettingStartedChecklist';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronDown } from 'lucide-react';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -302,18 +306,37 @@ const Dashboard = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <div className="max-w-7xl mx-auto space-y-8">
-          {/* Two-column layout: Video + Hero */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-in">
-            <WelcomeVideo />
+        <div className="max-w-7xl mx-auto space-y-12">
+          {/* Hero Section - Full Width */}
+          <div className="animate-fade-in">
             <HeroSection />
           </div>
 
-          {/* Gamification Bar */}
-          <GamificationBar />
+          {/* Featured Actions - Prominent */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
+            <FeaturedActions />
+          </div>
 
-          {/* Stats Grid */}
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {/* Two Column: Getting Started + Gamification */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <div className="lg:col-span-2">
+              <GettingStartedChecklist />
+            </div>
+            <div>
+              <GamificationBar />
+            </div>
+          </div>
+
+          {/* Key Stats - Reduced to 3 most motivating */}
+          <div className="grid gap-6 md:grid-cols-3 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <StatsCard
+              title="Current Streak"
+              value={stats.currentStreak}
+              subtitle="Days in a row"
+              icon={TrendingUp}
+              gradient="from-status-low to-warm-blue"
+              delay="0s"
+            />
             <StatsCard
               title="Assessments"
               value={stats.assessmentCount}
@@ -323,90 +346,68 @@ const Dashboard = () => {
               delay="0.1s"
             />
             <StatsCard
-              title="Prayers"
-              value={stats.prayerCount}
-              subtitle="In your journal"
-              icon={MessageSquare}
-              gradient="from-warm-blue to-accent"
-              delay="0.2s"
-            />
-            <StatsCard
               title="Today's Devotional"
               value={stats.devotionalCompleted ? '✓' : '○'}
               subtitle={stats.devotionalCompleted ? 'Completed today' : 'Not yet completed'}
               icon={BookOpen}
               gradient="from-sacred to-secondary"
-              delay="0.3s"
-            />
-            <StatsCard
-              title="Current Streak"
-              value={stats.currentStreak}
-              subtitle="Days in a row"
-              icon={TrendingUp}
-              gradient="from-status-low to-warm-blue"
-              delay="0.4s"
+              delay="0.2s"
             />
           </div>
 
-          {/* Quick Wins Section - Daily Engagement Features */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Verse of the Day */}
+          {/* Today's Engagement */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in" style={{ animationDelay: '0.4s' }}>
             <div className="lg:col-span-2">
               <VerseOfTheDay />
             </div>
-            
-            {/* Quick Check-In */}
             <div>
               <QuickCheckIn />
             </div>
-            
-            {/* Daily Challenges */}
-            <div className="lg:col-span-2">
-              <DailyChallengesWidget />
-            </div>
-            
-            {/* Weekly Insights */}
-            <div>
-              <WeeklyInsights />
-            </div>
           </div>
 
-          {/* Study Guide Widget */}
-          <div className="mb-8">
-            <StudyGuideWidget />
+          {/* Daily Challenges */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.5s' }}>
+            <DailyChallengesWidget />
           </div>
 
-          {/* AI Recommendations */}
-          <div className="mb-8">
+          {/* Study Recommendations */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.6s' }}>
             <StudyRecommendations />
           </div>
 
-          {/* Quick Actions */}
-          <div>
-            <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
-              Quick Actions
-            </h2>
-            <div className="grid gap-4 grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
-              {sortedActions.map((action, index) => (
-                <CompactQuickAction
-                  key={action.id}
-                  id={action.id}
-                  title={action.title}
-                  description={action.description}
-                  icon={action.icon}
-                  href={action.href}
-                  iconColor={action.iconColor}
-                  iconBg={action.iconBg}
-                  delay={`${(index + 1) * 0.1}s`}
-                  isFavorite={isFavorite(action.id)}
-                  onToggleFavorite={toggleFavorite}
-                />
-              ))}
+          {/* More Quick Actions - Compact Grid */}
+          <Collapsible defaultOpen={false}>
+            <div className="space-y-4">
+              <CollapsibleTrigger className="flex items-center gap-2 text-xl font-bold hover:text-primary transition-colors group w-full">
+                <span className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+                  More Actions
+                </span>
+                <ChevronDown className="w-5 h-5 transition-transform group-data-[state=open]:rotate-180" />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="space-y-4">
+                <div className="grid gap-4 grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+                  {sortedActions.map((action, index) => (
+                    <CompactQuickAction
+                      key={action.id}
+                      id={action.id}
+                      title={action.title}
+                      description={action.description}
+                      icon={action.icon}
+                      href={action.href}
+                      iconColor={action.iconColor}
+                      iconBg={action.iconBg}
+                      delay={`${(index + 1) * 0.1}s`}
+                      isFavorite={isFavorite(action.id)}
+                      onToggleFavorite={toggleFavorite}
+                    />
+                  ))}
+                </div>
+              </CollapsibleContent>
             </div>
-          </div>
+          </Collapsible>
 
           {/* Progress Link */}
-          <Card className="bg-gradient-to-r from-sacred/10 to-warm-blue/10 border-sacred/20">
+          <Card className="bg-gradient-to-r from-sacred/10 to-warm-blue/10 border-sacred/20 animate-fade-in" style={{ animationDelay: '0.7s' }}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between flex-wrap gap-4">
                 <div>
@@ -425,26 +426,37 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          {/* Essential Resources */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.5s' }}>
-            <ResourcesSection />
+          {/* Welcome Video - Moved Lower */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.75s' }}>
+            <WelcomeVideo />
           </div>
 
-          {/* Chapter Resources */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.55s' }}>
-            <ChapterResourcesSection />
+          {/* Study Guide Widget */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.8s' }}>
+            <StudyGuideWidget />
           </div>
 
-          {/* Videos Section */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.6s' }}>
-            <VideoSection />
-          </div>
-
-          {/* Community Service and Notes */}
-          <div className="grid gap-6 lg:grid-cols-2 animate-fade-in" style={{ animationDelay: '0.7s' }}>
-            <CommunityServiceChecklist />
-            <ChapterMeetingNotes />
-          </div>
+          {/* Collapsible Resources */}
+          <Collapsible defaultOpen={false}>
+            <div className="space-y-6">
+              <CollapsibleTrigger className="flex items-center gap-2 text-xl font-bold hover:text-primary transition-colors group w-full">
+                <span className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+                  Resources & Community
+                </span>
+                <ChevronDown className="w-5 h-5 transition-transform group-data-[state=open]:rotate-180" />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="space-y-6 pt-2">
+                <ResourcesSection />
+                <ChapterResourcesSection />
+                <VideoSection />
+                <WeeklyInsights />
+                <div className="grid gap-6 lg:grid-cols-2">
+                  <CommunityServiceChecklist />
+                  <ChapterMeetingNotes />
+                </div>
+              </CollapsibleContent>
+            </div>
+          </Collapsible>
 
           {/* Recent Assessments */}
           {recentAssessments.length > 0 && (
