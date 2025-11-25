@@ -11,6 +11,14 @@ import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
 
 const features = [
   {
+    title: "Resources Hub",
+    description: "Access articles, teachings, testimonials, and the complete Sacred Greeks content library",
+    icon: Library,
+    link: "/resources",
+    color: "text-warm-blue",
+    requiresAuth: false,
+  },
+  {
     title: "Study Guide",
     description: "5-session biblical study guide on faith and Greek life perfect for groups or personal reflection",
     icon: BookOpen,

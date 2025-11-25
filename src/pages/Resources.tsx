@@ -1,0 +1,352 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { 
+  BookOpen, 
+  Heart, 
+  FileText, 
+  MessageSquare, 
+  Lock, 
+  ExternalLink,
+  Home,
+  Sparkles
+} from "lucide-react";
+
+interface ResourceItem {
+  title: string;
+  description: string;
+  url: string;
+  icon: any;
+  requiresAuth?: boolean;
+  badge?: string;
+  category: "about" | "book" | "articles" | "testimonials";
+}
+
+const resources: ResourceItem[] = [
+  // About/Mission Section
+  {
+    title: "Our Mission",
+    description: "Learn about the Sacred Greeks movement and the P.R.O.O.F. framework",
+    url: "https://www.sacredgreeks.com/about",
+    icon: Heart,
+    requiresAuth: false,
+    category: "about",
+  },
+  {
+    title: "P.R.O.O.F. Framework",
+    description: "Understanding the biblical framework for navigating Greek life",
+    url: "https://www.sacredgreeks.com/proof",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "about",
+  },
+  
+  // Book Info Section
+  {
+    title: "Sacred, Not Sinful",
+    description: "Discover the book that started it all - biblical guidance for Greek life",
+    url: "https://www.sacredgreeks.com/book",
+    icon: BookOpen,
+    requiresAuth: false,
+    badge: "Featured",
+    category: "book",
+  },
+  {
+    title: "Book Chapters",
+    description: "Explore chapter summaries and key teachings",
+    url: "https://www.sacredgreeks.com/chapters",
+    icon: FileText,
+    requiresAuth: true,
+    badge: "Members",
+    category: "book",
+  },
+  
+  // Resources/Articles Section
+  {
+    title: "Articles & Blog",
+    description: "Read the latest insights on faith and Greek life",
+    url: "https://www.sacredgreeks.com/blog",
+    icon: FileText,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
+    title: "FAQs",
+    description: "Common questions about faith and Greek organizations",
+    url: "https://www.sacredgreeks.com/faq",
+    icon: MessageSquare,
+    requiresAuth: false,
+    category: "articles",
+  },
+  
+  // Testimonials Section
+  {
+    title: "Success Stories",
+    description: "Read how others are integrating faith and Greek life",
+    url: "https://www.sacredgreeks.com/testimonials",
+    icon: MessageSquare,
+    requiresAuth: false,
+    category: "testimonials",
+  },
+];
+
+const Resources = () => {
+  const { user } = useAuth();
+  const [selectedUrl, setSelectedUrl] = useState<string | null>(null);
+  const [selectedTitle, setSelectedTitle] = useState<string>("");
+
+  const handleResourceClick = (resource: ResourceItem) => {
+    if (resource.requiresAuth && !user) {
+      // Redirect to auth page
+      window.location.href = "/auth";
+      return;
+    }
+    setSelectedUrl(resource.url);
+    setSelectedTitle(resource.title);
+  };
+
+  const handleOpenExternal = () => {
+    if (selectedUrl) {
+      window.open(selectedUrl, "_blank", "noopener,noreferrer");
+    }
+  };
+
+  const ResourceCard = ({ resource }: { resource: ResourceItem }) => {
+    const Icon = resource.icon;
+    const isLocked = resource.requiresAuth && !user;
+
+    return (
+      <Card 
+        className={`group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer border-2 ${
+          isLocked ? "opacity-75" : "hover:border-sacred/50"
+        }`}
+        onClick={() => handleResourceClick(resource)}
+      >
+        <CardHeader>
+          <div className="flex items-start justify-between mb-2">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-sacred to-warm-blue flex items-center justify-center group-hover:scale-110 transition-transform">
+              <Icon className="w-6 h-6 text-white" />
+            </div>
+            {resource.badge && (
+              <Badge className="bg-sacred/10 text-sacred border-sacred/20">
+                {resource.badge}
+              </Badge>
+            )}
+            {isLocked && (
+              <Badge variant="outline" className="gap-1">
+                <Lock className="w-3 h-3" />
+                Members
+              </Badge>
+            )}
+          </div>
+          <CardTitle className="text-lg group-hover:text-sacred transition-colors">
+            {resource.title}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <CardDescription className="text-sm leading-relaxed">
+            {resource.description}
+          </CardDescription>
+          <div className="mt-4 flex items-center gap-2 text-sacred text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+            {isLocked ? (
+              <>
+                <Lock className="w-4 h-4" />
+                <span>Sign in to view</span>
+              </>
+            ) : (
+              <>
+                <span>View content</span>
+                <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+    );
+  };
+
+  const filterByCategory = (category: string) => {
+    return resources.filter(r => r.category === category);
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="border-b border-border bg-card sticky top-0 z-40 backdrop-blur">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <Link 
+              to={user ? "/dashboard" : "/"} 
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <Home className="w-4 h-4" />
+              <span className="text-sm font-medium">Home</span>
+            </Link>
+            <div className="flex items-center gap-2">
+              <BookOpen className="w-5 h-5 text-sacred" />
+              <h1 className="text-lg font-semibold text-foreground">Resources Hub</h1>
+            </div>
+            {!user && (
+              <Link to="/auth">
+                <Button size="sm" className="bg-sacred hover:bg-sacred/90">
+                  Sign In
+                </Button>
+              </Link>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* Content */}
+      <main className="container mx-auto px-4 py-8 max-w-7xl">
+        {/* Hero Section */}
+        <div className="text-center mb-12 animate-fade-in">
+          <Badge className="bg-sacred/10 text-sacred border-sacred/20 mb-4">
+            Your Complete Resource Library
+          </Badge>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-sacred to-warm-blue bg-clip-text text-transparent">
+            Sacred Greeks Resources
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Explore articles, teachings, testimonials, and insights on integrating faith and Greek life
+          </p>
+        </div>
+
+        {/* Tabbed Navigation */}
+        <Tabs defaultValue="all" className="w-full">
+          <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-5 mb-8">
+            <TabsTrigger value="all">All</TabsTrigger>
+            <TabsTrigger value="about">About</TabsTrigger>
+            <TabsTrigger value="book">Book</TabsTrigger>
+            <TabsTrigger value="articles">Articles</TabsTrigger>
+            <TabsTrigger value="testimonials">Stories</TabsTrigger>
+          </TabsList>
+
+          {/* All Resources */}
+          <TabsContent value="all" className="space-y-8">
+            {/* Featured Resources */}
+            <div>
+              <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-sacred" />
+                Featured Resources
+              </h3>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {resources.filter(r => r.badge === "Featured").map((resource) => (
+                  <ResourceCard key={resource.title} resource={resource} />
+                ))}
+              </div>
+            </div>
+
+            {/* All Resources */}
+            <div>
+              <h3 className="text-xl font-semibold mb-4">All Resources</h3>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {resources.filter(r => r.badge !== "Featured").map((resource) => (
+                  <ResourceCard key={resource.title} resource={resource} />
+                ))}
+              </div>
+            </div>
+          </TabsContent>
+
+          {/* About Tab */}
+          <TabsContent value="about">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filterByCategory("about").map((resource) => (
+                <ResourceCard key={resource.title} resource={resource} />
+              ))}
+            </div>
+          </TabsContent>
+
+          {/* Book Tab */}
+          <TabsContent value="book">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filterByCategory("book").map((resource) => (
+                <ResourceCard key={resource.title} resource={resource} />
+              ))}
+            </div>
+          </TabsContent>
+
+          {/* Articles Tab */}
+          <TabsContent value="articles">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filterByCategory("articles").map((resource) => (
+                <ResourceCard key={resource.title} resource={resource} />
+              ))}
+            </div>
+          </TabsContent>
+
+          {/* Testimonials Tab */}
+          <TabsContent value="testimonials">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filterByCategory("testimonials").map((resource) => (
+                <ResourceCard key={resource.title} resource={resource} />
+              ))}
+            </div>
+          </TabsContent>
+        </Tabs>
+
+        {/* Member CTA */}
+        {!user && (
+          <Card className="mt-12 bg-gradient-to-br from-sacred/5 to-warm-blue/5 border-sacred/20">
+            <CardContent className="p-8 text-center">
+              <Lock className="w-12 h-12 text-sacred mx-auto mb-4" />
+              <h3 className="text-2xl font-bold mb-2">Unlock All Resources</h3>
+              <p className="text-muted-foreground mb-6 max-w-lg mx-auto">
+                Create a free account to access premium content, book chapters, and member-exclusive resources
+              </p>
+              <Link to="/auth">
+                <Button size="lg" className="bg-sacred hover:bg-sacred/90">
+                  Sign Up Free
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        )}
+      </main>
+
+      {/* Iframe Modal */}
+      <Dialog open={!!selectedUrl} onOpenChange={(open) => !open && setSelectedUrl(null)}>
+        <DialogContent className="max-w-5xl h-[85vh] flex flex-col p-0">
+          <DialogHeader className="px-6 pt-6 pb-2">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1">
+                <DialogTitle className="text-xl">{selectedTitle}</DialogTitle>
+                <DialogDescription className="mt-1">
+                  Content from Sacred Greeks website
+                </DialogDescription>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleOpenExternal}
+                className="flex-shrink-0"
+              >
+                <ExternalLink className="w-4 h-4 mr-2" />
+                Open in New Tab
+              </Button>
+            </div>
+          </DialogHeader>
+          
+          <div className="flex-1 px-6 pb-6 overflow-hidden">
+            {selectedUrl && (
+              <iframe
+                src={selectedUrl}
+                title={selectedTitle}
+                className="w-full h-full rounded-md border bg-background"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+};
+
+export default Resources;

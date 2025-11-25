@@ -41,6 +41,7 @@ import OfflineSettings from "./pages/OfflineSettings";
 import ArticleLibrary from "./pages/ArticleLibrary";
 import PrayerGuide from "./pages/PrayerGuide";
 import QRCodePage from "./pages/QRCode";
+import Resources from "./pages/Resources";
 
 const queryClient = new QueryClient();
 
@@ -71,6 +72,7 @@ const App = () => (
               <Route path="/did-you-know" element={<DidYouKnow />} />
               <Route path="/articles" element={<ArticleLibrary />} />
               <Route path="/qr-code" element={<QRCodePage />} />
+              <Route path="/resources" element={<Resources />} />
               <Route
                 path="/prayer-guide"
                 element={
