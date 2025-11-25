@@ -106,22 +106,29 @@ const Auth = () => {
     try {
       const validated = authSchema.parse({ email, password });
 
-      // Save or remove email based on "Remember me" checkbox
-      if (rememberMe) {
-        localStorage.setItem('rememberedEmail', validated.email);
-      } else {
-        localStorage.removeItem('rememberedEmail');
-      }
-
       const { error } = await signIn(validated.email, validated.password);
 
       if (error) {
+        // Save or remove email based on "Remember me" checkbox (only on successful sign-in)
+        if (rememberMe) {
+          localStorage.setItem('rememberedEmail', validated.email);
+        } else {
+          localStorage.removeItem('rememberedEmail');
+        }
+        
         toast({
           title: 'Error signing in',
           description: error.message,
           variant: 'destructive',
         });
       } else {
+        // Save or remove email based on "Remember me" checkbox (only on successful sign-in)
+        if (rememberMe) {
+          localStorage.setItem('rememberedEmail', validated.email);
+        } else {
+          localStorage.removeItem('rememberedEmail');
+        }
+        
         toast({
           title: 'Welcome back!',
           description: 'You have been signed in successfully.',
