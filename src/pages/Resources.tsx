@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useExternalLinks } from "@/hooks/use-external-links";
@@ -5,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { 
   BookOpen, 
   Heart, 
@@ -15,7 +17,8 @@ import {
   Home,
   Sparkles,
   CheckCircle,
-  Download
+  Download,
+  X
 } from "lucide-react";
 
 interface ResourceItem {
@@ -117,6 +120,8 @@ const resources: ResourceItem[] = [
 const Resources = () => {
   const { user } = useAuth();
   const { openExternalLink } = useExternalLinks();
+  const [iframeUrl, setIframeUrl] = useState<string | null>(null);
+  const [iframeTitle, setIframeTitle] = useState<string>("");
 
   const handleResourceClick = (resource: ResourceItem) => {
     if (resource.requiresAuth && !user) {
@@ -127,8 +132,14 @@ const Resources = () => {
     
     // Check if internal or external link
     if (resource.url.startsWith('http')) {
-      // Open external links in new tab
-      openExternalLink(resource.url);
+      // Check if it's a Gamma.app link - open in iframe
+      if (resource.url.includes('gamma.app')) {
+        setIframeUrl(resource.url);
+        setIframeTitle(resource.title);
+      } else {
+        // Open other external links (Amazon, etc.) in new tab
+        openExternalLink(resource.url);
+      }
     } else {
       // Navigate to internal route
       window.location.href = resource.url;
@@ -352,6 +363,33 @@ const Resources = () => {
         )}
       </main>
 
+      {/* Iframe Modal for Gamma.app content */}
+      <Dialog open={!!iframeUrl} onOpenChange={() => setIframeUrl(null)}>
+        <DialogContent className="max-w-6xl h-[90vh] p-0">
+          <DialogHeader className="p-4 border-b">
+            <div className="flex items-center justify-between">
+              <DialogTitle>{iframeTitle}</DialogTitle>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIframeUrl(null)}
+                className="h-8 w-8"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+          </DialogHeader>
+          {iframeUrl && (
+            <iframe
+              src={iframeUrl}
+              className="w-full h-[calc(90vh-64px)] border-0"
+              title={iframeTitle}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
