@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Share2, Facebook, Twitter, Linkedin, Link2, Copy, Check } from "lucide-react";
+import { Share2, Facebook, Twitter, Linkedin, Copy, Check } from "lucide-react";
 import { toast } from "sonner";
+import { useExternalLinks } from "@/hooks/use-external-links";
 
 interface SocialShareDialogProps {
   title: string;
@@ -22,6 +23,7 @@ export function SocialShareDialog({
 }: SocialShareDialogProps) {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const { openExternalLink } = useExternalLinks();
 
   const encodedTitle = encodeURIComponent(title);
   const encodedDescription = encodeURIComponent(description);
@@ -46,7 +48,7 @@ export function SocialShareDialog({
   };
 
   const handleShare = (platform: keyof typeof shareLinks) => {
-    window.open(shareLinks[platform], "_blank", "width=600,height=400");
+    openExternalLink(shareLinks[platform]);
   };
 
   return (
