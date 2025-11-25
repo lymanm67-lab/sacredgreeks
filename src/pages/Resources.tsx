@@ -98,6 +98,15 @@ const resources: ResourceItem[] = [
     downloadUrl: "/resources/integrity-under-pressure-2.pdf",
   },
   {
+    title: "Christian Greek Life Study Guide",
+    description: "Comprehensive study guide for integrating Christian faith with Greek life participation",
+    url: "https://gamma.app/docs/Christian-Greek-Life-Study-Guide-ihr8fq0g089n32t",
+    icon: BookOpen,
+    requiresAuth: false,
+    badge: "Featured",
+    category: "articles",
+  },
+  {
     title: "Sacred Comfort: Praying for Greeks in Tough Times",
     description: "How to pray for and walk with fraternity and sorority members during difficult seasons",
     url: "https://gamma.app/docs/Sacred-Comfort-How-To-Pray-For-And-Walk-With-Fraternity-And-Sorority-ccgepyu7je8fpav",
