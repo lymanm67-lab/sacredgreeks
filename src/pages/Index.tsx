@@ -7,6 +7,7 @@ import { Heart, Video, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListCh
 import { Testimonials } from "@/components/Testimonials";
 import { MobileQRCode } from "@/components/MobileQRCode";
 import logo from "@/assets/sacred-greeks-logo.png";
+import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
 
 const features = [
   {
@@ -44,6 +45,7 @@ const features = [
     link: "https://drlymanmontgomery.involve.me/fmmpa",
     color: "text-sacred",
     isExternal: true,
+    useModal: true,
   },
   {
     title: "Prayer Journal",
@@ -222,6 +224,36 @@ const Index = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature, index) => {
               const isExternal = feature.isExternal || false;
+              
+              if (isExternal && feature.useModal) {
+                return (
+                  <ExternalContentModal
+                    key={feature.title}
+                    url={feature.link}
+                    title={feature.title}
+                    description={feature.description}
+                    trigger={
+                      <div className="cursor-pointer">
+                        <Card className="h-full transition-all hover:shadow-lg hover:scale-105 border-2 hover:border-sacred/50 cursor-pointer group animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+                          <CardHeader className="space-y-4">
+                            <div className="w-14 h-14 rounded-lg bg-muted flex items-center justify-center group-hover:bg-sacred/10 transition-colors">
+                              <feature.icon className={`w-7 h-7 ${feature.color}`} />
+                            </div>
+                            <CardTitle className="text-xl">
+                              {feature.title}
+                            </CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <CardDescription className="text-base">
+                              {feature.description}
+                            </CardDescription>
+                          </CardContent>
+                        </Card>
+                      </div>
+                    }
+                  />
+                );
+              }
               
               if (isExternal) {
                 return (

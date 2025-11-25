@@ -15,6 +15,7 @@ import { CommunityServiceChecklist } from '@/components/dashboard/CommunityServi
 import { ChapterMeetingNotes } from '@/components/dashboard/ChapterMeetingNotes';
 import { ResourcesSection } from '@/components/dashboard/ResourcesSection';
 import { ChapterResourcesSection } from '@/components/dashboard/ChapterResourcesSection';
+import { ExternalContentModal } from '@/components/ui/ExternalContentModal';
 import { Onboarding } from '@/components/Onboarding';
 import { useOnboarding } from '@/hooks/use-onboarding';
 import { MobileQRCode } from '@/components/MobileQRCode';
@@ -179,6 +180,7 @@ const Dashboard = () => {
       iconColor: 'text-white',
       iconBg: 'bg-gradient-to-br from-rose-500 to-pink-600',
       isExternal: true,
+      useModal: true,
     },
     {
       id: 'daily-devotional',
@@ -396,22 +398,47 @@ const Dashboard = () => {
               </CollapsibleTrigger>
               <CollapsibleContent className="space-y-4">
                 <div className="grid gap-4 grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
-                  {sortedActions.map((action, index) => (
-                <CompactQuickAction
-                  key={action.id}
-                  id={action.id}
-                  title={action.title}
-                  description={action.description}
-                  icon={action.icon}
-                  href={action.href}
-                  iconColor={action.iconColor}
-                  iconBg={action.iconBg}
-                  delay={`${(index + 1) * 0.1}s`}
-                  isFavorite={isFavorite(action.id)}
-                  onToggleFavorite={toggleFavorite}
-                  isExternal={action.isExternal}
-                />
-                  ))}
+                  {sortedActions.map((action, index) => 
+                    action.useModal ? (
+                      <ExternalContentModal
+                        key={action.id}
+                        url={action.href}
+                        title={action.title}
+                        description={action.description}
+                        trigger={
+                          <div>
+                            <CompactQuickAction
+                              id={action.id}
+                              title={action.title}
+                              description={action.description}
+                              icon={action.icon}
+                              href={action.href}
+                              iconColor={action.iconColor}
+                              iconBg={action.iconBg}
+                              delay={`${(index + 1) * 0.1}s`}
+                              isFavorite={isFavorite(action.id)}
+                              onToggleFavorite={toggleFavorite}
+                            />
+                          </div>
+                        }
+                      />
+                    ) : (
+                      <CompactQuickAction
+                        key={action.id}
+                        id={action.id}
+                        title={action.title}
+                        description={action.description}
+                        icon={action.icon}
+                        href={action.href}
+                        iconColor={action.iconColor}
+                        iconBg={action.iconBg}
+                        delay={`${(index + 1) * 0.1}s`}
+                        isFavorite={isFavorite(action.id)}
+                        onToggleFavorite={toggleFavorite}
+                        isExternal={action.isExternal}
+                      />
+                    )
+                  )}
                 </div>
               </CollapsibleContent>
             </div>
