@@ -34,7 +34,7 @@ const resources: ResourceItem[] = [
   {
     title: "Our Mission",
     description: "Learn about the Sacred Greeks movement and the P.R.O.O.F. framework",
-    url: "/faq",
+    url: "/about",
     icon: Heart,
     requiresAuth: false,
     category: "about",
