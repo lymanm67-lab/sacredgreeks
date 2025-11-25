@@ -203,6 +203,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Why I Did Not Renounce My BGLO",
+    description: "A personal testimony and pastoral guidance on remaining in Black Greek Letter Organizations as a Christian",
+    url: "https://gamma.app/docs/Why-This-Christian-Did-Not-Renounce-My-Black-Greek-Letter-Organization-ft5vd5wc4gdfmuv",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
