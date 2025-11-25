@@ -131,6 +131,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Robert's Rules of Order in Chapter Meetings",
+    description: "A practical guide to running effective and organized chapter meetings using parliamentary procedure",
+    url: "https://gamma.app/docs/How-To-Use-Roberts-Rules-of-Order-in-Chapter-Meetings-viytfotsasvx46d",
+    icon: FileText,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
