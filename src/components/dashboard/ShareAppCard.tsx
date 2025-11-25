@@ -7,7 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 
 export function ShareAppCard() {
   const { toast } = useToast();
-  const appUrl = 'https://sacredgreekslife.com';
+  const appUrl = 'https://www.sacredgreekslife.com';
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(appUrl);
