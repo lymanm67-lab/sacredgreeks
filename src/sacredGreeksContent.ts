@@ -1102,11 +1102,6 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
     description: "Academic traditions with Greek and pagan roots",
     videos: [
       {
-        title: "Greek Influence in Modern Education",
-        url: "https://youtu.be/9qLofoqskHk",
-        description: "Exploring how pagan traditions shaped academic ceremonies and symbols"
-      },
-      {
         title: "The Surprising History of Black Fraternities and Sororities!",
         url: "https://youtu.be/Y6N089RVnBU",
         description: "Discover the rich history and foundations of Black Greek Letter Organizations"
