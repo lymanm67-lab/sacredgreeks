@@ -996,7 +996,7 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
         title: "Greek & Roman Architecture",
         origin: "Columns, domes, and classical architecture were designed for pagan temples dedicated to Zeus, Jupiter, Athena, and other gods. These styles emerged from idol worship contexts.",
         today: "Countless church buildings use Greek columns, Roman domes, and classical architecture. The U.S. Supreme Court, Capitol Building, and many churches feature these 'pagan temple' designs.",
-        reflection: "If building style with pagan origins is acceptable for churches and government, why are Greek letters—also historical references—considered uniquely problematic?"
+        reflection: "If building style with pagan origins is acceptable for churches and government, why are Greek letters (also historical references) considered uniquely problematic?"
       },
       {
         id: "steeples",
@@ -1031,7 +1031,7 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
         title: "Days of the Week",
         origin: "Monday (Moon's day), Tuesday (Tiw/Mars), Wednesday (Woden/Mercury), Thursday (Thor/Jupiter), Friday (Frigg/Venus), Saturday (Saturn), Sunday (Sun). Each day is named after Roman or Norse deities.",
         today: "Christians use these pagan names every single day. Church services happen on 'Sunday' (Sun worship day). Businesses, schools, and calendars universally use these terms.",
-        reflection: "We don't rename the weekdays to avoid pagan associations. We understand they're just names now. Why can't Greek letters be understood the same way—historical references that don't determine our worship?"
+        reflection: "We don't rename the weekdays to avoid pagan associations. We understand they're just names now. Why can't Greek letters be understood the same way, as historical references that don't determine our worship?"
       },
       {
         id: "months",
@@ -1116,7 +1116,7 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
       {
         id: "university-names",
         title: "College & University Names",
-        origin: "Harvard's motto 'Veritas' and seal originally included 'Christo et Ecclesiae' but also used Latin and classical references. Many Christian colleges are named after saints—a practice with Catholic/pagan saint veneration roots.",
+        origin: "Harvard's motto 'Veritas' and seal originally included 'Christo et Ecclesiae' but also used Latin and classical references. Many Christian colleges are named after saints, a practice with Catholic/pagan saint veneration roots.",
         today: "Christian students attend universities with Latin mottos, Greek letters in math and science, and classical references everywhere. No one calls these schools demonic.",
         reflection: "Education is full of Greek language, mythology references, and classical traditions. We distinguish between using something historically and worshiping it. BGLOs deserve the same nuance."
       },
@@ -1153,7 +1153,7 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
         title: "Eyeliner & Eye Makeup",
         origin: "Ancient Egyptians created kohl eyeliner to honor and invoke the protection of the Eye of Horus (Wadjet) and the Eye of Ra. The almond-shaped eye design was meant to channel the power of these solar deities. The goddess Iris was also associated with eye beauty and the rainbow, connecting vision to divine favor.",
         today: "Christians wear eyeliner, mascara, and eyeshadow daily. Makeup tutorials and beauty brands celebrate 'Egyptian eye' looks. False eyelashes and dramatic eye makeup are standard in church services, weddings, and everyday life.",
-        reflection: "If we can enhance our eyes with makeup techniques rooted in Egyptian deity worship—literally drawing symbols meant to invoke Horus and Ra—why are Greek letters problematic? Both have ancient religious origins but modern secular use."
+        reflection: "If we can enhance our eyes with makeup techniques rooted in Egyptian deity worship (literally drawing symbols meant to invoke Horus and Ra), why are Greek letters problematic? Both have ancient religious origins but modern secular use."
       },
       {
         id: "eyeshadow",
@@ -1165,9 +1165,9 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
       {
         id: "wigs",
         title: "Wigs & Hair Extensions",
-        origin: "Ancient Egyptians wore elaborate wigs as status symbols and religious expressions. The wigs represented the Nile River's life-giving flow—straight, dark hair symbolized the river itself. High priests and pharaohs wore wigs in temple ceremonies to embody divine authority and connection to the gods.",
-        today: "Christians—especially in Black churches—embrace wigs, weaves, and hair extensions as expressions of beauty and style. Pastors preach in them, choir members sing in them, and church fashion celebrates them.",
-        reflection: "If wigs that literally symbolized the Nile River and priestly connection to Egyptian gods can be worn in church without spiritual concern, why are Greek organizations—also using symbols in new contexts—treated as dangerous?"
+        origin: "Ancient Egyptians wore elaborate wigs as status symbols and religious expressions. The wigs represented the Nile River's life-giving flow. Straight, dark hair symbolized the river itself. High priests and pharaohs wore wigs in temple ceremonies to embody divine authority and connection to the gods.",
+        today: "Christians (especially in Black churches) embrace wigs, weaves, and hair extensions as expressions of beauty and style. Pastors preach in them, choir members sing in them, and church fashion celebrates them.",
+        reflection: "If wigs that literally symbolized the Nile River and priestly connection to Egyptian gods can be worn in church without spiritual concern, why are Greek organizations (also using symbols in new contexts) treated as dangerous?"
       }
     ]
   },
@@ -1191,14 +1191,14 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
       {
         id: "planet-names",
         title: "Planets & Space",
-        origin: "Mercury, Venus, Mars, Jupiter, Saturn, Neptune, Uranus—all named after Roman gods. Pluto is the god of the underworld. We teach these to children.",
+        origin: "Mercury, Venus, Mars, Jupiter, Saturn, Neptune, Uranus, all named after Roman gods. Pluto is the god of the underworld. We teach these to children.",
         today: "Christians study astronomy, NASA missions, and space science using these pagan god names. Churches hold VBS programs teaching kids about planets without renaming them.",
         reflection: "We accept that planet names don't promote worship of Roman gods. They're just names. Greek organization names can be understood the same way."
       },
       {
         id: "common-names",
         title: "Popular Christian Names",
-        origin: "Diana (Roman moon goddess), Alexander (means 'defender of man'—Greek), Jason (Greek hero from mythology), Daphne (Greek nymph), Iris (Greek goddess), Penelope (Odysseus's wife).",
+        origin: "Diana (Roman moon goddess), Alexander (means 'defender of man', Greek), Jason (Greek hero from mythology), Daphne (Greek nymph), Iris (Greek goddess), Penelope (Odysseus's wife).",
         today: "Christian parents name children these names, knowing the origins but choosing them for beauty or family significance. The pagan connection doesn't transfer.",
         reflection: "If we can name our children after mythological figures because we like the sound or meaning, why can't Greek organizations be joined for service and community despite mythological names?"
       },
