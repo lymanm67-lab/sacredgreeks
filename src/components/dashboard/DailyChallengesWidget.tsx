@@ -232,14 +232,17 @@ export function DailyChallengesWidget() {
           challenges.map((challenge) => {
             const Icon = getIconComponent(challenge.icon);
             const completed = isChallengeCompleted(challenge.id);
+            const actionLink = getChallengeActionLink(challenge.challenge_type);
 
-            return (
+            const challengeCard = (
               <div
                 key={challenge.id}
-                className={`p-4 rounded-lg border ${
+                className={`p-4 rounded-lg border transition-all ${
                   completed 
                     ? 'bg-primary/5 border-primary/20' 
-                    : 'bg-card border-border'
+                    : actionLink 
+                      ? 'bg-card border-border hover:border-primary/50 hover:shadow-md cursor-pointer'
+                      : 'bg-card border-border'
                 }`}
               >
                 <div className="flex items-start gap-3">
@@ -257,6 +260,12 @@ export function DailyChallengesWidget() {
                         <p className="text-xs text-muted-foreground mt-1">
                           {challenge.description}
                         </p>
+                        {!completed && actionLink && (
+                          <p className="text-xs text-primary mt-2 flex items-center gap-1">
+                            Click to {getChallengeActionText(challenge.challenge_type).toLowerCase()}
+                            <ArrowRight className="h-3 w-3" />
+                          </p>
+                        )}
                       </div>
                       {completed ? (
                         <CheckCircle2 className="h-5 w-5 text-primary shrink-0" />
@@ -267,32 +276,29 @@ export function DailyChallengesWidget() {
                       )}
                     </div>
                     {!completed && (
-                      <div className="mt-3 flex gap-2">
-                        {getChallengeActionLink(challenge.challenge_type) && (
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="flex-1"
-                            asChild
-                          >
-                            <Link to={getChallengeActionLink(challenge.challenge_type)!}>
-                              {getChallengeActionText(challenge.challenge_type)}
-                              <ArrowRight className="ml-2 h-4 w-4" />
-                            </Link>
-                          </Button>
-                        )}
-                        <Button
-                          size="sm"
-                          className={getChallengeActionLink(challenge.challenge_type) ? 'flex-1' : 'w-full'}
-                          onClick={() => completeChallenge(challenge.id, challenge.points_reward)}
-                        >
-                          Mark as Done
-                        </Button>
-                      </div>
+                      <Button
+                        size="sm"
+                        className="mt-3 w-full"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          completeChallenge(challenge.id, challenge.points_reward);
+                        }}
+                      >
+                        Mark as Done
+                      </Button>
                     )}
                   </div>
                 </div>
               </div>
+            );
+
+            return actionLink && !completed ? (
+              <Link key={challenge.id} to={actionLink}>
+                {challengeCard}
+              </Link>
+            ) : (
+              challengeCard
             );
           })
         )}
