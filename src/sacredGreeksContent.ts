@@ -954,11 +954,6 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
         description: "Exploring the pagan origins of wedding rings and how Christians embrace this tradition"
       },
       {
-        title: "The Strange Secrets Behind Old Wedding Traditions",
-        url: "https://youtu.be/9qLofoqskHk",
-        description: "Uncovering the surprising pagan and cultural origins of modern wedding customs"
-      },
-      {
         title: "Baby Podcast Reveals Family Secrets! | Fraternities, Greek Gods & Birthday Candles",
         url: "https://youtu.be/031_jOt2Vmw",
         description: "Exploring the hidden connections between everyday traditions, Greek mythology, and fraternities"
