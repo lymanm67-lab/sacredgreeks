@@ -258,7 +258,7 @@ const Index = () => {
               Powerful Benefits That Transform Your Life
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Experience real growth as you integrate faith and Greek life with clarity and purpose
+              Experience real transformation as you grow spiritually
             </p>
           </div>
 
