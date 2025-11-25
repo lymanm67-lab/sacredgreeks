@@ -211,6 +211,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "How Not to Lose Your Christian Identity After Intake",
+    description: "Practical guidance for maintaining your faith and Christian identity throughout the intake process",
+    url: "https://gamma.app/docs/How-Not-to-Lose-Your-Christian-Identity-After-Intake-6lwq13dmgrs5ney",
+    icon: CheckCircle,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
