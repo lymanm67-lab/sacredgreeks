@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
-import { Heart, BookOpen, Library, Book, MessageCircle } from 'lucide-react';
+import { Heart, BookOpen, Library, Book, MessageCircle, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ExternalContentModal } from '@/components/ui/ExternalContentModal';
 
@@ -32,6 +32,14 @@ const featuredActions = [
     gradient: 'from-blue-500 to-indigo-600',
   },
   {
+    id: 'prayer-guide',
+    title: 'Prayer Guide',
+    description: 'AI prayers, templates & tutorials',
+    icon: Sparkles,
+    href: '/prayer-guide',
+    gradient: 'from-pink-500 to-rose-600',
+  },
+  {
     id: 'bible-study',
     title: 'Bible Study',
     description: 'Explore Scripture with study plans',
@@ -51,7 +59,7 @@ export const FeaturedActions = () => {
         <p className="text-muted-foreground">Choose an action to begin your spiritual journey today</p>
       </div>
       
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-5">
         {featuredActions.map((action, index) => (
           <motion.div
             key={action.id}
