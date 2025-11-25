@@ -983,6 +983,11 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
         title: "The Pagan Symbols Hidden In Your Church",
         url: "https://youtu.be/48I-fdTNg8c",
         description: "Exploring why church architecture and symbols often resemble pagan temples and imagery"
+      },
+      {
+        title: "Why Do Courthouses Look Like Temples?",
+        url: "https://youtu.be/-q3FNrUe8YY",
+        description: "Examining how government buildings adopted Greek and Roman temple architecture traditionally used for pagan worship"
       }
     ],
     items: [
