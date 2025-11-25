@@ -42,6 +42,7 @@ import ArticleLibrary from "./pages/ArticleLibrary";
 import PrayerGuide from "./pages/PrayerGuide";
 import QRCodePage from "./pages/QRCode";
 import Resources from "./pages/Resources";
+import About from "./pages/About";
 
 const queryClient = new QueryClient();
 
@@ -70,9 +71,10 @@ const App = () => (
               <Route path="/study" element={<StudyGuide />} />
               <Route path="/podcast" element={<Podcast />} />
               <Route path="/did-you-know" element={<DidYouKnow />} />
-              <Route path="/articles" element={<ArticleLibrary />} />
-              <Route path="/qr-code" element={<QRCodePage />} />
-              <Route path="/resources" element={<Resources />} />
+               <Route path="/articles" element={<ArticleLibrary />} />
+               <Route path="/qr-code" element={<QRCodePage />} />
+               <Route path="/resources" element={<Resources />} />
+               <Route path="/about" element={<About />} />
               <Route
                 path="/prayer-guide"
                 element={
