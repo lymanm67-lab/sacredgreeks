@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { QrCode, Share2, Copy } from 'lucide-react';
+import { QrCode, Share2, Copy, Smartphone } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 export function ShareAppCard() {
@@ -45,22 +45,28 @@ export function ShareAppCard() {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
-        <div className="flex flex-col sm:flex-row gap-2">
-          <Link to="/qr-code" className="flex-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <Link to="/install" className="w-full">
+            <Button variant="default" className="w-full bg-sacred hover:bg-sacred/90">
+              <Smartphone className="w-4 h-4 mr-2" />
+              Install App
+            </Button>
+          </Link>
+          <Link to="/qr-code" className="w-full">
             <Button variant="outline" className="w-full">
               <QrCode className="w-4 h-4 mr-2" />
               Get QR Code
             </Button>
           </Link>
-          <Button 
-            variant="outline" 
-            onClick={handleShare}
-            className="flex-1"
-          >
-            <Share2 className="w-4 h-4 mr-2" />
-            Share Link
-          </Button>
         </div>
+        <Button 
+          variant="outline" 
+          onClick={handleShare}
+          className="w-full"
+        >
+          <Share2 className="w-4 h-4 mr-2" />
+          Share Link
+        </Button>
         <div className="flex items-center gap-2 bg-muted/50 p-3 rounded-lg">
           <code className="flex-1 text-xs font-mono truncate">{appUrl}</code>
           <Button

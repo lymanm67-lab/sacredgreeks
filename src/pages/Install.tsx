@@ -72,105 +72,192 @@ const Install = () => {
           {/* Installation Instructions */}
           <div className="grid md:grid-cols-2 gap-6">
             {/* iPhone Instructions */}
-            <Card className="border-blue-500/20">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Share2 className="w-5 h-5 text-blue-500" />
-                  Install on iPhone/iPad
+            <Card className="border-blue-500/20 shadow-lg">
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-xl">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+                    <Share2 className="w-5 h-5 text-white" />
+                  </div>
+                  iPhone Installation
                 </CardTitle>
-                <CardDescription>Using Safari browser</CardDescription>
+                <CardDescription>Step-by-step guide for Safari browser</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <ol className="space-y-3 text-sm">
-                  <li className="flex gap-3">
-                    <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 font-semibold text-xs">
+              <CardContent className="space-y-6">
+                <ol className="space-y-4">
+                  <li className="flex gap-4 items-start">
+                    <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white font-bold text-sm">
                       1
                     </span>
-                    <span>Open <strong>{appUrl}</strong> in Safari</span>
+                    <div className="flex-1 pt-1">
+                      <p className="font-semibold mb-1">Open in Safari</p>
+                      <p className="text-sm text-muted-foreground">
+                        Navigate to <span className="font-mono bg-muted px-2 py-0.5 rounded">www.sacredgreekslife.com</span> in Safari browser
+                      </p>
+                    </div>
                   </li>
-                  <li className="flex gap-3">
-                    <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 font-semibold text-xs">
+                  <li className="flex gap-4 items-start">
+                    <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white font-bold text-sm">
                       2
                     </span>
-                    <span>Tap the <Share2 className="w-4 h-4 inline" /> Share button at the bottom of the screen</span>
+                    <div className="flex-1 pt-1">
+                      <p className="font-semibold mb-1 flex items-center gap-2">
+                        Tap Share Button
+                        <Share2 className="w-4 h-4 text-blue-500" />
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Tap the Share button at the bottom of your screen (square icon with arrow pointing up)
+                      </p>
+                    </div>
                   </li>
-                  <li className="flex gap-3">
-                    <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 font-semibold text-xs">
+                  <li className="flex gap-4 items-start">
+                    <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white font-bold text-sm">
                       3
                     </span>
-                    <span>Scroll down and tap <strong>"Add to Home Screen"</strong></span>
+                    <div className="flex-1 pt-1">
+                      <p className="font-semibold mb-1">Add to Home Screen</p>
+                      <p className="text-sm text-muted-foreground">
+                        Scroll down the share menu and tap "Add to Home Screen"
+                      </p>
+                    </div>
                   </li>
-                  <li className="flex gap-3">
-                    <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 font-semibold text-xs">
+                  <li className="flex gap-4 items-start">
+                    <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-blue-500 text-white font-bold text-sm">
                       4
                     </span>
-                    <span>Tap <strong>"Add"</strong> in the top right corner</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 font-semibold text-xs">
-                      5
-                    </span>
-                    <span>The app icon will appear on your home screen!</span>
+                    <div className="flex-1 pt-1">
+                      <p className="font-semibold mb-1">Confirm Installation</p>
+                      <p className="text-sm text-muted-foreground">
+                        Tap "Add" in the top right corner. The Sacred Greeks icon will appear on your home screen!
+                      </p>
+                    </div>
                   </li>
                 </ol>
-                <div className="pt-4 border-t border-border">
+                <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900 rounded-lg p-3">
+                  <p className="text-xs text-blue-900 dark:text-blue-100">
+                    <strong>💡 Pro Tip:</strong> Long-press the app icon after installing to access quick shortcuts to Daily Devotional, Prayer Journal, and New Assessment!
+                  </p>
+                </div>
+                <div className="pt-2 border-t border-border">
                   <p className="text-xs text-muted-foreground">
-                    <strong>Note:</strong> You must use Safari browser. Installation from Chrome or other browsers is not supported on iOS.
+                    <strong>Important:</strong> Safari browser required. Installation from Chrome or other browsers is not supported on iOS.
                   </p>
                 </div>
               </CardContent>
             </Card>
 
             {/* Android Instructions */}
-            <Card className="border-green-500/20">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Chrome className="w-5 h-5 text-green-500" />
-                  Install on Android
+            <Card className="border-green-500/20 shadow-lg">
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-xl">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center">
+                    <Chrome className="w-5 h-5 text-white" />
+                  </div>
+                  Android Installation
                 </CardTitle>
-                <CardDescription>Using Chrome or other browsers</CardDescription>
+                <CardDescription>Step-by-step guide for Chrome browser</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <ol className="space-y-3 text-sm">
-                  <li className="flex gap-3">
-                    <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-green-500/10 text-green-500 font-semibold text-xs">
+              <CardContent className="space-y-6">
+                <ol className="space-y-4">
+                  <li className="flex gap-4 items-start">
+                    <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-green-600 text-white font-bold text-sm">
                       1
                     </span>
-                    <span>Open <strong>{appUrl}</strong> in Chrome</span>
+                    <div className="flex-1 pt-1">
+                      <p className="font-semibold mb-1">Open in Chrome</p>
+                      <p className="text-sm text-muted-foreground">
+                        Navigate to <span className="font-mono bg-muted px-2 py-0.5 rounded">www.sacredgreekslife.com</span> in Chrome browser
+                      </p>
+                    </div>
                   </li>
-                  <li className="flex gap-3">
-                    <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-green-500/10 text-green-500 font-semibold text-xs">
+                  <li className="flex gap-4 items-start">
+                    <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-green-600 text-white font-bold text-sm">
                       2
                     </span>
-                    <span>Tap the <MoreVertical className="w-4 h-4 inline" /> menu icon (three dots) in the top right</span>
+                    <div className="flex-1 pt-1">
+                      <p className="font-semibold mb-1 flex items-center gap-2">
+                        Open Menu
+                        <MoreVertical className="w-4 h-4" />
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Tap the three-dot menu button in the top right corner of Chrome
+                      </p>
+                    </div>
                   </li>
-                  <li className="flex gap-3">
-                    <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-green-500/10 text-green-500 font-semibold text-xs">
+                  <li className="flex gap-4 items-start">
+                    <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-green-600 text-white font-bold text-sm">
                       3
                     </span>
-                    <span>Select <strong>"Add to Home screen"</strong> or <strong>"Install app"</strong></span>
+                    <div className="flex-1 pt-1">
+                      <p className="font-semibold mb-1 flex items-center gap-2">
+                        Install App
+                        <Download className="w-4 h-4" />
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Look for "Install App" or "Add to Home Screen" in the menu and tap it
+                      </p>
+                    </div>
                   </li>
-                  <li className="flex gap-3">
-                    <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-green-500/10 text-green-500 font-semibold text-xs">
+                  <li className="flex gap-4 items-start">
+                    <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-green-600 text-white font-bold text-sm">
                       4
                     </span>
-                    <span>Confirm by tapping <strong>"Add"</strong> or <strong>"Install"</strong></span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-green-500/10 text-green-500 font-semibold text-xs">
-                      5
-                    </span>
-                    <span>The app will be added to your home screen!</span>
+                    <div className="flex-1 pt-1">
+                      <p className="font-semibold mb-1">Confirm Installation</p>
+                      <p className="text-sm text-muted-foreground">
+                        Tap "Install" in the popup. The Sacred Greeks icon will appear on your home screen!
+                      </p>
+                    </div>
                   </li>
                 </ol>
-                <div className="pt-4 border-t border-border">
+                <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-900 rounded-lg p-3">
+                  <p className="text-xs text-green-900 dark:text-green-100">
+                    <strong>💡 Alternative:</strong> Some Android phones show an install banner automatically when you visit the site. Just tap "Install" if you see it!
+                  </p>
+                </div>
+                <div className="pt-2 border-t border-border">
                   <p className="text-xs text-muted-foreground">
-                    <strong>Tip:</strong> Some Android browsers may show an automatic install banner at the bottom of the page.
+                    <strong>Note:</strong> Works with Chrome, Edge, Samsung Internet, and other Chromium-based browsers.
                   </p>
                 </div>
               </CardContent>
             </Card>
           </div>
+
+          {/* Troubleshooting Section */}
+          <Card className="border-amber-500/20 shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-xl">Troubleshooting</CardTitle>
+              <CardDescription>Having issues? Here are some common solutions</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-3">
+                <div className="border-l-4 border-sacred pl-4">
+                  <h4 className="font-semibold mb-1.5">Don't see "Add to Home Screen"?</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Make sure you're using the correct browser: Safari on iPhone or Chrome on Android. Other browsers may not support app installation.
+                  </p>
+                </div>
+                <div className="border-l-4 border-sacred pl-4">
+                  <h4 className="font-semibold mb-1.5">App not working offline?</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Open the app while connected to internet first. It will automatically download content for offline use. Visit a few pages while online to cache them.
+                  </p>
+                </div>
+                <div className="border-l-4 border-sacred pl-4">
+                  <h4 className="font-semibold mb-1.5">How do I uninstall the app?</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Just long-press the app icon on your home screen and select "Remove App" (iPhone) or "Uninstall" (Android), like any other app.
+                  </p>
+                </div>
+                <div className="border-l-4 border-sacred pl-4">
+                  <h4 className="font-semibold mb-1.5">App looks different from the website?</h4>
+                  <p className="text-sm text-muted-foreground">
+                    The installed app runs in full-screen mode without browser UI. This is normal and provides a better app experience!
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Benefits Section */}
           <Card className="bg-gradient-to-br from-sacred/5 to-warm-blue/5 border-sacred/20">
