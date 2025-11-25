@@ -110,7 +110,7 @@ const Guide = () => {
             </Link>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-sacred"></div>
-              <h1 className="text-lg font-semibold text-foreground">Sacred Greeks Guide</h1>
+              <h1 className="text-lg font-semibold text-foreground">How to Handle BGLO Objections</h1>
             </div>
           </div>
         </div>

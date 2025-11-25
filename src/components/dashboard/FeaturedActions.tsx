@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
-import { Heart, BookOpen, Library, Book } from 'lucide-react';
+import { Heart, BookOpen, Library, Book, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ExternalContentModal } from '@/components/ui/ExternalContentModal';
 
@@ -14,6 +14,14 @@ const featuredActions = [
     gradient: 'from-rose-500 to-pink-600',
     isExternal: true,
     useModal: true,
+  },
+  {
+    id: 'bglo-objections',
+    title: 'Handle BGLO Objections',
+    description: 'Navigate Greek life challenges using the PROOF framework',
+    icon: MessageCircle,
+    href: '/guide',
+    gradient: 'from-purple-500 to-violet-600',
   },
   {
     id: 'daily-devotional',

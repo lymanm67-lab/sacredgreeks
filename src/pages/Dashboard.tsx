@@ -4,7 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark, Book, Clock, Lightbulb, Library } from 'lucide-react';
+import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark, Book, Clock, Lightbulb, Library, MessageCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { HeroSection } from '@/components/dashboard/HeroSection';
 import { WelcomeVideo } from '@/components/dashboard/WelcomeVideo';
@@ -181,6 +181,15 @@ const Dashboard = () => {
       iconBg: 'bg-gradient-to-br from-rose-500 to-pink-600',
       isExternal: true,
       useModal: true,
+    },
+    {
+      id: 'bglo-objections',
+      title: 'Handle Objections',
+      description: 'Navigate BGLO challenges with PROOF',
+      icon: MessageCircle,
+      href: '/guide',
+      iconColor: 'text-white',
+      iconBg: 'bg-gradient-to-br from-purple-500 to-violet-600',
     },
     {
       id: 'daily-devotional',
