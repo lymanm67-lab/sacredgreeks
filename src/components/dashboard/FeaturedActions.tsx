@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
-import { Heart, BookOpen, MessageSquare, Book } from 'lucide-react';
+import { Heart, BookOpen, Library, Book } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const featuredActions = [
@@ -21,12 +21,12 @@ const featuredActions = [
     gradient: 'from-blue-500 to-indigo-600',
   },
   {
-    id: 'prayer-wall',
-    title: 'Prayer Wall',
-    description: 'Share and support community prayer requests',
-    icon: MessageSquare,
-    href: '/prayer-wall',
-    gradient: 'from-purple-500 to-violet-600',
+    id: 'article-library',
+    title: 'Article Library',
+    description: 'Biblical wisdom for your Greek life journey',
+    icon: Library,
+    href: '/articles',
+    gradient: 'from-indigo-500 to-blue-600',
   },
   {
     id: 'bible-study',

@@ -4,7 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark, Book, Clock, Lightbulb } from 'lucide-react';
+import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark, Book, Clock, Lightbulb, Library } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { HeroSection } from '@/components/dashboard/HeroSection';
 import { WelcomeVideo } from '@/components/dashboard/WelcomeVideo';
@@ -250,6 +250,15 @@ const Dashboard = () => {
       href: '/did-you-know',
       iconColor: 'text-white',
       iconBg: 'bg-gradient-to-br from-fuchsia-500 to-pink-600',
+    },
+    {
+      id: 'article-library',
+      title: 'Article Library',
+      description: 'Biblical wisdom articles for Greek life journey',
+      icon: Library,
+      href: '/articles',
+      iconColor: 'text-white',
+      iconBg: 'bg-gradient-to-br from-indigo-500 to-blue-600',
     },
   ];
 
