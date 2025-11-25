@@ -97,8 +97,8 @@ const DidYouKnow = () => {
               historical origins</strong>.
             </p>
             <p className="leading-relaxed text-primary font-medium">
-              If we can redeem Christmas trees, wedding rings, and medical symbols—all with
-              pagan origins—why can't individuals redeem their BGLO membership for service,
+              If we can redeem Christmas trees, wedding rings, and medical symbols (all with
+              pagan origins), why can't individuals redeem their BGLO membership for service,
               community, and Christian witness?
             </p>
           </CardContent>
@@ -304,7 +304,7 @@ const DidYouKnow = () => {
               letters or historical references <strong>falls apart</strong>.
             </p>
             <p className="leading-relaxed text-primary font-medium">
-              The real question isn't the origin—it's the current use and intent. Are you
+              The real question isn't the origin, it's the current use and intent. Are you
               using your membership to serve Christ and your community? That's what matters.
             </p>
           </CardContent>

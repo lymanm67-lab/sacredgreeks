@@ -150,7 +150,7 @@ const Index = () => {
           
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Your daily companion for integrating faith and Greek life. Get devotionals, guidance, 
-            prayer tools, and progress tracking—all grounded in the P.R.O.O.F. framework from 
+            prayer tools, and progress tracking, all grounded in the P.R.O.O.F. framework from 
             "Sacred, Not Sinful."
           </p>
 
