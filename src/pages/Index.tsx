@@ -356,13 +356,16 @@ const Index = () => {
                 FAQ
               </Link>
               <a
-                href="https://sacredgreeks.com/"
+                href="https://www.sacredgreeks.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-sacred transition-colors"
               >
                 SacredGreeks.com
               </a>
+              <Link to="/qr-code" className="text-muted-foreground hover:text-sacred transition-colors">
+                Get QR Code
+              </Link>
               <Link to="/privacy" className="text-muted-foreground hover:text-sacred transition-colors">
                 Privacy Policy
               </Link>

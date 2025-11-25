@@ -36,6 +36,7 @@ import { SocialMediaConnect } from '@/components/SocialMediaConnect';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown } from 'lucide-react';
 import { CategorySection } from '@/components/dashboard/CategorySection';
+import { ShareAppCard } from '@/components/dashboard/ShareAppCard';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -411,6 +412,11 @@ const Dashboard = () => {
               description="I'm growing in my faith with the Sacred Greeks app. Join me on this journey of spiritual growth and brotherhood!"
               hashtags={["SacredGreeks", "FaithJourney", "Brotherhood"]}
             />
+          </div>
+
+          {/* Share App Card */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.68s' }}>
+            <ShareAppCard />
           </div>
 
           {/* Study Recommendations */}
