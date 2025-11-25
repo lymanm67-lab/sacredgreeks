@@ -7,7 +7,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark, Book, Clock, Lightbulb, Library, MessageCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { HeroSection } from '@/components/dashboard/HeroSection';
-import { WelcomeVideo } from '@/components/dashboard/WelcomeVideo';
 import { StatsCard } from '@/components/dashboard/StatsCard';
 import { CompactQuickAction } from '@/components/dashboard/CompactQuickAction';
 import { VideoSection } from '@/components/dashboard/VideoSection';
@@ -329,9 +328,8 @@ const Dashboard = () => {
             <FeaturedActions />
           </div>
 
-          {/* Welcome Video + Verse of the Day */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <WelcomeVideo />
+          {/* Verse of the Day */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <VerseOfTheDay />
           </div>
 
