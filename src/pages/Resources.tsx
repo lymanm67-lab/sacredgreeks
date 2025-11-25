@@ -139,6 +139,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Sacred Conversations: Leading Greeks to Christ",
+    description: "Using the Roman Road to share the Gospel with fraternity and sorority members",
+    url: "https://gamma.app/docs/Sacred-Conversations-Leading-Greek-Members-to-Christ-Using-the-Roman-ekkmlx5d1615hlv",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
