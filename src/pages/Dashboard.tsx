@@ -357,6 +357,11 @@ const Dashboard = () => {
             <VerseOfTheDay />
           </div>
 
+          {/* Share App Card */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.25s' }}>
+            <ShareAppCard />
+          </div>
+
           {/* Two Column: Getting Started + Gamification */}
           <div ref={checklistScroll.ref} className={`scroll-animate ${checklistScroll.isVisible ? 'visible' : ''} grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in`} style={{ animationDelay: '0.3s' }}>
             <div className="lg:col-span-2">
@@ -412,11 +417,6 @@ const Dashboard = () => {
               description="I'm growing in my faith with the Sacred Greeks app. Join me on this journey of spiritual growth and brotherhood!"
               hashtags={["SacredGreeks", "FaithJourney", "Brotherhood"]}
             />
-          </div>
-
-          {/* Share App Card */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.68s' }}>
-            <ShareAppCard />
           </div>
 
           {/* Study Recommendations */}
