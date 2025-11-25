@@ -19,7 +19,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Home, Plus, Check, Trash2, Search, Download } from 'lucide-react';
+import { Home, Plus, Check, Trash2, Search, Download, Volume2, Loader2, History, Filter } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { prayerJournalSchema } from '@/lib/validation';
 import { useGamification } from '@/hooks/use-gamification';
@@ -27,6 +27,8 @@ import { usePullToRefresh } from '@/hooks/use-pull-to-refresh';
 import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
 import { useAutoCompleteChallenge } from '@/hooks/use-auto-complete-challenge';
 import { BreadcrumbNav } from '@/components/ui/breadcrumb-nav';
+import { usePrayerAudio } from '@/hooks/use-prayer-audio';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface Prayer {
   id: string;
@@ -48,7 +50,10 @@ const PrayerJournal = () => {
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState('all');
+  const [filterType, setFilterType] = useState<string>('all');
   const { toast } = useToast();
+  const { playPrayer, isPlaying, isLoading: audioLoading, currentPrayerId } = usePrayerAudio();
 
   // Pull to refresh
   const handleRefresh = async () => {
@@ -68,20 +73,34 @@ const PrayerJournal = () => {
   }, [user]);
 
   useEffect(() => {
-    // Filter prayers based on search query
-    if (!searchQuery.trim()) {
-      setFilteredPrayers(prayers);
-    } else {
+    // Filter prayers based on search query, tab, and type
+    let filtered = prayers;
+
+    // Filter by tab (all, answered, unanswered)
+    if (activeTab === 'answered') {
+      filtered = filtered.filter(p => p.answered);
+    } else if (activeTab === 'unanswered') {
+      filtered = filtered.filter(p => !p.answered);
+    }
+
+    // Filter by type
+    if (filterType !== 'all') {
+      filtered = filtered.filter(p => p.prayer_type === filterType);
+    }
+
+    // Filter by search query
+    if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
-      const filtered = prayers.filter(
+      filtered = filtered.filter(
         (prayer) =>
           prayer.title.toLowerCase().includes(query) ||
           prayer.content?.toLowerCase().includes(query) ||
           prayer.prayer_type.toLowerCase().includes(query)
       );
-      setFilteredPrayers(filtered);
     }
-  }, [searchQuery, prayers]);
+
+    setFilteredPrayers(filtered);
+  }, [searchQuery, prayers, activeTab, filterType]);
 
   const loadPrayers = async () => {
     if (!user) return;
@@ -357,90 +376,138 @@ const PrayerJournal = () => {
             </div>
           </div>
 
-          {/* Search */}
+          {/* Search and Filters */}
           {prayers.length > 0 && (
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input
-                type="text"
-                placeholder="Search prayers by title, content, or type..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-              />
+            <div className="space-y-4">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Search prayers by title, content, or type..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <Filter className="w-4 h-4 text-muted-foreground" />
+                <Select value={filterType} onValueChange={setFilterType}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Filter by type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Types</SelectItem>
+                    <SelectItem value="request">Request</SelectItem>
+                    <SelectItem value="thanksgiving">Thanksgiving</SelectItem>
+                    <SelectItem value="confession">Confession</SelectItem>
+                    <SelectItem value="praise">Praise</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           )}
 
-          {/* Prayers List */}
-          {filteredPrayers.length === 0 && prayers.length === 0 ? (
-            <Card>
-              <CardContent className="text-center py-12">
-                <p className="text-muted-foreground mb-4">No prayers yet. Start your prayer journal today!</p>
-                <Button onClick={() => setDialogOpen(true)} className="bg-sacred hover:bg-sacred/90">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add First Prayer
-                </Button>
-              </CardContent>
-            </Card>
-          ) : filteredPrayers.length === 0 ? (
-            <Card>
-              <CardContent className="text-center py-12">
-                <p className="text-muted-foreground">No prayers match your search. Try different keywords.</p>
-              </CardContent>
-            </Card>
-          ) : (
-            <div className="space-y-4">
-              {filteredPrayers.map((prayer) => (
-                <Card key={prayer.id} className={prayer.answered ? 'border-green-500/50 bg-green-50/50' : ''}>
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <CardTitle>{prayer.title}</CardTitle>
-                          {prayer.answered && (
-                            <span className="inline-flex items-center text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
-                              <Check className="w-3 h-3 mr-1" />
-                              Answered
-                            </span>
-                          )}
-                        </div>
-                        <span className={`inline-block text-xs px-2 py-1 rounded ${getPrayerTypeColor(prayer.prayer_type)}`}>
-                          {getPrayerTypeLabel(prayer.prayer_type)}
-                        </span>
-                      </div>
-                      <div className="flex gap-2">
-                        {!prayer.answered && (
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => markAnswered(prayer.id)}
-                          >
-                            <Check className="w-4 h-4" />
-                          </Button>
-                        )}
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => setDeleteId(prayer.id)}
-                        >
-                          <Trash2 className="w-4 h-4 text-destructive" />
-                        </Button>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground whitespace-pre-wrap mb-3">{prayer.content}</p>
-                    <div className="text-sm text-muted-foreground">
-                      <p>Recorded: {new Date(prayer.created_at).toLocaleDateString()}</p>
-                      {prayer.answered_at && (
-                        <p>Answered: {new Date(prayer.answered_at).toLocaleDateString()}</p>
-                      )}
-                    </div>
+          {/* Prayer Tabs */}
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="all">
+                All ({prayers.length})
+              </TabsTrigger>
+              <TabsTrigger value="unanswered">
+                Active ({prayers.filter(p => !p.answered).length})
+              </TabsTrigger>
+              <TabsTrigger value="answered">
+                <History className="w-4 h-4 mr-2" />
+                Answered ({prayers.filter(p => p.answered).length})
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value={activeTab} className="mt-6">
+              {/* Prayers List */}
+              {filteredPrayers.length === 0 && prayers.length === 0 ? (
+                <Card>
+                  <CardContent className="text-center py-12">
+                    <p className="text-muted-foreground mb-4">No prayers yet. Start your prayer journal today!</p>
+                    <Button onClick={() => setDialogOpen(true)} className="bg-sacred hover:bg-sacred/90">
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add First Prayer
+                    </Button>
                   </CardContent>
                 </Card>
-              ))}
-            </div>
-          )}
+              ) : filteredPrayers.length === 0 ? (
+                <Card>
+                  <CardContent className="text-center py-12">
+                    <p className="text-muted-foreground">No prayers match your filters. Try adjusting your selection.</p>
+                  </CardContent>
+                </Card>
+              ) : (
+                <div className="space-y-4">
+                  {filteredPrayers.map((prayer) => (
+                    <Card key={prayer.id} className={prayer.answered ? 'border-green-500/50 bg-green-50/50' : ''}>
+                      <CardHeader>
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                              <CardTitle>{prayer.title}</CardTitle>
+                              {prayer.answered && (
+                                <span className="inline-flex items-center text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
+                                  <Check className="w-3 h-3 mr-1" />
+                                  Answered
+                                </span>
+                              )}
+                            </div>
+                            <span className={`inline-block text-xs px-2 py-1 rounded ${getPrayerTypeColor(prayer.prayer_type)}`}>
+                              {getPrayerTypeLabel(prayer.prayer_type)}
+                            </span>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => playPrayer(prayer.content || '', prayer.id)}
+                              disabled={audioLoading && currentPrayerId === prayer.id}
+                            >
+                              {audioLoading && currentPrayerId === prayer.id ? (
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                              ) : (
+                                <Volume2 className={`w-4 h-4 ${isPlaying && currentPrayerId === prayer.id ? 'text-sacred' : ''}`} />
+                              )}
+                            </Button>
+                            {!prayer.answered && (
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => markAnswered(prayer.id)}
+                              >
+                                <Check className="w-4 h-4" />
+                              </Button>
+                            )}
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => setDeleteId(prayer.id)}
+                            >
+                              <Trash2 className="w-4 h-4 text-destructive" />
+                            </Button>
+                          </div>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-muted-foreground whitespace-pre-wrap mb-3">{prayer.content}</p>
+                        <div className="text-sm text-muted-foreground">
+                          <p>Recorded: {new Date(prayer.created_at).toLocaleDateString()}</p>
+                          {prayer.answered_at && (
+                            <p>Answered: {new Date(prayer.answered_at).toLocaleDateString()}</p>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </TabsContent>
+          </Tabs>
         </div>
       </main>
 
