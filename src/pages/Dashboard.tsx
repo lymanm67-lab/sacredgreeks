@@ -173,11 +173,12 @@ const Dashboard = () => {
     {
       id: 'new-assessment',
       title: 'New Assessment',
-      description: 'Process a new decision with biblical guidance',
+      description: 'Discover your 5 Persona Types Architecture',
       icon: Heart,
-      href: '/guide',
+      href: 'https://drlymanmontgomery.involve.me/fmmpa',
       iconColor: 'text-white',
       iconBg: 'bg-gradient-to-br from-rose-500 to-pink-600',
+      isExternal: true,
     },
     {
       id: 'daily-devotional',
@@ -396,19 +397,20 @@ const Dashboard = () => {
               <CollapsibleContent className="space-y-4">
                 <div className="grid gap-4 grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
                   {sortedActions.map((action, index) => (
-                    <CompactQuickAction
-                      key={action.id}
-                      id={action.id}
-                      title={action.title}
-                      description={action.description}
-                      icon={action.icon}
-                      href={action.href}
-                      iconColor={action.iconColor}
-                      iconBg={action.iconBg}
-                      delay={`${(index + 1) * 0.1}s`}
-                      isFavorite={isFavorite(action.id)}
-                      onToggleFavorite={toggleFavorite}
-                    />
+                <CompactQuickAction
+                  key={action.id}
+                  id={action.id}
+                  title={action.title}
+                  description={action.description}
+                  icon={action.icon}
+                  href={action.href}
+                  iconColor={action.iconColor}
+                  iconBg={action.iconBg}
+                  delay={`${(index + 1) * 0.1}s`}
+                  isFavorite={isFavorite(action.id)}
+                  onToggleFavorite={toggleFavorite}
+                  isExternal={action.isExternal}
+                />
                   ))}
                 </div>
               </CollapsibleContent>

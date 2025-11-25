@@ -38,11 +38,12 @@ const features = [
     color: "text-blue-500",
   },
   {
-    title: "Decision Guide",
-    description: "Navigate difficult questions with personalized biblical guidance",
+    title: "5 Persona Assessment",
+    description: "Discover your unique 5 Persona Types Architecture with this comprehensive assessment",
     icon: Heart,
-    link: "/guide",
+    link: "https://drlymanmontgomery.involve.me/fmmpa",
     color: "text-sacred",
+    isExternal: true,
   },
   {
     title: "Prayer Journal",
@@ -219,25 +220,56 @@ const Index = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((feature, index) => (
-              <Link key={feature.title} to={user ? feature.link : "/auth"}>
-                <Card className="h-full transition-all hover:shadow-lg hover:scale-105 border-2 hover:border-sacred/50 cursor-pointer group animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
-                  <CardHeader className="space-y-4">
-                    <div className="w-14 h-14 rounded-lg bg-muted flex items-center justify-center group-hover:bg-sacred/10 transition-colors">
-                      <feature.icon className={`w-7 h-7 ${feature.color}`} />
-                    </div>
-                    <CardTitle className="text-xl">
-                      {feature.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-base">
-                      {feature.description}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
+            {features.map((feature, index) => {
+              const isExternal = feature.isExternal || false;
+              
+              if (isExternal) {
+                return (
+                  <a 
+                    key={feature.title} 
+                    href={feature.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Card className="h-full transition-all hover:shadow-lg hover:scale-105 border-2 hover:border-sacred/50 cursor-pointer group animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+                      <CardHeader className="space-y-4">
+                        <div className="w-14 h-14 rounded-lg bg-muted flex items-center justify-center group-hover:bg-sacred/10 transition-colors">
+                          <feature.icon className={`w-7 h-7 ${feature.color}`} />
+                        </div>
+                        <CardTitle className="text-xl">
+                          {feature.title}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <CardDescription className="text-base">
+                          {feature.description}
+                        </CardDescription>
+                      </CardContent>
+                    </Card>
+                  </a>
+                );
+              }
+              
+              return (
+                <Link key={feature.title} to={user ? feature.link : "/auth"}>
+                  <Card className="h-full transition-all hover:shadow-lg hover:scale-105 border-2 hover:border-sacred/50 cursor-pointer group animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+                    <CardHeader className="space-y-4">
+                      <div className="w-14 h-14 rounded-lg bg-muted flex items-center justify-center group-hover:bg-sacred/10 transition-colors">
+                        <feature.icon className={`w-7 h-7 ${feature.color}`} />
+                      </div>
+                      <CardTitle className="text-xl">
+                        {feature.title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <CardDescription className="text-base">
+                        {feature.description}
+                      </CardDescription>
+                    </CardContent>
+                  </Card>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>
