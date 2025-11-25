@@ -34,6 +34,7 @@ interface ResourceItem {
   badge?: string;
   category: "about" | "book" | "articles" | "testimonials";
   downloadUrl?: string;
+  tags?: string[];
 }
 
 const resources: ResourceItem[] = [
@@ -45,6 +46,380 @@ const resources: ResourceItem[] = [
     icon: Heart,
     requiresAuth: false,
     category: "about",
+    tags: ["About"],
+  },
+  {
+    title: "P.R.O.O.F. Framework",
+    description: "Understanding the biblical framework for navigating Greek life",
+    url: "/guide",
+    icon: Sparkles,
+    requiresAuth: true,
+    category: "about",
+    tags: ["Framework", "About"],
+  },
+  
+  // Book Info Section
+  {
+    title: "Sacred, Not Sinful",
+    description: "Discover the book that started it all - biblical guidance for Greek life",
+    url: "https://a.co/d/bf5ipKE",
+    icon: BookOpen,
+    requiresAuth: false,
+    badge: "Featured",
+    category: "book",
+    tags: ["Book"],
+  },
+  {
+    title: "Book Chapters",
+    description: "Explore chapter summaries and key teachings",
+    url: "/study",
+    icon: FileText,
+    requiresAuth: true,
+    badge: "Members",
+    category: "book",
+    tags: ["Book", "Study"],
+  },
+  
+  // Resources/Articles Section
+  {
+    title: "Articles & Blog",
+    description: "Read the latest insights on faith and Greek life",
+    url: "/articles",
+    icon: FileText,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Articles"],
+  },
+  {
+    title: "Repentance, Repair & Renewal Checklist",
+    description: "A spiritual guide for aligning Greek life with devotion to Christ",
+    url: "https://gamma.app/docs/Christian-Black-Greek-Life-Repentance-Repair-and-Renewal-Checklis-12fobc2w0gro04i",
+    icon: CheckCircle,
+    requiresAuth: false,
+    category: "articles",
+    downloadUrl: "/resources/repentance-repair-renewal-checklist.pdf",
+    tags: ["Devotionals", "Framework"],
+  },
+  {
+    title: "Integrity Under Pressure Playbook",
+    description: "A practical ethics guide for hot moments on campus and in life using the P.R.O.O.F. framework",
+    url: "https://gamma.app/docs/Integrity-Under-Pressure-752n7nfkgl1wn7w",
+    icon: BookOpen,
+    requiresAuth: false,
+    category: "articles",
+    downloadUrl: "/resources/integrity-under-pressure-2.pdf",
+    tags: ["Leadership", "Framework"],
+  },
+  {
+    title: "Christian Greek Life Study Guide",
+    description: "Comprehensive study guide for integrating Christian faith with Greek life participation",
+    url: "https://gamma.app/docs/Christian-Greek-Life-Study-Guide-ihr8fq0g089n32t",
+    icon: BookOpen,
+    requiresAuth: false,
+    badge: "Featured",
+    category: "articles",
+    tags: ["Study", "Framework"],
+  },
+  {
+    title: "Sacred Comfort: Praying for Greeks in Tough Times",
+    description: "How to pray for and walk with fraternity and sorority members during difficult seasons",
+    url: "https://gamma.app/docs/Sacred-Comfort-How-To-Pray-For-And-Walk-With-Fraternity-And-Sorority-ccgepyu7je8fpav",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Service", "Devotionals"],
+  },
+  {
+    title: "Servant Leadership in Greek Life",
+    description: "How to run your chapter and service projects like Jesus with biblical principles",
+    url: "https://gamma.app/docs/Servant-Leadership-in-Greek-Life-How-to-Run-Your-Chapter-and-Service-roah3o2oby0g55s",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Leadership", "Service"],
+  },
+  {
+    title: "Sacred Service: Planning Community Projects",
+    description: "A guide for planning and executing meaningful community service projects with your chapter",
+    url: "https://gamma.app/docs/Sacred-Service-Planning-Community-Projects-with-Your-Chapter-28f7a9bc5w5jghb",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Service", "Leadership"],
+  },
+  {
+    title: "Robert's Rules of Order in Chapter Meetings",
+    description: "A practical guide to running effective and organized chapter meetings using parliamentary procedure",
+    url: "https://gamma.app/docs/How-To-Use-Roberts-Rules-of-Order-in-Chapter-Meetings-viytfotsasvx46d",
+    icon: FileText,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Leadership", "Framework"],
+  },
+  {
+    title: "Sacred Conversations: Leading Greeks to Christ",
+    description: "Using the Roman Road to share the Gospel with fraternity and sorority members",
+    url: "https://gamma.app/docs/Sacred-Conversations-Leading-Greek-Members-to-Christ-Using-the-Roman-ekkmlx5d1615hlv",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Evangelism", "Service"],
+  },
+  {
+    title: "Cultural Reflection Devotional for the Holidays",
+    description: "Sacred Greeks devotional for reflecting on culture and faith during the holiday season",
+    url: "https://gamma.app/docs/Sacred-Greeks-Cultural-Reflection-Devotional-for-the-Holidays-uudch3osmv3ss77",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Devotionals"],
+  },
+  {
+    title: "7-Days to Unshakeable Focus",
+    description: "A week-long devotional guide to develop spiritual focus and mental clarity",
+    url: "https://gamma.app/docs/7-Days-to-Unshakeable-Focus-3pebfj1ub3rqkue",
+    icon: CheckCircle,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Devotionals"],
+  },
+  {
+    title: "5 Steps to Retain & Engage Your Staff",
+    description: "Best practices for retaining chapter staff and staying audit ready with strong leadership",
+    url: "https://gamma.app/docs/5-Steps-to-Retain-and-Engage-Your-Staff-While-Staying-Audit-Ready-e7ydcjtrr2ujq0b",
+    icon: FileText,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Leadership"],
+  },
+  {
+    title: "Defending Your Faith and Fraternity",
+    description: "How to respond when church leaders challenge your Greek life participation",
+    url: "https://gamma.app/docs/How-to-Defend-Your-Faith-and-Fraternity-When-Church-Leaders-Challenge-um32h0hd55s8c6v",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Apologetics"],
+  },
+  {
+    title: "Are BGLOs Sinful? A Biblical Response",
+    description: "A biblical perspective addressing common concerns about Black Greek Letter Organizations",
+    url: "https://gamma.app/docs/Are-BGLOs-Sinful-A-Biblical-Response-for-Christians-qj85c0up8fdigh5",
+    icon: BookOpen,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Apologetics"],
+  },
+  {
+    title: "Should Christians Denounce BGLOs?",
+    description: "Exploring truth, trauma, and theology in the discussion about Black Greek Letter Organizations",
+    url: "https://gamma.app/docs/Should-Christians-Denounce-BGLOs-Truth-Trauma-and-Theology-un3ueaqjhbjf8y2",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Apologetics"],
+  },
+  {
+    title: "Greek Life, Social Justice, And Faith",
+    description: "How BGLOs can be Kingdom tools for advancing social justice and faith",
+    url: "https://gamma.app/docs/Greek-Life-Social-Justice-And-Faith-How-BGLOs-Can-Be-Kingdom-Tools-97rakhcw3n90dt0",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Service", "Social Justice"],
+  },
+  {
+    title: "Why I Did Not Renounce My BGLO",
+    description: "A personal testimony and pastoral guidance on remaining in Black Greek Letter Organizations as a Christian",
+    url: "https://gamma.app/docs/Why-This-Christian-Did-Not-Renounce-My-Black-Greek-Letter-Organization-ft5vd5wc4gdfmuv",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Testimonials", "Apologetics"],
+  },
+  {
+    title: "How Not to Lose Your Christian Identity After Intake",
+    description: "Practical guidance for maintaining your faith and Christian identity throughout the intake process",
+    url: "https://gamma.app/docs/How-Not-to-Lose-Your-Christian-Identity-After-Intake-6lwq13dmgrs5ney",
+    icon: CheckCircle,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["New Members", "Framework"],
+  },
+  {
+    title: "When Leaving Makes Sense",
+    description: "A Christian's guide to exiting a Greek organization gracefully without destroying relationships",
+    url: "https://gamma.app/docs/When-Leaving-Makes-Sense-A-Christians-Guide-to-Exiting-a-Greek-Organization-cyi9l2rq808g6r6",
+    icon: FileText,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Transition", "Framework"],
+  },
+  {
+    title: "How to Leave Without Burning Bridges Checklist",
+    description: "Practical checklist for leaving your Greek organization while preserving brotherhood and sisterhood bonds",
+    url: "https://gamma.app/docs/How-to-Leave-Without-Burning-Brotherhood-or-Sisterhood-Bridges-Checklist-p2gg3fi0f1bw4tr",
+    icon: CheckCircle,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Transition", "Framework"],
+  },
+  {
+    title: "Symbolism in BGLO Rituals: Harmless or Spiritual Danger?",
+    description: "A guide for Christians and church leaders examining symbolism in Black Greek rituals",
+    url: "https://gamma.app/docs/Symbolism-in-BGLO-Rituals-Harmless-or-Spiritual-Danger-A-Guide-for-nftyg892145844a",
+    icon: BookOpen,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Apologetics"],
+  },
+  {
+    title: "Should Members Take Oaths For BGLOs?",
+    description: "Christian guidance on taking oaths for Black Greek Letter Organizations",
+    url: "https://gamma.app/docs/Christian-Guidance-Should-Members-Take-Oaths-For-Black-Greek-Letter-y630omdzx2sp7z3",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Apologetics", "Framework"],
+  },
+  {
+    title: "Dr. Lyman A. Montgomery Signature Greek Life Series",
+    description: "Comprehensive teaching series on integrating Christian faith with Greek life participation",
+    url: "https://gamma.app/docs/Dr-Lyman-A-Montgomery-Signature-Greek-Life-Series-hfn73itjrx2l4wx",
+    icon: BookOpen,
+    requiresAuth: false,
+    badge: "Featured",
+    category: "articles",
+    tags: ["Study", "Framework"],
+  },
+  {
+    title: "Practical Frameworks & Checklists",
+    description: "Essential frameworks and checklists for navigating Greek life as a Christian",
+    url: "https://gamma.app/docs/Practical-Frameworks-Checklists-kvq0rliv8297moo",
+    icon: CheckCircle,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Framework"],
+  },
+  {
+    title: "CROSS Guide for Greek Life",
+    description: "Comprehensive guide using the CROSS framework for Christian Greek life participation",
+    url: "https://gamma.app/docs/CROSS-Guide-for-Greek-Life-ug6sn2qq95613dg",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Framework", "Study"],
+  },
+  {
+    title: "How to Be P.I.L.L.A.R. within Your Greek Organization",
+    description: "Framework for being a pillar of faith and leadership within your Greek letter organization",
+    url: "https://gamma.app/docs/How-to-Be-PILLAR-within-Your-Greek-Letter-Organization-ctdbb60tc09ez0e",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Leadership", "Framework"],
+  },
+  {
+    title: "How to Handle Tensions Within Your Greek Organization",
+    description: "Practical guidance for navigating and resolving conflicts within your Greek letter organization",
+    url: "https://gamma.app/docs/How-to-Handle-Tensions-Within-Your-Greek-Letter-Organization-hoaqqjovrxsxpve",
+    icon: FileText,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Conflict Resolution", "Leadership"],
+  },
+  {
+    title: "Christian BGLO Redemption Guide",
+    description: "A simple guide to repentance, repair, and renewal for Christians in Black Greek Letter Organizations",
+    url: "https://gamma.app/docs/Christian-BGLO-Redemption-A-Simple-Guide-to-Repentance-Repair-and-Renewal-6bfy5y35wg4bezt",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Devotionals", "Framework"],
+  },
+  {
+    title: "Inclusive Environment Toolkit",
+    description: "Tools and strategies for creating inclusive and welcoming environments within Greek organizations",
+    url: "https://gamma.app/docs/Inclusive-Environment-Toolkit-czjmm4li1c9jp0f",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Leadership", "Service"],
+  },
+  {
+    title: "Redeemed Greeks",
+    description: "A vision for redemption and renewal within Greek letter organizations through Christ",
+    url: "https://gamma.app/docs/Redeemed-Greeks-l28kd2r827ynm99",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Devotionals", "Vision"],
+  },
+  {
+    title: "Why Some Call BGLOs Demonic",
+    description: "Understanding and addressing concerns about spiritual warfare claims regarding Black Greek Letter Organizations",
+    url: "https://gamma.app/docs/Why-Some-Call-Black-Greek-Letter-Organizations-Demonic-4exmqlq3k79oepv",
+    icon: BookOpen,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Apologetics"],
+  },
+  {
+    title: "Is Being Christian & Greek 'Incompatible'?",
+    description: "Setting the record straight on the compatibility of Christian faith and Greek life participation",
+    url: "https://gamma.app/docs/Is-Being-Christian-Greek-Incompatible-Time-to-Set-the-Record-Straight-t4agxb757qkugvr",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Apologetics"],
+  },
+  {
+    title: "Your Chapter, God's Canvas",
+    description: "Living out your faith authentically within your Greek letter organization",
+    url: "https://gamma.app/docs/Your-Chapter-Gods-Canvas-Living-Out-Your-Faith-Authentically-sgrjn53235fsej2",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Leadership", "Vision"],
+  },
+  {
+    title: "Redeem Your Letters",
+    description: "A powerful message about redeeming your Greek letters and bringing glory to God through your organization",
+    url: "https://gamma.app/docs/Redeem-Your-Letters-trkhw9krqh3l4cs",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Vision", "Devotionals"],
+  },
+  {
+    title: "Christian Greek Life Power Guide",
+    description: "Comprehensive power guide for navigating Greek life as a committed Christian",
+    url: "https://gamma.app/docs/Christian-Greek-Life-Power-Guide-6026roc21m7i8gc",
+    icon: BookOpen,
+    requiresAuth: false,
+    badge: "Featured",
+    category: "articles",
+    tags: ["Framework", "Study"],
+  },
+  {
+    title: "FAQs",
+    description: "Common questions about faith and Greek organizations",
+    url: "/faq",
+    icon: MessageSquare,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["FAQ"],
+  },
+  
+  // Testimonials Section
+  {
+    title: "Success Stories",
+    description: "Read how others are integrating faith and Greek life",
+    url: "/did-you-know",
+    icon: MessageSquare,
+    requiresAuth: false,
+    category: "testimonials",
+    tags: ["Testimonials"],
   },
   {
     title: "P.R.O.O.F. Framework",
@@ -389,8 +764,26 @@ const Resources = () => {
   const [pdfTitle, setPdfTitle] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState("");
   const [resourceType, setResourceType] = useState<string>("all");
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 18;
+
+  // Available topic tags
+  const availableTags = [
+    "Leadership",
+    "Apologetics",
+    "Devotionals",
+    "Service",
+    "Conflict Resolution",
+    "Framework",
+    "New Members",
+    "Study",
+    "Evangelism",
+    "Transition",
+    "Social Justice",
+    "Vision",
+    "Testimonials",
+  ];
 
   const handleResourceClick = (resource: ResourceItem) => {
     if (resource.requiresAuth && !user) {
@@ -460,36 +853,49 @@ const Resources = () => {
             {resource.title}
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <CardDescription className="text-sm leading-relaxed">
-            {resource.description}
-          </CardDescription>
-          <div className="mt-4 flex items-center justify-between">
-            <div className="flex items-center gap-2 text-sacred text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-              {isLocked ? (
-                <>
-                  <Lock className="w-4 h-4" />
-                  <span>Sign in to view</span>
-                </>
-              ) : (
-                <>
-                  <span>View content</span>
-                  <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </>
-              )}
-            </div>
-            {resource.downloadUrl && !isLocked && (
-              <Button
-                variant="ghost"
-                size="sm"
-                className="opacity-0 group-hover:opacity-100 transition-opacity"
-                onClick={(e) => handleDownload(e, resource.downloadUrl!, resource.title)}
+      <CardContent>
+        <CardDescription className="text-sm leading-relaxed">
+          {resource.description}
+        </CardDescription>
+        {resource.tags && resource.tags.length > 0 && (
+          <div className="flex flex-wrap gap-1 mt-3">
+            {resource.tags.map(tag => (
+              <Badge 
+                key={tag} 
+                variant="secondary" 
+                className="text-xs bg-sacred/5 text-sacred border-sacred/20"
               >
-                <Download className="w-4 h-4" />
-              </Button>
+                {tag}
+              </Badge>
+            ))}
+          </div>
+        )}
+        <div className="mt-4 flex items-center justify-between">
+          <div className="flex items-center gap-2 text-sacred text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+            {isLocked ? (
+              <>
+                <Lock className="w-4 h-4" />
+                <span>Sign in to view</span>
+              </>
+            ) : (
+              <>
+                <span>View content</span>
+                <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </>
             )}
           </div>
-        </CardContent>
+          {resource.downloadUrl && !isLocked && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="opacity-0 group-hover:opacity-100 transition-opacity"
+              onClick={(e) => handleDownload(e, resource.downloadUrl!, resource.title)}
+            >
+              <Download className="w-4 h-4" />
+            </Button>
+          )}
+        </div>
+      </CardContent>
       </Card>
     );
   };
@@ -520,6 +926,13 @@ const Resources = () => {
       });
     }
     
+    // Apply tag filters
+    if (selectedTags.length > 0) {
+      filtered = filtered.filter(r => 
+        r.tags && selectedTags.some(tag => r.tags!.includes(tag))
+      );
+    }
+    
     return filtered;
   };
 
@@ -542,6 +955,22 @@ const Resources = () => {
 
   const handleTypeChange = (value: string) => {
     setResourceType(value);
+    setCurrentPage(1);
+  };
+
+  const toggleTag = (tag: string) => {
+    setSelectedTags(prev => 
+      prev.includes(tag) 
+        ? prev.filter(t => t !== tag)
+        : [...prev, tag]
+    );
+    setCurrentPage(1);
+  };
+
+  const clearAllFilters = () => {
+    setSearchQuery("");
+    setResourceType("all");
+    setSelectedTags([]);
     setCurrentPage(1);
   };
 
@@ -599,7 +1028,7 @@ const Resources = () => {
                 className="pl-10 h-12 text-base"
               />
             </div>
-            <div className="flex gap-4 justify-center">
+            <div className="flex gap-4 justify-center flex-wrap">
               <Select value={resourceType} onValueChange={handleTypeChange}>
                 <SelectTrigger className="w-[200px] bg-background">
                   <SelectValue placeholder="Filter by type" />
@@ -611,6 +1040,29 @@ const Resources = () => {
                   <SelectItem value="page">Internal Pages</SelectItem>
                 </SelectContent>
               </Select>
+              {(searchQuery || resourceType !== "all" || selectedTags.length > 0) && (
+                <Button variant="outline" onClick={clearAllFilters}>
+                  Clear Filters
+                </Button>
+              )}
+            </div>
+            
+            {/* Topic Tags */}
+            <div className="flex flex-wrap gap-2 justify-center">
+              {availableTags.map(tag => (
+                <Badge
+                  key={tag}
+                  variant={selectedTags.includes(tag) ? "default" : "outline"}
+                  className={`cursor-pointer transition-all ${
+                    selectedTags.includes(tag) 
+                      ? "bg-sacred text-white hover:bg-sacred/90" 
+                      : "hover:bg-sacred/10 hover:text-sacred hover:border-sacred"
+                  }`}
+                  onClick={() => toggleTag(tag)}
+                >
+                  {tag}
+                </Badge>
+              ))}
             </div>
           </div>
         </div>
