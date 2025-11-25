@@ -18,6 +18,7 @@ import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import Devotional from "./pages/Devotional";
 import PrayerJournal from "./pages/PrayerJournal";
+import PrayerWall from "./pages/PrayerWall";
 import AssessmentHistory from "./pages/AssessmentHistory";
 import Profile from "./pages/Profile";
 import ResetPassword from "./pages/ResetPassword";
@@ -100,6 +101,14 @@ const App = () => (
                 element={
                   <ProtectedRoute>
                     <PrayerJournal />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/prayer-wall"
+                element={
+                  <ProtectedRoute>
+                    <PrayerWall />
                   </ProtectedRoute>
                 }
               />

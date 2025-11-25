@@ -191,6 +191,14 @@ const Dashboard = () => {
       gradient: 'from-sacred to-secondary',
     },
     {
+      id: 'prayer-wall',
+      title: 'Prayer Wall',
+      description: 'Share and support community prayer requests',
+      icon: Heart,
+      href: '/prayer-wall',
+      gradient: 'from-red-500 to-pink-500',
+    },
+    {
       id: 'bible-study',
       title: 'Bible Study',
       description: 'Search Scripture and explore reading plans',
