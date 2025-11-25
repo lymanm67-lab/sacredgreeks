@@ -980,7 +980,7 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
     description: "Building designs and imagery with pagan heritage",
     videos: [
       {
-        title: "Your Church Looks Pagan - Here's Why",
+        title: "The Pagan Symbols Hidden In Your Church",
         url: "https://youtu.be/48I-fdTNg8c",
         description: "Exploring why church architecture and symbols often resemble pagan temples and imagery"
       }
