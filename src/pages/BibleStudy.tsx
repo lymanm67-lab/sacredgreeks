@@ -15,6 +15,7 @@ import { usePullToRefresh } from '@/hooks/use-pull-to-refresh';
 import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
+import { supabase } from '@/integrations/supabase/client';
 
 const readingPlans = [
   {
@@ -55,8 +56,9 @@ const BibleStudy = () => {
   const [loading, setLoading] = useState(false);
   const [dailyVerse, setDailyVerse] = useState<any>(null);
   const [loadingVerse, setLoadingVerse] = useState(true);
-  const [searchMode, setSearchMode] = useState<'reference' | 'phrase'>('reference');
+  const [searchMode, setSearchMode] = useState<'reference' | 'phrase' | 'ai'>('reference');
   const [phraseResults, setPhraseResults] = useState<any[]>([]);
+  const [aiResults, setAiResults] = useState<any[]>([]);
 
   // Pull to refresh
   const handleRefresh = async () => {
@@ -114,7 +116,44 @@ const BibleStudy = () => {
 
     setLoading(true);
     
-    if (searchMode === 'reference') {
+    if (searchMode === 'ai') {
+      // AI-powered search
+      try {
+        const { data, error } = await supabase.functions.invoke('bible-verse-ai-search', {
+          body: { query: searchQuery }
+        });
+
+        if (error) {
+          console.error('AI search error:', error);
+          toast({
+            title: 'AI search failed',
+            description: 'Please try again or use reference/keyword search',
+            variant: 'destructive'
+          });
+          setAiResults([]);
+        } else if (data?.verses && data.verses.length > 0) {
+          setAiResults(data.verses);
+          setSearchResults(null);
+          setPhraseResults([]);
+        } else {
+          toast({
+            title: 'No verses found',
+            description: 'Try rephrasing your search or use reference/keyword search',
+            variant: 'destructive'
+          });
+          setAiResults([]);
+        }
+      } catch (error) {
+        console.error('AI search error:', error);
+        toast({
+          title: 'AI search failed',
+          description: 'Please try again later',
+          variant: 'destructive'
+        });
+      } finally {
+        setLoading(false);
+      }
+    } else if (searchMode === 'reference') {
       try {
         // Bible API format: book chapter:verse or book chapter
         const response = await fetch(`https://bible-api.com/${encodeURIComponent(searchQuery)}?translation=kjv`);
@@ -301,11 +340,12 @@ const BibleStudy = () => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {/* Search Mode Selection */}
-                  <RadioGroup value={searchMode} onValueChange={(value: 'reference' | 'phrase') => {
+                  <RadioGroup value={searchMode} onValueChange={(value: 'reference' | 'phrase' | 'ai') => {
                     setSearchMode(value);
                     setSearchResults(null);
                     setPhraseResults([]);
-                  }} className="flex gap-4">
+                    setAiResults([]);
+                  }} className="flex flex-wrap gap-4">
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="reference" id="reference" />
                       <Label htmlFor="reference" className="font-medium cursor-pointer">
@@ -318,11 +358,24 @@ const BibleStudy = () => {
                         Keyword/Phrase
                       </Label>
                     </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="ai" id="ai" />
+                      <Label htmlFor="ai" className="font-medium cursor-pointer flex items-center gap-1">
+                        <Sparkles className="w-3 h-3" />
+                        AI Assistant
+                      </Label>
+                    </div>
                   </RadioGroup>
 
                   <form onSubmit={handleSearch} className="flex gap-2">
                     <Input
-                      placeholder={searchMode === 'reference' ? "e.g., John 3:16 or Romans 8" : "e.g., love, strength, faith, courage"}
+                      placeholder={
+                        searchMode === 'ai' 
+                          ? "e.g., breaking one law is like breaking all laws" 
+                          : searchMode === 'reference' 
+                            ? "e.g., John 3:16 or Romans 8" 
+                            : "e.g., love, strength, faith, courage"
+                      }
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="flex-1"
@@ -369,6 +422,41 @@ const BibleStudy = () => {
                     </div>
                   )}
 
+                  {/* AI Search Results */}
+                  {aiResults.length > 0 && searchMode === 'ai' && (
+                    <div className="space-y-4 animate-fade-in">
+                      <div className="flex items-center justify-between">
+                        <Badge className="bg-sacred/10 text-sacred border-sacred/20 text-sm flex items-center gap-1">
+                          <Sparkles className="w-3 h-3" />
+                          {aiResults.length} AI suggestion{aiResults.length !== 1 ? 's' : ''}
+                        </Badge>
+                      </div>
+                      <ScrollArea className="h-[500px] space-y-3">
+                        {aiResults.map((verse, idx) => (
+                          <Card key={idx} className="mb-3 hover:shadow-md transition-shadow border-sacred/20">
+                            <CardHeader className="pb-3">
+                              <Badge className="w-fit bg-sacred/10 text-sacred border-sacred/20">
+                                {verse.reference}
+                              </Badge>
+                            </CardHeader>
+                            <CardContent>
+                              <p className="text-sm leading-relaxed mb-2">{verse.text}</p>
+                              {verse.keywords && verse.keywords.length > 0 && (
+                                <div className="flex flex-wrap gap-1 mt-3">
+                                  {verse.keywords.map((keyword: string, kidx: number) => (
+                                    <Badge key={kidx} variant="secondary" className="text-xs">
+                                      {keyword}
+                                    </Badge>
+                                  ))}
+                                </div>
+                              )}
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </ScrollArea>
+                    </div>
+                  )}
+
                   {/* Phrase Search Results */}
                   {phraseResults.length > 0 && searchMode === 'phrase' && (
                     <div className="space-y-4 animate-fade-in">
@@ -394,18 +482,22 @@ const BibleStudy = () => {
                     </div>
                   )}
 
-                  {!searchResults && !loading && phraseResults.length === 0 && (
+                  {!searchResults && !loading && phraseResults.length === 0 && aiResults.length === 0 && (
                     <div className="text-center py-12 text-muted-foreground">
                       <Book className="w-12 h-12 mx-auto mb-4 opacity-50" />
                       <p className="mb-2">
-                        {searchMode === 'reference' 
-                          ? 'Enter a verse reference to search Scripture' 
-                          : 'Enter keywords to find relevant verses'}
+                        {searchMode === 'ai'
+                          ? 'Describe a verse or concept, even if you don\'t remember the exact wording'
+                          : searchMode === 'reference' 
+                            ? 'Enter a verse reference to search Scripture' 
+                            : 'Enter keywords to find relevant verses'}
                       </p>
                       <p className="text-sm">
-                        {searchMode === 'reference'
-                          ? 'Examples: "John 3:16", "Psalm 23", "Romans 8:28"'
-                          : 'Examples: "love", "strength", "faith", "courage", "peace"'}
+                        {searchMode === 'ai'
+                          ? 'Examples: "breaking one law is like breaking all", "faith without works", "love your enemies"'
+                          : searchMode === 'reference'
+                            ? 'Examples: "John 3:16", "Psalm 23", "Romans 8:28"'
+                            : 'Examples: "love", "strength", "faith", "courage", "peace"'}
                       </p>
                     </div>
                   )}
