@@ -227,6 +227,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "How to Leave Without Burning Bridges Checklist",
+    description: "Practical checklist for leaving your Greek organization while preserving brotherhood and sisterhood bonds",
+    url: "https://gamma.app/docs/How-to-Leave-Without-Burning-Brotherhood-or-Sisterhood-Bridges-Checklist-p2gg3fi0f1bw4tr",
+    icon: CheckCircle,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
