@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useExternalLinks } from "@/hooks/use-external-links";
@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PDFViewer } from "@/components/ui/PDFViewer";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { 
   BookOpen, 
   Heart, 
@@ -17,7 +19,10 @@ import {
   Home,
   Sparkles,
   CheckCircle,
-  Download
+  Download,
+  Search,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 
 interface ResourceItem {
@@ -382,6 +387,10 @@ const Resources = () => {
   const { openExternalLink } = useExternalLinks();
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [pdfTitle, setPdfTitle] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [resourceType, setResourceType] = useState<string>("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 18;
 
   const handleResourceClick = (resource: ResourceItem) => {
     if (resource.requiresAuth && !user) {
@@ -489,6 +498,53 @@ const Resources = () => {
     return resources.filter(r => r.category === category);
   };
 
+  // Filter and search logic
+  const getFilteredResources = (category: string) => {
+    let filtered = category === "all" ? resources : filterByCategory(category);
+    
+    // Apply search query
+    if (searchQuery) {
+      filtered = filtered.filter(r => 
+        r.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        r.description.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    
+    // Apply resource type filter
+    if (resourceType !== "all") {
+      filtered = filtered.filter(r => {
+        if (resourceType === "pdf") return r.url.endsWith('.pdf') || r.downloadUrl;
+        if (resourceType === "presentation") return r.url.includes('gamma.app');
+        if (resourceType === "page") return !r.url.startsWith('http');
+        return true;
+      });
+    }
+    
+    return filtered;
+  };
+
+  // Pagination logic
+  const getPaginatedResources = (filteredResources: ResourceItem[]) => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredResources.slice(startIndex, endIndex);
+  };
+
+  const getTotalPages = (filteredResources: ResourceItem[]) => {
+    return Math.ceil(filteredResources.length / itemsPerPage);
+  };
+
+  // Reset to page 1 when filters change
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+    setCurrentPage(1);
+  };
+
+  const handleTypeChange = (value: string) => {
+    setResourceType(value);
+    setCurrentPage(1);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -520,16 +576,43 @@ const Resources = () => {
       {/* Content */}
       <main className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Hero Section */}
-        <div className="text-center mb-12 animate-fade-in">
+        <div className="text-center mb-8 animate-fade-in">
           <Badge className="bg-sacred/10 text-sacred border-sacred/20 mb-4">
             Your Complete Resource Library
           </Badge>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-sacred to-warm-blue bg-clip-text text-transparent">
             Sacred Greeks Resources
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
             Explore articles, teachings, testimonials, and insights on integrating faith and Greek life
           </p>
+
+          {/* Search and Filter Bar */}
+          <div className="max-w-4xl mx-auto space-y-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+              <Input
+                type="text"
+                placeholder="Search resources by title or description..."
+                value={searchQuery}
+                onChange={(e) => handleSearchChange(e.target.value)}
+                className="pl-10 h-12 text-base"
+              />
+            </div>
+            <div className="flex gap-4 justify-center">
+              <Select value={resourceType} onValueChange={handleTypeChange}>
+                <SelectTrigger className="w-[200px] bg-background">
+                  <SelectValue placeholder="Filter by type" />
+                </SelectTrigger>
+                <SelectContent className="bg-background z-50">
+                  <SelectItem value="all">All Types</SelectItem>
+                  <SelectItem value="presentation">Presentations</SelectItem>
+                  <SelectItem value="pdf">PDFs</SelectItem>
+                  <SelectItem value="page">Internal Pages</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
         </div>
 
         {/* Tabbed Navigation */}
@@ -544,64 +627,282 @@ const Resources = () => {
 
           {/* All Resources */}
           <TabsContent value="all" className="space-y-8">
-            {/* Featured Resources */}
-            <div>
-              <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-sacred" />
-                Featured Resources
-              </h3>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {resources.filter(r => r.badge === "Featured").map((resource) => (
-                  <ResourceCard key={resource.title} resource={resource} />
-                ))}
-              </div>
-            </div>
+            {(() => {
+              const filteredResources = getFilteredResources("all");
+              const paginatedResources = getPaginatedResources(filteredResources);
+              const totalPages = getTotalPages(filteredResources);
+              const featuredResources = filteredResources.filter(r => r.badge === "Featured");
 
-            {/* All Resources */}
-            <div>
-              <h3 className="text-xl font-semibold mb-4">All Resources</h3>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {resources.filter(r => r.badge !== "Featured").map((resource) => (
-                  <ResourceCard key={resource.title} resource={resource} />
-                ))}
-              </div>
-            </div>
+              return (
+                <>
+                  {/* Featured Resources */}
+                  {featuredResources.length > 0 && currentPage === 1 && !searchQuery && resourceType === "all" && (
+                    <div>
+                      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                        <Sparkles className="w-5 h-5 text-sacred" />
+                        Featured Resources
+                      </h3>
+                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {featuredResources.map((resource) => (
+                          <ResourceCard key={resource.title} resource={resource} />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* All Resources */}
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-xl font-semibold">
+                        {searchQuery || resourceType !== "all" ? "Search Results" : "All Resources"}
+                        <span className="text-sm text-muted-foreground ml-2">
+                          ({filteredResources.length} {filteredResources.length === 1 ? 'resource' : 'resources'})
+                        </span>
+                      </h3>
+                    </div>
+                    
+                    {paginatedResources.length > 0 ? (
+                      <>
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                          {paginatedResources.map((resource) => (
+                            <ResourceCard key={resource.title} resource={resource} />
+                          ))}
+                        </div>
+
+                        {/* Pagination */}
+                        {totalPages > 1 && (
+                          <div className="flex items-center justify-center gap-4 mt-8">
+                            <Button
+                              variant="outline"
+                              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                              disabled={currentPage === 1}
+                            >
+                              <ChevronLeft className="w-4 h-4 mr-2" />
+                              Previous
+                            </Button>
+                            <span className="text-sm font-medium">
+                              Page {currentPage} of {totalPages}
+                            </span>
+                            <Button
+                              variant="outline"
+                              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                              disabled={currentPage === totalPages}
+                            >
+                              Next
+                              <ChevronRight className="w-4 h-4 ml-2" />
+                            </Button>
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <div className="text-center py-12">
+                        <p className="text-muted-foreground">No resources found matching your criteria.</p>
+                      </div>
+                    )}
+                  </div>
+                </>
+              );
+            })()}
           </TabsContent>
 
           {/* About Tab */}
           <TabsContent value="about">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filterByCategory("about").map((resource) => (
-                <ResourceCard key={resource.title} resource={resource} />
-              ))}
-            </div>
+            {(() => {
+              const filteredResources = getFilteredResources("about");
+              const paginatedResources = getPaginatedResources(filteredResources);
+              const totalPages = getTotalPages(filteredResources);
+
+              return (
+                <>
+                  {paginatedResources.length > 0 ? (
+                    <>
+                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {paginatedResources.map((resource) => (
+                          <ResourceCard key={resource.title} resource={resource} />
+                        ))}
+                      </div>
+                      {totalPages > 1 && (
+                        <div className="flex items-center justify-center gap-4 mt-8">
+                          <Button
+                            variant="outline"
+                            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                            disabled={currentPage === 1}
+                          >
+                            <ChevronLeft className="w-4 h-4 mr-2" />
+                            Previous
+                          </Button>
+                          <span className="text-sm font-medium">
+                            Page {currentPage} of {totalPages}
+                          </span>
+                          <Button
+                            variant="outline"
+                            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                            disabled={currentPage === totalPages}
+                          >
+                            Next
+                            <ChevronRight className="w-4 h-4 ml-2" />
+                          </Button>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <div className="text-center py-12">
+                      <p className="text-muted-foreground">No resources found.</p>
+                    </div>
+                  )}
+                </>
+              );
+            })()}
           </TabsContent>
 
           {/* Book Tab */}
           <TabsContent value="book">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filterByCategory("book").map((resource) => (
-                <ResourceCard key={resource.title} resource={resource} />
-              ))}
-            </div>
+            {(() => {
+              const filteredResources = getFilteredResources("book");
+              const paginatedResources = getPaginatedResources(filteredResources);
+              const totalPages = getTotalPages(filteredResources);
+
+              return (
+                <>
+                  {paginatedResources.length > 0 ? (
+                    <>
+                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {paginatedResources.map((resource) => (
+                          <ResourceCard key={resource.title} resource={resource} />
+                        ))}
+                      </div>
+                      {totalPages > 1 && (
+                        <div className="flex items-center justify-center gap-4 mt-8">
+                          <Button
+                            variant="outline"
+                            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                            disabled={currentPage === 1}
+                          >
+                            <ChevronLeft className="w-4 h-4 mr-2" />
+                            Previous
+                          </Button>
+                          <span className="text-sm font-medium">
+                            Page {currentPage} of {totalPages}
+                          </span>
+                          <Button
+                            variant="outline"
+                            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                            disabled={currentPage === totalPages}
+                          >
+                            Next
+                            <ChevronRight className="w-4 h-4 ml-2" />
+                          </Button>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <div className="text-center py-12">
+                      <p className="text-muted-foreground">No resources found.</p>
+                    </div>
+                  )}
+                </>
+              );
+            })()}
           </TabsContent>
 
           {/* Articles Tab */}
           <TabsContent value="articles">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filterByCategory("articles").map((resource) => (
-                <ResourceCard key={resource.title} resource={resource} />
-              ))}
-            </div>
+            {(() => {
+              const filteredResources = getFilteredResources("articles");
+              const paginatedResources = getPaginatedResources(filteredResources);
+              const totalPages = getTotalPages(filteredResources);
+
+              return (
+                <>
+                  {paginatedResources.length > 0 ? (
+                    <>
+                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {paginatedResources.map((resource) => (
+                          <ResourceCard key={resource.title} resource={resource} />
+                        ))}
+                      </div>
+                      {totalPages > 1 && (
+                        <div className="flex items-center justify-center gap-4 mt-8">
+                          <Button
+                            variant="outline"
+                            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                            disabled={currentPage === 1}
+                          >
+                            <ChevronLeft className="w-4 h-4 mr-2" />
+                            Previous
+                          </Button>
+                          <span className="text-sm font-medium">
+                            Page {currentPage} of {totalPages}
+                          </span>
+                          <Button
+                            variant="outline"
+                            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                            disabled={currentPage === totalPages}
+                          >
+                            Next
+                            <ChevronRight className="w-4 h-4 ml-2" />
+                          </Button>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <div className="text-center py-12">
+                      <p className="text-muted-foreground">No resources found.</p>
+                    </div>
+                  )}
+                </>
+              );
+            })()}
           </TabsContent>
 
           {/* Testimonials Tab */}
           <TabsContent value="testimonials">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filterByCategory("testimonials").map((resource) => (
-                <ResourceCard key={resource.title} resource={resource} />
-              ))}
-            </div>
+            {(() => {
+              const filteredResources = getFilteredResources("testimonials");
+              const paginatedResources = getPaginatedResources(filteredResources);
+              const totalPages = getTotalPages(filteredResources);
+
+              return (
+                <>
+                  {paginatedResources.length > 0 ? (
+                    <>
+                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {paginatedResources.map((resource) => (
+                          <ResourceCard key={resource.title} resource={resource} />
+                        ))}
+                      </div>
+                      {totalPages > 1 && (
+                        <div className="flex items-center justify-center gap-4 mt-8">
+                          <Button
+                            variant="outline"
+                            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                            disabled={currentPage === 1}
+                          >
+                            <ChevronLeft className="w-4 h-4 mr-2" />
+                            Previous
+                          </Button>
+                          <span className="text-sm font-medium">
+                            Page {currentPage} of {totalPages}
+                          </span>
+                          <Button
+                            variant="outline"
+                            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                            disabled={currentPage === totalPages}
+                          >
+                            Next
+                            <ChevronRight className="w-4 h-4 ml-2" />
+                          </Button>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <div className="text-center py-12">
+                      <p className="text-muted-foreground">No resources found.</p>
+                    </div>
+                  )}
+                </>
+              );
+            })()}
           </TabsContent>
         </Tabs>
 
