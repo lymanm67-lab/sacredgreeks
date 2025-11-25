@@ -123,6 +123,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Sacred Service: Planning Community Projects",
+    description: "A guide for planning and executing meaningful community service projects with your chapter",
+    url: "https://gamma.app/docs/Sacred-Service-Planning-Community-Projects-with-Your-Chapter-28f7a9bc5w5jghb",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
