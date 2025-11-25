@@ -37,6 +37,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { ChevronDown } from 'lucide-react';
 import { CategorySection } from '@/components/dashboard/CategorySection';
 import { ShareAppCard } from '@/components/dashboard/ShareAppCard';
+import { FeaturedArticle } from '@/components/dashboard/FeaturedArticle';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -357,8 +358,13 @@ const Dashboard = () => {
             <VerseOfTheDay />
           </div>
 
-          {/* Share App Card */}
+          {/* Featured Article */}
           <div className="animate-fade-in" style={{ animationDelay: '0.25s' }}>
+            <FeaturedArticle />
+          </div>
+
+          {/* Share App Card */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
             <ShareAppCard />
           </div>
 
