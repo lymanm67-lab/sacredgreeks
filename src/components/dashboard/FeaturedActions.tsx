@@ -75,7 +75,7 @@ export const FeaturedActions = () => {
                 description={action.description}
                 trigger={
                   <div className="h-full cursor-pointer">
-                    <Card className="group relative overflow-hidden border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer h-full flex flex-col">
+                    <Card className="group relative overflow-hidden border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer h-full min-h-[220px] flex flex-col">
                       <div className="p-6 space-y-4 flex-1 flex flex-col">
                         {/* Icon */}
                         <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${action.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0`}>
@@ -106,7 +106,7 @@ export const FeaturedActions = () => {
                 rel="noopener noreferrer"
                 className="block h-full"
               >
-                <Card className="group relative overflow-hidden border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer h-full flex flex-col">
+                <Card className="group relative overflow-hidden border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer h-full min-h-[220px] flex flex-col">
                   <div className="p-6 space-y-4 flex-1 flex flex-col">
                     {/* Icon */}
                     <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${action.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0`}>
@@ -130,7 +130,7 @@ export const FeaturedActions = () => {
               </a>
             ) : (
               <Link to={action.href} className="block h-full">
-                <Card className="group relative overflow-hidden border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer h-full flex flex-col">
+                <Card className="group relative overflow-hidden border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer h-full min-h-[220px] flex flex-col">
                   <div className="p-6 space-y-4 flex-1 flex flex-col">
                     {/* Icon */}
                     <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${action.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0`}>
