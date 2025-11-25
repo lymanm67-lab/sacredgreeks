@@ -12,6 +12,7 @@ import { CookieConsent } from "@/components/CookieConsent";
 import { AnalyticsProvider } from "@/components/AnalyticsProvider";
 import { AIAssistantWidget } from "@/components/AIAssistantWidget";
 import { OfflineIndicator } from "@/components/ui/OfflineIndicator";
+import { CelebrationProvider } from "@/contexts/CelebrationContext";
 import Index from "./pages/Index";
 import Privacy from "./pages/Privacy";
 import Auth from "./pages/Auth";
@@ -45,15 +46,16 @@ const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <InstallPrompt />
-          <OfflineIndicator />
-          <AIAssistantWidget />
-          <BrowserRouter>
-            <CookieConsent />
-            <AnalyticsProvider>
+        <CelebrationProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <InstallPrompt />
+            <OfflineIndicator />
+            <AIAssistantWidget />
+            <BrowserRouter>
+              <CookieConsent />
+              <AnalyticsProvider>
               <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
@@ -183,9 +185,10 @@ const App = () => (
             </AnalyticsProvider>
           </BrowserRouter>
         </TooltipProvider>
-      </AuthProvider>
-    </QueryClientProvider>
-  </ErrorBoundary>
+      </CelebrationProvider>
+    </AuthProvider>
+  </QueryClientProvider>
+</ErrorBoundary>
 );
 
 export default App;
