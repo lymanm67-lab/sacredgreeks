@@ -18,6 +18,7 @@ import { Label } from '@/components/ui/label';
 import { supabase } from '@/integrations/supabase/client';
 import { useSavedBibleSearches } from '@/hooks/use-saved-bible-searches';
 import { SavedSearchesList } from '@/components/bible-study/SavedSearchesList';
+import { useAutoCompleteChallenge } from '@/hooks/use-auto-complete-challenge';
 
 const readingPlans = [
   {
@@ -53,6 +54,7 @@ const BibleStudy = () => {
   const { user } = useAuth();
   const { toast } = useToast();
   const { openExternalLink } = useExternalLinks();
+  const { completeChallenge } = useAutoCompleteChallenge();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -138,6 +140,9 @@ const BibleStudy = () => {
           setAiResults(data.verses);
           setSearchResults(null);
           setPhraseResults([]);
+          
+          // Auto-complete Bible study challenge
+          await completeChallenge('bible_study');
         } else {
           toast({
             title: 'No verses found',
@@ -165,6 +170,9 @@ const BibleStudy = () => {
           const data = await response.json();
           setSearchResults(data);
           setPhraseResults([]);
+          
+          // Auto-complete Bible study challenge
+          await completeChallenge('bible_study');
         } else {
           toast({
             title: 'Verse not found',
@@ -217,6 +225,9 @@ const BibleStudy = () => {
         if (matches.length > 0) {
           setPhraseResults(matches);
           setSearchResults(null);
+          
+          // Auto-complete Bible study challenge
+          await completeChallenge('bible_study');
         } else {
           toast({
             title: 'No verses found',

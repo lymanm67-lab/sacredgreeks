@@ -13,6 +13,7 @@ import { AchievementBadgeDialog } from '@/components/AchievementBadgeDialog';
 import { useGamification } from '@/hooks/use-gamification';
 import { usePullToRefresh } from '@/hooks/use-pull-to-refresh';
 import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
+import { useAutoCompleteChallenge } from '@/hooks/use-auto-complete-challenge';
 
 interface Devotional {
   id: string;
@@ -29,6 +30,7 @@ interface Devotional {
 const Devotional = () => {
   const { user } = useAuth();
   const { awardPoints } = useGamification();
+  const { completeChallenge } = useAutoCompleteChallenge();
   const [devotional, setDevotional] = useState<Devotional | null>(null);
   const [completed, setCompleted] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -119,6 +121,9 @@ const Devotional = () => {
 
       // Award points and check achievements
       awardPoints({ points: 10, actionType: 'devotional' });
+
+      // Auto-complete devotional challenge
+      await completeChallenge('devotional');
 
       // Check for achievements via edge function
       await supabase.functions.invoke('check-achievements', {

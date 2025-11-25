@@ -16,6 +16,7 @@ import { format } from 'date-fns';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import { cn } from '@/lib/utils';
 import { communityServiceSchema } from '@/lib/validation';
+import { useAutoCompleteChallenge } from '@/hooks/use-auto-complete-challenge';
 
 interface ServiceActivity {
   id: string;
@@ -31,6 +32,7 @@ interface ServiceActivity {
 export default function ServiceTracker() {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { completeChallenge } = useAutoCompleteChallenge();
   const [activities, setActivities] = useState<ServiceActivity[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -101,6 +103,9 @@ export default function ServiceTracker() {
       setEventDate(undefined);
       setShowAddForm(false);
       loadActivities();
+      
+      // Auto-complete service challenge
+      await completeChallenge('service');
       
       toast({
         title: 'Activity Added',
