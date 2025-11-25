@@ -26,6 +26,7 @@ import { useGamification } from '@/hooks/use-gamification';
 import { usePullToRefresh } from '@/hooks/use-pull-to-refresh';
 import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
 import { useAutoCompleteChallenge } from '@/hooks/use-auto-complete-challenge';
+import { BreadcrumbNav } from '@/components/ui/breadcrumb-nav';
 
 interface Prayer {
   id: string;
@@ -282,10 +283,10 @@ const PrayerJournal = () => {
       />
       <header className="border-b border-border bg-card">
         <div className="container mx-auto px-4 py-4">
-          <Link to="/dashboard" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
-            <Home className="w-4 h-4" />
-            <span className="text-sm font-medium">Dashboard</span>
-          </Link>
+          <BreadcrumbNav items={[
+            { label: 'Daily Spiritual Tools', category: 'daily-spiritual' },
+            { label: 'Prayer Journal' }
+          ]} />
         </div>
       </header>
 

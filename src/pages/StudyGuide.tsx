@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { ArrowLeft, BookOpen, MessageCircle, CheckCircle, Check, Edit3, Share2, Award, ShoppingCart } from "lucide-react";
+import { ArrowLeft, BookOpen, MessageCircle, CheckCircle, Check, Edit3, Share2, Award, ShoppingCart, Lock } from "lucide-react";
 import { studyGuideSessions } from "@/sacredGreeksContent";
 import { useStudyProgress } from "@/hooks/use-study-progress";
 import { Progress } from "@/components/ui/progress";
@@ -163,6 +163,41 @@ const StudyGuide = () => {
                 </CardContent>
               </Card>
             </div>
+          )}
+
+          {!isAuthenticated && (
+            <Card className="max-w-md mx-auto mb-8 border-2 border-sacred/30">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Lock className="w-5 h-5 text-sacred" />
+                  Unlock Full Experience
+                </CardTitle>
+                <CardDescription>
+                  Sign up for free to track your progress, save notes, and earn completion certificates
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3 mb-4">
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-sacred mt-0.5" />
+                    <span className="text-sm">Save progress across all 5 sessions</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-sacred mt-0.5" />
+                    <span className="text-sm">Personal notes and reflections</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-sacred mt-0.5" />
+                    <span className="text-sm">Completion certificate to share</span>
+                  </div>
+                </div>
+                <Link to="/auth">
+                  <Button className="w-full bg-sacred hover:bg-sacred/90">
+                    Create Free Account
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
           )}
 
           <div className="flex flex-wrap justify-center gap-4 pt-4">

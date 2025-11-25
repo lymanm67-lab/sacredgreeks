@@ -12,6 +12,7 @@ import { PrayerRequestCard } from '@/components/prayer-wall/PrayerRequestCard';
 import { CreatePrayerRequestDialog } from '@/components/prayer-wall/CreatePrayerRequestDialog';
 import { usePullToRefresh } from '@/hooks/use-pull-to-refresh';
 import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
+import { BreadcrumbNav } from '@/components/ui/breadcrumb-nav';
 
 interface PrayerRequest {
   id: string;
