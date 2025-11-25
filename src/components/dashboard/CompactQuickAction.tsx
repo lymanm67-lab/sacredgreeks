@@ -14,7 +14,8 @@ interface CompactQuickActionProps {
   description: string;
   icon: LucideIcon;
   href: string;
-  gradient?: string;
+  iconColor?: string;
+  iconBg?: string;
   delay?: string;
   isFavorite?: boolean;
   onToggleFavorite?: (id: string) => void;
@@ -26,7 +27,8 @@ export const CompactQuickAction = ({
   description, 
   icon: Icon, 
   href, 
-  gradient = "from-sacred to-warm-blue", 
+  iconColor = "text-white",
+  iconBg = "bg-primary",
   delay = "0s",
   isFavorite = false,
   onToggleFavorite
@@ -41,7 +43,7 @@ export const CompactQuickAction = ({
               <Button
                 size="sm"
                 variant="ghost"
-                className="absolute -top-2 -right-2 z-20 h-7 w-7 p-0 rounded-full bg-card border border-border hover:bg-card hover:border-sacred shadow-md"
+                className="absolute -top-1 -right-1 z-20 h-6 w-6 p-0 rounded-full bg-background border border-border hover:bg-background hover:border-primary shadow-sm"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -49,10 +51,10 @@ export const CompactQuickAction = ({
                 }}
               >
                 <Star 
-                  className={`h-3.5 w-3.5 transition-colors ${
+                  className={`h-3 w-3 transition-colors ${
                     isFavorite 
-                      ? 'fill-sacred text-sacred' 
-                      : 'text-muted-foreground hover:text-sacred'
+                      ? 'fill-amber-500 text-amber-500' 
+                      : 'text-muted-foreground hover:text-amber-500'
                   }`}
                 />
               </Button>
@@ -60,22 +62,19 @@ export const CompactQuickAction = ({
             
             <Link to={href}>
               <div 
-                className={`group relative overflow-hidden rounded-2xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer border-2 ${
+                className={`group relative overflow-hidden rounded-2xl p-5 transition-all duration-300 hover:-translate-y-1 cursor-pointer border ${
                   isFavorite 
-                    ? 'border-sacred/50 bg-sacred/5' 
-                    : 'border-border/50 bg-card'
-                } hover:border-sacred/50 animate-scale-in`}
+                    ? 'border-amber-200 dark:border-amber-900/50 bg-amber-50/50 dark:bg-amber-950/20 shadow-sm hover:shadow-amber-200/50 dark:hover:shadow-amber-900/30' 
+                    : 'border-border/50 bg-card hover:border-border shadow-sm hover:shadow-md'
+                } animate-scale-in`}
                 style={{ animationDelay: delay }}
               >
-                {/* Gradient overlay on hover */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
-                
-                {/* Icon container */}
+                {/* Icon container with improved styling */}
                 <div className="relative z-10 flex flex-col items-center justify-center gap-3">
-                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                    <Icon className="w-7 h-7 text-white" />
+                  <div className={`w-12 h-12 rounded-xl ${iconBg} flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300`}>
+                    <Icon className={`w-6 h-6 ${iconColor}`} />
                   </div>
-                  <span className="text-sm font-semibold text-center text-foreground group-hover:text-sacred transition-colors">
+                  <span className="text-xs font-semibold text-center text-foreground group-hover:text-primary transition-colors leading-tight">
                     {title}
                   </span>
                 </div>
