@@ -163,6 +163,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "5 Steps to Retain & Engage Your Staff",
+    description: "Best practices for retaining chapter staff and staying audit ready with strong leadership",
+    url: "https://gamma.app/docs/5-Steps-to-Retain-and-Engage-Your-Staff-While-Staying-Audit-Ready-e7ydcjtrr2ujq0b",
+    icon: FileText,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
