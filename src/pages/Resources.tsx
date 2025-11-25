@@ -98,6 +98,22 @@ const resources: ResourceItem[] = [
     downloadUrl: "/resources/integrity-under-pressure-2.pdf",
   },
   {
+    title: "Sacred Comfort: Praying for Greeks in Tough Times",
+    description: "How to pray for and walk with fraternity and sorority members during difficult seasons",
+    url: "https://gamma.app/docs/Sacred-Comfort-How-To-Pray-For-And-Walk-With-Fraternity-And-Sorority-ccgepyu7je8fpav",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
+    title: "Servant Leadership in Greek Life",
+    description: "How to run your chapter and service projects like Jesus with biblical principles",
+    url: "https://gamma.app/docs/Servant-Leadership-in-Greek-Life-How-to-Run-Your-Chapter-and-Service-roah3o2oby0g55s",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
