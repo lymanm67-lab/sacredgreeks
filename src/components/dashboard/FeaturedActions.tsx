@@ -32,14 +32,6 @@ const featuredActions = [
     gradient: 'from-blue-500 to-indigo-600',
   },
   {
-    id: 'article-library',
-    title: 'Article Library',
-    description: 'Biblical wisdom for your Greek life journey',
-    icon: Library,
-    href: '/articles',
-    gradient: 'from-indigo-500 to-blue-600',
-  },
-  {
     id: 'bible-study',
     title: 'Bible Study',
     description: 'Explore Scripture with study plans',
