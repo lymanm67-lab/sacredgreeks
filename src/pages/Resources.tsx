@@ -324,6 +324,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Is Being Christian & Greek 'Incompatible'?",
+    description: "Setting the record straight on the compatibility of Christian faith and Greek life participation",
+    url: "https://gamma.app/docs/Is-Being-Christian-Greek-Incompatible-Time-to-Set-the-Record-Straight-t4agxb757qkugvr",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
