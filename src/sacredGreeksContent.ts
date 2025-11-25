@@ -1110,6 +1110,11 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
         title: "The Surprising History of Black Fraternities and Sororities!",
         url: "https://youtu.be/Y6N089RVnBU",
         description: "Discover the rich history and foundations of Black Greek Letter Organizations"
+      },
+      {
+        title: "Why Do Courthouses Look Like Temples?",
+        url: "https://youtu.be/-q3FNrUe8YY",
+        description: "Examining the architectural and symbolic connections between modern courthouses and ancient pagan temples"
       }
     ],
     items: [
