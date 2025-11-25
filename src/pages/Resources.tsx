@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useExternalLinks } from "@/hooks/use-external-links";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -119,6 +119,7 @@ const resources: ResourceItem[] = [
 
 const Resources = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const { openExternalLink } = useExternalLinks();
   const [iframeUrl, setIframeUrl] = useState<string | null>(null);
   const [iframeTitle, setIframeTitle] = useState<string>("");
@@ -126,7 +127,7 @@ const Resources = () => {
   const handleResourceClick = (resource: ResourceItem) => {
     if (resource.requiresAuth && !user) {
       // Redirect to auth page
-      window.location.href = "/auth";
+      navigate("/auth");
       return;
     }
     
@@ -141,8 +142,8 @@ const Resources = () => {
         openExternalLink(resource.url);
       }
     } else {
-      // Navigate to internal route
-      window.location.href = resource.url;
+      // Navigate to internal route using React Router
+      navigate(resource.url);
     }
   };
 
