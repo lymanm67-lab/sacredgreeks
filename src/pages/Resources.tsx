@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useExternalLinks } from "@/hooks/use-external-links";
@@ -5,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PDFViewer } from "@/components/ui/PDFViewer";
 import { 
   BookOpen, 
   Heart, 
@@ -119,11 +121,20 @@ const Resources = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { openExternalLink } = useExternalLinks();
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const [pdfTitle, setPdfTitle] = useState<string>("");
 
   const handleResourceClick = (resource: ResourceItem) => {
     if (resource.requiresAuth && !user) {
       // Redirect to auth page
       navigate("/auth");
+      return;
+    }
+    
+    // Check if it's a PDF file
+    if (resource.url.endsWith('.pdf')) {
+      setPdfUrl(resource.url);
+      setPdfTitle(resource.title);
       return;
     }
     
@@ -354,6 +365,13 @@ const Resources = () => {
         )}
       </main>
 
+      {/* PDF Viewer Modal */}
+      <PDFViewer
+        isOpen={!!pdfUrl}
+        onClose={() => setPdfUrl(null)}
+        pdfUrl={pdfUrl || ""}
+        title={pdfTitle}
+      />
     </div>
   );
 };
