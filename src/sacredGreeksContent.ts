@@ -1234,6 +1234,13 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
     id: "medicine-pharmacy",
     title: "Medicine & Pharmacy",
     description: "Modern healthcare practices rooted in Greek mythology and pagan symbolism",
+    videos: [
+      {
+        title: "Pharmakeia Explained Snake Staffs, Sorcery",
+        url: "https://youtu.be/f8WECW23fSg",
+        description: "Exploring the biblical term pharmakeia and its connection to ancient medical symbols and practices"
+      }
+    ],
     items: [
       {
         id: "caduceus",
