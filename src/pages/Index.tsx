@@ -48,12 +48,10 @@ const features = [
 ];
 
 const benefits = [
-  "Access daily devotionals tailored for Greek life",
-  "Track your spiritual journey and progress",
-  "Get personalized guidance for difficult decisions",
-  "Connect faith and fraternity/sorority life",
-  "Build a private prayer journal",
-  "Organize chapter meetings with purpose",
+  "Daily Spiritual Tools: Devotionals, Bible study, prayer guides & journals for consistent spiritual growth",
+  "Community Features: Prayer Wall, service tracking & shared support with brothers and sisters",
+  "Personal Growth: Track progress with insights, achievements, streaks & personalized recommendations",
+  "P.R.O.O.F. Framework: Navigate Greek life challenges with biblical guidance"
 ];
 
 const Index = () => {
