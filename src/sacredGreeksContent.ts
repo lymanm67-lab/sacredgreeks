@@ -1135,6 +1135,13 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
     id: "fashion-cosmetics",
     title: "Fashion & Cosmetics",
     description: "Beauty practices and fashion with Egyptian origins and deity connections",
+    videos: [
+      {
+        title: "Joseph in Linen, Daniel in Purple",
+        url: "https://youtu.be/FTeOlOv2cDM",
+        description: "Exploring the biblical and historical significance of clothing colors and materials"
+      }
+    ],
     items: [
       {
         id: "eye-makeup",
