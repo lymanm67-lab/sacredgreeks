@@ -3,7 +3,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Video, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library } from "lucide-react";
+import { Heart, Video, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library, Lock } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
 import { MobileQRCode } from "@/components/MobileQRCode";
 import logo from "@/assets/sacred-greeks-logo.png";
@@ -16,6 +16,7 @@ const features = [
     icon: BookOpen,
     link: "/study",
     color: "text-sacred",
+    requiresAuth: false,
   },
   {
     title: "Article Library",
@@ -23,6 +24,7 @@ const features = [
     icon: Library,
     link: "/articles",
     color: "text-indigo-500",
+    requiresAuth: false,
   },
   {
     title: "Podcast",
@@ -30,6 +32,7 @@ const features = [
     icon: Headphones,
     link: "/podcast",
     color: "text-purple-500",
+    requiresAuth: false,
   },
   {
     title: "Daily Devotionals",
@@ -37,6 +40,7 @@ const features = [
     icon: Calendar,
     link: "/devotional",
     color: "text-blue-500",
+    requiresAuth: true,
   },
   {
     title: "5 Persona Assessment",
@@ -46,6 +50,7 @@ const features = [
     color: "text-sacred",
     isExternal: true,
     useModal: true,
+    requiresAuth: false,
   },
   {
     title: "Prayer Journal",
@@ -53,6 +58,7 @@ const features = [
     icon: Sparkles,
     link: "/prayer-journal",
     color: "text-purple-500",
+    requiresAuth: true,
   },
   {
     title: "Progress Tracking",
@@ -60,6 +66,7 @@ const features = [
     icon: TrendingUp,
     link: "/progress",
     color: "text-green-500",
+    requiresAuth: true,
   },
   {
     title: "Community Service",
@@ -67,6 +74,7 @@ const features = [
     icon: ListChecks,
     link: "/dashboard",
     color: "text-orange-500",
+    requiresAuth: true,
   },
   {
     title: "Chapter Notes",
@@ -74,6 +82,7 @@ const features = [
     icon: Calendar,
     link: "/dashboard",
     color: "text-cyan-500",
+    requiresAuth: true,
   },
 ];
 
@@ -224,6 +233,8 @@ const Index = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature, index) => {
               const isExternal = feature.isExternal || false;
+              const requiresAuth = feature.requiresAuth || false;
+              const showLockBadge = requiresAuth && !user;
               
               if (isExternal && feature.useModal) {
                 return (
@@ -236,8 +247,10 @@ const Index = () => {
                       <div className="cursor-pointer">
                         <Card className="h-full transition-all hover:shadow-lg hover:scale-105 border-2 hover:border-sacred/50 cursor-pointer group animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
                           <CardHeader className="space-y-4">
-                            <div className="w-14 h-14 rounded-lg bg-muted flex items-center justify-center group-hover:bg-sacred/10 transition-colors">
-                              <feature.icon className={`w-7 h-7 ${feature.color}`} />
+                            <div className="flex items-start justify-between">
+                              <div className="w-14 h-14 rounded-lg bg-muted flex items-center justify-center group-hover:bg-sacred/10 transition-colors">
+                                <feature.icon className={`w-7 h-7 ${feature.color}`} />
+                              </div>
                             </div>
                             <CardTitle className="text-xl">
                               {feature.title}
@@ -265,8 +278,10 @@ const Index = () => {
                   >
                     <Card className="h-full transition-all hover:shadow-lg hover:scale-105 border-2 hover:border-sacred/50 cursor-pointer group animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
                       <CardHeader className="space-y-4">
-                        <div className="w-14 h-14 rounded-lg bg-muted flex items-center justify-center group-hover:bg-sacred/10 transition-colors">
-                          <feature.icon className={`w-7 h-7 ${feature.color}`} />
+                        <div className="flex items-start justify-between">
+                          <div className="w-14 h-14 rounded-lg bg-muted flex items-center justify-center group-hover:bg-sacred/10 transition-colors">
+                            <feature.icon className={`w-7 h-7 ${feature.color}`} />
+                          </div>
                         </div>
                         <CardTitle className="text-xl">
                           {feature.title}
@@ -284,10 +299,18 @@ const Index = () => {
               
               return (
                 <Link key={feature.title} to={user ? feature.link : "/auth"}>
-                  <Card className="h-full transition-all hover:shadow-lg hover:scale-105 border-2 hover:border-sacred/50 cursor-pointer group animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+                  <Card className={`h-full transition-all hover:shadow-lg hover:scale-105 border-2 hover:border-sacred/50 cursor-pointer group animate-fade-in ${showLockBadge ? 'relative' : ''}`} style={{ animationDelay: `${index * 0.1}s` }}>
                     <CardHeader className="space-y-4">
-                      <div className="w-14 h-14 rounded-lg bg-muted flex items-center justify-center group-hover:bg-sacred/10 transition-colors">
-                        <feature.icon className={`w-7 h-7 ${feature.color}`} />
+                      <div className="flex items-start justify-between">
+                        <div className="w-14 h-14 rounded-lg bg-muted flex items-center justify-center group-hover:bg-sacred/10 transition-colors">
+                          <feature.icon className={`w-7 h-7 ${feature.color}`} />
+                        </div>
+                        {showLockBadge && (
+                          <Badge variant="secondary" className="bg-sacred/10 text-sacred border-sacred/20 flex items-center gap-1">
+                            <Lock className="w-3 h-3" />
+                            Sign up
+                          </Badge>
+                        )}
                       </div>
                       <CardTitle className="text-xl">
                         {feature.title}
@@ -297,6 +320,11 @@ const Index = () => {
                       <CardDescription className="text-base">
                         {feature.description}
                       </CardDescription>
+                      {showLockBadge && (
+                        <p className="text-xs text-sacred mt-3 font-medium">
+                          Create a free account to unlock this feature
+                        </p>
+                      )}
                     </CardContent>
                   </Card>
                 </Link>
