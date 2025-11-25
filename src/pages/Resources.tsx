@@ -80,19 +80,20 @@ const resources: ResourceItem[] = [
   {
     title: "Repentance, Repair & Renewal Checklist",
     description: "A spiritual guide for aligning Greek life with devotion to Christ",
-    url: "https://gamma.app/docs/Christian-Black-Greek-Life-Repentance-Repair-and-Renewal-Checklis-12fobc2w0gro04i",
+    url: "/resources/repentance-repair-renewal-checklist.pdf",
     icon: CheckCircle,
     requiresAuth: false,
     category: "articles",
+    downloadUrl: "/resources/repentance-repair-renewal-checklist.pdf",
   },
   {
     title: "Integrity Under Pressure Playbook",
     description: "A practical ethics guide for hot moments on campus and in life using the P.R.O.O.F. framework",
-    url: "https://gamma.app/docs/Integrity-Under-Pressure-752n7nfkgl1wn7w",
+    url: "/resources/integrity-under-pressure-2.pdf",
     icon: BookOpen,
     requiresAuth: false,
     category: "articles",
-    downloadUrl: "/resources/integrity-under-pressure.pdf",
+    downloadUrl: "/resources/integrity-under-pressure-2.pdf",
   },
   {
     title: "FAQs",
