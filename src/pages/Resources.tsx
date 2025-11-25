@@ -219,6 +219,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "When Leaving Makes Sense",
+    description: "A Christian's guide to exiting a Greek organization gracefully without destroying relationships",
+    url: "https://gamma.app/docs/When-Leaving-Makes-Sense-A-Christians-Guide-to-Exiting-a-Greek-Organization-cyi9l2rq808g6r6",
+    icon: FileText,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
