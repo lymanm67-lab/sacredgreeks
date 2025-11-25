@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useContext, useState, useCallback } from 'react';
+import type { FC, ReactNode } from 'react';
 import { CelebrationAnimation } from '@/components/CelebrationAnimation';
 
 interface CelebrationData {
@@ -12,7 +13,7 @@ interface CelebrationContextType {
 
 const CelebrationContext = createContext<CelebrationContextType | undefined>(undefined);
 
-export const CelebrationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const CelebrationProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [show, setShow] = useState(false);
   const [celebrationData, setCelebrationData] = useState<CelebrationData>({
     points: 10,
