@@ -52,7 +52,7 @@ const resources: ResourceItem[] = [
   {
     title: "Sacred, Not Sinful",
     description: "Discover the book that started it all - biblical guidance for Greek life",
-    url: "https://www.amazon.com/dp/B0CKRP2QVL",
+    url: "https://a.co/d/bf5ipKE",
     icon: BookOpen,
     requiresAuth: false,
     badge: "Featured",
