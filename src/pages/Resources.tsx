@@ -300,6 +300,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Inclusive Environment Toolkit",
+    description: "Tools and strategies for creating inclusive and welcoming environments within Greek organizations",
+    url: "https://gamma.app/docs/Inclusive-Environment-Toolkit-czjmm4li1c9jp0f",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
