@@ -332,6 +332,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Your Chapter, God's Canvas",
+    description: "Living out your faith authentically within your Greek letter organization",
+    url: "https://gamma.app/docs/Your-Chapter-Gods-Canvas-Living-Out-Your-Faith-Authentically-sgrjn53235fsej2",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
