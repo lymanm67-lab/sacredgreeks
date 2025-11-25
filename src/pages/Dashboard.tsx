@@ -31,6 +31,8 @@ import { QuickCheckIn } from '@/components/dashboard/QuickCheckIn';
 import { WeeklyInsights } from '@/components/dashboard/WeeklyInsights';
 import { FeaturedActions } from '@/components/dashboard/FeaturedActions';
 import { GettingStartedChecklist } from '@/components/dashboard/GettingStartedChecklist';
+import { SocialShareDialog } from '@/components/SocialShareDialog';
+import { SocialMediaConnect } from '@/components/SocialMediaConnect';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown } from 'lucide-react';
 
@@ -401,6 +403,15 @@ const Dashboard = () => {
             <DailyChallengesWidget />
           </div>
 
+          {/* Share Progress */}
+          <div className="flex justify-end animate-fade-in" style={{ animationDelay: '0.65s' }}>
+            <SocialShareDialog
+              title="Join me on Sacred Greeks!"
+              description="I'm growing in my faith with the Sacred Greeks app. Join me on this journey of spiritual growth and brotherhood!"
+              hashtags={["SacredGreeks", "FaithJourney", "Brotherhood"]}
+            />
+          </div>
+
           {/* Study Recommendations */}
           <div ref={studyScroll.ref} className={`scroll-animate ${studyScroll.isVisible ? 'visible' : ''} animate-fade-in`} style={{ animationDelay: '0.7s' }}>
             <StudyRecommendations />
@@ -498,6 +509,7 @@ const Dashboard = () => {
                 <ChevronDown className="w-5 h-5 transition-transform group-data-[state=open]:rotate-180" />
               </CollapsibleTrigger>
               <CollapsibleContent className="space-y-6 pt-2">
+                <SocialMediaConnect />
                 <ResourcesSection />
                 <ChapterResourcesSection />
                 <VideoSection />
