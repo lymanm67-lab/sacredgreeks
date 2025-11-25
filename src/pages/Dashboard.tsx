@@ -329,8 +329,14 @@ const Dashboard = () => {
             <FeaturedActions />
           </div>
 
+          {/* Welcome Video + Verse of the Day */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <WelcomeVideo />
+            <VerseOfTheDay />
+          </div>
+
           {/* Two Column: Getting Started + Gamification */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in" style={{ animationDelay: '0.3s' }}>
             <div className="lg:col-span-2">
               <GettingStartedChecklist />
             </div>
@@ -340,7 +346,7 @@ const Dashboard = () => {
           </div>
 
           {/* Key Stats - Reduced to 3 most motivating */}
-          <div className="grid gap-6 md:grid-cols-3 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+          <div className="grid gap-6 md:grid-cols-3 animate-fade-in" style={{ animationDelay: '0.4s' }}>
             <StatsCard
               title="Current Streak"
               value={stats.currentStreak}
@@ -367,23 +373,18 @@ const Dashboard = () => {
             />
           </div>
 
-          {/* Today's Engagement */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-            <div className="lg:col-span-2">
-              <VerseOfTheDay />
-            </div>
-            <div>
-              <QuickCheckIn />
-            </div>
+          {/* Quick Check In */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.5s' }}>
+            <QuickCheckIn />
           </div>
 
           {/* Daily Challenges */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.5s' }}>
+          <div className="animate-fade-in" style={{ animationDelay: '0.6s' }}>
             <DailyChallengesWidget />
           </div>
 
           {/* Study Recommendations */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.6s' }}>
+          <div className="animate-fade-in" style={{ animationDelay: '0.7s' }}>
             <StudyRecommendations />
           </div>
 
@@ -463,11 +464,6 @@ const Dashboard = () => {
               </div>
             </CardContent>
           </Card>
-
-          {/* Welcome Video - Moved Lower */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.75s' }}>
-            <WelcomeVideo />
-          </div>
 
           {/* Study Guide Widget */}
           <div className="animate-fade-in" style={{ animationDelay: '0.8s' }}>
