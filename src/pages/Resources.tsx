@@ -348,6 +348,15 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Christian Greek Life Power Guide",
+    description: "Comprehensive power guide for navigating Greek life as a committed Christian",
+    url: "https://gamma.app/docs/Christian-Greek-Life-Power-Guide-6026roc21m7i8gc",
+    icon: BookOpen,
+    requiresAuth: false,
+    badge: "Featured",
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
