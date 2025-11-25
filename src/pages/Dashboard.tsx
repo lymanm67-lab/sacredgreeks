@@ -220,6 +220,15 @@ const Dashboard = () => {
       iconBg: 'bg-gradient-to-br from-purple-500 to-violet-600',
     },
     {
+      id: 'prayer-guide',
+      title: 'Prayer Guide',
+      description: 'AI prayers, templates & learning',
+      icon: Heart,
+      href: '/prayer-guide',
+      iconColor: 'text-white',
+      iconBg: 'bg-gradient-to-br from-pink-500 to-rose-600',
+    },
+    {
       id: 'prayer-wall',
       title: 'Prayer Wall',
       description: 'Share and support community prayer requests',
