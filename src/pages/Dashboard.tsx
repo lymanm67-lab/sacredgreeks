@@ -263,15 +263,6 @@ const Dashboard = () => {
       iconColor: 'text-white',
       iconBg: 'bg-gradient-to-br from-fuchsia-500 to-pink-600',
     },
-    {
-      id: 'article-library',
-      title: 'Article Library',
-      description: 'Biblical wisdom articles for Greek life journey',
-      icon: Library,
-      href: '/articles',
-      iconColor: 'text-white',
-      iconBg: 'bg-gradient-to-br from-indigo-500 to-blue-600',
-    },
   ];
 
   // Sort actions: favorites first, then the rest
