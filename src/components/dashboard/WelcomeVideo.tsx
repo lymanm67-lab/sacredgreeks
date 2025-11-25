@@ -7,6 +7,8 @@ export const WelcomeVideo = () => {
   
   // Replace this URL with your actual welcome video URL
   const videoUrl = "https://www.youtube.com/embed/dslPmKSDJ50";
+  const videoId = "dslPmKSDJ50";
+  const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
   
   return (
     <Card className="overflow-hidden border-2 shadow-xl h-full flex flex-col">
@@ -21,11 +23,19 @@ export const WelcomeVideo = () => {
         <div className="relative aspect-video bg-muted flex-1">
           {!isPlaying ? (
             // Thumbnail with play button
-            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-sacred/20 to-warm-blue/20 cursor-pointer group" onClick={() => setIsPlaying(true)}>
-              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+            <div 
+              className="absolute inset-0 flex items-center justify-center cursor-pointer group"
+              style={{
+                backgroundImage: `url(${thumbnailUrl})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }}
+              onClick={() => setIsPlaying(true)}
+            >
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 z-10">
                 <Play className="w-8 h-8 md:w-10 md:h-10 text-sacred ml-1" fill="currentColor" />
               </div>
-              <div className="absolute inset-0 bg-black/20" />
+              <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors" />
             </div>
           ) : (
             // Actual video iframe
