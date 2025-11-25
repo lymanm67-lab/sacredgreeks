@@ -2,7 +2,7 @@
 
 ## 🎉 Your App is Ready to Share!
 
-Your app is now live at: **https://sacredgreekslife.com**
+Your app is now live at: **https://www.sacredgreekslife.com**
 
 Below are ready-to-use code snippets you can add to **www.sacredgreeks.com** to promote the app.
 
@@ -94,7 +94,7 @@ Below are ready-to-use code snippets you can add to **www.sacredgreeks.com** to 
     </div>
   </div>
   <div style="display: flex; align-items: center; gap: 12px;">
-    <a href="https://sacredgreekslife.com" class="sacred-app-banner-btn">
+    <a href="https://www.sacredgreekslife.com" class="sacred-app-banner-btn">
       Open App
     </a>
     <button class="sacred-app-banner-close" onclick="closeSacredBanner()">×</button>
@@ -162,7 +162,7 @@ Below are ready-to-use code snippets you can add to **www.sacredgreeks.com** to 
 </style>
 
 <div class="sacred-app-float">
-  <a href="https://sacredgreekslife.com" class="sacred-app-float-btn">
+  <a href="https://www.sacredgreekslife.com" class="sacred-app-float-btn">
     📱 Get the App
   </a>
 </div>
@@ -182,10 +182,10 @@ Below are ready-to-use code snippets you can add to **www.sacredgreeks.com** to 
   <h2 style="margin: 0 0 12px 0; font-size: 28px; font-weight: 700;">Experience Sacred Greeks on the Go</h2>
   <p style="margin: 0 0 24px 0; font-size: 16px; opacity: 0.95; line-height: 1.6;">Track your spiritual journey with daily devotionals, prayer tools, and community support—all in one powerful app.</p>
   <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-    <a href="https://sacredgreekslife.com" style="background: white; color: #2563eb; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; display: inline-block;">
+    <a href="https://www.sacredgreekslife.com" style="background: white; color: #2563eb; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; display: inline-block;">
       Launch App
     </a>
-    <a href="https://sacredgreekslife.com/qr-code" style="background: rgba(255,255,255,0.2); color: white; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; display: inline-block; border: 2px solid white;">
+    <a href="https://www.sacredgreekslife.com/qr-code" style="background: rgba(255,255,255,0.2); color: white; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; display: inline-block; border: 2px solid white;">
       Get QR Code
     </a>
   </div>
@@ -200,7 +200,7 @@ Below are ready-to-use code snippets you can add to **www.sacredgreeks.com** to 
 **Location:** Add to your navigation or footer
 
 ```html
-<a href="https://sacredgreekslife.com" style="color: #2563eb; text-decoration: none; font-weight: 600;">
+<a href="https://www.sacredgreekslife.com" style="color: #2563eb; text-decoration: none; font-weight: 600;">
   📱 Get the App
 </a>
 ```
@@ -211,7 +211,7 @@ Below are ready-to-use code snippets you can add to **www.sacredgreeks.com** to 
 
 Want a QR code for printed materials or your website?
 
-1. Visit: **https://sacredgreekslife.com/qr-code**
+1. Visit: **https://www.sacredgreekslife.com/qr-code**
 2. Click "Download QR Code"
 3. Add the image to your website or print materials
 
