@@ -187,6 +187,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Should Christians Denounce BGLOs?",
+    description: "Exploring truth, trauma, and theology in the discussion about Black Greek Letter Organizations",
+    url: "https://gamma.app/docs/Should-Christians-Denounce-BGLOs-Truth-Trauma-and-Theology-un3ueaqjhbjf8y2",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
