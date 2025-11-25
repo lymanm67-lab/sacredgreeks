@@ -255,10 +255,10 @@ const Index = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Powerful Features for Your Journey
+              Powerful Benefits That Transform Your Life
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Every tool you need to grow spiritually while honoring your Greek letters
+              Experience real growth as you integrate faith and Greek life with clarity and purpose
             </p>
           </div>
 
