@@ -171,6 +171,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Defending Your Faith and Fraternity",
+    description: "How to respond when church leaders challenge your Greek life participation",
+    url: "https://gamma.app/docs/How-to-Defend-Your-Faith-and-Fraternity-When-Church-Leaders-Challenge-um32h0hd55s8c6v",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
