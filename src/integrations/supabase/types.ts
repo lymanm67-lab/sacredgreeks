@@ -576,6 +576,36 @@ export type Database = {
         }
         Relationships: []
       }
+      saved_bible_searches: {
+        Row: {
+          created_at: string
+          id: string
+          results_json: Json
+          search_query: string
+          search_type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          results_json: Json
+          search_query: string
+          search_type?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          results_json?: Json
+          search_query?: string
+          search_type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       shared_results: {
         Row: {
           assessment_id: string
