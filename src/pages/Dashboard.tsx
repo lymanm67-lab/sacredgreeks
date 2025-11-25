@@ -614,21 +614,17 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          {/* Study Guide Widget */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.8s' }}>
-            <StudyGuideWidget />
-          </div>
-
-          {/* Collapsible Resources */}
+          {/* Collapsible Resources & Study */}
           <Collapsible defaultOpen={false}>
             <div className="space-y-6">
               <CollapsibleTrigger className="flex items-center gap-2 text-xl font-bold hover:text-primary transition-colors group w-full">
                 <span className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
-                  Resources & Community
+                  Resources, Study & Community
                 </span>
                 <ChevronDown className="w-5 h-5 transition-transform group-data-[state=open]:rotate-180" />
               </CollapsibleTrigger>
               <CollapsibleContent className="space-y-6 pt-2">
+                <StudyGuideWidget />
                 <SocialMediaConnect />
                 <ResourcesSection />
                 <ChapterResourcesSection />
