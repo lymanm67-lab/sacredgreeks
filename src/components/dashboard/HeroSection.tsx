@@ -35,12 +35,12 @@ export const HeroSection = () => {
   const firstName = user?.user_metadata?.full_name?.split(' ')[0] || 'Friend';
 
   return (
-    <div className="relative overflow-hidden rounded-3xl bg-gradient-hero p-8 md:p-12 shadow-2xl">
+    <div className="relative overflow-hidden rounded-3xl bg-gradient-hero p-6 md:p-8 lg:p-12 shadow-2xl">
       {/* Decorative elements */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
       <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
       
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+      <div className="relative z-10 flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-8 lg:items-center">
         {/* Left side: Welcome and Verse */}
         <div>
           <div className="flex items-center gap-2 mb-4 animate-slide-up">
@@ -73,7 +73,7 @@ export const HeroSection = () => {
         </div>
 
         {/* Right side: Welcome Video */}
-        <div className="animate-scale-in" style={{ animationDelay: '0.4s' }}>
+        <div className="animate-scale-in w-full" style={{ animationDelay: '0.4s' }}>
           <WelcomeVideo />
         </div>
       </div>
