@@ -82,7 +82,7 @@ const resources: ResourceItem[] = [
   {
     title: "Repentance, Repair & Renewal Checklist",
     description: "A spiritual guide for aligning Greek life with devotion to Christ",
-    url: "/resources/repentance-repair-renewal-checklist.pdf",
+    url: "https://gamma.app/docs/Christian-Black-Greek-Life-Repentance-Repair-and-Renewal-Checklis-12fobc2w0gro04i",
     icon: CheckCircle,
     requiresAuth: false,
     category: "articles",
