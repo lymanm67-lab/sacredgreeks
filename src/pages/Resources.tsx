@@ -251,6 +251,15 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Dr. Lyman A. Montgomery Signature Greek Life Series",
+    description: "Comprehensive teaching series on integrating Christian faith with Greek life participation",
+    url: "https://gamma.app/docs/Dr-Lyman-A-Montgomery-Signature-Greek-Life-Series-hfn73itjrx2l4wx",
+    icon: BookOpen,
+    requiresAuth: false,
+    badge: "Featured",
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
