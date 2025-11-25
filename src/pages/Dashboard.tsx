@@ -380,7 +380,7 @@ const Dashboard = () => {
           </div>
 
           {/* Key Stats - Reduced to 3 most motivating */}
-          <div ref={statsScroll.ref} className={`scroll-animate ${statsScroll.isVisible ? 'visible' : ''} grid gap-6 md:grid-cols-3 animate-fade-in`} style={{ animationDelay: '0.4s' }}>
+          <div ref={statsScroll.ref} className={`scroll-animate ${statsScroll.isVisible ? 'visible' : ''} grid gap-6 grid-cols-1 md:grid-cols-3 auto-rows-fr animate-fade-in`} style={{ animationDelay: '0.4s' }}>
             <StatsCard
               title="Current Streak"
               value={stats.currentStreak}
