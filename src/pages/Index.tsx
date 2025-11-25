@@ -164,7 +164,7 @@ const Index = () => {
               </Link>
               <Link to="/guide">
                 <Button size="lg" variant="outline" className="text-lg px-8 py-6">
-                  Try Decision Guide
+                  Handle BGLO Objections
                 </Button>
               </Link>
             </div>
