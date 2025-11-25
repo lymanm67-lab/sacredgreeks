@@ -1137,7 +1137,7 @@ export const didYouKnowCategories: DidYouKnowCategory[] = [
     description: "Beauty practices and fashion with Egyptian origins and deity connections",
     videos: [
       {
-        title: "Joseph in Linen, Daniel in Purple",
+        title: "Eyeliner, Wigs, and Worship: What Christians Never Learn About Egyptian Symbols",
         url: "https://youtu.be/FTeOlOv2cDM",
         description: "Exploring the biblical and historical significance of clothing colors and materials"
       }
