@@ -292,6 +292,14 @@ const resources: ResourceItem[] = [
     category: "articles",
   },
   {
+    title: "Christian BGLO Redemption Guide",
+    description: "A simple guide to repentance, repair, and renewal for Christians in Black Greek Letter Organizations",
+    url: "https://gamma.app/docs/Christian-BGLO-Redemption-A-Simple-Guide-to-Repentance-Repair-and-Renewal-6bfy5y35wg4bezt",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+  },
+  {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
     url: "/faq",
