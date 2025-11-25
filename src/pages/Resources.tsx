@@ -34,7 +34,7 @@ const resources: ResourceItem[] = [
   {
     title: "Our Mission",
     description: "Learn about the Sacred Greeks movement and the P.R.O.O.F. framework",
-    url: "https://www.sacredgreeks.com/about",
+    url: "/faq",
     icon: Heart,
     requiresAuth: false,
     category: "about",
@@ -42,9 +42,9 @@ const resources: ResourceItem[] = [
   {
     title: "P.R.O.O.F. Framework",
     description: "Understanding the biblical framework for navigating Greek life",
-    url: "https://www.sacredgreeks.com/proof",
+    url: "/guide",
     icon: Sparkles,
-    requiresAuth: false,
+    requiresAuth: true,
     category: "about",
   },
   
@@ -52,7 +52,7 @@ const resources: ResourceItem[] = [
   {
     title: "Sacred, Not Sinful",
     description: "Discover the book that started it all - biblical guidance for Greek life",
-    url: "https://www.sacredgreeks.com/book",
+    url: "https://www.amazon.com/dp/B0CKRP2QVL",
     icon: BookOpen,
     requiresAuth: false,
     badge: "Featured",
@@ -61,7 +61,7 @@ const resources: ResourceItem[] = [
   {
     title: "Book Chapters",
     description: "Explore chapter summaries and key teachings",
-    url: "https://www.sacredgreeks.com/chapters",
+    url: "/study",
     icon: FileText,
     requiresAuth: true,
     badge: "Members",
@@ -72,7 +72,7 @@ const resources: ResourceItem[] = [
   {
     title: "Articles & Blog",
     description: "Read the latest insights on faith and Greek life",
-    url: "https://www.sacredgreeks.com/blog",
+    url: "/articles",
     icon: FileText,
     requiresAuth: false,
     category: "articles",
@@ -97,7 +97,7 @@ const resources: ResourceItem[] = [
   {
     title: "FAQs",
     description: "Common questions about faith and Greek organizations",
-    url: "https://www.sacredgreeks.com/faq",
+    url: "/faq",
     icon: MessageSquare,
     requiresAuth: false,
     category: "articles",
@@ -107,7 +107,7 @@ const resources: ResourceItem[] = [
   {
     title: "Success Stories",
     description: "Read how others are integrating faith and Greek life",
-    url: "https://www.sacredgreeks.com/testimonials",
+    url: "/did-you-know",
     icon: MessageSquare,
     requiresAuth: false,
     category: "testimonials",
@@ -125,8 +125,14 @@ const Resources = () => {
       return;
     }
     
-    // Open external links directly in new tab/browser
-    openExternalLink(resource.url);
+    // Check if internal or external link
+    if (resource.url.startsWith('http')) {
+      // Open external links in new tab
+      openExternalLink(resource.url);
+    } else {
+      // Navigate to internal route
+      window.location.href = resource.url;
+    }
   };
 
   const handleDownload = (e: React.MouseEvent, downloadUrl: string, title: string) => {
