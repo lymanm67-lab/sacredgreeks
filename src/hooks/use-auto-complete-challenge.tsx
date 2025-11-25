@@ -1,11 +1,12 @@
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useGamification } from './use-gamification';
-import { toast } from 'sonner';
+import { useCelebration } from '@/contexts/CelebrationContext';
 
 export const useAutoCompleteChallenge = () => {
   const { user } = useAuth();
   const { awardPoints } = useGamification();
+  const { celebrate } = useCelebration();
 
   const completeChallenge = async (challengeType: string) => {
     if (!user) return;
@@ -66,8 +67,10 @@ export const useAutoCompleteChallenge = () => {
         actionType: 'daily_challenge',
       });
 
-      toast.success(`Challenge completed! +${challenge.points_reward} points`, {
-        description: challenge.title,
+      // Trigger celebration animation
+      celebrate({
+        points: challenge.points_reward,
+        title: challenge.title,
       });
     } catch (error) {
       console.error('Error auto-completing challenge:', error);
