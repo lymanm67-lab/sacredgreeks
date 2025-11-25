@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Heart, Search, Book, BookOpen, Calendar, ArrowLeft, ExternalLink, Loader2, Sparkles } from 'lucide-react';
+import { Heart, Search, Book, BookOpen, Calendar, ArrowLeft, ExternalLink, Loader2, Sparkles, Bookmark, BookmarkCheck } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { ExternalContentModal } from '@/components/ui/ExternalContentModal';
 import { useExternalLinks } from '@/hooks/use-external-links';
@@ -16,6 +16,8 @@ import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { supabase } from '@/integrations/supabase/client';
+import { useSavedBibleSearches } from '@/hooks/use-saved-bible-searches';
+import { SavedSearchesList } from '@/components/bible-study/SavedSearchesList';
 
 const readingPlans = [
   {
@@ -59,6 +61,7 @@ const BibleStudy = () => {
   const [searchMode, setSearchMode] = useState<'reference' | 'phrase' | 'ai'>('reference');
   const [phraseResults, setPhraseResults] = useState<any[]>([]);
   const [aiResults, setAiResults] = useState<any[]>([]);
+  const { savedSearches, loading: savedLoading, saveSearch, deleteSearch, isSearchSaved } = useSavedBibleSearches();
 
   // Pull to refresh
   const handleRefresh = async () => {
@@ -234,6 +237,46 @@ const BibleStudy = () => {
     }
   };
 
+  const handleSaveSearch = async () => {
+    if (!searchQuery.trim()) return;
+    
+    let results: any[] = [];
+    if (searchMode === 'ai') {
+      results = aiResults;
+    } else if (searchMode === 'phrase') {
+      results = phraseResults;
+    } else if (searchResults) {
+      results = [{
+        reference: searchResults.reference,
+        text: searchResults.text,
+        translation: searchResults.translation_name
+      }];
+    }
+
+    if (results.length > 0) {
+      await saveSearch(searchQuery, searchMode, results);
+    }
+  };
+
+  const handleLoadSearch = (search: any) => {
+    setSearchQuery(search.search_query);
+    setSearchMode(search.search_type);
+    
+    if (search.search_type === 'ai') {
+      setAiResults(search.results_json);
+      setPhraseResults([]);
+      setSearchResults(null);
+    } else if (search.search_type === 'phrase') {
+      setPhraseResults(search.results_json);
+      setAiResults([]);
+      setSearchResults(null);
+    } else {
+      setSearchResults(search.results_json[0]);
+      setAiResults([]);
+      setPhraseResults([]);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
       <PullToRefreshIndicator 
@@ -315,10 +358,14 @@ const BibleStudy = () => {
 
           {/* Main Content Tabs */}
           <Tabs defaultValue="search" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-2 lg:w-[400px] mx-auto">
+            <TabsList className="grid w-full grid-cols-3 lg:w-[500px] mx-auto">
               <TabsTrigger value="search" className="gap-2">
                 <Search className="w-4 h-4" />
                 Scripture Search
+              </TabsTrigger>
+              <TabsTrigger value="saved" className="gap-2">
+                <Bookmark className="w-4 h-4" />
+                Saved Searches
               </TabsTrigger>
               <TabsTrigger value="plans" className="gap-2">
                 <Calendar className="w-4 h-4" />
@@ -430,6 +477,19 @@ const BibleStudy = () => {
                           <Sparkles className="w-3 h-3" />
                           {aiResults.length} AI suggestion{aiResults.length !== 1 ? 's' : ''}
                         </Badge>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={handleSaveSearch}
+                          disabled={isSearchSaved(searchQuery, searchMode)}
+                          className="gap-2"
+                        >
+                          {isSearchSaved(searchQuery, searchMode) ? (
+                            <><BookmarkCheck className="w-4 h-4" /> Saved</>
+                          ) : (
+                            <><Bookmark className="w-4 h-4" /> Save Search</>
+                          )}
+                        </Button>
                       </div>
                       <ScrollArea className="h-[500px] space-y-3">
                         {aiResults.map((verse, idx) => (
@@ -464,6 +524,19 @@ const BibleStudy = () => {
                         <Badge className="bg-sacred/10 text-sacred border-sacred/20 text-sm">
                           {phraseResults.length} verse{phraseResults.length !== 1 ? 's' : ''} found
                         </Badge>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={handleSaveSearch}
+                          disabled={isSearchSaved(searchQuery, searchMode)}
+                          className="gap-2"
+                        >
+                          {isSearchSaved(searchQuery, searchMode) ? (
+                            <><BookmarkCheck className="w-4 h-4" /> Saved</>
+                          ) : (
+                            <><Bookmark className="w-4 h-4" /> Save Search</>
+                          )}
+                        </Button>
                       </div>
                       <ScrollArea className="h-[500px] space-y-3">
                         {phraseResults.map((verse, idx) => (
@@ -541,6 +614,34 @@ const BibleStudy = () => {
                       />
                     </div>
                   </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Saved Searches Tab */}
+            <TabsContent value="saved" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Bookmark className="w-5 h-5 text-sacred" />
+                    Saved Searches
+                  </CardTitle>
+                  <CardDescription>
+                    Quick access to your previously saved Bible searches
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {savedLoading ? (
+                    <div className="flex items-center justify-center py-8">
+                      <Loader2 className="w-6 h-6 animate-spin text-sacred" />
+                    </div>
+                  ) : (
+                    <SavedSearchesList
+                      searches={savedSearches}
+                      onDelete={deleteSearch}
+                      onLoadSearch={handleLoadSearch}
+                    />
+                  )}
                 </CardContent>
               </Card>
             </TabsContent>
