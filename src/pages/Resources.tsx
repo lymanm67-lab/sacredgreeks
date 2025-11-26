@@ -79,6 +79,15 @@ const resources: ResourceItem[] = [
     category: "about",
     tags: ["About", "Media"],
   },
+  {
+    title: "Media Kit for Editors, Event Planners, and Partners",
+    description: "Comprehensive media resources, press materials, and partnership information for Sacred Greeks",
+    url: "https://gamma.app/embed/bfldg6hc0ymwkly",
+    icon: FileText,
+    requiresAuth: false,
+    category: "about",
+    tags: ["About", "Media"],
+  },
   
   // Book Info Section
   {
