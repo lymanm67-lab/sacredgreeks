@@ -5,12 +5,19 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Home, Heart, Lock } from 'lucide-react';
 import { SacredGreeksResults } from '@/components/sacred-greeks/SacredGreeksResults';
+import { useCertificateMeta } from '@/hooks/use-certificate-meta';
 
 const SharedResult = () => {
   const { token } = useParams();
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Set certificate meta tags for social sharing
+  useCertificateMeta(result ? {
+    assessmentType: result.result_type?.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase()) || 'Assessment',
+    scenario: result.scenario || 'Sacred Greeks Guide',
+  } : null);
 
   useEffect(() => {
     loadSharedResult();
