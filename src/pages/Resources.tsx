@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PDFViewer } from "@/components/ui/PDFViewer";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { 
   BookOpen, 
   Heart, 
@@ -22,7 +23,10 @@ import {
   Download,
   Search,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  X,
+  Maximize2,
+  Minimize2
 } from "lucide-react";
 
 interface ResourceItem {
@@ -93,12 +97,313 @@ const resources: ResourceItem[] = [
   {
     title: "Repentance, Repair & Renewal Checklist",
     description: "A spiritual guide for aligning Greek life with devotion to Christ",
-    url: "https://gamma.app/docs/Christian-Black-Greek-Life-Repentance-Repair-and-Renewal-Checklis-12fobc2w0gro04i",
+    url: "https://gamma.app/embed/12fobc2w0gro04i",
     icon: CheckCircle,
     requiresAuth: false,
     category: "articles",
     downloadUrl: "/resources/repentance-repair-renewal-checklist.pdf",
     tags: ["Devotionals", "Framework"],
+  },
+  {
+    title: "Integrity Under Pressure Playbook",
+    description: "A practical ethics guide for hot moments on campus and in life using the P.R.O.O.F. framework",
+    url: "https://gamma.app/embed/752n7nfkgl1wn7w",
+    icon: BookOpen,
+    requiresAuth: false,
+    category: "articles",
+    downloadUrl: "/resources/integrity-under-pressure-2.pdf",
+    tags: ["Leadership", "Framework"],
+  },
+  {
+    title: "Christian Greek Life Study Guide",
+    description: "Comprehensive study guide for integrating Christian faith with Greek life participation",
+    url: "https://gamma.app/embed/ihr8fq0g089n32t",
+    icon: BookOpen,
+    requiresAuth: false,
+    badge: "Featured",
+    category: "articles",
+    tags: ["Study", "Framework"],
+  },
+  {
+    title: "Sacred Comfort: Praying for Greeks in Tough Times",
+    description: "How to pray for and walk with fraternity and sorority members during difficult seasons",
+    url: "https://gamma.app/embed/ccgepyu7je8fpav",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Service", "Devotionals"],
+  },
+  {
+    title: "Servant Leadership in Greek Life",
+    description: "How to run your chapter and service projects like Jesus with biblical principles",
+    url: "https://gamma.app/embed/roah3o2oby0g55s",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Leadership", "Service"],
+  },
+  {
+    title: "Sacred Service: Planning Community Projects",
+    description: "A guide for planning and executing meaningful community service projects with your chapter",
+    url: "https://gamma.app/embed/28f7a9bc5w5jghb",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Service", "Leadership"],
+  },
+  {
+    title: "Robert's Rules of Order in Chapter Meetings",
+    description: "A practical guide to running effective and organized chapter meetings using parliamentary procedure",
+    url: "https://gamma.app/embed/viytfotsasvx46d",
+    icon: FileText,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Leadership", "Framework"],
+  },
+  {
+    title: "Sacred Conversations: Leading Greeks to Christ",
+    description: "Using the Roman Road to share the Gospel with fraternity and sorority members",
+    url: "https://gamma.app/embed/ekkmlx5d1615hlv",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Evangelism", "Service"],
+  },
+  {
+    title: "Cultural Reflection Devotional for the Holidays",
+    description: "Sacred Greeks devotional for reflecting on culture and faith during the holiday season",
+    url: "https://gamma.app/embed/uudch3osmv3ss77",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Devotionals"],
+  },
+  {
+    title: "7-Days to Unshakeable Focus",
+    description: "A week-long devotional guide to develop spiritual focus and mental clarity",
+    url: "https://gamma.app/embed/3pebfj1ub3rqkue",
+    icon: CheckCircle,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Devotionals"],
+  },
+  {
+    title: "5 Steps to Retain & Engage Your Staff",
+    description: "Best practices for retaining chapter staff and staying audit ready with strong leadership",
+    url: "https://gamma.app/embed/e7ydcjtrr2ujq0b",
+    icon: FileText,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Leadership"],
+  },
+  {
+    title: "Defending Your Faith and Fraternity",
+    description: "How to respond when church leaders challenge your Greek life participation",
+    url: "https://gamma.app/embed/um32h0hd55s8c6v",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Apologetics"],
+  },
+  {
+    title: "Are BGLOs Sinful? A Biblical Response",
+    description: "A biblical perspective addressing common concerns about Black Greek Letter Organizations",
+    url: "https://gamma.app/embed/qj85c0up8fdigh5",
+    icon: BookOpen,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Apologetics"],
+  },
+  {
+    title: "Should Christians Denounce BGLOs?",
+    description: "Exploring truth, trauma, and theology in the discussion about Black Greek Letter Organizations",
+    url: "https://gamma.app/embed/un3ueaqjhbjf8y2",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Apologetics"],
+  },
+  {
+    title: "Greek Life, Social Justice, And Faith",
+    description: "How BGLOs can be Kingdom tools for advancing social justice and faith",
+    url: "https://gamma.app/embed/97rakhcw3n90dt0",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Service", "Social Justice"],
+  },
+  {
+    title: "Why I Did Not Renounce My BGLO",
+    description: "A personal testimony and pastoral guidance on remaining in Black Greek Letter Organizations as a Christian",
+    url: "https://gamma.app/embed/ft5vd5wc4gdfmuv",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Testimonials", "Apologetics"],
+  },
+  {
+    title: "How Not to Lose Your Christian Identity After Intake",
+    description: "Practical guidance for maintaining your faith and Christian identity throughout the intake process",
+    url: "https://gamma.app/embed/6lwq13dmgrs5ney",
+    icon: CheckCircle,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["New Members", "Framework"],
+  },
+  {
+    title: "When Leaving Makes Sense",
+    description: "A Christian's guide to exiting a Greek organization gracefully without destroying relationships",
+    url: "https://gamma.app/embed/cyi9l2rq808g6r6",
+    icon: FileText,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Transition", "Framework"],
+  },
+  {
+    title: "How to Leave Without Burning Bridges Checklist",
+    description: "Practical checklist for leaving your Greek organization while preserving brotherhood and sisterhood bonds",
+    url: "https://gamma.app/embed/p2gg3fi0f1bw4tr",
+    icon: CheckCircle,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Transition", "Framework"],
+  },
+  {
+    title: "Symbolism in BGLO Rituals: Harmless or Spiritual Danger?",
+    description: "A guide for Christians and church leaders examining symbolism in Black Greek rituals",
+    url: "https://gamma.app/embed/nftyg892145844a",
+    icon: BookOpen,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Apologetics"],
+  },
+  {
+    title: "Should Members Take Oaths For BGLOs?",
+    description: "Christian guidance on taking oaths for Black Greek Letter Organizations",
+    url: "https://gamma.app/embed/y630omdzx2sp7z3",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Apologetics", "Framework"],
+  },
+  {
+    title: "Dr. Lyman A. Montgomery Signature Greek Life Series",
+    description: "Comprehensive teaching series on integrating Christian faith with Greek life participation",
+    url: "https://gamma.app/embed/hfn73itjrx2l4wx",
+    icon: BookOpen,
+    requiresAuth: false,
+    badge: "Featured",
+    category: "articles",
+    tags: ["Study", "Framework"],
+  },
+  {
+    title: "Practical Frameworks & Checklists",
+    description: "Essential frameworks and checklists for navigating Greek life as a Christian",
+    url: "https://gamma.app/embed/kvq0rliv8297moo",
+    icon: CheckCircle,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Framework"],
+  },
+  {
+    title: "CROSS Guide for Greek Life",
+    description: "Comprehensive guide using the CROSS framework for Christian Greek life participation",
+    url: "https://gamma.app/embed/ug6sn2qq95613dg",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Framework", "Study"],
+  },
+  {
+    title: "How to Be P.I.L.L.A.R. within Your Greek Organization",
+    description: "Framework for being a pillar of faith and leadership within your Greek letter organization",
+    url: "https://gamma.app/embed/ctdbb60tc09ez0e",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Leadership", "Framework"],
+  },
+  {
+    title: "How to Handle Tensions Within Your Greek Organization",
+    description: "Practical guidance for navigating and resolving conflicts within your Greek letter organization",
+    url: "https://gamma.app/embed/hoaqqjovrxsxpve",
+    icon: FileText,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Conflict Resolution", "Leadership"],
+  },
+  {
+    title: "Christian BGLO Redemption Guide",
+    description: "A simple guide to repentance, repair, and renewal for Christians in Black Greek Letter Organizations",
+    url: "https://gamma.app/embed/6bfy5y35wg4bezt",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Devotionals", "Framework"],
+  },
+  {
+    title: "Inclusive Environment Toolkit",
+    description: "Tools and strategies for creating inclusive and welcoming environments within Greek organizations",
+    url: "https://gamma.app/embed/czjmm4li1c9jp0f",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Leadership", "Service"],
+  },
+  {
+    title: "Redeemed Greeks",
+    description: "A vision for redemption and renewal within Greek letter organizations through Christ",
+    url: "https://gamma.app/embed/l28kd2r827ynm99",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Devotionals", "Vision"],
+  },
+  {
+    title: "Why Some Call BGLOs Demonic",
+    description: "Understanding and addressing concerns about spiritual warfare claims regarding Black Greek Letter Organizations",
+    url: "https://gamma.app/embed/4exmqlq3k79oepv",
+    icon: BookOpen,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Apologetics"],
+  },
+  {
+    title: "Is Being Christian & Greek 'Incompatible'?",
+    description: "Setting the record straight on the compatibility of Christian faith and Greek life participation",
+    url: "https://gamma.app/embed/t4agxb757qkugvr",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Apologetics"],
+  },
+  {
+    title: "Your Chapter, God's Canvas",
+    description: "Living out your faith authentically within your Greek letter organization",
+    url: "https://gamma.app/embed/sgrjn53235fsej2",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Leadership", "Vision"],
+  },
+  {
+    title: "Redeem Your Letters",
+    description: "A powerful message about redeeming your Greek letters and bringing glory to God through your organization",
+    url: "https://gamma.app/embed/trkhw9krqh3l4cs",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Vision", "Devotionals"],
+  },
+  {
+    title: "Christian Greek Life Power Guide",
+    description: "Comprehensive power guide for navigating Greek life as a committed Christian",
+    url: "https://gamma.app/embed/6026roc21m7i8gc",
+    icon: BookOpen,
+    requiresAuth: false,
+    badge: "Featured",
+    category: "articles",
+    tags: ["Framework", "Study"],
   },
   {
     title: "Integrity Under Pressure Playbook",
@@ -762,6 +1067,8 @@ const Resources = () => {
   const { openExternalLink } = useExternalLinks();
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [pdfTitle, setPdfTitle] = useState<string>("");
+  const [embedUrl, setEmbedUrl] = useState<string | null>(null);
+  const [embedTitle, setEmbedTitle] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState("");
   const [resourceType, setResourceType] = useState<string>("all");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -799,9 +1106,16 @@ const Resources = () => {
       return;
     }
     
+    // Check if it's a Gamma.app embed
+    if (resource.url.includes('gamma.app/embed/')) {
+      setEmbedUrl(resource.url);
+      setEmbedTitle(resource.title);
+      return;
+    }
+    
     // Check if internal or external link
     if (resource.url.startsWith('http')) {
-      // Open all external links in new tab
+      // Open all other external links in new tab
       openExternalLink(resource.url);
     } else {
       // Navigate to internal route using React Router
@@ -1384,6 +1698,47 @@ const Resources = () => {
         pdfUrl={pdfUrl || ""}
         title={pdfTitle}
       />
+
+      {/* Gamma Embed Viewer Modal */}
+      <Dialog open={!!embedUrl} onOpenChange={() => setEmbedUrl(null)}>
+        <DialogContent className={`p-0 max-w-[95vw] h-[90vh]`}>
+          <DialogHeader className="p-4 border-b bg-card">
+            <div className="flex items-center justify-between">
+              <DialogTitle className="text-lg font-semibold">{embedTitle}</DialogTitle>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => window.open(embedUrl?.replace('/embed/', '/docs/'), '_blank')}
+                  className="h-8 w-8"
+                  title="Open in new tab"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setEmbedUrl(null)}
+                  className="h-8 w-8"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          </DialogHeader>
+          <div className="w-full h-[calc(100%-64px)] bg-muted/20">
+            {embedUrl && (
+              <iframe
+                src={embedUrl}
+                className="w-full h-full border-0"
+                title={embedTitle}
+                allow="fullscreen"
+                allowFullScreen
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
