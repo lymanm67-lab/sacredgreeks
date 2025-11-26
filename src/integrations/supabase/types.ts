@@ -756,6 +756,57 @@ export type Database = {
         }
         Relationships: []
       }
+      shared_certificates: {
+        Row: {
+          assessment_type: string
+          certificate_type: string
+          completion_date: string
+          created_at: string
+          expires_at: string | null
+          id: string
+          last_viewed_at: string | null
+          og_image_url: string | null
+          scenario: string
+          share_token: string
+          theme: string
+          user_id: string
+          user_name: string
+          view_count: number | null
+        }
+        Insert: {
+          assessment_type: string
+          certificate_type: string
+          completion_date: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          last_viewed_at?: string | null
+          og_image_url?: string | null
+          scenario: string
+          share_token: string
+          theme?: string
+          user_id: string
+          user_name: string
+          view_count?: number | null
+        }
+        Update: {
+          assessment_type?: string
+          certificate_type?: string
+          completion_date?: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          last_viewed_at?: string | null
+          og_image_url?: string | null
+          scenario?: string
+          share_token?: string
+          theme?: string
+          user_id?: string
+          user_name?: string
+          view_count?: number | null
+        }
+        Relationships: []
+      }
       shared_results: {
         Row: {
           assessment_id: string
