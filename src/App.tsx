@@ -43,6 +43,7 @@ import PrayerGuide from "./pages/PrayerGuide";
 import QRCodePage from "./pages/QRCode";
 import Resources from "./pages/Resources";
 import About from "./pages/About";
+import PodcastAppearances from "./pages/PodcastAppearances";
 
 const queryClient = new QueryClient();
 
@@ -70,6 +71,7 @@ const App = () => (
               <Route path="/shared/:token" element={<SharedResult />} />
               <Route path="/study" element={<StudyGuide />} />
               <Route path="/podcast" element={<Podcast />} />
+              <Route path="/podcast-appearances" element={<PodcastAppearances />} />
               <Route path="/did-you-know" element={<DidYouKnow />} />
                <Route path="/articles" element={<ArticleLibrary />} />
                <Route path="/qr-code" element={<QRCodePage />} />
