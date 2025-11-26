@@ -22,6 +22,14 @@ const podcastEpisodes: PodcastEpisode[] = [
     date: "2024",
     platform: "YouTube",
     topics: ["Faith", "Greek Life", "Leadership", "Biblical Guidance"]
+  },
+  {
+    title: "Sacred Greeks Interview with Dr. Lyman Montgomery",
+    description: "Join us for an insightful discussion with Dr. Lyman Montgomery as he shares his expertise on navigating Christian values within Greek organizations, addressing theological concerns, and empowering students to live out their faith authentically.",
+    embedUrl: "https://www.youtube.com/embed/l4A1FkoXmlc?si=ck8XE4bQuRt8C9cg",
+    date: "2024",
+    platform: "YouTube",
+    topics: ["Christian Values", "Greek Organizations", "Theology", "Student Ministry"]
   }
 ];
 
