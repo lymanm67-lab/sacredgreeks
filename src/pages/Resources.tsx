@@ -13,6 +13,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useResourceHistory } from "@/hooks/use-resource-history";
 import { useResourceRecommendations } from "@/hooks/use-resource-recommendations";
+import { SuggestResourceDialog } from "@/components/resources/SuggestResourceDialog";
+import { MediaInquiryForm } from "@/components/resources/MediaInquiryForm";
 import { formatDistanceToNow } from "date-fns";
 import { 
   BookOpen, 
@@ -34,7 +36,9 @@ import {
   Clock,
   Trash2,
   Lightbulb,
-  User
+  User,
+  Mic,
+  Mail
 } from "lucide-react";
 
 interface ResourceItem {
@@ -87,6 +91,16 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "about",
     tags: ["About", "Media"],
+  },
+  {
+    title: "Podcast Appearances",
+    description: "Listen to Dr. Lyman Montgomery's podcast interviews discussing faith, leadership, and Greek life",
+    url: "/podcast-appearances",
+    icon: Mic,
+    requiresAuth: false,
+    badge: "Media",
+    category: "about",
+    tags: ["Media", "Podcast", "Interviews"],
   },
   
   // Book Info Section
@@ -1466,6 +1480,12 @@ const Resources = () => {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
             Explore articles, teachings, testimonials, and insights on integrating faith and Greek life
           </p>
+
+          {/* Action Buttons */}
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <MediaInquiryForm />
+            <SuggestResourceDialog />
+          </div>
 
           {/* Search and Filter Bar */}
           <div className="max-w-4xl mx-auto space-y-4">
