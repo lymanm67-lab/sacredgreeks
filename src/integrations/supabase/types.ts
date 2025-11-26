@@ -122,6 +122,90 @@ export type Database = {
         }
         Relationships: []
       }
+      beta_feedback: {
+        Row: {
+          admin_notes: string | null
+          created_at: string
+          description: string
+          feedback_type: string
+          id: string
+          page_context: string | null
+          rating: number | null
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          created_at?: string
+          description: string
+          feedback_type: string
+          id?: string
+          page_context?: string | null
+          rating?: number | null
+          status?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          created_at?: string
+          description?: string
+          feedback_type?: string
+          id?: string
+          page_context?: string | null
+          rating?: number | null
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      beta_testers: {
+        Row: {
+          beta_code: string | null
+          created_at: string
+          feedback_count: number
+          id: string
+          onboarding_completed: boolean
+          onboarding_completed_at: string | null
+          referred_by: string | null
+          signup_date: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          beta_code?: string | null
+          created_at?: string
+          feedback_count?: number
+          id?: string
+          onboarding_completed?: boolean
+          onboarding_completed_at?: string | null
+          referred_by?: string | null
+          signup_date?: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          beta_code?: string | null
+          created_at?: string
+          feedback_count?: number
+          id?: string
+          onboarding_completed?: boolean
+          onboarding_completed_at?: string | null
+          referred_by?: string | null
+          signup_date?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       bookmarks: {
         Row: {
           bookmark_type: string
@@ -561,6 +645,39 @@ export type Database = {
         }
         Relationships: []
       }
+      referrals: {
+        Row: {
+          converted_at: string | null
+          created_at: string
+          id: string
+          referral_code: string
+          referred_user_id: string | null
+          referrer_id: string
+          reward_earned: number
+          status: string
+        }
+        Insert: {
+          converted_at?: string | null
+          created_at?: string
+          id?: string
+          referral_code: string
+          referred_user_id?: string | null
+          referrer_id: string
+          reward_earned?: number
+          status?: string
+        }
+        Update: {
+          converted_at?: string | null
+          created_at?: string
+          id?: string
+          referral_code?: string
+          referred_user_id?: string | null
+          referrer_id?: string
+          reward_earned?: number
+          status?: string
+        }
+        Relationships: []
+      }
       resource_suggestions: {
         Row: {
           admin_notes: string | null
@@ -919,6 +1036,7 @@ export type Database = {
         Returns: boolean
       }
       cleanup_old_rate_limits: { Args: never; Returns: undefined }
+      generate_referral_code: { Args: never; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

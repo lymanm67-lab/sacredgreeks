@@ -6,7 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Home, User } from 'lucide-react';
+import { Home, User, Award, Gift } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
 import { NotificationSettings } from '@/components/NotificationSettings';
@@ -21,6 +22,7 @@ const profileSchema = z.object({
 const Profile = () => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
@@ -171,6 +173,31 @@ const Profile = () => {
                   {loading ? 'Saving...' : 'Save Changes'}
                 </Button>
               </form>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Quick Actions</CardTitle>
+            </CardHeader>
+            <CardContent className="grid gap-2 sm:grid-cols-2">
+              <Button
+                variant="outline"
+                className="justify-start"
+                onClick={() => navigate("/achievements")}
+              >
+                <Award className="w-4 h-4 mr-2" />
+                View Achievements
+              </Button>
+              
+              <Button
+                variant="outline"
+                className="justify-start"
+                onClick={() => navigate("/referrals")}
+              >
+                <Gift className="w-4 h-4 mr-2" />
+                Referral Program
+              </Button>
             </CardContent>
           </Card>
 
