@@ -6,7 +6,6 @@ import { Award, AlertCircle, Home, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useCertificateMeta } from '@/hooks/use-certificate-meta';
-import { Helmet } from 'react-helmet';
 
 interface SharedCertificate {
   certificate_type: string;
@@ -122,37 +121,8 @@ export default function SharedCertificate() {
     );
   }
 
-  const shareUrl = window.location.href;
-  const pageTitle = `${certificate.user_name} completed the Sacred Greeks Decision Guide! 🎓`;
-  const pageDescription = `Assessment: ${certificate.assessment_type} - ${certificate.scenario}. Join me in this journey of faith and Greek life.`;
-
   return (
-    <>
-      <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
-        
-        {/* Open Graph */}
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDescription} />
-        <meta property="og:url" content={shareUrl} />
-        {certificate.og_image_url && (
-          <meta property="og:image" content={certificate.og_image_url} />
-        )}
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={pageDescription} />
-        {certificate.og_image_url && (
-          <meta name="twitter:image" content={certificate.og_image_url} />
-        )}
-      </Helmet>
-
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-sacred/5 to-muted p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-sacred/5 to-muted p-4">
         <Card className="w-full max-w-2xl border-sacred/20">
           <CardContent className="p-8 space-y-6">
             {/* Header */}
@@ -224,6 +194,5 @@ export default function SharedCertificate() {
           </CardContent>
         </Card>
       </div>
-    </>
   );
 }

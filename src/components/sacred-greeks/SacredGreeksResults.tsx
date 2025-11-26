@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart, ExternalLink, RefreshCw, BookOpen, MessageSquare, Video, Share2, Check, Download, Facebook, Linkedin, Twitter } from "lucide-react";
+import { Heart, ExternalLink, RefreshCw, BookOpen, MessageSquare, Video, Share2, Check, Download } from "lucide-react";
 import { SacredGreeksAnswers, SacredGreeksScores, ResultType } from "@/types/assessment";
 import { sacredGreeksResults, type Scenario } from "@/sacredGreeksContent";
 import { supabase } from "@/integrations/supabase/client";
@@ -11,14 +11,9 @@ import { SocialShareDialog } from "@/components/SocialShareDialog";
 import { AchievementBadgeDialog } from "@/components/AchievementBadgeDialog";
 import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
 import { useExternalLinks } from "@/hooks/use-external-links";
-import { downloadCertificatePDF } from "@/lib/certificate-generator";
+import { downloadCertificatePDF, CertificateTheme } from "@/lib/certificate-generator";
 import { useCertificateMeta } from "@/hooks/use-certificate-meta";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { SocialShareButtons } from "@/components/certificate/SocialShareButtons";
 
 interface SacredGreeksResultsProps {
   resultType: ResultType;
@@ -34,6 +29,8 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
   const { openExternalLink } = useExternalLinks();
   const [copied, setCopied] = useState(false);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
+  const [isCreatingShare, setIsCreatingShare] = useState(false);
+  const [selectedTheme] = useState<CertificateTheme>('classic');
   
   // Validate data before using
   if (!answers || !resultType || !scores) {
@@ -69,7 +66,8 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
       userName,
       assessmentType: resultType.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
       scenario: scenario,
-      completionDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+      completionDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+      theme: selectedTheme
     });
     toast({
       title: "Certificate Downloaded!",
@@ -77,21 +75,78 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
     });
   };
 
-  const shareToSocial = (platform: 'facebook' | 'linkedin' | 'twitter') => {
-    const text = `I just completed the Sacred Greeks Decision Guide! 🎓 Assessment: ${resultType.replace(/_/g, ' ')} - ${scenario}`;
-    const url = shareUrl || window.location.href;
-    
-    const urls = {
-      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`,
-      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
-      twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
-    };
+  const handleCreateShareLink = async () => {
+    if (!user) {
+      toast({
+        title: "Sign in required",
+        description: "Please sign in to share your certificate",
+        variant: "destructive",
+      });
+      return;
+    }
 
-    window.open(urls[platform], '_blank', 'width=600,height=400');
-    toast({
-      title: "Sharing Certificate",
-      description: `Opening ${platform} to share your achievement!`,
-    });
+    setIsCreatingShare(true);
+    try {
+      const userName = user.user_metadata?.full_name || user.email || 'Participant';
+      const shareToken = `${Date.now()}-${Math.random().toString(36).substring(7)}`;
+      
+      // Create shared certificate record
+      const { error: insertError } = await supabase
+        .from('shared_certificates')
+        .insert({
+          share_token: shareToken,
+          user_id: user.id,
+          certificate_type: 'assessment',
+          assessment_type: resultType.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+          scenario: scenario,
+          theme: selectedTheme,
+          completion_date: new Date().toLocaleDateString(),
+          user_name: userName,
+        });
+
+      if (insertError) throw insertError;
+
+      // Generate OG image in background
+      supabase.functions
+        .invoke('generate-certificate-og-image', {
+          body: {
+            userName,
+            assessmentType: resultType.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+            scenario: scenario,
+            theme: selectedTheme,
+            shareToken,
+          },
+        })
+        .then(({ data, error }) => {
+          if (error) {
+            console.error('Failed to generate OG image:', error);
+          } else if (data?.imageUrl) {
+            // Update certificate with OG image URL
+            supabase
+              .from('shared_certificates')
+              .update({ og_image_url: data.imageUrl })
+              .eq('share_token', shareToken)
+              .then(() => console.log('OG image updated'));
+          }
+        });
+
+      const url = `${window.location.origin}/certificate/share/${shareToken}`;
+      setShareUrl(url);
+
+      toast({
+        title: "Share link created!",
+        description: "You can now share your certificate on social media",
+      });
+    } catch (error) {
+      console.error('Error creating share link:', error);
+      toast({
+        title: "Failed to create share link",
+        description: "Please try again",
+        variant: "destructive",
+      });
+    } finally {
+      setIsCreatingShare(false);
+    }
   };
 
   if (!content) {
@@ -230,39 +285,43 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
                 </p>
               </div>
               <div className="mt-6 pt-6 border-t border-border space-y-3">
-                <div className="grid grid-cols-2 gap-3">
+                <div className="flex gap-3">
                   <Button
                     onClick={handleDownloadPDF}
                     variant="outline"
-                    className="w-full"
+                    className="flex-1"
                   >
                     <Download className="w-4 h-4 mr-2" />
                     Download PDF
                   </Button>
                   
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="outline" className="w-full">
-                        <Share2 className="w-4 h-4 mr-2" />
-                        Share
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-48">
-                      <DropdownMenuItem onClick={() => shareToSocial('linkedin')}>
-                        <Linkedin className="w-4 h-4 mr-2" />
-                        Share on LinkedIn
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => shareToSocial('facebook')}>
-                        <Facebook className="w-4 h-4 mr-2" />
-                        Share on Facebook
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => shareToSocial('twitter')}>
-                        <Twitter className="w-4 h-4 mr-2" />
-                        Share on Twitter
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  {!shareUrl ? (
+                    <Button
+                      onClick={handleCreateShareLink}
+                      disabled={isCreatingShare}
+                      variant="outline"
+                      className="flex-1"
+                    >
+                      <Share2 className="w-4 h-4 mr-2" />
+                      {isCreatingShare ? 'Creating...' : 'Create Share Link'}
+                    </Button>
+                  ) : (
+                    <Button variant="outline" className="flex-1" disabled>
+                      <Check className="w-4 h-4 mr-2" />
+                      Share Link Ready
+                    </Button>
+                  )}
                 </div>
+
+                {shareUrl && (
+                  <div className="pt-2">
+                    <SocialShareButtons
+                      shareUrl={shareUrl}
+                      title={`I completed the Sacred Greeks Decision Guide! 🎓`}
+                      description={`Assessment: ${resultType.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} - ${scenario}`}
+                    />
+                  </div>
+                )}
 
                 {user?.email && (
                   <Button
