@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart, ExternalLink, RefreshCw, BookOpen, MessageSquare, Video, Share2, Check } from "lucide-react";
+import { Heart, ExternalLink, RefreshCw, BookOpen, MessageSquare, Video, Share2, Check, Download, Facebook, Linkedin, Twitter } from "lucide-react";
 import { SacredGreeksAnswers, SacredGreeksScores, ResultType } from "@/types/assessment";
 import { sacredGreeksResults, type Scenario } from "@/sacredGreeksContent";
 import { supabase } from "@/integrations/supabase/client";
@@ -11,6 +11,14 @@ import { SocialShareDialog } from "@/components/SocialShareDialog";
 import { AchievementBadgeDialog } from "@/components/AchievementBadgeDialog";
 import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
 import { useExternalLinks } from "@/hooks/use-external-links";
+import { downloadCertificatePDF } from "@/lib/certificate-generator";
+import { useCertificateMeta } from "@/hooks/use-certificate-meta";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface SacredGreeksResultsProps {
   resultType: ResultType;
@@ -28,6 +36,44 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const scenario = answers.scenario as Scenario;
   const content = sacredGreeksResults[scenario]?.[resultType];
+
+  // Set certificate meta tags for social sharing
+  useCertificateMeta(!isSharedView ? {
+    assessmentType: resultType.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+    scenario: scenario,
+    userName: user?.user_metadata?.full_name || user?.email
+  } : null);
+
+  const handleDownloadPDF = () => {
+    const userName = user?.user_metadata?.full_name || user?.email || "Sacred Greeks Member";
+    downloadCertificatePDF({
+      userName,
+      assessmentType: resultType.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+      scenario: scenario,
+      completionDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    });
+    toast({
+      title: "Certificate Downloaded!",
+      description: "Your PDF certificate has been saved to your downloads.",
+    });
+  };
+
+  const shareToSocial = (platform: 'facebook' | 'linkedin' | 'twitter') => {
+    const text = `I just completed the Sacred Greeks Decision Guide! 🎓 Assessment: ${resultType.replace(/_/g, ' ')} - ${scenario}`;
+    const url = shareUrl || window.location.href;
+    
+    const urls = {
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`,
+      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+      twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
+    };
+
+    window.open(urls[platform], '_blank', 'width=600,height=400');
+    toast({
+      title: "Sharing Certificate",
+      description: `Opening ${platform} to share your achievement!`,
+    });
+  };
 
   if (!content) {
     return <div>Error: Content not found for this scenario and result type.</div>;
@@ -164,8 +210,42 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
                   Completed on {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                 </p>
               </div>
-              {user?.email && (
-                <div className="mt-6 pt-6 border-t border-border">
+              <div className="mt-6 pt-6 border-t border-border space-y-3">
+                <div className="grid grid-cols-2 gap-3">
+                  <Button
+                    onClick={handleDownloadPDF}
+                    variant="outline"
+                    className="w-full"
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Download PDF
+                  </Button>
+                  
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" className="w-full">
+                        <Share2 className="w-4 h-4 mr-2" />
+                        Share
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-48">
+                      <DropdownMenuItem onClick={() => shareToSocial('linkedin')}>
+                        <Linkedin className="w-4 h-4 mr-2" />
+                        Share on LinkedIn
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => shareToSocial('facebook')}>
+                        <Facebook className="w-4 h-4 mr-2" />
+                        Share on Facebook
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => shareToSocial('twitter')}>
+                        <Twitter className="w-4 h-4 mr-2" />
+                        Share on Twitter
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+
+                {user?.email && (
                   <Button
                     onClick={async () => {
                       try {
@@ -194,10 +274,10 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
                     className="w-full"
                   >
                     <Share2 className="w-4 h-4 mr-2" />
-                    Email My Certificate & Results
+                    Email Certificate & Results
                   </Button>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </CardContent>
         </Card>
