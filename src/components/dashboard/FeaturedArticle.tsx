@@ -1,8 +1,8 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, CheckCircle, BookOpen } from "lucide-react";
+import { ArrowRight, CheckCircle, BookOpen, Maximize2, Minimize2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const featuredArticles = [
@@ -23,6 +23,8 @@ const featuredArticles = [
 ];
 
 export const FeaturedArticle = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
   // Rotate featured article weekly based on ISO week number
   const featuredArticle = useMemo(() => {
     const now = new Date();
@@ -62,13 +64,45 @@ export const FeaturedArticle = () => {
           {featuredArticle.description}
         </p>
         
+        {/* Embedded Content */}
+        <div className="relative w-full rounded-lg overflow-hidden border-2 border-border bg-muted">
+          <div className={`relative w-full transition-all duration-300 ${isExpanded ? 'h-[800px]' : 'h-[500px]'}`}>
+            <iframe
+              src={featuredArticle.url}
+              className="absolute inset-0 w-full h-full"
+              title={featuredArticle.title}
+              allowFullScreen
+              style={{ border: 'none' }}
+            />
+          </div>
+          <Button
+            onClick={() => setIsExpanded(!isExpanded)}
+            variant="secondary"
+            size="sm"
+            className="absolute top-2 right-2 z-10 bg-background/90 hover:bg-background backdrop-blur-sm"
+          >
+            {isExpanded ? (
+              <>
+                <Minimize2 className="w-4 h-4 mr-2" />
+                Collapse
+              </>
+            ) : (
+              <>
+                <Maximize2 className="w-4 h-4 mr-2" />
+                Expand
+              </>
+            )}
+          </Button>
+        </div>
+        
         <div className="flex flex-col sm:flex-row gap-3">
           <Button 
             onClick={handleOpenExternal}
-            className="flex-1 bg-sacred hover:bg-sacred/90"
+            variant="outline"
+            className="flex-1 border-sacred/20 hover:bg-sacred/10 hover:border-sacred/50"
           >
-            Read Article
-            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            Open in New Tab
+            <ArrowRight className="w-4 h-4 ml-2" />
           </Button>
           <Link to="/resources" className="flex-1">
             <Button variant="outline" className="w-full border-sacred/20 hover:bg-sacred/10 hover:border-sacred/50">
