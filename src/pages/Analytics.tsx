@@ -6,8 +6,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BarChart, TrendingUp, Users, Eye, Clock, Home } from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
+import { BarChart, TrendingUp, Users, Eye, Clock, Home, Download, Calendar } from "lucide-react";
+import { formatDistanceToNow, format, subDays, startOfDay } from "date-fns";
+import { LineChart, Line, PieChart, Pie, BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from "recharts";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface AnalyticsData {
   mostPopularResources: Array<{ title: string; count: number; category: string }>;
@@ -20,19 +23,24 @@ interface AnalyticsData {
     created_at: string;
     event_data: any;
   }>;
+  dailyTrends: Array<{ date: string; pageViews: number; events: number }>;
 }
+
+const COLORS = ['hsl(var(--sacred))', 'hsl(var(--primary))', 'hsl(var(--secondary))', 'hsl(var(--accent))', 'hsl(var(--muted))'];
 
 const Analytics = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [dateRange, setDateRange] = useState({ start: subDays(new Date(), 30), end: new Date() });
   const [analytics, setAnalytics] = useState<AnalyticsData>({
     mostPopularResources: [],
     audienceEngagement: [],
     pageViews: [],
     averageTimeSpent: [],
     recentActivity: [],
+    dailyTrends: [],
   });
 
   useEffect(() => {
@@ -77,13 +85,17 @@ const Analytics = () => {
     try {
       setLoading(true);
 
+      const startDate = startOfDay(dateRange.start).toISOString();
+      const endDate = startOfDay(dateRange.end).toISOString();
+
       // Fetch most popular resources
       const { data: resourceClicks } = await supabase
         .from("analytics_events")
-        .select("event_data")
+        .select("event_data, created_at")
         .eq("event_type", "resource_click")
-        .order("created_at", { ascending: false })
-        .limit(1000);
+        .gte("created_at", startDate)
+        .lte("created_at", endDate)
+        .order("created_at", { ascending: false });
 
       const resourceCounts = new Map<string, { count: number; category: string }>();
       resourceClicks?.forEach((event) => {
@@ -106,8 +118,9 @@ const Analytics = () => {
         .from("analytics_events")
         .select("event_data")
         .eq("event_type", "audience_tab_click")
-        .order("created_at", { ascending: false })
-        .limit(1000);
+        .gte("created_at", startDate)
+        .lte("created_at", endDate)
+        .order("created_at", { ascending: false });
 
       const audienceCounts = new Map<string, number>();
       tabClicks?.forEach((event) => {
@@ -125,10 +138,11 @@ const Analytics = () => {
       // Fetch page views
       const { data: pageViewData } = await supabase
         .from("analytics_events")
-        .select("page_path")
+        .select("page_path, created_at")
         .eq("event_type", "page_view")
-        .order("created_at", { ascending: false })
-        .limit(1000);
+        .gte("created_at", startDate)
+        .lte("created_at", endDate)
+        .order("created_at", { ascending: false });
 
       const pageCounts = new Map<string, number>();
       pageViewData?.forEach((event) => {
@@ -148,8 +162,9 @@ const Analytics = () => {
         .from("analytics_events")
         .select("page_path, event_data")
         .eq("event_type", "time_spent")
-        .order("created_at", { ascending: false })
-        .limit(1000);
+        .gte("created_at", startDate)
+        .lte("created_at", endDate)
+        .order("created_at", { ascending: false });
 
       const timeByPage = new Map<string, { total: number; count: number }>();
       timeSpentData?.forEach((event) => {
@@ -177,8 +192,33 @@ const Analytics = () => {
       const { data: recentActivity } = await supabase
         .from("analytics_events")
         .select("event_type, event_category, created_at, event_data")
+        .gte("created_at", startDate)
+        .lte("created_at", endDate)
         .order("created_at", { ascending: false })
         .limit(20);
+
+      // Fetch daily trends for line chart
+      const { data: allEvents } = await supabase
+        .from("analytics_events")
+        .select("event_type, created_at")
+        .gte("created_at", startDate)
+        .lte("created_at", endDate)
+        .order("created_at", { ascending: true });
+
+      const dailyData = new Map<string, { pageViews: number; events: number }>();
+      allEvents?.forEach((event) => {
+        const date = format(new Date(event.created_at), 'yyyy-MM-dd');
+        const existing = dailyData.get(date) || { pageViews: 0, events: 0 };
+        if (event.event_type === 'page_view') {
+          existing.pageViews += 1;
+        }
+        existing.events += 1;
+        dailyData.set(date, existing);
+      });
+
+      const dailyTrends = Array.from(dailyData.entries())
+        .map(([date, data]) => ({ date, ...data }))
+        .sort((a, b) => a.date.localeCompare(b.date));
 
       setAnalytics({
         mostPopularResources,
@@ -186,6 +226,7 @@ const Analytics = () => {
         pageViews,
         averageTimeSpent,
         recentActivity: recentActivity || [],
+        dailyTrends,
       });
     } catch (error) {
       console.error("Error fetching analytics:", error);
@@ -223,6 +264,31 @@ const Analytics = () => {
     return labels[value] || value;
   };
 
+  const exportToCSV = (data: any[], filename: string) => {
+    if (data.length === 0) return;
+    
+    const headers = Object.keys(data[0]);
+    const csvContent = [
+      headers.join(','),
+      ...data.map(row => 
+        headers.map(header => {
+          const value = row[header];
+          return typeof value === 'string' && value.includes(',') ? `"${value}"` : value;
+        }).join(',')
+      )
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `${filename}-${format(new Date(), 'yyyy-MM-dd')}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -247,6 +313,38 @@ const Analytics = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8 max-w-7xl">
+        {/* Date Range Filter */}
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle>Date Range Filter</CardTitle>
+            <CardDescription>Select date range to filter analytics data</CardDescription>
+          </CardHeader>
+          <CardContent className="flex items-end gap-4">
+            <div className="flex-1">
+              <Label htmlFor="start-date">Start Date</Label>
+              <Input
+                id="start-date"
+                type="date"
+                value={format(dateRange.start, 'yyyy-MM-dd')}
+                onChange={(e) => setDateRange({ ...dateRange, start: new Date(e.target.value) })}
+              />
+            </div>
+            <div className="flex-1">
+              <Label htmlFor="end-date">End Date</Label>
+              <Input
+                id="end-date"
+                type="date"
+                value={format(dateRange.end, 'yyyy-MM-dd')}
+                onChange={(e) => setDateRange({ ...dateRange, end: new Date(e.target.value) })}
+              />
+            </div>
+            <Button onClick={fetchAnalytics} className="gap-2">
+              <Calendar className="w-4 h-4" />
+              Apply Filter
+            </Button>
+          </CardContent>
+        </Card>
+
         {/* Summary Cards */}
         <div className="grid md:grid-cols-3 gap-4 mb-8">
           <Card>
@@ -287,8 +385,9 @@ const Analytics = () => {
         </div>
 
         {/* Detailed Analytics */}
-        <Tabs defaultValue="resources" className="space-y-4">
-          <TabsList>
+        <Tabs defaultValue="trends" className="space-y-4">
+          <TabsList className="flex-wrap h-auto">
+            <TabsTrigger value="trends">Daily Trends</TabsTrigger>
             <TabsTrigger value="resources">Popular Resources</TabsTrigger>
             <TabsTrigger value="audience">Audience Engagement</TabsTrigger>
             <TabsTrigger value="pages">Page Views</TabsTrigger>
@@ -296,110 +395,215 @@ const Analytics = () => {
             <TabsTrigger value="activity">Recent Activity</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="resources">
+          <TabsContent value="trends">
             <Card>
-              <CardHeader>
-                <CardTitle>Most Popular Resources</CardTitle>
-                <CardDescription>
-                  Top 10 resources by click count
-                </CardDescription>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle>Daily Activity Trends</CardTitle>
+                  <CardDescription>Page views and events over time</CardDescription>
+                </div>
+                <Button variant="outline" size="sm" onClick={() => exportToCSV(analytics.dailyTrends, 'daily-trends')} className="gap-2">
+                  <Download className="w-4 h-4" />
+                  Export CSV
+                </Button>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {analytics.mostPopularResources.map((resource, index) => (
-                    <div key={resource.title} className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-sacred/10 text-sacred flex items-center justify-center font-bold">
-                          {index + 1}
-                        </div>
-                        <div>
-                          <div className="font-medium">{resource.title}</div>
-                          <div className="text-sm text-muted-foreground capitalize">{resource.category}</div>
-                        </div>
-                      </div>
-                      <div className="text-2xl font-bold text-sacred">{resource.count}</div>
-                    </div>
-                  ))}
+                <ResponsiveContainer width="100%" height={400}>
+                  <LineChart data={analytics.dailyTrends}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis 
+                      dataKey="date" 
+                      stroke="hsl(var(--muted-foreground))"
+                      tickFormatter={(value) => format(new Date(value), 'MMM dd')}
+                    />
+                    <YAxis stroke="hsl(var(--muted-foreground))" />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'hsl(var(--card))', 
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '8px'
+                      }}
+                      labelFormatter={(value) => format(new Date(value), 'MMM dd, yyyy')}
+                    />
+                    <Legend />
+                    <Line type="monotone" dataKey="pageViews" stroke="hsl(var(--sacred))" strokeWidth={2} name="Page Views" />
+                    <Line type="monotone" dataKey="events" stroke="hsl(var(--primary))" strokeWidth={2} name="Total Events" />
+                  </LineChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="resources">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle>Most Popular Resources</CardTitle>
+                  <CardDescription>Top 10 resources by click count</CardDescription>
                 </div>
+                <Button variant="outline" size="sm" onClick={() => exportToCSV(analytics.mostPopularResources, 'popular-resources')} className="gap-2">
+                  <Download className="w-4 h-4" />
+                  Export CSV
+                </Button>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={400}>
+                  <RechartsBarChart data={analytics.mostPopularResources} layout="vertical">
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis type="number" stroke="hsl(var(--muted-foreground))" />
+                    <YAxis 
+                      dataKey="title" 
+                      type="category" 
+                      width={150}
+                      stroke="hsl(var(--muted-foreground))"
+                      tick={{ fontSize: 12 }}
+                    />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'hsl(var(--card))', 
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '8px'
+                      }}
+                    />
+                    <Bar dataKey="count" fill="hsl(var(--sacred))" radius={[0, 8, 8, 0]} />
+                  </RechartsBarChart>
+                </ResponsiveContainer>
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="audience">
             <Card>
-              <CardHeader>
-                <CardTitle>Audience Tab Engagement</CardTitle>
-                <CardDescription>
-                  Which audience tabs are most popular
-                </CardDescription>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle>Audience Tab Engagement</CardTitle>
+                  <CardDescription>Distribution of audience tab interactions</CardDescription>
+                </div>
+                <Button variant="outline" size="sm" onClick={() => exportToCSV(analytics.audienceEngagement.map(a => ({ audience: getAudienceLabel(a.audience), count: a.count })), 'audience-engagement')} className="gap-2">
+                  <Download className="w-4 h-4" />
+                  Export CSV
+                </Button>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {analytics.audienceEngagement.map((item) => (
-                    <div key={item.audience} className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
-                      <div className="font-medium">{getAudienceLabel(item.audience)}</div>
-                      <div className="text-2xl font-bold text-sacred">{item.count}</div>
-                    </div>
-                  ))}
-                </div>
+                <ResponsiveContainer width="100%" height={400}>
+                  <PieChart>
+                    <Pie
+                      data={analytics.audienceEngagement}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={({ audience, percent }) => `${getAudienceLabel(audience)} (${(percent * 100).toFixed(0)}%)`}
+                      outerRadius={120}
+                      fill="hsl(var(--sacred))"
+                      dataKey="count"
+                    >
+                      {analytics.audienceEngagement.map((_, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'hsl(var(--card))', 
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '8px'
+                      }}
+                      formatter={(value: any, name: any, props: any) => [value, getAudienceLabel(props.payload.audience)]}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="pages">
             <Card>
-              <CardHeader>
-                <CardTitle>Top Pages</CardTitle>
-                <CardDescription>
-                  Most viewed pages in the app
-                </CardDescription>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle>Top Pages</CardTitle>
+                  <CardDescription>Most viewed pages in the app</CardDescription>
+                </div>
+                <Button variant="outline" size="sm" onClick={() => exportToCSV(analytics.pageViews, 'page-views')} className="gap-2">
+                  <Download className="w-4 h-4" />
+                  Export CSV
+                </Button>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {analytics.pageViews.map((page) => (
-                    <div key={page.path} className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
-                      <div className="font-mono text-sm">{page.path}</div>
-                      <div className="text-2xl font-bold text-sacred">{page.count}</div>
-                    </div>
-                  ))}
-                </div>
+                <ResponsiveContainer width="100%" height={400}>
+                  <RechartsBarChart data={analytics.pageViews}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis 
+                      dataKey="path" 
+                      stroke="hsl(var(--muted-foreground))"
+                      angle={-45}
+                      textAnchor="end"
+                      height={100}
+                      tick={{ fontSize: 11 }}
+                    />
+                    <YAxis stroke="hsl(var(--muted-foreground))" />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'hsl(var(--card))', 
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '8px'
+                      }}
+                    />
+                    <Bar dataKey="count" fill="hsl(var(--primary))" radius={[8, 8, 0, 0]} />
+                  </RechartsBarChart>
+                </ResponsiveContainer>
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="time">
             <Card>
-              <CardHeader>
-                <CardTitle>Average Time Spent</CardTitle>
-                <CardDescription>
-                  Where users spend the most time
-                </CardDescription>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle>Average Time Spent</CardTitle>
+                  <CardDescription>Where users spend the most time</CardDescription>
+                </div>
+                <Button variant="outline" size="sm" onClick={() => exportToCSV(analytics.averageTimeSpent, 'time-spent')} className="gap-2">
+                  <Download className="w-4 h-4" />
+                  Export CSV
+                </Button>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {analytics.averageTimeSpent.map((page) => (
-                    <div key={page.path} className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
-                      <div className="font-mono text-sm">{page.path}</div>
-                      <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-muted-foreground" />
-                        <div className="text-lg font-bold text-sacred">
-                          {Math.floor(page.avg_seconds / 60)}m {page.avg_seconds % 60}s
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <ResponsiveContainer width="100%" height={400}>
+                  <RechartsBarChart data={analytics.averageTimeSpent} layout="vertical">
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis type="number" stroke="hsl(var(--muted-foreground))" label={{ value: 'Seconds', position: 'bottom' }} />
+                    <YAxis 
+                      dataKey="path" 
+                      type="category" 
+                      width={150}
+                      stroke="hsl(var(--muted-foreground))"
+                      tick={{ fontSize: 12 }}
+                    />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'hsl(var(--card))', 
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '8px'
+                      }}
+                      formatter={(value: any) => [`${Math.floor(value / 60)}m ${value % 60}s`, 'Time']}
+                    />
+                    <Bar dataKey="avg_seconds" fill="hsl(var(--accent))" radius={[0, 8, 8, 0]} />
+                  </RechartsBarChart>
+                </ResponsiveContainer>
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="activity">
             <Card>
-              <CardHeader>
-                <CardTitle>Recent Activity</CardTitle>
-                <CardDescription>
-                  Latest 20 analytics events
-                </CardDescription>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle>Recent Activity</CardTitle>
+                  <CardDescription>Latest 20 analytics events</CardDescription>
+                </div>
+                <Button variant="outline" size="sm" onClick={() => exportToCSV(analytics.recentActivity, 'recent-activity')} className="gap-2">
+                  <Download className="w-4 h-4" />
+                  Export CSV
+                </Button>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
