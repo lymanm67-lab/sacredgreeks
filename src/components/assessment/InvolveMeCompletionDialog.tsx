@@ -10,6 +10,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { SocialShareButtons } from '@/components/certificate/SocialShareButtons';
 
 interface InvolveMeCompletionDialogProps {
   open: boolean;
@@ -27,7 +28,9 @@ export function InvolveMeCompletionDialog({
   const { user } = useAuth();
   const { toast } = useToast();
   const [isSendingEmail, setIsSendingEmail] = useState(false);
+  const [isCreatingShare, setIsCreatingShare] = useState(false);
   const [selectedTheme, setSelectedTheme] = useState<CertificateTheme>('classic');
+  const [shareUrl, setShareUrl] = useState<string | null>(null);
 
   const handleDownloadCertificate = () => {
     const userName = user?.user_metadata?.full_name || user?.email || 'Participant';
@@ -82,6 +85,80 @@ export function InvolveMeCompletionDialog({
       });
     } finally {
       setIsSendingEmail(false);
+    }
+  };
+
+  const handleCreateShareLink = async () => {
+    if (!user) {
+      toast({
+        title: "Sign in required",
+        description: "Please sign in to share your certificate",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsCreatingShare(true);
+    try {
+      const userName = user.user_metadata?.full_name || user.email || 'Participant';
+      const shareToken = `${Date.now()}-${Math.random().toString(36).substring(7)}`;
+      
+      // Create shared certificate record
+      const { error: insertError } = await supabase
+        .from('shared_certificates')
+        .insert({
+          share_token: shareToken,
+          user_id: user.id,
+          certificate_type: 'assessment',
+          assessment_type: assessmentType,
+          scenario: assessmentTitle,
+          theme: selectedTheme,
+          completion_date: new Date().toLocaleDateString(),
+          user_name: userName,
+        });
+
+      if (insertError) throw insertError;
+
+      // Generate OG image in background
+      supabase.functions
+        .invoke('generate-certificate-og-image', {
+          body: {
+            userName,
+            assessmentType,
+            scenario: assessmentTitle,
+            theme: selectedTheme,
+            shareToken,
+          },
+        })
+        .then(({ data, error }) => {
+          if (error) {
+            console.error('Failed to generate OG image:', error);
+          } else if (data?.imageUrl) {
+            // Update certificate with OG image URL
+            supabase
+              .from('shared_certificates')
+              .update({ og_image_url: data.imageUrl })
+              .eq('share_token', shareToken)
+              .then(() => console.log('OG image updated'));
+          }
+        });
+
+      const url = `${window.location.origin}/certificate/share/${shareToken}`;
+      setShareUrl(url);
+
+      toast({
+        title: "Share link created!",
+        description: "You can now share your certificate on social media",
+      });
+    } catch (error) {
+      console.error('Error creating share link:', error);
+      toast({
+        title: "Failed to create share link",
+        description: "Please try again",
+        variant: "destructive",
+      });
+    } finally {
+      setIsCreatingShare(false);
     }
   };
 
@@ -196,6 +273,36 @@ export function InvolveMeCompletionDialog({
             </div>
           </CardContent>
         </Card>
+
+        {/* Social Sharing */}
+        {!shareUrl ? (
+          <Card className="border-sacred/20">
+            <CardContent className="p-4">
+              <Button
+                onClick={handleCreateShareLink}
+                disabled={isCreatingShare}
+                variant="outline"
+                className="w-full"
+              >
+                <Share2 className="w-4 h-4 mr-2" />
+                {isCreatingShare ? 'Creating...' : 'Create Share Link'}
+              </Button>
+              <p className="text-xs text-muted-foreground text-center mt-2">
+                Share your achievement on social media
+              </p>
+            </CardContent>
+          </Card>
+        ) : (
+          <Card className="border-sacred/20">
+            <CardContent className="p-4">
+              <SocialShareButtons
+                shareUrl={shareUrl}
+                title={`I completed the Sacred Greeks Decision Guide! 🎓`}
+                description={`Assessment: ${assessmentType} - ${assessmentTitle}`}
+              />
+            </CardContent>
+          </Card>
+        )}
 
         <div className="space-y-3">
           <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">

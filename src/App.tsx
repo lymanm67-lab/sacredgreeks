@@ -49,6 +49,7 @@ import Analytics from "./pages/Analytics";
 import BetaOnboarding from "./pages/BetaOnboarding";
 import ReferralDashboard from "./pages/ReferralDashboard";
 import FMMPAAssessment from "./pages/FMMPAAssessment";
+import SharedCertificate from "./pages/SharedCertificate";
 
 const queryClient = new QueryClient();
 
@@ -82,8 +83,9 @@ const App = () => (
                 <Route path="/articles" element={<ArticleLibrary />} />
                 <Route path="/qr-code" element={<QRCodePage />} />
                 <Route path="/resources" element={<Resources />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/assessment/fmmpa" element={<FMMPAAssessment />} />
+                 <Route path="/about" element={<About />} />
+                 <Route path="/assessment/fmmpa" element={<FMMPAAssessment />} />
+                 <Route path="/certificate/share/:shareToken" element={<SharedCertificate />} />
               <Route
                 path="/prayer-guide"
                 element={
