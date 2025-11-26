@@ -51,6 +51,7 @@ interface ResourceItem {
   category: "about" | "book" | "articles" | "testimonials";
   downloadUrl?: string;
   tags?: string[];
+  audience?: ("greeks" | "prospective" | "parents" | "church")[];
 }
 
 const resources: ResourceItem[] = [
@@ -63,6 +64,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "about",
     tags: ["About"],
+    audience: ["greeks", "prospective", "parents", "church"],
   },
   {
     title: "P.R.O.O.F. Framework",
@@ -72,6 +74,7 @@ const resources: ResourceItem[] = [
     requiresAuth: true,
     category: "about",
     tags: ["Framework", "About"],
+    audience: ["greeks", "prospective", "church"],
   },
   {
     title: "Dr. Lyman Montgomery Media Kit",
@@ -82,6 +85,7 @@ const resources: ResourceItem[] = [
     badge: "Featured",
     category: "about",
     tags: ["About", "Media"],
+    audience: ["church", "parents"],
   },
   {
     title: "Media Kit for Editors, Event Planners, and Partners",
@@ -91,6 +95,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "about",
     tags: ["About", "Media"],
+    audience: ["church", "parents"],
   },
   {
     title: "Podcast Appearances",
@@ -101,6 +106,7 @@ const resources: ResourceItem[] = [
     badge: "Media",
     category: "about",
     tags: ["Media", "Podcast", "Interviews"],
+    audience: ["greeks", "prospective", "parents", "church"],
   },
   {
     title: "Unmasking Hope Documentary",
@@ -111,6 +117,7 @@ const resources: ResourceItem[] = [
     badge: "Featured",
     category: "about",
     tags: ["Media", "Documentary", "Film"],
+    audience: ["greeks", "prospective", "parents", "church"],
   },
   
   // Book Info Section
@@ -123,6 +130,7 @@ const resources: ResourceItem[] = [
     badge: "Featured",
     category: "book",
     tags: ["Book"],
+    audience: ["greeks", "prospective", "parents", "church"],
   },
   {
     title: "Book Chapters",
@@ -133,6 +141,7 @@ const resources: ResourceItem[] = [
     badge: "Members",
     category: "book",
     tags: ["Book", "Study"],
+    audience: ["greeks"],
   },
   
   // Resources/Articles Section
@@ -144,6 +153,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Articles"],
+    audience: ["greeks", "prospective", "parents", "church"],
   },
   {
     title: "The Focused Driven Life",
@@ -153,6 +163,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Devotionals", "Leadership"],
+    audience: ["greeks", "prospective"],
   },
   {
     title: "Repentance, Repair & Renewal Checklist",
@@ -163,6 +174,7 @@ const resources: ResourceItem[] = [
     category: "articles",
     downloadUrl: "/resources/repentance-repair-renewal-checklist.pdf",
     tags: ["Devotionals", "Framework"],
+    audience: ["greeks"],
   },
   {
     title: "Integrity Under Pressure Playbook",
@@ -173,6 +185,7 @@ const resources: ResourceItem[] = [
     category: "articles",
     downloadUrl: "/resources/integrity-under-pressure-2.pdf",
     tags: ["Leadership", "Framework"],
+    audience: ["greeks", "prospective"],
   },
   {
     title: "Christian Greek Life Study Guide",
@@ -183,6 +196,7 @@ const resources: ResourceItem[] = [
     badge: "Featured",
     category: "articles",
     tags: ["Study", "Framework"],
+    audience: ["greeks", "prospective", "parents", "church"],
   },
   {
     title: "Sacred Comfort: Praying for Greeks in Tough Times",
@@ -192,6 +206,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Service", "Devotionals"],
+    audience: ["parents", "church"],
   },
   {
     title: "Servant Leadership in Greek Life",
@@ -201,6 +216,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Leadership", "Service"],
+    audience: ["greeks"],
   },
   {
     title: "Sacred Service: Planning Community Projects",
@@ -210,6 +226,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Service", "Leadership"],
+    audience: ["greeks"],
   },
   {
     title: "Robert's Rules of Order in Chapter Meetings",
@@ -219,6 +236,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Leadership", "Framework"],
+    audience: ["greeks"],
   },
   {
     title: "Sacred Conversations: Leading Greeks to Christ",
@@ -228,6 +246,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Evangelism", "Service"],
+    audience: ["greeks", "church"],
   },
   {
     title: "Cultural Reflection Devotional for the Holidays",
@@ -237,6 +256,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Devotionals"],
+    audience: ["greeks", "prospective"],
   },
   {
     title: "7-Days to Unshakeable Focus",
@@ -246,6 +266,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Devotionals"],
+    audience: ["greeks", "prospective"],
   },
   {
     title: "5 Steps to Retain & Engage Your Staff",
@@ -255,6 +276,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Leadership"],
+    audience: ["greeks"],
   },
   {
     title: "Defending Your Faith and Fraternity",
@@ -264,6 +286,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Apologetics"],
+    audience: ["greeks", "prospective", "parents", "church"],
   },
   {
     title: "Are BGLOs Sinful? A Biblical Response",
@@ -273,6 +296,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Apologetics"],
+    audience: ["greeks", "prospective", "parents", "church"],
   },
   {
     title: "Should Christians Denounce BGLOs?",
@@ -282,6 +306,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Apologetics"],
+    audience: ["greeks", "parents", "church"],
   },
   {
     title: "Greek Life, Social Justice, And Faith",
@@ -291,6 +316,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Service", "Social Justice"],
+    audience: ["greeks", "church"],
   },
   {
     title: "Why I Did Not Renounce My BGLO",
@@ -300,6 +326,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Testimonials", "Apologetics"],
+    audience: ["greeks", "church"],
   },
   {
     title: "How Not to Lose Your Christian Identity After Intake",
@@ -309,6 +336,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["New Members", "Framework"],
+    audience: ["prospective", "greeks"],
   },
   {
     title: "When Leaving Makes Sense",
@@ -318,6 +346,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Transition", "Framework"],
+    audience: ["greeks"],
   },
   {
     title: "How to Leave Without Burning Bridges Checklist",
@@ -327,6 +356,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Transition", "Framework"],
+    audience: ["greeks"],
   },
   {
     title: "Symbolism in BGLO Rituals: Harmless or Spiritual Danger?",
@@ -336,6 +366,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Apologetics"],
+    audience: ["greeks", "parents", "church"],
   },
   {
     title: "Should Members Take Oaths For BGLOs?",
@@ -345,6 +376,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Apologetics", "Framework"],
+    audience: ["greeks", "prospective", "church"],
   },
   {
     title: "Dr. Lyman A. Montgomery Signature Greek Life Series",
@@ -355,6 +387,7 @@ const resources: ResourceItem[] = [
     badge: "Featured",
     category: "articles",
     tags: ["Study", "Framework"],
+    audience: ["greeks", "prospective", "parents", "church"],
   },
   {
     title: "Practical Frameworks & Checklists",
@@ -364,6 +397,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Framework"],
+    audience: ["greeks", "prospective"],
   },
   {
     title: "CROSS Guide for Greek Life",
@@ -373,6 +407,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Framework", "Study"],
+    audience: ["greeks", "prospective"],
   },
   {
     title: "How to Be P.I.L.L.A.R. within Your Greek Organization",
@@ -382,6 +417,7 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Leadership", "Framework"],
+    audience: ["greeks"],
   },
   {
     title: "How to Handle Tensions Within Your Greek Organization",
@@ -1133,6 +1169,7 @@ const Resources = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [resourceType, setResourceType] = useState<string>("all");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedAudience, setSelectedAudience] = useState<string>("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -1318,9 +1355,25 @@ const Resources = () => {
     return resources.filter(r => r.category === category);
   };
 
+  const filterByAudience = (audience: string) => {
+    if (audience === "all") return resources;
+    
+    return resources.filter(r => {
+      // Provide default audiences if not specified
+      const audiences = r.audience || ["greeks", "prospective", "parents", "church"];
+      return audiences.includes(audience as "greeks" | "prospective" | "parents" | "church");
+    });
+  };
+
   // Filter and search logic
-  const getFilteredResources = (category: string) => {
-    let filtered = category === "all" ? resources : filterByCategory(category);
+  const getFilteredResources = (category?: string) => {
+    // Start with audience filter
+    let filtered = filterByAudience(selectedAudience);
+    
+    // Apply category filter if specified
+    if (category && category !== "all") {
+      filtered = filtered.filter(r => r.category === category);
+    }
     
     // Apply search query
     if (searchQuery) {
@@ -1548,295 +1601,111 @@ const Resources = () => {
           </div>
         </div>
 
-        {/* Tabbed Navigation */}
-        <Tabs defaultValue="all" className="w-full">
-          <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-5 mb-8">
-            <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="about">About</TabsTrigger>
-            <TabsTrigger value="book">Book</TabsTrigger>
-            <TabsTrigger value="articles">Articles</TabsTrigger>
-            <TabsTrigger value="testimonials">Stories</TabsTrigger>
+        {/* Audience-Based Tabs */}
+        <Tabs value={selectedAudience} onValueChange={(value) => {setSelectedAudience(value); setCurrentPage(1);}} className="w-full">
+          <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-5 mb-8">
+            <TabsTrigger value="all">All Resources</TabsTrigger>
+            <TabsTrigger value="greeks">Greek Members</TabsTrigger>
+            <TabsTrigger value="prospective">Prospective</TabsTrigger>
+            <TabsTrigger value="parents">Parents & Families</TabsTrigger>
+            <TabsTrigger value="church">Church Leaders</TabsTrigger>
           </TabsList>
 
-          {/* All Resources */}
-          <TabsContent value="all" className="space-y-8">
-            {(() => {
-              const filteredResources = getFilteredResources("all");
-              const paginatedResources = getPaginatedResources(filteredResources);
-              const totalPages = getTotalPages(filteredResources);
-              const featuredResources = filteredResources.filter(r => r.badge === "Featured");
+          {/* Render content for each tab */}
+          {["all", "greeks", "prospective", "parents", "church"].map((audienceValue) => (
+            <TabsContent key={audienceValue} value={audienceValue} className="space-y-8">
+              {(() => {
+                const filteredResources = getFilteredResources();
+                const paginatedResources = getPaginatedResources(filteredResources);
+                const totalPages = getTotalPages(filteredResources);
+                const featuredResources = filteredResources.filter(r => r.badge === "Featured");
 
-              return (
-                <>
-                  {/* Featured Resources */}
-                  {featuredResources.length > 0 && currentPage === 1 && !searchQuery && resourceType === "all" && (
-                    <div>
-                      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                        <Sparkles className="w-5 h-5 text-sacred" />
-                        Featured Resources
-                      </h3>
-                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {featuredResources.map((resource) => (
-                          <ResourceCard key={resource.title} resource={resource} />
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* All Resources */}
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-xl font-semibold">
-                        {searchQuery || resourceType !== "all" ? "Search Results" : "All Resources"}
-                        <span className="text-sm text-muted-foreground ml-2">
-                          ({filteredResources.length} {filteredResources.length === 1 ? 'resource' : 'resources'})
-                        </span>
-                      </h3>
-                    </div>
-                    
-                    {paginatedResources.length > 0 ? (
-                      <>
+                return (
+                  <>
+                    {/* Featured Resources */}
+                    {featuredResources.length > 0 && currentPage === 1 && !searchQuery && resourceType === "all" && (
+                      <div>
+                        <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                          <Sparkles className="w-5 h-5 text-sacred" />
+                          Featured Resources
+                        </h3>
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                          {paginatedResources.map((resource) => (
-                            <ResourceCard key={resource.title} resource={resource} />
+                          {featuredResources.map((resource) => (
+                            <ResourceCard key={resource.title + resource.url} resource={resource} />
                           ))}
                         </div>
-
-                        {/* Pagination */}
-                        {totalPages > 1 && (
-                          <div className="flex items-center justify-center gap-4 mt-8">
-                            <Button
-                              variant="outline"
-                              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                              disabled={currentPage === 1}
-                            >
-                              <ChevronLeft className="w-4 h-4 mr-2" />
-                              Previous
-                            </Button>
-                            <span className="text-sm font-medium">
-                              Page {currentPage} of {totalPages}
-                            </span>
-                            <Button
-                              variant="outline"
-                              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                              disabled={currentPage === totalPages}
-                            >
-                              Next
-                              <ChevronRight className="w-4 h-4 ml-2" />
-                            </Button>
-                          </div>
-                        )}
-                      </>
-                    ) : (
-                      <div className="text-center py-12">
-                        <p className="text-muted-foreground">No resources found matching your criteria.</p>
                       </div>
                     )}
-                  </div>
-                </>
-              );
-            })()}
-          </TabsContent>
 
-          {/* About Tab */}
-          <TabsContent value="about">
-            {(() => {
-              const filteredResources = getFilteredResources("about");
-              const paginatedResources = getPaginatedResources(filteredResources);
-              const totalPages = getTotalPages(filteredResources);
-
-              return (
-                <>
-                  {paginatedResources.length > 0 ? (
-                    <>
-                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {paginatedResources.map((resource) => (
-                          <ResourceCard key={resource.title} resource={resource} />
-                        ))}
-                      </div>
-                      {totalPages > 1 && (
-                        <div className="flex items-center justify-center gap-4 mt-8">
-                          <Button
-                            variant="outline"
-                            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                            disabled={currentPage === 1}
-                          >
-                            <ChevronLeft className="w-4 h-4 mr-2" />
-                            Previous
-                          </Button>
-                          <span className="text-sm font-medium">
-                            Page {currentPage} of {totalPages}
+                    {/* All Resources */}
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-xl font-semibold">
+                          {searchQuery || resourceType !== "all" ? "Search Results" : 
+                           audienceValue === "all" ? "All Resources" :
+                           audienceValue === "greeks" ? "For Greek Members" :
+                           audienceValue === "prospective" ? "For Prospective Members" :
+                           audienceValue === "parents" ? "For Parents & Families" :
+                           "For Church Leaders"}
+                          <span className="text-sm text-muted-foreground ml-2">
+                            ({filteredResources.length} {filteredResources.length === 1 ? 'resource' : 'resources'})
                           </span>
-                          <Button
-                            variant="outline"
-                            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                            disabled={currentPage === totalPages}
-                          >
-                            Next
-                            <ChevronRight className="w-4 h-4 ml-2" />
+                        </h3>
+                      </div>
+                      
+                      {paginatedResources.length > 0 ? (
+                        <>
+                          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {paginatedResources.map((resource) => (
+                              <ResourceCard key={resource.title + resource.url} resource={resource} />
+                            ))}
+                          </div>
+
+                          {/* Pagination */}
+                          {totalPages > 1 && (
+                            <div className="flex items-center justify-center gap-4 mt-8">
+                              <Button
+                                variant="outline"
+                                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                                disabled={currentPage === 1}
+                              >
+                                <ChevronLeft className="w-4 h-4 mr-2" />
+                                Previous
+                              </Button>
+                              <span className="text-sm font-medium">
+                                Page {currentPage} of {totalPages}
+                              </span>
+                              <Button
+                                variant="outline"
+                                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                                disabled={currentPage === totalPages}
+                              >
+                                Next
+                                <ChevronRight className="w-4 h-4 ml-2" />
+                              </Button>
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        <div className="text-center py-12">
+                          <div className="w-16 h-16 rounded-full bg-sacred/10 flex items-center justify-center mx-auto mb-4">
+                            <Search className="w-8 h-8 text-sacred" />
+                          </div>
+                          <h4 className="text-lg font-semibold mb-2">No resources found</h4>
+                          <p className="text-muted-foreground mb-4">
+                            Try adjusting your search or filters
+                          </p>
+                          <Button onClick={clearAllFilters} variant="outline">
+                            Clear All Filters
                           </Button>
                         </div>
                       )}
-                    </>
-                  ) : (
-                    <div className="text-center py-12">
-                      <p className="text-muted-foreground">No resources found.</p>
                     </div>
-                  )}
-                </>
-              );
-            })()}
-          </TabsContent>
-
-          {/* Book Tab */}
-          <TabsContent value="book">
-            {(() => {
-              const filteredResources = getFilteredResources("book");
-              const paginatedResources = getPaginatedResources(filteredResources);
-              const totalPages = getTotalPages(filteredResources);
-
-              return (
-                <>
-                  {paginatedResources.length > 0 ? (
-                    <>
-                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {paginatedResources.map((resource) => (
-                          <ResourceCard key={resource.title} resource={resource} />
-                        ))}
-                      </div>
-                      {totalPages > 1 && (
-                        <div className="flex items-center justify-center gap-4 mt-8">
-                          <Button
-                            variant="outline"
-                            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                            disabled={currentPage === 1}
-                          >
-                            <ChevronLeft className="w-4 h-4 mr-2" />
-                            Previous
-                          </Button>
-                          <span className="text-sm font-medium">
-                            Page {currentPage} of {totalPages}
-                          </span>
-                          <Button
-                            variant="outline"
-                            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                            disabled={currentPage === totalPages}
-                          >
-                            Next
-                            <ChevronRight className="w-4 h-4 ml-2" />
-                          </Button>
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    <div className="text-center py-12">
-                      <p className="text-muted-foreground">No resources found.</p>
-                    </div>
-                  )}
-                </>
-              );
-            })()}
-          </TabsContent>
-
-          {/* Articles Tab */}
-          <TabsContent value="articles">
-            {(() => {
-              const filteredResources = getFilteredResources("articles");
-              const paginatedResources = getPaginatedResources(filteredResources);
-              const totalPages = getTotalPages(filteredResources);
-
-              return (
-                <>
-                  {paginatedResources.length > 0 ? (
-                    <>
-                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {paginatedResources.map((resource) => (
-                          <ResourceCard key={resource.title} resource={resource} />
-                        ))}
-                      </div>
-                      {totalPages > 1 && (
-                        <div className="flex items-center justify-center gap-4 mt-8">
-                          <Button
-                            variant="outline"
-                            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                            disabled={currentPage === 1}
-                          >
-                            <ChevronLeft className="w-4 h-4 mr-2" />
-                            Previous
-                          </Button>
-                          <span className="text-sm font-medium">
-                            Page {currentPage} of {totalPages}
-                          </span>
-                          <Button
-                            variant="outline"
-                            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                            disabled={currentPage === totalPages}
-                          >
-                            Next
-                            <ChevronRight className="w-4 h-4 ml-2" />
-                          </Button>
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    <div className="text-center py-12">
-                      <p className="text-muted-foreground">No resources found.</p>
-                    </div>
-                  )}
-                </>
-              );
-            })()}
-          </TabsContent>
-
-          {/* Testimonials Tab */}
-          <TabsContent value="testimonials">
-            {(() => {
-              const filteredResources = getFilteredResources("testimonials");
-              const paginatedResources = getPaginatedResources(filteredResources);
-              const totalPages = getTotalPages(filteredResources);
-
-              return (
-                <>
-                  {paginatedResources.length > 0 ? (
-                    <>
-                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {paginatedResources.map((resource) => (
-                          <ResourceCard key={resource.title} resource={resource} />
-                        ))}
-                      </div>
-                      {totalPages > 1 && (
-                        <div className="flex items-center justify-center gap-4 mt-8">
-                          <Button
-                            variant="outline"
-                            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                            disabled={currentPage === 1}
-                          >
-                            <ChevronLeft className="w-4 h-4 mr-2" />
-                            Previous
-                          </Button>
-                          <span className="text-sm font-medium">
-                            Page {currentPage} of {totalPages}
-                          </span>
-                          <Button
-                            variant="outline"
-                            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                            disabled={currentPage === totalPages}
-                          >
-                            Next
-                            <ChevronRight className="w-4 h-4 ml-2" />
-                          </Button>
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    <div className="text-center py-12">
-                      <p className="text-muted-foreground">No resources found.</p>
-                    </div>
-                  )}
-                </>
-              );
-            })()}
-          </TabsContent>
+                  </>
+                );
+              })()}
+            </TabsContent>
+          ))}
         </Tabs>
 
         {/* Member CTA */}
