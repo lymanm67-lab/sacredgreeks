@@ -46,7 +46,7 @@ verify_jwt = true
 verify_jwt = false
 
 [functions.send-referral-reward-email]
-verify_jwt = true
+verify_jwt = false
 
 [functions.send-onboarding-complete-email]
 verify_jwt = true
