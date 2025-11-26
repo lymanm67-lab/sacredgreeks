@@ -6,7 +6,7 @@ import welcomeThumbnail from '@/assets/welcome-video-thumbnail.jpg';
 export const WelcomeVideo = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   
-  const videoUrl = "https://ai.invideo.io/embed/ECsSNrYTESo";
+  const videoUrl = "https://ai.invideo.io/watch/ECsSNrYTESo";
   
   return (
     <Card className="overflow-hidden border-2 shadow-xl h-full flex flex-col">
@@ -38,12 +38,12 @@ export const WelcomeVideo = () => {
               <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors" />
             </div>
           ) : (
-            // Actual video iframe
+            // Actual video iframe - using watch URL which opens in the player
             <iframe
-              src={`${videoUrl}?autoplay=1`}
+              src={videoUrl}
               title="Welcome Video"
-              className="absolute inset-0 w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              className="absolute inset-0 w-full h-full border-0"
+              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
               allowFullScreen
             />
           )}
