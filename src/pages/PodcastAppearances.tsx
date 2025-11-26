@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Home, Mic, ExternalLink, Play, Video } from "lucide-react";
 import { ShareDocumentaryDialog } from "@/components/resources/ShareDocumentaryDialog";
+import { DocumentaryAwardsSection } from "@/components/resources/DocumentaryAwardsSection";
 
 interface PodcastEpisode {
   title: string;
@@ -141,6 +142,11 @@ const PodcastAppearances = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* Documentary Awards & Reviews */}
+        <div className="mb-12">
+          <DocumentaryAwardsSection />
+        </div>
 
         {/* Podcast Episodes Section Header */}
         <div className="mb-8">

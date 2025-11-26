@@ -9,6 +9,7 @@ import { MobileQRCode } from "@/components/MobileQRCode";
 import logo from "@/assets/sacred-greeks-logo.png";
 import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
 import { ShareDocumentaryDialog } from "@/components/resources/ShareDocumentaryDialog";
+import { DocumentaryAwardsSection } from "@/components/resources/DocumentaryAwardsSection";
 
 const features = [
   {
@@ -402,6 +403,13 @@ const Index = () => {
               </CardContent>
             </Card>
           </div>
+        </div>
+      </div>
+
+      {/* Documentary Awards & Reviews */}
+      <div className="container mx-auto px-4 py-16">
+        <div className="max-w-6xl mx-auto">
+          <DocumentaryAwardsSection />
         </div>
       </div>
 
