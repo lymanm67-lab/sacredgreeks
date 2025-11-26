@@ -44,3 +44,12 @@ verify_jwt = true
 
 [functions.recommend-resources]
 verify_jwt = false
+
+[functions.send-referral-reward-email]
+verify_jwt = true
+
+[functions.send-onboarding-complete-email]
+verify_jwt = true
+
+[functions.send-weekly-beta-update]
+verify_jwt = false
