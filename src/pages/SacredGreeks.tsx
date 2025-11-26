@@ -11,6 +11,7 @@ import { SacredGreeksAnswers } from "@/types/assessment";
 import { calculateSacredGreeksScores } from "@/lib/scoring";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 const steps = [
   { label: "Scenario", description: "Choose your situation" },
@@ -117,12 +118,14 @@ const SacredGreeks = () => {
           )}
 
           {currentStep === 3 && resultData && (
-            <SacredGreeksResults
-              resultType={resultData.resultType}
-              scores={resultData.scores}
-              answers={resultData.answers}
-              onRestart={handleRestart}
-            />
+            <ErrorBoundary>
+              <SacredGreeksResults
+                resultType={resultData.resultType}
+                scores={resultData.scores}
+                answers={resultData.answers}
+                onRestart={handleRestart}
+              />
+            </ErrorBoundary>
           )}
         </div>
       </main>

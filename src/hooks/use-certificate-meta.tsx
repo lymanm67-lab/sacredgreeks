@@ -8,7 +8,7 @@ interface CertificateMetaData {
 
 export const useCertificateMeta = (data: CertificateMetaData | null) => {
   useEffect(() => {
-    if (!data) return;
+    if (!data || !data.assessmentType || !data.scenario) return;
 
     const title = `${data.userName || 'I'} completed the Sacred Greeks Decision Guide! 🎓`;
     const description = `Assessment: ${data.assessmentType} - ${data.scenario}. Join me in this journey of faith and Greek life.`;

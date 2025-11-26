@@ -34,11 +34,30 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
   const { openExternalLink } = useExternalLinks();
   const [copied, setCopied] = useState(false);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
+  
+  // Validate data before using
+  if (!answers || !resultType || !scores) {
+    return (
+      <Card className="p-6">
+        <CardTitle>Error Loading Results</CardTitle>
+        <CardDescription className="mt-2">
+          Unable to load your assessment results. Please try again.
+        </CardDescription>
+        {onRestart && (
+          <Button onClick={onRestart} className="mt-4">
+            <RefreshCw className="w-4 h-4 mr-2" />
+            Restart Assessment
+          </Button>
+        )}
+      </Card>
+    );
+  }
+  
   const scenario = answers.scenario as Scenario;
   const content = sacredGreeksResults[scenario]?.[resultType];
 
   // Set certificate meta tags for social sharing
-  useCertificateMeta(!isSharedView ? {
+  useCertificateMeta(!isSharedView && scenario ? {
     assessmentType: resultType.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
     scenario: scenario,
     userName: user?.user_metadata?.full_name || user?.email
