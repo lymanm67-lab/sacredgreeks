@@ -143,6 +143,66 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
 
   return (
     <div className="space-y-8">
+      {/* Certificate of Completion */}
+      {!isSharedView && (
+        <Card className="border-2 border-sacred bg-gradient-to-br from-sacred via-purple-600 to-blue-600 text-white overflow-hidden">
+          <CardContent className="p-8">
+            <div className="bg-white/95 backdrop-blur rounded-lg p-8 text-center">
+              <div className="space-y-4">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sacred/10 mb-2">
+                  <Heart className="w-8 h-8 text-sacred" />
+                </div>
+                <h2 className="text-3xl font-bold text-sacred">Certificate of Completion</h2>
+                <div className="h-1 w-20 bg-sacred mx-auto rounded-full"></div>
+                <p className="text-muted-foreground text-lg">This certifies that you have completed the</p>
+                <h3 className="text-2xl font-semibold text-purple-600">Sacred Greeks Decision Guide</h3>
+                <div className="pt-4 space-y-2">
+                  <p className="text-sm text-muted-foreground">Assessment Type:</p>
+                  <p className="text-lg font-semibold text-foreground">{resultType.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} - {scenario}</p>
+                </div>
+                <p className="text-sm text-muted-foreground pt-6">
+                  Completed on {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                </p>
+              </div>
+              {user?.email && (
+                <div className="mt-6 pt-6 border-t border-border">
+                  <Button
+                    onClick={async () => {
+                      try {
+                        const { error } = await supabase.functions.invoke("send-results-email", {
+                          body: {
+                            email: user.email,
+                            resultType,
+                            scenario,
+                            content,
+                          },
+                        });
+                        if (error) throw error;
+                        toast({
+                          title: "Certificate Sent!",
+                          description: "Your certificate and results have been emailed to you.",
+                        });
+                      } catch (error) {
+                        console.error("Error sending email:", error);
+                        toast({
+                          title: "Error",
+                          description: "Failed to send email. Please try again.",
+                          variant: "destructive",
+                        });
+                      }
+                    }}
+                    className="w-full"
+                  >
+                    <Share2 className="w-4 h-4 mr-2" />
+                    Email My Certificate & Results
+                  </Button>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Headline and Intro */}
       <Card className="border-2 border-sacred/20 bg-gradient-to-br from-sacred/5 to-background">
         <CardHeader>

@@ -52,6 +52,14 @@ const SacredGreeks = () => {
 
       setResultData({ scores, resultType, answers: fullAnswers });
       setCurrentStep(3);
+
+      // Offer to send results via email if user is authenticated
+      if (user?.email) {
+        toast({
+          title: "Assessment Complete!",
+          description: "Your certificate and results are ready. Would you like them emailed?",
+        });
+      }
     } catch (error) {
       console.error('Error saving submission:', error);
       toast({
