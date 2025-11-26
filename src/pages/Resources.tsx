@@ -8,9 +8,11 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PDFViewer } from "@/components/ui/PDFViewer";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useResourceHistory } from "@/hooks/use-resource-history";
+import { useResourceRecommendations } from "@/hooks/use-resource-recommendations";
 import { formatDistanceToNow } from "date-fns";
 import { 
   BookOpen, 
@@ -30,7 +32,8 @@ import {
   Maximize2,
   Minimize2,
   Clock,
-  Trash2
+  Trash2,
+  Lightbulb
 } from "lucide-react";
 
 interface ResourceItem {
@@ -1073,6 +1076,7 @@ const Resources = () => {
   const [pdfTitle, setPdfTitle] = useState<string>("");
   const [embedUrl, setEmbedUrl] = useState<string | null>(null);
   const [embedTitle, setEmbedTitle] = useState<string>("");
+  const [currentResource, setCurrentResource] = useState<ResourceItem | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [resourceType, setResourceType] = useState<string>("all");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -1080,6 +1084,7 @@ const Resources = () => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
   const { history, addToHistory, clearHistory } = useResourceHistory();
+  const { recommendations, isLoading: loadingRecommendations, fetchRecommendations, clearRecommendations } = useResourceRecommendations();
   const itemsPerPage = 18;
 
   // Available topic tags
@@ -1122,8 +1127,11 @@ const Resources = () => {
     
     // Check if it's a Gamma.app embed
     if (resource.url.includes('gamma.app/embed/')) {
+      setCurrentResource(resource);
       setEmbedUrl(resource.url);
       setEmbedTitle(resource.title);
+      // Fetch AI recommendations
+      fetchRecommendations(resource, resources);
       return;
     }
     
@@ -1135,6 +1143,12 @@ const Resources = () => {
       // Navigate to internal route using React Router
       navigate(resource.url);
     }
+  };
+
+  const handleCloseEmbed = () => {
+    setEmbedUrl(null);
+    setCurrentResource(null);
+    clearRecommendations();
   };
 
   const toggleFullscreen = async () => {
@@ -1794,9 +1808,9 @@ const Resources = () => {
       />
 
       {/* Gamma Embed Viewer Modal */}
-      <Dialog open={!!embedUrl} onOpenChange={() => setEmbedUrl(null)}>
-        <DialogContent ref={dialogRef} className={`p-0 max-w-[95vw] h-[90vh]`}>
-          <DialogHeader className="p-4 border-b bg-card">
+      <Dialog open={!!embedUrl} onOpenChange={handleCloseEmbed}>
+        <DialogContent ref={dialogRef} className="p-0 max-w-[98vw] h-[95vh] flex flex-col">
+          <DialogHeader className="p-4 border-b bg-card flex-shrink-0">
             <div className="flex items-center justify-between">
               <DialogTitle className="text-lg font-semibold">{embedTitle}</DialogTitle>
               <div className="flex items-center gap-2">
@@ -1825,7 +1839,7 @@ const Resources = () => {
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => setEmbedUrl(null)}
+                  onClick={handleCloseEmbed}
                   className="h-8 w-8"
                 >
                   <X className="h-4 w-4" />
@@ -1833,15 +1847,84 @@ const Resources = () => {
               </div>
             </div>
           </DialogHeader>
-          <div className="w-full h-[calc(100%-64px)] bg-muted/20">
-            {embedUrl && (
-              <iframe
-                src={embedUrl}
-                className="w-full h-full border-0"
-                title={embedTitle}
-                allow="fullscreen"
-                allowFullScreen
-              />
+          
+          <div className="flex flex-1 overflow-hidden">
+            {/* Main content area */}
+            <div className="flex-1 bg-muted/20">
+              {embedUrl && (
+                <iframe
+                  src={embedUrl}
+                  className="w-full h-full border-0"
+                  title={embedTitle}
+                  allow="fullscreen"
+                  allowFullScreen
+                />
+              )}
+            </div>
+
+            {/* AI Recommendations Sidebar */}
+            {!isFullscreen && (
+              <div className="w-80 border-l bg-card overflow-y-auto flex-shrink-0">
+                <div className="p-4 border-b bg-muted/30">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Lightbulb className="w-5 h-5 text-sacred" />
+                    <h3 className="font-semibold">Related Resources</h3>
+                  </div>
+                  <p className="text-xs text-muted-foreground">AI-powered recommendations</p>
+                </div>
+                
+                <div className="p-4 space-y-3">
+                  {loadingRecommendations ? (
+                    <>
+                      {[1, 2, 3].map((i) => (
+                        <Card key={i} className="p-3">
+                          <Skeleton className="h-4 w-3/4 mb-2" />
+                          <Skeleton className="h-3 w-full mb-1" />
+                          <Skeleton className="h-3 w-2/3" />
+                        </Card>
+                      ))}
+                    </>
+                  ) : recommendations.length > 0 ? (
+                    <>
+                      {recommendations.map((rec, index) => {
+                        const Icon = rec.icon;
+                        return (
+                          <Card
+                            key={index}
+                            className="p-3 cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5 hover:border-sacred/50"
+                            onClick={() => {
+                              handleCloseEmbed();
+                              setTimeout(() => handleResourceClick(rec), 100);
+                            }}
+                          >
+                            <div className="flex items-start gap-2 mb-2">
+                              <div className="w-8 h-8 rounded-lg bg-sacred/10 flex items-center justify-center flex-shrink-0">
+                                <Icon className="w-4 h-4 text-sacred" />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <h4 className="text-sm font-semibold leading-tight mb-1">{rec.title}</h4>
+                                <Badge variant="secondary" className="text-xs">
+                                  {rec.category}
+                                </Badge>
+                              </div>
+                            </div>
+                            {rec.reason && (
+                              <p className="text-xs text-muted-foreground leading-relaxed">
+                                {rec.reason}
+                              </p>
+                            )}
+                          </Card>
+                        );
+                      })}
+                    </>
+                  ) : (
+                    <div className="text-center py-8 text-muted-foreground">
+                      <Sparkles className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                      <p className="text-sm">No recommendations available</p>
+                    </div>
+                  )}
+                </div>
+              </div>
             )}
           </div>
         </DialogContent>
