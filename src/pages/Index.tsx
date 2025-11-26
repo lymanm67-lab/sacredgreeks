@@ -33,10 +33,10 @@ const features = [
     title: "5 Persona Assessment",
     description: "Discover your unique 5 Persona Types Architecture with this comprehensive assessment",
     icon: Heart,
-    link: "https://drlymanmontgomery.involve.me/fmmpa",
+    link: "/assessment/fmmpa",
     color: "text-sacred",
-    isExternal: true,
-    useModal: true,
+    isExternal: false,
+    useModal: false,
     requiresAuth: false,
   },
   {
