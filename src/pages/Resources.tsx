@@ -468,7 +468,7 @@ const resources: ResourceItem[] = [
   {
     title: "Integrity Under Pressure Playbook",
     description: "A practical ethics guide for hot moments on campus and in life using the P.R.O.O.F. framework",
-    url: "https://gamma.app/docs/Integrity-Under-Pressure-752n7nfkgl1wn7w",
+    url: "https://gamma.app/embed/752n7nfkgl1wn7w",
     icon: BookOpen,
     requiresAuth: false,
     category: "articles",
@@ -478,7 +478,7 @@ const resources: ResourceItem[] = [
   {
     title: "Christian Greek Life Study Guide",
     description: "Comprehensive study guide for integrating Christian faith with Greek life participation",
-    url: "https://gamma.app/docs/Christian-Greek-Life-Study-Guide-ihr8fq0g089n32t",
+    url: "https://gamma.app/embed/ihr8fq0g089n32t",
     icon: BookOpen,
     requiresAuth: false,
     badge: "Featured",
@@ -488,7 +488,7 @@ const resources: ResourceItem[] = [
   {
     title: "Sacred Comfort: Praying for Greeks in Tough Times",
     description: "How to pray for and walk with fraternity and sorority members during difficult seasons",
-    url: "https://gamma.app/docs/Sacred-Comfort-How-To-Pray-For-And-Walk-With-Fraternity-And-Sorority-ccgepyu7je8fpav",
+    url: "https://gamma.app/embed/ccgepyu7je8fpav",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -497,7 +497,7 @@ const resources: ResourceItem[] = [
   {
     title: "Servant Leadership in Greek Life",
     description: "How to run your chapter and service projects like Jesus with biblical principles",
-    url: "https://gamma.app/docs/Servant-Leadership-in-Greek-Life-How-to-Run-Your-Chapter-and-Service-roah3o2oby0g55s",
+    url: "https://gamma.app/embed/roah3o2oby0g55s",
     icon: Sparkles,
     requiresAuth: false,
     category: "articles",
@@ -506,7 +506,7 @@ const resources: ResourceItem[] = [
   {
     title: "Sacred Service: Planning Community Projects",
     description: "A guide for planning and executing meaningful community service projects with your chapter",
-    url: "https://gamma.app/docs/Sacred-Service-Planning-Community-Projects-with-Your-Chapter-28f7a9bc5w5jghb",
+    url: "https://gamma.app/embed/28f7a9bc5w5jghb",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -515,7 +515,7 @@ const resources: ResourceItem[] = [
   {
     title: "Robert's Rules of Order in Chapter Meetings",
     description: "A practical guide to running effective and organized chapter meetings using parliamentary procedure",
-    url: "https://gamma.app/docs/How-To-Use-Roberts-Rules-of-Order-in-Chapter-Meetings-viytfotsasvx46d",
+    url: "https://gamma.app/embed/viytfotsasvx46d",
     icon: FileText,
     requiresAuth: false,
     category: "articles",
@@ -524,7 +524,7 @@ const resources: ResourceItem[] = [
   {
     title: "Sacred Conversations: Leading Greeks to Christ",
     description: "Using the Roman Road to share the Gospel with fraternity and sorority members",
-    url: "https://gamma.app/docs/Sacred-Conversations-Leading-Greek-Members-to-Christ-Using-the-Roman-ekkmlx5d1615hlv",
+    url: "https://gamma.app/embed/ekkmlx5d1615hlv",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -533,7 +533,7 @@ const resources: ResourceItem[] = [
   {
     title: "Cultural Reflection Devotional for the Holidays",
     description: "Sacred Greeks devotional for reflecting on culture and faith during the holiday season",
-    url: "https://gamma.app/docs/Sacred-Greeks-Cultural-Reflection-Devotional-for-the-Holidays-uudch3osmv3ss77",
+    url: "https://gamma.app/embed/uudch3osmv3ss77",
     icon: Sparkles,
     requiresAuth: false,
     category: "articles",
@@ -542,7 +542,7 @@ const resources: ResourceItem[] = [
   {
     title: "7-Days to Unshakeable Focus",
     description: "A week-long devotional guide to develop spiritual focus and mental clarity",
-    url: "https://gamma.app/docs/7-Days-to-Unshakeable-Focus-3pebfj1ub3rqkue",
+    url: "https://gamma.app/embed/3pebfj1ub3rqkue",
     icon: CheckCircle,
     requiresAuth: false,
     category: "articles",
@@ -551,7 +551,7 @@ const resources: ResourceItem[] = [
   {
     title: "5 Steps to Retain & Engage Your Staff",
     description: "Best practices for retaining chapter staff and staying audit ready with strong leadership",
-    url: "https://gamma.app/docs/5-Steps-to-Retain-and-Engage-Your-Staff-While-Staying-Audit-Ready-e7ydcjtrr2ujq0b",
+    url: "https://gamma.app/embed/e7ydcjtrr2ujq0b",
     icon: FileText,
     requiresAuth: false,
     category: "articles",
@@ -560,7 +560,7 @@ const resources: ResourceItem[] = [
   {
     title: "Defending Your Faith and Fraternity",
     description: "How to respond when church leaders challenge your Greek life participation",
-    url: "https://gamma.app/docs/How-to-Defend-Your-Faith-and-Fraternity-When-Church-Leaders-Challenge-um32h0hd55s8c6v",
+    url: "https://gamma.app/embed/um32h0hd55s8c6v",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -569,7 +569,7 @@ const resources: ResourceItem[] = [
   {
     title: "Are BGLOs Sinful? A Biblical Response",
     description: "A biblical perspective addressing common concerns about Black Greek Letter Organizations",
-    url: "https://gamma.app/docs/Are-BGLOs-Sinful-A-Biblical-Response-for-Christians-qj85c0up8fdigh5",
+    url: "https://gamma.app/embed/qj85c0up8fdigh5",
     icon: BookOpen,
     requiresAuth: false,
     category: "articles",
@@ -578,7 +578,7 @@ const resources: ResourceItem[] = [
   {
     title: "Should Christians Denounce BGLOs?",
     description: "Exploring truth, trauma, and theology in the discussion about Black Greek Letter Organizations",
-    url: "https://gamma.app/docs/Should-Christians-Denounce-BGLOs-Truth-Trauma-and-Theology-un3ueaqjhbjf8y2",
+    url: "https://gamma.app/embed/un3ueaqjhbjf8y2",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -587,7 +587,7 @@ const resources: ResourceItem[] = [
   {
     title: "Greek Life, Social Justice, And Faith",
     description: "How BGLOs can be Kingdom tools for advancing social justice and faith",
-    url: "https://gamma.app/docs/Greek-Life-Social-Justice-And-Faith-How-BGLOs-Can-Be-Kingdom-Tools-97rakhcw3n90dt0",
+    url: "https://gamma.app/embed/97rakhcw3n90dt0",
     icon: Sparkles,
     requiresAuth: false,
     category: "articles",
@@ -596,7 +596,7 @@ const resources: ResourceItem[] = [
   {
     title: "Why I Did Not Renounce My BGLO",
     description: "A personal testimony and pastoral guidance on remaining in Black Greek Letter Organizations as a Christian",
-    url: "https://gamma.app/docs/Why-This-Christian-Did-Not-Renounce-My-Black-Greek-Letter-Organization-ft5vd5wc4gdfmuv",
+    url: "https://gamma.app/embed/ft5vd5wc4gdfmuv",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -605,7 +605,7 @@ const resources: ResourceItem[] = [
   {
     title: "How Not to Lose Your Christian Identity After Intake",
     description: "Practical guidance for maintaining your faith and Christian identity throughout the intake process",
-    url: "https://gamma.app/docs/How-Not-to-Lose-Your-Christian-Identity-After-Intake-6lwq13dmgrs5ney",
+    url: "https://gamma.app/embed/6lwq13dmgrs5ney",
     icon: CheckCircle,
     requiresAuth: false,
     category: "articles",
@@ -614,7 +614,7 @@ const resources: ResourceItem[] = [
   {
     title: "When Leaving Makes Sense",
     description: "A Christian's guide to exiting a Greek organization gracefully without destroying relationships",
-    url: "https://gamma.app/docs/When-Leaving-Makes-Sense-A-Christians-Guide-to-Exiting-a-Greek-Organization-cyi9l2rq808g6r6",
+    url: "https://gamma.app/embed/cyi9l2rq808g6r6",
     icon: FileText,
     requiresAuth: false,
     category: "articles",
@@ -623,7 +623,7 @@ const resources: ResourceItem[] = [
   {
     title: "How to Leave Without Burning Bridges Checklist",
     description: "Practical checklist for leaving your Greek organization while preserving brotherhood and sisterhood bonds",
-    url: "https://gamma.app/docs/How-to-Leave-Without-Burning-Brotherhood-or-Sisterhood-Bridges-Checklist-p2gg3fi0f1bw4tr",
+    url: "https://gamma.app/embed/p2gg3fi0f1bw4tr",
     icon: CheckCircle,
     requiresAuth: false,
     category: "articles",
@@ -632,7 +632,7 @@ const resources: ResourceItem[] = [
   {
     title: "Symbolism in BGLO Rituals: Harmless or Spiritual Danger?",
     description: "A guide for Christians and church leaders examining symbolism in Black Greek rituals",
-    url: "https://gamma.app/docs/Symbolism-in-BGLO-Rituals-Harmless-or-Spiritual-Danger-A-Guide-for-nftyg892145844a",
+    url: "https://gamma.app/embed/nftyg892145844a",
     icon: BookOpen,
     requiresAuth: false,
     category: "articles",
@@ -641,7 +641,7 @@ const resources: ResourceItem[] = [
   {
     title: "Should Members Take Oaths For BGLOs?",
     description: "Christian guidance on taking oaths for Black Greek Letter Organizations",
-    url: "https://gamma.app/docs/Christian-Guidance-Should-Members-Take-Oaths-For-Black-Greek-Letter-y630omdzx2sp7z3",
+    url: "https://gamma.app/embed/y630omdzx2sp7z3",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -650,7 +650,7 @@ const resources: ResourceItem[] = [
   {
     title: "Dr. Lyman A. Montgomery Signature Greek Life Series",
     description: "Comprehensive teaching series on integrating Christian faith with Greek life participation",
-    url: "https://gamma.app/docs/Dr-Lyman-A-Montgomery-Signature-Greek-Life-Series-hfn73itjrx2l4wx",
+    url: "https://gamma.app/embed/hfn73itjrx2l4wx",
     icon: BookOpen,
     requiresAuth: false,
     badge: "Featured",
@@ -660,7 +660,7 @@ const resources: ResourceItem[] = [
   {
     title: "Practical Frameworks & Checklists",
     description: "Essential frameworks and checklists for navigating Greek life as a Christian",
-    url: "https://gamma.app/docs/Practical-Frameworks-Checklists-kvq0rliv8297moo",
+    url: "https://gamma.app/embed/kvq0rliv8297moo",
     icon: CheckCircle,
     requiresAuth: false,
     category: "articles",
@@ -669,7 +669,7 @@ const resources: ResourceItem[] = [
   {
     title: "CROSS Guide for Greek Life",
     description: "Comprehensive guide using the CROSS framework for Christian Greek life participation",
-    url: "https://gamma.app/docs/CROSS-Guide-for-Greek-Life-ug6sn2qq95613dg",
+    url: "https://gamma.app/embed/ug6sn2qq95613dg",
     icon: Sparkles,
     requiresAuth: false,
     category: "articles",
@@ -678,7 +678,7 @@ const resources: ResourceItem[] = [
   {
     title: "How to Be P.I.L.L.A.R. within Your Greek Organization",
     description: "Framework for being a pillar of faith and leadership within your Greek letter organization",
-    url: "https://gamma.app/docs/How-to-Be-PILLAR-within-Your-Greek-Letter-Organization-ctdbb60tc09ez0e",
+    url: "https://gamma.app/embed/ctdbb60tc09ez0e",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -687,7 +687,7 @@ const resources: ResourceItem[] = [
   {
     title: "How to Handle Tensions Within Your Greek Organization",
     description: "Practical guidance for navigating and resolving conflicts within your Greek letter organization",
-    url: "https://gamma.app/docs/How-to-Handle-Tensions-Within-Your-Greek-Letter-Organization-hoaqqjovrxsxpve",
+    url: "https://gamma.app/embed/hoaqqjovrxsxpve",
     icon: FileText,
     requiresAuth: false,
     category: "articles",
@@ -696,7 +696,7 @@ const resources: ResourceItem[] = [
   {
     title: "Christian BGLO Redemption Guide",
     description: "A simple guide to repentance, repair, and renewal for Christians in Black Greek Letter Organizations",
-    url: "https://gamma.app/docs/Christian-BGLO-Redemption-A-Simple-Guide-to-Repentance-Repair-and-Renewal-6bfy5y35wg4bezt",
+    url: "https://gamma.app/embed/6bfy5y35wg4bezt",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -705,7 +705,7 @@ const resources: ResourceItem[] = [
   {
     title: "Inclusive Environment Toolkit",
     description: "Tools and strategies for creating inclusive and welcoming environments within Greek organizations",
-    url: "https://gamma.app/docs/Inclusive-Environment-Toolkit-czjmm4li1c9jp0f",
+    url: "https://gamma.app/embed/czjmm4li1c9jp0f",
     icon: Sparkles,
     requiresAuth: false,
     category: "articles",
@@ -714,7 +714,7 @@ const resources: ResourceItem[] = [
   {
     title: "Redeemed Greeks",
     description: "A vision for redemption and renewal within Greek letter organizations through Christ",
-    url: "https://gamma.app/docs/Redeemed-Greeks-l28kd2r827ynm99",
+    url: "https://gamma.app/embed/l28kd2r827ynm99",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -723,7 +723,7 @@ const resources: ResourceItem[] = [
   {
     title: "Why Some Call BGLOs Demonic",
     description: "Understanding and addressing concerns about spiritual warfare claims regarding Black Greek Letter Organizations",
-    url: "https://gamma.app/docs/Why-Some-Call-Black-Greek-Letter-Organizations-Demonic-4exmqlq3k79oepv",
+    url: "https://gamma.app/embed/4exmqlq3k79oepv",
     icon: BookOpen,
     requiresAuth: false,
     category: "articles",
@@ -732,7 +732,7 @@ const resources: ResourceItem[] = [
   {
     title: "Is Being Christian & Greek 'Incompatible'?",
     description: "Setting the record straight on the compatibility of Christian faith and Greek life participation",
-    url: "https://gamma.app/docs/Is-Being-Christian-Greek-Incompatible-Time-to-Set-the-Record-Straight-t4agxb757qkugvr",
+    url: "https://gamma.app/embed/t4agxb757qkugvr",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -741,7 +741,7 @@ const resources: ResourceItem[] = [
   {
     title: "Your Chapter, God's Canvas",
     description: "Living out your faith authentically within your Greek letter organization",
-    url: "https://gamma.app/docs/Your-Chapter-Gods-Canvas-Living-Out-Your-Faith-Authentically-sgrjn53235fsej2",
+    url: "https://gamma.app/embed/sgrjn53235fsej2",
     icon: Sparkles,
     requiresAuth: false,
     category: "articles",
@@ -750,7 +750,7 @@ const resources: ResourceItem[] = [
   {
     title: "Redeem Your Letters",
     description: "A powerful message about redeeming your Greek letters and bringing glory to God through your organization",
-    url: "https://gamma.app/docs/Redeem-Your-Letters-trkhw9krqh3l4cs",
+    url: "https://gamma.app/embed/trkhw9krqh3l4cs",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -759,7 +759,7 @@ const resources: ResourceItem[] = [
   {
     title: "Christian Greek Life Power Guide",
     description: "Comprehensive power guide for navigating Greek life as a committed Christian",
-    url: "https://gamma.app/docs/Christian-Greek-Life-Power-Guide-6026roc21m7i8gc",
+    url: "https://gamma.app/embed/6026roc21m7i8gc",
     icon: BookOpen,
     requiresAuth: false,
     badge: "Featured",
@@ -827,7 +827,7 @@ const resources: ResourceItem[] = [
   {
     title: "Repentance, Repair & Renewal Checklist",
     description: "A spiritual guide for aligning Greek life with devotion to Christ",
-    url: "https://gamma.app/docs/Christian-Black-Greek-Life-Repentance-Repair-and-Renewal-Checklis-12fobc2w0gro04i",
+    url: "https://gamma.app/embed/12fobc2w0gro04i",
     icon: CheckCircle,
     requiresAuth: false,
     category: "articles",
@@ -836,7 +836,7 @@ const resources: ResourceItem[] = [
   {
     title: "Integrity Under Pressure Playbook",
     description: "A practical ethics guide for hot moments on campus and in life using the P.R.O.O.F. framework",
-    url: "https://gamma.app/docs/Integrity-Under-Pressure-752n7nfkgl1wn7w",
+    url: "https://gamma.app/embed/752n7nfkgl1wn7w",
     icon: BookOpen,
     requiresAuth: false,
     category: "articles",
@@ -845,7 +845,7 @@ const resources: ResourceItem[] = [
   {
     title: "Christian Greek Life Study Guide",
     description: "Comprehensive study guide for integrating Christian faith with Greek life participation",
-    url: "https://gamma.app/docs/Christian-Greek-Life-Study-Guide-ihr8fq0g089n32t",
+    url: "https://gamma.app/embed/ihr8fq0g089n32t",
     icon: BookOpen,
     requiresAuth: false,
     badge: "Featured",
@@ -854,7 +854,7 @@ const resources: ResourceItem[] = [
   {
     title: "Sacred Comfort: Praying for Greeks in Tough Times",
     description: "How to pray for and walk with fraternity and sorority members during difficult seasons",
-    url: "https://gamma.app/docs/Sacred-Comfort-How-To-Pray-For-And-Walk-With-Fraternity-And-Sorority-ccgepyu7je8fpav",
+    url: "https://gamma.app/embed/ccgepyu7je8fpav",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -862,7 +862,7 @@ const resources: ResourceItem[] = [
   {
     title: "Servant Leadership in Greek Life",
     description: "How to run your chapter and service projects like Jesus with biblical principles",
-    url: "https://gamma.app/docs/Servant-Leadership-in-Greek-Life-How-to-Run-Your-Chapter-and-Service-roah3o2oby0g55s",
+    url: "https://gamma.app/embed/roah3o2oby0g55s",
     icon: Sparkles,
     requiresAuth: false,
     category: "articles",
@@ -870,7 +870,7 @@ const resources: ResourceItem[] = [
   {
     title: "Sacred Service: Planning Community Projects",
     description: "A guide for planning and executing meaningful community service projects with your chapter",
-    url: "https://gamma.app/docs/Sacred-Service-Planning-Community-Projects-with-Your-Chapter-28f7a9bc5w5jghb",
+    url: "https://gamma.app/embed/28f7a9bc5w5jghb",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -878,7 +878,7 @@ const resources: ResourceItem[] = [
   {
     title: "Robert's Rules of Order in Chapter Meetings",
     description: "A practical guide to running effective and organized chapter meetings using parliamentary procedure",
-    url: "https://gamma.app/docs/How-To-Use-Roberts-Rules-of-Order-in-Chapter-Meetings-viytfotsasvx46d",
+    url: "https://gamma.app/embed/viytfotsasvx46d",
     icon: FileText,
     requiresAuth: false,
     category: "articles",
@@ -886,7 +886,7 @@ const resources: ResourceItem[] = [
   {
     title: "Sacred Conversations: Leading Greeks to Christ",
     description: "Using the Roman Road to share the Gospel with fraternity and sorority members",
-    url: "https://gamma.app/docs/Sacred-Conversations-Leading-Greek-Members-to-Christ-Using-the-Roman-ekkmlx5d1615hlv",
+    url: "https://gamma.app/embed/ekkmlx5d1615hlv",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -894,7 +894,7 @@ const resources: ResourceItem[] = [
   {
     title: "Cultural Reflection Devotional for the Holidays",
     description: "Sacred Greeks devotional for reflecting on culture and faith during the holiday season",
-    url: "https://gamma.app/docs/Sacred-Greeks-Cultural-Reflection-Devotional-for-the-Holidays-uudch3osmv3ss77",
+    url: "https://gamma.app/embed/uudch3osmv3ss77",
     icon: Sparkles,
     requiresAuth: false,
     category: "articles",
@@ -902,7 +902,7 @@ const resources: ResourceItem[] = [
   {
     title: "7-Days to Unshakeable Focus",
     description: "A week-long devotional guide to develop spiritual focus and mental clarity",
-    url: "https://gamma.app/docs/7-Days-to-Unshakeable-Focus-3pebfj1ub3rqkue",
+    url: "https://gamma.app/embed/3pebfj1ub3rqkue",
     icon: CheckCircle,
     requiresAuth: false,
     category: "articles",
@@ -910,7 +910,7 @@ const resources: ResourceItem[] = [
   {
     title: "5 Steps to Retain & Engage Your Staff",
     description: "Best practices for retaining chapter staff and staying audit ready with strong leadership",
-    url: "https://gamma.app/docs/5-Steps-to-Retain-and-Engage-Your-Staff-While-Staying-Audit-Ready-e7ydcjtrr2ujq0b",
+    url: "https://gamma.app/embed/e7ydcjtrr2ujq0b",
     icon: FileText,
     requiresAuth: false,
     category: "articles",
@@ -918,7 +918,7 @@ const resources: ResourceItem[] = [
   {
     title: "Defending Your Faith and Fraternity",
     description: "How to respond when church leaders challenge your Greek life participation",
-    url: "https://gamma.app/docs/How-to-Defend-Your-Faith-and-Fraternity-When-Church-Leaders-Challenge-um32h0hd55s8c6v",
+    url: "https://gamma.app/embed/um32h0hd55s8c6v",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -926,7 +926,7 @@ const resources: ResourceItem[] = [
   {
     title: "Are BGLOs Sinful? A Biblical Response",
     description: "A biblical perspective addressing common concerns about Black Greek Letter Organizations",
-    url: "https://gamma.app/docs/Are-BGLOs-Sinful-A-Biblical-Response-for-Christians-qj85c0up8fdigh5",
+    url: "https://gamma.app/embed/qj85c0up8fdigh5",
     icon: BookOpen,
     requiresAuth: false,
     category: "articles",
@@ -934,7 +934,7 @@ const resources: ResourceItem[] = [
   {
     title: "Should Christians Denounce BGLOs?",
     description: "Exploring truth, trauma, and theology in the discussion about Black Greek Letter Organizations",
-    url: "https://gamma.app/docs/Should-Christians-Denounce-BGLOs-Truth-Trauma-and-Theology-un3ueaqjhbjf8y2",
+    url: "https://gamma.app/embed/un3ueaqjhbjf8y2",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -942,7 +942,7 @@ const resources: ResourceItem[] = [
   {
     title: "Greek Life, Social Justice, And Faith",
     description: "How BGLOs can be Kingdom tools for advancing social justice and faith",
-    url: "https://gamma.app/docs/Greek-Life-Social-Justice-And-Faith-How-BGLOs-Can-Be-Kingdom-Tools-97rakhcw3n90dt0",
+    url: "https://gamma.app/embed/97rakhcw3n90dt0",
     icon: Sparkles,
     requiresAuth: false,
     category: "articles",
@@ -950,7 +950,7 @@ const resources: ResourceItem[] = [
   {
     title: "Why I Did Not Renounce My BGLO",
     description: "A personal testimony and pastoral guidance on remaining in Black Greek Letter Organizations as a Christian",
-    url: "https://gamma.app/docs/Why-This-Christian-Did-Not-Renounce-My-Black-Greek-Letter-Organization-ft5vd5wc4gdfmuv",
+    url: "https://gamma.app/embed/ft5vd5wc4gdfmuv",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -958,7 +958,7 @@ const resources: ResourceItem[] = [
   {
     title: "How Not to Lose Your Christian Identity After Intake",
     description: "Practical guidance for maintaining your faith and Christian identity throughout the intake process",
-    url: "https://gamma.app/docs/How-Not-to-Lose-Your-Christian-Identity-After-Intake-6lwq13dmgrs5ney",
+    url: "https://gamma.app/embed/6lwq13dmgrs5ney",
     icon: CheckCircle,
     requiresAuth: false,
     category: "articles",
@@ -966,7 +966,7 @@ const resources: ResourceItem[] = [
   {
     title: "When Leaving Makes Sense",
     description: "A Christian's guide to exiting a Greek organization gracefully without destroying relationships",
-    url: "https://gamma.app/docs/When-Leaving-Makes-Sense-A-Christians-Guide-to-Exiting-a-Greek-Organization-cyi9l2rq808g6r6",
+    url: "https://gamma.app/embed/cyi9l2rq808g6r6",
     icon: FileText,
     requiresAuth: false,
     category: "articles",
@@ -974,7 +974,7 @@ const resources: ResourceItem[] = [
   {
     title: "How to Leave Without Burning Bridges Checklist",
     description: "Practical checklist for leaving your Greek organization while preserving brotherhood and sisterhood bonds",
-    url: "https://gamma.app/docs/How-to-Leave-Without-Burning-Brotherhood-or-Sisterhood-Bridges-Checklist-p2gg3fi0f1bw4tr",
+    url: "https://gamma.app/embed/p2gg3fi0f1bw4tr",
     icon: CheckCircle,
     requiresAuth: false,
     category: "articles",
@@ -982,7 +982,7 @@ const resources: ResourceItem[] = [
   {
     title: "Symbolism in BGLO Rituals: Harmless or Spiritual Danger?",
     description: "A guide for Christians and church leaders examining symbolism in Black Greek rituals",
-    url: "https://gamma.app/docs/Symbolism-in-BGLO-Rituals-Harmless-or-Spiritual-Danger-A-Guide-for-nftyg892145844a",
+    url: "https://gamma.app/embed/nftyg892145844a",
     icon: BookOpen,
     requiresAuth: false,
     category: "articles",
@@ -990,7 +990,7 @@ const resources: ResourceItem[] = [
   {
     title: "Should Members Take Oaths For BGLOs?",
     description: "Christian guidance on taking oaths for Black Greek Letter Organizations",
-    url: "https://gamma.app/docs/Christian-Guidance-Should-Members-Take-Oaths-For-Black-Greek-Letter-y630omdzx2sp7z3",
+    url: "https://gamma.app/embed/y630omdzx2sp7z3",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -998,7 +998,7 @@ const resources: ResourceItem[] = [
   {
     title: "Dr. Lyman A. Montgomery Signature Greek Life Series",
     description: "Comprehensive teaching series on integrating Christian faith with Greek life participation",
-    url: "https://gamma.app/docs/Dr-Lyman-A-Montgomery-Signature-Greek-Life-Series-hfn73itjrx2l4wx",
+    url: "https://gamma.app/embed/hfn73itjrx2l4wx",
     icon: BookOpen,
     requiresAuth: false,
     badge: "Featured",
@@ -1007,7 +1007,7 @@ const resources: ResourceItem[] = [
   {
     title: "Practical Frameworks & Checklists",
     description: "Essential frameworks and checklists for navigating Greek life as a Christian",
-    url: "https://gamma.app/docs/Practical-Frameworks-Checklists-kvq0rliv8297moo",
+    url: "https://gamma.app/embed/kvq0rliv8297moo",
     icon: CheckCircle,
     requiresAuth: false,
     category: "articles",
@@ -1015,7 +1015,7 @@ const resources: ResourceItem[] = [
   {
     title: "CROSS Guide for Greek Life",
     description: "Comprehensive guide using the CROSS framework for Christian Greek life participation",
-    url: "https://gamma.app/docs/CROSS-Guide-for-Greek-Life-ug6sn2qq95613dg",
+    url: "https://gamma.app/embed/ug6sn2qq95613dg",
     icon: Sparkles,
     requiresAuth: false,
     category: "articles",
@@ -1023,7 +1023,7 @@ const resources: ResourceItem[] = [
   {
     title: "How to Be P.I.L.L.A.R. within Your Greek Organization",
     description: "Framework for being a pillar of faith and leadership within your Greek letter organization",
-    url: "https://gamma.app/docs/How-to-Be-PILLAR-within-Your-Greek-Letter-Organization-ctdbb60tc09ez0e",
+    url: "https://gamma.app/embed/ctdbb60tc09ez0e",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -1031,7 +1031,7 @@ const resources: ResourceItem[] = [
   {
     title: "How to Handle Tensions Within Your Greek Organization",
     description: "Practical guidance for navigating and resolving conflicts within your Greek letter organization",
-    url: "https://gamma.app/docs/How-to-Handle-Tensions-Within-Your-Greek-Letter-Organization-hoaqqjovrxsxpve",
+    url: "https://gamma.app/embed/hoaqqjovrxsxpve",
     icon: FileText,
     requiresAuth: false,
     category: "articles",
@@ -1039,7 +1039,7 @@ const resources: ResourceItem[] = [
   {
     title: "Christian BGLO Redemption Guide",
     description: "A simple guide to repentance, repair, and renewal for Christians in Black Greek Letter Organizations",
-    url: "https://gamma.app/docs/Christian-BGLO-Redemption-A-Simple-Guide-to-Repentance-Repair-and-Renewal-6bfy5y35wg4bezt",
+    url: "https://gamma.app/embed/6bfy5y35wg4bezt",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -1047,7 +1047,7 @@ const resources: ResourceItem[] = [
   {
     title: "Inclusive Environment Toolkit",
     description: "Tools and strategies for creating inclusive and welcoming environments within Greek organizations",
-    url: "https://gamma.app/docs/Inclusive-Environment-Toolkit-czjmm4li1c9jp0f",
+    url: "https://gamma.app/embed/czjmm4li1c9jp0f",
     icon: Sparkles,
     requiresAuth: false,
     category: "articles",
@@ -1055,7 +1055,7 @@ const resources: ResourceItem[] = [
   {
     title: "Redeemed Greeks",
     description: "A vision for redemption and renewal within Greek letter organizations through Christ",
-    url: "https://gamma.app/docs/Redeemed-Greeks-l28kd2r827ynm99",
+    url: "https://gamma.app/embed/l28kd2r827ynm99",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -1063,7 +1063,7 @@ const resources: ResourceItem[] = [
   {
     title: "Why Some Call BGLOs Demonic",
     description: "Understanding and addressing concerns about spiritual warfare claims regarding Black Greek Letter Organizations",
-    url: "https://gamma.app/docs/Why-Some-Call-Black-Greek-Letter-Organizations-Demonic-4exmqlq3k79oepv",
+    url: "https://gamma.app/embed/4exmqlq3k79oepv",
     icon: BookOpen,
     requiresAuth: false,
     category: "articles",
@@ -1071,7 +1071,7 @@ const resources: ResourceItem[] = [
   {
     title: "Is Being Christian & Greek 'Incompatible'?",
     description: "Setting the record straight on the compatibility of Christian faith and Greek life participation",
-    url: "https://gamma.app/docs/Is-Being-Christian-Greek-Incompatible-Time-to-Set-the-Record-Straight-t4agxb757qkugvr",
+    url: "https://gamma.app/embed/t4agxb757qkugvr",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -1079,7 +1079,7 @@ const resources: ResourceItem[] = [
   {
     title: "Your Chapter, God's Canvas",
     description: "Living out your faith authentically within your Greek letter organization",
-    url: "https://gamma.app/docs/Your-Chapter-Gods-Canvas-Living-Out-Your-Faith-Authentically-sgrjn53235fsej2",
+    url: "https://gamma.app/embed/sgrjn53235fsej2",
     icon: Sparkles,
     requiresAuth: false,
     category: "articles",
@@ -1087,7 +1087,7 @@ const resources: ResourceItem[] = [
   {
     title: "Redeem Your Letters",
     description: "A powerful message about redeeming your Greek letters and bringing glory to God through your organization",
-    url: "https://gamma.app/docs/Redeem-Your-Letters-trkhw9krqh3l4cs",
+    url: "https://gamma.app/embed/trkhw9krqh3l4cs",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
