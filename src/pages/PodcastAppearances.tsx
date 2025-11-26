@@ -30,6 +30,14 @@ const podcastEpisodes: PodcastEpisode[] = [
     date: "2024",
     platform: "YouTube",
     topics: ["Christian Values", "Greek Organizations", "Theology", "Student Ministry"]
+  },
+  {
+    title: "Faith, Leadership & Greek Life Discussion",
+    description: "Dr. Lyman Montgomery explores the intersection of Christian leadership principles and Greek life culture, offering practical wisdom for students seeking to honor God while serving in their fraternity or sorority.",
+    embedUrl: "https://www.youtube.com/embed/8Qi7SxpzMmg?si=uA8kAXyDiJ7_flSf",
+    date: "2024",
+    platform: "YouTube",
+    topics: ["Faith", "Leadership", "Greek Culture", "Service"]
   }
 ];
 
