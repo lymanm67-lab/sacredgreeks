@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Home, Mic, ExternalLink, Play, Video } from "lucide-react";
+import { ShareDocumentaryDialog } from "@/components/resources/ShareDocumentaryDialog";
 
 interface PodcastEpisode {
   title: string;
@@ -109,18 +110,21 @@ const PodcastAppearances = () => {
                   Journey through authentic stories of hope, healing, and transformation for Christians 
                   navigating fraternity and sorority membership.
                 </p>
-                <a 
-                  href="https://www.unmaskinghopethemovie.com/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-block"
-                >
-                  <Button size="lg" className="bg-sacred hover:bg-sacred/90 text-sacred-foreground">
-                    <Video className="w-5 h-5 mr-2" />
-                    Watch Now
-                    <ExternalLink className="w-4 h-4 ml-2" />
-                  </Button>
-                </a>
+                <div className="flex flex-wrap gap-3">
+                  <a 
+                    href="https://www.unmaskinghopethemovie.com/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-block"
+                  >
+                    <Button size="lg" className="bg-sacred hover:bg-sacred/90 text-sacred-foreground">
+                      <Video className="w-5 h-5 mr-2" />
+                      Watch Now
+                      <ExternalLink className="w-4 h-4 ml-2" />
+                    </Button>
+                  </a>
+                  <ShareDocumentaryDialog />
+                </div>
               </div>
             </div>
           </CardContent>
