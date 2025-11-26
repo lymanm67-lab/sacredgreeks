@@ -8,6 +8,7 @@ import { Testimonials } from "@/components/Testimonials";
 import { MobileQRCode } from "@/components/MobileQRCode";
 import logo from "@/assets/sacred-greeks-logo.png";
 import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
+import { ShareDocumentaryDialog } from "@/components/resources/ShareDocumentaryDialog";
 
 const features = [
   {
@@ -355,6 +356,13 @@ const Index = () => {
                     Watch Now
                   </Button>
                 </a>
+                <ShareDocumentaryDialog 
+                  trigger={
+                    <Button size="lg" variant="outline" className="w-full sm:w-auto">
+                      Share Documentary
+                    </Button>
+                  }
+                />
                 <Link to="/resources">
                   <Button size="lg" variant="outline" className="w-full sm:w-auto">
                     Explore Resources
