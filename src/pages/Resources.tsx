@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useExternalLinks } from "@/hooks/use-external-links";
@@ -10,6 +10,8 @@ import { PDFViewer } from "@/components/ui/PDFViewer";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useResourceHistory } from "@/hooks/use-resource-history";
+import { formatDistanceToNow } from "date-fns";
 import { 
   BookOpen, 
   Heart, 
@@ -26,7 +28,9 @@ import {
   ChevronRight,
   X,
   Maximize2,
-  Minimize2
+  Minimize2,
+  Clock,
+  Trash2
 } from "lucide-react";
 
 interface ResourceItem {
@@ -1073,6 +1077,9 @@ const Resources = () => {
   const [resourceType, setResourceType] = useState<string>("all");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const { history, addToHistory, clearHistory } = useResourceHistory();
   const itemsPerPage = 18;
 
   // Available topic tags
@@ -1099,6 +1106,13 @@ const Resources = () => {
       return;
     }
     
+    // Add to viewing history
+    addToHistory({
+      title: resource.title,
+      url: resource.url,
+      category: resource.category,
+    });
+    
     // Check if it's a PDF file
     if (resource.url.endsWith('.pdf')) {
       setPdfUrl(resource.url);
@@ -1122,6 +1136,25 @@ const Resources = () => {
       navigate(resource.url);
     }
   };
+
+  const toggleFullscreen = async () => {
+    if (!document.fullscreenElement) {
+      await dialogRef.current?.requestFullscreen();
+      setIsFullscreen(true);
+    } else {
+      await document.exitFullscreen();
+      setIsFullscreen(false);
+    }
+  };
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
 
   const handleDownload = (e: React.MouseEvent, downloadUrl: string, title: string) => {
     e.stopPropagation();
@@ -1318,6 +1351,67 @@ const Resources = () => {
 
       {/* Content */}
       <main className="container mx-auto px-4 py-8 max-w-7xl">
+        {/* Recently Viewed Section */}
+        {history.length > 0 && (
+          <Card className="mb-8 animate-fade-in">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-5 h-5 text-sacred" />
+                  <CardTitle>Recently Viewed</CardTitle>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={clearHistory}
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  <Trash2 className="w-4 h-4 mr-2" />
+                  Clear History
+                </Button>
+              </div>
+              <CardDescription>Your recently accessed resources</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {history.slice(0, 6).map((item, index) => {
+                  const resource = resources.find(r => r.url === item.url);
+                  if (!resource) return null;
+                  const Icon = resource.icon;
+                  
+                  return (
+                    <Card
+                      key={index}
+                      className="cursor-pointer hover:shadow-md transition-all hover:-translate-y-1"
+                      onClick={() => handleResourceClick(resource)}
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-2">
+                              <div className="w-8 h-8 rounded-lg bg-sacred/10 flex items-center justify-center flex-shrink-0">
+                                <Icon className="w-4 h-4 text-sacred" />
+                              </div>
+                              <h4 className="font-semibold text-sm truncate flex-1">{item.title}</h4>
+                            </div>
+                            <Badge variant="secondary" className="text-xs mb-2">
+                              {item.category}
+                            </Badge>
+                            <p className="text-xs text-muted-foreground">
+                              {formatDistanceToNow(new Date(item.viewedAt), { addSuffix: true })}
+                            </p>
+                          </div>
+                          <ExternalLink className="w-4 h-4 text-muted-foreground flex-shrink-0 mt-1" />
+                        </div>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+        
         {/* Hero Section */}
         <div className="text-center mb-8 animate-fade-in">
           <Badge className="bg-sacred/10 text-sacred border-sacred/20 mb-4">
@@ -1701,11 +1795,24 @@ const Resources = () => {
 
       {/* Gamma Embed Viewer Modal */}
       <Dialog open={!!embedUrl} onOpenChange={() => setEmbedUrl(null)}>
-        <DialogContent className={`p-0 max-w-[95vw] h-[90vh]`}>
+        <DialogContent ref={dialogRef} className={`p-0 max-w-[95vw] h-[90vh]`}>
           <DialogHeader className="p-4 border-b bg-card">
             <div className="flex items-center justify-between">
               <DialogTitle className="text-lg font-semibold">{embedTitle}</DialogTitle>
               <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={toggleFullscreen}
+                  title={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+                >
+                  {isFullscreen ? (
+                    <Minimize2 className="h-4 w-4 mr-2" />
+                  ) : (
+                    <Maximize2 className="h-4 w-4 mr-2" />
+                  )}
+                  {isFullscreen ? 'Exit' : 'Fullscreen'}
+                </Button>
                 <Button
                   variant="ghost"
                   size="icon"
