@@ -33,7 +33,8 @@ import {
   Minimize2,
   Clock,
   Trash2,
-  Lightbulb
+  Lightbulb,
+  User
 } from "lucide-react";
 
 interface ResourceItem {
@@ -67,6 +68,16 @@ const resources: ResourceItem[] = [
     requiresAuth: true,
     category: "about",
     tags: ["Framework", "About"],
+  },
+  {
+    title: "Dr. Lyman Montgomery Media Kit",
+    description: "Speaker bio, credentials, booking information, and media resources for Dr. Lyman Montgomery",
+    url: "https://gamma.app/embed/biu8ffusrj97br1",
+    icon: User,
+    requiresAuth: false,
+    badge: "Featured",
+    category: "about",
+    tags: ["About", "Media"],
   },
   
   // Book Info Section
