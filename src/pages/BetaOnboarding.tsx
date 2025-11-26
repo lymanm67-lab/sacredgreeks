@@ -198,7 +198,7 @@ export default function BetaOnboarding() {
       // Check if beta_tester record exists
       const { data: existing } = await supabase
         .from('beta_testers')
-        .select('id')
+        .select('id, beta_code')
         .eq('user_id', user.id)
         .maybeSingle();
 
@@ -226,6 +226,31 @@ export default function BetaOnboarding() {
         _points: 100,
         _action_type: 'beta_onboarding_complete'
       });
+
+      // Get user profile to send welcome email
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('email, full_name')
+        .eq('id', user.id)
+        .single();
+
+      // Get beta code
+      const { data: betaTester } = await supabase
+        .from('beta_testers')
+        .select('beta_code')
+        .eq('user_id', user.id)
+        .single();
+
+      // Send onboarding completion email
+      if (profile?.email && betaTester?.beta_code) {
+        supabase.functions.invoke('send-onboarding-complete-email', {
+          body: {
+            userEmail: profile.email,
+            userName: profile.full_name || 'Beta Tester',
+            referralCode: betaTester.beta_code,
+          },
+        }).catch(err => console.error('Failed to send welcome email:', err));
+      }
 
       toast.success('Welcome to the beta! You earned 100 points! 🎉');
       navigate('/dashboard');
