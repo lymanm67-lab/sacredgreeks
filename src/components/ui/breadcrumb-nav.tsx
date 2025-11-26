@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Home } from 'lucide-react';
 
@@ -34,7 +33,7 @@ export function BreadcrumbNav({ items }: BreadcrumbNavProps) {
         const colorClass = item.category ? categoryColors[item.category] : '';
         
         return (
-          <React.Fragment key={index}>
+          <div key={index} className="flex items-center gap-2">
             <ChevronRight className="w-4 h-4" />
             {item.href && !isLast ? (
               <Link 
@@ -48,7 +47,7 @@ export function BreadcrumbNav({ items }: BreadcrumbNavProps) {
                 {item.label}
               </span>
             )}
-          </React.Fragment>
+          </div>
         );
       })}
     </nav>

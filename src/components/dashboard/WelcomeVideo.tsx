@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Play } from 'lucide-react';
 import welcomeThumbnail from '@/assets/welcome-video-thumbnail.jpg';
