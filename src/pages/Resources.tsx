@@ -2,6 +2,7 @@ import { useState, useMemo, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useExternalLinks } from "@/hooks/use-external-links";
+import { useAnalytics } from "@/hooks/use-analytics";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -1163,6 +1164,7 @@ const Resources = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { openExternalLink } = useExternalLinks();
+  const { trackEvent } = useAnalytics();
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [pdfTitle, setPdfTitle] = useState<string>("");
   const [embedUrl, setEmbedUrl] = useState<string | null>(null);
@@ -1197,6 +1199,21 @@ const Resources = () => {
   ];
 
   const handleResourceClick = (resource: ResourceItem) => {
+    // Track resource click
+    trackEvent({
+      event: 'resource_click',
+      properties: {
+        category: 'resources',
+        resource_title: resource.title,
+        resource_category: resource.category,
+        resource_url: resource.url,
+        resource_audience: resource.audience?.join(',') || 'all',
+        resource_tags: resource.tags?.join(',') || '',
+        requires_auth: resource.requiresAuth || false,
+        is_authenticated: !!user,
+      }
+    });
+
     if (resource.requiresAuth && !user) {
       // Redirect to auth page
       navigate("/auth");
@@ -1605,7 +1622,19 @@ const Resources = () => {
         </div>
 
         {/* Audience-Based Tabs */}
-        <Tabs value={selectedAudience} onValueChange={(value) => {setSelectedAudience(value); setCurrentPage(1);}} className="w-full">
+        <Tabs value={selectedAudience} onValueChange={(value) => {
+          // Track tab change
+          trackEvent({
+            event: 'audience_tab_click',
+            properties: {
+              category: 'navigation',
+              tab_value: value,
+              previous_tab: selectedAudience,
+            }
+          });
+          setSelectedAudience(value); 
+          setCurrentPage(1);
+        }} className="w-full">
           <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-5 mb-8">
             <TabsTrigger value="all">All Resources</TabsTrigger>
             <TabsTrigger value="greeks">Greek Members</TabsTrigger>

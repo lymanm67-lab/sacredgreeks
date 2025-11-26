@@ -44,6 +44,7 @@ import QRCodePage from "./pages/QRCode";
 import Resources from "./pages/Resources";
 import About from "./pages/About";
 import PodcastAppearances from "./pages/PodcastAppearances";
+import Analytics from "./pages/Analytics";
 
 const queryClient = new QueryClient();
 
@@ -194,6 +195,14 @@ const App = () => (
                 element={
                   <ProtectedRoute>
                     <Admin />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/analytics"
+                element={
+                  <ProtectedRoute>
+                    <Analytics />
                   </ProtectedRoute>
                 }
               />

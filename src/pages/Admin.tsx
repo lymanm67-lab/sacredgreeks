@@ -123,11 +123,18 @@ const Admin = () => {
               <span className="text-sm font-medium">Home</span>
             </Link>
             <h1 className="text-lg font-semibold text-foreground">Sacred Greeks Admin</h1>
-            <Link to="/dashboard">
-              <Button variant="outline" size="sm">
-                Dashboard
-              </Button>
-            </Link>
+            <div className="flex gap-2">
+              <Link to="/analytics">
+                <Button variant="outline" size="sm">
+                  Analytics
+                </Button>
+              </Link>
+              <Link to="/dashboard">
+                <Button variant="outline" size="sm">
+                  Dashboard
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </header>
