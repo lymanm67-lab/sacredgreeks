@@ -4,10 +4,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Award, Download, Share2, Home, BookOpen } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { downloadCertificatePDF } from '@/lib/certificate-generator';
+import { downloadCertificatePDF, CertificateTheme } from '@/lib/certificate-generator';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 interface InvolveMeCompletionDialogProps {
   open: boolean;
@@ -25,6 +27,7 @@ export function InvolveMeCompletionDialog({
   const { user } = useAuth();
   const { toast } = useToast();
   const [isSendingEmail, setIsSendingEmail] = useState(false);
+  const [selectedTheme, setSelectedTheme] = useState<CertificateTheme>('classic');
 
   const handleDownloadCertificate = () => {
     const userName = user?.user_metadata?.full_name || user?.email || 'Participant';
@@ -32,7 +35,8 @@ export function InvolveMeCompletionDialog({
       userName,
       assessmentType,
       scenario: assessmentTitle,
-      completionDate: new Date().toLocaleDateString()
+      completionDate: new Date().toLocaleDateString(),
+      theme: selectedTheme
     });
     
     toast({
@@ -105,9 +109,70 @@ export function InvolveMeCompletionDialog({
               <div>
                 <h3 className="font-semibold text-lg">Your Certificate is Ready</h3>
                 <p className="text-sm text-muted-foreground">
-                  Download or email your completion certificate
+                  Choose a theme and download your completion certificate
                 </p>
               </div>
+            </div>
+
+            <div className="mb-4">
+              <Label className="text-sm font-medium mb-3 block">Certificate Theme</Label>
+              <RadioGroup value={selectedTheme} onValueChange={(value) => setSelectedTheme(value as CertificateTheme)}>
+                <div className="grid grid-cols-3 gap-3">
+                  <Label
+                    htmlFor="classic"
+                    className={`flex flex-col items-center gap-2 p-3 rounded-lg border-2 cursor-pointer transition-all ${
+                      selectedTheme === 'classic' 
+                        ? 'border-sacred bg-sacred/5' 
+                        : 'border-border hover:border-sacred/50'
+                    }`}
+                  >
+                    <RadioGroupItem value="classic" id="classic" className="sr-only" />
+                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+                      <Award className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-sm font-semibold">Classic</p>
+                      <p className="text-xs text-muted-foreground">Traditional & Formal</p>
+                    </div>
+                  </Label>
+
+                  <Label
+                    htmlFor="modern"
+                    className={`flex flex-col items-center gap-2 p-3 rounded-lg border-2 cursor-pointer transition-all ${
+                      selectedTheme === 'modern' 
+                        ? 'border-sacred bg-sacred/5' 
+                        : 'border-border hover:border-sacred/50'
+                    }`}
+                  >
+                    <RadioGroupItem value="modern" id="modern" className="sr-only" />
+                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-indigo-600 to-slate-900 flex items-center justify-center">
+                      <Award className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-sm font-semibold">Modern</p>
+                      <p className="text-xs text-muted-foreground">Bold & Minimalist</p>
+                    </div>
+                  </Label>
+
+                  <Label
+                    htmlFor="elegant"
+                    className={`flex flex-col items-center gap-2 p-3 rounded-lg border-2 cursor-pointer transition-all ${
+                      selectedTheme === 'elegant' 
+                        ? 'border-sacred bg-sacred/5' 
+                        : 'border-border hover:border-sacred/50'
+                    }`}
+                  >
+                    <RadioGroupItem value="elegant" id="elegant" className="sr-only" />
+                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-amber-600 to-amber-800 flex items-center justify-center">
+                      <Award className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-sm font-semibold">Elegant</p>
+                      <p className="text-xs text-muted-foreground">Sophisticated & Refined</p>
+                    </div>
+                  </Label>
+                </div>
+              </RadioGroup>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">
