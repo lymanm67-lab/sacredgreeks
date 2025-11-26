@@ -9,14 +9,14 @@ const featuredArticles = [
   {
     title: "Repentance, Repair & Renewal Checklist",
     description: "A spiritual guide for members and leaders of Black Greek-letter organizations seeking to align their commitment to service with their devotion to Christ.",
-    url: "https://gamma.app/docs/Christian-Black-Greek-Life-Repentance-Repair-and-Renewal-Checklis-12fobc2w0gro04i",
+    url: "https://gamma.app/embed/12fobc2w0gro04i",
     category: "Spiritual Growth",
     icon: CheckCircle,
   },
   {
     title: "Integrity Under Pressure Playbook",
     description: "A practical ethics guide for hot moments on campus and in life using the P.R.O.O.F. framework.",
-    url: "https://gamma.app/docs/Integrity-Under-Pressure-752n7nfkgl1wn7w",
+    url: "https://gamma.app/embed/752n7nfkgl1wn7w",
     category: "Ethics & Decision Making",
     icon: BookOpen,
   },
