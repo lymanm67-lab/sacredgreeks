@@ -113,6 +113,15 @@ const resources: ResourceItem[] = [
     tags: ["Articles"],
   },
   {
+    title: "The Focused Driven Life",
+    description: "A guide to living with purpose, intention, and spiritual focus in your daily life and Greek organization",
+    url: "https://gamma.app/embed/zunnl42jvtz0e8a",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Devotionals", "Leadership"],
+  },
+  {
     title: "Repentance, Repair & Renewal Checklist",
     description: "A spiritual guide for aligning Greek life with devotion to Christ",
     url: "https://gamma.app/embed/12fobc2w0gro04i",
