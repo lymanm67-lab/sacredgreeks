@@ -356,6 +356,17 @@ const Index = () => {
                     Watch Now
                   </Button>
                 </a>
+                <a 
+                  href="https://vimeo.com/781211329?fl=pl&fe=sh" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-block"
+                >
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto">
+                    <Video className="w-5 h-5 mr-2" />
+                    Watch Trailer
+                  </Button>
+                </a>
                 <ShareDocumentaryDialog 
                   trigger={
                     <Button size="lg" variant="outline" className="w-full sm:w-auto">
