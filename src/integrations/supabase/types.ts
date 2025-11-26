@@ -680,6 +680,45 @@ export type Database = {
         }
         Relationships: []
       }
+      testimonials: {
+        Row: {
+          approved: boolean
+          content: string
+          created_at: string
+          featured: boolean
+          id: string
+          organization: string | null
+          role: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          approved?: boolean
+          content: string
+          created_at?: string
+          featured?: boolean
+          id?: string
+          organization?: string | null
+          role: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          approved?: boolean
+          content?: string
+          created_at?: string
+          featured?: boolean
+          id?: string
+          organization?: string | null
+          role?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_achievements: {
         Row: {
           achievement_id: string
