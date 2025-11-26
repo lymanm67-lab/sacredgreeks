@@ -1,4 +1,3 @@
-import React from 'react';
 import { Shield, ShieldAlert, ShieldCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PasswordRequirements } from '@/components/PasswordRequirements';
