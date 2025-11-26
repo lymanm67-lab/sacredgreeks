@@ -102,6 +102,16 @@ const resources: ResourceItem[] = [
     category: "about",
     tags: ["Media", "Podcast", "Interviews"],
   },
+  {
+    title: "Unmasking Hope Documentary",
+    description: "Watch the powerful documentary exploring faith, identity, and redemption in Greek life",
+    url: "https://www.unmaskinghopethemovie.com/",
+    icon: FileText,
+    requiresAuth: false,
+    badge: "Featured",
+    category: "about",
+    tags: ["Media", "Documentary", "Film"],
+  },
   
   // Book Info Section
   {
