@@ -10,6 +10,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { CookieConsent } from "@/components/CookieConsent";
 import { AnalyticsProvider } from "@/components/AnalyticsProvider";
+import { BetaFeedbackWidget } from "@/components/BetaFeedbackWidget";
 import { AIAssistantWidget } from "@/components/AIAssistantWidget";
 import { OfflineIndicator } from "@/components/ui/OfflineIndicator";
 import { CelebrationProvider } from "@/contexts/CelebrationContext";
@@ -45,6 +46,8 @@ import Resources from "./pages/Resources";
 import About from "./pages/About";
 import PodcastAppearances from "./pages/PodcastAppearances";
 import Analytics from "./pages/Analytics";
+import BetaOnboarding from "./pages/BetaOnboarding";
+import ReferralDashboard from "./pages/ReferralDashboard";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +61,7 @@ const App = () => (
             <Sonner />
             <InstallPrompt />
             <OfflineIndicator />
+            <BetaFeedbackWidget />
             <AIAssistantWidget />
             <BrowserRouter>
               <CookieConsent />
@@ -203,6 +207,22 @@ const App = () => (
                 element={
                   <ProtectedRoute>
                     <Analytics />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/beta-onboarding"
+                element={
+                  <ProtectedRoute>
+                    <BetaOnboarding />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/referrals"
+                element={
+                  <ProtectedRoute>
+                    <ReferralDashboard />
                   </ProtectedRoute>
                 }
               />
