@@ -15,6 +15,8 @@ import { useResourceHistory } from "@/hooks/use-resource-history";
 import { useResourceRecommendations } from "@/hooks/use-resource-recommendations";
 import { SuggestResourceDialog } from "@/components/resources/SuggestResourceDialog";
 import { MediaInquiryForm } from "@/components/resources/MediaInquiryForm";
+import { SubmitTestimonialDialog } from "@/components/resources/SubmitTestimonialDialog";
+import { TestimonialsSection } from "@/components/resources/TestimonialsSection";
 import { formatDistanceToNow } from "date-fns";
 import { 
   BookOpen, 
@@ -1548,6 +1550,7 @@ const Resources = () => {
           <div className="flex items-center justify-center gap-3 mb-6">
             <MediaInquiryForm />
             <SuggestResourceDialog />
+            <SubmitTestimonialDialog />
           </div>
 
           {/* Search and Filter Bar */}
@@ -1707,6 +1710,11 @@ const Resources = () => {
             </TabsContent>
           ))}
         </Tabs>
+
+        {/* Testimonials Section */}
+        <div className="mt-16 mb-12">
+          <TestimonialsSection />
+        </div>
 
         {/* Member CTA */}
         {!user && (
