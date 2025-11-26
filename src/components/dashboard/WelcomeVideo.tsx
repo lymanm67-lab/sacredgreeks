@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Play } from 'lucide-react';
+import welcomeThumbnail from '@/assets/welcome-video-thumbnail.jpg';
 
 export const WelcomeVideo = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [thumbnailError, setThumbnailError] = useState(false);
   
-  // Replace this URL with your actual welcome video URL
   const videoUrl = "https://ai.invideo.io/embed/ECsSNrYTESo";
-  const videoId = "ECsSNrYTESo";
-  // invideo.io doesn't have a direct thumbnail URL, so we'll use gradient fallback
-  const thumbnailUrl = "";
   
   return (
     <Card className="overflow-hidden border-2 shadow-xl h-full flex flex-col">
@@ -18,7 +14,7 @@ export const WelcomeVideo = () => {
         {/* Video Title/Header */}
         <div className="bg-gradient-to-r from-sacred to-warm-blue p-4">
           <h2 className="text-xl md:text-2xl font-bold text-white">Welcome to Sacred Greeks</h2>
-          <p className="text-white/90 text-xs md:text-sm mt-1">A message from Dr. Lyman Montgomery</p>
+          <p className="text-white/90 text-xs md:text-sm mt-1">Discover how to navigate Greek life with faith and integrity</p>
         </div>
         
         {/* Video Container */}
@@ -29,8 +25,12 @@ export const WelcomeVideo = () => {
               className="absolute inset-0 flex items-center justify-center cursor-pointer group"
               onClick={() => setIsPlaying(true)}
             >
-              {/* Background gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-sacred/20 to-warm-blue/20" />
+              {/* Custom thumbnail */}
+              <img 
+                src={welcomeThumbnail}
+                alt="Sacred Greeks Welcome Video"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
               
               <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 z-10">
                 <Play className="w-8 h-8 md:w-10 md:h-10 text-sacred ml-1" fill="currentColor" />
