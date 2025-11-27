@@ -47,6 +47,39 @@ export type Database = {
         }
         Relationships: []
       }
+      analytics_events: {
+        Row: {
+          created_at: string | null
+          event_category: string
+          event_data: Json | null
+          event_type: string
+          id: string
+          page_path: string | null
+          session_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          event_category: string
+          event_data?: Json | null
+          event_type: string
+          id?: string
+          page_path?: string | null
+          session_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          event_category?: string
+          event_data?: Json | null
+          event_type?: string
+          id?: string
+          page_path?: string | null
+          session_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       assessment_submissions: {
         Row: {
           answers_json: Json
@@ -86,6 +119,90 @@ export type Database = {
           track?: string
           updated_at?: string
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      beta_feedback: {
+        Row: {
+          admin_notes: string | null
+          created_at: string
+          description: string
+          feedback_type: string
+          id: string
+          page_context: string | null
+          rating: number | null
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          created_at?: string
+          description: string
+          feedback_type: string
+          id?: string
+          page_context?: string | null
+          rating?: number | null
+          status?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          created_at?: string
+          description?: string
+          feedback_type?: string
+          id?: string
+          page_context?: string | null
+          rating?: number | null
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      beta_testers: {
+        Row: {
+          beta_code: string | null
+          created_at: string
+          feedback_count: number
+          id: string
+          onboarding_completed: boolean
+          onboarding_completed_at: string | null
+          referred_by: string | null
+          signup_date: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          beta_code?: string | null
+          created_at?: string
+          feedback_count?: number
+          id?: string
+          onboarding_completed?: boolean
+          onboarding_completed_at?: string | null
+          referred_by?: string | null
+          signup_date?: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          beta_code?: string | null
+          created_at?: string
+          feedback_count?: number
+          id?: string
+          onboarding_completed?: boolean
+          onboarding_completed_at?: string | null
+          referred_by?: string | null
+          signup_date?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -528,6 +645,39 @@ export type Database = {
         }
         Relationships: []
       }
+      referrals: {
+        Row: {
+          converted_at: string | null
+          created_at: string
+          id: string
+          referral_code: string
+          referred_user_id: string | null
+          referrer_id: string
+          reward_earned: number
+          status: string
+        }
+        Insert: {
+          converted_at?: string | null
+          created_at?: string
+          id?: string
+          referral_code: string
+          referred_user_id?: string | null
+          referrer_id: string
+          reward_earned?: number
+          status?: string
+        }
+        Update: {
+          converted_at?: string | null
+          created_at?: string
+          id?: string
+          referral_code?: string
+          referred_user_id?: string | null
+          referrer_id?: string
+          reward_earned?: number
+          status?: string
+        }
+        Relationships: []
+      }
       resource_suggestions: {
         Row: {
           admin_notes: string | null
@@ -606,6 +756,57 @@ export type Database = {
         }
         Relationships: []
       }
+      shared_certificates: {
+        Row: {
+          assessment_type: string
+          certificate_type: string
+          completion_date: string
+          created_at: string
+          expires_at: string | null
+          id: string
+          last_viewed_at: string | null
+          og_image_url: string | null
+          scenario: string
+          share_token: string
+          theme: string
+          user_id: string
+          user_name: string
+          view_count: number | null
+        }
+        Insert: {
+          assessment_type: string
+          certificate_type: string
+          completion_date: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          last_viewed_at?: string | null
+          og_image_url?: string | null
+          scenario: string
+          share_token: string
+          theme?: string
+          user_id: string
+          user_name: string
+          view_count?: number | null
+        }
+        Update: {
+          assessment_type?: string
+          certificate_type?: string
+          completion_date?: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          last_viewed_at?: string | null
+          og_image_url?: string | null
+          scenario?: string
+          share_token?: string
+          theme?: string
+          user_id?: string
+          user_name?: string
+          view_count?: number | null
+        }
+        Relationships: []
+      }
       shared_results: {
         Row: {
           assessment_id: string
@@ -675,6 +876,45 @@ export type Database = {
           id?: string
           notes?: string | null
           session_id?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          approved: boolean
+          content: string
+          created_at: string
+          featured: boolean
+          id: string
+          organization: string | null
+          role: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          approved?: boolean
+          content: string
+          created_at?: string
+          featured?: boolean
+          id?: string
+          organization?: string | null
+          role: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          approved?: boolean
+          content?: string
+          created_at?: string
+          featured?: boolean
+          id?: string
+          organization?: string | null
+          role?: string
+          title?: string
           updated_at?: string
           user_id?: string
         }
@@ -847,6 +1087,7 @@ export type Database = {
         Returns: boolean
       }
       cleanup_old_rate_limits: { Args: never; Returns: undefined }
+      generate_referral_code: { Args: never; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
