@@ -134,9 +134,9 @@ const Index = () => {
               itemId="hero-intro"
               title="Sacred Greeks Introduction"
               voice="onyx"
-              variant="secondary"
+              variant="outline"
               size="default"
-              className="min-h-[44px] min-w-[120px]"
+              className="min-h-[48px] min-w-[140px] border-2 border-sacred bg-sacred/10 text-sacred hover:bg-sacred/20 font-semibold shadow-sm"
             />
           </div>
 
