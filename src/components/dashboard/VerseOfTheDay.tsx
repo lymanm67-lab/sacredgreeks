@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { BookOpen, Share2, Bookmark, BookmarkCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import { useAuth } from '@/contexts/AuthContext';
+import { ListenButton } from '@/components/ListenButton';
 
 interface DailyVerse {
   id: string;
@@ -188,9 +189,19 @@ export function VerseOfTheDay() {
           <blockquote className="text-lg font-serif italic leading-relaxed border-l-4 border-primary pl-4">
             "{verse.verse_text}"
           </blockquote>
-          <p className="text-sm font-medium text-primary">
-            — {verse.verse_ref}
-          </p>
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-medium text-primary">
+              — {verse.verse_ref}
+            </p>
+            <ListenButton
+              text={`${verse.verse_ref}. ${verse.verse_text}`}
+              itemId={`verse-${verse.id}`}
+              title="Verse of the Day"
+              showLabel={false}
+              size="sm"
+              variant="ghost"
+            />
+          </div>
         </div>
 
         {/* Reflection */}

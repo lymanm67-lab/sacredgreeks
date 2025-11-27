@@ -29,6 +29,7 @@ import {
 import { toast } from 'sonner';
 import { useGamification } from '@/hooks/use-gamification';
 import { formatDistanceToNow } from 'date-fns';
+import { ListenButton } from '@/components/ListenButton';
 
 interface PrayerRequestCardProps {
   request: any;
@@ -193,9 +194,19 @@ export function PrayerRequestCard({ request, currentUserId, onUpdate }: PrayerRe
         </CardHeader>
         <CardContent className="space-y-4">
           {request.description && (
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              {request.description}
-            </p>
+            <div className="flex items-start gap-2">
+              <p className="text-sm text-muted-foreground leading-relaxed flex-1">
+                {request.description}
+              </p>
+              <ListenButton
+                text={`${request.title}. ${request.description}`}
+                itemId={`prayer-request-${request.id}`}
+                title={request.title}
+                showLabel={false}
+                size="sm"
+                variant="ghost"
+              />
+            </div>
           )}
 
           {request.answered && request.answered_testimony && (

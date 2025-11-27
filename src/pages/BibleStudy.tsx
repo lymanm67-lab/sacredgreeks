@@ -20,6 +20,7 @@ import { useSavedBibleSearches } from '@/hooks/use-saved-bible-searches';
 import { SavedSearchesList } from '@/components/bible-study/SavedSearchesList';
 import { useAutoCompleteChallenge } from '@/hooks/use-auto-complete-challenge';
 import { VoiceInputButton } from '@/components/VoiceInputButton';
+import { ListenButton } from '@/components/ListenButton';
 
 const readingPlans = [
   {
@@ -345,19 +346,29 @@ const BibleStudy = () => {
                   <blockquote className="text-lg italic border-l-4 border-sacred pl-4 py-2">
                     "{dailyVerse.text}"
                   </blockquote>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between flex-wrap gap-2">
                     <Badge className="bg-sacred/10 text-sacred border-sacred/20">
                       {dailyVerse.reference}
                     </Badge>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={fetchDailyVerse}
-                      className="gap-2"
-                    >
-                      <Sparkles className="w-4 h-4" />
-                      Get Another Verse
-                    </Button>
+                    <div className="flex items-center gap-2">
+                      <ListenButton
+                        text={`${dailyVerse.reference}. ${dailyVerse.text}`}
+                        itemId={`bible-daily-verse`}
+                        title="Daily Verse"
+                        showLabel={false}
+                        size="sm"
+                        variant="ghost"
+                      />
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={fetchDailyVerse}
+                        className="gap-2"
+                      >
+                        <Sparkles className="w-4 h-4" />
+                        Get Another Verse
+                      </Button>
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -461,13 +472,23 @@ const BibleStudy = () => {
                   {/* Reference Search Results */}
                   {searchResults && searchMode === 'reference' && (
                     <div className="space-y-4 animate-fade-in">
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between flex-wrap gap-2">
                         <Badge className="bg-sacred/10 text-sacred border-sacred/20 text-sm">
                           {searchResults.reference}
                         </Badge>
-                        <span className="text-xs text-muted-foreground">
-                          {searchResults.translation_name}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <ListenButton
+                            text={`${searchResults.reference}. ${searchResults.text || searchResults.verses?.map((v: any) => v.text).join(' ')}`}
+                            itemId={`ref-search-result`}
+                            title={searchResults.reference}
+                            showLabel={true}
+                            size="sm"
+                            variant="outline"
+                          />
+                          <span className="text-xs text-muted-foreground">
+                            {searchResults.translation_name}
+                          </span>
+                        </div>
                       </div>
                       <ScrollArea className="h-[400px] rounded-lg border p-4 bg-muted/30">
                         <div className="space-y-4">
@@ -512,11 +533,21 @@ const BibleStudy = () => {
                       </div>
                       <ScrollArea className="h-[500px] space-y-3">
                         {aiResults.map((verse, idx) => (
-                          <Card key={idx} className="mb-3 hover:shadow-md transition-shadow border-sacred/20">
+                            <Card key={idx} className="mb-3 hover:shadow-md transition-shadow border-sacred/20">
                             <CardHeader className="pb-3">
-                              <Badge className="w-fit bg-sacred/10 text-sacred border-sacred/20">
-                                {verse.reference}
-                              </Badge>
+                              <div className="flex items-center justify-between">
+                                <Badge className="w-fit bg-sacred/10 text-sacred border-sacred/20">
+                                  {verse.reference}
+                                </Badge>
+                                <ListenButton
+                                  text={`${verse.reference}. ${verse.text}`}
+                                  itemId={`ai-verse-${idx}`}
+                                  title={verse.reference}
+                                  showLabel={false}
+                                  size="sm"
+                                  variant="ghost"
+                                />
+                              </div>
                             </CardHeader>
                             <CardContent>
                               <p className="text-sm leading-relaxed mb-2">{verse.text}</p>
@@ -561,9 +592,19 @@ const BibleStudy = () => {
                         {phraseResults.map((verse, idx) => (
                           <Card key={idx} className="mb-3 hover:shadow-md transition-shadow">
                             <CardHeader className="pb-3">
-                              <Badge className="w-fit bg-sacred/10 text-sacred border-sacred/20">
-                                {verse.ref}
-                              </Badge>
+                              <div className="flex items-center justify-between">
+                                <Badge className="w-fit bg-sacred/10 text-sacred border-sacred/20">
+                                  {verse.ref}
+                                </Badge>
+                                <ListenButton
+                                  text={`${verse.ref}. ${verse.text}`}
+                                  itemId={`phrase-verse-${idx}`}
+                                  title={verse.ref}
+                                  showLabel={false}
+                                  size="sm"
+                                  variant="ghost"
+                                />
+                              </div>
                             </CardHeader>
                             <CardContent>
                               <p className="text-sm leading-relaxed">{verse.text}</p>
