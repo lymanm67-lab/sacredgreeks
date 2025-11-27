@@ -66,6 +66,22 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-muted/30 to-background">
+      {/* TEST BANNER - Remove after debugging */}
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: '#ff0000',
+        color: 'white',
+        padding: '20px',
+        textAlign: 'center',
+        fontSize: '20px',
+        fontWeight: 'bold',
+        zIndex: 9999,
+      }}>
+        🔊 TEST: Can you see this red banner? v3
+      </div>
       {/* Header with Auth */}
       <header className="border-b border-border bg-card/80 backdrop-blur sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
