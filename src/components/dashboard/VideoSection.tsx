@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Video } from 'lucide-react';
+import { Video, Play } from 'lucide-react';
+import { ExternalContentModal } from '@/components/ui/ExternalContentModal';
 
 const videos = [
   {
@@ -31,21 +32,28 @@ export const VideoSection = () => {
       <CardContent>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {videos.map((video, index) => (
-            <div key={index} className="space-y-2">
-              <div className="aspect-video rounded-lg overflow-hidden bg-muted">
-                <iframe
-                  src={video.url}
-                  title={video.title}
-                  className="w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-              <div>
-                <h3 className="font-medium text-sm">{video.title}</h3>
-                <p className="text-xs text-muted-foreground">{video.description}</p>
-              </div>
-            </div>
+            <ExternalContentModal
+              key={index}
+              url={video.url}
+              title={video.title}
+              description={video.description}
+              category="Video"
+              trigger={
+                <div className="space-y-2 cursor-pointer group">
+                  <div className="aspect-video rounded-lg overflow-hidden bg-muted border-2 border-border group-hover:border-sacred/50 transition-all relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-sacred/20 to-warm-blue/20 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <Play className="w-6 h-6 text-sacred ml-0.5" />
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-sm group-hover:text-sacred transition-colors">{video.title}</h3>
+                    <p className="text-xs text-muted-foreground">{video.description}</p>
+                  </div>
+                </div>
+              }
+            />
           ))}
         </div>
       </CardContent>

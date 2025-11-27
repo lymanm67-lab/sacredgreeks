@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -46,7 +45,6 @@ const podcastEpisodes: PodcastEpisode[] = [
 ];
 
 const PodcastAppearances = () => {
-  const [selectedEpisode, setSelectedEpisode] = useState<PodcastEpisode | null>(null);
   const { openExternalLink } = useExternalLinks();
 
   return (
@@ -155,73 +153,27 @@ const PodcastAppearances = () => {
           </p>
         </div>
 
-        {/* Featured Episode */}
-        {selectedEpisode ? (
-          <Card className="mb-12 animate-fade-in">
-            <CardHeader>
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex-1">
-                  <CardTitle className="text-2xl mb-2">{selectedEpisode.title}</CardTitle>
-                  <CardDescription className="text-base">
-                    {selectedEpisode.description}
-                  </CardDescription>
-                  <div className="flex items-center gap-3 mt-4">
-                    <Badge variant="outline">{selectedEpisode.platform}</Badge>
-                    <Badge variant="outline">{selectedEpisode.date}</Badge>
-                  </div>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setSelectedEpisode(null)}
-                >
-                  Show All
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="aspect-video w-full rounded-lg overflow-hidden bg-muted mb-4">
-                <iframe
-                  width="100%"
-                  height="100%"
-                  src={selectedEpisode.embedUrl}
-                  title={selectedEpisode.title}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
-                  className="w-full h-full"
-                />
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {selectedEpisode.topics.map((topic) => (
-                  <Badge key={topic} className="bg-sacred/10 text-sacred border-sacred/20">
-                    {topic}
-                  </Badge>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        ) : (
-          <>
-            {/* All Episodes Grid */}
-            <div className="grid gap-6 mb-12">
-              {podcastEpisodes.map((episode, index) => (
-                <Card 
-                  key={index}
-                  className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer"
-                  onClick={() => setSelectedEpisode(episode)}
-                >
+        {/* All Episodes Grid */}
+        <div className="grid gap-6 mb-12">
+          {podcastEpisodes.map((episode, index) => (
+            <ExternalContentModal
+              key={index}
+              url={episode.embedUrl}
+              title={episode.title}
+              description={episode.description}
+              category="Podcast"
+              trigger={
+                <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer">
                   <CardHeader>
                     <div className="flex items-start gap-4">
                       <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-sacred to-warm-blue flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
                         <Play className="w-8 h-8 text-white" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <CardTitle className="text-xl mb-2 group-hover:text-sacred transition-colors">
+                        <CardTitle className="text-xl mb-2 group-hover:text-sacred transition-colors text-left">
                           {episode.title}
                         </CardTitle>
-                        <CardDescription className="line-clamp-2">
+                        <CardDescription className="line-clamp-2 text-left">
                           {episode.description}
                         </CardDescription>
                         <div className="flex items-center gap-3 mt-3">
@@ -250,32 +202,32 @@ const PodcastAppearances = () => {
                     </div>
                   </CardContent>
                 </Card>
+              }
+            />
+          ))}
+        </div>
+
+        {/* Topics Overview */}
+        <Card className="bg-gradient-to-br from-sacred/5 to-warm-blue/5 border-sacred/20">
+          <CardHeader>
+            <CardTitle>Topics Discussed</CardTitle>
+            <CardDescription>
+              Key themes explored across podcast appearances
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {["Faith", "Greek Life", "Leadership", "Biblical Guidance", "Student Ministry", "Campus Culture"].map((topic) => (
+                <div 
+                  key={topic}
+                  className="p-4 rounded-lg bg-background border border-border text-center hover:border-sacred/50 transition-colors"
+                >
+                  <p className="font-semibold text-sm">{topic}</p>
+                </div>
               ))}
             </div>
-
-            {/* Topics Overview */}
-            <Card className="bg-gradient-to-br from-sacred/5 to-warm-blue/5 border-sacred/20">
-              <CardHeader>
-                <CardTitle>Topics Discussed</CardTitle>
-                <CardDescription>
-                  Key themes explored across podcast appearances
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {["Faith", "Greek Life", "Leadership", "Biblical Guidance", "Student Ministry", "Campus Culture"].map((topic) => (
-                    <div 
-                      key={topic}
-                      className="p-4 rounded-lg bg-background border border-border text-center hover:border-sacred/50 transition-colors"
-                    >
-                      <p className="font-semibold text-sm">{topic}</p>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </>
-        )}
+          </CardContent>
+        </Card>
 
         {/* CTA Section */}
         <Card className="mt-12 bg-gradient-to-br from-sacred/5 to-warm-blue/5 border-sacred/20">
