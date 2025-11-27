@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, CheckCircle, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
+import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
 
 const featuredArticles = [
   {
@@ -35,10 +36,6 @@ export const FeaturedArticle = () => {
 
   const Icon = featuredArticle.icon;
 
-  const handleOpenExternal = () => {
-    window.open(featuredArticle.url, "_blank", "noopener,noreferrer");
-  };
-
   return (
     <Card className="group hover:shadow-xl transition-all duration-300 border-2 border-sacred/20 hover:border-sacred/50 bg-gradient-to-br from-card to-sacred/5">
       <CardHeader>
@@ -63,13 +60,17 @@ export const FeaturedArticle = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-3">
-          <Button 
-            onClick={handleOpenExternal}
-            className="flex-1 bg-sacred hover:bg-sacred/90"
-          >
-            Read Article
-            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-          </Button>
+          <ExternalContentModal
+            url={featuredArticle.url}
+            title={featuredArticle.title}
+            description={featuredArticle.description}
+            trigger={
+              <Button className="flex-1 bg-sacred hover:bg-sacred/90">
+                Read Article
+                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            }
+          />
           <Link to="/resources" className="flex-1">
             <Button variant="outline" className="w-full border-sacred/20 hover:bg-sacred/10 hover:border-sacred/50">
               Browse All Resources
