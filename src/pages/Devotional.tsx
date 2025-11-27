@@ -15,6 +15,7 @@ import { usePullToRefresh } from '@/hooks/use-pull-to-refresh';
 import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
 import { useAutoCompleteChallenge } from '@/hooks/use-auto-complete-challenge';
 import { BreadcrumbNav } from '@/components/ui/breadcrumb-nav';
+import { ListenButton } from '@/components/ListenButton';
 
 interface Devotional {
   id: string;
@@ -245,6 +246,18 @@ const Devotional = () => {
             <p className="text-xl text-sacred font-medium">
               P.R.O.O.F. Focus: {devotional.proof_focus}
             </p>
+            
+            {/* Listen to Full Devotional */}
+            <div className="pt-4">
+              <ListenButton
+                text={`${devotional.title}. Scripture: ${devotional.scripture_ref}. ${devotional.scripture_text}. Reflection: ${devotional.reflection}. Today's Application: ${devotional.application}. Prayer: ${devotional.prayer}`}
+                itemId={`devotional-${devotional.id}`}
+                title={`Daily Devotional: ${devotional.title}`}
+                voice="onyx"
+                variant="default"
+                className="bg-sacred hover:bg-sacred/90 text-sacred-foreground"
+              />
+            </div>
           </div>
 
           {/* Scripture */}

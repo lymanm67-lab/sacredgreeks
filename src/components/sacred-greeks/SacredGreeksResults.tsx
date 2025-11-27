@@ -14,6 +14,7 @@ import { AchievementBadgeDialog } from "@/components/AchievementBadgeDialog";
 import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
 import { useExternalLinks } from "@/hooks/use-external-links";
 import { SignUpPrompt } from "./SignUpPrompt";
+import { ListenButton } from "@/components/ListenButton";
 
 interface SacredGreeksResultsProps {
   resultType: ResultType;
@@ -236,10 +237,20 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
       {/* P.R.O.O.F. Framework */}
       <Card data-section="proof" className="border-2 border-sacred/20">
         <CardHeader>
-          <CardTitle className="text-xl">P.R.O.O.F. Framework</CardTitle>
-          <CardDescription>
-            Five lenses to help you examine your situation biblically and wisely.
-          </CardDescription>
+          <div className="flex items-start justify-between">
+            <div>
+              <CardTitle className="text-xl">P.R.O.O.F. Framework</CardTitle>
+              <CardDescription>
+                Five lenses to help you examine your situation biblically and wisely.
+              </CardDescription>
+            </div>
+            <ListenButton
+              text={content.proofPoints.map(p => `${p.label}: ${p.text}`).join('. ')}
+              itemId={`proof-${scenario}-${resultType}`}
+              title="P.R.O.O.F. Framework"
+              voice="onyx"
+            />
+          </div>
         </CardHeader>
         <CardContent className="space-y-4">
           {content.proofPoints.map((point, index) => (
@@ -254,7 +265,15 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
       {/* Prayer */}
       <Card data-section="prayer" className="bg-sacred/5 border-sacred/20">
         <CardHeader>
-          <CardTitle className="text-lg">A Prayer for You</CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-lg">A Prayer for You</CardTitle>
+            <ListenButton
+              text={content.prayer}
+              itemId={`prayer-${scenario}-${resultType}`}
+              title="Prayer"
+              voice="onyx"
+            />
+          </div>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground leading-relaxed italic">{content.prayer}</p>
