@@ -11,6 +11,7 @@ import { SocialShareDialog } from "@/components/SocialShareDialog";
 import { AchievementBadgeDialog } from "@/components/AchievementBadgeDialog";
 import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
 import { useExternalLinks } from "@/hooks/use-external-links";
+import { SignUpPrompt } from "./SignUpPrompt";
 
 interface SacredGreeksResultsProps {
   resultType: ResultType;
@@ -18,9 +19,10 @@ interface SacredGreeksResultsProps {
   answers: SacredGreeksAnswers;
   onRestart?: () => void;
   isSharedView?: boolean;
+  limitedAccess?: boolean;
 }
 
-export function SacredGreeksResults({ resultType, scores, answers, onRestart, isSharedView = false }: SacredGreeksResultsProps) {
+export function SacredGreeksResults({ resultType, scores, answers, onRestart, isSharedView = false, limitedAccess = false }: SacredGreeksResultsProps) {
   const { toast } = useToast();
   const { user } = useAuth();
   const { openExternalLink } = useExternalLinks();
@@ -143,7 +145,7 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
 
   return (
     <div className="space-y-8">
-      {/* Headline and Intro */}
+      {/* Headline and Intro - Always visible */}
       <Card className="border-2 border-sacred/20 bg-gradient-to-br from-sacred/5 to-background">
         <CardHeader>
           <div className="flex items-start gap-4">
@@ -158,7 +160,7 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
         </CardHeader>
       </Card>
 
-      {/* Scripture Toolkit */}
+      {/* Scripture Toolkit - Show preview for limited access */}
       {content.scriptureToolkit.length > 0 && (
         <Card>
           <CardHeader>
@@ -171,18 +173,30 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {content.scriptureToolkit.map((scripture, index) => (
+            {(limitedAccess ? content.scriptureToolkit.slice(0, 1) : content.scriptureToolkit).map((scripture, index) => (
               <div key={index} className="border-l-4 border-sacred/30 pl-4 space-y-1">
                 <p className="font-semibold text-foreground">{scripture.ref}</p>
                 <p className="text-sm text-muted-foreground">{scripture.summary}</p>
                 <p className="text-sm italic text-muted-foreground">When to use: {scripture.whenToUse}</p>
               </div>
             ))}
+            {limitedAccess && content.scriptureToolkit.length > 1 && (
+              <p className="text-sm text-muted-foreground italic">
+                + {content.scriptureToolkit.length - 1} more scriptures available with free account...
+              </p>
+            )}
           </CardContent>
         </Card>
       )}
 
-      {/* Sample Responses */}
+      {/* Sign Up Prompt for limited access users */}
+      {limitedAccess && (
+        <SignUpPrompt scenario={answers.scenario} />
+      )}
+
+      {/* Full content only for authenticated users */}
+      {!limitedAccess && (
+        <>
       {content.sampleResponses.length > 0 && (
         <Card>
           <CardHeader>
@@ -487,8 +501,10 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
           </Card>
         </div>
       )}
+      </>
+      )}
 
-      {/* Restart */}
+      {/* Restart - Always visible */}
       {!isSharedView && onRestart && (
         <div className="flex justify-center pt-4">
           <Button variant="outline" onClick={onRestart}>

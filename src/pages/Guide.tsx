@@ -46,30 +46,21 @@ const Guide = () => {
     // Calculate scores
     const { scores, resultType } = calculateSacredGreeksScores(fullAnswers);
 
-    // Save to database
-    try {
-      if (!user) {
-        toast({
-          title: "Authentication required",
-          description: "Please sign in to save your assessment.",
-          variant: "destructive",
+    // For authenticated users, save to database and award points
+    if (user) {
+      try {
+        const { error } = await supabase.from('assessment_submissions').insert({
+          track: 'sacred_greeks' as const,
+          scenario: fullAnswers.scenario,
+          answers_json: fullAnswers as any,
+          scores_json: scores as any,
+          result_type: resultType,
+          user_id: user.id,
         });
-        return;
-      }
 
-      const { error } = await supabase.from('assessment_submissions').insert({
-        track: 'sacred_greeks' as const,
-        scenario: fullAnswers.scenario,
-        answers_json: fullAnswers as any,
-        scores_json: scores as any,
-        result_type: resultType,
-        user_id: user.id,
-      });
+        if (error) throw error;
 
-      if (error) throw error;
-
-      // Award points and check achievements
-      if (user) {
+        // Award points and check achievements
         await supabase.rpc("award_points", {
           _user_id: user.id,
           _points: 20,
@@ -79,17 +70,15 @@ const Guide = () => {
         await supabase.functions.invoke('check-achievements', {
           body: { userId: user.id, actionType: 'assessment' }
         });
+      } catch (error) {
+        console.error('Error saving assessment:', error);
+        // Continue to show results even if save fails
       }
-
-      setResultData({ scores, resultType, answers: fullAnswers });
-      setCurrentStep(3);
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to save your assessment. Please try again.",
-        variant: "destructive",
-      });
     }
+
+    // Show results (limited for non-authenticated users)
+    setResultData({ scores, resultType, answers: fullAnswers });
+    setCurrentStep(3);
   };
 
   const handleRestart = () => {
@@ -144,6 +133,7 @@ const Guide = () => {
               scores={resultData.scores}
               answers={resultData.answers}
               onRestart={handleRestart}
+              limitedAccess={!user}
             />
           )}
         </div>
