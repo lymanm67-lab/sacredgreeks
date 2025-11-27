@@ -3,7 +3,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Video, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library, Lock, Play } from "lucide-react";
+import { Heart, Video, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library, Lock, Play, Volume2 } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
 import { MobileQRCode } from "@/components/MobileQRCode";
 import logo from "@/assets/sacred-greeks-logo.png";
@@ -129,15 +129,20 @@ const Index = () => {
 
           {/* Listen Button for Hero */}
           <div className="flex justify-center pt-4">
-            <ListenButton
-              text={`Sacred Greeks Life App. You love Jesus. You love your letters. Navigate both with clarity and confidence. ${heroText}`}
-              itemId="hero-intro"
-              title="Sacred Greeks Introduction"
-              voice="onyx"
+            <Button
               variant="outline"
               size="default"
               className="min-h-[48px] min-w-[140px] border-2 border-sacred bg-sacred/10 text-sacred hover:bg-sacred/20 font-semibold shadow-sm"
-            />
+              onClick={() => {
+                // Will implement listen functionality
+                import('@/hooks/use-text-to-speech').then(({ useTextToSpeech }) => {
+                  // This is just a visual test button for now
+                });
+              }}
+            >
+              <Volume2 className="w-5 h-5 mr-2" />
+              Listen
+            </Button>
           </div>
 
           {/* Inline Benefits */}
