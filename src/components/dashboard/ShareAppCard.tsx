@@ -2,12 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { QrCode, Share2, Copy, Smartphone } from 'lucide-react';
+import { QrCode, Share2, Copy, Smartphone, MessageSquare } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 export function ShareAppCard() {
   const { toast } = useToast();
   const appUrl = 'https://www.sacredgreekslife.com';
+  const shareMessage = `Check out Sacred Greeks Life - daily devotionals, prayer tools, and community support for Greek life members! ${appUrl}`;
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(appUrl);
@@ -15,6 +16,24 @@ export function ShareAppCard() {
       title: 'Link Copied!',
       description: 'Share it with your chapter members',
     });
+  };
+
+  const handleSMSShare = () => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      const smsUrl = isIOS 
+        ? `sms:&body=${encodeURIComponent(shareMessage)}`
+        : `sms:?body=${encodeURIComponent(shareMessage)}`;
+      window.location.href = smsUrl;
+    } else {
+      navigator.clipboard.writeText(shareMessage);
+      toast({
+        title: 'Message Copied!',
+        description: 'Paste it in your messaging app to share',
+      });
+    }
   };
 
   const handleShare = async () => {
@@ -45,17 +64,24 @@ export function ShareAppCard() {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <Button 
+          onClick={handleSMSShare}
+          className="w-full bg-sacred hover:bg-sacred/90"
+        >
+          <MessageSquare className="w-4 h-4 mr-2" />
+          Text a Friend
+        </Button>
+        <div className="grid grid-cols-2 gap-2">
           <Link to="/install" className="w-full">
-            <Button variant="default" className="w-full bg-sacred hover:bg-sacred/90">
+            <Button variant="outline" className="w-full">
               <Smartphone className="w-4 h-4 mr-2" />
-              Install App
+              Install
             </Button>
           </Link>
           <Link to="/qr-code" className="w-full">
             <Button variant="outline" className="w-full">
               <QrCode className="w-4 h-4 mr-2" />
-              Get QR Code
+              QR Code
             </Button>
           </Link>
         </div>
