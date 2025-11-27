@@ -114,21 +114,6 @@ const handler = async (req: Request): Promise<Response> => {
       )
       .join("");
 
-    // Generate completion certificate
-    const certificateHtml = `
-      <div style="background: linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%); border-radius: 16px; padding: 48px 32px; text-align: center; margin-bottom: 32px; box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);">
-        <div style="background: white; border-radius: 12px; padding: 40px 32px;">
-          <h2 style="color: #8B5CF6; font-size: 32px; margin: 0 0 16px 0; font-weight: 700;">Certificate of Completion</h2>
-          <div style="height: 2px; width: 80px; background: #8B5CF6; margin: 0 auto 24px auto;"></div>
-          <p style="font-size: 18px; color: #333; margin-bottom: 8px;">This certifies that you have completed the</p>
-          <h3 style="color: #6366F1; font-size: 24px; margin: 8px 0; font-weight: 600;">Sacred Greeks Decision Guide</h3>
-          <p style="font-size: 16px; color: #666; margin: 24px 0 8px 0;">Assessment Type:</p>
-          <p style="font-size: 18px; color: #333; font-weight: 600; margin: 0 0 24px 0;">${escapeHtml(resultType)} - ${escapeHtml(scenario)}</p>
-          <p style="font-size: 14px; color: #999; margin-top: 32px;">Completed on ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
-        </div>
-      </div>
-    `;
-
     const emailHtml = `
       <!DOCTYPE html>
       <html>
@@ -140,10 +125,8 @@ const handler = async (req: Request): Promise<Response> => {
           
           <div style="text-align: center; margin-bottom: 32px;">
             <h1 style="color: #8B5CF6; margin-bottom: 8px;">Sacred Greeks Decision Guide</h1>
-            <p style="color: #666;">Your Assessment Results & Certificate</p>
+            <p style="color: #666;">Your Assessment Results</p>
           </div>
-
-          ${certificateHtml}
 
           <div style="background: linear-gradient(to bottom right, rgba(139, 92, 246, 0.05), transparent); border: 2px solid rgba(139, 92, 246, 0.2); border-radius: 12px; padding: 24px; margin-bottom: 32px;">
             <h2 style="font-size: 24px; margin-bottom: 16px; color: #333;">${content.headline}</h2>
@@ -210,7 +193,7 @@ const handler = async (req: Request): Promise<Response> => {
     const emailResponse = await resend.emails.send({
       from: "Sacred Greeks <onboarding@resend.dev>",
       to: [email],
-      subject: "Your Sacred Greeks Certificate & Assessment Results",
+      subject: "Your Sacred Greeks Assessment Results",
       html: emailHtml,
     });
 

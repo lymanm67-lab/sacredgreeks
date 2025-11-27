@@ -10,10 +10,10 @@ const featuredActions = [
     title: 'Start Assessment',
     description: 'Discover your 5 Persona Types Architecture',
     icon: Heart,
-    href: '/assessment/fmmpa',
+    href: 'https://drlymanmontgomery.involve.me/fmmpa',
     gradient: 'from-rose-500 to-pink-600',
-    isExternal: false,
-    useModal: false,
+    isExternal: true,
+    useModal: true,
   },
   {
     id: 'bglo-objections',

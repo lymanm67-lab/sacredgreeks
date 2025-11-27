@@ -11,7 +11,6 @@ import { SacredGreeksAnswers } from "@/types/assessment";
 import { calculateSacredGreeksScores } from "@/lib/scoring";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 const steps = [
   { label: "Scenario", description: "Choose your situation" },
@@ -53,14 +52,6 @@ const SacredGreeks = () => {
 
       setResultData({ scores, resultType, answers: fullAnswers });
       setCurrentStep(3);
-
-      // Offer to send results via email if user is authenticated
-      if (user?.email) {
-        toast({
-          title: "Assessment Complete!",
-          description: "Your certificate and results are ready. Would you like them emailed?",
-        });
-      }
     } catch (error) {
       console.error('Error saving submission:', error);
       toast({
@@ -118,14 +109,12 @@ const SacredGreeks = () => {
           )}
 
           {currentStep === 3 && resultData && (
-            <ErrorBoundary>
-              <SacredGreeksResults
-                resultType={resultData.resultType}
-                scores={resultData.scores}
-                answers={resultData.answers}
-                onRestart={handleRestart}
-              />
-            </ErrorBoundary>
+            <SacredGreeksResults
+              resultType={resultData.resultType}
+              scores={resultData.scores}
+              answers={resultData.answers}
+              onRestart={handleRestart}
+            />
           )}
         </div>
       </main>

@@ -1,6 +1,7 @@
-
+import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
@@ -9,7 +10,6 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { CookieConsent } from "@/components/CookieConsent";
 import { AnalyticsProvider } from "@/components/AnalyticsProvider";
-import { BetaFeedbackWidget } from "@/components/BetaFeedbackWidget";
 import { AIAssistantWidget } from "@/components/AIAssistantWidget";
 import { OfflineIndicator } from "@/components/ui/OfflineIndicator";
 import { CelebrationProvider } from "@/contexts/CelebrationContext";
@@ -44,58 +44,39 @@ import QRCodePage from "./pages/QRCode";
 import Resources from "./pages/Resources";
 import About from "./pages/About";
 import PodcastAppearances from "./pages/PodcastAppearances";
-import Analytics from "./pages/Analytics";
-import BetaOnboarding from "./pages/BetaOnboarding";
-import ReferralDashboard from "./pages/ReferralDashboard";
-import FMMPAAssessment from "./pages/FMMPAAssessment";
-import SharedCertificate from "./pages/SharedCertificate";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import TermsOfService from "./pages/TermsOfService";
-import HooksTest from "./pages/HooksTest";
 
 const queryClient = new QueryClient();
 
-const App = () => {
-  // Early bailout for hooks test - renders before any providers
-  if (typeof window !== 'undefined' && window.location.pathname === '/hooks-test') {
-    return <HooksTest />;
-  }
-
-  return (
+const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <CelebrationProvider>
+          <TooltipProvider>
             <Toaster />
             <Sonner />
             <InstallPrompt />
             <OfflineIndicator />
-            <BetaFeedbackWidget />
             <AIAssistantWidget />
             <BrowserRouter>
               <CookieConsent />
               <AnalyticsProvider>
               <Routes>
-              <Route path="/hooks-test" element={<HooksTest />} />
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/privacy" element={<Privacy />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/terms-of-service" element={<TermsOfService />} />
               <Route path="/install" element={<Install />} />
-               <Route path="/shared/:token" element={<SharedResult />} />
-               <Route path="/study" element={<StudyGuide />} />
-               <Route path="/podcast" element={<Podcast />} />
-               <Route path="/podcast-appearances" element={<PodcastAppearances />} />
-               <Route path="/did-you-know" element={<DidYouKnow />} />
-                <Route path="/articles" element={<ArticleLibrary />} />
-                <Route path="/qr-code" element={<QRCodePage />} />
-                <Route path="/resources" element={<Resources />} />
-                 <Route path="/about" element={<About />} />
-                 <Route path="/assessment/fmmpa" element={<FMMPAAssessment />} />
-                 <Route path="/certificate/share/:shareToken" element={<SharedCertificate />} />
+              <Route path="/shared/:token" element={<SharedResult />} />
+              <Route path="/study" element={<StudyGuide />} />
+              <Route path="/podcast" element={<Podcast />} />
+              <Route path="/podcast-appearances" element={<PodcastAppearances />} />
+              <Route path="/did-you-know" element={<DidYouKnow />} />
+               <Route path="/articles" element={<ArticleLibrary />} />
+               <Route path="/qr-code" element={<QRCodePage />} />
+               <Route path="/resources" element={<Resources />} />
+               <Route path="/about" element={<About />} />
               <Route
                 path="/prayer-guide"
                 element={
@@ -216,39 +197,15 @@ const App = () => {
                   </ProtectedRoute>
                 }
               />
-              <Route
-                path="/analytics"
-                element={
-                  <ProtectedRoute>
-                    <Analytics />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/beta-onboarding"
-                element={
-                  <ProtectedRoute>
-                    <BetaOnboarding />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/referrals"
-                element={
-                  <ProtectedRoute>
-                    <ReferralDashboard />
-                  </ProtectedRoute>
-                }
-              />
               <Route path="*" element={<NotFound />} />
             </Routes>
             </AnalyticsProvider>
           </BrowserRouter>
-        </CelebrationProvider>
-      </AuthProvider>
-    </QueryClientProvider>
-  </ErrorBoundary>
-  );
-};
+        </TooltipProvider>
+      </CelebrationProvider>
+    </AuthProvider>
+  </QueryClientProvider>
+</ErrorBoundary>
+);
 
 export default App;

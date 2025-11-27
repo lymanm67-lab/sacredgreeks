@@ -1,10 +1,9 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { BookOpen, Heart, FileText, CheckCircle, TrendingUp } from 'lucide-react';
-import { OnboardingVideoPlayer } from '@/components/OnboardingVideoPlayer';
 
 interface OnboardingProps {
   open: boolean;
@@ -12,9 +11,9 @@ interface OnboardingProps {
 }
 
 export function Onboarding({ open, onComplete }: OnboardingProps) {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
   const navigate = useNavigate();
-  const totalSteps = 6; // Added video step
+  const totalSteps = 5;
 
   const handleNext = () => {
     if (step < totalSteps) {
@@ -40,13 +39,6 @@ export function Onboarding({ open, onComplete }: OnboardingProps) {
         <Progress value={progress} className="w-full" />
         
         <div className="py-6">
-          {step === 0 && (
-            <OnboardingVideoPlayer 
-              onSkip={() => setStep(1)}
-              onComplete={() => setStep(1)}
-            />
-          )}
-
           {step === 1 && (
             <div className="space-y-4 text-center">
               <div className="w-20 h-20 mx-auto bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
@@ -108,22 +100,18 @@ export function Onboarding({ open, onComplete }: OnboardingProps) {
           )}
         </div>
 
-        {step !== 0 && (
-          <>
-            <div className="flex justify-between gap-3">
-              <Button variant="outline" onClick={handleSkip}>
-                Skip
-              </Button>
-              <Button onClick={handleNext} className="bg-sacred hover:bg-sacred/90">
-                {step === totalSteps ? 'Get Started' : 'Next'}
-              </Button>
-            </div>
+        <div className="flex justify-between gap-3">
+          <Button variant="outline" onClick={handleSkip}>
+            Skip
+          </Button>
+          <Button onClick={handleNext} className="bg-sacred hover:bg-sacred/90">
+            {step === totalSteps ? 'Get Started' : 'Next'}
+          </Button>
+        </div>
 
-            <p className="text-xs text-center text-muted-foreground">
-              Step {step} of {totalSteps}
-            </p>
-          </>
-        )}
+        <p className="text-xs text-center text-muted-foreground">
+          Step {step} of {totalSteps}
+        </p>
       </DialogContent>
     </Dialog>
   );

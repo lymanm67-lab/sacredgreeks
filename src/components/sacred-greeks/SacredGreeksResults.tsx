@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart, ExternalLink, RefreshCw, BookOpen, MessageSquare, Video, Share2, Check, Download } from "lucide-react";
+import { Heart, ExternalLink, RefreshCw, BookOpen, MessageSquare, Video, Share2, Check } from "lucide-react";
 import { SacredGreeksAnswers, SacredGreeksScores, ResultType } from "@/types/assessment";
 import { sacredGreeksResults, type Scenario } from "@/sacredGreeksContent";
 import { supabase } from "@/integrations/supabase/client";
@@ -11,9 +11,6 @@ import { SocialShareDialog } from "@/components/SocialShareDialog";
 import { AchievementBadgeDialog } from "@/components/AchievementBadgeDialog";
 import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
 import { useExternalLinks } from "@/hooks/use-external-links";
-import { downloadCertificatePDF, CertificateTheme } from "@/lib/certificate-generator";
-import { useCertificateMeta } from "@/hooks/use-certificate-meta";
-import { SocialShareButtons } from "@/components/certificate/SocialShareButtons";
 
 interface SacredGreeksResultsProps {
   resultType: ResultType;
@@ -29,125 +26,8 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
   const { openExternalLink } = useExternalLinks();
   const [copied, setCopied] = useState(false);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
-  const [isCreatingShare, setIsCreatingShare] = useState(false);
-  const [selectedTheme] = useState<CertificateTheme>('classic');
-  
-  // Validate data before using
-  if (!answers || !resultType || !scores) {
-    return (
-      <Card className="p-6">
-        <CardTitle>Error Loading Results</CardTitle>
-        <CardDescription className="mt-2">
-          Unable to load your assessment results. Please try again.
-        </CardDescription>
-        {onRestart && (
-          <Button onClick={onRestart} className="mt-4">
-            <RefreshCw className="w-4 h-4 mr-2" />
-            Restart Assessment
-          </Button>
-        )}
-      </Card>
-    );
-  }
-  
   const scenario = answers.scenario as Scenario;
   const content = sacredGreeksResults[scenario]?.[resultType];
-
-  // Set certificate meta tags for social sharing
-  useCertificateMeta(!isSharedView && scenario ? {
-    assessmentType: resultType.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
-    scenario: scenario,
-    userName: user?.user_metadata?.full_name || user?.email
-  } : null);
-
-  const handleDownloadPDF = () => {
-    const userName = user?.user_metadata?.full_name || user?.email || "Sacred Greeks Member";
-    downloadCertificatePDF({
-      userName,
-      assessmentType: resultType.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
-      scenario: scenario,
-      completionDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-      theme: selectedTheme
-    });
-    toast({
-      title: "Certificate Downloaded!",
-      description: "Your PDF certificate has been saved to your downloads.",
-    });
-  };
-
-  const handleCreateShareLink = async () => {
-    if (!user) {
-      toast({
-        title: "Sign in required",
-        description: "Please sign in to share your certificate",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setIsCreatingShare(true);
-    try {
-      const userName = user.user_metadata?.full_name || user.email || 'Participant';
-      const shareToken = `${Date.now()}-${Math.random().toString(36).substring(7)}`;
-      
-      // Create shared certificate record
-      const { error: insertError } = await supabase
-        .from('shared_certificates')
-        .insert({
-          share_token: shareToken,
-          user_id: user.id,
-          certificate_type: 'assessment',
-          assessment_type: resultType.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
-          scenario: scenario,
-          theme: selectedTheme,
-          completion_date: new Date().toLocaleDateString(),
-          user_name: userName,
-        });
-
-      if (insertError) throw insertError;
-
-      // Generate OG image in background
-      supabase.functions
-        .invoke('generate-certificate-og-image', {
-          body: {
-            userName,
-            assessmentType: resultType.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
-            scenario: scenario,
-            theme: selectedTheme,
-            shareToken,
-          },
-        })
-        .then(({ data, error }) => {
-          if (error) {
-            console.error('Failed to generate OG image:', error);
-          } else if (data?.imageUrl) {
-            // Update certificate with OG image URL
-            supabase
-              .from('shared_certificates')
-              .update({ og_image_url: data.imageUrl })
-              .eq('share_token', shareToken)
-              .then(() => console.log('OG image updated'));
-          }
-        });
-
-      const url = `${window.location.origin}/certificate/share/${shareToken}`;
-      setShareUrl(url);
-
-      toast({
-        title: "Share link created!",
-        description: "You can now share your certificate on social media",
-      });
-    } catch (error) {
-      console.error('Error creating share link:', error);
-      toast({
-        title: "Failed to create share link",
-        description: "Please try again",
-        variant: "destructive",
-      });
-    } finally {
-      setIsCreatingShare(false);
-    }
-  };
 
   if (!content) {
     return <div>Error: Content not found for this scenario and result type.</div>;
@@ -263,104 +143,6 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
 
   return (
     <div className="space-y-8">
-      {/* Certificate of Completion */}
-      {!isSharedView && (
-        <Card className="border-2 border-sacred bg-gradient-to-br from-sacred via-purple-600 to-blue-600 text-white overflow-hidden">
-          <CardContent className="p-8">
-            <div className="bg-white/95 backdrop-blur rounded-lg p-8 text-center">
-              <div className="space-y-4">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sacred/10 mb-2">
-                  <Heart className="w-8 h-8 text-sacred" />
-                </div>
-                <h2 className="text-3xl font-bold text-sacred">Certificate of Completion</h2>
-                <div className="h-1 w-20 bg-sacred mx-auto rounded-full"></div>
-                <p className="text-muted-foreground text-lg">This certifies that you have completed the</p>
-                <h3 className="text-2xl font-semibold text-purple-600">Sacred Greeks Decision Guide</h3>
-                <div className="pt-4 space-y-2">
-                  <p className="text-sm text-muted-foreground">Assessment Type:</p>
-                  <p className="text-lg font-semibold text-foreground">{resultType.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} - {scenario}</p>
-                </div>
-                <p className="text-sm text-muted-foreground pt-6">
-                  Completed on {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-                </p>
-              </div>
-              <div className="mt-6 pt-6 border-t border-border space-y-3">
-                <div className="flex gap-3">
-                  <Button
-                    onClick={handleDownloadPDF}
-                    variant="outline"
-                    className="flex-1"
-                  >
-                    <Download className="w-4 h-4 mr-2" />
-                    Download PDF
-                  </Button>
-                  
-                  {!shareUrl ? (
-                    <Button
-                      onClick={handleCreateShareLink}
-                      disabled={isCreatingShare}
-                      variant="outline"
-                      className="flex-1"
-                    >
-                      <Share2 className="w-4 h-4 mr-2" />
-                      {isCreatingShare ? 'Creating...' : 'Create Share Link'}
-                    </Button>
-                  ) : (
-                    <Button variant="outline" className="flex-1" disabled>
-                      <Check className="w-4 h-4 mr-2" />
-                      Share Link Ready
-                    </Button>
-                  )}
-                </div>
-
-                {shareUrl && (
-                  <div className="pt-2">
-                    <SocialShareButtons
-                      shareUrl={shareUrl}
-                      title={`I completed the Sacred Greeks Decision Guide! 🎓`}
-                      description={`Assessment: ${resultType.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} - ${scenario}`}
-                    />
-                  </div>
-                )}
-
-                {user?.email && (
-                  <Button
-                    onClick={async () => {
-                      try {
-                        const { error } = await supabase.functions.invoke("send-results-email", {
-                          body: {
-                            email: user.email,
-                            resultType,
-                            scenario,
-                            content,
-                          },
-                        });
-                        if (error) throw error;
-                        toast({
-                          title: "Certificate Sent!",
-                          description: "Your certificate and results have been emailed to you.",
-                        });
-                      } catch (error) {
-                        console.error("Error sending email:", error);
-                        toast({
-                          title: "Error",
-                          description: "Failed to send email. Please try again.",
-                          variant: "destructive",
-                        });
-                      }
-                    }}
-                    className="w-full"
-                  >
-                    <Share2 className="w-4 h-4 mr-2" />
-                    Email Certificate & Results
-                  </Button>
-                )}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
       {/* Headline and Intro */}
       <Card className="border-2 border-sacred/20 bg-gradient-to-br from-sacred/5 to-background">
         <CardHeader>

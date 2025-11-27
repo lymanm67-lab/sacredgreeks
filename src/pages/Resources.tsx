@@ -2,7 +2,6 @@ import { useState, useMemo, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useExternalLinks } from "@/hooks/use-external-links";
-import { useAnalytics } from "@/hooks/use-analytics";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -16,8 +15,6 @@ import { useResourceHistory } from "@/hooks/use-resource-history";
 import { useResourceRecommendations } from "@/hooks/use-resource-recommendations";
 import { SuggestResourceDialog } from "@/components/resources/SuggestResourceDialog";
 import { MediaInquiryForm } from "@/components/resources/MediaInquiryForm";
-import { SubmitTestimonialDialog } from "@/components/resources/SubmitTestimonialDialog";
-import { TestimonialsSection } from "@/components/resources/TestimonialsSection";
 import { formatDistanceToNow } from "date-fns";
 import { 
   BookOpen, 
@@ -54,7 +51,6 @@ interface ResourceItem {
   category: "about" | "book" | "articles" | "testimonials";
   downloadUrl?: string;
   tags?: string[];
-  audience?: ("greeks" | "prospective" | "parents" | "church")[];
 }
 
 const resources: ResourceItem[] = [
@@ -67,7 +63,6 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "about",
     tags: ["About"],
-    audience: ["greeks", "prospective", "parents", "church"],
   },
   {
     title: "P.R.O.O.F. Framework",
@@ -77,7 +72,6 @@ const resources: ResourceItem[] = [
     requiresAuth: true,
     category: "about",
     tags: ["Framework", "About"],
-    audience: ["greeks", "prospective", "church"],
   },
   {
     title: "Dr. Lyman Montgomery Media Kit",
@@ -88,7 +82,6 @@ const resources: ResourceItem[] = [
     badge: "Featured",
     category: "about",
     tags: ["About", "Media"],
-    audience: ["church", "parents"],
   },
   {
     title: "Media Kit for Editors, Event Planners, and Partners",
@@ -98,7 +91,6 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "about",
     tags: ["About", "Media"],
-    audience: ["church", "parents"],
   },
   {
     title: "Podcast Appearances",
@@ -109,7 +101,6 @@ const resources: ResourceItem[] = [
     badge: "Media",
     category: "about",
     tags: ["Media", "Podcast", "Interviews"],
-    audience: ["greeks", "prospective", "parents", "church"],
   },
   {
     title: "Unmasking Hope Documentary",
@@ -120,7 +111,6 @@ const resources: ResourceItem[] = [
     badge: "Featured",
     category: "about",
     tags: ["Media", "Documentary", "Film"],
-    audience: ["greeks", "prospective", "parents", "church"],
   },
   
   // Book Info Section
@@ -133,7 +123,6 @@ const resources: ResourceItem[] = [
     badge: "Featured",
     category: "book",
     tags: ["Book"],
-    audience: ["greeks", "prospective", "parents", "church"],
   },
   {
     title: "Book Chapters",
@@ -144,7 +133,6 @@ const resources: ResourceItem[] = [
     badge: "Members",
     category: "book",
     tags: ["Book", "Study"],
-    audience: ["greeks"],
   },
   
   // Resources/Articles Section
@@ -156,7 +144,6 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Articles"],
-    audience: ["greeks", "prospective", "parents", "church"],
   },
   {
     title: "The Focused Driven Life",
@@ -166,7 +153,6 @@ const resources: ResourceItem[] = [
     requiresAuth: false,
     category: "articles",
     tags: ["Devotionals", "Leadership"],
-    audience: ["greeks", "prospective"],
   },
   {
     title: "Repentance, Repair & Renewal Checklist",
@@ -177,332 +163,6 @@ const resources: ResourceItem[] = [
     category: "articles",
     downloadUrl: "/resources/repentance-repair-renewal-checklist.pdf",
     tags: ["Devotionals", "Framework"],
-    audience: ["greeks"],
-  },
-  {
-    title: "Integrity Under Pressure Playbook",
-    description: "A practical ethics guide for hot moments on campus and in life using the P.R.O.O.F. framework",
-    url: "https://gamma.app/embed/752n7nfkgl1wn7w",
-    icon: BookOpen,
-    requiresAuth: false,
-    category: "articles",
-    downloadUrl: "/resources/integrity-under-pressure-2.pdf",
-    tags: ["Leadership", "Framework"],
-    audience: ["greeks", "prospective"],
-  },
-  {
-    title: "Christian Greek Life Study Guide",
-    description: "Comprehensive study guide for integrating Christian faith with Greek life participation",
-    url: "https://gamma.app/embed/ihr8fq0g089n32t",
-    icon: BookOpen,
-    requiresAuth: false,
-    badge: "Featured",
-    category: "articles",
-    tags: ["Study", "Framework"],
-    audience: ["greeks", "prospective", "parents", "church"],
-  },
-  {
-    title: "Sacred Comfort: Praying for Greeks in Tough Times",
-    description: "How to pray for and walk with fraternity and sorority members during difficult seasons",
-    url: "https://gamma.app/embed/ccgepyu7je8fpav",
-    icon: Heart,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Service", "Devotionals"],
-    audience: ["parents", "church"],
-  },
-  {
-    title: "Servant Leadership in Greek Life",
-    description: "How to run your chapter and service projects like Jesus with biblical principles",
-    url: "https://gamma.app/embed/roah3o2oby0g55s",
-    icon: Sparkles,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Leadership", "Service"],
-    audience: ["greeks"],
-  },
-  {
-    title: "Sacred Service: Planning Community Projects",
-    description: "A guide for planning and executing meaningful community service projects with your chapter",
-    url: "https://gamma.app/embed/28f7a9bc5w5jghb",
-    icon: Heart,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Service", "Leadership"],
-    audience: ["greeks"],
-  },
-  {
-    title: "Robert's Rules of Order in Chapter Meetings",
-    description: "A practical guide to running effective and organized chapter meetings using parliamentary procedure",
-    url: "https://gamma.app/embed/viytfotsasvx46d",
-    icon: FileText,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Leadership", "Framework"],
-    audience: ["greeks"],
-  },
-  {
-    title: "Sacred Conversations: Leading Greeks to Christ",
-    description: "Using the Roman Road to share the Gospel with fraternity and sorority members",
-    url: "https://gamma.app/embed/ekkmlx5d1615hlv",
-    icon: Heart,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Evangelism", "Service"],
-    audience: ["greeks", "church"],
-  },
-  {
-    title: "Cultural Reflection Devotional for the Holidays",
-    description: "Sacred Greeks devotional for reflecting on culture and faith during the holiday season",
-    url: "https://gamma.app/embed/uudch3osmv3ss77",
-    icon: Sparkles,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Devotionals"],
-    audience: ["greeks", "prospective"],
-  },
-  {
-    title: "7-Days to Unshakeable Focus",
-    description: "A week-long devotional guide to develop spiritual focus and mental clarity",
-    url: "https://gamma.app/embed/3pebfj1ub3rqkue",
-    icon: CheckCircle,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Devotionals"],
-    audience: ["greeks", "prospective"],
-  },
-  {
-    title: "5 Steps to Retain & Engage Your Staff",
-    description: "Best practices for retaining chapter staff and staying audit ready with strong leadership",
-    url: "https://gamma.app/embed/e7ydcjtrr2ujq0b",
-    icon: FileText,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Leadership"],
-    audience: ["greeks"],
-  },
-  {
-    title: "Defending Your Faith and Fraternity",
-    description: "How to respond when church leaders challenge your Greek life participation",
-    url: "https://gamma.app/embed/um32h0hd55s8c6v",
-    icon: Heart,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Apologetics"],
-    audience: ["greeks", "prospective", "parents", "church"],
-  },
-  {
-    title: "Are BGLOs Sinful? A Biblical Response",
-    description: "A biblical perspective addressing common concerns about Black Greek Letter Organizations",
-    url: "https://gamma.app/embed/qj85c0up8fdigh5",
-    icon: BookOpen,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Apologetics"],
-    audience: ["greeks", "prospective", "parents", "church"],
-  },
-  {
-    title: "Should Christians Denounce BGLOs?",
-    description: "Exploring truth, trauma, and theology in the discussion about Black Greek Letter Organizations",
-    url: "https://gamma.app/embed/un3ueaqjhbjf8y2",
-    icon: Heart,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Apologetics"],
-    audience: ["greeks", "parents", "church"],
-  },
-  {
-    title: "Greek Life, Social Justice, And Faith",
-    description: "How BGLOs can be Kingdom tools for advancing social justice and faith",
-    url: "https://gamma.app/embed/97rakhcw3n90dt0",
-    icon: Sparkles,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Service", "Social Justice"],
-    audience: ["greeks", "church"],
-  },
-  {
-    title: "Why I Did Not Renounce My BGLO",
-    description: "A personal testimony and pastoral guidance on remaining in Black Greek Letter Organizations as a Christian",
-    url: "https://gamma.app/embed/ft5vd5wc4gdfmuv",
-    icon: Heart,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Testimonials", "Apologetics"],
-    audience: ["greeks", "church"],
-  },
-  {
-    title: "How Not to Lose Your Christian Identity After Intake",
-    description: "Practical guidance for maintaining your faith and Christian identity throughout the intake process",
-    url: "https://gamma.app/embed/6lwq13dmgrs5ney",
-    icon: CheckCircle,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["New Members", "Framework"],
-    audience: ["prospective", "greeks"],
-  },
-  {
-    title: "When Leaving Makes Sense",
-    description: "A Christian's guide to exiting a Greek organization gracefully without destroying relationships",
-    url: "https://gamma.app/embed/cyi9l2rq808g6r6",
-    icon: FileText,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Transition", "Framework"],
-    audience: ["greeks"],
-  },
-  {
-    title: "How to Leave Without Burning Bridges Checklist",
-    description: "Practical checklist for leaving your Greek organization while preserving brotherhood and sisterhood bonds",
-    url: "https://gamma.app/embed/p2gg3fi0f1bw4tr",
-    icon: CheckCircle,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Transition", "Framework"],
-    audience: ["greeks"],
-  },
-  {
-    title: "Symbolism in BGLO Rituals: Harmless or Spiritual Danger?",
-    description: "A guide for Christians and church leaders examining symbolism in Black Greek rituals",
-    url: "https://gamma.app/embed/nftyg892145844a",
-    icon: BookOpen,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Apologetics"],
-    audience: ["greeks", "parents", "church"],
-  },
-  {
-    title: "Should Members Take Oaths For BGLOs?",
-    description: "Christian guidance on taking oaths for Black Greek Letter Organizations",
-    url: "https://gamma.app/embed/y630omdzx2sp7z3",
-    icon: Heart,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Apologetics", "Framework"],
-    audience: ["greeks", "prospective", "church"],
-  },
-  {
-    title: "Dr. Lyman A. Montgomery Signature Greek Life Series",
-    description: "Comprehensive teaching series on integrating Christian faith with Greek life participation",
-    url: "https://gamma.app/embed/hfn73itjrx2l4wx",
-    icon: BookOpen,
-    requiresAuth: false,
-    badge: "Featured",
-    category: "articles",
-    tags: ["Study", "Framework"],
-    audience: ["greeks", "prospective", "parents", "church"],
-  },
-  {
-    title: "Practical Frameworks & Checklists",
-    description: "Essential frameworks and checklists for navigating Greek life as a Christian",
-    url: "https://gamma.app/embed/kvq0rliv8297moo",
-    icon: CheckCircle,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Framework"],
-    audience: ["greeks", "prospective"],
-  },
-  {
-    title: "CROSS Guide for Greek Life",
-    description: "Comprehensive guide using the CROSS framework for Christian Greek life participation",
-    url: "https://gamma.app/embed/ug6sn2qq95613dg",
-    icon: Sparkles,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Framework", "Study"],
-    audience: ["greeks", "prospective"],
-  },
-  {
-    title: "How to Be P.I.L.L.A.R. within Your Greek Organization",
-    description: "Framework for being a pillar of faith and leadership within your Greek letter organization",
-    url: "https://gamma.app/embed/ctdbb60tc09ez0e",
-    icon: Heart,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Leadership", "Framework"],
-    audience: ["greeks"],
-  },
-  {
-    title: "How to Handle Tensions Within Your Greek Organization",
-    description: "Practical guidance for navigating and resolving conflicts within your Greek letter organization",
-    url: "https://gamma.app/embed/hoaqqjovrxsxpve",
-    icon: FileText,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Conflict Resolution", "Leadership"],
-  },
-  {
-    title: "Christian BGLO Redemption Guide",
-    description: "A simple guide to repentance, repair, and renewal for Christians in Black Greek Letter Organizations",
-    url: "https://gamma.app/embed/6bfy5y35wg4bezt",
-    icon: Heart,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Devotionals", "Framework"],
-  },
-  {
-    title: "Inclusive Environment Toolkit",
-    description: "Tools and strategies for creating inclusive and welcoming environments within Greek organizations",
-    url: "https://gamma.app/embed/czjmm4li1c9jp0f",
-    icon: Sparkles,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Leadership", "Service"],
-  },
-  {
-    title: "Redeemed Greeks",
-    description: "A vision for redemption and renewal within Greek letter organizations through Christ",
-    url: "https://gamma.app/embed/l28kd2r827ynm99",
-    icon: Heart,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Devotionals", "Vision"],
-  },
-  {
-    title: "Why Some Call BGLOs Demonic",
-    description: "Understanding and addressing concerns about spiritual warfare claims regarding Black Greek Letter Organizations",
-    url: "https://gamma.app/embed/4exmqlq3k79oepv",
-    icon: BookOpen,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Apologetics"],
-  },
-  {
-    title: "Is Being Christian & Greek 'Incompatible'?",
-    description: "Setting the record straight on the compatibility of Christian faith and Greek life participation",
-    url: "https://gamma.app/embed/t4agxb757qkugvr",
-    icon: Heart,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Apologetics"],
-  },
-  {
-    title: "Your Chapter, God's Canvas",
-    description: "Living out your faith authentically within your Greek letter organization",
-    url: "https://gamma.app/embed/sgrjn53235fsej2",
-    icon: Sparkles,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Leadership", "Vision"],
-  },
-  {
-    title: "Redeem Your Letters",
-    description: "A powerful message about redeeming your Greek letters and bringing glory to God through your organization",
-    url: "https://gamma.app/embed/trkhw9krqh3l4cs",
-    icon: Heart,
-    requiresAuth: false,
-    category: "articles",
-    tags: ["Vision", "Devotionals"],
-  },
-  {
-    title: "Christian Greek Life Power Guide",
-    description: "Comprehensive power guide for navigating Greek life as a committed Christian",
-    url: "https://gamma.app/embed/6026roc21m7i8gc",
-    icon: BookOpen,
-    requiresAuth: false,
-    badge: "Featured",
-    category: "articles",
-    tags: ["Framework", "Study"],
   },
   {
     title: "Integrity Under Pressure Playbook",
@@ -799,6 +459,307 @@ const resources: ResourceItem[] = [
     title: "Christian Greek Life Power Guide",
     description: "Comprehensive power guide for navigating Greek life as a committed Christian",
     url: "https://gamma.app/embed/6026roc21m7i8gc",
+    icon: BookOpen,
+    requiresAuth: false,
+    badge: "Featured",
+    category: "articles",
+    tags: ["Framework", "Study"],
+  },
+  {
+    title: "Integrity Under Pressure Playbook",
+    description: "A practical ethics guide for hot moments on campus and in life using the P.R.O.O.F. framework",
+    url: "https://gamma.app/docs/Integrity-Under-Pressure-752n7nfkgl1wn7w",
+    icon: BookOpen,
+    requiresAuth: false,
+    category: "articles",
+    downloadUrl: "/resources/integrity-under-pressure-2.pdf",
+    tags: ["Leadership", "Framework"],
+  },
+  {
+    title: "Christian Greek Life Study Guide",
+    description: "Comprehensive study guide for integrating Christian faith with Greek life participation",
+    url: "https://gamma.app/docs/Christian-Greek-Life-Study-Guide-ihr8fq0g089n32t",
+    icon: BookOpen,
+    requiresAuth: false,
+    badge: "Featured",
+    category: "articles",
+    tags: ["Study", "Framework"],
+  },
+  {
+    title: "Sacred Comfort: Praying for Greeks in Tough Times",
+    description: "How to pray for and walk with fraternity and sorority members during difficult seasons",
+    url: "https://gamma.app/docs/Sacred-Comfort-How-To-Pray-For-And-Walk-With-Fraternity-And-Sorority-ccgepyu7je8fpav",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Service", "Devotionals"],
+  },
+  {
+    title: "Servant Leadership in Greek Life",
+    description: "How to run your chapter and service projects like Jesus with biblical principles",
+    url: "https://gamma.app/docs/Servant-Leadership-in-Greek-Life-How-to-Run-Your-Chapter-and-Service-roah3o2oby0g55s",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Leadership", "Service"],
+  },
+  {
+    title: "Sacred Service: Planning Community Projects",
+    description: "A guide for planning and executing meaningful community service projects with your chapter",
+    url: "https://gamma.app/docs/Sacred-Service-Planning-Community-Projects-with-Your-Chapter-28f7a9bc5w5jghb",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Service", "Leadership"],
+  },
+  {
+    title: "Robert's Rules of Order in Chapter Meetings",
+    description: "A practical guide to running effective and organized chapter meetings using parliamentary procedure",
+    url: "https://gamma.app/docs/How-To-Use-Roberts-Rules-of-Order-in-Chapter-Meetings-viytfotsasvx46d",
+    icon: FileText,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Leadership", "Framework"],
+  },
+  {
+    title: "Sacred Conversations: Leading Greeks to Christ",
+    description: "Using the Roman Road to share the Gospel with fraternity and sorority members",
+    url: "https://gamma.app/docs/Sacred-Conversations-Leading-Greek-Members-to-Christ-Using-the-Roman-ekkmlx5d1615hlv",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Evangelism", "Service"],
+  },
+  {
+    title: "Cultural Reflection Devotional for the Holidays",
+    description: "Sacred Greeks devotional for reflecting on culture and faith during the holiday season",
+    url: "https://gamma.app/docs/Sacred-Greeks-Cultural-Reflection-Devotional-for-the-Holidays-uudch3osmv3ss77",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Devotionals"],
+  },
+  {
+    title: "7-Days to Unshakeable Focus",
+    description: "A week-long devotional guide to develop spiritual focus and mental clarity",
+    url: "https://gamma.app/docs/7-Days-to-Unshakeable-Focus-3pebfj1ub3rqkue",
+    icon: CheckCircle,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Devotionals"],
+  },
+  {
+    title: "5 Steps to Retain & Engage Your Staff",
+    description: "Best practices for retaining chapter staff and staying audit ready with strong leadership",
+    url: "https://gamma.app/docs/5-Steps-to-Retain-and-Engage-Your-Staff-While-Staying-Audit-Ready-e7ydcjtrr2ujq0b",
+    icon: FileText,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Leadership"],
+  },
+  {
+    title: "Defending Your Faith and Fraternity",
+    description: "How to respond when church leaders challenge your Greek life participation",
+    url: "https://gamma.app/docs/How-to-Defend-Your-Faith-and-Fraternity-When-Church-Leaders-Challenge-um32h0hd55s8c6v",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Apologetics"],
+  },
+  {
+    title: "Are BGLOs Sinful? A Biblical Response",
+    description: "A biblical perspective addressing common concerns about Black Greek Letter Organizations",
+    url: "https://gamma.app/docs/Are-BGLOs-Sinful-A-Biblical-Response-for-Christians-qj85c0up8fdigh5",
+    icon: BookOpen,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Apologetics"],
+  },
+  {
+    title: "Should Christians Denounce BGLOs?",
+    description: "Exploring truth, trauma, and theology in the discussion about Black Greek Letter Organizations",
+    url: "https://gamma.app/docs/Should-Christians-Denounce-BGLOs-Truth-Trauma-and-Theology-un3ueaqjhbjf8y2",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Apologetics"],
+  },
+  {
+    title: "Greek Life, Social Justice, And Faith",
+    description: "How BGLOs can be Kingdom tools for advancing social justice and faith",
+    url: "https://gamma.app/docs/Greek-Life-Social-Justice-And-Faith-How-BGLOs-Can-Be-Kingdom-Tools-97rakhcw3n90dt0",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Service", "Social Justice"],
+  },
+  {
+    title: "Why I Did Not Renounce My BGLO",
+    description: "A personal testimony and pastoral guidance on remaining in Black Greek Letter Organizations as a Christian",
+    url: "https://gamma.app/docs/Why-This-Christian-Did-Not-Renounce-My-Black-Greek-Letter-Organization-ft5vd5wc4gdfmuv",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Testimonials", "Apologetics"],
+  },
+  {
+    title: "How Not to Lose Your Christian Identity After Intake",
+    description: "Practical guidance for maintaining your faith and Christian identity throughout the intake process",
+    url: "https://gamma.app/docs/How-Not-to-Lose-Your-Christian-Identity-After-Intake-6lwq13dmgrs5ney",
+    icon: CheckCircle,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["New Members", "Framework"],
+  },
+  {
+    title: "When Leaving Makes Sense",
+    description: "A Christian's guide to exiting a Greek organization gracefully without destroying relationships",
+    url: "https://gamma.app/docs/When-Leaving-Makes-Sense-A-Christians-Guide-to-Exiting-a-Greek-Organization-cyi9l2rq808g6r6",
+    icon: FileText,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Transition", "Framework"],
+  },
+  {
+    title: "How to Leave Without Burning Bridges Checklist",
+    description: "Practical checklist for leaving your Greek organization while preserving brotherhood and sisterhood bonds",
+    url: "https://gamma.app/docs/How-to-Leave-Without-Burning-Brotherhood-or-Sisterhood-Bridges-Checklist-p2gg3fi0f1bw4tr",
+    icon: CheckCircle,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Transition", "Framework"],
+  },
+  {
+    title: "Symbolism in BGLO Rituals: Harmless or Spiritual Danger?",
+    description: "A guide for Christians and church leaders examining symbolism in Black Greek rituals",
+    url: "https://gamma.app/docs/Symbolism-in-BGLO-Rituals-Harmless-or-Spiritual-Danger-A-Guide-for-nftyg892145844a",
+    icon: BookOpen,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Apologetics"],
+  },
+  {
+    title: "Should Members Take Oaths For BGLOs?",
+    description: "Christian guidance on taking oaths for Black Greek Letter Organizations",
+    url: "https://gamma.app/docs/Christian-Guidance-Should-Members-Take-Oaths-For-Black-Greek-Letter-y630omdzx2sp7z3",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Apologetics", "Framework"],
+  },
+  {
+    title: "Dr. Lyman A. Montgomery Signature Greek Life Series",
+    description: "Comprehensive teaching series on integrating Christian faith with Greek life participation",
+    url: "https://gamma.app/docs/Dr-Lyman-A-Montgomery-Signature-Greek-Life-Series-hfn73itjrx2l4wx",
+    icon: BookOpen,
+    requiresAuth: false,
+    badge: "Featured",
+    category: "articles",
+    tags: ["Study", "Framework"],
+  },
+  {
+    title: "Practical Frameworks & Checklists",
+    description: "Essential frameworks and checklists for navigating Greek life as a Christian",
+    url: "https://gamma.app/docs/Practical-Frameworks-Checklists-kvq0rliv8297moo",
+    icon: CheckCircle,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Framework"],
+  },
+  {
+    title: "CROSS Guide for Greek Life",
+    description: "Comprehensive guide using the CROSS framework for Christian Greek life participation",
+    url: "https://gamma.app/docs/CROSS-Guide-for-Greek-Life-ug6sn2qq95613dg",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Framework", "Study"],
+  },
+  {
+    title: "How to Be P.I.L.L.A.R. within Your Greek Organization",
+    description: "Framework for being a pillar of faith and leadership within your Greek letter organization",
+    url: "https://gamma.app/docs/How-to-Be-PILLAR-within-Your-Greek-Letter-Organization-ctdbb60tc09ez0e",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Leadership", "Framework"],
+  },
+  {
+    title: "How to Handle Tensions Within Your Greek Organization",
+    description: "Practical guidance for navigating and resolving conflicts within your Greek letter organization",
+    url: "https://gamma.app/docs/How-to-Handle-Tensions-Within-Your-Greek-Letter-Organization-hoaqqjovrxsxpve",
+    icon: FileText,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Conflict Resolution", "Leadership"],
+  },
+  {
+    title: "Christian BGLO Redemption Guide",
+    description: "A simple guide to repentance, repair, and renewal for Christians in Black Greek Letter Organizations",
+    url: "https://gamma.app/docs/Christian-BGLO-Redemption-A-Simple-Guide-to-Repentance-Repair-and-Renewal-6bfy5y35wg4bezt",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Devotionals", "Framework"],
+  },
+  {
+    title: "Inclusive Environment Toolkit",
+    description: "Tools and strategies for creating inclusive and welcoming environments within Greek organizations",
+    url: "https://gamma.app/docs/Inclusive-Environment-Toolkit-czjmm4li1c9jp0f",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Leadership", "Service"],
+  },
+  {
+    title: "Redeemed Greeks",
+    description: "A vision for redemption and renewal within Greek letter organizations through Christ",
+    url: "https://gamma.app/docs/Redeemed-Greeks-l28kd2r827ynm99",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Devotionals", "Vision"],
+  },
+  {
+    title: "Why Some Call BGLOs Demonic",
+    description: "Understanding and addressing concerns about spiritual warfare claims regarding Black Greek Letter Organizations",
+    url: "https://gamma.app/docs/Why-Some-Call-Black-Greek-Letter-Organizations-Demonic-4exmqlq3k79oepv",
+    icon: BookOpen,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Apologetics"],
+  },
+  {
+    title: "Is Being Christian & Greek 'Incompatible'?",
+    description: "Setting the record straight on the compatibility of Christian faith and Greek life participation",
+    url: "https://gamma.app/docs/Is-Being-Christian-Greek-Incompatible-Time-to-Set-the-Record-Straight-t4agxb757qkugvr",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Apologetics"],
+  },
+  {
+    title: "Your Chapter, God's Canvas",
+    description: "Living out your faith authentically within your Greek letter organization",
+    url: "https://gamma.app/docs/Your-Chapter-Gods-Canvas-Living-Out-Your-Faith-Authentically-sgrjn53235fsej2",
+    icon: Sparkles,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Leadership", "Vision"],
+  },
+  {
+    title: "Redeem Your Letters",
+    description: "A powerful message about redeeming your Greek letters and bringing glory to God through your organization",
+    url: "https://gamma.app/docs/Redeem-Your-Letters-trkhw9krqh3l4cs",
+    icon: Heart,
+    requiresAuth: false,
+    category: "articles",
+    tags: ["Vision", "Devotionals"],
+  },
+  {
+    title: "Christian Greek Life Power Guide",
+    description: "Comprehensive power guide for navigating Greek life as a committed Christian",
+    url: "https://gamma.app/docs/Christian-Greek-Life-Power-Guide-6026roc21m7i8gc",
     icon: BookOpen,
     requiresAuth: false,
     badge: "Featured",
@@ -866,7 +827,7 @@ const resources: ResourceItem[] = [
   {
     title: "Repentance, Repair & Renewal Checklist",
     description: "A spiritual guide for aligning Greek life with devotion to Christ",
-    url: "https://gamma.app/embed/12fobc2w0gro04i",
+    url: "https://gamma.app/docs/Christian-Black-Greek-Life-Repentance-Repair-and-Renewal-Checklis-12fobc2w0gro04i",
     icon: CheckCircle,
     requiresAuth: false,
     category: "articles",
@@ -875,7 +836,7 @@ const resources: ResourceItem[] = [
   {
     title: "Integrity Under Pressure Playbook",
     description: "A practical ethics guide for hot moments on campus and in life using the P.R.O.O.F. framework",
-    url: "https://gamma.app/embed/752n7nfkgl1wn7w",
+    url: "https://gamma.app/docs/Integrity-Under-Pressure-752n7nfkgl1wn7w",
     icon: BookOpen,
     requiresAuth: false,
     category: "articles",
@@ -884,7 +845,7 @@ const resources: ResourceItem[] = [
   {
     title: "Christian Greek Life Study Guide",
     description: "Comprehensive study guide for integrating Christian faith with Greek life participation",
-    url: "https://gamma.app/embed/ihr8fq0g089n32t",
+    url: "https://gamma.app/docs/Christian-Greek-Life-Study-Guide-ihr8fq0g089n32t",
     icon: BookOpen,
     requiresAuth: false,
     badge: "Featured",
@@ -893,7 +854,7 @@ const resources: ResourceItem[] = [
   {
     title: "Sacred Comfort: Praying for Greeks in Tough Times",
     description: "How to pray for and walk with fraternity and sorority members during difficult seasons",
-    url: "https://gamma.app/embed/ccgepyu7je8fpav",
+    url: "https://gamma.app/docs/Sacred-Comfort-How-To-Pray-For-And-Walk-With-Fraternity-And-Sorority-ccgepyu7je8fpav",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -901,7 +862,7 @@ const resources: ResourceItem[] = [
   {
     title: "Servant Leadership in Greek Life",
     description: "How to run your chapter and service projects like Jesus with biblical principles",
-    url: "https://gamma.app/embed/roah3o2oby0g55s",
+    url: "https://gamma.app/docs/Servant-Leadership-in-Greek-Life-How-to-Run-Your-Chapter-and-Service-roah3o2oby0g55s",
     icon: Sparkles,
     requiresAuth: false,
     category: "articles",
@@ -909,7 +870,7 @@ const resources: ResourceItem[] = [
   {
     title: "Sacred Service: Planning Community Projects",
     description: "A guide for planning and executing meaningful community service projects with your chapter",
-    url: "https://gamma.app/embed/28f7a9bc5w5jghb",
+    url: "https://gamma.app/docs/Sacred-Service-Planning-Community-Projects-with-Your-Chapter-28f7a9bc5w5jghb",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -917,7 +878,7 @@ const resources: ResourceItem[] = [
   {
     title: "Robert's Rules of Order in Chapter Meetings",
     description: "A practical guide to running effective and organized chapter meetings using parliamentary procedure",
-    url: "https://gamma.app/embed/viytfotsasvx46d",
+    url: "https://gamma.app/docs/How-To-Use-Roberts-Rules-of-Order-in-Chapter-Meetings-viytfotsasvx46d",
     icon: FileText,
     requiresAuth: false,
     category: "articles",
@@ -925,7 +886,7 @@ const resources: ResourceItem[] = [
   {
     title: "Sacred Conversations: Leading Greeks to Christ",
     description: "Using the Roman Road to share the Gospel with fraternity and sorority members",
-    url: "https://gamma.app/embed/ekkmlx5d1615hlv",
+    url: "https://gamma.app/docs/Sacred-Conversations-Leading-Greek-Members-to-Christ-Using-the-Roman-ekkmlx5d1615hlv",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -933,7 +894,7 @@ const resources: ResourceItem[] = [
   {
     title: "Cultural Reflection Devotional for the Holidays",
     description: "Sacred Greeks devotional for reflecting on culture and faith during the holiday season",
-    url: "https://gamma.app/embed/uudch3osmv3ss77",
+    url: "https://gamma.app/docs/Sacred-Greeks-Cultural-Reflection-Devotional-for-the-Holidays-uudch3osmv3ss77",
     icon: Sparkles,
     requiresAuth: false,
     category: "articles",
@@ -941,7 +902,7 @@ const resources: ResourceItem[] = [
   {
     title: "7-Days to Unshakeable Focus",
     description: "A week-long devotional guide to develop spiritual focus and mental clarity",
-    url: "https://gamma.app/embed/3pebfj1ub3rqkue",
+    url: "https://gamma.app/docs/7-Days-to-Unshakeable-Focus-3pebfj1ub3rqkue",
     icon: CheckCircle,
     requiresAuth: false,
     category: "articles",
@@ -949,7 +910,7 @@ const resources: ResourceItem[] = [
   {
     title: "5 Steps to Retain & Engage Your Staff",
     description: "Best practices for retaining chapter staff and staying audit ready with strong leadership",
-    url: "https://gamma.app/embed/e7ydcjtrr2ujq0b",
+    url: "https://gamma.app/docs/5-Steps-to-Retain-and-Engage-Your-Staff-While-Staying-Audit-Ready-e7ydcjtrr2ujq0b",
     icon: FileText,
     requiresAuth: false,
     category: "articles",
@@ -957,7 +918,7 @@ const resources: ResourceItem[] = [
   {
     title: "Defending Your Faith and Fraternity",
     description: "How to respond when church leaders challenge your Greek life participation",
-    url: "https://gamma.app/embed/um32h0hd55s8c6v",
+    url: "https://gamma.app/docs/How-to-Defend-Your-Faith-and-Fraternity-When-Church-Leaders-Challenge-um32h0hd55s8c6v",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -965,7 +926,7 @@ const resources: ResourceItem[] = [
   {
     title: "Are BGLOs Sinful? A Biblical Response",
     description: "A biblical perspective addressing common concerns about Black Greek Letter Organizations",
-    url: "https://gamma.app/embed/qj85c0up8fdigh5",
+    url: "https://gamma.app/docs/Are-BGLOs-Sinful-A-Biblical-Response-for-Christians-qj85c0up8fdigh5",
     icon: BookOpen,
     requiresAuth: false,
     category: "articles",
@@ -973,7 +934,7 @@ const resources: ResourceItem[] = [
   {
     title: "Should Christians Denounce BGLOs?",
     description: "Exploring truth, trauma, and theology in the discussion about Black Greek Letter Organizations",
-    url: "https://gamma.app/embed/un3ueaqjhbjf8y2",
+    url: "https://gamma.app/docs/Should-Christians-Denounce-BGLOs-Truth-Trauma-and-Theology-un3ueaqjhbjf8y2",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -981,7 +942,7 @@ const resources: ResourceItem[] = [
   {
     title: "Greek Life, Social Justice, And Faith",
     description: "How BGLOs can be Kingdom tools for advancing social justice and faith",
-    url: "https://gamma.app/embed/97rakhcw3n90dt0",
+    url: "https://gamma.app/docs/Greek-Life-Social-Justice-And-Faith-How-BGLOs-Can-Be-Kingdom-Tools-97rakhcw3n90dt0",
     icon: Sparkles,
     requiresAuth: false,
     category: "articles",
@@ -989,7 +950,7 @@ const resources: ResourceItem[] = [
   {
     title: "Why I Did Not Renounce My BGLO",
     description: "A personal testimony and pastoral guidance on remaining in Black Greek Letter Organizations as a Christian",
-    url: "https://gamma.app/embed/ft5vd5wc4gdfmuv",
+    url: "https://gamma.app/docs/Why-This-Christian-Did-Not-Renounce-My-Black-Greek-Letter-Organization-ft5vd5wc4gdfmuv",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -997,7 +958,7 @@ const resources: ResourceItem[] = [
   {
     title: "How Not to Lose Your Christian Identity After Intake",
     description: "Practical guidance for maintaining your faith and Christian identity throughout the intake process",
-    url: "https://gamma.app/embed/6lwq13dmgrs5ney",
+    url: "https://gamma.app/docs/How-Not-to-Lose-Your-Christian-Identity-After-Intake-6lwq13dmgrs5ney",
     icon: CheckCircle,
     requiresAuth: false,
     category: "articles",
@@ -1005,7 +966,7 @@ const resources: ResourceItem[] = [
   {
     title: "When Leaving Makes Sense",
     description: "A Christian's guide to exiting a Greek organization gracefully without destroying relationships",
-    url: "https://gamma.app/embed/cyi9l2rq808g6r6",
+    url: "https://gamma.app/docs/When-Leaving-Makes-Sense-A-Christians-Guide-to-Exiting-a-Greek-Organization-cyi9l2rq808g6r6",
     icon: FileText,
     requiresAuth: false,
     category: "articles",
@@ -1013,7 +974,7 @@ const resources: ResourceItem[] = [
   {
     title: "How to Leave Without Burning Bridges Checklist",
     description: "Practical checklist for leaving your Greek organization while preserving brotherhood and sisterhood bonds",
-    url: "https://gamma.app/embed/p2gg3fi0f1bw4tr",
+    url: "https://gamma.app/docs/How-to-Leave-Without-Burning-Brotherhood-or-Sisterhood-Bridges-Checklist-p2gg3fi0f1bw4tr",
     icon: CheckCircle,
     requiresAuth: false,
     category: "articles",
@@ -1021,7 +982,7 @@ const resources: ResourceItem[] = [
   {
     title: "Symbolism in BGLO Rituals: Harmless or Spiritual Danger?",
     description: "A guide for Christians and church leaders examining symbolism in Black Greek rituals",
-    url: "https://gamma.app/embed/nftyg892145844a",
+    url: "https://gamma.app/docs/Symbolism-in-BGLO-Rituals-Harmless-or-Spiritual-Danger-A-Guide-for-nftyg892145844a",
     icon: BookOpen,
     requiresAuth: false,
     category: "articles",
@@ -1029,7 +990,7 @@ const resources: ResourceItem[] = [
   {
     title: "Should Members Take Oaths For BGLOs?",
     description: "Christian guidance on taking oaths for Black Greek Letter Organizations",
-    url: "https://gamma.app/embed/y630omdzx2sp7z3",
+    url: "https://gamma.app/docs/Christian-Guidance-Should-Members-Take-Oaths-For-Black-Greek-Letter-y630omdzx2sp7z3",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -1037,7 +998,7 @@ const resources: ResourceItem[] = [
   {
     title: "Dr. Lyman A. Montgomery Signature Greek Life Series",
     description: "Comprehensive teaching series on integrating Christian faith with Greek life participation",
-    url: "https://gamma.app/embed/hfn73itjrx2l4wx",
+    url: "https://gamma.app/docs/Dr-Lyman-A-Montgomery-Signature-Greek-Life-Series-hfn73itjrx2l4wx",
     icon: BookOpen,
     requiresAuth: false,
     badge: "Featured",
@@ -1046,7 +1007,7 @@ const resources: ResourceItem[] = [
   {
     title: "Practical Frameworks & Checklists",
     description: "Essential frameworks and checklists for navigating Greek life as a Christian",
-    url: "https://gamma.app/embed/kvq0rliv8297moo",
+    url: "https://gamma.app/docs/Practical-Frameworks-Checklists-kvq0rliv8297moo",
     icon: CheckCircle,
     requiresAuth: false,
     category: "articles",
@@ -1054,7 +1015,7 @@ const resources: ResourceItem[] = [
   {
     title: "CROSS Guide for Greek Life",
     description: "Comprehensive guide using the CROSS framework for Christian Greek life participation",
-    url: "https://gamma.app/embed/ug6sn2qq95613dg",
+    url: "https://gamma.app/docs/CROSS-Guide-for-Greek-Life-ug6sn2qq95613dg",
     icon: Sparkles,
     requiresAuth: false,
     category: "articles",
@@ -1062,7 +1023,7 @@ const resources: ResourceItem[] = [
   {
     title: "How to Be P.I.L.L.A.R. within Your Greek Organization",
     description: "Framework for being a pillar of faith and leadership within your Greek letter organization",
-    url: "https://gamma.app/embed/ctdbb60tc09ez0e",
+    url: "https://gamma.app/docs/How-to-Be-PILLAR-within-Your-Greek-Letter-Organization-ctdbb60tc09ez0e",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -1070,7 +1031,7 @@ const resources: ResourceItem[] = [
   {
     title: "How to Handle Tensions Within Your Greek Organization",
     description: "Practical guidance for navigating and resolving conflicts within your Greek letter organization",
-    url: "https://gamma.app/embed/hoaqqjovrxsxpve",
+    url: "https://gamma.app/docs/How-to-Handle-Tensions-Within-Your-Greek-Letter-Organization-hoaqqjovrxsxpve",
     icon: FileText,
     requiresAuth: false,
     category: "articles",
@@ -1078,7 +1039,7 @@ const resources: ResourceItem[] = [
   {
     title: "Christian BGLO Redemption Guide",
     description: "A simple guide to repentance, repair, and renewal for Christians in Black Greek Letter Organizations",
-    url: "https://gamma.app/embed/6bfy5y35wg4bezt",
+    url: "https://gamma.app/docs/Christian-BGLO-Redemption-A-Simple-Guide-to-Repentance-Repair-and-Renewal-6bfy5y35wg4bezt",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -1086,7 +1047,7 @@ const resources: ResourceItem[] = [
   {
     title: "Inclusive Environment Toolkit",
     description: "Tools and strategies for creating inclusive and welcoming environments within Greek organizations",
-    url: "https://gamma.app/embed/czjmm4li1c9jp0f",
+    url: "https://gamma.app/docs/Inclusive-Environment-Toolkit-czjmm4li1c9jp0f",
     icon: Sparkles,
     requiresAuth: false,
     category: "articles",
@@ -1094,7 +1055,7 @@ const resources: ResourceItem[] = [
   {
     title: "Redeemed Greeks",
     description: "A vision for redemption and renewal within Greek letter organizations through Christ",
-    url: "https://gamma.app/embed/l28kd2r827ynm99",
+    url: "https://gamma.app/docs/Redeemed-Greeks-l28kd2r827ynm99",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -1102,7 +1063,7 @@ const resources: ResourceItem[] = [
   {
     title: "Why Some Call BGLOs Demonic",
     description: "Understanding and addressing concerns about spiritual warfare claims regarding Black Greek Letter Organizations",
-    url: "https://gamma.app/embed/4exmqlq3k79oepv",
+    url: "https://gamma.app/docs/Why-Some-Call-Black-Greek-Letter-Organizations-Demonic-4exmqlq3k79oepv",
     icon: BookOpen,
     requiresAuth: false,
     category: "articles",
@@ -1110,7 +1071,7 @@ const resources: ResourceItem[] = [
   {
     title: "Is Being Christian & Greek 'Incompatible'?",
     description: "Setting the record straight on the compatibility of Christian faith and Greek life participation",
-    url: "https://gamma.app/embed/t4agxb757qkugvr",
+    url: "https://gamma.app/docs/Is-Being-Christian-Greek-Incompatible-Time-to-Set-the-Record-Straight-t4agxb757qkugvr",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -1118,7 +1079,7 @@ const resources: ResourceItem[] = [
   {
     title: "Your Chapter, God's Canvas",
     description: "Living out your faith authentically within your Greek letter organization",
-    url: "https://gamma.app/embed/sgrjn53235fsej2",
+    url: "https://gamma.app/docs/Your-Chapter-Gods-Canvas-Living-Out-Your-Faith-Authentically-sgrjn53235fsej2",
     icon: Sparkles,
     requiresAuth: false,
     category: "articles",
@@ -1126,7 +1087,7 @@ const resources: ResourceItem[] = [
   {
     title: "Redeem Your Letters",
     description: "A powerful message about redeeming your Greek letters and bringing glory to God through your organization",
-    url: "https://gamma.app/embed/trkhw9krqh3l4cs",
+    url: "https://gamma.app/docs/Redeem-Your-Letters-trkhw9krqh3l4cs",
     icon: Heart,
     requiresAuth: false,
     category: "articles",
@@ -1164,7 +1125,6 @@ const Resources = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { openExternalLink } = useExternalLinks();
-  const { trackEvent } = useAnalytics();
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [pdfTitle, setPdfTitle] = useState<string>("");
   const [embedUrl, setEmbedUrl] = useState<string | null>(null);
@@ -1173,7 +1133,6 @@ const Resources = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [resourceType, setResourceType] = useState<string>("all");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [selectedAudience, setSelectedAudience] = useState<string>("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -1199,21 +1158,6 @@ const Resources = () => {
   ];
 
   const handleResourceClick = (resource: ResourceItem) => {
-    // Track resource click
-    trackEvent({
-      event: 'resource_click',
-      properties: {
-        category: 'resources',
-        resource_title: resource.title,
-        resource_category: resource.category,
-        resource_url: resource.url,
-        resource_audience: resource.audience?.join(',') || 'all',
-        resource_tags: resource.tags?.join(',') || '',
-        requires_auth: resource.requiresAuth || false,
-        is_authenticated: !!user,
-      }
-    });
-
     if (resource.requiresAuth && !user) {
       // Redirect to auth page
       navigate("/auth");
@@ -1374,25 +1318,9 @@ const Resources = () => {
     return resources.filter(r => r.category === category);
   };
 
-  const filterByAudience = (audience: string) => {
-    if (audience === "all") return resources;
-    
-    return resources.filter(r => {
-      // Provide default audiences if not specified
-      const audiences = r.audience || ["greeks", "prospective", "parents", "church"];
-      return audiences.includes(audience as "greeks" | "prospective" | "parents" | "church");
-    });
-  };
-
   // Filter and search logic
-  const getFilteredResources = (category?: string) => {
-    // Start with audience filter
-    let filtered = filterByAudience(selectedAudience);
-    
-    // Apply category filter if specified
-    if (category && category !== "all") {
-      filtered = filtered.filter(r => r.category === category);
-    }
+  const getFilteredResources = (category: string) => {
+    let filtered = category === "all" ? resources : filterByCategory(category);
     
     // Apply search query
     if (searchQuery) {
@@ -1567,7 +1495,6 @@ const Resources = () => {
           <div className="flex items-center justify-center gap-3 mb-6">
             <MediaInquiryForm />
             <SuggestResourceDialog />
-            <SubmitTestimonialDialog />
           </div>
 
           {/* Search and Filter Bar */}
@@ -1621,129 +1548,296 @@ const Resources = () => {
           </div>
         </div>
 
-        {/* Audience-Based Tabs */}
-        <Tabs value={selectedAudience} onValueChange={(value) => {
-          // Track tab change
-          trackEvent({
-            event: 'audience_tab_click',
-            properties: {
-              category: 'navigation',
-              tab_value: value,
-              previous_tab: selectedAudience,
-            }
-          });
-          setSelectedAudience(value); 
-          setCurrentPage(1);
-        }} className="w-full">
-          <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-5 mb-8">
-            <TabsTrigger value="all">All Resources</TabsTrigger>
-            <TabsTrigger value="greeks">Greek Members</TabsTrigger>
-            <TabsTrigger value="prospective">Prospective</TabsTrigger>
-            <TabsTrigger value="parents">Parents & Families</TabsTrigger>
-            <TabsTrigger value="church">Church Leaders</TabsTrigger>
+        {/* Tabbed Navigation */}
+        <Tabs defaultValue="all" className="w-full">
+          <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-5 mb-8">
+            <TabsTrigger value="all">All</TabsTrigger>
+            <TabsTrigger value="about">About</TabsTrigger>
+            <TabsTrigger value="book">Book</TabsTrigger>
+            <TabsTrigger value="articles">Articles</TabsTrigger>
+            <TabsTrigger value="testimonials">Stories</TabsTrigger>
           </TabsList>
 
-          {/* Render content for each tab */}
-          {["all", "greeks", "prospective", "parents", "church"].map((audienceValue) => (
-            <TabsContent key={audienceValue} value={audienceValue} className="space-y-8">
-              {(() => {
-                const filteredResources = getFilteredResources();
-                const paginatedResources = getPaginatedResources(filteredResources);
-                const totalPages = getTotalPages(filteredResources);
-                const featuredResources = filteredResources.filter(r => r.badge === "Featured");
+          {/* All Resources */}
+          <TabsContent value="all" className="space-y-8">
+            {(() => {
+              const filteredResources = getFilteredResources("all");
+              const paginatedResources = getPaginatedResources(filteredResources);
+              const totalPages = getTotalPages(filteredResources);
+              const featuredResources = filteredResources.filter(r => r.badge === "Featured");
 
-                return (
-                  <>
-                    {/* Featured Resources */}
-                    {featuredResources.length > 0 && currentPage === 1 && !searchQuery && resourceType === "all" && (
-                      <div>
-                        <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                          <Sparkles className="w-5 h-5 text-sacred" />
-                          Featured Resources
-                        </h3>
+              return (
+                <>
+                  {/* Featured Resources */}
+                  {featuredResources.length > 0 && currentPage === 1 && !searchQuery && resourceType === "all" && (
+                    <div>
+                      <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                        <Sparkles className="w-5 h-5 text-sacred" />
+                        Featured Resources
+                      </h3>
+                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {featuredResources.map((resource) => (
+                          <ResourceCard key={resource.title} resource={resource} />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* All Resources */}
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-xl font-semibold">
+                        {searchQuery || resourceType !== "all" ? "Search Results" : "All Resources"}
+                        <span className="text-sm text-muted-foreground ml-2">
+                          ({filteredResources.length} {filteredResources.length === 1 ? 'resource' : 'resources'})
+                        </span>
+                      </h3>
+                    </div>
+                    
+                    {paginatedResources.length > 0 ? (
+                      <>
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                          {featuredResources.map((resource) => (
-                            <ResourceCard key={resource.title + resource.url} resource={resource} />
+                          {paginatedResources.map((resource) => (
+                            <ResourceCard key={resource.title} resource={resource} />
                           ))}
                         </div>
+
+                        {/* Pagination */}
+                        {totalPages > 1 && (
+                          <div className="flex items-center justify-center gap-4 mt-8">
+                            <Button
+                              variant="outline"
+                              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                              disabled={currentPage === 1}
+                            >
+                              <ChevronLeft className="w-4 h-4 mr-2" />
+                              Previous
+                            </Button>
+                            <span className="text-sm font-medium">
+                              Page {currentPage} of {totalPages}
+                            </span>
+                            <Button
+                              variant="outline"
+                              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                              disabled={currentPage === totalPages}
+                            >
+                              Next
+                              <ChevronRight className="w-4 h-4 ml-2" />
+                            </Button>
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <div className="text-center py-12">
+                        <p className="text-muted-foreground">No resources found matching your criteria.</p>
                       </div>
                     )}
+                  </div>
+                </>
+              );
+            })()}
+          </TabsContent>
 
-                    {/* All Resources */}
-                    <div>
-                      <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-xl font-semibold">
-                          {searchQuery || resourceType !== "all" ? "Search Results" : 
-                           audienceValue === "all" ? "All Resources" :
-                           audienceValue === "greeks" ? "For Greek Members" :
-                           audienceValue === "prospective" ? "For Prospective Members" :
-                           audienceValue === "parents" ? "For Parents & Families" :
-                           "For Church Leaders"}
-                          <span className="text-sm text-muted-foreground ml-2">
-                            ({filteredResources.length} {filteredResources.length === 1 ? 'resource' : 'resources'})
-                          </span>
-                        </h3>
+          {/* About Tab */}
+          <TabsContent value="about">
+            {(() => {
+              const filteredResources = getFilteredResources("about");
+              const paginatedResources = getPaginatedResources(filteredResources);
+              const totalPages = getTotalPages(filteredResources);
+
+              return (
+                <>
+                  {paginatedResources.length > 0 ? (
+                    <>
+                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {paginatedResources.map((resource) => (
+                          <ResourceCard key={resource.title} resource={resource} />
+                        ))}
                       </div>
-                      
-                      {paginatedResources.length > 0 ? (
-                        <>
-                          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {paginatedResources.map((resource) => (
-                              <ResourceCard key={resource.title + resource.url} resource={resource} />
-                            ))}
-                          </div>
-
-                          {/* Pagination */}
-                          {totalPages > 1 && (
-                            <div className="flex items-center justify-center gap-4 mt-8">
-                              <Button
-                                variant="outline"
-                                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                                disabled={currentPage === 1}
-                              >
-                                <ChevronLeft className="w-4 h-4 mr-2" />
-                                Previous
-                              </Button>
-                              <span className="text-sm font-medium">
-                                Page {currentPage} of {totalPages}
-                              </span>
-                              <Button
-                                variant="outline"
-                                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                                disabled={currentPage === totalPages}
-                              >
-                                Next
-                                <ChevronRight className="w-4 h-4 ml-2" />
-                              </Button>
-                            </div>
-                          )}
-                        </>
-                      ) : (
-                        <div className="text-center py-12">
-                          <div className="w-16 h-16 rounded-full bg-sacred/10 flex items-center justify-center mx-auto mb-4">
-                            <Search className="w-8 h-8 text-sacred" />
-                          </div>
-                          <h4 className="text-lg font-semibold mb-2">No resources found</h4>
-                          <p className="text-muted-foreground mb-4">
-                            Try adjusting your search or filters
-                          </p>
-                          <Button onClick={clearAllFilters} variant="outline">
-                            Clear All Filters
+                      {totalPages > 1 && (
+                        <div className="flex items-center justify-center gap-4 mt-8">
+                          <Button
+                            variant="outline"
+                            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                            disabled={currentPage === 1}
+                          >
+                            <ChevronLeft className="w-4 h-4 mr-2" />
+                            Previous
+                          </Button>
+                          <span className="text-sm font-medium">
+                            Page {currentPage} of {totalPages}
+                          </span>
+                          <Button
+                            variant="outline"
+                            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                            disabled={currentPage === totalPages}
+                          >
+                            Next
+                            <ChevronRight className="w-4 h-4 ml-2" />
                           </Button>
                         </div>
                       )}
+                    </>
+                  ) : (
+                    <div className="text-center py-12">
+                      <p className="text-muted-foreground">No resources found.</p>
                     </div>
-                  </>
-                );
-              })()}
-            </TabsContent>
-          ))}
-        </Tabs>
+                  )}
+                </>
+              );
+            })()}
+          </TabsContent>
 
-        {/* Testimonials Section */}
-        <div className="mt-16 mb-12">
-          <TestimonialsSection />
-        </div>
+          {/* Book Tab */}
+          <TabsContent value="book">
+            {(() => {
+              const filteredResources = getFilteredResources("book");
+              const paginatedResources = getPaginatedResources(filteredResources);
+              const totalPages = getTotalPages(filteredResources);
+
+              return (
+                <>
+                  {paginatedResources.length > 0 ? (
+                    <>
+                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {paginatedResources.map((resource) => (
+                          <ResourceCard key={resource.title} resource={resource} />
+                        ))}
+                      </div>
+                      {totalPages > 1 && (
+                        <div className="flex items-center justify-center gap-4 mt-8">
+                          <Button
+                            variant="outline"
+                            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                            disabled={currentPage === 1}
+                          >
+                            <ChevronLeft className="w-4 h-4 mr-2" />
+                            Previous
+                          </Button>
+                          <span className="text-sm font-medium">
+                            Page {currentPage} of {totalPages}
+                          </span>
+                          <Button
+                            variant="outline"
+                            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                            disabled={currentPage === totalPages}
+                          >
+                            Next
+                            <ChevronRight className="w-4 h-4 ml-2" />
+                          </Button>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <div className="text-center py-12">
+                      <p className="text-muted-foreground">No resources found.</p>
+                    </div>
+                  )}
+                </>
+              );
+            })()}
+          </TabsContent>
+
+          {/* Articles Tab */}
+          <TabsContent value="articles">
+            {(() => {
+              const filteredResources = getFilteredResources("articles");
+              const paginatedResources = getPaginatedResources(filteredResources);
+              const totalPages = getTotalPages(filteredResources);
+
+              return (
+                <>
+                  {paginatedResources.length > 0 ? (
+                    <>
+                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {paginatedResources.map((resource) => (
+                          <ResourceCard key={resource.title} resource={resource} />
+                        ))}
+                      </div>
+                      {totalPages > 1 && (
+                        <div className="flex items-center justify-center gap-4 mt-8">
+                          <Button
+                            variant="outline"
+                            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                            disabled={currentPage === 1}
+                          >
+                            <ChevronLeft className="w-4 h-4 mr-2" />
+                            Previous
+                          </Button>
+                          <span className="text-sm font-medium">
+                            Page {currentPage} of {totalPages}
+                          </span>
+                          <Button
+                            variant="outline"
+                            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                            disabled={currentPage === totalPages}
+                          >
+                            Next
+                            <ChevronRight className="w-4 h-4 ml-2" />
+                          </Button>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <div className="text-center py-12">
+                      <p className="text-muted-foreground">No resources found.</p>
+                    </div>
+                  )}
+                </>
+              );
+            })()}
+          </TabsContent>
+
+          {/* Testimonials Tab */}
+          <TabsContent value="testimonials">
+            {(() => {
+              const filteredResources = getFilteredResources("testimonials");
+              const paginatedResources = getPaginatedResources(filteredResources);
+              const totalPages = getTotalPages(filteredResources);
+
+              return (
+                <>
+                  {paginatedResources.length > 0 ? (
+                    <>
+                      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {paginatedResources.map((resource) => (
+                          <ResourceCard key={resource.title} resource={resource} />
+                        ))}
+                      </div>
+                      {totalPages > 1 && (
+                        <div className="flex items-center justify-center gap-4 mt-8">
+                          <Button
+                            variant="outline"
+                            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                            disabled={currentPage === 1}
+                          >
+                            <ChevronLeft className="w-4 h-4 mr-2" />
+                            Previous
+                          </Button>
+                          <span className="text-sm font-medium">
+                            Page {currentPage} of {totalPages}
+                          </span>
+                          <Button
+                            variant="outline"
+                            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                            disabled={currentPage === totalPages}
+                          >
+                            Next
+                            <ChevronRight className="w-4 h-4 ml-2" />
+                          </Button>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <div className="text-center py-12">
+                      <p className="text-muted-foreground">No resources found.</p>
+                    </div>
+                  )}
+                </>
+              );
+            })()}
+          </TabsContent>
+        </Tabs>
 
         {/* Member CTA */}
         {!user && (

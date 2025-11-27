@@ -1,16 +1,12 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Play } from 'lucide-react';
 import welcomeThumbnail from '@/assets/welcome-video-thumbnail.jpg';
-import { useExternalLinks } from '@/hooks/use-external-links';
 
 export const WelcomeVideo = () => {
-  const { openExternalLink } = useExternalLinks();
-  const videoUrl = "https://ai.invideo.io/watch/ECsSNrYTESo";
+  const [isPlaying, setIsPlaying] = useState(false);
   
-  const handlePlayVideo = () => {
-    openExternalLink(videoUrl);
-  };
+  const videoUrl = "https://ai.invideo.io/embed/ECsSNrYTESo";
   
   return (
     <Card className="overflow-hidden border-2 shadow-xl h-full flex flex-col">
@@ -23,23 +19,34 @@ export const WelcomeVideo = () => {
         
         {/* Video Container */}
         <div className="relative aspect-video bg-muted flex-1">
-          {/* Thumbnail with play button */}
-          <div 
-            className="absolute inset-0 flex items-center justify-center cursor-pointer group"
-            onClick={handlePlayVideo}
-          >
-            {/* Custom thumbnail */}
-            <img 
-              src={welcomeThumbnail}
-              alt="Sacred Greeks Welcome Video"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            
-            <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 z-10">
-              <Play className="w-8 h-8 md:w-10 md:h-10 text-sacred ml-1" fill="currentColor" />
+          {!isPlaying ? (
+            // Thumbnail with play button
+            <div 
+              className="absolute inset-0 flex items-center justify-center cursor-pointer group"
+              onClick={() => setIsPlaying(true)}
+            >
+              {/* Custom thumbnail */}
+              <img 
+                src={welcomeThumbnail}
+                alt="Sacred Greeks Welcome Video"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 z-10">
+                <Play className="w-8 h-8 md:w-10 md:h-10 text-sacred ml-1" fill="currentColor" />
+              </div>
+              <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors" />
             </div>
-            <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors" />
-          </div>
+          ) : (
+            // Actual video iframe
+            <iframe
+              src={`${videoUrl}?autoplay=1`}
+              title="Welcome Video"
+              className="absolute inset-0 w-full h-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          )}
         </div>
       </div>
     </Card>

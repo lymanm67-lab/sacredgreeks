@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -192,11 +192,11 @@ const Dashboard = () => {
       title: 'New Assessment',
       description: 'Discover your 5 Persona Types Architecture',
       icon: Heart,
-      href: '/assessment/fmmpa',
+      href: 'https://drlymanmontgomery.involve.me/fmmpa',
       iconColor: 'text-white',
       iconBg: 'bg-gradient-to-br from-rose-500 to-pink-600',
-      isExternal: false,
-      useModal: false,
+      isExternal: true,
+      useModal: true,
     },
     {
       id: 'bglo-objections',

@@ -1,12 +1,11 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { SuggestResourceDialog } from '@/components/resources/SuggestResourceDialog';
-import { Users, Heart, BookOpen, ExternalLink, Search, ArrowUpDown, HandHeart, Library } from 'lucide-react';
+import { Users, Heart, BookOpen, ExternalLink, Search, ArrowUpDown, HandHeart } from 'lucide-react';
 
 const chapterResources = [
   {
@@ -43,83 +42,6 @@ const chapterResources = [
     url: "https://gamma.app/docs/Sacred-Service-Planning-Community-Projects-with-Your-Chapter-28f7a9bc5w5jghb",
     icon: HandHeart,
     category: "Service"
-  },
-  {
-    title: "5 Biblical Truths Every Pastor Needs to Know About Black Greek Letter Organizations",
-    description: "Essential guidance for pastors, church leaders, and Christian counselors addressing BGLOs",
-    url: "https://gamma.app/docs/trkhw9krqh3l4cs",
-    icon: Heart,
-    category: "Faith"
-  },
-  {
-    title: "Sacred Greeks Cultural Reflection Devotional for the Holidays",
-    description: "A holiday journey for believers in Greek Life who want to honor Christ and reflect on culture with courage",
-    url: "https://gamma.app/docs/uudch3osmv3ss77",
-    icon: Heart,
-    category: "Faith"
-  },
-  {
-    title: "How to Defend Your Faith and Fraternity When Church Leaders Challenge You",
-    description: "A practical guide for answering concerns with Scripture, wisdom, and respect",
-    url: "https://gamma.app/docs/um32h0hd55s8c6v",
-    icon: Heart,
-    category: "Faith"
-  },
-  {
-    title: "How Not to Lose Your Christian Identity After Intake",
-    description: "Guidance for maintaining your Christian identity and values after joining a Greek organization",
-    url: "https://gamma.app/docs/6lwq13dmgrs5ney",
-    icon: Heart,
-    category: "Faith"
-  },
-  {
-    title: "How to Handle Tensions Within Your Greek Letter Organization",
-    description: "A practical framework to identify real issues and address them with grace and truth",
-    url: "https://gamma.app/docs/hoaqqjovrxsxpve",
-    icon: Users,
-    category: "Leadership"
-  },
-  {
-    title: "Christian BGLO Redemption: A Simple Guide to Repentance, Repair, and Renewal",
-    description: "When we miss the mark, we repent, repair, and rebuild trust with biblical guidance",
-    url: "https://gamma.app/docs/6bfy5y35wg4bezt",
-    icon: Users,
-    category: "Leadership"
-  },
-  {
-    title: "Should Christians Denounce BGLOs? Truth, Trauma, and Theology",
-    description: "Addresses whether Christians should denounce BGLOs with Scripture, pastoral care, and discernment",
-    url: "https://gamma.app/docs/un3ueaqjhbjf8y2",
-    icon: Heart,
-    category: "Faith"
-  },
-  {
-    title: "Symbolism in BGLO Rituals: Harmless or Spiritual Danger?",
-    description: "Examines whether symbols and ritual moments in fraternities are tradition or spiritually dangerous",
-    url: "https://gamma.app/docs/nftyg892145844a",
-    icon: Heart,
-    category: "Faith"
-  },
-  {
-    title: "When Leaving Makes Sense: A Christian's Guide to Exiting a Greek Organization",
-    description: "Guidance for discerning when to leave and how to exit with integrity while maintaining relationships",
-    url: "https://gamma.app/docs/cyi9l2rq808g6r6",
-    icon: Heart,
-    category: "Faith"
-  },
-  {
-    title: "Your Chapter, God's Canvas: Living Out Your Faith Authentically",
-    description: "Discovering authentic Christian living and spiritual growth within Greek life",
-    url: "https://gamma.app/docs/sgrjn53235fsej2",
-    icon: Heart,
-    category: "Faith"
-  },
-  {
-    title: "Is Being Christian & Greek 'Incompatible'? Time to Set the Record Straight",
-    description: "Addresses compatibility between Christianity and Greek life with scripture, history, and theology",
-    url: "https://gamma.app/docs/t4agxb757qkugvr",
-    icon: Heart,
-    category: "Faith"
   }
 ];
 
@@ -220,58 +142,47 @@ export const ChapterResourcesSection = () => {
             No resources found matching your search.
           </div>
         ) : (
-          <>
-            <div className="grid gap-4 md:grid-cols-3">
-              {sortedResources.map((resource, index) => {
-                const Icon = resource.icon;
-                return (
-                  <div key={index} className="p-4 border rounded-lg hover:bg-muted/50 transition-colors">
-                    <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-full bg-warm-blue/10 flex items-center justify-center flex-shrink-0">
-                        <Icon className="w-5 h-5 text-warm-blue" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3 className="font-semibold text-sm">{resource.title}</h3>
-                          <span className="text-xs px-2 py-0.5 rounded bg-warm-blue/10 text-warm-blue">
-                            {resource.category}
-                          </span>
-                        </div>
-                        <p className="text-xs text-muted-foreground mb-3 line-clamp-2">
-                          {resource.description}
-                        </p>
-                        <Button 
-                          variant="outline" 
-                          size="sm"
-                          asChild
-                          className="w-full"
-                        >
-                          <a 
-                            href={resource.url} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2"
-                          >
-                            View Resource
-                            <ExternalLink className="w-3 h-3" />
-                          </a>
-                        </Button>
-                      </div>
-                    </div>
+          <div className="grid gap-4 md:grid-cols-3">
+          {sortedResources.map((resource, index) => {
+            const Icon = resource.icon;
+            return (
+              <div key={index} className="p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-full bg-warm-blue/10 flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-5 h-5 text-warm-blue" />
                   </div>
-                );
-              })}
-            </div>
-            
-            <div className="mt-6 pt-6 border-t flex justify-center">
-              <Button variant="outline" asChild>
-                <Link to="/resources" className="flex items-center gap-2">
-                  <Library className="w-4 h-4" />
-                  View All Resources
-                </Link>
-              </Button>
-            </div>
-          </>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-semibold text-sm">{resource.title}</h3>
+                      <span className="text-xs px-2 py-0.5 rounded bg-warm-blue/10 text-warm-blue">
+                        {resource.category}
+                      </span>
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-3 line-clamp-2">
+                      {resource.description}
+                    </p>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      asChild
+                      className="w-full"
+                    >
+                      <a 
+                        href={resource.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2"
+                      >
+                        View Resource
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
         )}
       </CardContent>
     </Card>
