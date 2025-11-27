@@ -264,7 +264,17 @@ const Devotional = () => {
           {/* Scripture */}
           <Card className="border-2 border-sacred/20">
             <CardHeader>
-              <CardTitle className="text-lg">{devotional.scripture_ref}</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-lg">{devotional.scripture_ref}</CardTitle>
+                <ListenButton
+                  text={`${devotional.scripture_ref}. ${devotional.scripture_text}`}
+                  itemId={`scripture-${devotional.id}`}
+                  title="Scripture"
+                  showLabel={false}
+                  size="sm"
+                  variant="ghost"
+                />
+              </div>
             </CardHeader>
             <CardContent>
               <p className="text-lg leading-relaxed italic">{devotional.scripture_text}</p>
@@ -274,7 +284,17 @@ const Devotional = () => {
           {/* Reflection */}
           <Card>
             <CardHeader>
-              <CardTitle>Reflection</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle>Reflection</CardTitle>
+                <ListenButton
+                  text={devotional.reflection}
+                  itemId={`reflection-${devotional.id}`}
+                  title="Reflection"
+                  showLabel={false}
+                  size="sm"
+                  variant="ghost"
+                />
+              </div>
             </CardHeader>
             <CardContent>
               <p className="leading-relaxed">{devotional.reflection}</p>
@@ -284,7 +304,17 @@ const Devotional = () => {
           {/* Application */}
           <Card>
             <CardHeader>
-              <CardTitle>Today's Application</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle>Today's Application</CardTitle>
+                <ListenButton
+                  text={devotional.application}
+                  itemId={`application-${devotional.id}`}
+                  title="Today's Application"
+                  showLabel={false}
+                  size="sm"
+                  variant="ghost"
+                />
+              </div>
             </CardHeader>
             <CardContent>
               <p className="leading-relaxed">{devotional.application}</p>
@@ -294,7 +324,17 @@ const Devotional = () => {
           {/* Prayer */}
           <Card className="bg-sacred/5 border-sacred/20">
             <CardHeader>
-              <CardTitle>Prayer</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle>Prayer</CardTitle>
+                <ListenButton
+                  text={devotional.prayer}
+                  itemId={`prayer-${devotional.id}`}
+                  title="Prayer"
+                  showLabel={false}
+                  size="sm"
+                  variant="ghost"
+                />
+              </div>
             </CardHeader>
             <CardContent>
               <p className="leading-relaxed italic">{devotional.prayer}</p>
