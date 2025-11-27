@@ -400,6 +400,30 @@ const Auth = () => {
                       </Link>
                     </div>
                   </form>
+
+                  <div className="mt-6 pt-6 border-t border-border">
+                    <div className="text-center mb-3">
+                      <p className="text-sm text-muted-foreground">Want to explore first?</p>
+                    </div>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="w-full"
+                      onClick={() => {
+                        const emailInput = document.getElementById('signin-email') as HTMLInputElement;
+                        const passwordInput = document.getElementById('signin-password') as HTMLInputElement;
+                        if (emailInput && passwordInput) {
+                          emailInput.value = 'demo@sacredgreeks.com';
+                          passwordInput.value = 'Demo123!';
+                        }
+                      }}
+                    >
+                      Try Demo Account
+                    </Button>
+                    <p className="text-xs text-muted-foreground mt-2 text-center">
+                      Pre-populated with sample data to explore all features
+                    </p>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
