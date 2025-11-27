@@ -3,20 +3,16 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Video, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library, Lock, Play, Volume2 } from "lucide-react";
+import { Heart, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library, Lock } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
 import { MobileQRCode } from "@/components/MobileQRCode";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import logo from "@/assets/sacred-greeks-logo.png";
 import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
-import { ShareDocumentaryDialog } from "@/components/resources/ShareDocumentaryDialog";
-import { DocumentaryAwardsSection } from "@/components/resources/DocumentaryAwardsSection";
 import { ListenButton } from "@/components/ListenButton";
-import { useExternalLinks } from "@/hooks/use-external-links";
 import { ScrollProgressIndicator } from "@/components/ui/ScrollProgressIndicator";
 import { FloatingCTA } from "@/components/ui/FloatingCTA";
 import { StatsSection } from "@/components/landing/StatsSection";
-import { VideoThumbnail } from "@/components/landing/VideoThumbnail";
 import { ShareSection } from "@/components/landing/ShareSection";
 
 const features = [
@@ -66,7 +62,6 @@ const benefits = [
 
 const Index = () => {
   const { user } = useAuth();
-  const { openExternalLink } = useExternalLinks();
 
   const heroText = "Your daily companion for integrating faith and Greek life. Get devotionals, guidance, prayer tools, and progress tracking, all grounded in the P.R.O.O.F. framework from Sacred, Not Sinful.";
 
@@ -378,93 +373,6 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Featured Documentary */}
-      <div className="container mx-auto px-4 py-16 bg-gradient-to-br from-sacred/5 to-warm-blue/5">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <Badge className="bg-sacred/10 text-sacred border-sacred/20 mb-4">
-              <Video className="w-3 h-3 mr-1" />
-              Featured Documentary
-            </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Unmasking Hope
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              A powerful documentary exploring faith, identity, and redemption in Greek life
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="space-y-6">
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Journey through the powerful intersection of faith, Greek life, and personal transformation. 
-                This documentary reveals authentic stories of hope, healing, and redemption for Christians 
-                navigating fraternity and sorority membership.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 flex-wrap">
-                <ExternalContentModal
-                  url="https://player.vimeo.com/video/781211329"
-                  title="Unmasking Hope"
-                  description="Watch the powerful documentary exploring faith, identity, and redemption in Greek life."
-                  category="Documentary"
-                  trigger={
-                    <Button 
-                      size="lg" 
-                      className="bg-sacred hover:bg-sacred/90 text-sacred-foreground w-full sm:w-auto"
-                    >
-                      <Video className="w-5 h-5 mr-2" />
-                      Watch Now
-                      <Play className="w-4 h-4 ml-2" />
-                    </Button>
-                  }
-                />
-                <ShareDocumentaryDialog 
-                  trigger={
-                    <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                      Share Documentary
-                    </Button>
-                  }
-                />
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="w-full sm:w-auto"
-                  onClick={() => openExternalLink("https://www.unmaskinghopethemovie.com/")}
-                >
-                  Visit Website
-                </Button>
-                <Link to="/resources">
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                    Explore Resources
-                  </Button>
-                </Link>
-              </div>
-            </div>
-            
-            <ExternalContentModal
-              url="https://player.vimeo.com/video/781211329"
-              title="Unmasking Hope"
-              description="Watch the powerful documentary exploring faith, identity, and redemption in Greek life."
-              category="Documentary"
-              trigger={
-                <VideoThumbnail
-                  thumbnailUrl="https://vumbnail.com/781211329.jpg"
-                  title="Unmasking Hope"
-                  subtitle="Click to Watch Documentary"
-                  duration="45:00"
-                />
-              }
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Documentary Awards & Reviews */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-6xl mx-auto">
-          <DocumentaryAwardsSection />
-        </div>
-      </div>
 
       {/* Testimonials */}
       <Testimonials />
