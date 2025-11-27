@@ -128,31 +128,31 @@ const Index = () => {
           </p>
 
           {/* Listen Button for Hero */}
-          <div className="flex justify-center pt-4">
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            paddingTop: '16px',
+            width: '100%',
+            minHeight: '60px',
+            backgroundColor: 'rgba(255,0,0,0.1)'
+          }}>
             <button
               type="button"
               style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                padding: '12px 24px',
-                fontSize: '16px',
-                fontWeight: 600,
-                color: '#2563eb',
-                backgroundColor: '#dbeafe',
-                border: '2px solid #2563eb',
-                borderRadius: '8px',
-                cursor: 'pointer',
+                display: 'block',
+                padding: '14px 28px',
+                fontSize: '18px',
+                fontWeight: 700,
+                color: 'white',
+                backgroundColor: '#2563eb',
+                border: 'none',
+                borderRadius: '12px',
                 WebkitAppearance: 'none',
-                WebkitTapHighlightColor: 'transparent',
+                appearance: 'none',
               }}
-              onClick={() => {
-                console.log('Listen button clicked');
-              }}
+              onClick={() => alert('Listen clicked!')}
             >
-              <Volume2 style={{ width: '20px', height: '20px' }} />
-              Listen
+              🔊 Listen
             </button>
           </div>
 
