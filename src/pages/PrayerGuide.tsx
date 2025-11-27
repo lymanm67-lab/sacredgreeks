@@ -9,11 +9,13 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Home, Sparkles, BookOpen, GraduationCap, Heart, Save, Copy, Check, Loader2, Mic } from 'lucide-react';
+import { Home, Sparkles, BookOpen, GraduationCap, Heart, Save, Copy, Check, Loader2, Mic, Music } from 'lucide-react';
 import { toast } from 'sonner';
 import { prayerTemplates, prayerCategories } from '@/data/prayerTemplates';
 import { prayerMethods } from '@/data/prayerLearning';
 import { VoiceRecordingButton, VoiceInputButton } from '@/components/VoiceInputButton';
+import { AmbientSoundPlayer } from '@/components/prayer/AmbientSoundPlayer';
+import { PrayAlongKaraoke } from '@/components/prayer/PrayAlongKaraoke';
 
 export default function PrayerGuide() {
   const { user } = useAuth();
@@ -121,18 +123,31 @@ export default function PrayerGuide() {
         </div>
 
         <Tabs defaultValue="ai" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-8">
+          <TabsList className="grid w-full grid-cols-5 mb-8">
             <TabsTrigger value="ai" className="flex items-center gap-2">
               <Sparkles className="w-4 h-4" />
-              AI Prayer Guide
+              <span className="hidden sm:inline">AI Prayer</span>
+              <span className="sm:hidden">AI</span>
+            </TabsTrigger>
+            <TabsTrigger value="pray-along" className="flex items-center gap-2">
+              <BookOpen className="w-4 h-4" />
+              <span className="hidden sm:inline">Pray Along</span>
+              <span className="sm:hidden">Along</span>
+            </TabsTrigger>
+            <TabsTrigger value="ambient" className="flex items-center gap-2">
+              <Music className="w-4 h-4" />
+              <span className="hidden sm:inline">Ambient</span>
+              <span className="sm:hidden">Sound</span>
             </TabsTrigger>
             <TabsTrigger value="templates" className="flex items-center gap-2">
               <BookOpen className="w-4 h-4" />
-              Prayer Templates
+              <span className="hidden sm:inline">Templates</span>
+              <span className="sm:hidden">Temp</span>
             </TabsTrigger>
             <TabsTrigger value="learn" className="flex items-center gap-2">
               <GraduationCap className="w-4 h-4" />
-              Learn to Pray
+              <span className="hidden sm:inline">Learn</span>
+              <span className="sm:hidden">Learn</span>
             </TabsTrigger>
           </TabsList>
 
@@ -274,6 +289,91 @@ export default function PrayerGuide() {
                     </CardContent>
                   </Card>
                 )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Pray Along Karaoke Tab */}
+          <TabsContent value="pray-along" className="space-y-6">
+            <div className="grid gap-6">
+              <div className="text-center space-y-2">
+                <h3 className="text-xl font-semibold">Follow Along & Pray Together</h3>
+                <p className="text-muted-foreground">
+                  Let the highlighted text guide your prayer pace. Perfect for meditation and focused prayer time.
+                </p>
+              </div>
+              
+              {/* Ambient sound toggle for pray along */}
+              <div className="flex justify-center">
+                <AmbientSoundPlayer compact />
+              </div>
+              
+              <PrayAlongKaraoke />
+            </div>
+          </TabsContent>
+
+          {/* Ambient Sounds Tab */}
+          <TabsContent value="ambient" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Music className="w-5 h-5 text-primary" />
+                  Ambient Prayer Sounds
+                </CardTitle>
+                <CardDescription>
+                  Create a peaceful atmosphere for prayer and meditation with calming background sounds
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <AmbientSoundPlayer />
+                
+                <div className="grid md:grid-cols-2 gap-4 pt-4">
+                  <Card className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border-blue-500/20">
+                    <CardContent className="pt-6">
+                      <h4 className="font-semibold mb-2">🌊 Ocean Meditation</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Let the gentle rhythm of ocean waves calm your mind as you enter into prayer. 
+                        Studies show natural water sounds reduce stress and promote focus.
+                      </p>
+                    </CardContent>
+                  </Card>
+                  
+                  <Card className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 border-green-500/20">
+                    <CardContent className="pt-6">
+                      <h4 className="font-semibold mb-2">🌲 Forest Prayer</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Connect with God's creation through peaceful forest sounds. 
+                        The birds and rustling leaves create a natural sanctuary for reflection.
+                      </p>
+                    </CardContent>
+                  </Card>
+                  
+                  <Card className="bg-gradient-to-br from-orange-500/10 to-yellow-500/10 border-orange-500/20">
+                    <CardContent className="pt-6">
+                      <h4 className="font-semibold mb-2">🔥 Fireside Devotion</h4>
+                      <p className="text-sm text-muted-foreground">
+                        The crackling warmth of a fire creates an intimate setting for personal prayer 
+                        and quiet time with God.
+                      </p>
+                    </CardContent>
+                  </Card>
+                  
+                  <Card className="bg-gradient-to-br from-slate-500/10 to-gray-500/10 border-slate-500/20">
+                    <CardContent className="pt-6">
+                      <h4 className="font-semibold mb-2">🌧️ Rain Reflection</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Gentle rain creates a cocoon of peace, helping you block out distractions 
+                        and focus deeply on your prayers.
+                      </p>
+                    </CardContent>
+                  </Card>
+                </div>
+                
+                <div className="p-4 bg-muted/50 rounded-lg">
+                  <p className="text-sm text-muted-foreground text-center">
+                    💡 <strong>Tip:</strong> Combine ambient sounds with the Pray Along mode for a deeply immersive prayer experience
+                  </p>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
