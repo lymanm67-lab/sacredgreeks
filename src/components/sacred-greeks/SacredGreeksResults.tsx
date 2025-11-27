@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart, ExternalLink, RefreshCw, BookOpen, MessageSquare, Video, Share2, Check } from "lucide-react";
+import { Heart, ExternalLink, RefreshCw, BookOpen, MessageSquare, Video, Share2, Check, LayoutDashboard } from "lucide-react";
 import { SacredGreeksAnswers, SacredGreeksScores, ResultType } from "@/types/assessment";
 import { sacredGreeksResults, type Scenario } from "@/sacredGreeksContent";
 import { supabase } from "@/integrations/supabase/client";
@@ -504,12 +505,20 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
       </>
       )}
 
-      {/* Restart - Always visible */}
-      {!isSharedView && onRestart && (
-        <div className="flex justify-center pt-4">
-          <Button variant="outline" onClick={onRestart}>
-            <RefreshCw className="w-4 h-4 mr-2" />
-            Start Over
+      {/* Navigation buttons - Always visible */}
+      {!isSharedView && (
+        <div className="flex flex-col sm:flex-row justify-center gap-3 pt-4">
+          {onRestart && (
+            <Button variant="outline" onClick={onRestart}>
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Start Over
+            </Button>
+          )}
+          <Button asChild>
+            <Link to="/dashboard">
+              <LayoutDashboard className="w-4 h-4 mr-2" />
+              Back to Dashboard
+            </Link>
           </Button>
         </div>
       )}
