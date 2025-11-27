@@ -63,6 +63,7 @@ const Auth = () => {
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
     const fullName = formData.get('fullName') as string;
+    const redirectUrl = searchParams.get('redirect') || '/dashboard';
 
     try {
       const validated = authSchema.parse({ email, password, fullName });
@@ -80,7 +81,7 @@ const Auth = () => {
           title: 'Welcome!',
           description: 'Your account has been created successfully.',
         });
-        navigate('/dashboard');
+        navigate(redirectUrl);
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -102,6 +103,7 @@ const Auth = () => {
     const formData = new FormData(e.currentTarget);
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
+    const redirectUrl = searchParams.get('redirect') || '/dashboard';
 
     try {
       const validated = authSchema.parse({ email, password });
@@ -126,7 +128,7 @@ const Auth = () => {
           title: 'Welcome back!',
           description: 'You have been signed in successfully.',
         });
-        navigate('/dashboard');
+        navigate(redirectUrl);
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
