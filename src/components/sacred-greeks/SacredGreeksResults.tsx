@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart, ExternalLink, RefreshCw, BookOpen, MessageSquare, Video, Share2, Check } from "lucide-react";
+import { Heart, ExternalLink, RefreshCw, BookOpen, MessageSquare, Video, Share2, Check, Sparkles } from "lucide-react";
 import { SacredGreeksAnswers, SacredGreeksScores, ResultType } from "@/types/assessment";
 import { sacredGreeksResults, type Scenario } from "@/sacredGreeksContent";
 import { supabase } from "@/integrations/supabase/client";
@@ -12,6 +12,9 @@ import { AchievementBadgeDialog } from "@/components/AchievementBadgeDialog";
 import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
 import { useExternalLinks } from "@/hooks/use-external-links";
 import { SignUpPrompt } from "./SignUpPrompt";
+import { useProgressiveReveal } from "@/hooks/use-progressive-reveal";
+import { ProgressiveRevealIndicator } from "./ProgressiveRevealIndicator";
+import { LockedContentCard } from "./LockedContentCard";
 
 interface SacredGreeksResultsProps {
   resultType: ResultType;
@@ -30,6 +33,8 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const scenario = answers.scenario as Scenario;
   const content = sacredGreeksResults[scenario]?.[resultType];
+  
+  const { currentStage, stages, hasScrolledToBottom } = useProgressiveReveal(limitedAccess);
 
   if (!content) {
     return <div>Error: Content not found for this scenario and result type.</div>;
@@ -145,7 +150,12 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
 
   return (
     <div className="space-y-8">
-      {/* Headline and Intro - Always visible */}
+      {/* Progressive Reveal Indicator - Only for limited access */}
+      {limitedAccess && (
+        <ProgressiveRevealIndicator stages={stages} currentStage={currentStage} />
+      )}
+
+      {/* Stage 1: Headline and Intro - Always visible */}
       <Card className="border-2 border-sacred/20 bg-gradient-to-br from-sacred/5 to-background">
         <CardHeader>
           <div className="flex items-start gap-4">
@@ -160,90 +170,177 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
         </CardHeader>
       </Card>
 
-      {/* Scripture Toolkit - Show preview for limited access */}
+      {/* Stage 2: Scripture Toolkit - Revealed on scroll or time */}
       {content.scriptureToolkit.length > 0 && (
-        <Card>
+        <>
+          {(!limitedAccess || currentStage >= 2) ? (
+            <Card className="animate-in fade-in-50 slide-in-from-bottom-4 duration-500">
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <BookOpen className="w-5 h-5 text-sacred" />
+                  <CardTitle className="text-xl">Scripture Toolkit</CardTitle>
+                  {limitedAccess && currentStage === 2 && (
+                    <span className="ml-2 text-xs bg-sacred/20 text-sacred px-2 py-0.5 rounded-full flex items-center gap-1">
+                      <Sparkles className="w-3 h-3" /> Just unlocked!
+                    </span>
+                  )}
+                </div>
+                <CardDescription>
+                  Use these passages to ground your thinking and conversations in God's Word.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {/* Show 2 scriptures for limited access at stage 2+ */}
+                {(limitedAccess ? content.scriptureToolkit.slice(0, 2) : content.scriptureToolkit).map((scripture, index) => (
+                  <div key={index} className="border-l-4 border-sacred/30 pl-4 space-y-1">
+                    <p className="font-semibold text-foreground">{scripture.ref}</p>
+                    <p className="text-sm text-muted-foreground">{scripture.summary}</p>
+                    <p className="text-sm italic text-muted-foreground">When to use: {scripture.whenToUse}</p>
+                  </div>
+                ))}
+                {limitedAccess && content.scriptureToolkit.length > 2 && (
+                  <p className="text-sm text-muted-foreground italic">
+                    + {content.scriptureToolkit.length - 2} more scriptures available with free account...
+                  </p>
+                )}
+              </CardContent>
+            </Card>
+          ) : (
+            <LockedContentCard
+              title="Scripture Toolkit"
+              description="Biblical passages for your situation"
+              icon={<BookOpen className="w-5 h-5" />}
+              previewText={content.scriptureToolkit[0]?.summary}
+              onUnlockHint="Keep reading to unlock..."
+            />
+          )}
+        </>
+      )}
+
+      {/* Stage 3: Sample Response Preview */}
+      {content.sampleResponses.length > 0 && (
+        <>
+          {(!limitedAccess || currentStage >= 3) ? (
+            <Card className="animate-in fade-in-50 slide-in-from-bottom-4 duration-500">
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <MessageSquare className="w-5 h-5 text-sacred" />
+                  <CardTitle className="text-xl">Sample Responses</CardTitle>
+                  {limitedAccess && currentStage === 3 && (
+                    <span className="ml-2 text-xs bg-sacred/20 text-sacred px-2 py-0.5 rounded-full flex items-center gap-1">
+                      <Sparkles className="w-3 h-3" /> Just unlocked!
+                    </span>
+                  )}
+                </div>
+                <CardDescription>
+                  Use these examples to help you respond with clarity, grace, and conviction.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Show 1 sample response for limited access */}
+                {(limitedAccess ? content.sampleResponses.slice(0, 1) : content.sampleResponses).map((response, index) => (
+                  <div key={index} className="space-y-3 p-4 bg-muted/30 rounded-lg">
+                    <p className="font-semibold text-sacred">{response.label}</p>
+                    <div className="space-y-2">
+                      <p className="text-sm">
+                        <span className="font-medium">Objection:</span> "{response.objection}"
+                      </p>
+                      <p className="text-sm">
+                        <span className="font-medium">You can say:</span> "{response.youCanSay}"
+                      </p>
+                    </div>
+                  </div>
+                ))}
+                {limitedAccess && content.sampleResponses.length > 1 && (
+                  <p className="text-sm text-muted-foreground italic">
+                    + {content.sampleResponses.length - 1} more responses available with free account...
+                  </p>
+                )}
+              </CardContent>
+            </Card>
+          ) : (
+            <LockedContentCard
+              title="Sample Responses"
+              description="Practical responses to common objections"
+              icon={<MessageSquare className="w-5 h-5" />}
+              previewText={content.sampleResponses[0]?.objection}
+              onUnlockHint="Scroll down to unlock..."
+            />
+          )}
+        </>
+      )}
+
+      {/* Stage 4: P.R.O.O.F. Framework Preview */}
+      {(!limitedAccess || currentStage >= 4) ? (
+        <Card className={`border-2 border-sacred/20 ${limitedAccess ? 'animate-in fade-in-50 slide-in-from-bottom-4 duration-500' : ''}`}>
           <CardHeader>
             <div className="flex items-center gap-2">
-              <BookOpen className="w-5 h-5 text-sacred" />
-              <CardTitle className="text-xl">Scripture Toolkit</CardTitle>
+              <CardTitle className="text-xl">P.R.O.O.F. Framework</CardTitle>
+              {limitedAccess && currentStage === 4 && (
+                <span className="ml-2 text-xs bg-sacred/20 text-sacred px-2 py-0.5 rounded-full flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" /> Just unlocked!
+                </span>
+              )}
             </div>
             <CardDescription>
-              Use these passages to ground your thinking and conversations in God's Word.
+              Five lenses to help you examine your situation biblically and wisely.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {(limitedAccess ? content.scriptureToolkit.slice(0, 1) : content.scriptureToolkit).map((scripture, index) => (
-              <div key={index} className="border-l-4 border-sacred/30 pl-4 space-y-1">
-                <p className="font-semibold text-foreground">{scripture.ref}</p>
-                <p className="text-sm text-muted-foreground">{scripture.summary}</p>
-                <p className="text-sm italic text-muted-foreground">When to use: {scripture.whenToUse}</p>
+            {/* Show 2 PROOF points for limited access */}
+            {(limitedAccess ? content.proofPoints.slice(0, 2) : content.proofPoints).map((point, index) => (
+              <div key={index} className="space-y-2">
+                <h4 className="font-semibold text-foreground">{point.label}</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">{point.text}</p>
               </div>
             ))}
-            {limitedAccess && content.scriptureToolkit.length > 1 && (
+            {limitedAccess && content.proofPoints.length > 2 && (
               <p className="text-sm text-muted-foreground italic">
-                + {content.scriptureToolkit.length - 1} more scriptures available with free account...
+                + {content.proofPoints.length - 2} more framework points available with free account...
               </p>
             )}
           </CardContent>
         </Card>
+      ) : (
+        <LockedContentCard
+          title="P.R.O.O.F. Framework"
+          description="Biblical examination framework"
+          icon={<BookOpen className="w-5 h-5" />}
+          previewText={content.proofPoints[0]?.text}
+          isTeaser
+          onUnlockHint="Almost there! Keep scrolling..."
+        />
       )}
 
-      {/* Sign Up Prompt for limited access users */}
+      {/* Sign Up Prompt for limited access users - Show after Stage 4 */}
+      {limitedAccess && currentStage >= 4 && (
+        <div className="animate-in fade-in-50 slide-in-from-bottom-4 duration-700">
+          <SignUpPrompt scenario={answers.scenario} />
+        </div>
+      )}
+
+      {/* Locked Content Teasers for limited access */}
       {limitedAccess && (
-        <SignUpPrompt scenario={answers.scenario} />
+        <div className="space-y-4 opacity-60">
+          <LockedContentCard
+            title="A Prayer for You"
+            description="A personalized prayer for your journey"
+            icon={<Heart className="w-5 h-5" />}
+            previewText={content.prayer.slice(0, 100)}
+          />
+          {content.videos && content.videos.length > 0 && (
+            <LockedContentCard
+              title="Recommended Videos"
+              description={`${content.videos.length} curated videos for deeper learning`}
+              icon={<Video className="w-5 h-5" />}
+            />
+          )}
+        </div>
       )}
 
       {/* Full content only for authenticated users */}
       {!limitedAccess && (
         <>
-      {content.sampleResponses.length > 0 && (
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <MessageSquare className="w-5 h-5 text-sacred" />
-              <CardTitle className="text-xl">Sample Responses</CardTitle>
-            </div>
-            <CardDescription>
-              Use these examples to help you respond with clarity, grace, and conviction.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {content.sampleResponses.map((response, index) => (
-              <div key={index} className="space-y-3 p-4 bg-muted/30 rounded-lg">
-                <p className="font-semibold text-sacred">{response.label}</p>
-                <div className="space-y-2">
-                  <p className="text-sm">
-                    <span className="font-medium">Objection:</span> "{response.objection}"
-                  </p>
-                  <p className="text-sm">
-                    <span className="font-medium">You can say:</span> "{response.youCanSay}"
-                  </p>
-                </div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-      )}
-
-      {/* P.R.O.O.F. Framework */}
-      <Card className="border-2 border-sacred/20">
-        <CardHeader>
-          <CardTitle className="text-xl">P.R.O.O.F. Framework</CardTitle>
-          <CardDescription>
-            Five lenses to help you examine your situation biblically and wisely.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {content.proofPoints.map((point, index) => (
-            <div key={index} className="space-y-2">
-              <h4 className="font-semibold text-foreground">{point.label}</h4>
-              <p className="text-sm text-muted-foreground leading-relaxed">{point.text}</p>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-
       {/* Prayer */}
       <Card className="bg-sacred/5 border-sacred/20">
         <CardHeader>
