@@ -3,13 +3,15 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Video, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library, Lock } from "lucide-react";
+import { Heart, Video, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library, Lock, Play } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
 import { MobileQRCode } from "@/components/MobileQRCode";
 import logo from "@/assets/sacred-greeks-logo.png";
 import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
 import { ShareDocumentaryDialog } from "@/components/resources/ShareDocumentaryDialog";
 import { DocumentaryAwardsSection } from "@/components/resources/DocumentaryAwardsSection";
+import { ListenButton } from "@/components/ListenButton";
+import { useExternalLinks } from "@/hooks/use-external-links";
 
 const features = [
   {
@@ -58,6 +60,9 @@ const benefits = [
 
 const Index = () => {
   const { user } = useAuth();
+  const { openExternalLink } = useExternalLinks();
+
+  const heroText = "Your daily companion for integrating faith and Greek life. Get devotionals, guidance, prayer tools, and progress tracking, all grounded in the P.R.O.O.F. framework from Sacred, Not Sinful.";
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-muted/30 to-background">
@@ -119,10 +124,20 @@ const Index = () => {
           </p>
           
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Your daily companion for integrating faith and Greek life. Get devotionals, guidance, 
-            prayer tools, and progress tracking, all grounded in the P.R.O.O.F. framework from 
-            "Sacred, Not Sinful."
+            {heroText}
           </p>
+
+          {/* Listen Button for Hero */}
+          <div className="flex justify-center pt-2">
+            <ListenButton
+              text={`Sacred Greeks Life App. You love Jesus. You love your letters. Navigate both with clarity and confidence. ${heroText}`}
+              itemId="hero-intro"
+              title="Sacred Greeks Introduction"
+              voice="onyx"
+              variant="outline"
+              size="sm"
+            />
+          </div>
 
           {/* Inline Benefits */}
           {!user && (
@@ -345,29 +360,28 @@ const Index = () => {
                 This documentary reveals authentic stories of hope, healing, and redemption for Christians 
                 navigating fraternity and sorority membership.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a 
-                  href="https://www.unmaskinghopethemovie.com/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-block"
+              <div className="flex flex-col sm:flex-row gap-4 flex-wrap">
+                <Button 
+                  size="lg" 
+                  className="bg-sacred hover:bg-sacred/90 text-sacred-foreground w-full sm:w-auto"
+                  onClick={() => openExternalLink("https://www.unmaskinghopethemovie.com/")}
                 >
-                  <Button size="lg" className="bg-sacred hover:bg-sacred/90 text-sacred-foreground w-full sm:w-auto">
-                    <Video className="w-5 h-5 mr-2" />
-                    Watch Now
-                  </Button>
-                </a>
-                <a 
-                  href="https://vimeo.com/781211329?fl=pl&fe=sh" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-block"
-                >
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                    <Video className="w-5 h-5 mr-2" />
-                    Watch Trailer
-                  </Button>
-                </a>
+                  <Video className="w-5 h-5 mr-2" />
+                  Watch Now
+                </Button>
+                <ExternalContentModal
+                  url="https://player.vimeo.com/video/781211329"
+                  title="Unmasking Hope - Trailer"
+                  description="Watch the trailer for the Unmasking Hope documentary exploring faith, identity, and redemption in Greek life."
+                  category="Documentary"
+                  trigger={
+                    <Button size="lg" variant="outline" className="w-full sm:w-auto">
+                      <Video className="w-5 h-5 mr-2" />
+                      Watch Trailer
+                      <Play className="w-4 h-4 ml-2" />
+                    </Button>
+                  }
+                />
                 <ShareDocumentaryDialog 
                   trigger={
                     <Button size="lg" variant="outline" className="w-full sm:w-auto">
@@ -385,11 +399,9 @@ const Index = () => {
             
             <Card className="overflow-hidden shadow-xl">
               <CardContent className="p-0">
-                <a 
-                  href="https://www.unmaskinghopethemovie.com/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="block relative group"
+                <div 
+                  onClick={() => openExternalLink("https://www.unmaskinghopethemovie.com/")}
+                  className="block relative group cursor-pointer"
                 >
                   <div className="aspect-video bg-gradient-to-br from-sacred to-warm-blue flex items-center justify-center relative overflow-hidden">
                     <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
@@ -399,7 +411,7 @@ const Index = () => {
                       <p className="text-white/80 text-sm">Official Documentary</p>
                     </div>
                   </div>
-                </a>
+                </div>
               </CardContent>
             </Card>
           </div>
