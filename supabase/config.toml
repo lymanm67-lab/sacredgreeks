@@ -44,3 +44,6 @@ verify_jwt = true
 
 [functions.recommend-resources]
 verify_jwt = false
+
+[functions.generate-devotionals]
+verify_jwt = false
