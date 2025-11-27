@@ -127,33 +127,17 @@ const Index = () => {
             {heroText}
           </p>
 
-          {/* Listen Button for Hero */}
-          <div style={{ 
-            display: 'flex', 
-            justifyContent: 'center', 
-            paddingTop: '16px',
-            width: '100%',
-            minHeight: '60px',
-            backgroundColor: 'rgba(255,0,0,0.1)'
-          }}>
-            <button
-              type="button"
-              style={{
-                display: 'block',
-                padding: '14px 28px',
-                fontSize: '18px',
-                fontWeight: 700,
-                color: 'white',
-                backgroundColor: '#2563eb',
-                border: 'none',
-                borderRadius: '12px',
-                WebkitAppearance: 'none',
-                appearance: 'none',
-              }}
-              onClick={() => alert('Listen clicked!')}
-            >
-              🔊 Listen
-            </button>
+          {/* Listen Button for Hero - Icon only for clean look */}
+          <div className="flex justify-center pt-2">
+            <ListenButton
+              text={heroText}
+              itemId="hero-welcome"
+              title="Welcome to Sacred Greeks"
+              variant="ghost"
+              size="icon"
+              showLabel={false}
+              className="h-10 w-10 rounded-full bg-muted/50 hover:bg-muted"
+            />
           </div>
 
           {/* Inline Benefits */}
