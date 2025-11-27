@@ -65,13 +65,13 @@ const Index = () => {
   const heroText = "Your daily companion for integrating faith and Greek life. Get devotionals, guidance, prayer tools, and progress tracking, all grounded in the P.R.O.O.F. framework from Sacred, Not Sinful.";
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-muted/30 to-background">
+    <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/20">
       {/* Header with Auth */}
-      <header className="border-b border-border bg-card/80 backdrop-blur sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
+      <header className="border-b border-border/50 bg-background/80 backdrop-blur-lg sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="bg-blue-600 rounded-lg p-2">
+              <div className="bg-gradient-to-br from-sacred to-sacred/80 rounded-xl p-2 shadow-lg shadow-sacred/20">
                 <img src={logo} alt="Sacred Greeks" className="h-6 w-auto brightness-0 invert" />
               </div>
             </div>
@@ -79,7 +79,7 @@ const Index = () => {
               <MobileQRCode />
               {user ? (
                 <Link to="/dashboard">
-                  <Button className="bg-sacred hover:bg-sacred/90 text-sacred-foreground">
+                  <Button className="bg-sacred hover:bg-sacred/90 text-sacred-foreground shadow-lg shadow-sacred/20 hover:shadow-xl hover:shadow-sacred/30 transition-all">
                     <LayoutDashboard className="w-4 h-4 mr-2" />
                     Dashboard
                   </Button>
@@ -87,13 +87,13 @@ const Index = () => {
               ) : (
                 <>
                   <Link to="/auth">
-                    <Button variant="ghost" size="sm">
+                    <Button variant="ghost" size="sm" className="hover:bg-muted">
                       Sign In
                     </Button>
                   </Link>
                   <Link to="/auth">
-                    <Button className="bg-sacred hover:bg-sacred/90 text-sacred-foreground" size="sm">
-                      Sign Up
+                    <Button className="bg-sacred hover:bg-sacred/90 text-sacred-foreground shadow-lg shadow-sacred/20" size="sm">
+                      Get Started
                     </Button>
                   </Link>
                 </>
@@ -104,41 +104,56 @@ const Index = () => {
       </header>
 
       {/* Hero Section */}
-      <div className="container mx-auto px-4 py-12 md:py-20">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-          <Badge className="bg-sacred/10 text-sacred hover:bg-sacred/20 border-sacred/20" variant="outline">
-            Trusted by Christians in Greek Life
-          </Badge>
-          
-          <div className="inline-flex items-center justify-center mb-4 animate-fade-in bg-blue-50 rounded-full p-6">
-            <img src={logo} alt="Sacred Greeks" className="h-24 w-auto" style={{ filter: 'brightness(0) saturate(100%) invert(38%) sepia(98%) saturate(3032%) hue-rotate(207deg) brightness(98%) contrast(97%)' }} />
-          </div>
-          
-          <h1 className="text-5xl md:text-7xl font-bold text-foreground leading-tight animate-fade-in">
-            Sacred Greeks <span className="text-sacred">Life App</span>
-          </h1>
-          
-          <p className="text-2xl md:text-3xl text-muted-foreground font-medium animate-fade-in">
-            You love Jesus. You love your letters. <br className="hidden md:inline" />
-            Navigate both with clarity and confidence.
-          </p>
-          
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            {heroText}
-          </p>
+      <div className="relative overflow-hidden">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sacred/5 via-transparent to-transparent pointer-events-none" />
+        
+        <div className="container mx-auto px-4 py-16 md:py-24 relative">
+          <div className="max-w-4xl mx-auto text-center space-y-6">
+            <Badge className="bg-sacred/10 text-sacred hover:bg-sacred/20 border-sacred/20 animate-fade-in-up" variant="outline">
+              ✨ Trusted by Christians in Greek Life
+            </Badge>
+            
+            <div className="inline-flex items-center justify-center animate-fade-in-up-delay-1">
+              <div className="relative">
+                <div className="absolute inset-0 bg-sacred/20 rounded-full blur-2xl animate-pulse-glow" />
+                <div className="relative bg-gradient-to-br from-sacred/10 to-sacred/5 rounded-full p-8 border border-sacred/20">
+                  <img 
+                    src={logo} 
+                    alt="Sacred Greeks" 
+                    className="h-20 md:h-24 w-auto" 
+                    style={{ filter: 'brightness(0) saturate(100%) invert(38%) sepia(98%) saturate(3032%) hue-rotate(207deg) brightness(98%) contrast(97%)' }} 
+                  />
+                </div>
+              </div>
+            </div>
+            
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-foreground leading-tight animate-fade-in-up-delay-2">
+              Sacred Greeks{' '}
+              <span className="gradient-text">Life App</span>
+            </h1>
+            
+            <p className="text-xl md:text-2xl text-muted-foreground font-medium animate-fade-in-up-delay-3 max-w-2xl mx-auto">
+              You love Jesus. You love your letters.{' '}
+              <span className="text-foreground">Navigate both with clarity and confidence.</span>
+            </p>
+            
+            <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed animate-fade-in">
+              {heroText}
+            </p>
 
-          {/* Listen Button for Hero - Icon only for clean look */}
-          <div className="flex justify-center pt-2">
-            <ListenButton
-              text={heroText}
-              itemId="hero-welcome"
-              title="Welcome to Sacred Greeks"
-              variant="ghost"
-              size="icon"
-              showLabel={false}
-              className="h-10 w-10 rounded-full bg-muted/50 hover:bg-muted"
-            />
-          </div>
+            {/* Listen Button for Hero - Icon only for clean look */}
+            <div className="flex justify-center pt-2">
+              <ListenButton
+                text={heroText}
+                itemId="hero-welcome"
+                title="Welcome to Sacred Greeks"
+                variant="ghost"
+                size="icon"
+                showLabel={false}
+                className="h-10 w-10 rounded-full bg-muted/50 hover:bg-sacred/10 hover:text-sacred transition-colors"
+              />
+            </div>
 
           {/* Inline Benefits */}
           {!user && (
@@ -202,21 +217,28 @@ const Index = () => {
           </Link>
         </div>
       </div>
+    </div>
 
       {/* Benefits Section */}
       {!user && (
-        <div className="container mx-auto px-4 py-16 bg-muted/50">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-              Everything You Need to Thrive
-            </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {benefits.map((benefit, index) => (
-                <div key={index} className="flex items-start gap-3 animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
-                  <CheckCircle2 className="w-6 h-6 text-sacred flex-shrink-0 mt-1" />
-                  <p className="text-base text-muted-foreground">{benefit}</p>
-                </div>
-              ))}
+        <div className="bg-gradient-to-b from-muted/30 to-background py-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-5xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 animate-fade-in-up">
+                Everything You Need to <span className="gradient-text">Thrive</span>
+              </h2>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {benefits.map((benefit, index) => (
+                  <div 
+                    key={index} 
+                    className="flex items-start gap-3 p-4 rounded-xl bg-card/50 border border-border/50 hover-lift animate-fade-in-up"
+                    style={{ animationDelay: `${index * 0.05}s` }}
+                  >
+                    <CheckCircle2 className="w-5 h-5 text-sacred flex-shrink-0 mt-0.5" />
+                    <p className="text-sm text-muted-foreground">{benefit}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -226,15 +248,15 @@ const Index = () => {
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Powerful Benefits That Transform Your Life
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-fade-in-up">
+              Powerful Benefits That <span className="gradient-text">Transform</span> Your Life
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto animate-fade-in-up-delay-1">
               Experience real transformation as you grow spiritually
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {features.map((feature, index) => {
               const isExternal = feature.isExternal || false;
               const requiresAuth = feature.requiresAuth || false;

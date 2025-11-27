@@ -79,6 +79,5 @@ export default defineConfig(({ mode }) => ({
       '@radix-ui/react-popover',
       '@tanstack/react-query'
     ],
-    force: true,
   },
 }));
