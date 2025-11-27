@@ -39,6 +39,7 @@ import { ChevronDown } from 'lucide-react';
 import { CategorySection } from '@/components/dashboard/CategorySection';
 import { ShareAppCard } from '@/components/dashboard/ShareAppCard';
 import { FeaturedArticle } from '@/components/dashboard/FeaturedArticle';
+import { RecentlyViewed } from '@/components/dashboard/RecentlyViewed';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -371,6 +372,11 @@ const Dashboard = () => {
           {/* Featured Article */}
           <div className="animate-fade-in" style={{ animationDelay: '0.25s' }}>
             <FeaturedArticle />
+          </div>
+
+          {/* Recently Viewed */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.27s' }}>
+            <RecentlyViewed />
           </div>
 
           {/* Share App Card */}

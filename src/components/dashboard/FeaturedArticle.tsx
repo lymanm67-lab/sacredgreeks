@@ -64,6 +64,7 @@ export const FeaturedArticle = () => {
             url={featuredArticle.url}
             title={featuredArticle.title}
             description={featuredArticle.description}
+            category={featuredArticle.category}
             trigger={
               <Button className="flex-1 bg-sacred hover:bg-sacred/90">
                 Read Article
