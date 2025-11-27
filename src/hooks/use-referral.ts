@@ -117,7 +117,7 @@ export function useReferral(options?: UseReferralOptions) {
 
   const shareReferral = async () => {
     const link = getReferralLink();
-    const message = `A gift for you from Dr. Lyman Montgomery, creator of the Sacred Greeks Life App – the digital companion to "Sacred Not Sinful: A Biblical Response to the Black Greek Letter Organizations Debate." Join me and grow spiritually with daily devotionals, prayer tools, and community support for Greek life members and supporters: ${link}`;
+    const message = `A gift from Dr. Lyman Montgomery – the Sacred Greeks Life App helps you navigate the tension between Greek life and faith. Features daily devotionals, prayer tools, and Bible study resources to grow spiritually while honoring both your faith and fraternity/sorority. For Greek life members and supporters: ${link}`;
 
     if (navigator.share) {
       try {
@@ -136,7 +136,7 @@ export function useReferral(options?: UseReferralOptions) {
 
   const textReferral = () => {
     const link = getReferralLink();
-    const message = `A gift for you from Dr. Lyman Montgomery, creator of the Sacred Greeks Life App – the digital companion to "Sacred Not Sinful: A Biblical Response to the Black Greek Letter Organizations Debate." Join me and grow spiritually with daily devotionals, prayer tools, and community support for Greek life members and supporters: ${link}`;
+    const message = `A gift from Dr. Lyman Montgomery – the Sacred Greeks Life App helps you navigate the tension between Greek life and faith. Features daily devotionals, prayer tools, and Bible study resources to grow spiritually while honoring both your faith and fraternity/sorority. For Greek life members and supporters: ${link}`;
     
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     
