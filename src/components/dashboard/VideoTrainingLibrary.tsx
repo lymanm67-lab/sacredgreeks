@@ -1,8 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { GraduationCap, Play, Clock } from 'lucide-react';
-import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { ExternalContentModal } from '@/components/ui/ExternalContentModal';
 
 interface VideoTraining {
   id: string;
@@ -86,94 +85,60 @@ const getCategoryLabel = (category: string) => {
 };
 
 export const VideoTrainingLibrary = () => {
-  const [selectedVideo, setSelectedVideo] = useState<VideoTraining | null>(null);
-
   return (
-    <>
-      <Card>
-        <CardHeader>
-          <div className="flex items-center gap-2 mb-2">
-            <GraduationCap className="w-5 h-5 text-sacred" />
-            <CardTitle>Video Training Library</CardTitle>
-          </div>
-          <CardDescription>
-            Essential teachings for Christian Greeks navigating faith and fraternity/sorority life
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {trainings.map((training) => (
-              <div
-                key={training.id}
-                className="group cursor-pointer"
-                onClick={() => setSelectedVideo(training)}
-              >
-                <div className="space-y-3">
-                  <div className="relative aspect-video rounded-lg overflow-hidden bg-muted border-2 border-border group-hover:border-sacred/50 transition-all">
-                    <div className="absolute inset-0 bg-gradient-to-br from-sacred/20 to-warm-blue/20 flex items-center justify-center">
-                      <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <Play className="w-8 h-8 text-sacred ml-1" />
+    <Card>
+      <CardHeader>
+        <div className="flex items-center gap-2 mb-2">
+          <GraduationCap className="w-5 h-5 text-sacred" />
+          <CardTitle>Video Training Library</CardTitle>
+        </div>
+        <CardDescription>
+          Essential teachings for Christian Greeks navigating faith and fraternity/sorority life
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {trainings.map((training) => (
+            <ExternalContentModal
+              key={training.id}
+              url={training.videoUrl}
+              title={training.title}
+              description={training.description}
+              category="Training Video"
+              trigger={
+                <div className="group cursor-pointer">
+                  <div className="space-y-3">
+                    <div className="relative aspect-video rounded-lg overflow-hidden bg-muted border-2 border-border group-hover:border-sacred/50 transition-all">
+                      <div className="absolute inset-0 bg-gradient-to-br from-sacred/20 to-warm-blue/20 flex items-center justify-center">
+                        <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform">
+                          <Play className="w-8 h-8 text-sacred ml-1" />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Badge variant="outline" className={getCategoryColor(training.category)}>
-                        {getCategoryLabel(training.category)}
-                      </Badge>
-                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <Clock className="w-3 h-3" />
-                        {training.duration}
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <Badge variant="outline" className={getCategoryColor(training.category)}>
+                          {getCategoryLabel(training.category)}
+                        </Badge>
+                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                          <Clock className="w-3 h-3" />
+                          {training.duration}
+                        </div>
                       </div>
+                      <h3 className="font-semibold text-sm group-hover:text-sacred transition-colors line-clamp-2 text-left">
+                        {training.title}
+                      </h3>
+                      <p className="text-xs text-muted-foreground line-clamp-2 text-left">
+                        {training.description}
+                      </p>
                     </div>
-                    <h3 className="font-semibold text-sm group-hover:text-sacred transition-colors line-clamp-2">
-                      {training.title}
-                    </h3>
-                    <p className="text-xs text-muted-foreground line-clamp-2">
-                      {training.description}
-                    </p>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Video Dialog */}
-      <Dialog open={!!selectedVideo} onOpenChange={(open) => !open && setSelectedVideo(null)}>
-        <DialogContent className="max-w-4xl h-[85vh] flex flex-col p-0">
-          <DialogHeader className="px-6 pt-6 pb-2">
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Badge variant="outline" className={selectedVideo ? getCategoryColor(selectedVideo.category) : ''}>
-                  {selectedVideo ? getCategoryLabel(selectedVideo.category) : ''}
-                </Badge>
-                <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                  <Clock className="w-3 h-3" />
-                  {selectedVideo?.duration}
-                </div>
-              </div>
-              <DialogTitle className="text-xl">{selectedVideo?.title}</DialogTitle>
-              <p className="text-sm text-muted-foreground">{selectedVideo?.description}</p>
-            </div>
-          </DialogHeader>
-          
-          <div className="flex-1 px-6 pb-6 overflow-hidden">
-            {selectedVideo && (
-              <div className="w-full h-full rounded-md overflow-hidden bg-background">
-                <iframe
-                  src={selectedVideo.videoUrl}
-                  title={selectedVideo.title}
-                  className="w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
-    </>
+              }
+            />
+          ))}
+        </div>
+      </CardContent>
+    </Card>
   );
 };
