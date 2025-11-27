@@ -8,6 +8,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Progress } from "@/components/ui/progress";
+import { useState, useEffect } from "react";
 
 interface ListenButtonProps {
   text: string;
@@ -40,9 +42,26 @@ export function ListenButton({
   showLabel = true,
 }: ListenButtonProps) {
   const { speak, pause, resume, stop, isPlaying, isPaused, isLoading, playbackSpeed, changeSpeed } = useTextToSpeech();
+  const [loadingProgress, setLoadingProgress] = useState(0);
   
   const isThisPlaying = isPlaying === itemId;
   const isThisLoading = isLoading === itemId;
+
+  // Simulate loading progress for better mobile UX
+  useEffect(() => {
+    if (isThisLoading) {
+      setLoadingProgress(0);
+      const interval = setInterval(() => {
+        setLoadingProgress((prev) => {
+          if (prev >= 90) return prev;
+          return prev + Math.random() * 15;
+        });
+      }, 200);
+      return () => clearInterval(interval);
+    } else {
+      setLoadingProgress(0);
+    }
+  }, [isThisLoading]);
 
   const handleClick = async () => {
     if (isThisLoading) return;
@@ -62,78 +81,91 @@ export function ListenButton({
   };
 
   return (
-    <div className="flex items-center gap-2">
-      <Button
-        variant={variant}
-        size={size}
-        onClick={handleClick}
-        disabled={isThisLoading}
-        className={cn(
-          "transition-all",
-          isThisPlaying && "bg-sacred/10 border-sacred text-sacred hover:bg-sacred/20",
-          className
-        )}
-      >
-        {isThisLoading ? (
+    <div className="flex flex-col gap-2">
+      <div className="flex items-center gap-2">
+        <Button
+          variant={variant}
+          size={size}
+          onClick={handleClick}
+          disabled={isThisLoading}
+          className={cn(
+            "transition-all relative overflow-hidden",
+            isThisPlaying && "bg-sacred/10 border-sacred text-sacred hover:bg-sacred/20",
+            isThisLoading && "bg-sacred/5 border-sacred/50 animate-pulse",
+            className
+          )}
+        >
+          {isThisLoading ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin text-sacred" />
+              {showLabel && <span className="ml-2">Preparing audio...</span>}
+            </>
+          ) : isThisPlaying && !isPaused ? (
+            <>
+              <Pause className="w-4 h-4" />
+              {showLabel && <span className="ml-2">Pause</span>}
+            </>
+          ) : isThisPlaying && isPaused ? (
+            <>
+              <Play className="w-4 h-4" />
+              {showLabel && <span className="ml-2">Resume</span>}
+            </>
+          ) : (
+            <>
+              <Volume2 className="w-4 h-4" />
+              {showLabel && <span className="ml-2">Listen</span>}
+            </>
+          )}
+        </Button>
+        
+        {isThisPlaying && (
           <>
-            <Loader2 className="w-4 h-4 animate-spin" />
-            {showLabel && <span className="ml-2">Loading...</span>}
-          </>
-        ) : isThisPlaying && !isPaused ? (
-          <>
-            <Pause className="w-4 h-4" />
-            {showLabel && <span className="ml-2">Pause</span>}
-          </>
-        ) : isThisPlaying && isPaused ? (
-          <>
-            <Play className="w-4 h-4" />
-            {showLabel && <span className="ml-2">Resume</span>}
-          </>
-        ) : (
-          <>
-            <Volume2 className="w-4 h-4" />
-            {showLabel && <span className="ml-2">Listen</span>}
-          </>
-        )}
-      </Button>
-      
-      {isThisPlaying && (
-        <>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-8 px-2 text-xs font-medium"
-              >
-                {playbackSpeed}x
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start">
-              {SPEED_OPTIONS.map((option) => (
-                <DropdownMenuItem
-                  key={option.value}
-                  onClick={() => changeSpeed(option.value)}
-                  className={cn(
-                    "cursor-pointer",
-                    playbackSpeed === option.value && "bg-accent"
-                  )}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-8 px-2 text-xs font-medium"
                 >
-                  {option.label}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-          
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleStop}
-            className="h-8 w-8 text-muted-foreground hover:text-destructive"
-          >
-            <Square className="w-3 h-3 fill-current" />
-          </Button>
-        </>
+                  {playbackSpeed}x
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                {SPEED_OPTIONS.map((option) => (
+                  <DropdownMenuItem
+                    key={option.value}
+                    onClick={() => changeSpeed(option.value)}
+                    className={cn(
+                      "cursor-pointer",
+                      playbackSpeed === option.value && "bg-accent"
+                    )}
+                  >
+                    {option.label}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleStop}
+              className="h-8 w-8 text-muted-foreground hover:text-destructive"
+            >
+              <Square className="w-3 h-3 fill-current" />
+            </Button>
+          </>
+        )}
+      </div>
+      
+      {/* Loading progress bar for mobile visibility */}
+      {isThisLoading && (
+        <div className="w-full max-w-[200px] space-y-1">
+          <Progress value={loadingProgress} className="h-1.5" />
+          <p className="text-xs text-muted-foreground text-center animate-pulse">
+            Generating audio...
+          </p>
+        </div>
       )}
     </div>
   );
