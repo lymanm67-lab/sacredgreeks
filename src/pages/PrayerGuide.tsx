@@ -16,6 +16,7 @@ import { prayerMethods } from '@/data/prayerLearning';
 import { VoiceRecordingButton, VoiceInputButton } from '@/components/VoiceInputButton';
 import { AmbientSoundPlayer } from '@/components/prayer/AmbientSoundPlayer';
 import { PrayAlongKaraoke } from '@/components/prayer/PrayAlongKaraoke';
+import { ListenButton } from '@/components/ListenButton';
 
 export default function PrayerGuide() {
   const { user } = useAuth();
@@ -257,9 +258,15 @@ export default function PrayerGuide() {
                   <Card className="bg-muted/50">
                     <CardContent className="pt-6">
                       <div className="space-y-4">
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           <h4 className="font-semibold">Your Personalized Prayer</h4>
-                          <div className="flex gap-2">
+                          <div className="flex flex-wrap gap-2">
+                            <ListenButton
+                              text={generatedPrayer}
+                              itemId={`generated-prayer-${Date.now()}`}
+                              title="Generated Prayer"
+                              showLabel={true}
+                            />
                             <Button
                               variant="outline"
                               size="sm"
@@ -277,7 +284,7 @@ export default function PrayerGuide() {
                               onClick={() => handleSavePrayer(generatedPrayer, `AI Prayer - ${selectedCategoryData?.name}`)}
                             >
                               <Save className="w-4 h-4 mr-2" />
-                              Save to Journal
+                              Save
                             </Button>
                           </div>
                         </div>
@@ -412,20 +419,30 @@ export default function PrayerGuide() {
                   {categoryTemplates.map((template) => (
                     <Card key={template.id} className="hover:shadow-md transition-shadow">
                       <CardHeader>
-                        <div className="flex items-start justify-between">
-                          <div className="space-y-1">
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="space-y-1 flex-1">
                             <CardTitle className="text-lg">{template.title}</CardTitle>
                             <CardDescription className="text-xs">
                               <span className="font-semibold">Scripture:</span> {template.scripture}
                             </CardDescription>
                           </div>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleSavePrayer(template.prayer, template.title)}
-                          >
-                            <Save className="w-4 h-4" />
-                          </Button>
+                          <div className="flex gap-1 flex-shrink-0">
+                            <ListenButton
+                              text={template.prayer}
+                              itemId={`template-${template.id}`}
+                              title={template.title}
+                              showLabel={false}
+                              size="icon"
+                              variant="ghost"
+                            />
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => handleSavePrayer(template.prayer, template.title)}
+                            >
+                              <Save className="w-4 h-4" />
+                            </Button>
+                          </div>
                         </div>
                       </CardHeader>
                       <CardContent>
