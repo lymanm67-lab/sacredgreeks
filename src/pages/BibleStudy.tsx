@@ -19,6 +19,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useSavedBibleSearches } from '@/hooks/use-saved-bible-searches';
 import { SavedSearchesList } from '@/components/bible-study/SavedSearchesList';
 import { useAutoCompleteChallenge } from '@/hooks/use-auto-complete-challenge';
+import { VoiceInputButton } from '@/components/VoiceInputButton';
 
 const readingPlans = [
   {
@@ -426,18 +427,25 @@ const BibleStudy = () => {
                   </RadioGroup>
 
                   <form onSubmit={handleSearch} className="flex gap-2">
-                    <Input
-                      placeholder={
-                        searchMode === 'ai' 
-                          ? "e.g., breaking one law is like breaking all laws" 
-                          : searchMode === 'reference' 
-                            ? "e.g., John 3:16 or Romans 8" 
-                            : "e.g., love, strength, faith, courage"
-                      }
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="flex-1"
-                    />
+                    <div className="flex-1 flex gap-2">
+                      <Input
+                        placeholder={
+                          searchMode === 'ai' 
+                            ? "e.g., breaking one law is like breaking all laws" 
+                            : searchMode === 'reference' 
+                              ? "e.g., John 3:16 or Romans 8" 
+                              : "e.g., love, strength, faith, courage"
+                        }
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="flex-1"
+                      />
+                      <VoiceInputButton
+                        onTranscript={setSearchQuery}
+                        existingText={searchQuery}
+                        appendMode={false}
+                      />
+                    </div>
                     <Button type="submit" disabled={loading} className="bg-sacred hover:bg-sacred/90">
                       {loading ? (
                         <Loader2 className="w-4 h-4 animate-spin" />
