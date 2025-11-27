@@ -1,7 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Volume2, Pause, Play, Loader2, Square } from "lucide-react";
-import { useTextToSpeech } from "@/hooks/use-text-to-speech";
+import { useTextToSpeech, PlaybackSpeed } from "@/hooks/use-text-to-speech";
 import { cn } from "@/lib/utils";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface ListenButtonProps {
   text: string;
@@ -14,17 +20,26 @@ interface ListenButtonProps {
   showLabel?: boolean;
 }
 
+const SPEED_OPTIONS: { value: PlaybackSpeed; label: string }[] = [
+  { value: 0.5, label: "0.5x" },
+  { value: 0.75, label: "0.75x" },
+  { value: 1, label: "1x" },
+  { value: 1.25, label: "1.25x" },
+  { value: 1.5, label: "1.5x" },
+  { value: 2, label: "2x" },
+];
+
 export function ListenButton({
   text,
   itemId,
   title,
-  voice = "onyx", // Deep, warm male voice - good for educational content
+  voice = "onyx",
   variant = "outline",
   size = "sm",
   className,
   showLabel = true,
 }: ListenButtonProps) {
-  const { speak, pause, resume, stop, isPlaying, isPaused, isLoading } = useTextToSpeech();
+  const { speak, pause, resume, stop, isPlaying, isPaused, isLoading, playbackSpeed, changeSpeed } = useTextToSpeech();
   
   const isThisPlaying = isPlaying === itemId;
   const isThisLoading = isLoading === itemId;
@@ -83,14 +98,42 @@ export function ListenButton({
       </Button>
       
       {isThisPlaying && (
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={handleStop}
-          className="h-8 w-8 text-muted-foreground hover:text-destructive"
-        >
-          <Square className="w-3 h-3 fill-current" />
-        </Button>
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-8 px-2 text-xs font-medium"
+              >
+                {playbackSpeed}x
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start">
+              {SPEED_OPTIONS.map((option) => (
+                <DropdownMenuItem
+                  key={option.value}
+                  onClick={() => changeSpeed(option.value)}
+                  className={cn(
+                    "cursor-pointer",
+                    playbackSpeed === option.value && "bg-accent"
+                  )}
+                >
+                  {option.label}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+          
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleStop}
+            className="h-8 w-8 text-muted-foreground hover:text-destructive"
+          >
+            <Square className="w-3 h-3 fill-current" />
+          </Button>
+        </>
       )}
     </div>
   );

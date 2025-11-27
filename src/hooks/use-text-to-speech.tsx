@@ -1,13 +1,16 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useBackgroundAudio } from "./use-background-audio";
+
+export type PlaybackSpeed = 0.5 | 0.75 | 1 | 1.25 | 1.5 | 2;
 
 export const useTextToSpeech = () => {
   const [isPlaying, setIsPlaying] = useState<string | null>(null);
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<string | null>(null);
   const [currentTitle, setCurrentTitle] = useState<string>("");
+  const [playbackSpeed, setPlaybackSpeed] = useState<PlaybackSpeed>(1);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const { setAudioRef, updatePlaybackState, updatePositionState } = useBackgroundAudio({
@@ -102,6 +105,7 @@ export const useTextToSpeech = () => {
       const audioUrl = URL.createObjectURL(blob);
 
       const audio = new Audio(audioUrl);
+      audio.playbackRate = playbackSpeed;
       audioRef.current = audio;
       setAudioRef(audio);
 
@@ -181,6 +185,13 @@ export const useTextToSpeech = () => {
     updatePlaybackState("none");
   };
 
+  const changeSpeed = useCallback((speed: PlaybackSpeed) => {
+    setPlaybackSpeed(speed);
+    if (audioRef.current) {
+      audioRef.current.playbackRate = speed;
+    }
+  }, []);
+
   return {
     speak,
     pause,
@@ -189,5 +200,7 @@ export const useTextToSpeech = () => {
     isPlaying,
     isPaused,
     isLoading,
+    playbackSpeed,
+    changeSpeed,
   };
 };
