@@ -42,6 +42,83 @@ const chapterResources = [
     url: "https://gamma.app/docs/Sacred-Service-Planning-Community-Projects-with-Your-Chapter-28f7a9bc5w5jghb",
     icon: HandHeart,
     category: "Service"
+  },
+  {
+    title: "5 Biblical Truths Every Pastor Needs to Know About Black Greek Letter Organizations",
+    description: "Essential guidance for pastors, church leaders, and Christian counselors addressing BGLOs",
+    url: "https://gamma.app/docs/trkhw9krqh3l4cs",
+    icon: Heart,
+    category: "Faith"
+  },
+  {
+    title: "Sacred Greeks Cultural Reflection Devotional for the Holidays",
+    description: "A holiday journey for believers in Greek Life who want to honor Christ and reflect on culture with courage",
+    url: "https://gamma.app/docs/uudch3osmv3ss77",
+    icon: Heart,
+    category: "Faith"
+  },
+  {
+    title: "How to Defend Your Faith and Fraternity When Church Leaders Challenge You",
+    description: "A practical guide for answering concerns with Scripture, wisdom, and respect",
+    url: "https://gamma.app/docs/um32h0hd55s8c6v",
+    icon: Heart,
+    category: "Faith"
+  },
+  {
+    title: "How Not to Lose Your Christian Identity After Intake",
+    description: "Guidance for maintaining your Christian identity and values after joining a Greek organization",
+    url: "https://gamma.app/docs/6lwq13dmgrs5ney",
+    icon: Heart,
+    category: "Faith"
+  },
+  {
+    title: "How to Handle Tensions Within Your Greek Letter Organization",
+    description: "A practical framework to identify real issues and address them with grace and truth",
+    url: "https://gamma.app/docs/hoaqqjovrxsxpve",
+    icon: Users,
+    category: "Leadership"
+  },
+  {
+    title: "Christian BGLO Redemption: A Simple Guide to Repentance, Repair, and Renewal",
+    description: "When we miss the mark, we repent, repair, and rebuild trust with biblical guidance",
+    url: "https://gamma.app/docs/6bfy5y35wg4bezt",
+    icon: Users,
+    category: "Leadership"
+  },
+  {
+    title: "Should Christians Denounce BGLOs? Truth, Trauma, and Theology",
+    description: "Addresses whether Christians should denounce BGLOs with Scripture, pastoral care, and discernment",
+    url: "https://gamma.app/docs/un3ueaqjhbjf8y2",
+    icon: Heart,
+    category: "Faith"
+  },
+  {
+    title: "Symbolism in BGLO Rituals: Harmless or Spiritual Danger?",
+    description: "Examines whether symbols and ritual moments in fraternities are tradition or spiritually dangerous",
+    url: "https://gamma.app/docs/nftyg892145844a",
+    icon: Heart,
+    category: "Faith"
+  },
+  {
+    title: "When Leaving Makes Sense: A Christian's Guide to Exiting a Greek Organization",
+    description: "Guidance for discerning when to leave and how to exit with integrity while maintaining relationships",
+    url: "https://gamma.app/docs/cyi9l2rq808g6r6",
+    icon: Heart,
+    category: "Faith"
+  },
+  {
+    title: "Your Chapter, God's Canvas: Living Out Your Faith Authentically",
+    description: "Discovering authentic Christian living and spiritual growth within Greek life",
+    url: "https://gamma.app/docs/sgrjn53235fsej2",
+    icon: Heart,
+    category: "Faith"
+  },
+  {
+    title: "Is Being Christian & Greek 'Incompatible'? Time to Set the Record Straight",
+    description: "Addresses compatibility between Christianity and Greek life with scripture, history, and theology",
+    url: "https://gamma.app/docs/t4agxb757qkugvr",
+    icon: Heart,
+    category: "Faith"
   }
 ];
 
