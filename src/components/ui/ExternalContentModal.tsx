@@ -1,24 +1,42 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, X } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
+import { useResourceHistory } from '@/hooks/use-resource-history';
 
 interface ExternalContentModalProps {
   url: string;
   title: string;
   description?: string;
+  category?: string;
   trigger: React.ReactNode;
   allowDirectLink?: boolean;
+  onOpen?: () => void;
 }
 
 export function ExternalContentModal({ 
   url, 
   title, 
   description,
+  category = "Resource",
   trigger,
-  allowDirectLink = true 
+  allowDirectLink = true,
+  onOpen
 }: ExternalContentModalProps) {
   const [open, setOpen] = useState(false);
+  const { addToHistory } = useResourceHistory();
+
+  useEffect(() => {
+    if (open) {
+      // Track this view in history
+      addToHistory({
+        title,
+        url,
+        category,
+      });
+      onOpen?.();
+    }
+  }, [open]);
 
   const handleOpenExternal = () => {
     window.open(url, '_blank', 'noopener,noreferrer');
