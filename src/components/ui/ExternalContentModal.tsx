@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, AlertCircle, Loader2 } from 'lucide-react';
@@ -15,6 +15,38 @@ interface ExternalContentModalProps {
   onOpen?: () => void;
 }
 
+// Helper to detect video URLs and format them for embedding
+const getEmbedUrl = (url: string): { embedUrl: string; isVideo: boolean } => {
+  // Vimeo
+  const vimeoMatch = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if (vimeoMatch) {
+    return {
+      embedUrl: `https://player.vimeo.com/video/${vimeoMatch[1]}?autoplay=1&title=0&byline=0&portrait=0`,
+      isVideo: true
+    };
+  }
+  
+  // YouTube
+  const youtubeMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+  if (youtubeMatch) {
+    return {
+      embedUrl: `https://www.youtube.com/embed/${youtubeMatch[1]}?autoplay=1&rel=0`,
+      isVideo: true
+    };
+  }
+  
+  // Already an embed URL
+  if (url.includes('player.vimeo.com') || url.includes('youtube.com/embed')) {
+    const separator = url.includes('?') ? '&' : '?';
+    return {
+      embedUrl: url.includes('autoplay') ? url : `${url}${separator}autoplay=1`,
+      isVideo: true
+    };
+  }
+  
+  return { embedUrl: url, isVideo: false };
+};
+
 export function ExternalContentModal({ 
   url, 
   title, 
@@ -30,6 +62,8 @@ export function ExternalContentModal({
   const { addToHistory } = useResourceHistory();
   const { openExternalLink } = useExternalLinks();
 
+  const { embedUrl, isVideo } = useMemo(() => getEmbedUrl(url), [url]);
+
   useEffect(() => {
     if (open) {
       // Reset states when opening
@@ -44,12 +78,14 @@ export function ExternalContentModal({
       });
       onOpen?.();
 
-      // Set a timeout - if iframe doesn't load in 5 seconds, show fallback
+      // For videos, give more time (15s), for other content use 8s
+      const timeoutDuration = isVideo ? 15000 : 8000;
+      
       const timeout = setTimeout(() => {
         if (!iframeLoaded) {
           setIframeError(true);
         }
-      }, 5000);
+      }, timeoutDuration);
 
       return () => clearTimeout(timeout);
     }
@@ -103,10 +139,12 @@ export function ExternalContentModal({
           <div className="flex-1 px-6 pb-6 relative">
             {/* Loading State */}
             {!iframeLoaded && !iframeError && (
-              <div className="absolute inset-0 flex items-center justify-center bg-muted/50 rounded-md">
+              <div className="absolute inset-0 flex items-center justify-center bg-muted/50 rounded-md z-10">
                 <div className="text-center space-y-3">
                   <Loader2 className="w-8 h-8 animate-spin mx-auto text-sacred" />
-                  <p className="text-sm text-muted-foreground">Loading content...</p>
+                  <p className="text-sm text-muted-foreground">
+                    {isVideo ? 'Loading video...' : 'Loading content...'}
+                  </p>
                 </div>
               </div>
             )}
@@ -131,10 +169,10 @@ export function ExternalContentModal({
             )}
 
             <iframe
-              src={url}
+              src={embedUrl}
               title={title}
-              className={`w-full h-full rounded-md border bg-background ${iframeError ? 'opacity-0' : ''}`}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              className={`w-full h-full rounded-md border bg-black ${iframeError ? 'opacity-0' : ''}`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
               allowFullScreen
               onLoad={handleIframeLoad}
               onError={handleIframeError}
