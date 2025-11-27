@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart, ExternalLink, RefreshCw, BookOpen, MessageSquare, Video, Share2, Check, LayoutDashboard } from "lucide-react";
+import { Heart, ExternalLink, RefreshCw, BookOpen, MessageSquare, Video, Share2, Check, LayoutDashboard, Save, History } from "lucide-react";
+import { ResultsProgressIndicator } from "./ResultsProgressIndicator";
 import { SacredGreeksAnswers, SacredGreeksScores, ResultType } from "@/types/assessment";
 import { sacredGreeksResults, type Scenario } from "@/sacredGreeksContent";
 import { supabase } from "@/integrations/supabase/client";
@@ -146,8 +147,13 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
 
   return (
     <div className="space-y-8">
+      {/* Progress Indicator - Only show for full access */}
+      {!isSharedView && (
+        <ResultsProgressIndicator limitedAccess={limitedAccess} />
+      )}
+
       {/* Headline and Intro - Always visible */}
-      <Card className="border-2 border-sacred/20 bg-gradient-to-br from-sacred/5 to-background">
+      <Card data-section="headline" className="border-2 border-sacred/20 bg-gradient-to-br from-sacred/5 to-background">
         <CardHeader>
           <div className="flex items-start gap-4">
             <div className="w-14 h-14 rounded-full bg-sacred/10 flex items-center justify-center flex-shrink-0">
@@ -163,7 +169,7 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
 
       {/* Scripture Toolkit - Show preview for limited access */}
       {content.scriptureToolkit.length > 0 && (
-        <Card>
+        <Card data-section="scripture">
           <CardHeader>
             <div className="flex items-center gap-2">
               <BookOpen className="w-5 h-5 text-sacred" />
@@ -199,7 +205,7 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
       {!limitedAccess && (
         <>
       {content.sampleResponses.length > 0 && (
-        <Card>
+        <Card data-section="responses">
           <CardHeader>
             <div className="flex items-center gap-2">
               <MessageSquare className="w-5 h-5 text-sacred" />
@@ -228,7 +234,7 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
       )}
 
       {/* P.R.O.O.F. Framework */}
-      <Card className="border-2 border-sacred/20">
+      <Card data-section="proof" className="border-2 border-sacred/20">
         <CardHeader>
           <CardTitle className="text-xl">P.R.O.O.F. Framework</CardTitle>
           <CardDescription>
@@ -246,7 +252,7 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
       </Card>
 
       {/* Prayer */}
-      <Card className="bg-sacred/5 border-sacred/20">
+      <Card data-section="prayer" className="bg-sacred/5 border-sacred/20">
         <CardHeader>
           <CardTitle className="text-lg">A Prayer for You</CardTitle>
         </CardHeader>
@@ -257,7 +263,7 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
 
       {/* Videos */}
       {content.videos && content.videos.length > 0 && (
-        <Card>
+        <Card data-section="videos">
           <CardHeader>
             <div className="flex items-center gap-2">
               <Video className="w-5 h-5 text-sacred" />
@@ -328,7 +334,7 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
       )}
 
       {/* CTAs */}
-      <Card className="bg-sacred/5">
+      <Card data-section="cta" className="bg-sacred/5">
         <CardHeader>
           <CardTitle>Continue Your Journey</CardTitle>
         </CardHeader>
@@ -512,6 +518,14 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
             <Button variant="outline" onClick={onRestart}>
               <RefreshCw className="w-4 h-4 mr-2" />
               Start Over
+            </Button>
+          )}
+          {user && (
+            <Button variant="outline" asChild>
+              <Link to="/assessment-history">
+                <History className="w-4 h-4 mr-2" />
+                View History
+              </Link>
             </Button>
           )}
           <Button asChild>

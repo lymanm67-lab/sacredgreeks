@@ -70,6 +70,11 @@ const Guide = () => {
         await supabase.functions.invoke('check-achievements', {
           body: { userId: user.id, actionType: 'assessment' }
         });
+
+        toast({
+          title: "Assessment Saved!",
+          description: "Your results have been saved to your history. +20 points earned!",
+        });
       } catch (error) {
         console.error('Error saving assessment:', error);
         // Continue to show results even if save fails

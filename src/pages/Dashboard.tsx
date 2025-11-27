@@ -271,6 +271,15 @@ const Dashboard = () => {
       iconBg: 'bg-gradient-to-br from-cyan-500 to-blue-600',
     },
     {
+      id: 'assessment-history',
+      title: 'My Assessments',
+      description: 'View your past assessment results',
+      icon: FileText,
+      href: '/assessment-history',
+      iconColor: 'text-white',
+      iconBg: 'bg-gradient-to-br from-slate-500 to-gray-600',
+    },
+    {
       id: 'achievements',
       title: 'Achievements',
       description: 'View your progress and unlocked badges',
