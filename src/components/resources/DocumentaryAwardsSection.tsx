@@ -53,8 +53,8 @@ const reviews = [
 export const DocumentaryAwardsSection = () => {
   return (
     <div className="space-y-12">
-      {/* Awards Section */}
-      <div className="space-y-6">
+      {/* Awards Section - Hidden on mobile */}
+      <div className="hidden md:block space-y-6">
         <div className="text-center">
           <Badge className="bg-sacred/10 text-sacred border-sacred/20 mb-4">
             <Award className="w-3 h-3 mr-1" />
