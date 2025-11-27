@@ -6,6 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Home, Mic, ExternalLink, Play, Video } from "lucide-react";
 import { ShareDocumentaryDialog } from "@/components/resources/ShareDocumentaryDialog";
 import { DocumentaryAwardsSection } from "@/components/resources/DocumentaryAwardsSection";
+import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
+import { useExternalLinks } from "@/hooks/use-external-links";
 
 interface PodcastEpisode {
   title: string;
@@ -45,6 +47,7 @@ const podcastEpisodes: PodcastEpisode[] = [
 
 const PodcastAppearances = () => {
   const [selectedEpisode, setSelectedEpisode] = useState<PodcastEpisode | null>(null);
+  const { openExternalLink } = useExternalLinks();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
@@ -89,17 +92,15 @@ const PodcastAppearances = () => {
         <Card className="mb-12 overflow-hidden border-2 border-sacred/20 bg-gradient-to-br from-sacred/5 to-warm-blue/5 animate-fade-in">
           <CardContent className="p-0">
             <div className="grid md:grid-cols-2 gap-0">
-              <a 
-                href="https://www.unmaskinghopethemovie.com/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="block relative group"
+              <div 
+                onClick={() => openExternalLink("https://www.unmaskinghopethemovie.com/")}
+                className="block relative group cursor-pointer"
               >
                 <div className="aspect-video md:aspect-square bg-gradient-to-br from-sacred to-warm-blue flex items-center justify-center relative overflow-hidden">
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
                   <Video className="w-24 h-24 text-white relative z-10 group-hover:scale-110 transition-transform" />
                 </div>
-              </a>
+              </div>
               <div className="p-8 flex flex-col justify-center">
                 <Badge className="bg-sacred/10 text-sacred border-sacred/20 w-fit mb-4">
                   <Video className="w-3 h-3 mr-1" />
@@ -112,30 +113,28 @@ const PodcastAppearances = () => {
                   navigating fraternity and sorority membership.
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <a 
-                    href="https://www.unmaskinghopethemovie.com/" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-block"
+                  <Button 
+                    size="lg" 
+                    className="bg-sacred hover:bg-sacred/90 text-sacred-foreground"
+                    onClick={() => openExternalLink("https://www.unmaskinghopethemovie.com/")}
                   >
-                    <Button size="lg" className="bg-sacred hover:bg-sacred/90 text-sacred-foreground">
-                      <Video className="w-5 h-5 mr-2" />
-                      Watch Now
-                      <ExternalLink className="w-4 h-4 ml-2" />
-                    </Button>
-                  </a>
-                  <a 
-                    href="https://vimeo.com/781211329?fl=pl&fe=sh" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-block"
-                  >
-                    <Button size="lg" variant="outline">
-                      <Video className="w-5 h-5 mr-2" />
-                      Watch Trailer
-                      <ExternalLink className="w-4 h-4 ml-2" />
-                    </Button>
-                  </a>
+                    <Video className="w-5 h-5 mr-2" />
+                    Watch Now
+                    <ExternalLink className="w-4 h-4 ml-2" />
+                  </Button>
+                  <ExternalContentModal
+                    url="https://player.vimeo.com/video/781211329"
+                    title="Unmasking Hope - Trailer"
+                    description="Watch the trailer for the Unmasking Hope documentary exploring faith, identity, and redemption in Greek life."
+                    category="Documentary"
+                    trigger={
+                      <Button size="lg" variant="outline">
+                        <Video className="w-5 h-5 mr-2" />
+                        Watch Trailer
+                        <Play className="w-4 h-4 ml-2" />
+                      </Button>
+                    }
+                  />
                   <ShareDocumentaryDialog />
                 </div>
               </div>
