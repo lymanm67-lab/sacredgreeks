@@ -9,10 +9,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Home, Sparkles, BookOpen, GraduationCap, Heart, Save, Copy, Check, Loader2 } from 'lucide-react';
+import { Home, Sparkles, BookOpen, GraduationCap, Heart, Save, Copy, Check, Loader2, Mic } from 'lucide-react';
 import { toast } from 'sonner';
 import { prayerTemplates, prayerCategories } from '@/data/prayerTemplates';
 import { prayerMethods } from '@/data/prayerLearning';
+import { VoiceRecordingButton, VoiceInputButton } from '@/components/VoiceInputButton';
 
 export default function PrayerGuide() {
   const { user } = useAuth();
@@ -170,12 +171,20 @@ export default function PrayerGuide() {
                 </div>
 
                 {/* Situation Input */}
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">
-                    Describe your situation (optional):
-                  </label>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-medium">
+                      Describe your situation (optional):
+                    </label>
+                    <VoiceInputButton
+                      onTranscript={setSituation}
+                      existingText={situation}
+                      appendMode={true}
+                      showLabel={true}
+                    />
+                  </div>
                   <Textarea
-                    placeholder="E.g., 'I'm facing a difficult decision about my career' or 'I'm dealing with anxiety about an upcoming exam'"
+                    placeholder="E.g., 'I'm facing a difficult decision about my career' or 'I'm dealing with anxiety about an upcoming exam' (or use voice input above)"
                     value={situation}
                     onChange={(e) => setSituation(e.target.value)}
                     rows={4}
@@ -184,6 +193,28 @@ export default function PrayerGuide() {
                   <p className="text-xs text-muted-foreground">
                     The more specific you are, the more personalized your prayer will be
                   </p>
+                  
+                  {/* Immersive Voice Prayer Section */}
+                  <Card className="border-dashed border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-primary/10">
+                    <CardContent className="pt-6">
+                      <div className="text-center mb-4">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-2">
+                          <Mic className="w-4 h-4" />
+                          Voice Prayer Mode
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                          Speak your heart directly - let your words flow naturally
+                        </p>
+                      </div>
+                      <VoiceRecordingButton
+                        onTranscript={setSituation}
+                        existingText={situation}
+                        appendMode={false}
+                        showLivePreview={true}
+                        placeholder="Your spoken prayer will appear here in real-time..."
+                      />
+                    </CardContent>
+                  </Card>
                 </div>
 
                 {/* Generate Button */}
