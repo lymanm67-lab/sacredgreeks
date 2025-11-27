@@ -30,6 +30,7 @@ import { BreadcrumbNav } from '@/components/ui/breadcrumb-nav';
 import { usePrayerAudio } from '@/hooks/use-prayer-audio';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { VoiceInputButton } from '@/components/VoiceInputButton';
+import { ListenButton } from '@/components/ListenButton';
 
 interface Prayer {
   id: string;
@@ -474,18 +475,14 @@ const PrayerJournal = () => {
                             </span>
                           </div>
                           <div className="flex gap-2">
-                            <Button
+                            <ListenButton
+                              text={prayer.content || prayer.title}
+                              itemId={`prayer-${prayer.id}`}
+                              title={prayer.title}
+                              showLabel={false}
                               size="sm"
                               variant="outline"
-                              onClick={() => playPrayer(prayer.content || '', prayer.id)}
-                              disabled={audioLoading && currentPrayerId === prayer.id}
-                            >
-                              {audioLoading && currentPrayerId === prayer.id ? (
-                                <Loader2 className="w-4 h-4 animate-spin" />
-                              ) : (
-                                <Volume2 className={`w-4 h-4 ${isPlaying && currentPrayerId === prayer.id ? 'text-sacred' : ''}`} />
-                              )}
-                            </Button>
+                            />
                             {!prayer.answered && (
                               <Button
                                 size="sm"
