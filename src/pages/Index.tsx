@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Heart, Video, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library, Lock, Play, Volume2 } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
 import { MobileQRCode } from "@/components/MobileQRCode";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import logo from "@/assets/sacred-greeks-logo.png";
 import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
 import { ShareDocumentaryDialog } from "@/components/resources/ShareDocumentaryDialog";
@@ -72,10 +73,11 @@ const Index = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="bg-gradient-to-br from-sacred to-sacred/80 rounded-xl p-2 shadow-lg shadow-sacred/20">
-                <img src={logo} alt="Sacred Greeks" className="h-6 w-auto brightness-0 invert" />
+                <img src={logo} alt="Sacred Greeks" className="h-6 w-auto brightness-0 invert" loading="lazy" />
               </div>
             </div>
             <div className="flex items-center gap-3">
+              <ThemeToggle />
               <MobileQRCode />
               {user ? (
                 <Link to="/dashboard">
@@ -122,6 +124,8 @@ const Index = () => {
                     src={logo} 
                     alt="Sacred Greeks" 
                     className="h-20 md:h-24 w-auto" 
+                    loading="lazy"
+                    decoding="async"
                     style={{ filter: 'brightness(0) saturate(100%) invert(38%) sepia(98%) saturate(3032%) hue-rotate(207deg) brightness(98%) contrast(97%)' }} 
                   />
                 </div>
