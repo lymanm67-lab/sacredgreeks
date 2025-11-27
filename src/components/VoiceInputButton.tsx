@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Mic, MicOff } from "lucide-react";
+import { Mic, MicOff, AlertCircle } from "lucide-react";
 import { useVoiceToText } from "@/hooks/use-voice-to-text";
 import { useEffect, useState, useRef } from "react";
 import { cn } from "@/lib/utils";
@@ -9,6 +9,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+
+// Check if speech recognition is supported
+const isSpeechRecognitionSupported = () => {
+  if (typeof window === 'undefined') return false;
+  return 'SpeechRecognition' in window || 'webkitSpeechRecognition' in window;
+};
 
 interface VoiceInputButtonProps {
   onTranscript: (text: string) => void;
@@ -25,6 +31,7 @@ export function VoiceInputButton({
   existingText = "",
   showLabel = false,
 }: VoiceInputButtonProps) {
+  const [isSupported, setIsSupported] = useState(true);
   const { isListening, transcript, toggleListening, clearTranscript } = useVoiceToText({
     onTranscript: (text) => {
       if (appendMode && existingText) {
@@ -35,12 +42,43 @@ export function VoiceInputButton({
     },
   });
 
+  useEffect(() => {
+    setIsSupported(isSpeechRecognitionSupported());
+  }, []);
+
   // Clear transcript when starting a new session
   useEffect(() => {
     if (!isListening) {
       clearTranscript();
     }
   }, [isListening, clearTranscript]);
+
+  // Show unsupported message
+  if (!isSupported) {
+    return (
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              type="button"
+              variant="outline"
+              size={showLabel ? "sm" : "icon"}
+              disabled
+              className={cn("opacity-50", className)}
+            >
+              <span className="flex items-center gap-2">
+                <Mic className="w-4 h-4" />
+                {showLabel && <span>Voice</span>}
+              </span>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent className="max-w-[200px]">
+            <p className="text-xs">Voice input not supported on this browser. Try Chrome on Android or desktop.</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    );
+  }
 
   return (
     <TooltipProvider>
@@ -145,6 +183,7 @@ export function VoiceRecordingButton({
   placeholder = "Your words will appear here as you speak...",
 }: VoiceRecordingButtonProps) {
   const [liveText, setLiveText] = useState("");
+  const [isSupported, setIsSupported] = useState(true);
   const liveTextRef = useRef("");
   
   const { isListening, toggleListening, clearTranscript } = useVoiceToText({
@@ -161,6 +200,10 @@ export function VoiceRecordingButton({
   });
 
   useEffect(() => {
+    setIsSupported(isSpeechRecognitionSupported());
+  }, []);
+
+  useEffect(() => {
     if (!isListening) {
       // Keep the text visible briefly after stopping
       setTimeout(() => {
@@ -174,6 +217,24 @@ export function VoiceRecordingButton({
       liveTextRef.current = "";
     }
   }, [isListening, clearTranscript]);
+
+  // Show unsupported message
+  if (!isSupported) {
+    return (
+      <div className={cn("flex flex-col items-center gap-4", className)}>
+        <div className="relative w-20 h-20 rounded-full flex items-center justify-center bg-muted text-muted-foreground">
+          <Mic className="w-8 h-8 opacity-50" />
+          <AlertCircle className="absolute -top-1 -right-1 w-6 h-6 text-amber-500" />
+        </div>
+        <div className="text-center max-w-xs">
+          <p className="text-sm font-medium text-muted-foreground">Voice Input Unavailable</p>
+          <p className="text-xs text-muted-foreground mt-1">
+            Voice recording isn't supported on this browser. For the best experience, use Chrome on Android or desktop.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={cn("flex flex-col items-center gap-4", className)}>
