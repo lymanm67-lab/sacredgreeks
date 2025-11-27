@@ -51,10 +51,17 @@ import FMMPAAssessment from "./pages/FMMPAAssessment";
 import SharedCertificate from "./pages/SharedCertificate";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
+import HooksTest from "./pages/HooksTest";
 
 const queryClient = new QueryClient();
 
-const App = () => (
+const App = () => {
+  // Early bailout for hooks test - renders before any providers
+  if (typeof window !== 'undefined' && window.location.pathname === '/hooks-test') {
+    return <HooksTest />;
+  }
+
+  return (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
@@ -69,6 +76,7 @@ const App = () => (
               <CookieConsent />
               <AnalyticsProvider>
               <Routes>
+              <Route path="/hooks-test" element={<HooksTest />} />
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/reset-password" element={<ResetPassword />} />
@@ -240,6 +248,7 @@ const App = () => (
       </AuthProvider>
     </QueryClientProvider>
   </ErrorBoundary>
-);
+  );
+};
 
 export default App;
