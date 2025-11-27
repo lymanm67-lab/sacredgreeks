@@ -14,6 +14,7 @@ import { StudyReminderSettings } from "@/components/StudyReminderSettings";
 import { ShareCompletionDialog } from "@/components/study-guide/ShareCompletionDialog";
 import { CertificateDialog } from "@/components/study-guide/CertificateDialog";
 import { AchievementBadgeDialog } from "@/components/AchievementBadgeDialog";
+import { ListenButton } from "@/components/ListenButton";
 
 const StudyGuide = () => {
   const {
@@ -278,6 +279,15 @@ const StudyGuide = () => {
                       Teaching Content
                     </AccordionTrigger>
                     <AccordionContent className="text-muted-foreground space-y-4">
+                      <div className="flex items-center justify-between mb-4 pb-4 border-b border-border">
+                        <span className="text-sm font-medium text-foreground">Listen to this session</span>
+                        <ListenButton
+                          text={session.teaching}
+                          itemId={`teaching-${session.id}`}
+                          title={`Session ${session.id}: ${session.title}`}
+                          voice="onyx"
+                        />
+                      </div>
                       {session.teaching.split('\n\n').map((paragraph, idx) => (
                         <p key={idx}>{paragraph}</p>
                       ))}
