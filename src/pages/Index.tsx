@@ -128,14 +128,15 @@ const Index = () => {
           </p>
 
           {/* Listen Button for Hero */}
-          <div className="flex justify-center pt-2">
+          <div className="flex justify-center pt-4">
             <ListenButton
               text={`Sacred Greeks Life App. You love Jesus. You love your letters. Navigate both with clarity and confidence. ${heroText}`}
               itemId="hero-intro"
               title="Sacred Greeks Introduction"
               voice="onyx"
-              variant="outline"
-              size="sm"
+              variant="secondary"
+              size="default"
+              className="min-h-[44px] min-w-[120px]"
             />
           </div>
 
