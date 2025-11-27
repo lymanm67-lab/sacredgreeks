@@ -129,20 +129,31 @@ const Index = () => {
 
           {/* Listen Button for Hero */}
           <div className="flex justify-center pt-4">
-            <Button
-              variant="outline"
-              size="default"
-              className="min-h-[48px] min-w-[140px] border-2 border-sacred bg-sacred/10 text-sacred hover:bg-sacred/20 font-semibold shadow-sm"
+            <button
+              type="button"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                padding: '12px 24px',
+                fontSize: '16px',
+                fontWeight: 600,
+                color: '#2563eb',
+                backgroundColor: '#dbeafe',
+                border: '2px solid #2563eb',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                WebkitAppearance: 'none',
+                WebkitTapHighlightColor: 'transparent',
+              }}
               onClick={() => {
-                // Will implement listen functionality
-                import('@/hooks/use-text-to-speech').then(({ useTextToSpeech }) => {
-                  // This is just a visual test button for now
-                });
+                console.log('Listen button clicked');
               }}
             >
-              <Volume2 className="w-5 h-5 mr-2" />
+              <Volume2 style={{ width: '20px', height: '20px' }} />
               Listen
-            </Button>
+            </button>
           </div>
 
           {/* Inline Benefits */}
