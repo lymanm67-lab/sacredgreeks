@@ -8,7 +8,7 @@ export function ShareSection() {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
   const appUrl = 'https://www.sacredgreekslife.com';
-  const shareMessage = `A gift for you from Dr. Lyman Montgomery, creator of the Sacred Greeks Life App – the digital companion to "Sacred Not Sinful: A Biblical Response to the Black Greek Letter Organizations Debate." Grow spiritually with daily devotionals, prayer tools, and community support designed for Greek life members and supporters. Join us: ${appUrl}`;
+  const shareMessage = `A gift from Dr. Lyman Montgomery – the Sacred Greeks Life App helps you navigate the tension between Greek life and faith. Features daily devotionals, prayer tools, and Bible study resources to grow spiritually while honoring both your faith and fraternity/sorority. For Greek life members and supporters: ${appUrl}`;
 
   const handleSMSShare = () => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -49,7 +49,7 @@ export function ShareSection() {
       try {
         await navigator.share({
           title: 'Sacred Greeks Life - A Gift from Dr. Lyman Montgomery',
-          text: 'A gift from Dr. Lyman Montgomery – the digital companion to "Sacred Not Sinful: A Biblical Response to the Black Greek Letter Organizations Debate." Grow spiritually with daily devotionals and prayer tools for Greek life members and supporters!',
+          text: 'A gift from Dr. Lyman Montgomery – the Sacred Greeks Life App helps you navigate the tension between Greek life and faith. Daily devotionals, prayer tools & Bible study for Greek life members and supporters!',
           url: appUrl,
         });
       } catch (error) {
