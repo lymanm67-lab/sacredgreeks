@@ -4,9 +4,11 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Users, Copy, MessageSquare, Share2, Gift, Trophy } from 'lucide-react';
 import { useReferral } from '@/hooks/use-referral';
+import { useAuth } from '@/contexts/AuthContext';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export function ReferralCard() {
+  const { user } = useAuth();
   const { 
     referralCode, 
     stats, 
@@ -14,8 +16,7 @@ export function ReferralCard() {
     copyReferralLink, 
     textReferral,
     shareReferral,
-    getReferralLink 
-  } = useReferral();
+  } = useReferral({ userId: user?.id });
 
   if (loading) {
     return (

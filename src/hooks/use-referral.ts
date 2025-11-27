@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 
 interface Referral {
@@ -13,8 +12,11 @@ interface Referral {
   created_at: string;
 }
 
-export function useReferral() {
-  const { user } = useAuth();
+interface UseReferralOptions {
+  userId?: string | null;
+}
+
+export function useReferral(options?: UseReferralOptions) {
   const { toast } = useToast();
   const [referralCode, setReferralCode] = useState<string | null>(null);
   const [referrals, setReferrals] = useState<Referral[]>([]);
@@ -26,18 +28,19 @@ export function useReferral() {
     totalPoints: 0,
   });
 
+  const userId = options?.userId;
+
   const fetchReferralData = useCallback(async () => {
-    if (!user) {
+    if (!userId) {
       setLoading(false);
       return;
     }
 
     try {
-      // Fetch user's referrals
       const { data: referralData, error } = await supabase
         .from('referrals')
         .select('*')
-        .eq('referrer_id', user.id)
+        .eq('referrer_id', userId)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -46,7 +49,6 @@ export function useReferral() {
         setReferrals(referralData);
         setReferralCode(referralData[0].referral_code);
         
-        // Calculate stats
         const successful = referralData.filter(r => r.status === 'converted').length;
         const pending = referralData.filter(r => r.status === 'pending').length;
         const totalPoints = referralData.reduce((sum, r) => sum + r.reward_earned, 0);
@@ -58,7 +60,6 @@ export function useReferral() {
           totalPoints,
         });
       } else {
-        // Generate a new referral code if none exists
         await generateReferralCode();
       }
     } catch (error) {
@@ -66,25 +67,23 @@ export function useReferral() {
     } finally {
       setLoading(false);
     }
-  }, [user]);
+  }, [userId]);
 
   const generateReferralCode = async () => {
-    if (!user) return null;
+    if (!userId) return null;
 
     try {
-      // Generate a unique code
       const { data: codeData, error: codeError } = await supabase
         .rpc('generate_referral_code');
 
       if (codeError) throw codeError;
 
-      const newCode = codeData || `SG${user.id.slice(0, 6).toUpperCase()}`;
+      const newCode = codeData || `SG${userId.slice(0, 6).toUpperCase()}`;
 
-      // Create the referral entry
       const { data, error } = await supabase
         .from('referrals')
         .insert({
-          referrer_id: user.id,
+          referrer_id: userId,
           referral_code: newCode,
           status: 'pending',
           reward_earned: 0,
