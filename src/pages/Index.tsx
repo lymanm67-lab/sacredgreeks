@@ -388,23 +388,18 @@ const Index = () => {
                 navigating fraternity and sorority membership.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 flex-wrap">
-                <Button 
-                  size="lg" 
-                  className="bg-sacred hover:bg-sacred/90 text-sacred-foreground w-full sm:w-auto"
-                  onClick={() => openExternalLink("https://www.unmaskinghopethemovie.com/")}
-                >
-                  <Video className="w-5 h-5 mr-2" />
-                  Watch Now
-                </Button>
                 <ExternalContentModal
                   url="https://player.vimeo.com/video/781211329"
-                  title="Unmasking Hope - Trailer"
-                  description="Watch the trailer for the Unmasking Hope documentary exploring faith, identity, and redemption in Greek life."
+                  title="Unmasking Hope"
+                  description="Watch the powerful documentary exploring faith, identity, and redemption in Greek life."
                   category="Documentary"
                   trigger={
-                    <Button size="lg" variant="outline" className="w-full sm:w-auto">
+                    <Button 
+                      size="lg" 
+                      className="bg-sacred hover:bg-sacred/90 text-sacred-foreground w-full sm:w-auto"
+                    >
                       <Video className="w-5 h-5 mr-2" />
-                      Watch Trailer
+                      Watch Now
                       <Play className="w-4 h-4 ml-2" />
                     </Button>
                   }
@@ -416,6 +411,14 @@ const Index = () => {
                     </Button>
                   }
                 />
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="w-full sm:w-auto"
+                  onClick={() => openExternalLink("https://www.unmaskinghopethemovie.com/")}
+                >
+                  Visit Website
+                </Button>
                 <Link to="/resources">
                   <Button size="lg" variant="outline" className="w-full sm:w-auto">
                     Explore Resources
@@ -424,23 +427,28 @@ const Index = () => {
               </div>
             </div>
             
-            <Card className="overflow-hidden shadow-xl">
-              <CardContent className="p-0">
-                <div 
-                  onClick={() => openExternalLink("https://www.unmaskinghopethemovie.com/")}
-                  className="block relative group cursor-pointer"
-                >
-                  <div className="aspect-video bg-gradient-to-br from-sacred to-warm-blue flex items-center justify-center relative overflow-hidden">
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
-                    <Video className="w-20 h-20 text-white relative z-10 group-hover:scale-110 transition-transform" />
-                    <div className="absolute bottom-4 left-4 right-4 z-10">
-                      <p className="text-white font-semibold text-lg">Unmasking Hope</p>
-                      <p className="text-white/80 text-sm">Official Documentary</p>
+            <ExternalContentModal
+              url="https://player.vimeo.com/video/781211329"
+              title="Unmasking Hope"
+              description="Watch the powerful documentary exploring faith, identity, and redemption in Greek life."
+              category="Documentary"
+              trigger={
+                <Card className="overflow-hidden shadow-xl cursor-pointer">
+                  <CardContent className="p-0">
+                    <div className="block relative group">
+                      <div className="aspect-video bg-gradient-to-br from-sacred to-warm-blue flex items-center justify-center relative overflow-hidden">
+                        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
+                        <Play className="w-20 h-20 text-white relative z-10 group-hover:scale-110 transition-transform" />
+                        <div className="absolute bottom-4 left-4 right-4 z-10">
+                          <p className="text-white font-semibold text-lg">Unmasking Hope</p>
+                          <p className="text-white/80 text-sm">Click to Watch Documentary</p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                  </CardContent>
+                </Card>
+              }
+            />
           </div>
         </div>
       </div>
