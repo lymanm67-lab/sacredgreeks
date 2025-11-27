@@ -93,14 +93,7 @@ const App = () => (
                   </ProtectedRoute>
                 }
               />
-              <Route
-                path="/guide"
-                element={
-                  <ProtectedRoute>
-                    <Guide />
-                  </ProtectedRoute>
-                }
-              />
+              <Route path="/guide" element={<Guide />} />
               <Route
                 path="/dashboard"
                 element={
