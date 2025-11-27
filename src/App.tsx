@@ -50,6 +50,8 @@ import BetaOnboarding from "./pages/BetaOnboarding";
 import ReferralDashboard from "./pages/ReferralDashboard";
 import FMMPAAssessment from "./pages/FMMPAAssessment";
 import SharedCertificate from "./pages/SharedCertificate";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 
 const queryClient = new QueryClient();
 
@@ -74,6 +76,8 @@ const App = () => (
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/privacy" element={<Privacy />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms-of-service" element={<TermsOfService />} />
               <Route path="/install" element={<Install />} />
                <Route path="/shared/:token" element={<SharedResult />} />
                <Route path="/study" element={<StudyGuide />} />
