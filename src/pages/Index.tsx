@@ -334,16 +334,16 @@ const Index = () => {
               Unmasking Hope
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              A powerful documentary exploring faith, identity, and redemption in Greek life
+              Powerful stories of overcoming trauma through faith, healing, and redemption
             </p>
           </div>
           
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="space-y-6">
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Journey through the powerful intersection of faith, Greek life, and personal transformation. 
-                This documentary reveals authentic stories of hope, healing, and redemption for Christians 
-                navigating fraternity and sorority membership.
+                Journey through authentic personal stories of hope, healing, and transformation. 
+                This documentary reveals the power of faith in overcoming trauma and finding redemption, 
+                featuring real testimonies of those who have found healing through their spiritual journey.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <a 
@@ -354,18 +354,7 @@ const Index = () => {
                 >
                   <Button size="lg" className="bg-sacred hover:bg-sacred/90 text-sacred-foreground w-full sm:w-auto">
                     <Video className="w-5 h-5 mr-2" />
-                    Watch Now
-                  </Button>
-                </a>
-                <a 
-                  href="https://vimeo.com/781211329?fl=pl&fe=sh" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-block"
-                >
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                    <Video className="w-5 h-5 mr-2" />
-                    Watch Trailer
+                    Watch Full Documentary
                   </Button>
                 </a>
                 <ShareDocumentaryDialog 
@@ -385,31 +374,18 @@ const Index = () => {
             
             <Card className="overflow-hidden shadow-xl">
               <CardContent className="p-0">
-                <a 
-                  href="https://www.unmaskinghopethemovie.com/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="block relative group"
-                >
-                  <div className="aspect-video bg-gradient-to-br from-sacred to-warm-blue flex items-center justify-center relative overflow-hidden">
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
-                    <Video className="w-20 h-20 text-white relative z-10 group-hover:scale-110 transition-transform" />
-                    <div className="absolute bottom-4 left-4 right-4 z-10">
-                      <p className="text-white font-semibold text-lg">Unmasking Hope</p>
-                      <p className="text-white/80 text-sm">Official Documentary</p>
-                    </div>
-                  </div>
-                </a>
+                <div className="aspect-video">
+                  <iframe
+                    src="https://player.vimeo.com/video/781211329?title=0&byline=0&portrait=0"
+                    className="w-full h-full"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    allowFullScreen
+                    title="Unmasking Hope Trailer"
+                  />
+                </div>
               </CardContent>
             </Card>
           </div>
-        </div>
-      </div>
-
-      {/* Documentary Awards & Reviews */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-6xl mx-auto">
-          <DocumentaryAwardsSection />
         </div>
       </div>
 
