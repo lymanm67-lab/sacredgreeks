@@ -29,6 +29,7 @@ import { useAutoCompleteChallenge } from '@/hooks/use-auto-complete-challenge';
 import { BreadcrumbNav } from '@/components/ui/breadcrumb-nav';
 import { usePrayerAudio } from '@/hooks/use-prayer-audio';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { VoiceInputButton } from '@/components/VoiceInputButton';
 
 interface Prayer {
   id: string;
@@ -52,6 +53,7 @@ const PrayerJournal = () => {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('all');
   const [filterType, setFilterType] = useState<string>('all');
+  const [prayerContent, setPrayerContent] = useState('');
   const { toast } = useToast();
   const { playPrayer, isPlaying, isLoading: audioLoading, currentPrayerId } = usePrayerAudio();
 
@@ -174,6 +176,7 @@ const PrayerJournal = () => {
       setDialogOpen(false);
       loadPrayers();
       (e.target as HTMLFormElement).reset();
+      setPrayerContent('');
     } catch (error) {
       if (error instanceof Error) {
         toast({
@@ -358,13 +361,22 @@ const PrayerJournal = () => {
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="content">Prayer</Label>
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="content">Prayer</Label>
+                      <VoiceInputButton
+                        onTranscript={setPrayerContent}
+                        existingText={prayerContent}
+                        appendMode={true}
+                      />
+                    </div>
                     <Textarea
                       id="content"
                       name="content"
-                      placeholder="Write your prayer..."
+                      placeholder="Write your prayer... (or tap the mic to dictate)"
                       rows={6}
                       required
+                      value={prayerContent}
+                      onChange={(e) => setPrayerContent(e.target.value)}
                     />
                   </div>
                   <Button type="submit" className="w-full bg-sacred hover:bg-sacred/90">

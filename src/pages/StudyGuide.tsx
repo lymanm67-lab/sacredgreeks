@@ -15,6 +15,7 @@ import { ShareCompletionDialog } from "@/components/study-guide/ShareCompletionD
 import { CertificateDialog } from "@/components/study-guide/CertificateDialog";
 import { AchievementBadgeDialog } from "@/components/AchievementBadgeDialog";
 import { ListenButton } from "@/components/ListenButton";
+import { VoiceInputButton } from "@/components/VoiceInputButton";
 
 const StudyGuide = () => {
   const {
@@ -306,12 +307,21 @@ const StudyGuide = () => {
                               {idx + 1}. {question}?
                             </p>
                             {isAuthenticated ? (
-                              <Textarea
-                                placeholder="Write your answer here..."
-                                className="min-h-[120px] resize-none bg-muted/50"
-                                value={answersState[`${session.id}-${idx}`] || ""}
-                                onChange={(e) => handleAnswerChange(session.id, idx, e.target.value)}
-                              />
+                              <div className="space-y-2">
+                                <div className="flex justify-end">
+                                  <VoiceInputButton
+                                    onTranscript={(text) => handleAnswerChange(session.id, idx, text)}
+                                    existingText={answersState[`${session.id}-${idx}`] || ""}
+                                    appendMode={true}
+                                  />
+                                </div>
+                                <Textarea
+                                  placeholder="Write your answer here... (or tap the mic to dictate)"
+                                  className="min-h-[120px] resize-none bg-muted/50"
+                                  value={answersState[`${session.id}-${idx}`] || ""}
+                                  onChange={(e) => handleAnswerChange(session.id, idx, e.target.value)}
+                                />
+                              </div>
                             ) : (
                               <div className="bg-muted/30 border border-dashed border-muted-foreground/30 rounded-lg p-6 text-center">
                                 <p className="text-sm text-muted-foreground">
@@ -354,11 +364,22 @@ const StudyGuide = () => {
                       </AccordionTrigger>
                       <AccordionContent>
                         <div className="space-y-4">
-                          <p className="text-sm text-muted-foreground">
-                            Write your personal thoughts, insights, and reflections from this session. Your notes are private and saved automatically.
-                          </p>
+                          <div className="flex items-center justify-between">
+                            <p className="text-sm text-muted-foreground">
+                              Write your personal thoughts, insights, and reflections from this session. Your notes are private and saved automatically.
+                            </p>
+                            <VoiceInputButton
+                              onTranscript={(text) => handleNotesChange(session.id, text)}
+                              existingText={
+                                notesState[session.id] !== undefined
+                                  ? notesState[session.id]
+                                  : getSessionNotes(session.id)
+                              }
+                              appendMode={true}
+                            />
+                          </div>
                           <Textarea
-                            placeholder="Share your reflections, questions, or key takeaways from this session..."
+                            placeholder="Share your reflections, questions, or key takeaways from this session... (or tap the mic to dictate)"
                             className="min-h-[200px] resize-none"
                             value={
                               notesState[session.id] !== undefined

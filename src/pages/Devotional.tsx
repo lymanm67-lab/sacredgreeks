@@ -16,6 +16,7 @@ import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
 import { useAutoCompleteChallenge } from '@/hooks/use-auto-complete-challenge';
 import { BreadcrumbNav } from '@/components/ui/breadcrumb-nav';
 import { ListenButton } from '@/components/ListenButton';
+import { VoiceInputButton } from '@/components/VoiceInputButton';
 
 interface Devotional {
   id: string;
@@ -311,12 +312,19 @@ const Devotional = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label htmlFor="devotional-notes" className="text-sm text-muted-foreground">
-                    Write your personal reflections, prayers, or insights from today&apos;s devotional
-                  </Label>
+                  <div className="flex items-center justify-between mb-2">
+                    <Label htmlFor="devotional-notes" className="text-sm text-muted-foreground">
+                      Write your personal reflections, prayers, or insights from today&apos;s devotional
+                    </Label>
+                    <VoiceInputButton
+                      onTranscript={setNotes}
+                      existingText={notes}
+                      appendMode={true}
+                    />
+                  </div>
                   <Textarea
                     id="devotional-notes"
-                    placeholder="What is God speaking to you today? How will you apply this to your life?"
+                    placeholder="What is God speaking to you today? How will you apply this to your life? (or tap the mic to dictate)"
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     rows={6}
