@@ -22,6 +22,7 @@ import {
 import { toast } from 'sonner';
 import { useGamification } from '@/hooks/use-gamification';
 import { useAutoCompleteChallenge } from '@/hooks/use-auto-complete-challenge';
+import { VoiceInputButton } from '@/components/VoiceInputButton';
 
 interface CreatePrayerRequestDialogProps {
   open: boolean;
@@ -103,10 +104,17 @@ export function CreatePrayerRequestDialog({
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="title">Prayer Request Title *</Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="title">Prayer Request Title *</Label>
+              <VoiceInputButton
+                onTranscript={setTitle}
+                existingText={title}
+                appendMode={false}
+              />
+            </div>
             <Input
               id="title"
-              placeholder="e.g., Guidance in Career Decision"
+              placeholder="e.g., Guidance in Career Decision (or tap mic to speak)"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               maxLength={100}
@@ -115,10 +123,17 @@ export function CreatePrayerRequestDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">Details (Optional)</Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="description">Details (Optional)</Label>
+              <VoiceInputButton
+                onTranscript={setDescription}
+                existingText={description}
+                appendMode={true}
+              />
+            </div>
             <Textarea
               id="description"
-              placeholder="Share more details about your prayer request..."
+              placeholder="Share more details about your prayer request... (or tap mic to speak)"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={4}
