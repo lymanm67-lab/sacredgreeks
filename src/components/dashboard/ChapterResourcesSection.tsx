@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { SuggestResourceDialog } from '@/components/resources/SuggestResourceDialog';
-import { Users, Heart, BookOpen, ExternalLink, Search, ArrowUpDown, HandHeart } from 'lucide-react';
+import { Users, Heart, BookOpen, ExternalLink, Search, ArrowUpDown, HandHeart, Library } from 'lucide-react';
 
 const chapterResources = [
   {
@@ -219,47 +220,58 @@ export const ChapterResourcesSection = () => {
             No resources found matching your search.
           </div>
         ) : (
-          <div className="grid gap-4 md:grid-cols-3">
-          {sortedResources.map((resource, index) => {
-            const Icon = resource.icon;
-            return (
-              <div key={index} className="p-4 border rounded-lg hover:bg-muted/50 transition-colors">
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-full bg-warm-blue/10 flex items-center justify-center flex-shrink-0">
-                    <Icon className="w-5 h-5 text-warm-blue" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-semibold text-sm">{resource.title}</h3>
-                      <span className="text-xs px-2 py-0.5 rounded bg-warm-blue/10 text-warm-blue">
-                        {resource.category}
-                      </span>
+          <>
+            <div className="grid gap-4 md:grid-cols-3">
+              {sortedResources.map((resource, index) => {
+                const Icon = resource.icon;
+                return (
+                  <div key={index} className="p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-full bg-warm-blue/10 flex items-center justify-center flex-shrink-0">
+                        <Icon className="w-5 h-5 text-warm-blue" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <h3 className="font-semibold text-sm">{resource.title}</h3>
+                          <span className="text-xs px-2 py-0.5 rounded bg-warm-blue/10 text-warm-blue">
+                            {resource.category}
+                          </span>
+                        </div>
+                        <p className="text-xs text-muted-foreground mb-3 line-clamp-2">
+                          {resource.description}
+                        </p>
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          asChild
+                          className="w-full"
+                        >
+                          <a 
+                            href={resource.url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2"
+                          >
+                            View Resource
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        </Button>
+                      </div>
                     </div>
-                    <p className="text-xs text-muted-foreground mb-3 line-clamp-2">
-                      {resource.description}
-                    </p>
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      asChild
-                      className="w-full"
-                    >
-                      <a 
-                        href={resource.url} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2"
-                      >
-                        View Resource
-                        <ExternalLink className="w-3 h-3" />
-                      </a>
-                    </Button>
                   </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                );
+              })}
+            </div>
+            
+            <div className="mt-6 pt-6 border-t flex justify-center">
+              <Button variant="outline" asChild>
+                <Link to="/resources" className="flex items-center gap-2">
+                  <Library className="w-4 h-4" />
+                  View All Resources
+                </Link>
+              </Button>
+            </div>
+          </>
         )}
       </CardContent>
     </Card>
