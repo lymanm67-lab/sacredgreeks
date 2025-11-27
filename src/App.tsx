@@ -1,9 +1,9 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -13,39 +13,63 @@ import { AnalyticsProvider } from "@/components/AnalyticsProvider";
 import { AIAssistantWidget } from "@/components/AIAssistantWidget";
 import { OfflineIndicator } from "@/components/ui/OfflineIndicator";
 import { CelebrationProvider } from "@/contexts/CelebrationContext";
-import Index from "./pages/Index";
-import Privacy from "./pages/Privacy";
-import Auth from "./pages/Auth";
-import Dashboard from "./pages/Dashboard";
-import Devotional from "./pages/Devotional";
-import PrayerJournal from "./pages/PrayerJournal";
-import PrayerWall from "./pages/PrayerWall";
-import AssessmentHistory from "./pages/AssessmentHistory";
-import Profile from "./pages/Profile";
-import ResetPassword from "./pages/ResetPassword";
-import FAQ from "./pages/FAQ";
-import Bookmarks from "./pages/Bookmarks";
-import Guide from "./pages/Guide";
-import Admin from "./pages/Admin";
-import NotFound from "./pages/NotFound";
-import Progress from "./pages/Progress";
-import SharedResult from "./pages/SharedResult";
-import Install from "./pages/Install";
-import BibleStudy from "./pages/BibleStudy";
-import ServiceTracker from "./pages/ServiceTracker";
-import StudyGuide from "./pages/StudyGuide";
-import Podcast from "./pages/Podcast";
-import Achievements from "./pages/Achievements";
-import DidYouKnow from "./pages/DidYouKnow";
-import OfflineSettings from "./pages/OfflineSettings";
-import ArticleLibrary from "./pages/ArticleLibrary";
-import PrayerGuide from "./pages/PrayerGuide";
-import QRCodePage from "./pages/QRCode";
-import Resources from "./pages/Resources";
-import About from "./pages/About";
-import PodcastAppearances from "./pages/PodcastAppearances";
+import { Loader2 } from "lucide-react";
 
-const queryClient = new QueryClient();
+// Eager load critical pages
+import Index from "./pages/Index";
+import Auth from "./pages/Auth";
+
+// Lazy load non-critical pages for better performance
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Devotional = lazy(() => import("./pages/Devotional"));
+const PrayerJournal = lazy(() => import("./pages/PrayerJournal"));
+const PrayerWall = lazy(() => import("./pages/PrayerWall"));
+const AssessmentHistory = lazy(() => import("./pages/AssessmentHistory"));
+const Profile = lazy(() => import("./pages/Profile"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword"));
+const FAQ = lazy(() => import("./pages/FAQ"));
+const Bookmarks = lazy(() => import("./pages/Bookmarks"));
+const Guide = lazy(() => import("./pages/Guide"));
+const Admin = lazy(() => import("./pages/Admin"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const Progress = lazy(() => import("./pages/Progress"));
+const SharedResult = lazy(() => import("./pages/SharedResult"));
+const Install = lazy(() => import("./pages/Install"));
+const BibleStudy = lazy(() => import("./pages/BibleStudy"));
+const ServiceTracker = lazy(() => import("./pages/ServiceTracker"));
+const StudyGuide = lazy(() => import("./pages/StudyGuide"));
+const Podcast = lazy(() => import("./pages/Podcast"));
+const Achievements = lazy(() => import("./pages/Achievements"));
+const DidYouKnow = lazy(() => import("./pages/DidYouKnow"));
+const OfflineSettings = lazy(() => import("./pages/OfflineSettings"));
+const ArticleLibrary = lazy(() => import("./pages/ArticleLibrary"));
+const PrayerGuide = lazy(() => import("./pages/PrayerGuide"));
+const QRCodePage = lazy(() => import("./pages/QRCode"));
+const Resources = lazy(() => import("./pages/Resources"));
+const About = lazy(() => import("./pages/About"));
+const PodcastAppearances = lazy(() => import("./pages/PodcastAppearances"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+
+// Loading fallback component
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center bg-background">
+    <div className="flex flex-col items-center gap-4">
+      <Loader2 className="w-8 h-8 animate-spin text-sacred" />
+      <p className="text-muted-foreground text-sm">Loading...</p>
+    </div>
+  </div>
+);
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      gcTime: 1000 * 60 * 30, // 30 minutes (formerly cacheTime)
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const App = () => (
   <ErrorBoundary>
@@ -61,144 +85,146 @@ const App = () => (
             <BrowserRouter>
               <CookieConsent />
               <AnalyticsProvider>
-              <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/reset-password" element={<ResetPassword />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/install" element={<Install />} />
-              <Route path="/shared/:token" element={<SharedResult />} />
-              <Route path="/study" element={<StudyGuide />} />
-              <Route path="/podcast" element={<Podcast />} />
-              <Route path="/podcast-appearances" element={<PodcastAppearances />} />
-              <Route path="/did-you-know" element={<DidYouKnow />} />
-               <Route path="/articles" element={<ArticleLibrary />} />
-               <Route path="/qr-code" element={<QRCodePage />} />
-               <Route path="/resources" element={<Resources />} />
-               <Route path="/about" element={<About />} />
-              <Route
-                path="/prayer-guide"
-                element={
-                  <ProtectedRoute>
-                    <PrayerGuide />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/achievements"
-                element={
-                  <ProtectedRoute>
-                    <Achievements />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="/guide" element={<Guide />} />
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/devotional"
-                element={
-                  <ProtectedRoute>
-                    <Devotional />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/prayer-journal"
-                element={
-                  <ProtectedRoute>
-                    <PrayerJournal />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/prayer-wall"
-                element={
-                  <ProtectedRoute>
-                    <PrayerWall />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/assessment-history"
-                element={
-                  <ProtectedRoute>
-                    <AssessmentHistory />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/profile"
-                element={
-                  <ProtectedRoute>
-                    <Profile />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/bookmarks"
-                element={
-                  <ProtectedRoute>
-                    <Bookmarks />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/bible-study"
-                element={
-                  <ProtectedRoute>
-                    <BibleStudy />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/offline-settings"
-                element={
-                  <ProtectedRoute>
-                    <OfflineSettings />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/service-tracker"
-                element={
-                  <ProtectedRoute>
-                    <ServiceTracker />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/progress"
-                element={
-                  <ProtectedRoute>
-                    <Progress />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/admin"
-                element={
-                  <ProtectedRoute>
-                    <Admin />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            </AnalyticsProvider>
-          </BrowserRouter>
-        </TooltipProvider>
-      </CelebrationProvider>
-    </AuthProvider>
-  </QueryClientProvider>
-</ErrorBoundary>
+                <Suspense fallback={<PageLoader />}>
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/auth" element={<Auth />} />
+                    <Route path="/reset-password" element={<ResetPassword />} />
+                    <Route path="/faq" element={<FAQ />} />
+                    <Route path="/privacy" element={<Privacy />} />
+                    <Route path="/install" element={<Install />} />
+                    <Route path="/shared/:token" element={<SharedResult />} />
+                    <Route path="/study" element={<StudyGuide />} />
+                    <Route path="/podcast" element={<Podcast />} />
+                    <Route path="/podcast-appearances" element={<PodcastAppearances />} />
+                    <Route path="/did-you-know" element={<DidYouKnow />} />
+                    <Route path="/articles" element={<ArticleLibrary />} />
+                    <Route path="/qr-code" element={<QRCodePage />} />
+                    <Route path="/resources" element={<Resources />} />
+                    <Route path="/about" element={<About />} />
+                    <Route
+                      path="/prayer-guide"
+                      element={
+                        <ProtectedRoute>
+                          <PrayerGuide />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/achievements"
+                      element={
+                        <ProtectedRoute>
+                          <Achievements />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route path="/guide" element={<Guide />} />
+                    <Route
+                      path="/dashboard"
+                      element={
+                        <ProtectedRoute>
+                          <Dashboard />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/devotional"
+                      element={
+                        <ProtectedRoute>
+                          <Devotional />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/prayer-journal"
+                      element={
+                        <ProtectedRoute>
+                          <PrayerJournal />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/prayer-wall"
+                      element={
+                        <ProtectedRoute>
+                          <PrayerWall />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/assessment-history"
+                      element={
+                        <ProtectedRoute>
+                          <AssessmentHistory />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/profile"
+                      element={
+                        <ProtectedRoute>
+                          <Profile />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/bookmarks"
+                      element={
+                        <ProtectedRoute>
+                          <Bookmarks />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/bible-study"
+                      element={
+                        <ProtectedRoute>
+                          <BibleStudy />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/offline-settings"
+                      element={
+                        <ProtectedRoute>
+                          <OfflineSettings />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/service-tracker"
+                      element={
+                        <ProtectedRoute>
+                          <ServiceTracker />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/progress"
+                      element={
+                        <ProtectedRoute>
+                          <Progress />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/admin"
+                      element={
+                        <ProtectedRoute>
+                          <Admin />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </Suspense>
+              </AnalyticsProvider>
+            </BrowserRouter>
+          </TooltipProvider>
+        </CelebrationProvider>
+      </AuthProvider>
+    </QueryClientProvider>
+  </ErrorBoundary>
 );
 
 export default App;
