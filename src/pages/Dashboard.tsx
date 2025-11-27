@@ -38,6 +38,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { ChevronDown } from 'lucide-react';
 import { CategorySection } from '@/components/dashboard/CategorySection';
 import { ShareAppCard } from '@/components/dashboard/ShareAppCard';
+import { ReferralCard } from '@/components/dashboard/ReferralCard';
 import { FeaturedArticle } from '@/components/dashboard/FeaturedArticle';
 import { RecentlyViewed } from '@/components/dashboard/RecentlyViewed';
 
@@ -382,6 +383,11 @@ const Dashboard = () => {
           {/* Share App Card */}
           <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
             <ShareAppCard />
+          </div>
+
+          {/* Referral Card */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.35s' }}>
+            <ReferralCard />
           </div>
 
           {/* Two Column: Getting Started + Gamification */}

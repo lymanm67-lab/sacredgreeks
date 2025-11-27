@@ -17,6 +17,7 @@ import { ScrollProgressIndicator } from "@/components/ui/ScrollProgressIndicator
 import { FloatingCTA } from "@/components/ui/FloatingCTA";
 import { StatsSection } from "@/components/landing/StatsSection";
 import { VideoThumbnail } from "@/components/landing/VideoThumbnail";
+import { ShareSection } from "@/components/landing/ShareSection";
 
 const features = [
   {
@@ -467,6 +468,9 @@ const Index = () => {
 
       {/* Testimonials */}
       <Testimonials />
+
+      {/* Share Section */}
+      <ShareSection />
 
       {/* Final CTA */}
       {!user && (
