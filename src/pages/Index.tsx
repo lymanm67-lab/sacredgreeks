@@ -433,15 +433,26 @@ const Index = () => {
               description="Watch the powerful documentary exploring faith, identity, and redemption in Greek life."
               category="Documentary"
               trigger={
-                <Card className="overflow-hidden shadow-xl cursor-pointer">
+                <Card className="overflow-hidden shadow-xl cursor-pointer hover-lift">
                   <CardContent className="p-0">
                     <div className="block relative group">
-                      <div className="aspect-video bg-gradient-to-br from-sacred to-warm-blue flex items-center justify-center relative overflow-hidden">
-                        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
-                        <Play className="w-20 h-20 text-white relative z-10 group-hover:scale-110 transition-transform" />
+                      <div className="aspect-video relative overflow-hidden">
+                        <img 
+                          src="https://vumbnail.com/781211329.jpg" 
+                          alt="Unmasking Hope Documentary"
+                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+                            <Play className="w-8 h-8 text-sacred ml-1" fill="currentColor" />
+                          </div>
+                        </div>
                         <div className="absolute bottom-4 left-4 right-4 z-10">
-                          <p className="text-white font-semibold text-lg">Unmasking Hope</p>
-                          <p className="text-white/80 text-sm">Click to Watch Documentary</p>
+                          <p className="text-white font-semibold text-lg drop-shadow-lg">Unmasking Hope</p>
+                          <p className="text-white/90 text-sm drop-shadow">Click to Watch Documentary</p>
                         </div>
                       </div>
                     </div>
