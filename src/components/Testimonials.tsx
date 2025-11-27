@@ -42,7 +42,7 @@ export const Testimonials = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12 animate-fade-in">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              What Others are Saying…
+              What Others Are Saying…
             </h2>
             <p className="text-xl text-muted-foreground">
               Real people finding biblical clarity and peace
