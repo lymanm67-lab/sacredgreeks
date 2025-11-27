@@ -58,11 +58,13 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      react: path.resolve(__dirname, "node_modules/react"),
+      "react-dom": path.resolve(__dirname, "node_modules/react-dom"),
     },
-    dedupe: ['react', 'react-dom'],
+    dedupe: ["react", "react-dom", "scheduler"],
   },
   optimizeDeps: {
-    include: ['react', 'react-dom'],
-    force: true,
+    include: ["react", "react-dom"],
+    exclude: ["@radix-ui/react-tooltip", "@radix-ui/react-hover-card"],
   },
 }));
