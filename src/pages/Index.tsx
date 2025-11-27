@@ -13,6 +13,10 @@ import { ShareDocumentaryDialog } from "@/components/resources/ShareDocumentaryD
 import { DocumentaryAwardsSection } from "@/components/resources/DocumentaryAwardsSection";
 import { ListenButton } from "@/components/ListenButton";
 import { useExternalLinks } from "@/hooks/use-external-links";
+import { ScrollProgressIndicator } from "@/components/ui/ScrollProgressIndicator";
+import { FloatingCTA } from "@/components/ui/FloatingCTA";
+import { StatsSection } from "@/components/landing/StatsSection";
+import { VideoThumbnail } from "@/components/landing/VideoThumbnail";
 
 const features = [
   {
@@ -67,6 +71,12 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/20">
+      {/* Scroll Progress Indicator */}
+      <ScrollProgressIndicator />
+      
+      {/* Floating CTA for non-authenticated users */}
+      {!user && <FloatingCTA scrollThreshold={600} />}
+      
       {/* Header with Auth */}
       <header className="border-b border-border/50 bg-background/80 backdrop-blur-lg sticky top-0 z-50">
         <div className="container mx-auto px-4 py-3">
@@ -189,13 +199,13 @@ const Index = () => {
           {!user && (
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
               <Link to="/auth">
-                <Button size="lg" className="bg-sacred hover:bg-sacred/90 text-sacred-foreground text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all">
+                <Button size="lg" className="bg-sacred hover:bg-sacred/90 text-sacred-foreground text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all btn-bounce hover:scale-105">
                   Start Your Journey Free
-                  <ArrowRight className="w-5 h-5 ml-2" />
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
               <Link to="/guide">
-                <Button size="lg" variant="outline" className="text-lg px-8 py-6">
+                <Button size="lg" variant="outline" className="text-lg px-8 py-6 btn-bounce hover:scale-105">
                   Handle BGLO Objections
                 </Button>
               </Link>
@@ -222,6 +232,9 @@ const Index = () => {
         </div>
       </div>
     </div>
+
+      {/* Stats Section */}
+      {!user && <StatsSection />}
 
       {/* Benefits Section */}
       {!user && (
@@ -275,14 +288,14 @@ const Index = () => {
                     description={feature.description}
                     trigger={
                       <div className="cursor-pointer">
-                        <Card className="h-full transition-all hover:shadow-lg hover:scale-105 border-2 hover:border-sacred/50 cursor-pointer group animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+                        <Card className="h-full transition-all hover:shadow-lg hover:scale-105 border-2 hover:border-sacred/50 cursor-pointer group animate-fade-in card-glow" style={{ animationDelay: `${index * 0.1}s` }}>
                           <CardHeader className="space-y-4">
                             <div className="flex items-start justify-between">
-                              <div className="w-14 h-14 rounded-lg bg-muted flex items-center justify-center group-hover:bg-sacred/10 transition-colors">
+                              <div className="w-14 h-14 rounded-lg bg-muted flex items-center justify-center group-hover:bg-sacred/10 group-hover:scale-110 transition-all">
                                 <feature.icon className={`w-7 h-7 ${feature.color}`} />
                               </div>
                             </div>
-                            <CardTitle className="text-xl">
+                            <CardTitle className="text-xl group-hover:text-sacred transition-colors">
                               {feature.title}
                             </CardTitle>
                           </CardHeader>
@@ -306,14 +319,14 @@ const Index = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <Card className="h-full transition-all hover:shadow-lg hover:scale-105 border-2 hover:border-sacred/50 cursor-pointer group animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+                    <Card className="h-full transition-all hover:shadow-lg hover:scale-105 border-2 hover:border-sacred/50 cursor-pointer group animate-fade-in card-glow" style={{ animationDelay: `${index * 0.1}s` }}>
                       <CardHeader className="space-y-4">
                         <div className="flex items-start justify-between">
-                          <div className="w-14 h-14 rounded-lg bg-muted flex items-center justify-center group-hover:bg-sacred/10 transition-colors">
+                          <div className="w-14 h-14 rounded-lg bg-muted flex items-center justify-center group-hover:bg-sacred/10 group-hover:scale-110 transition-all">
                             <feature.icon className={`w-7 h-7 ${feature.color}`} />
                           </div>
                         </div>
-                        <CardTitle className="text-xl">
+                        <CardTitle className="text-xl group-hover:text-sacred transition-colors">
                           {feature.title}
                         </CardTitle>
                       </CardHeader>
@@ -329,10 +342,10 @@ const Index = () => {
               
               return (
                 <Link key={feature.title} to={user ? feature.link : "/auth"}>
-                  <Card className={`h-full transition-all hover:shadow-lg hover:scale-105 border-2 hover:border-sacred/50 cursor-pointer group animate-fade-in ${showLockBadge ? 'relative' : ''}`} style={{ animationDelay: `${index * 0.1}s` }}>
+                  <Card className={`h-full transition-all hover:shadow-lg hover:scale-105 border-2 hover:border-sacred/50 cursor-pointer group animate-fade-in card-glow ${showLockBadge ? 'relative' : ''}`} style={{ animationDelay: `${index * 0.1}s` }}>
                     <CardHeader className="space-y-4">
                       <div className="flex items-start justify-between">
-                        <div className="w-14 h-14 rounded-lg bg-muted flex items-center justify-center group-hover:bg-sacred/10 transition-colors">
+                        <div className="w-14 h-14 rounded-lg bg-muted flex items-center justify-center group-hover:bg-sacred/10 group-hover:scale-110 transition-all">
                           <feature.icon className={`w-7 h-7 ${feature.color}`} />
                         </div>
                         {showLockBadge && (
@@ -342,7 +355,7 @@ const Index = () => {
                           </Badge>
                         )}
                       </div>
-                      <CardTitle className="text-xl">
+                      <CardTitle className="text-xl group-hover:text-sacred transition-colors">
                         {feature.title}
                       </CardTitle>
                     </CardHeader>
@@ -433,31 +446,12 @@ const Index = () => {
               description="Watch the powerful documentary exploring faith, identity, and redemption in Greek life."
               category="Documentary"
               trigger={
-                <Card className="overflow-hidden shadow-xl cursor-pointer hover-lift">
-                  <CardContent className="p-0">
-                    <div className="block relative group">
-                      <div className="aspect-video relative overflow-hidden">
-                        <img 
-                          src="https://vumbnail.com/781211329.jpg" 
-                          alt="Unmasking Hope Documentary"
-                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
-                            <Play className="w-8 h-8 text-sacred ml-1" fill="currentColor" />
-                          </div>
-                        </div>
-                        <div className="absolute bottom-4 left-4 right-4 z-10">
-                          <p className="text-white font-semibold text-lg drop-shadow-lg">Unmasking Hope</p>
-                          <p className="text-white/90 text-sm drop-shadow">Click to Watch Documentary</p>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                <VideoThumbnail
+                  thumbnailUrl="https://vumbnail.com/781211329.jpg"
+                  title="Unmasking Hope"
+                  subtitle="Click to Watch Documentary"
+                  duration="45:00"
+                />
               }
             />
           </div>
@@ -488,9 +482,9 @@ const Index = () => {
             </CardHeader>
             <CardContent className="flex justify-center pb-8">
               <Link to="/auth">
-                <Button size="lg" className="bg-sacred hover:bg-sacred/90 text-sacred-foreground text-lg px-10 py-6 shadow-lg hover:shadow-xl transition-all">
+                <Button size="lg" className="bg-sacred hover:bg-sacred/90 text-sacred-foreground text-lg px-10 py-6 shadow-lg hover:shadow-xl transition-all btn-bounce hover:scale-105 group">
                   Create Your Free Account
-                  <ArrowRight className="w-5 h-5 ml-2" />
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
             </CardContent>
