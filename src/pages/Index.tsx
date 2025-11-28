@@ -17,6 +17,7 @@ import { ListenButton } from "@/components/ListenButton";
 import { ScrollProgressIndicator } from "@/components/ui/ScrollProgressIndicator";
 import { FloatingCTA } from "@/components/ui/FloatingCTA";
 import { FloatingParticles } from "@/components/ui/FloatingParticles";
+import { ScrollIndicator } from "@/components/ui/ScrollIndicator";
 import { StatsSection } from "@/components/landing/StatsSection";
 import { ShareSection } from "@/components/landing/ShareSection";
 
@@ -419,6 +420,11 @@ const Index = () => {
             Install on your phone for the best experience
             <ArrowRight className="w-4 h-4" />
           </Link>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="mt-12 flex justify-center">
+          <ScrollIndicator targetId="core-features" />
         </div>
       </div>
     </div>

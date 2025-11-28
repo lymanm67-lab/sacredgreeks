@@ -3,6 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Heart, BookOpen, Library, Book, MessageCircle, Sparkles, Users, HeartHandshake } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ExternalContentModal } from '@/components/ui/ExternalContentModal';
+import { FeatureCardSkeleton } from '@/components/ui/CardSkeleton';
 
 const featuredActions = [
   {
@@ -69,7 +70,29 @@ const iconAnimationVariants = {
   }
 };
 
-export const FeaturedActions = () => {
+interface FeaturedActionsProps {
+  isLoading?: boolean;
+}
+
+export const FeaturedActions = ({ isLoading = false }: FeaturedActionsProps) => {
+  if (isLoading) {
+    return (
+      <div className="space-y-4">
+        <div>
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+            Get Started
+          </h2>
+          <p className="text-muted-foreground">Choose an action to begin your spiritual journey today</p>
+        </div>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <FeatureCardSkeleton key={i} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-4">
       <div>
