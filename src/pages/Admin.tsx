@@ -5,8 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ResourceSuggestionsManager } from "@/components/admin/ResourceSuggestionsManager";
-import { Home } from "lucide-react";
+import { UserManagement } from "@/components/admin/UserManagement";
+import { Home, Users, FileText, Lightbulb } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -132,68 +134,93 @@ const Admin = () => {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8 space-y-8">
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle>Recent Submissions</CardTitle>
-              <Button variant="outline" size="sm" onClick={loadSubmissions}>
-                Refresh
-              </Button>
-            </div>
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <p className="text-center py-8 text-muted-foreground">Loading...</p>
-            ) : submissions.length === 0 ? (
-              <p className="text-center py-8 text-muted-foreground">No submissions yet</p>
-            ) : (
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>ID</TableHead>
-                      <TableHead>Date</TableHead>
-                      <TableHead>Scenario</TableHead>
-                      <TableHead>Result</TableHead>
-                      <TableHead>Email</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {submissions.map((submission) => (
-                      <TableRow key={submission.id}>
-                        <TableCell className="font-mono text-xs">{submission.id.slice(0, 8)}...</TableCell>
-                        <TableCell className="text-sm">
-                          {new Date(submission.created_at).toLocaleDateString()}
-                        </TableCell>
-                        <TableCell className="text-sm">{submission.scenario}</TableCell>
-                        <TableCell>
-                          <Badge
-                            variant="outline"
-                            className={
-                              submission.result_type === 'high_risk'
-                                ? 'border-status-high text-status-high'
-                                : submission.result_type === 'medium_risk'
-                                ? 'border-status-medium text-status-medium'
-                                : 'border-status-low text-status-low'
-                            }
-                          >
-                            {submission.result_type.replace('_', ' ')}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="text-sm">
-                          {submission.email || <span className="text-muted-foreground">N/A</span>}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+      <main className="container mx-auto px-4 py-8">
+        <Tabs defaultValue="users" className="space-y-6">
+          <TabsList className="grid w-full max-w-md grid-cols-3">
+            <TabsTrigger value="users" className="flex items-center gap-2">
+              <Users className="h-4 w-4" />
+              Users
+            </TabsTrigger>
+            <TabsTrigger value="submissions" className="flex items-center gap-2">
+              <FileText className="h-4 w-4" />
+              Submissions
+            </TabsTrigger>
+            <TabsTrigger value="resources" className="flex items-center gap-2">
+              <Lightbulb className="h-4 w-4" />
+              Resources
+            </TabsTrigger>
+          </TabsList>
 
-        <ResourceSuggestionsManager />
+          <TabsContent value="users">
+            <UserManagement />
+          </TabsContent>
+
+          <TabsContent value="submissions">
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle>Recent Submissions</CardTitle>
+                  <Button variant="outline" size="sm" onClick={loadSubmissions}>
+                    Refresh
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                {loading ? (
+                  <p className="text-center py-8 text-muted-foreground">Loading...</p>
+                ) : submissions.length === 0 ? (
+                  <p className="text-center py-8 text-muted-foreground">No submissions yet</p>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>ID</TableHead>
+                          <TableHead>Date</TableHead>
+                          <TableHead>Scenario</TableHead>
+                          <TableHead>Result</TableHead>
+                          <TableHead>Email</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {submissions.map((submission) => (
+                          <TableRow key={submission.id}>
+                            <TableCell className="font-mono text-xs">{submission.id.slice(0, 8)}...</TableCell>
+                            <TableCell className="text-sm">
+                              {new Date(submission.created_at).toLocaleDateString()}
+                            </TableCell>
+                            <TableCell className="text-sm">{submission.scenario}</TableCell>
+                            <TableCell>
+                              <Badge
+                                variant="outline"
+                                className={
+                                  submission.result_type === 'high_risk'
+                                    ? 'border-status-high text-status-high'
+                                    : submission.result_type === 'medium_risk'
+                                    ? 'border-status-medium text-status-medium'
+                                    : 'border-status-low text-status-low'
+                                }
+                              >
+                                {submission.result_type.replace('_', ' ')}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="text-sm">
+                              {submission.email || <span className="text-muted-foreground">N/A</span>}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="resources">
+            <ResourceSuggestionsManager />
+          </TabsContent>
+        </Tabs>
       </main>
     </div>
   );
