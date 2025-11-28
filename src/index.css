@@ -424,3 +424,118 @@ html {
   animation: gradientShift 4s ease-in-out infinite;
   text-shadow: 0 0 40px hsl(var(--sacred) / 0.3);
 }
+
+/* Floating Particle Animations */
+@keyframes floatParticle {
+  0%, 100% {
+    transform: translateY(0) translateX(0) scale(1);
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px) scale(1.1);
+  }
+  50% {
+    transform: translateY(-10px) translateX(-5px) scale(0.9);
+  }
+  75% {
+    transform: translateY(-30px) translateX(5px) scale(1.05);
+  }
+}
+
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(30px, -40px) scale(1.2);
+    opacity: 0.5;
+  }
+}
+
+@keyframes floatSlowReverse {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(-20px, 30px) scale(1.1);
+    opacity: 0.4;
+  }
+}
+
+@keyframes floatMedium {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.2;
+  }
+  33% {
+    transform: translate(-15px, -25px) scale(1.15);
+    opacity: 0.35;
+  }
+  66% {
+    transform: translate(20px, 10px) scale(0.95);
+    opacity: 0.25;
+  }
+}
+
+.animate-float-particle {
+  animation: floatParticle linear infinite;
+}
+
+.animate-float-slow {
+  animation: floatSlow 20s ease-in-out infinite;
+}
+
+.animate-float-slow-reverse {
+  animation: floatSlowReverse 18s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: floatMedium 15s ease-in-out infinite;
+}
+
+/* Enhanced Feature Card Styles */
+.feature-card {
+  @apply relative overflow-hidden transition-all duration-300;
+}
+
+.feature-card::before {
+  content: '';
+  @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+  background: linear-gradient(135deg, hsl(var(--sacred) / 0.1) 0%, transparent 50%, hsl(280 70% 60% / 0.1) 100%);
+}
+
+.feature-card:hover::before {
+  @apply opacity-100;
+}
+
+.feature-card::after {
+  content: '';
+  @apply absolute -inset-px rounded-xl opacity-0 transition-opacity duration-300;
+  background: linear-gradient(135deg, hsl(var(--sacred) / 0.5), hsl(280 70% 60% / 0.3), hsl(var(--sacred) / 0.5));
+  z-index: -1;
+}
+
+.feature-card:hover::after {
+  @apply opacity-100;
+}
+
+.feature-card:hover {
+  @apply shadow-2xl;
+  box-shadow: 
+    0 25px 50px -12px hsl(var(--sacred) / 0.25),
+    0 0 30px hsl(var(--sacred) / 0.1);
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    border-color: hsl(var(--sacred) / 0.3);
+  }
+  50% {
+    border-color: hsl(var(--sacred) / 0.6);
+  }
+}
+
+.feature-card:hover {
+  animation: borderGlow 2s ease-in-out infinite;
+}

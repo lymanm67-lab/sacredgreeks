@@ -16,6 +16,7 @@ import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
 import { ListenButton } from "@/components/ListenButton";
 import { ScrollProgressIndicator } from "@/components/ui/ScrollProgressIndicator";
 import { FloatingCTA } from "@/components/ui/FloatingCTA";
+import { FloatingParticles } from "@/components/ui/FloatingParticles";
 import { StatsSection } from "@/components/landing/StatsSection";
 import { ShareSection } from "@/components/landing/ShareSection";
 
@@ -283,6 +284,8 @@ const Index = () => {
 
       {/* Hero Section */}
       <div className="relative overflow-hidden">
+        {/* Floating Particles Background */}
+        <FloatingParticles />
         {/* Subtle background pattern */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sacred/5 via-transparent to-transparent pointer-events-none" />
         
@@ -467,7 +470,7 @@ const Index = () => {
               const useModal = (feature as any).useModal || false;
               
               const cardContent = (
-                <Card className="h-full transition-all hover:shadow-xl hover:scale-105 border-2 hover:border-sacred/50 cursor-pointer group overflow-hidden">
+                <Card className="feature-card h-full transition-all hover:scale-[1.03] border-2 cursor-pointer group overflow-hidden">
                   <div className={`h-2 bg-gradient-to-r ${feature.color}`} />
                   <CardHeader className="space-y-3 pb-2">
                     <div className="flex items-start justify-between">
