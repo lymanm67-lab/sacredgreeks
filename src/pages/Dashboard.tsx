@@ -427,7 +427,7 @@ const Dashboard = () => {
 
           {/* Featured Actions - Prominent */}
           <div ref={featuredScroll.ref} className={`scroll-animate ${featuredScroll.isVisible ? 'visible' : ''} animate-fade-in`} style={{ animationDelay: '0.1s' }}>
-            <FeaturedActions />
+            <FeaturedActions isLoading={loading} />
           </div>
 
           {/* Verse of the Day */}
