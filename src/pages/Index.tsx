@@ -170,25 +170,38 @@ const Index = () => {
       {/* Floating CTA for non-authenticated users */}
       {!user && <FloatingCTA scrollThreshold={600} />}
 
+      {/* Back to Top Button - All Devices */}
+      <button
+        onClick={scrollToTop}
+        className={`fixed bottom-6 right-6 z-40 p-3 bg-sacred text-white rounded-full shadow-lg shadow-sacred/30 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-sacred/40 ${
+          showMobileNav ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+        } hidden md:flex items-center justify-center`}
+        aria-label="Back to top"
+      >
+        <ChevronUp className="h-5 w-5" />
+      </button>
+
       {/* Mobile Section Navigation */}
-      <div className={`fixed bottom-4 left-1/2 -translate-x-1/2 z-40 md:hidden transition-all duration-300 ${showMobileNav ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'}`}>
-        <div className="flex items-center gap-1 bg-background/95 backdrop-blur-lg border border-border/50 rounded-full px-2 py-1.5 shadow-lg">
-          {sectionNav.map((section) => (
+      <div className={`fixed bottom-4 left-1/2 -translate-x-1/2 z-40 md:hidden transition-all duration-500 ease-out ${showMobileNav ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'}`}>
+        <div className="flex items-center gap-1 bg-background/95 backdrop-blur-lg border border-border/50 rounded-full px-2 py-1.5 shadow-lg animate-fade-in">
+          {sectionNav.map((section, index) => (
             <button
               key={section.id}
               onClick={() => scrollToSection(section.id)}
-              className={`px-3 py-1.5 text-xs font-medium rounded-full transition-all ${
+              className={`px-3 py-1.5 text-xs font-medium rounded-full transition-all duration-200 ${
                 activeSection === section.id 
-                  ? 'bg-sacred text-white' 
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                  ? 'bg-sacred text-white scale-105' 
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted active:scale-95'
               }`}
+              style={{ animationDelay: `${index * 50}ms` }}
             >
               {section.label}
             </button>
           ))}
           <button
             onClick={scrollToTop}
-            className="p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted rounded-full ml-1"
+            className="p-1.5 text-muted-foreground hover:text-sacred hover:bg-sacred/10 rounded-full ml-1 transition-all duration-200 active:scale-90"
+            aria-label="Back to top"
           >
             <ChevronUp className="h-4 w-4" />
           </button>
