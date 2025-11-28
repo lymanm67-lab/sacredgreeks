@@ -359,29 +359,19 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-3">
-            <Button
-              variant="outline"
-              className="justify-start"
-              onClick={() => openExternalLink('https://sacredgreeks.com/')}
-            >
-              <ExternalLink className="w-4 h-4 mr-2" />
-              Visit Sacred Greeks
-            </Button>
-            <Button
-              variant="outline"
-              className="justify-start"
-              onClick={() => openExternalLink('https://sacredgreeks.com/#card-xr13vgv4m5slqey')}
-            >
-              <ExternalLink className="w-4 h-4 mr-2" />
-              Start Here
-            </Button>
+            <Link to="/ask-dr-lyman">
+              <Button variant="outline" className="w-full justify-start">
+                <MessageSquare className="w-4 h-4 mr-2" />
+                Ask Sacred Greeks (Submit a Question)
+              </Button>
+            </Link>
             <Button
               variant="outline"
               className="justify-start"
               onClick={() => openExternalLink('https://a.co/d/5a6Yt9t')}
             >
               <ExternalLink className="w-4 h-4 mr-2" />
-              Read "Sacred, Not Sinful"
+              Buy "Sacred, Not Sinful"
             </Button>
             <Button
               variant="outline"
@@ -389,15 +379,15 @@ export function SacredGreeksResults({ resultType, scores, answers, onRestart, is
               onClick={() => openExternalLink('https://gamma.app/docs/Christian-Greek-Life-Study-Guide-ihr8fq0g089n32t')}
             >
               <ExternalLink className="w-4 h-4 mr-2" />
-              Use the Christian Greek Life Study Guide
+              Download the Christian Greek Life Study Guide
             </Button>
             <Button
               variant="outline"
               className="justify-start"
-              onClick={() => openExternalLink('https://sacredgreeks.jellypod.ai/')}
+              onClick={() => openExternalLink('https://sacredgreeks.com/')}
             >
               <ExternalLink className="w-4 h-4 mr-2" />
-              Listen to the Sacred Greeks Podcast
+              Visit Sacred Greeks for More Teachings
             </Button>
           </div>
         </CardContent>

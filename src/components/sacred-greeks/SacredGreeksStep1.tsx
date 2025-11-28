@@ -8,18 +8,28 @@ import { ArrowRight } from "lucide-react";
 const scenarios = [
   { 
     value: "clip", 
-    label: "I saw a clip or sermon attacking BGLOs",
+    label: "I am thinking about responding to a denouncement video",
     description: "Process what you've heard and find biblical clarity"
   },
   { 
+    value: "denounce", 
+    label: "I am wondering if I should denounce or stay",
+    description: "Discern your next step with Scripture and wisdom"
+  },
+  { 
     value: "pressure", 
-    label: "Someone is pressuring me to denounce or resign",
-    description: "Navigate pressure with wisdom and peace"
+    label: "My pastor, parent, or spouse is pressuring me",
+    description: "Navigate pressure with grace and peace"
   },
   { 
     value: "event", 
-    label: "I want to plan a faith-based event in my org",
+    label: "I want to lead a faith-based event in my org",
     description: "Design ministry initiatives with confidence"
+  },
+  { 
+    value: "symbol", 
+    label: "I am confused about a symbol, ritual, or gesture",
+    description: "Get clarity on what honors Christ"
   },
 ];
 

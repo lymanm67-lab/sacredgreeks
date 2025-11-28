@@ -23,16 +23,20 @@ export interface SacredGreeksAnswers {
   scenario: string;
   role: string;
   situation: string;
+  whoInvolved: string;
+  alreadyDone: string;
   emotions: string[];
+  desiredOutcome: string;
+  supportLevel: string;
   scenarioSpecific: Record<string, string>;
 }
 
 export interface SacredGreeksScores {
   biblicalClarity: number;
-  consciencePeace: number;
-  relationalRisk: number;
-  symbolRisk: number;
-  emotionalPressure: number;
+  symbolRitualSensitivity: number;
+  traumaConscienceImpact: number;
+  witnessCommunityImpact: number;
+  relationalWisdom: number;
 }
 
-export type ResultType = 'high_risk' | 'medium_risk' | 'low_risk' | 'steady_language' | 'high_pressure' | 'ministry_idea';
+export type ResultType = 'high_risk' | 'medium_risk' | 'low_risk' | 'steady_language' | 'high_pressure' | 'ministry_idea' | 'symbol_clarity';

@@ -102,44 +102,70 @@ export function calculateSacredGreeksScores(answers: SacredGreeksAnswers): {
 } {
   const scores: SacredGreeksScores = {
     biblicalClarity: 3,
-    consciencePeace: 3,
-    relationalRisk: 2,
-    symbolRisk: 2,
-    emotionalPressure: 2,
+    symbolRitualSensitivity: 3,
+    traumaConscienceImpact: 3,
+    witnessCommunityImpact: 3,
+    relationalWisdom: 3,
   };
 
-  // Emotions impact emotional pressure and conscience peace
-  const highPressureEmotions = ['Afraid of being judged', 'Ashamed', 'Hurt by church'];
-  const emotionalPressureCount = answers.emotions.filter(e => 
-    highPressureEmotions.includes(e)
-  ).length;
+  // Emotions impact trauma/conscience and biblical clarity
+  const traumaEmotions = ['Afraid of being judged', 'Ashamed', 'Hurt by church', 'Anxious'];
+  const traumaCount = answers.emotions.filter(e => traumaEmotions.includes(e)).length;
   
-  if (emotionalPressureCount > 0) {
-    scores.emotionalPressure += emotionalPressureCount;
-    scores.consciencePeace -= 1;
+  if (traumaCount > 0) {
+    scores.traumaConscienceImpact += traumaCount;
   }
 
   if (answers.emotions.includes('Confused') || answers.emotions.includes('Numb')) {
     scores.biblicalClarity -= 1;
   }
 
-  if (answers.emotions.includes('Hopeful') || answers.emotions.includes('Curious')) {
-    scores.consciencePeace += 1;
+  if (answers.emotions.includes('Hopeful') || answers.emotions.includes('Curious') || answers.emotions.includes('Peaceful')) {
+    scores.traumaConscienceImpact -= 1;
+    scores.biblicalClarity += 1;
+  }
+
+  if (answers.emotions.includes('Defensive') || answers.emotions.includes('Angry')) {
+    scores.relationalWisdom += 1;
+  }
+
+  // Support level affects multiple dimensions
+  if (answers.supportLevel === 'I feel alone in this' || answers.supportLevel === 'Little support, mostly opposition') {
+    scores.traumaConscienceImpact += 1;
+    scores.witnessCommunityImpact += 1;
+    scores.relationalWisdom += 1;
+  } else if (answers.supportLevel === 'Strong support from all (church, family, chapter)') {
+    scores.relationalWisdom -= 1;
+    scores.witnessCommunityImpact -= 1;
   }
 
   // Scenario-specific scoring
   if (answers.scenario === 'pressure') {
-    scores.relationalRisk += 2;
-    scores.emotionalPressure += 1;
+    scores.relationalWisdom += 2;
+    scores.traumaConscienceImpact += 1;
     
-    if (answers.scenarioSpecific.belief === 'not sure') {
-      scores.biblicalClarity -= 1;
-      scores.consciencePeace -= 1;
+    if (answers.scenarioSpecific.pressureSource === 'pastor' || answers.scenarioSpecific.pressureSource === 'multiple') {
+      scores.witnessCommunityImpact += 1;
     }
+  } else if (answers.scenario === 'denounce') {
+    scores.biblicalClarity += 1;
+    scores.witnessCommunityImpact += 1;
+    
+    if (answers.scenarioSpecific.currentBelief === 'sinful') {
+      scores.traumaConscienceImpact += 1;
+    } else if (answers.scenarioSpecific.currentBelief === 'unsure') {
+      scores.biblicalClarity -= 1;
+    }
+  } else if (answers.scenario === 'symbol') {
+    scores.symbolRitualSensitivity += 2;
+    scores.biblicalClarity += 1;
   } else if (answers.scenario === 'event') {
-    scores.symbolRisk += 1;
-    if (answers.scenarioSpecific.concern?.includes('symbol')) {
-      scores.symbolRisk += 1;
+    scores.witnessCommunityImpact += 1;
+    scores.symbolRitualSensitivity += 1;
+  } else if (answers.scenario === 'clip') {
+    scores.biblicalClarity += 1;
+    if (answers.scenarioSpecific.contentType === 'sermon') {
+      scores.witnessCommunityImpact += 1;
     }
   }
 
@@ -149,13 +175,23 @@ export function calculateSacredGreeksScores(answers: SacredGreeksAnswers): {
     scores[scoreKey] = Math.max(1, Math.min(5, scores[scoreKey]));
   });
 
-  // Determine result type
+  // Determine result type based on scenario and scores
   let resultType: ResultType;
-  if (scores.emotionalPressure >= 4 || scores.relationalRisk >= 4) {
+  
+  // High pressure situations
+  if (scores.traumaConscienceImpact >= 4 || scores.relationalWisdom >= 4) {
     resultType = 'high_pressure';
-  } else if (answers.scenario === 'event') {
+  } 
+  // Ministry/event scenarios
+  else if (answers.scenario === 'event') {
     resultType = 'ministry_idea';
-  } else {
+  }
+  // Symbol confusion scenarios
+  else if (answers.scenario === 'symbol') {
+    resultType = 'symbol_clarity';
+  }
+  // Default to steady language for clip, denounce, and lower-pressure situations
+  else {
     resultType = 'steady_language';
   }
 
