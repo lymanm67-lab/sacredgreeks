@@ -16,7 +16,6 @@ import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
 import { ListenButton } from "@/components/ListenButton";
 import { ScrollProgressIndicator } from "@/components/ui/ScrollProgressIndicator";
 import { FloatingCTA } from "@/components/ui/FloatingCTA";
-import { FloatingParticles } from "@/components/ui/FloatingParticles";
 import { ScrollIndicator } from "@/components/ui/ScrollIndicator";
 import { StatsSection } from "@/components/landing/StatsSection";
 import { ShareSection } from "@/components/landing/ShareSection";
@@ -282,8 +281,12 @@ const Index = () => {
 
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        {/* Floating Particles Background */}
-        <FloatingParticles enableParallax={false} />
+        {/* Animated Gradient Background */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-sacred/10 via-transparent to-transparent rounded-full blur-3xl animate-gradient-shift" />
+          <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-purple-500/8 via-transparent to-transparent rounded-full blur-3xl animate-gradient-shift-reverse" />
+          <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-br from-amber-500/5 to-rose-500/5 rounded-full blur-3xl animate-gradient-pulse" />
+        </div>
         {/* Subtle background pattern */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sacred/5 via-transparent to-transparent pointer-events-none" />
         
