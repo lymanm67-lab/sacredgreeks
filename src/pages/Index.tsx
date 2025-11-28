@@ -174,7 +174,7 @@ const Index = () => {
       <button
         onClick={scrollToTop}
         className={`fixed bottom-6 right-6 z-40 p-3 bg-sacred text-white rounded-full shadow-lg shadow-sacred/30 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-sacred/40 ${
-          showMobileNav ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+          showMobileNav ? 'opacity-100 translate-y-0 animate-[bounce_0.5s_ease-out]' : 'opacity-0 translate-y-4 pointer-events-none'
         } hidden md:flex items-center justify-center`}
         aria-label="Back to top"
       >
