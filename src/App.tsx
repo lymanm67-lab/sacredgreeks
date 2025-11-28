@@ -57,6 +57,7 @@ const Journey = lazy(() => import("./pages/Journey"));
 const MythBuster = lazy(() => import("./pages/MythBuster"));
 const SymbolGuide = lazy(() => import("./pages/SymbolGuide"));
 const AskDrLyman = lazy(() => import("./pages/AskDrLyman"));
+const ContentHub = lazy(() => import("./pages/ContentHub"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -118,6 +119,7 @@ const App = () => (
                     <Route path="/myth-buster" element={<MythBuster />} />
                     <Route path="/symbol-guide" element={<SymbolGuide />} />
                     <Route path="/ask-dr-lyman" element={<AskDrLyman />} />
+                    <Route path="/content-hub" element={<ContentHub />} />
                     <Route
                       path="/prayer-guide"
                       element={

@@ -56,3 +56,6 @@ verify_jwt = false
 
 [functions.response-coach]
 verify_jwt = false
+
+[functions.journey-reminder]
+verify_jwt = false
