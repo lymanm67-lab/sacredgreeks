@@ -5,7 +5,7 @@ import { useSubscription } from "@/hooks/use-subscription";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library, Lock, HandHeart, HeartHandshake, ChevronUp, Quote, Phone, MessageCircle, PenLine, Crown } from "lucide-react";
+import { Heart, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library, Lock, HandHeart, HeartHandshake, ChevronUp, Quote, Phone, MessageCircle, PenLine, Crown, Drama } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
 import { ShareHealingStoryDialog } from "@/components/ShareHealingStoryDialog";
 import { ApprovedHealingStories } from "@/components/ApprovedHealingStories";
@@ -38,11 +38,18 @@ const coreFeatures = [
     badge: "Start Here",
   },
   {
-    title: "Symbols, Rituals & Myths Library",
-    description: "Biblical responses to accusations, Christian perspectives on Greek symbolism, and guidance on participation",
-    icon: Library,
+    title: "Myth Buster Library",
+    description: "Searchable biblical responses to common accusations about Greek life",
+    icon: BookOpen,
     link: "/myth-buster",
     color: "from-purple-500 to-violet-600",
+  },
+  {
+    title: "Symbol & Ritual Guide",
+    description: "Christian perspectives on Greek symbolism with guidance on participation",
+    icon: Sparkles,
+    link: "/symbol-guide",
+    color: "from-amber-500 to-orange-600",
   },
   {
     title: "Family, Ministry & Church Hurt Healing",
@@ -58,6 +65,16 @@ const coreFeatures = [
     icon: Users,
     link: "/ask-dr-lyman",
     color: "from-teal-500 to-emerald-600",
+  },
+  {
+    title: "Shattered Masks Assessment",
+    description: "Discover your archetype and understand how you navigate identity, faith, and Greek life",
+    icon: Drama,
+    link: "https://drlymanmontgomery.involve.me/shattered-masks-archetype-assessment",
+    color: "from-fuchsia-500 to-pink-600",
+    badge: "Assessment",
+    isExternal: true,
+    useModal: true,
   },
 ];
 
@@ -445,8 +462,11 @@ const Index = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-            {coreFeatures.map((feature, index) => (
-              <Link key={feature.title} to={feature.link}>
+            {coreFeatures.map((feature, index) => {
+              const isExternal = (feature as any).isExternal || false;
+              const useModal = (feature as any).useModal || false;
+              
+              const cardContent = (
                 <Card className="h-full transition-all hover:shadow-xl hover:scale-105 border-2 hover:border-sacred/50 cursor-pointer group overflow-hidden">
                   <div className={`h-2 bg-gradient-to-r ${feature.color}`} />
                   <CardHeader className="space-y-3 pb-2">
@@ -468,8 +488,34 @@ const Index = () => {
                     </CardDescription>
                   </CardContent>
                 </Card>
-              </Link>
-            ))}
+              );
+              
+              if (isExternal && useModal) {
+                return (
+                  <ExternalContentModal
+                    key={feature.title}
+                    url={feature.link}
+                    title={feature.title}
+                    description={feature.description}
+                    trigger={<div className="cursor-pointer">{cardContent}</div>}
+                  />
+                );
+              }
+              
+              if (isExternal) {
+                return (
+                  <a key={feature.title} href={feature.link} target="_blank" rel="noopener noreferrer">
+                    {cardContent}
+                  </a>
+                );
+              }
+              
+              return (
+                <Link key={feature.title} to={feature.link}>
+                  {cardContent}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>
