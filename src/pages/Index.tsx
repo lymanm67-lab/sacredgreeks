@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useSubscription } from "@/hooks/use-subscription";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library, Lock, HandHeart, HeartHandshake, ChevronUp, Quote, Phone, MessageCircle, PenLine } from "lucide-react";
+import { Heart, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library, Lock, HandHeart, HeartHandshake, ChevronUp, Quote, Phone, MessageCircle, PenLine, Crown } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
 import { ShareHealingStoryDialog } from "@/components/ShareHealingStoryDialog";
 import { ApprovedHealingStories } from "@/components/ApprovedHealingStories";
@@ -26,7 +27,7 @@ const sectionNav = [
   { id: "testimonials", label: "Stories" },
 ];
 
-// Core features for the new user journey
+// Core features for the new user journey - reorganized per user request
 const coreFeatures = [
   {
     title: "30-Day Journey",
@@ -51,23 +52,19 @@ const coreFeatures = [
     color: "from-amber-500 to-orange-600",
   },
   {
+    title: "Family, Ministry & Church Hurt Healing",
+    description: "Navigate damaged relationships and process spiritual trauma with guided prayers and real testimonies",
+    icon: HandHeart,
+    link: "/family-ministry-fallout",
+    color: "from-rose-500 to-amber-500",
+    badge: "Support",
+  },
+  {
     title: "Ask Dr. Lyman",
     description: "Submit questions and get curated answers on theology, family, and campus ministry",
     icon: Users,
     link: "/ask-dr-lyman",
     color: "from-teal-500 to-emerald-600",
-  },
-];
-
-// Healing & Support resources - combined into single comprehensive resource
-const healingResources = [
-  {
-    title: "Family, Ministry & Church Hurt Healing",
-    description: "Navigate damaged relationships, process spiritual trauma with guided prayers, journaling prompts, and real testimonies from Christian Greeks who've walked this path",
-    icon: HandHeart,
-    link: "/family-ministry-fallout",
-    color: "from-amber-500 to-rose-500",
-    badge: "Comprehensive",
   },
 ];
 
@@ -88,6 +85,26 @@ const features = [
     color: "text-blue-500",
     requiresAuth: true,
     lockBadgeText: "Daily guidance delivered",
+  },
+  {
+    title: "AI Bible Study Tools",
+    description: "Get AI-powered verse searches, study recommendations, and personalized spiritual insights",
+    icon: Sparkles,
+    link: "/bible-study",
+    color: "text-sacred",
+    requiresAuth: true,
+    isPremium: true,
+    lockBadgeText: "Pro Feature",
+  },
+  {
+    title: "Response Coach",
+    description: "Practice responding to tough questions about faith and Greek life with AI-powered feedback",
+    icon: Users,
+    link: "/guide",
+    color: "text-teal-500",
+    requiresAuth: true,
+    isPremium: true,
+    lockBadgeText: "Pro Feature",
   },
   {
     title: "5 Persona Assessment",
@@ -118,6 +135,7 @@ const benefits = [
 
 const Index = () => {
   const { user } = useAuth();
+  const { subscribed, tier } = useSubscription();
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
@@ -460,46 +478,58 @@ const Index = () => {
               </Link>
             ))}
           </div>
-
-          {/* Healing & Support Resources - Integrated into Core Features */}
-          <div id="healing-resources" className="scroll-mt-20">
-            <div className="text-center mb-6">
-              <Badge className="bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20 mb-3">Support & Restoration</Badge>
-              <h3 className="text-xl md:text-2xl font-bold">
-                Healing for the <span className="text-amber-500">Wounded</span>
-              </h3>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-4 max-w-3xl mx-auto">
-              {healingResources.map((resource) => (
-                <Link key={resource.title} to={resource.link}>
-                  <Card className="h-full transition-all hover:shadow-xl hover:scale-105 border-2 border-amber-500/30 hover:border-amber-500/60 cursor-pointer group overflow-hidden bg-gradient-to-br from-amber-500/5 to-rose-500/5 dark:from-amber-950/20 dark:to-rose-950/20">
-                    <div className={`h-2 bg-gradient-to-r ${resource.color}`} />
-                    <CardHeader className="space-y-3 pb-2">
-                      <div className="flex items-start justify-between">
-                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${resource.color} flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg`}>
-                          <resource.icon className="w-6 h-6 text-white" />
-                        </div>
-                        {resource.badge && (
-                          <Badge className="bg-amber-500 text-white animate-pulse">{resource.badge}</Badge>
-                        )}
-                      </div>
-                      <CardTitle className="text-lg group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-                        {resource.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <CardDescription className="text-sm">
-                        {resource.description}
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
+
+      {/* Subscription Upgrade Banner - Show for non-subscribed users */}
+      {user && !subscribed && (
+        <div className="container mx-auto px-4 py-8">
+          <div className="max-w-4xl mx-auto">
+            <Card className="bg-gradient-to-r from-sacred/10 via-purple-500/10 to-sacred/10 border-sacred/30 overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-sacred/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
+              <CardContent className="flex flex-col md:flex-row items-center justify-between gap-6 p-6 md:p-8 relative">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-sacred to-purple-600 flex items-center justify-center shadow-lg shadow-sacred/30">
+                    <Crown className="w-7 h-7 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-foreground">Unlock Premium Features</h3>
+                    <p className="text-muted-foreground text-sm">AI Bible Study, Response Coach, and more with a free trial</p>
+                  </div>
+                </div>
+                <Link to="/subscription">
+                  <Button className="bg-sacred hover:bg-sacred/90 text-sacred-foreground shadow-lg hover:shadow-xl transition-all">
+                    <Crown className="w-4 h-4 mr-2" />
+                    Start Free Trial
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      )}
+
+      {/* Subscription CTA for non-authenticated users */}
+      {!user && (
+        <div className="container mx-auto px-4 py-8">
+          <div className="max-w-4xl mx-auto">
+            <Card className="bg-gradient-to-r from-sacred/5 via-purple-500/5 to-sacred/5 border-border/50">
+              <CardContent className="flex flex-col md:flex-row items-center justify-between gap-6 p-6">
+                <div className="text-center md:text-left">
+                  <h3 className="text-lg font-semibold text-foreground">Ready for Premium Features?</h3>
+                  <p className="text-muted-foreground text-sm">Sign up free, then unlock AI tools with a trial</p>
+                </div>
+                <Link to="/auth">
+                  <Button variant="outline" className="border-sacred/50 hover:bg-sacred/10">
+                    Sign Up Free
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      )}
 
       {/* Features Section */}
       <div id="more-features" className="container mx-auto px-4 py-16 scroll-mt-20">
@@ -513,11 +543,21 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {features.map((feature, index) => {
               const isExternal = feature.isExternal || false;
               const requiresAuth = feature.requiresAuth || false;
+              const isPremium = (feature as any).isPremium || false;
               const showLockBadge = requiresAuth && !user;
+              const showPremiumBadge = isPremium && user && !subscribed;
+              const premiumLocked = isPremium && !subscribed;
+              
+              // Determine link destination based on auth and subscription status
+              const getLink = () => {
+                if (!user) return "/auth";
+                if (premiumLocked) return "/subscription";
+                return feature.link;
+              };
               
               if (isExternal && feature.useModal) {
                 return (
@@ -581,17 +621,29 @@ const Index = () => {
               }
               
               return (
-                <Link key={feature.title} to={user ? feature.link : "/auth"}>
-                  <Card className={`h-full transition-all hover:shadow-lg hover:scale-105 border-2 hover:border-sacred/50 cursor-pointer group animate-fade-in card-glow ${showLockBadge ? 'relative' : ''}`} style={{ animationDelay: `${index * 0.1}s` }}>
+                <Link key={feature.title} to={getLink()}>
+                  <Card className={`h-full transition-all hover:shadow-lg hover:scale-105 border-2 hover:border-sacred/50 cursor-pointer group animate-fade-in card-glow ${isPremium ? 'border-purple-500/30 bg-gradient-to-br from-purple-500/5 to-sacred/5' : ''}`} style={{ animationDelay: `${index * 0.1}s` }}>
                     <CardHeader className="space-y-4">
                       <div className="flex items-start justify-between">
-                        <div className="w-14 h-14 rounded-lg bg-muted flex items-center justify-center group-hover:bg-sacred/10 group-hover:scale-110 transition-all">
+                        <div className={`w-14 h-14 rounded-lg flex items-center justify-center group-hover:scale-110 transition-all ${isPremium ? 'bg-gradient-to-br from-purple-500/20 to-sacred/20' : 'bg-muted group-hover:bg-sacred/10'}`}>
                           <feature.icon className={`w-7 h-7 ${feature.color}`} />
                         </div>
-                        {showLockBadge && (
+                        {showPremiumBadge && (
+                          <Badge className="bg-gradient-to-r from-purple-500 to-sacred text-white flex items-center gap-1 text-xs">
+                            <Crown className="w-3 h-3" />
+                            Pro
+                          </Badge>
+                        )}
+                        {showLockBadge && !isPremium && (
                           <Badge variant="secondary" className="bg-sacred/10 text-sacred border-sacred/20 flex items-center gap-1 text-xs">
                             <Lock className="w-3 h-3" />
                             {feature.lockBadgeText || "Sign up"}
+                          </Badge>
+                        )}
+                        {showLockBadge && isPremium && (
+                          <Badge className="bg-gradient-to-r from-purple-500 to-sacred text-white flex items-center gap-1 text-xs">
+                            <Crown className="w-3 h-3" />
+                            Pro
                           </Badge>
                         )}
                       </div>
@@ -603,9 +655,14 @@ const Index = () => {
                       <CardDescription className="text-base">
                         {feature.description}
                       </CardDescription>
-                      {showLockBadge && (
+                      {showLockBadge && !isPremium && (
                         <p className="text-xs text-sacred mt-3 font-medium">
-                          Create a free account to unlock this feature
+                          Create a free account to unlock
+                        </p>
+                      )}
+                      {(showPremiumBadge || (showLockBadge && isPremium)) && (
+                        <p className="text-xs text-purple-600 dark:text-purple-400 mt-3 font-medium">
+                          Start your free trial to unlock
                         </p>
                       )}
                     </CardContent>
@@ -615,45 +672,8 @@ const Index = () => {
             })}
           </div>
 
-          {/* Healing Resources - Also visible in this section */}
-          <div className="mt-10 max-w-4xl mx-auto">
-            <div className="text-center mb-6">
-              <Badge className="bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/30 mb-3">
-                <HeartHandshake className="w-3 h-3 mr-1" />
-                Support & Restoration
-              </Badge>
-              <h3 className="text-xl md:text-2xl font-bold">
-                Healing for the <span className="text-amber-500">Wounded</span>
-              </h3>
-            </div>
-            <div className="grid md:grid-cols-2 gap-6">
-              {healingResources.map((resource) => (
-                <Link key={resource.title} to={resource.link}>
-                  <Card className="h-full transition-all hover:shadow-xl hover:scale-105 border-2 border-amber-500/30 hover:border-amber-500/60 cursor-pointer group overflow-hidden bg-gradient-to-br from-amber-500/5 to-rose-500/5 dark:from-amber-950/20 dark:to-rose-950/20">
-                    <div className={`h-2 bg-gradient-to-r ${resource.color}`} />
-                    <CardHeader className="space-y-3">
-                      <div className="flex items-start justify-between">
-                        <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${resource.color} flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg`}>
-                          <resource.icon className="w-7 h-7 text-white" />
-                        </div>
-                        {resource.badge && (
-                          <Badge className="bg-amber-500 text-white animate-pulse">{resource.badge}</Badge>
-                        )}
-                      </div>
-                      <CardTitle className="text-xl group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-                        {resource.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <CardDescription className="text-base">
-                        {resource.description}
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-
+          {/* Healing Testimonial & Support Section */}
+          <div id="healing-resources" className="mt-10 max-w-4xl mx-auto scroll-mt-20">
             {/* Testimonial Quote */}
             <div className="mt-8 bg-gradient-to-r from-amber-500/10 via-rose-500/10 to-amber-500/10 rounded-2xl p-6 md:p-8 border border-amber-500/20">
               <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
