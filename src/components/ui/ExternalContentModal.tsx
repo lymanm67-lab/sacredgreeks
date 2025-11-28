@@ -78,8 +78,17 @@ export function ExternalContentModal({
       });
       onOpen?.();
 
-      // For videos, give more time (15s), for other content use 8s
-      const timeoutDuration = isVideo ? 15000 : 8000;
+      // For known video platforms (YouTube, Vimeo), trust they'll load and mark as loaded after a short delay
+      // This avoids issues with cross-origin iframe onLoad events not firing
+      if (isVideo) {
+        const videoLoadDelay = setTimeout(() => {
+          setIframeLoaded(true);
+        }, 1500);
+        return () => clearTimeout(videoLoadDelay);
+      }
+
+      // For non-video content, use timeout-based error detection
+      const timeoutDuration = 8000;
       
       const timeout = setTimeout(() => {
         if (!iframeLoaded) {
@@ -89,7 +98,7 @@ export function ExternalContentModal({
 
       return () => clearTimeout(timeout);
     }
-  }, [open]);
+  }, [open, isVideo]);
 
   const handleOpenExternal = () => {
     openExternalLink(url);
