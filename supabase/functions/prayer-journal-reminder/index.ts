@@ -27,12 +27,19 @@ Deno.serve(async (req) => {
   }
 
   try {
-    // SECURITY: Validate cron secret
+    // SECURITY: Validate cron secret, service role key, or anon key (for pg_cron)
     const cronSecret = Deno.env.get('CRON_SECRET');
+    const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+    const anonKey = Deno.env.get('SUPABASE_ANON_KEY');
     const providedSecret = req.headers.get('x-cron-secret');
+    const authHeader = req.headers.get('authorization');
     
-    if (!providedSecret || providedSecret !== cronSecret) {
-      console.error('Unauthorized: Invalid cron secret');
+    const isValidCronSecret = providedSecret && providedSecret === cronSecret;
+    const isValidServiceRole = authHeader && authHeader === `Bearer ${serviceRoleKey}`;
+    const isValidAnonKey = authHeader && authHeader === `Bearer ${anonKey}`;
+    
+    if (!isValidCronSecret && !isValidServiceRole && !isValidAnonKey) {
+      console.error('Unauthorized: Invalid authentication');
       return new Response(
         JSON.stringify({ error: 'Unauthorized' }),
         { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
