@@ -31,6 +31,107 @@
     <meta name="twitter:title" content="Sacred Greeks Life - A Gift from Dr. Lyman Montgomery" />
     <meta name="twitter:description" content="Navigate the tension between Greek life and faith. Daily devotionals, prayer tools, and Bible study resources for Greek life members and supporters." />
     <meta name="twitter:image" content="https://sacredgreekslife.com/icon-512.png" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://sacredgreekslife.com/#organization",
+          "name": "Sacred Greeks Life",
+          "url": "https://sacredgreekslife.com",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://sacredgreekslife.com/icon-512.png",
+            "width": 512,
+            "height": 512
+          },
+          "founder": {
+            "@type": "Person",
+            "name": "Dr. Lyman Montgomery"
+          },
+          "description": "Sacred Greeks Life helps Christians in Greek life navigate faith and fraternity/sorority membership with biblical guidance and daily devotionals."
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://sacredgreekslife.com/#website",
+          "url": "https://sacredgreekslife.com",
+          "name": "Sacred Greeks Life",
+          "description": "Your daily companion for navigating faith and Greek life",
+          "publisher": {
+            "@id": "https://sacredgreekslife.com/#organization"
+          },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://sacredgreekslife.com/bible-study?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "WebApplication",
+          "@id": "https://sacredgreekslife.com/#app",
+          "name": "Sacred Greeks Life App",
+          "url": "https://sacredgreekslife.com",
+          "applicationCategory": "ReligiousApplication",
+          "operatingSystem": "Web, iOS, Android",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "author": {
+            "@id": "https://sacredgreekslife.com/#organization"
+          },
+          "description": "Daily devotionals, prayer tools, Bible study resources, and the P.R.O.O.F. framework for Christians navigating Greek life.",
+          "featureList": [
+            "Daily Devotionals",
+            "Prayer Journal",
+            "Prayer Wall Community",
+            "Bible Study Tools",
+            "P.R.O.O.F. Framework Guide",
+            "Progress Tracking",
+            "Achievement System"
+          ],
+          "screenshot": "https://sacredgreekslife.com/icon-512.png"
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://sacredgreekslife.com/faq#faqpage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is Sacred Greeks Life?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sacred Greeks Life is a faith-based app designed to help Christians in Greek life navigate the tension between their faith and fraternity or sorority membership using the P.R.O.O.F. framework."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is Sacred Greeks Life free to use?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, Sacred Greeks Life is completely free. No credit card required. Access daily devotionals, prayer tools, Bible study resources, and community features at no cost."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the P.R.O.O.F. framework?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The P.R.O.O.F. framework is a biblical approach to evaluating and navigating Greek life membership while maintaining your Christian faith and values."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
   </head>
 
   <body>
