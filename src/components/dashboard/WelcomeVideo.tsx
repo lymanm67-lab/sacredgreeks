@@ -5,7 +5,7 @@ import welcomeThumbnail from '@/assets/welcome-video-thumbnail.jpg';
 import { ExternalContentModal } from '@/components/ui/ExternalContentModal';
 
 export const WelcomeVideo = () => {
-  const videoUrl = "https://ai.invideo.io/embed/ECsSNrYTESo";
+  const videoUrl = "https://www.youtube.com/embed/dslPmKSDJ50?si=e0r7XTNi-8YiRYBA";
   
   return (
     <Card className="overflow-hidden border-2 shadow-xl h-full flex flex-col">
