@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Check, X, Star, Eye, Trash2, RefreshCw } from "lucide-react";
+import { Check, X, Star, Eye, Trash2, RefreshCw, Search, Filter } from "lucide-react";
 
 interface HealingStory {
   id: string;
@@ -28,7 +29,41 @@ export function HealingStoriesManager() {
   const [loading, setLoading] = useState(true);
   const [selectedStory, setSelectedStory] = useState<HealingStory | null>(null);
   const [viewDialogOpen, setViewDialogOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState<"all" | "pending" | "approved" | "featured">("all");
+  const [typeFilter, setTypeFilter] = useState<string>("all");
   const { toast } = useToast();
+
+  const healingTypes = [
+    { value: "church_hurt", label: "Church Hurt" },
+    { value: "ministry_fallout", label: "Ministry Fallout" },
+    { value: "spiritual_trauma", label: "Spiritual Trauma" },
+    { value: "faith_reconciliation", label: "Faith Reconciliation" },
+    { value: "identity_journey", label: "Identity Journey" },
+    { value: "community_healing", label: "Community Healing" },
+    { value: "other", label: "Other" }
+  ];
+
+  const filteredStories = useMemo(() => {
+    return stories.filter(story => {
+      // Search filter
+      const matchesSearch = searchQuery === "" || 
+        story.story_title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        story.story_content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (story.name && story.name.toLowerCase().includes(searchQuery.toLowerCase()));
+
+      // Status filter
+      let matchesStatus = true;
+      if (statusFilter === "pending") matchesStatus = !story.approved;
+      else if (statusFilter === "approved") matchesStatus = story.approved;
+      else if (statusFilter === "featured") matchesStatus = story.featured;
+
+      // Type filter
+      const matchesType = typeFilter === "all" || story.healing_type === typeFilter;
+
+      return matchesSearch && matchesStatus && matchesType;
+    });
+  }, [stories, searchQuery, statusFilter, typeFilter]);
 
   const loadStories = async () => {
     setLoading(true);
@@ -108,16 +143,7 @@ export function HealingStoriesManager() {
   };
 
   const getHealingTypeLabel = (type: string) => {
-    const types: Record<string, string> = {
-      church_hurt: "Church Hurt",
-      ministry_fallout: "Ministry Fallout",
-      spiritual_trauma: "Spiritual Trauma",
-      faith_reconciliation: "Faith Reconciliation",
-      identity_journey: "Identity Journey",
-      community_healing: "Community Healing",
-      other: "Other"
-    };
-    return types[type] || type;
+    return healingTypes.find(t => t.value === type)?.label || type;
   };
 
   const viewStory = (story: HealingStory) => {
@@ -128,12 +154,15 @@ export function HealingStoriesManager() {
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap gap-4">
           <CardTitle>Healing Stories</CardTitle>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <Badge variant="outline">{stories.length} total</Badge>
             <Badge variant="outline" className="border-green-500 text-green-600">
               {stories.filter(s => s.approved).length} approved
+            </Badge>
+            <Badge variant="outline" className="border-amber-500 text-amber-600">
+              {stories.filter(s => !s.approved).length} pending
             </Badge>
             <Button variant="outline" size="sm" onClick={loadStories}>
               <RefreshCw className="w-4 h-4 mr-1" />
@@ -141,12 +170,50 @@ export function HealingStoriesManager() {
             </Button>
           </div>
         </div>
+        
+        {/* Filters */}
+        <div className="flex flex-wrap gap-3 mt-4">
+          <div className="relative flex-1 min-w-[200px]">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              placeholder="Search by title, content, or author..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-9"
+            />
+          </div>
+          <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v as typeof statusFilter)}>
+            <SelectTrigger className="w-[140px]">
+              <Filter className="w-4 h-4 mr-2" />
+              <SelectValue placeholder="Status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Status</SelectItem>
+              <SelectItem value="pending">Pending</SelectItem>
+              <SelectItem value="approved">Approved</SelectItem>
+              <SelectItem value="featured">Featured</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select value={typeFilter} onValueChange={setTypeFilter}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Healing Type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Types</SelectItem>
+              {healingTypes.map(type => (
+                <SelectItem key={type.value} value={type.value}>{type.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </CardHeader>
       <CardContent>
         {loading ? (
           <p className="text-center py-8 text-muted-foreground">Loading...</p>
-        ) : stories.length === 0 ? (
-          <p className="text-center py-8 text-muted-foreground">No healing stories submitted yet</p>
+        ) : filteredStories.length === 0 ? (
+          <p className="text-center py-8 text-muted-foreground">
+            {stories.length === 0 ? "No healing stories submitted yet" : "No stories match your filters"}
+          </p>
         ) : (
           <div className="overflow-x-auto">
             <Table>
@@ -161,7 +228,7 @@ export function HealingStoriesManager() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {stories.map((story) => (
+                {filteredStories.map((story) => (
                   <TableRow key={story.id}>
                     <TableCell className="text-sm">
                       {new Date(story.created_at).toLocaleDateString()}
