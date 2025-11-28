@@ -15,6 +15,7 @@ import { toast } from 'sonner';
 import DiscernmentGuidanceDialog from '@/components/symbol-guide/DiscernmentGuidanceDialog';
 import BookmarkNotesDialog from '@/components/symbol-guide/BookmarkNotesDialog';
 import ShareBookmarksDialog from '@/components/symbol-guide/ShareBookmarksDialog';
+import PrintComparisonGuideDialog from '@/components/symbol-guide/PrintComparisonGuideDialog';
 
 const cautionLevels = [
   { id: 'all', label: 'All Levels', icon: null },
@@ -779,15 +780,15 @@ const SymbolGuide = () => {
                       These comparisons help expose inconsistent logic when Greek letters are singled out as "demonic" while other ancient symbols are freely embraced.
                     </p>
                   </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="gap-2 shrink-0"
-                    onClick={exportComparisonsPDF}
-                  >
-                    <Printer className="w-4 h-4" />
-                    Print Guide
-                  </Button>
+                  <PrintComparisonGuideDialog
+                    selectedCategory={comparisonCategory}
+                    trigger={
+                      <Button variant="outline" size="sm" className="gap-2 shrink-0">
+                        <Printer className="w-4 h-4" />
+                        Print Guide
+                      </Button>
+                    }
+                  />
                 </div>
               </CardContent>
             </Card>
