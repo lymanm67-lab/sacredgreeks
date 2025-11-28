@@ -93,6 +93,24 @@ const contentItems: ContentItem[] = [
     duration: "22 min",
     tags: ["Apologetics", "Response"],
   },
+  {
+    id: "vid-4",
+    title: "Pagan Symbols Explained",
+    description: "Educational playlist exploring the origins and meanings of symbols often discussed in the context of Greek organizations from a biblical perspective.",
+    url: "https://www.youtube.com/watch?v=48I-fdTNg8c&list=PLLJ-NqFs_FU7gvbbmAGLTXLUa00AUX8oE",
+    type: "video",
+    featured: true,
+    tags: ["Symbols", "Education", "Playlist"],
+  },
+  {
+    id: "vid-5",
+    title: "Black Greek Letter Organizations Library",
+    description: "Comprehensive video playlist covering the history, traditions, and Christian perspectives on Black Greek Letter Organizations.",
+    url: "https://www.youtube.com/watch?v=GmMQisNNZjI&list=PLLJ-NqFs_FU5WGELPVR12Q0PESqnKHo0X",
+    type: "video",
+    featured: true,
+    tags: ["BGLO", "History", "Playlist"],
+  },
   
   // Study Guides
   {
