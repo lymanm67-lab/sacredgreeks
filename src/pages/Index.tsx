@@ -283,7 +283,7 @@ const Index = () => {
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         {/* Floating Particles Background */}
-        <FloatingParticles />
+        <FloatingParticles enableParallax={false} />
         {/* Subtle background pattern */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sacred/5 via-transparent to-transparent pointer-events-none" />
         
