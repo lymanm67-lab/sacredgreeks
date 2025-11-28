@@ -16,7 +16,7 @@ interface HealingStoryNotificationRequest {
   authorEmail?: string;
 }
 
-const ADMIN_EMAIL = "admin@sacredgreeks.com"; // Update this to actual admin email
+const ADMIN_EMAIL = Deno.env.get("ADMIN_EMAIL") || "info@sacredgreeks.com";
 
 const getHealingTypeLabel = (type: string): string => {
   const types: Record<string, string> = {
