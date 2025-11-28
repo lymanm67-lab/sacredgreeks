@@ -29,15 +29,25 @@ const sectionNav = [
   { id: "testimonials", label: "Stories", icon: null },
 ];
 
-// Core features for the new user journey - reorganized per user request
+// Core features for the new user journey - prioritized by importance
 const coreFeatures = [
+  {
+    title: "Shattered Masks Assessment",
+    description: "Discover your archetype and understand how you navigate identity, faith, and Greek life",
+    icon: Drama,
+    link: "https://drlymanmontgomery.involve.me/shattered-masks-archetype-assessment",
+    color: "from-fuchsia-500 to-pink-600",
+    badge: "Start Here",
+    isExternal: true,
+    useModal: true,
+  },
   {
     title: "30-Day Journey",
     description: "Daily readings, scriptures, and reflections walking you through the P.R.O.O.F. framework",
     icon: Calendar,
     link: "/journey",
     color: "from-sacred to-warm-blue",
-    badge: "Start Here",
+    badge: "Foundation",
   },
   {
     title: "Myth Buster Library",
@@ -59,16 +69,6 @@ const coreFeatures = [
     icon: Users,
     link: "/ask-dr-lyman",
     color: "from-teal-500 to-emerald-600",
-  },
-  {
-    title: "Shattered Masks Assessment",
-    description: "Discover your archetype and understand how you navigate identity, faith, and Greek life",
-    icon: Drama,
-    link: "https://drlymanmontgomery.involve.me/shattered-masks-archetype-assessment",
-    color: "from-fuchsia-500 to-pink-600",
-    badge: "Assessment",
-    isExternal: true,
-    useModal: true,
   },
 ];
 
