@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://sacredgreeks.com/sitemap.xml
+Sitemap: https://sacredgreekslife.com/sitemap.xml
