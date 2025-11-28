@@ -4,7 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark, Book, Clock, Lightbulb, Library, MessageCircle, Users } from 'lucide-react';
+import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark, Book, Clock, Lightbulb, Library, MessageCircle, Users, Play } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { HeroSection } from '@/components/dashboard/HeroSection';
 import { StatsCard } from '@/components/dashboard/StatsCard';
@@ -224,6 +224,15 @@ const Dashboard = () => {
       href: '/ask-dr-lyman',
       iconColor: 'text-white',
       iconBg: 'bg-gradient-to-br from-teal-500 to-emerald-600',
+    },
+    {
+      id: 'content-hub',
+      title: 'Content Hub',
+      description: 'Podcasts, videos, and study guides',
+      icon: Play,
+      href: '/content-hub',
+      iconColor: 'text-white',
+      iconBg: 'bg-gradient-to-br from-red-500 to-pink-600',
     },
     {
       id: 'new-assessment',

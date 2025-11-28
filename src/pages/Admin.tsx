@@ -8,7 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ResourceSuggestionsManager } from "@/components/admin/ResourceSuggestionsManager";
 import { UserManagement } from "@/components/admin/UserManagement";
-import { Home, Users, FileText, Lightbulb } from "lucide-react";
+import { QASubmissionsManager } from "@/components/admin/QASubmissionsManager";
+import { Home, Users, FileText, Lightbulb, MessageSquare } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -136,7 +137,7 @@ const Admin = () => {
 
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="users" className="space-y-6">
-          <TabsList className="grid w-full max-w-md grid-cols-3">
+          <TabsList className="grid w-full max-w-2xl grid-cols-4">
             <TabsTrigger value="users" className="flex items-center gap-2">
               <Users className="h-4 w-4" />
               Users
@@ -144,6 +145,10 @@ const Admin = () => {
             <TabsTrigger value="submissions" className="flex items-center gap-2">
               <FileText className="h-4 w-4" />
               Submissions
+            </TabsTrigger>
+            <TabsTrigger value="qa" className="flex items-center gap-2">
+              <MessageSquare className="h-4 w-4" />
+              Q&A
             </TabsTrigger>
             <TabsTrigger value="resources" className="flex items-center gap-2">
               <Lightbulb className="h-4 w-4" />
@@ -215,6 +220,10 @@ const Admin = () => {
                 )}
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="qa">
+            <QASubmissionsManager />
           </TabsContent>
 
           <TabsContent value="resources">
