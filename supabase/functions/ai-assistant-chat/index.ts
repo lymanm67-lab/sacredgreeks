@@ -5,16 +5,90 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// SECURITY: Input validation limits
+const MAX_MESSAGES = 50;
+const MAX_MESSAGE_LENGTH = 10000;
+const MAX_TOTAL_LENGTH = 100000;
+const VALID_ROLES = ["user", "assistant", "system"] as const;
+
+interface ChatMessage {
+  role: typeof VALID_ROLES[number];
+  content: string;
+}
+
+function validateMessages(messages: unknown): { valid: boolean; error?: string; messages?: ChatMessage[] } {
+  if (!Array.isArray(messages)) {
+    return { valid: false, error: "Messages must be an array" };
+  }
+
+  if (messages.length === 0) {
+    return { valid: false, error: "Messages array cannot be empty" };
+  }
+
+  if (messages.length > MAX_MESSAGES) {
+    return { valid: false, error: `Maximum ${MAX_MESSAGES} messages allowed` };
+  }
+
+  let totalLength = 0;
+  const validatedMessages: ChatMessage[] = [];
+
+  for (let i = 0; i < messages.length; i++) {
+    const msg = messages[i];
+    
+    if (!msg || typeof msg !== "object") {
+      return { valid: false, error: `Invalid message at index ${i}` };
+    }
+
+    if (!msg.role || typeof msg.role !== "string") {
+      return { valid: false, error: `Invalid role at index ${i}` };
+    }
+
+    if (!VALID_ROLES.includes(msg.role as typeof VALID_ROLES[number])) {
+      return { valid: false, error: `Invalid role "${msg.role}" at index ${i}` };
+    }
+
+    if (!msg.content || typeof msg.content !== "string") {
+      return { valid: false, error: `Invalid content at index ${i}` };
+    }
+
+    if (msg.content.length > MAX_MESSAGE_LENGTH) {
+      return { valid: false, error: `Message at index ${i} exceeds ${MAX_MESSAGE_LENGTH} character limit` };
+    }
+
+    totalLength += msg.content.length;
+    
+    validatedMessages.push({
+      role: msg.role as typeof VALID_ROLES[number],
+      content: msg.content,
+    });
+  }
+
+  if (totalLength > MAX_TOTAL_LENGTH) {
+    return { valid: false, error: `Total message length exceeds ${MAX_TOTAL_LENGTH} characters` };
+  }
+
+  return { valid: true, messages: validatedMessages };
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const { messages } = await req.json();
+    const body = await req.json();
+    const { messages } = body;
+
+    // SECURITY: Validate input
+    const validation = validateMessages(messages);
+    if (!validation.valid) {
+      return new Response(
+        JSON.stringify({ error: validation.error }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
-    // Centralized app knowledge - auto-generated from src/data/appKnowledge.ts
-    // Update appKnowledge.ts to update this system prompt
     const systemPrompt = `You are a helpful AI assistant for Sacred Greeks Life, a faith-based app helping Christians navigate Greek life. Created by Dr. Lyman Montgomery, author of "Sacred, Not Sinful: A Christian's Guide to Navigating Greek Life".
 
 **ABOUT THE APP:**
@@ -80,7 +154,7 @@ Be friendly, helpful, and guide users to the right features. Always mention the 
         model: "google/gemini-2.5-flash",
         messages: [
           { role: "system", content: systemPrompt },
-          ...messages,
+          ...(validation.messages || []),
         ],
         stream: true,
       }),
@@ -112,7 +186,7 @@ Be friendly, helpful, and guide users to the right features. Always mention the 
     });
   } catch (error) {
     console.error("Chat error:", error);
-    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : "Unknown error" }), {
+    return new Response(JSON.stringify({ error: "An error occurred while processing your request" }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
