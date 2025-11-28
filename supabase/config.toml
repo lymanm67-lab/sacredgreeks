@@ -47,3 +47,6 @@ verify_jwt = false
 
 [functions.generate-devotionals]
 verify_jwt = false
+
+[functions.chatgpt-action]
+verify_jwt = false
