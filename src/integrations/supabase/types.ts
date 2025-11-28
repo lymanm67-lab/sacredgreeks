@@ -416,6 +416,51 @@ export type Database = {
         }
         Relationships: []
       }
+      healing_stories: {
+        Row: {
+          approved: boolean
+          consent_to_publish: boolean
+          created_at: string
+          email: string | null
+          featured: boolean
+          healing_type: string
+          id: string
+          name: string | null
+          organization: string | null
+          story_content: string
+          story_title: string
+          updated_at: string
+        }
+        Insert: {
+          approved?: boolean
+          consent_to_publish?: boolean
+          created_at?: string
+          email?: string | null
+          featured?: boolean
+          healing_type?: string
+          id?: string
+          name?: string | null
+          organization?: string | null
+          story_content: string
+          story_title: string
+          updated_at?: string
+        }
+        Update: {
+          approved?: boolean
+          consent_to_publish?: boolean
+          created_at?: string
+          email?: string | null
+          featured?: boolean
+          healing_type?: string
+          id?: string
+          name?: string | null
+          organization?: string | null
+          story_content?: string
+          story_title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       journey_progress: {
         Row: {
           completed: boolean

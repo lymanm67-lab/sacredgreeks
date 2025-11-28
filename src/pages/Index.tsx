@@ -4,8 +4,9 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library, Lock, HandHeart, HeartHandshake, ChevronUp, Quote, Phone, MessageCircle } from "lucide-react";
+import { Heart, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library, Lock, HandHeart, HeartHandshake, ChevronUp, Quote, Phone, MessageCircle, PenLine } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
+import { ShareHealingStoryDialog } from "@/components/ShareHealingStoryDialog";
 import { MobileQRCode } from "@/components/MobileQRCode";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import logo from "@/assets/sacred-greeks-logo.png";
@@ -673,7 +674,7 @@ const Index = () => {
                     <Quote className="w-8 h-8 text-white" />
                   </div>
                 </div>
-                <div className="text-center md:text-left">
+                <div className="text-center md:text-left flex-1">
                   <p className="text-lg md:text-xl italic text-foreground/90 mb-3">
                     "After years of spiritual trauma from my church experience, I thought I'd never find healing. These resources helped me understand that my pain was valid and gave me a path forward. I'm finally reconnecting with my faith on my own terms."
                   </p>
@@ -681,6 +682,22 @@ const Index = () => {
                     — Anonymous Member, Healing Journey Participant
                   </p>
                 </div>
+              </div>
+              
+              {/* Share Your Story CTA */}
+              <div className="mt-6 pt-6 border-t border-amber-500/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p className="text-sm text-muted-foreground text-center sm:text-left">
+                  Your story could inspire someone else's healing journey.
+                </p>
+                <ShareHealingStoryDialog>
+                  <Button 
+                    variant="outline" 
+                    className="border-amber-500/50 text-amber-600 dark:text-amber-400 hover:bg-amber-500/10 hover:border-amber-500"
+                  >
+                    <PenLine className="w-4 h-4 mr-2" />
+                    Share Your Story
+                  </Button>
+                </ShareHealingStoryDialog>
               </div>
             </div>
 
