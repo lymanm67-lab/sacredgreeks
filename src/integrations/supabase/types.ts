@@ -1365,7 +1365,42 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      healing_stories_public: {
+        Row: {
+          created_at: string | null
+          featured: boolean | null
+          healing_type: string | null
+          id: string | null
+          name: string | null
+          organization: string | null
+          story_content: string | null
+          story_title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          featured?: boolean | null
+          healing_type?: string | null
+          id?: string | null
+          name?: string | null
+          organization?: string | null
+          story_content?: string | null
+          story_title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          featured?: boolean | null
+          healing_type?: string | null
+          id?: string | null
+          name?: string | null
+          organization?: string | null
+          story_content?: string | null
+          story_title?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       award_points: {
