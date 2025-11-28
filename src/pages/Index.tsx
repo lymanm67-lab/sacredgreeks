@@ -4,7 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library, Lock, HandHeart, HeartHandshake, ChevronUp } from "lucide-react";
+import { Heart, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library, Lock, HandHeart, HeartHandshake, ChevronUp, Quote, Phone, MessageCircle } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
 import { MobileQRCode } from "@/components/MobileQRCode";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -663,6 +663,61 @@ const Index = () => {
                   </Card>
                 </Link>
               ))}
+            </div>
+
+            {/* Testimonial Quote */}
+            <div className="mt-8 bg-gradient-to-r from-amber-500/10 via-rose-500/10 to-amber-500/10 rounded-2xl p-6 md:p-8 border border-amber-500/20">
+              <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+                <div className="flex-shrink-0">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-500 to-rose-500 flex items-center justify-center">
+                    <Quote className="w-8 h-8 text-white" />
+                  </div>
+                </div>
+                <div className="text-center md:text-left">
+                  <p className="text-lg md:text-xl italic text-foreground/90 mb-3">
+                    "After years of spiritual trauma from my church experience, I thought I'd never find healing. These resources helped me understand that my pain was valid and gave me a path forward. I'm finally reconnecting with my faith on my own terms."
+                  </p>
+                  <p className="text-sm font-medium text-amber-600 dark:text-amber-400">
+                    — Anonymous Member, Healing Journey Participant
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Crisis Support Section */}
+            <div className="mt-8 bg-gradient-to-br from-rose-500/10 to-red-500/10 dark:from-rose-950/30 dark:to-red-950/30 rounded-2xl p-6 md:p-8 border-2 border-rose-500/30">
+              <div className="flex flex-col items-center text-center">
+                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-rose-500 to-red-600 flex items-center justify-center mb-4 animate-pulse">
+                  <Phone className="w-7 h-7 text-white" />
+                </div>
+                <h4 className="text-xl md:text-2xl font-bold text-rose-600 dark:text-rose-400 mb-2">
+                  Need Immediate Support?
+                </h4>
+                <p className="text-muted-foreground mb-4 max-w-xl">
+                  If you're in crisis or experiencing a spiritual emergency, please reach out. You don't have to face this alone.
+                </p>
+                <div className="grid sm:grid-cols-2 gap-4 w-full max-w-lg">
+                  <a 
+                    href="tel:988" 
+                    className="flex items-center justify-center gap-2 bg-rose-500 hover:bg-rose-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hover:scale-105 shadow-lg"
+                  >
+                    <Phone className="w-5 h-5" />
+                    988 Suicide & Crisis Lifeline
+                  </a>
+                  <a 
+                    href="https://www.crisistextline.org/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-6 rounded-xl transition-all hover:scale-105 shadow-lg"
+                  >
+                    <MessageCircle className="w-5 h-5" />
+                    Text HOME to 741741
+                  </a>
+                </div>
+                <p className="text-xs text-muted-foreground mt-4">
+                  Available 24/7 • Free • Confidential
+                </p>
+              </div>
             </div>
           </div>
         </div>
