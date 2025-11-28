@@ -18,6 +18,7 @@ export interface RitualEntry {
   cautionLevel: "low" | "medium" | "high";
   cautionNote?: string;
   alternatives?: string;
+  scripturalContext?: string;
 }
 
 export const symbolGuideContent: SymbolEntry[] = [
@@ -154,7 +155,8 @@ export const ritualGuideContent: RitualEntry[] = [
     christianApproach: "Approach as a learning opportunity about the organization's history and values. Refuse any activities that violate Scripture, dignity, or conscience. Remember that membership is a privilege you can decline if requirements conflict with faith.",
     cautionLevel: "medium",
     cautionNote: "Be prepared to discuss modifications or opt out of specific elements that conflict with your faith.",
-    alternatives: "If elements are problematic, speak with leadership about alternatives that honor both organizational tradition and your faith."
+    alternatives: "If elements are problematic, speak with leadership about alternatives that honor both organizational tradition and your faith.",
+    scripturalContext: "Romans 12:2 - 'Do not conform to the pattern of this world, but be transformed by the renewing of your mind.'"
   },
   {
     id: "pledge-education",
@@ -162,7 +164,8 @@ export const ritualGuideContent: RitualEntry[] = [
     category: "membership",
     description: "Learning organizational history, values, songs, and traditions",
     christianApproach: "Learning is valuable. Engage fully with educational content. If any material promotes values contrary to Christianity, you can learn about it without endorsing it—similar to studying world religions academically.",
-    cautionLevel: "low"
+    cautionLevel: "low",
+    scripturalContext: "Proverbs 18:15 - 'The heart of the discerning acquires knowledge, for the ears of the wise seek it out.'"
   },
   {
     id: "service-requirements",
@@ -170,7 +173,8 @@ export const ritualGuideContent: RitualEntry[] = [
     category: "membership",
     description: "Community service expectations for new and ongoing members",
     christianApproach: "Embrace these wholeheartedly! Service is deeply biblical. Use service opportunities as expressions of Christ's love and as witness to your faith motivation.",
-    cautionLevel: "low"
+    cautionLevel: "low",
+    scripturalContext: "Galatians 5:13 - 'Serve one another humbly in love.'"
   },
   {
     id: "ceremony-participation",
@@ -179,7 +183,8 @@ export const ritualGuideContent: RitualEntry[] = [
     description: "Active participation in organizational ceremonies",
     christianApproach: "Participate with integrity. If asked to make statements, understand what you're saying. If ceremonial elements conflict with faith, discuss beforehand with leadership. Most organizations accommodate sincere religious concerns.",
     cautionLevel: "medium",
-    cautionNote: "Know what you're agreeing to. Ask questions beforehand. Maintain your freedom to abstain from specific elements."
+    cautionNote: "Know what you're agreeing to. Ask questions beforehand. Maintain your freedom to abstain from specific elements.",
+    scripturalContext: "Colossians 3:17 - 'Whatever you do, whether in word or deed, do it all in the name of the Lord Jesus.'"
   },
   {
     id: "secrecy-expectations",
@@ -188,7 +193,8 @@ export const ritualGuideContent: RitualEntry[] = [
     description: "Expectations to keep certain organizational matters private",
     christianApproach: "Organizations legitimately protect private matters—as do churches, businesses, and families. Distinguish between appropriate privacy and covering up wrongdoing. Never agree to hide unethical behavior.",
     cautionLevel: "medium",
-    cautionNote: "Confidentiality about internal business is fine. Secrecy that covers abuse or illegality is not. Know the difference."
+    cautionNote: "Confidentiality about internal business is fine. Secrecy that covers abuse or illegality is not. Know the difference.",
+    scripturalContext: "Ephesians 5:11 - 'Have nothing to do with the fruitless deeds of darkness, but rather expose them.'"
   },
   {
     id: "financial-commitment",
@@ -196,7 +202,8 @@ export const ritualGuideContent: RitualEntry[] = [
     category: "practical",
     description: "Dues, fees, and financial expectations of membership",
     christianApproach: "Budget for organizational costs as you would any meaningful commitment. Ensure dues don't compromise tithing or essential obligations. View financial contributions as supporting service, scholarship, and community.",
-    cautionLevel: "low"
+    cautionLevel: "low",
+    scripturalContext: "Proverbs 21:5 - 'The plans of the diligent lead to profit as surely as haste leads to poverty.'"
   }
 ];
 

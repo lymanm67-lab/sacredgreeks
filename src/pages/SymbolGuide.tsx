@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Filter, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, Book, ExternalLink, Share2 } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Filter, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, Book, ExternalLink, Share2, FileDown } from 'lucide-react';
 import { symbolGuideContent, ritualGuideContent, symbolCategories, SymbolEntry, RitualEntry } from '@/data/symbolGuideContent';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -180,6 +180,70 @@ const SymbolGuide = () => {
     return `/bible-study?search=${encodeURIComponent(cleanRef)}`;
   };
 
+  const exportBookmarksPDF = () => {
+    if (bookmarks.length === 0) {
+      toast.error('No bookmarks to export');
+      return;
+    }
+
+    const content: string[] = [
+      'SACRED GREEKS SYMBOL GUIDE',
+      'My Bookmarked Items & Personal Notes',
+      '=' .repeat(50),
+      `Generated: ${new Date().toLocaleDateString()}`,
+      '',
+    ];
+
+    bookmarks.forEach((bookmark, index) => {
+      const item = getItemDetails(bookmark);
+      if (!item) return;
+      
+      const isSymbol = bookmark.content_json.itemType === 'symbol';
+      const scriptureRef = isSymbol && 'scripturalContext' in item ? item.scripturalContext : 
+                          !isSymbol && 'scripturalContext' in item ? item.scripturalContext : null;
+      
+      content.push(`${index + 1}. ${item.name}`);
+      content.push(`   Type: ${bookmark.content_json.itemType.charAt(0).toUpperCase() + bookmark.content_json.itemType.slice(1)}`);
+      content.push(`   Caution Level: ${item.cautionLevel.charAt(0).toUpperCase() + item.cautionLevel.slice(1)}`);
+      content.push('');
+      content.push(`   Description: ${item.description}`);
+      content.push('');
+      content.push(`   Christian Perspective: ${isSymbol && 'christianPerspective' in item ? item.christianPerspective : ''}`);
+      content.push(`   ${!isSymbol && 'christianApproach' in item ? 'Christian Approach: ' + item.christianApproach : ''}`);
+      
+      if (scriptureRef) {
+        content.push('');
+        content.push(`   Scripture: ${scriptureRef}`);
+      }
+      
+      if (bookmark.notes) {
+        content.push('');
+        content.push(`   MY PERSONAL NOTES:`);
+        content.push(`   ${bookmark.notes}`);
+      }
+      
+      content.push('');
+      content.push('-'.repeat(50));
+      content.push('');
+    });
+
+    content.push('');
+    content.push('Sacred Greeks - Faith & Greek Life Together');
+    content.push('www.sacredgreeks.org');
+
+    const blob = new Blob([content.join('\n')], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `sacred-greeks-bookmarks-${new Date().toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    toast.success('Bookmarks exported successfully!');
+  };
+
   const filteredSymbols = useMemo(() => {
     return symbolGuideContent.filter(s => {
       const matchesCategory = symbolCategory === 'all' || s.category === symbolCategory;
@@ -327,6 +391,22 @@ const SymbolGuide = () => {
               <p className="text-sm text-badge-success-foreground"><CheckCircle className="w-4 h-4 inline mr-1" /> {ritual.alternatives}</p>
             </div>
           )}
+          {ritual.scripturalContext && (
+            <div className="bg-sacred/5 p-3 rounded-lg border border-sacred/20">
+              <div className="flex items-start justify-between gap-2">
+                <p className="text-xs text-foreground italic flex-1">
+                  <Book className="w-3 h-3 inline mr-1 text-sacred" />
+                  {ritual.scripturalContext}
+                </p>
+                <Link to={getScriptureLink(ritual.scripturalContext)}>
+                  <Button variant="ghost" size="sm" className="gap-1 text-xs h-7 px-2">
+                    <ExternalLink className="w-3 h-3" />
+                    Study
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
     );
@@ -374,6 +454,18 @@ const SymbolGuide = () => {
                       <CardTitle className="text-base">My Bookmarks ({bookmarks.length})</CardTitle>
                     </div>
                     <div className="flex items-center gap-2">
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="gap-1 h-8"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          exportBookmarksPDF();
+                        }}
+                      >
+                        <FileDown className="w-4 h-4" />
+                        Export
+                      </Button>
                       <ShareBookmarksDialog 
                         bookmarkIds={bookmarks.map(b => b.id)}
                         trigger={

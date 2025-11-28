@@ -377,6 +377,12 @@ const ContentHub = () => {
         <section className="border-t pt-8 space-y-4">
           <h2 className="text-lg font-semibold">Quick Links</h2>
           <div className="flex flex-wrap gap-3">
+            <Link to="/video-library">
+              <Button variant="outline" size="sm">
+                <Video className="h-4 w-4 mr-2" />
+                Video Library
+              </Button>
+            </Link>
             <Link to="/resources">
               <Button variant="outline" size="sm">
                 <BookOpen className="h-4 w-4 mr-2" />
