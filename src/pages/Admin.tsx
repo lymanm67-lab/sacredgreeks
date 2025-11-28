@@ -11,7 +11,7 @@ import { UserManagement } from "@/components/admin/UserManagement";
 import { QASubmissionsManager } from "@/components/admin/QASubmissionsManager";
 import { HealingStoriesManager } from "@/components/admin/HealingStoriesManager";
 import VideoSuggestionsManager from "@/components/admin/VideoSuggestionsManager";
-import { Home, Users, FileText, Lightbulb, MessageSquare, Heart, Video } from "lucide-react";
+import { Home, Users, FileText, Lightbulb, MessageSquare, Heart, Video, Rocket } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -128,11 +128,19 @@ const Admin = () => {
               <span className="text-sm font-medium">Home</span>
             </Link>
             <h1 className="text-lg font-semibold text-foreground">Sacred Greeks Admin</h1>
-            <Link to="/dashboard">
-              <Button variant="outline" size="sm">
-                Dashboard
-              </Button>
-            </Link>
+            <div className="flex items-center gap-2">
+              <Link to="/beta-checklist">
+                <Button variant="outline" size="sm" className="gap-2">
+                  <Rocket className="w-4 h-4" />
+                  Launch Checklist
+                </Button>
+              </Link>
+              <Link to="/dashboard">
+                <Button variant="outline" size="sm">
+                  Dashboard
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </header>
