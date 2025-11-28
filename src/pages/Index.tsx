@@ -170,6 +170,19 @@ const Index = () => {
       {/* Floating CTA for non-authenticated users */}
       {!user && <FloatingCTA scrollThreshold={600} />}
 
+      {/* Floating Support Button */}
+      <button
+        onClick={() => scrollToSection('healing-resources')}
+        className={`fixed bottom-24 md:bottom-20 left-4 z-40 flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-amber-500 to-rose-500 text-white rounded-full shadow-lg shadow-amber-500/30 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-amber-500/40 ${
+          showMobileNav ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 pointer-events-none'
+        }`}
+        aria-label="Need support?"
+      >
+        <HeartHandshake className="h-4 w-4" />
+        <span className="text-sm font-medium hidden sm:inline">Need Support?</span>
+        <span className="text-sm font-medium sm:hidden">Support</span>
+      </button>
+
       {/* Back to Top Button - All Devices */}
       <button
         onClick={scrollToTop}
@@ -351,6 +364,32 @@ const Index = () => {
               </Button>
             </Link>
           )}
+
+          {/* Mobile-First Healing Resources in Hero */}
+          <div className="mt-10 md:hidden">
+            <div className="text-center mb-4">
+              <Badge className="bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/30">
+                <HeartHandshake className="w-3 h-3 mr-1" />
+                Need Support?
+              </Badge>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <Link to="/family-ministry-fallout">
+                <div className="p-4 rounded-xl bg-gradient-to-br from-amber-500/10 to-rose-500/10 border border-amber-500/30 hover:border-amber-500/60 transition-all hover:scale-105 group">
+                  <HandHeart className="w-8 h-8 text-amber-500 mb-2 group-hover:scale-110 transition-transform" />
+                  <p className="font-semibold text-sm text-foreground">Family & Ministry Fallout</p>
+                  <p className="text-xs text-muted-foreground mt-1">Rebuild trust & heal</p>
+                </div>
+              </Link>
+              <Link to="/church-hurt-healing">
+                <div className="p-4 rounded-xl bg-gradient-to-br from-teal-500/10 to-cyan-500/10 border border-teal-500/30 hover:border-teal-500/60 transition-all hover:scale-105 group">
+                  <HeartHandshake className="w-8 h-8 text-teal-500 mb-2 group-hover:scale-110 transition-transform" />
+                  <p className="font-semibold text-sm text-foreground">Church Hurt Healing</p>
+                  <p className="text-xs text-muted-foreground mt-1">Process & restore</p>
+                </div>
+              </Link>
+            </div>
+          </div>
         </div>
 
         {/* Mobile Install CTA */}
