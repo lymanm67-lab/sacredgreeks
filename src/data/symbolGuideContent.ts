@@ -213,3 +213,161 @@ export const symbolCategories = [
   { id: "cultural", label: "Cultural" },
   { id: "ritual", label: "Ritual" }
 ];
+
+export interface CulturalComparisonEntry {
+  id: string;
+  category: string;
+  symbol: string;
+  ancientConnection: string;
+  modernUsage: string;
+  appUsage: string;
+}
+
+export const culturalComparisonCategories = [
+  { id: "all", label: "All Categories" },
+  { id: "weddings", label: "Weddings & Family" },
+  { id: "beauty", label: "Body & Beauty" },
+  { id: "brands", label: "Brands & Logos" },
+  { id: "civic", label: "Civic & Legal" },
+  { id: "church", label: "Church Architecture" },
+  { id: "death", label: "Death & Memorials" },
+  { id: "medicine", label: "Medicine & Oaths" }
+];
+
+export const culturalComparisons: CulturalComparisonEntry[] = [
+  // Weddings and Family Rituals
+  {
+    id: "wedding-rings",
+    category: "weddings",
+    symbol: "Wedding Rings",
+    ancientConnection: "Rings used in Roman and other ancient cultures as legal or covenant markers, often linked to the idea of an unbroken circle and household authority.",
+    modernUsage: "Christians exchange rings in church as a sign of covenant and lifelong commitment.",
+    appUsage: "Show that believers freely use a symbol with pre-Christian roots while focusing on the meaning they give it before God."
+  },
+  {
+    id: "wedding-party",
+    category: "weddings",
+    symbol: "Bridesmaids, Groomsmen, Best Man",
+    ancientConnection: "In some European customs, attendants and a strong 'best man' guarded the bride and sometimes even helped 'steal' her from her family. Bridesmaids and veils were said to confuse spirits or rivals.",
+    modernUsage: "Modern wedding parties are about honor, friendship, and photo moments, not kidnapping or spirit magic.",
+    appUsage: "Help users see that practices can shift meaning over time, so origin alone is not the whole story."
+  },
+  // Body and Beauty Practices
+  {
+    id: "wigs",
+    category: "beauty",
+    symbol: "Wigs and Hair Pieces",
+    ancientConnection: "Ancient Egypt, Greece, and Rome used wigs and elaborate hair as signs of status, beauty, and sometimes ritual.",
+    modernUsage: "Wigs, extensions, locs, and protective styles are standard parts of modern grooming and fashion, including in church.",
+    appUsage: "Reinforce that Christians already use beauty practices with complex roots while keeping their worship of God."
+  },
+  {
+    id: "cosmetics",
+    category: "beauty",
+    symbol: "Eye Shadow and Cosmetics",
+    ancientConnection: "Eye paints and kohl-lined eyes were ordinary in Egypt and the Mediterranean, associated with beauty, rank, and, at times, spiritual ideas.",
+    modernUsage: "Makeup is everyday for interviews, worship teams, media, and daily life.",
+    appUsage: "Invite users to ask, 'If we can use ancient cosmetic practices with wisdom, why single out Greek letters alone?'"
+  },
+  // Brands and Logos
+  {
+    id: "nike",
+    category: "brands",
+    symbol: "Nike",
+    ancientConnection: "Named after the Greek goddess of victory. The swoosh suggests movement and speed.",
+    modernUsage: "Sports culture, sneaker culture, and Christian athletes all use and wear Nike without worshipping a goddess.",
+    appUsage: "Perfect example when people say, 'Anything named after a Greek god is automatically demonic.'"
+  },
+  {
+    id: "car-brands",
+    category: "brands",
+    symbol: "Mercedes-Benz, Volkswagen, Volvo, Adidas",
+    ancientConnection: "Logos draw on symbols like stars, circles, shields, and stylized initials. Some have historic links to industry, nobility, or mythic ideas of power and safety.",
+    modernUsage: "Many believers drive these cars, wear these clothes, and never think of them as spiritual covenants.",
+    appUsage: "Show that nobody demands public repentance videos for driving a car with a star, but some require them for Greek letters."
+  },
+  {
+    id: "starbucks",
+    category: "brands",
+    symbol: "Starbucks Siren",
+    ancientConnection: "Based on a mythic sea figure from maritime lore, used to signal 'alluring' coffee and travel.",
+    modernUsage: "Christians meet for Bible study at Starbucks under a sea woman logo.",
+    appUsage: "Used to expose inconsistent logic when symbols with ancient stories are treated as neutral in one space and 'demonic' in another."
+  },
+  // Civic and Legal Symbols
+  {
+    id: "lady-justice",
+    category: "civic",
+    symbol: "Lady Justice",
+    ancientConnection: "Rooted in the Roman goddess Justitia and earlier Greek ideas of Dike and Themis. Scales and a blindfold carry that symbolism.",
+    modernUsage: "Courtrooms use her image to stand for fairness, not to invite prayer to a goddess.",
+    appUsage: "Great example to talk about 'respecting the virtue, not worshiping the statue.'"
+  },
+  {
+    id: "lady-liberty",
+    category: "civic",
+    symbol: "Lady Liberty",
+    ancientConnection: "Inspired by the Roman goddess Libertas, holding a torch and a tablet.",
+    modernUsage: "The Statue of Liberty is seen as a symbol of freedom and welcome, not as a deity.",
+    appUsage: "Shows that Greek and Roman names and forms are used symbolically in a nation many call 'Christian' without constant panic."
+  },
+  // Church Space and Architecture
+  {
+    id: "church-architecture",
+    category: "church",
+    symbol: "Domes, Columns, Basilica Layout",
+    ancientConnection: "Many church buildings echo Roman basilicas, Greek temples, and imperial halls in their shapes and designs.",
+    modernUsage: "Christians worship Jesus in buildings shaped by Greco-Roman architecture.",
+    appUsage: "Helps users see that architecture with classical roots is accepted as usual, while Greek letters are targeted."
+  },
+  {
+    id: "pulpits",
+    category: "church",
+    symbol: "Pulpits and Elevated Platforms",
+    ancientConnection: "Raised speaking platforms and central 'bema' style spaces existed in ancient courts and assemblies.",
+    modernUsage: "Modern pulpits function as teaching platforms that people respect, not altars to a new god.",
+    appUsage: "Shows that Christians adapt cultural forms but direct worship to Christ."
+  },
+  // Death, Grief, and Memorials
+  {
+    id: "funerals-repass",
+    category: "death",
+    symbol: "Funerals and Repass",
+    ancientConnection: "The pattern of gathering, speaking, and then sharing a meal after burial parallels ancient feasts of remembrance.",
+    modernUsage: "Black church culture treats the repass as sacred hospitality and community care.",
+    appUsage: "Use this to show how practices can be baptized and reshaped in Christ without denying their long history."
+  },
+  {
+    id: "eulogies",
+    category: "death",
+    symbol: "Eulogies",
+    ancientConnection: "From the Greek 'eulogia' or 'good words,' rooted in the practice of publicly praising someone.",
+    modernUsage: "Almost every Christian funeral includes a eulogy or reflections.",
+    appUsage: "Makes the point that a direct Greek term is embraced in church life without fear."
+  },
+  {
+    id: "memorial-day",
+    category: "death",
+    symbol: "Memorial Day and Grave Decoration",
+    ancientConnection: "Modern Memorial Day grew from Decoration Day after the Civil War, and some customs echo older practices, such as the Roman Rosalia, in which wreaths and flowers were placed at graves.",
+    modernUsage: "Churches and families decorate graves and hold remembrance services.",
+    appUsage: "Connect to Romans 14 and remind users that meaning and conscience matter more than origin alone."
+  },
+  {
+    id: "burial-wreaths",
+    category: "death",
+    symbol: "Burial Wreaths",
+    ancientConnection: "Wreaths and garlands for the dead were common in Roman festivals such as Rosalia.",
+    modernUsage: "Wreaths are used on caskets, doors, and grave sites as signs of honor and remembrance.",
+    appUsage: "Another example that helps Christians see how they already live with classical symbols without worshiping them."
+  },
+  // Medicine and Oaths
+  {
+    id: "hippocratic-oath",
+    category: "medicine",
+    symbol: "Hippocratic Oath (Original)",
+    ancientConnection: "The original Greek oath invoked Apollo, Asclepius, Hygieia, and Panacea as witnesses.",
+    modernUsage: "Modern medical oaths have been revised, and most no longer call on Greek gods, but the tradition keeps the Hippocratic name.",
+    appUsage: "Shows how a practice with explicit Greek deity language has been adapted, while BGLOs are often denied that same possibility."
+  }
+];

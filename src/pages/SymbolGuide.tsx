@@ -6,8 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Filter, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, Book, ExternalLink, Share2, FileDown } from 'lucide-react';
-import { symbolGuideContent, ritualGuideContent, symbolCategories, SymbolEntry, RitualEntry } from '@/data/symbolGuideContent';
+import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Filter, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, Book, ExternalLink, Share2, FileDown, Scale, History, Sparkles } from 'lucide-react';
+import { symbolGuideContent, ritualGuideContent, symbolCategories, culturalComparisons, culturalComparisonCategories, SymbolEntry, RitualEntry, CulturalComparisonEntry } from '@/data/symbolGuideContent';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -45,6 +45,7 @@ const SymbolGuide = () => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [symbolCategory, setSymbolCategory] = useState('all');
+  const [comparisonCategory, setComparisonCategory] = useState('all');
   const [cautionLevel, setCautionLevel] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [bookmarksOpen, setBookmarksOpen] = useState(false);
@@ -266,6 +267,65 @@ const SymbolGuide = () => {
       return matchesCaution && matchesSearch;
     });
   }, [cautionLevel, searchQuery]);
+
+  const filteredComparisons = useMemo(() => {
+    return culturalComparisons.filter(c => {
+      const matchesCategory = comparisonCategory === 'all' || c.category === comparisonCategory;
+      const matchesSearch = searchQuery === '' ||
+        c.symbol.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        c.ancientConnection.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        c.modernUsage.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        c.appUsage.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+  }, [comparisonCategory, searchQuery]);
+
+  const renderComparisonCard = (comparison: CulturalComparisonEntry) => {
+    const categoryLabel = culturalComparisonCategories.find(c => c.id === comparison.category)?.label || comparison.category;
+    return (
+      <Card key={comparison.id} className="overflow-hidden">
+        <CardHeader className="pb-2 bg-gradient-to-r from-sacred/5 to-warm-blue/5">
+          <div className="flex items-start justify-between gap-2">
+            <CardTitle className="text-lg">{comparison.symbol}</CardTitle>
+            <Badge variant="outline" className="w-fit capitalize shrink-0">{categoryLabel}</Badge>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4 pt-4">
+          <div className="grid gap-3">
+            <div className="flex gap-3">
+              <div className="shrink-0 w-8 h-8 rounded-full bg-amber-500/10 flex items-center justify-center">
+                <History className="w-4 h-4 text-amber-600" />
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-sm text-amber-700 dark:text-amber-400 mb-1">Ancient Connection</h4>
+                <p className="text-sm text-muted-foreground">{comparison.ancientConnection}</p>
+              </div>
+            </div>
+            
+            <div className="flex gap-3">
+              <div className="shrink-0 w-8 h-8 rounded-full bg-badge-success/10 flex items-center justify-center">
+                <Sparkles className="w-4 h-4 text-badge-success" />
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-sm text-badge-success mb-1">How It Shows Up Today</h4>
+                <p className="text-sm text-muted-foreground">{comparison.modernUsage}</p>
+              </div>
+            </div>
+            
+            <div className="flex gap-3">
+              <div className="shrink-0 w-8 h-8 rounded-full bg-sacred/10 flex items-center justify-center">
+                <Scale className="w-4 h-4 text-sacred" />
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-sm text-sacred mb-1">How This Helps You</h4>
+                <p className="text-sm text-muted-foreground">{comparison.appUsage}</p>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  };
 
   const renderSymbolCard = (symbol: SymbolEntry) => {
     const bookmark = getBookmark(symbol.id, 'symbol');
@@ -568,9 +628,10 @@ const SymbolGuide = () => {
         </div>
 
         <Tabs defaultValue="symbols" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="symbols">Symbols ({filteredSymbols.length})</TabsTrigger>
-            <TabsTrigger value="rituals">Rituals & Practices ({filteredRituals.length})</TabsTrigger>
+            <TabsTrigger value="rituals">Rituals ({filteredRituals.length})</TabsTrigger>
+            <TabsTrigger value="comparisons">Comparisons ({filteredComparisons.length})</TabsTrigger>
           </TabsList>
 
           <TabsContent value="symbols" className="space-y-4">
@@ -602,6 +663,44 @@ const SymbolGuide = () => {
               </Card>
             )}
             {filteredRituals.map(renderRitualCard)}
+          </TabsContent>
+
+          <TabsContent value="comparisons" className="space-y-4">
+            <Card className="mb-4 bg-gradient-to-r from-amber-500/10 to-sacred/10 border-sacred/20">
+              <CardContent className="pt-6">
+                <h3 className="font-semibold mb-2 flex items-center gap-2">
+                  <Scale className="w-5 h-5 text-sacred" />
+                  Why This Matters
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Christians already use many symbols and practices with pre-Christian or pagan origins—from wedding rings to church architecture to brand logos. 
+                  These comparisons help expose inconsistent logic when Greek letters are singled out as "demonic" while other ancient symbols are freely embraced.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <div className="flex flex-wrap gap-2 mb-4">
+              {culturalComparisonCategories.map(cat => (
+                <Button
+                  key={cat.id}
+                  variant={comparisonCategory === cat.id ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setComparisonCategory(cat.id)}
+                  className={comparisonCategory === cat.id ? 'bg-sacred hover:bg-sacred/90' : ''}
+                >
+                  {cat.label}
+                </Button>
+              ))}
+            </div>
+            
+            {filteredComparisons.length === 0 && (
+              <Card className="p-8 text-center">
+                <p className="text-muted-foreground">No comparisons found matching your filters</p>
+              </Card>
+            )}
+            <div className="grid gap-4 md:grid-cols-2">
+              {filteredComparisons.map(renderComparisonCard)}
+            </div>
           </TabsContent>
         </Tabs>
       </main>
