@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library, Lock, HandHeart, HeartHandshake } from "lucide-react";
+import { Heart, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library, Lock, HandHeart, HeartHandshake, ChevronUp } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
 import { MobileQRCode } from "@/components/MobileQRCode";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -14,6 +15,14 @@ import { ScrollProgressIndicator } from "@/components/ui/ScrollProgressIndicator
 import { FloatingCTA } from "@/components/ui/FloatingCTA";
 import { StatsSection } from "@/components/landing/StatsSection";
 import { ShareSection } from "@/components/landing/ShareSection";
+
+// Mobile section navigation items
+const sectionNav = [
+  { id: "core-features", label: "Core Tools" },
+  { id: "healing-resources", label: "Healing" },
+  { id: "more-features", label: "More" },
+  { id: "testimonials", label: "Stories" },
+];
 
 // Core features for the new user journey
 const coreFeatures = [
@@ -48,6 +57,26 @@ const coreFeatures = [
   },
 ];
 
+// Healing & Support resources - prominent placement
+const healingResources = [
+  {
+    title: "Family & Ministry Fallout",
+    description: "Navigate damaged relationships, rebuild trust, and have redemptive conversations with family and church",
+    icon: HandHeart,
+    link: "/family-ministry-fallout",
+    color: "from-amber-500 to-rose-500",
+    badge: "New",
+  },
+  {
+    title: "Church Hurt Healing",
+    description: "Process trauma with guided prayers, journaling prompts, and real testimonies from Christian Greeks",
+    icon: HeartHandshake,
+    link: "/church-hurt-healing",
+    color: "from-teal-500 to-cyan-600",
+    badge: "New",
+  },
+];
+
 const features = [
   {
     title: "Resources Hub",
@@ -65,24 +94,6 @@ const features = [
     color: "text-blue-500",
     requiresAuth: true,
     lockBadgeText: "Daily guidance delivered",
-  },
-  {
-    title: "Family & Ministry Fallout",
-    description: "Navigate damaged relationships, rebuild trust, and have redemptive conversations with family and church",
-    icon: HandHeart,
-    link: "/family-ministry-fallout",
-    color: "text-amber-500",
-    requiresAuth: false,
-    badge: "New",
-  },
-  {
-    title: "Church Hurt Healing",
-    description: "Process trauma with guided prayers, journaling prompts, and real testimonies from Christian Greeks",
-    icon: HeartHandshake,
-    link: "/church-hurt-healing",
-    color: "text-teal-500",
-    requiresAuth: false,
-    badge: "New",
   },
   {
     title: "5 Persona Assessment",
@@ -113,6 +124,41 @@ const benefits = [
 
 const Index = () => {
   const { user } = useAuth();
+  const [showMobileNav, setShowMobileNav] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show mobile nav after scrolling past hero
+      setShowMobileNav(window.scrollY > 400);
+      
+      // Update active section based on scroll position
+      const sections = sectionNav.map(s => document.getElementById(s.id));
+      const scrollPos = window.scrollY + 150;
+      
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section && section.offsetTop <= scrollPos) {
+          setActiveSection(sectionNav[i].id);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const heroText = "Your daily companion for integrating faith and Greek life. Get devotionals, guidance, prayer tools, and progress tracking, all grounded in the P.R.O.O.F. framework from Sacred, Not Sinful.";
 
@@ -123,6 +169,31 @@ const Index = () => {
       
       {/* Floating CTA for non-authenticated users */}
       {!user && <FloatingCTA scrollThreshold={600} />}
+
+      {/* Mobile Section Navigation */}
+      <div className={`fixed bottom-4 left-1/2 -translate-x-1/2 z-40 md:hidden transition-all duration-300 ${showMobileNav ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'}`}>
+        <div className="flex items-center gap-1 bg-background/95 backdrop-blur-lg border border-border/50 rounded-full px-2 py-1.5 shadow-lg">
+          {sectionNav.map((section) => (
+            <button
+              key={section.id}
+              onClick={() => scrollToSection(section.id)}
+              className={`px-3 py-1.5 text-xs font-medium rounded-full transition-all ${
+                activeSection === section.id 
+                  ? 'bg-sacred text-white' 
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+              }`}
+            >
+              {section.label}
+            </button>
+          ))}
+          <button
+            onClick={scrollToTop}
+            className="p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted rounded-full ml-1"
+          >
+            <ChevronUp className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
       
       {/* Header with Auth */}
       <header className="border-b border-border/50 bg-background/80 backdrop-blur-lg sticky top-0 z-50">
@@ -309,7 +380,7 @@ const Index = () => {
       )}
 
       {/* Core Features - The Real-Life Scene Solution */}
-      <div className="container mx-auto px-4 py-16 bg-gradient-to-b from-muted/30 to-background">
+      <div id="core-features" className="container mx-auto px-4 py-16 bg-gradient-to-b from-muted/30 to-background scroll-mt-20">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
             <Badge className="bg-sacred/10 text-sacred border-sacred/20 mb-4">For the Christian Greek at Midnight</Badge>
@@ -351,8 +422,51 @@ const Index = () => {
         </div>
       </div>
 
+      {/* Healing & Support Resources - Prominent Placement */}
+      <div id="healing-resources" className="container mx-auto px-4 py-12 scroll-mt-20">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-8">
+            <Badge className="bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20 mb-4">Support & Restoration</Badge>
+            <h2 className="text-2xl md:text-3xl font-bold mb-3">
+              Healing for the <span className="gradient-text">Wounded</span>
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">
+              Resources for navigating family tension, church rejection, and spiritual wounds from your Greek journey.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {healingResources.map((resource) => (
+              <Link key={resource.title} to={resource.link}>
+                <Card className="h-full transition-all hover:shadow-xl hover:scale-105 border-2 hover:border-amber-500/50 cursor-pointer group overflow-hidden bg-gradient-to-br from-background to-amber-50/5 dark:to-amber-950/10">
+                  <div className={`h-2 bg-gradient-to-r ${resource.color}`} />
+                  <CardHeader className="space-y-3">
+                    <div className="flex items-start justify-between">
+                      <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${resource.color} flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg`}>
+                        <resource.icon className="w-7 h-7 text-white" />
+                      </div>
+                      {resource.badge && (
+                        <Badge className="bg-amber-500 text-white">{resource.badge}</Badge>
+                      )}
+                    </div>
+                    <CardTitle className="text-xl group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                      {resource.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-base">
+                      {resource.description}
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Features Section */}
-      <div className="container mx-auto px-4 py-16">
+      <div id="more-features" className="container mx-auto px-4 py-16 scroll-mt-20">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-fade-in-up">
@@ -469,7 +583,9 @@ const Index = () => {
 
 
       {/* Testimonials */}
-      <Testimonials />
+      <div id="testimonials" className="scroll-mt-20">
+        <Testimonials />
+      </div>
 
       {/* Share Section */}
       <ShareSection />
