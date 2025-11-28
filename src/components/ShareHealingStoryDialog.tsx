@@ -88,6 +88,16 @@ export function ShareHealingStoryDialog({ children }: ShareHealingStoryDialogPro
 
       if (error) throw error;
 
+      // Send notification emails (non-blocking)
+      supabase.functions.invoke("notify-healing-story", {
+        body: {
+          storyTitle: formData.story_title.trim(),
+          healingType: formData.healing_type,
+          authorName: formData.name || undefined,
+          authorEmail: formData.email || undefined
+        }
+      }).catch(err => console.error("Notification error:", err));
+
       toast.success("Thank you for sharing your story! It will be reviewed before being published.");
       setOpen(false);
       setFormData({

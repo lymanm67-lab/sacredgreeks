@@ -367,22 +367,17 @@ const Index = () => {
                 Need Support?
               </Badge>
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              <Link to="/family-ministry-fallout">
-                <div className="p-4 rounded-xl bg-gradient-to-br from-amber-500/10 to-rose-500/10 border border-amber-500/30 hover:border-amber-500/60 transition-all hover:scale-105 group">
-                  <HandHeart className="w-8 h-8 text-amber-500 mb-2 group-hover:scale-110 transition-transform" />
-                  <p className="font-semibold text-sm text-foreground">Family & Ministry Fallout</p>
-                  <p className="text-xs text-muted-foreground mt-1">Rebuild trust & heal</p>
+            <Link to="/family-ministry-fallout">
+              <div className="p-4 rounded-xl bg-gradient-to-br from-amber-500/10 to-rose-500/10 border border-amber-500/30 hover:border-amber-500/60 transition-all hover:scale-105 group">
+                <div className="flex items-start gap-3">
+                  <HandHeart className="w-10 h-10 text-amber-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                  <div>
+                    <p className="font-semibold text-sm text-foreground">Family, Ministry & Church Hurt Healing</p>
+                    <p className="text-xs text-muted-foreground mt-1">Navigate damaged relationships, process spiritual trauma, and find healing with guided prayers, journaling, and real testimonies</p>
+                  </div>
                 </div>
-              </Link>
-              <Link to="/church-hurt-healing">
-                <div className="p-4 rounded-xl bg-gradient-to-br from-teal-500/10 to-cyan-500/10 border border-teal-500/30 hover:border-teal-500/60 transition-all hover:scale-105 group">
-                  <HeartHandshake className="w-8 h-8 text-teal-500 mb-2 group-hover:scale-110 transition-transform" />
-                  <p className="font-semibold text-sm text-foreground">Church Hurt Healing</p>
-                  <p className="text-xs text-muted-foreground mt-1">Process & restore</p>
-                </div>
-              </Link>
-            </div>
+              </div>
+            </Link>
           </div>
         </div>
 
