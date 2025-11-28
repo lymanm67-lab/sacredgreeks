@@ -1010,6 +1010,42 @@ export type Database = {
           },
         ]
       }
+      shattered_masks_results: {
+        Row: {
+          archetype: string
+          archetype_description: string | null
+          created_at: string
+          growth_areas: string[] | null
+          id: string
+          notes: string | null
+          strengths: string[] | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          archetype: string
+          archetype_description?: string | null
+          created_at?: string
+          growth_areas?: string[] | null
+          id?: string
+          notes?: string | null
+          strengths?: string[] | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          archetype?: string
+          archetype_description?: string | null
+          created_at?: string
+          growth_areas?: string[] | null
+          id?: string
+          notes?: string | null
+          strengths?: string[] | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       study_session_progress: {
         Row: {
           completed: boolean
