@@ -1010,6 +1010,48 @@ export type Database = {
           },
         ]
       }
+      shared_symbol_bookmarks: {
+        Row: {
+          bookmark_ids: string[]
+          created_at: string
+          description: string | null
+          expires_at: string | null
+          id: string
+          is_public: boolean
+          share_token: string
+          title: string
+          updated_at: string
+          user_id: string
+          view_count: number | null
+        }
+        Insert: {
+          bookmark_ids?: string[]
+          created_at?: string
+          description?: string | null
+          expires_at?: string | null
+          id?: string
+          is_public?: boolean
+          share_token: string
+          title?: string
+          updated_at?: string
+          user_id: string
+          view_count?: number | null
+        }
+        Update: {
+          bookmark_ids?: string[]
+          created_at?: string
+          description?: string | null
+          expires_at?: string | null
+          id?: string
+          is_public?: boolean
+          share_token?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+          view_count?: number | null
+        }
+        Relationships: []
+      }
       shattered_masks_results: {
         Row: {
           archetype: string
@@ -1290,6 +1332,7 @@ export type Database = {
       }
       cleanup_old_rate_limits: { Args: never; Returns: undefined }
       generate_referral_code: { Args: never; Returns: string }
+      generate_symbol_share_token: { Args: never; Returns: string }
       get_submission_email_if_consented: {
         Args: { submission_id: string }
         Returns: string
