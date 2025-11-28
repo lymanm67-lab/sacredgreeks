@@ -1,5 +1,5 @@
 // Enhanced Service Worker for PWA with offline support
-const CACHE_NAME = 'sacred-greeks-v4';
+const CACHE_NAME = 'sacred-greeks-v5';
 const RUNTIME_CACHE = 'sacred-greeks-runtime';
 const IMAGE_CACHE = 'sacred-greeks-images';
 
@@ -39,6 +39,13 @@ self.addEventListener('activate', (event) => {
       );
     }).then(() => self.clients.claim())
   );
+});
+
+// Listen for skip waiting message from the app
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
 
 // Fetch event - network first, fallback to cache
@@ -163,6 +170,8 @@ self.addEventListener('push', (event) => {
       badge: data.badge || '/icon-192.png',
       vibrate: [200, 100, 200],
       data: data.data || {},
+      tag: data.tag || 'default',
+      requireInteraction: data.requireInteraction || false,
       actions: [
         {
           action: 'open',
@@ -204,3 +213,24 @@ self.addEventListener('notificationclick', (event) => {
     );
   }
 });
+
+// Periodic background sync for checking updates (if supported)
+self.addEventListener('periodicsync', (event) => {
+  if (event.tag === 'check-updates') {
+    event.waitUntil(checkForAppUpdates());
+  }
+});
+
+async function checkForAppUpdates() {
+  try {
+    // Notify clients about potential updates
+    const clients = await self.clients.matchAll();
+    clients.forEach(client => {
+      client.postMessage({
+        type: 'CHECK_UPDATE'
+      });
+    });
+  } catch (error) {
+    console.error('Error checking for updates:', error);
+  }
+}
