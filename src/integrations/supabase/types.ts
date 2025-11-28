@@ -756,6 +756,42 @@ export type Database = {
         }
         Relationships: []
       }
+      saved_response_coach_results: {
+        Row: {
+          context: string | null
+          created_at: string
+          feedback_json: Json
+          id: string
+          notes: string | null
+          original_response: string
+          scenario: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          context?: string | null
+          created_at?: string
+          feedback_json: Json
+          id?: string
+          notes?: string | null
+          original_response: string
+          scenario: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          context?: string | null
+          created_at?: string
+          feedback_json?: Json
+          id?: string
+          notes?: string | null
+          original_response?: string
+          scenario?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       shared_certificates: {
         Row: {
           assessment_type: string

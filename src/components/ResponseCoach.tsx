@@ -4,11 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Progress } from "@/components/ui/progress";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { 
   Bot, 
-  Send, 
   Loader2, 
   CheckCircle2, 
   AlertTriangle, 
@@ -17,10 +15,14 @@ import {
   MessageCircle,
   Copy,
   RefreshCw,
-  Sparkles
+  Sparkles,
+  Bookmark,
+  BookmarkCheck
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useSavedResponses } from "@/hooks/use-saved-responses";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface FeedbackData {
   overallRating: "excellent" | "good" | "needs-work" | "concerning";
@@ -73,11 +75,15 @@ const ratingLabels = {
 
 export function ResponseCoach() {
   const { toast } = useToast();
+  const { user } = useAuth();
+  const { saveResponse, savedResponses } = useSavedResponses();
   const [scenario, setScenario] = useState<string>("");
   const [customContext, setCustomContext] = useState("");
   const [userResponse, setUserResponse] = useState("");
   const [loading, setLoading] = useState(false);
   const [feedback, setFeedback] = useState<FeedbackData | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   const getContext = () => {
     const selectedScenario = scenarios.find(s => s.value === scenario);
@@ -141,6 +147,25 @@ export function ResponseCoach() {
   const resetForm = () => {
     setFeedback(null);
     setUserResponse("");
+    setSaved(false);
+  };
+
+  const handleSaveResponse = async () => {
+    if (!feedback) return;
+    
+    setSaving(true);
+    const selectedScenario = scenarios.find(s => s.value === scenario);
+    const result = await saveResponse(
+      selectedScenario?.label || scenario,
+      getContext(),
+      userResponse,
+      feedback
+    );
+    setSaving(false);
+    
+    if (result) {
+      setSaved(true);
+    }
   };
 
   return (
@@ -372,15 +397,40 @@ export function ResponseCoach() {
             )}
 
             {/* Action Buttons */}
-            <div className="flex gap-3">
-              <Button variant="outline" onClick={resetForm} className="flex-1">
+            <div className="flex gap-3 flex-wrap">
+              <Button variant="outline" onClick={resetForm} className="flex-1 min-w-[140px]">
                 <RefreshCw className="w-4 h-4 mr-2" />
-                Try Another Response
+                Try Another
               </Button>
-              <Button onClick={() => setUserResponse(feedback.improvedResponse || userResponse)} className="flex-1 bg-sacred hover:bg-sacred/90">
-                Use Improved Version
+              {user && (
+                <Button 
+                  variant="outline" 
+                  onClick={handleSaveResponse}
+                  disabled={saving || saved}
+                  className="flex-1 min-w-[140px]"
+                >
+                  {saving ? (
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  ) : saved ? (
+                    <BookmarkCheck className="w-4 h-4 mr-2 text-green-500" />
+                  ) : (
+                    <Bookmark className="w-4 h-4 mr-2" />
+                  )}
+                  {saved ? "Saved" : "Save Result"}
+                </Button>
+              )}
+              <Button 
+                onClick={() => setUserResponse(feedback.improvedResponse || userResponse)} 
+                className="flex-1 min-w-[140px] bg-sacred hover:bg-sacred/90"
+              >
+                Use Improved
               </Button>
             </div>
+            {!user && (
+              <p className="text-xs text-center text-muted-foreground">
+                Sign in to save your response coach results for later reference
+              </p>
+            )}
           </div>
         )}
       </CardContent>
