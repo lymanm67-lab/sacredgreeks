@@ -75,6 +75,8 @@ export const QASubmissionsManager = () => {
     
     setSaving(true);
     try {
+      const wasAlreadyAnswered = !!selectedSubmission.answer;
+      
       const { error } = await supabase
         .from('qa_submissions')
         .update({
@@ -88,10 +90,43 @@ export const QASubmissionsManager = () => {
 
       if (error) throw error;
 
-      toast({
-        title: "Success",
-        description: "Answer saved successfully",
-      });
+      // Send email notification if this is a new answer and user provided email
+      if (answer && !wasAlreadyAnswered && selectedSubmission.email) {
+        try {
+          const { error: notifyError } = await supabase.functions.invoke('send-qa-answer-notification', {
+            body: {
+              email: selectedSubmission.email,
+              question: selectedSubmission.question,
+              answer: answer,
+              category: selectedSubmission.category,
+            },
+          });
+
+          if (notifyError) {
+            console.error('Failed to send notification:', notifyError);
+            toast({
+              title: "Answer Saved",
+              description: "Answer saved but email notification failed to send",
+            });
+          } else {
+            toast({
+              title: "Success",
+              description: "Answer saved and notification sent to user",
+            });
+          }
+        } catch (notifyErr) {
+          console.error('Error sending notification:', notifyErr);
+          toast({
+            title: "Answer Saved",
+            description: "Answer saved but email notification failed",
+          });
+        }
+      } else {
+        toast({
+          title: "Success",
+          description: "Answer saved successfully",
+        });
+      }
 
       setSelectedSubmission(null);
       loadSubmissions();

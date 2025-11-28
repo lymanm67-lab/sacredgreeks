@@ -1,61 +1,100 @@
 project_id = "mrwbbwdvtndgaewwwdko"
 
-[functions.send-results-email]
-verify_jwt = true
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
 
-[functions.subscribe-push]
-verify_jwt = true
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 15
 
-[functions.send-push-notification]
+[studio]
+enabled = true
+port = 54323
+api_url = "http://localhost"
+
+[inbucket]
+enabled = true
+port = 54324
+
+[storage]
+enabled = true
+
+[auth]
+enabled = true
+site_url = "http://localhost:3000"
+additional_redirect_urls = ["https://localhost:3000"]
+jwt_expiry = 3600
+enable_signup = true
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = false
+
+[functions.ai-assistant-chat]
+verify_jwt = false
+
+[functions.bible-verse-ai-search]
+verify_jwt = false
+
+[functions.chatgpt-action]
+verify_jwt = false
+
+[functions.check-achievements]
 verify_jwt = false
 
 [functions.daily-devotional-reminder]
+verify_jwt = false
+
+[functions.generate-achievement-badge]
+verify_jwt = false
+
+[functions.generate-devotionals]
+verify_jwt = false
+
+[functions.generate-prayer]
+verify_jwt = false
+
+[functions.journey-reminder]
 verify_jwt = false
 
 [functions.prayer-journal-reminder]
 verify_jwt = false
 
 [functions.rate-limit]
-verify_jwt = true
-
-[functions.send-invite-email]
-verify_jwt = true
-
-[functions.generate-achievement-badge]
-verify_jwt = true
-
-[functions.ai-assistant-chat]
 verify_jwt = false
-
-[functions.study-recommendations]
-verify_jwt = true
-
-[functions.check-achievements]
-verify_jwt = true
-
-[functions.text-to-speech]
-verify_jwt = false
-
-[functions.bible-verse-ai-search]
-verify_jwt = false
-
-[functions.generate-prayer]
-verify_jwt = true
 
 [functions.recommend-resources]
-verify_jwt = false
-
-[functions.generate-devotionals]
-verify_jwt = false
-
-[functions.chatgpt-action]
-verify_jwt = false
-
-[functions.study-reminder]
 verify_jwt = false
 
 [functions.response-coach]
 verify_jwt = false
 
-[functions.journey-reminder]
+[functions.send-invite-email]
+verify_jwt = false
+
+[functions.send-push-notification]
+verify_jwt = false
+
+[functions.send-results-email]
+verify_jwt = false
+
+[functions.study-recommendations]
+verify_jwt = false
+
+[functions.study-reminder]
+verify_jwt = false
+
+[functions.subscribe-push]
+verify_jwt = false
+
+[functions.text-to-speech]
+verify_jwt = false
+
+[functions.send-qa-answer-notification]
 verify_jwt = false
