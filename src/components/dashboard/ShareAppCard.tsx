@@ -7,7 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 
 export function ShareAppCard() {
   const { toast } = useToast();
-  const appUrl = 'https://www.sacredgreekslife.com';
+  const appUrl = 'https://sacredgreekslife.com';
   const shareMessage = `Check out Sacred Greeks Life - daily devotionals, prayer tools, and community support for Greek life members! ${appUrl}`;
 
   const handleCopyLink = () => {

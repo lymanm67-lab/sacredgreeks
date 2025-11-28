@@ -17,7 +17,7 @@ export function SMSShareButton({
   showLabel = true 
 }: SMSShareButtonProps) {
   const { toast } = useToast();
-  const appUrl = 'https://www.sacredgreekslife.com';
+  const appUrl = 'https://sacredgreekslife.com';
   const message = `A gift from Dr. Lyman Montgomery – the Sacred Greeks Life App helps you navigate the tension between Greek life and faith. Features daily devotionals, prayer tools, and Bible study resources to grow spiritually while honoring both your faith and fraternity/sorority. For Greek life members and supporters: ${appUrl}`;
 
   const handleSMSShare = () => {

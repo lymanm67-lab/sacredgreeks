@@ -91,7 +91,7 @@ const Install = () => {
                     <div className="flex-1 pt-1">
                       <p className="font-semibold mb-1">Open in Safari</p>
                       <p className="text-sm text-muted-foreground">
-                        Navigate to <span className="font-mono bg-muted px-2 py-0.5 rounded">www.sacredgreekslife.com</span> in Safari browser
+                        Navigate to <span className="font-mono bg-muted px-2 py-0.5 rounded">sacredgreekslife.com</span> in Safari browser
                       </p>
                     </div>
                   </li>
@@ -165,7 +165,7 @@ const Install = () => {
                     <div className="flex-1 pt-1">
                       <p className="font-semibold mb-1">Open in Chrome</p>
                       <p className="text-sm text-muted-foreground">
-                        Navigate to <span className="font-mono bg-muted px-2 py-0.5 rounded">www.sacredgreekslife.com</span> in Chrome browser
+                        Navigate to <span className="font-mono bg-muted px-2 py-0.5 rounded">sacredgreekslife.com</span> in Chrome browser
                       </p>
                     </div>
                   </li>
