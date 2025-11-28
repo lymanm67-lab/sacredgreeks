@@ -1082,6 +1082,10 @@ export type Database = {
         Returns: Json
       }
       calculate_level: { Args: { points: number }; Returns: number }
+      can_view_shared_certificate: {
+        Args: { _share_token: string }
+        Returns: boolean
+      }
       can_view_shared_result: {
         Args: { _share_token: string }
         Returns: boolean
