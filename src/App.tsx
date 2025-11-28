@@ -51,6 +51,7 @@ const About = lazy(() => import("./pages/About"));
 const PodcastAppearances = lazy(() => import("./pages/PodcastAppearances"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
+const FamilyMinistryFallout = lazy(() => import("./pages/FamilyMinistryFallout"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -106,6 +107,7 @@ const App = () => (
                     <Route path="/qr-code" element={<QRCodePage />} />
                     <Route path="/resources" element={<Resources />} />
                     <Route path="/about" element={<About />} />
+                    <Route path="/family-ministry-fallout" element={<FamilyMinistryFallout />} />
                     <Route
                       path="/prayer-guide"
                       element={
