@@ -3,10 +3,10 @@ import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-cron-secret',
 };
 
-// SECURITY FIX #3: Input validation schema
+// Input validation schema
 const requestSchema = z.object({
   schedule: z.enum(['daily', 'weekly'])
 });
@@ -27,6 +27,18 @@ Deno.serve(async (req) => {
   }
 
   try {
+    // SECURITY: Validate cron secret
+    const cronSecret = Deno.env.get('CRON_SECRET');
+    const providedSecret = req.headers.get('x-cron-secret');
+    
+    if (!providedSecret || providedSecret !== cronSecret) {
+      console.error('Unauthorized: Invalid cron secret');
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     console.log('Starting prayer journal reminder job...');
     
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -41,7 +53,7 @@ Deno.serve(async (req) => {
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // SECURITY FIX #3: Server-side validation
+    // Server-side validation
     const requestBody = await req.json();
     const validation = requestSchema.safeParse(requestBody);
     
@@ -156,7 +168,6 @@ Deno.serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
     );
   } catch (error: any) {
-    // SECURITY FIX #4: Log detailed errors server-side, return generic message to client
     console.error('Error in prayer-journal-reminder function:', error);
     return new Response(
       JSON.stringify({ error: 'Failed to send reminders. Please try again.' }),

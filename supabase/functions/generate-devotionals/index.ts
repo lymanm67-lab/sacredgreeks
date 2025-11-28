@@ -3,7 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-cron-secret",
 };
 
 const PROOF_FOCUSES = [
@@ -42,13 +42,74 @@ const THEMES = [
   "Extending grace to struggling brothers/sisters"
 ];
 
+// Input validation
+const MAX_DAYS = 90;
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { startDate, daysToGenerate = 30 } = await req.json();
+    // SECURITY: Validate cron secret OR admin authentication
+    const cronSecret = Deno.env.get("CRON_SECRET");
+    const providedSecret = req.headers.get("x-cron-secret");
+    const authHeader = req.headers.get("authorization");
+    
+    let isAuthorized = false;
+    
+    // Check cron secret first
+    if (providedSecret && cronSecret && providedSecret === cronSecret) {
+      isAuthorized = true;
+    }
+    
+    // Check for admin user if no cron secret
+    if (!isAuthorized && authHeader) {
+      const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
+      const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY") ?? "";
+      const authClient = createClient(supabaseUrl, supabaseAnonKey, {
+        global: { headers: { Authorization: authHeader } }
+      });
+      
+      const { data: { user }, error: authError } = await authClient.auth.getUser();
+      if (user && !authError) {
+        // Check if user is admin
+        const { data: roleData } = await authClient
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", user.id)
+          .eq("role", "admin")
+          .single();
+        
+        isAuthorized = !!roleData;
+      }
+    }
+    
+    if (!isAuthorized) {
+      console.error("Unauthorized: Invalid cron secret and not an admin user");
+      return new Response(
+        JSON.stringify({ error: "Unauthorized" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const body = await req.json().catch(() => ({}));
+    let { startDate, daysToGenerate = 30 } = body;
+    
+    // SECURITY: Input validation
+    if (typeof daysToGenerate !== "number" || daysToGenerate < 1 || daysToGenerate > MAX_DAYS) {
+      return new Response(
+        JSON.stringify({ error: `daysToGenerate must be between 1 and ${MAX_DAYS}` }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+    
+    if (startDate && (typeof startDate !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(startDate))) {
+      return new Response(
+        JSON.stringify({ error: "Invalid startDate format. Use YYYY-MM-DD" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
     
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
@@ -153,7 +214,7 @@ serve(async (req) => {
     }
 
     return new Response(
-      JSON.stringify({ error: errorMessage || "Failed to generate devotionals" }),
+      JSON.stringify({ error: "Failed to generate devotionals" }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }

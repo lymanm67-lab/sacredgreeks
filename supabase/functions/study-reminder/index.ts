@@ -2,13 +2,12 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { Resend } from "https://esm.sh/resend@4.0.0";
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
 const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-cron-secret",
 };
 
 interface UserProgress {
@@ -26,6 +25,25 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // SECURITY: Validate cron secret
+    const cronSecret = Deno.env.get("CRON_SECRET");
+    const providedSecret = req.headers.get("x-cron-secret");
+    
+    if (!providedSecret || providedSecret !== cronSecret) {
+      console.error("Unauthorized: Invalid cron secret");
+      return new Response(
+        JSON.stringify({ error: "Unauthorized" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    if (!resendApiKey) {
+      throw new Error("RESEND_API_KEY is not configured");
+    }
+
+    const resend = new Resend(resendApiKey);
+
     console.log("Starting study reminder process...");
 
     // Create Supabase client with service role key to bypass RLS
@@ -84,7 +102,7 @@ const handler = async (req: Request): Promise<Response> => {
     const emailPromises = usersToNotify.map(async (user) => {
       const greeting = user.full_name ? `Hi ${user.full_name}` : "Hi there";
       const nextSession = user.completed_sessions + 1;
-      const studyGuideUrl = `${Deno.env.get("SUPABASE_URL")?.replace("supabase.co", "lovable.app") || "https://app.lovable.app"}/study`;
+      const studyGuideUrl = "https://sacredgreekslife.com/study";
 
       try {
         const emailResponse = await resend.emails.send({
@@ -159,10 +177,10 @@ const handler = async (req: Request): Promise<Response> => {
           `,
         });
 
-        console.log(`Email sent to ${user.email}:`, emailResponse);
+        console.log(`Email sent to user ${user.user_id}`);
         return { success: true, email: user.email };
       } catch (error) {
-        console.error(`Failed to send email to ${user.email}:`, error);
+        console.error(`Failed to send email to user ${user.user_id}:`, error);
         return { success: false, email: user.email, error: error instanceof Error ? error.message : String(error) };
       }
     });
@@ -179,20 +197,16 @@ const handler = async (req: Request): Promise<Response> => {
         total_users: usersToNotify.length,
         successful: successCount,
         failed: failCount,
-        results,
       }),
       {
         status: 200,
-        headers: {
-          "Content-Type": "application/json",
-          ...corsHeaders,
-        },
+        headers: { "Content-Type": "application/json", ...corsHeaders },
       }
     );
   } catch (error: any) {
     console.error("Error in study-reminder function:", error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: "Failed to send study reminders" }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },

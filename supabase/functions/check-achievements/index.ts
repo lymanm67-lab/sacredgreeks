@@ -3,13 +3,16 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.7.1";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
+
+// Valid action types
+const VALID_ACTION_TYPES = ["devotional", "study", "assessment", "prayer"] as const;
+type ActionType = typeof VALID_ACTION_TYPES[number];
 
 interface CheckAchievementsRequest {
   userId: string;
-  actionType: "devotional" | "study" | "assessment" | "prayer";
+  actionType: ActionType;
 }
 
 serve(async (req) => {
@@ -18,11 +21,62 @@ serve(async (req) => {
   }
 
   try {
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    // SECURITY: Require authentication
+    const authHeader = req.headers.get("authorization");
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: "Authorization header required" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
 
-    const { userId, actionType } = await req.json() as CheckAchievementsRequest;
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
+    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    
+    // Verify the user's authentication
+    const authClient = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
+    
+    const { data: { user }, error: authError } = await authClient.auth.getUser();
+    if (authError || !user) {
+      console.error("Auth error:", authError);
+      return new Response(
+        JSON.stringify({ error: "Invalid authentication" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Parse and validate input
+    const body = await req.json();
+    const { userId, actionType } = body as CheckAchievementsRequest;
+
+    // SECURITY: Input validation
+    if (!userId || typeof userId !== "string" || userId.length > 100) {
+      return new Response(
+        JSON.stringify({ error: "Invalid userId" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    if (!actionType || !VALID_ACTION_TYPES.includes(actionType as ActionType)) {
+      return new Response(
+        JSON.stringify({ error: "Invalid actionType. Must be one of: " + VALID_ACTION_TYPES.join(", ") }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // SECURITY: User can only check achievements for themselves
+    if (user.id !== userId) {
+      return new Response(
+        JSON.stringify({ error: "Can only check achievements for your own user" }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Use service role for database operations
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     console.log("Checking achievements for user:", userId, "action:", actionType);
 
@@ -246,7 +300,7 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: "An error occurred while checking achievements",
       }),
       {
         status: 500,

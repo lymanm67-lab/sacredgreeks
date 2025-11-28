@@ -31,7 +31,7 @@ verify_jwt = false
 verify_jwt = true
 
 [functions.check-achievements]
-verify_jwt = false
+verify_jwt = true
 
 [functions.text-to-speech]
 verify_jwt = false
@@ -49,4 +49,7 @@ verify_jwt = false
 verify_jwt = false
 
 [functions.chatgpt-action]
+verify_jwt = false
+
+[functions.study-reminder]
 verify_jwt = false

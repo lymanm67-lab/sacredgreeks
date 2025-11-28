@@ -6,17 +6,38 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// SECURITY: Input validation
+const MAX_QUERY_LENGTH = 1000;
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { query } = await req.json();
+    const body = await req.json();
+    const { query } = body;
     
-    if (!query || query.trim().length === 0) {
+    // SECURITY: Validate input
+    if (!query || typeof query !== "string") {
       return new Response(
-        JSON.stringify({ error: 'Query is required' }),
+        JSON.stringify({ error: 'Query is required and must be a string' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const trimmedQuery = query.trim();
+
+    if (trimmedQuery.length === 0) {
+      return new Response(
+        JSON.stringify({ error: 'Query cannot be empty' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    if (trimmedQuery.length > MAX_QUERY_LENGTH) {
+      return new Response(
+        JSON.stringify({ error: `Query must be ${MAX_QUERY_LENGTH} characters or less` }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -30,7 +51,7 @@ serve(async (req) => {
       );
     }
 
-    console.log('Processing Bible verse search query:', query);
+    console.log('Processing Bible verse search query');
 
     // Call Lovable AI to help find relevant Bible verses
     const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
@@ -59,7 +80,7 @@ Be precise with references (e.g., "James 2:10" not just "James 2"). Include the 
           },
           {
             role: 'user',
-            content: query
+            content: trimmedQuery
           }
         ],
       }),
@@ -92,7 +113,7 @@ Be precise with references (e.g., "James 2:10" not just "James 2"). Include the 
     const aiData = await aiResponse.json();
     const aiText = aiData.choices?.[0]?.message?.content || '[]';
     
-    console.log('AI response:', aiText);
+    console.log('AI response received');
 
     // Parse the AI response
     let verses;
@@ -104,8 +125,25 @@ Be precise with references (e.g., "James 2:10" not just "James 2"). Include the 
       } else {
         verses = JSON.parse(aiText);
       }
+
+      // Validate and sanitize parsed verses
+      if (!Array.isArray(verses)) {
+        verses = [];
+      }
+
+      verses = verses
+        .filter((v: unknown) => v && typeof v === "object")
+        .slice(0, 10)
+        .map((v: any) => ({
+          reference: String(v.reference || "").substring(0, 100),
+          text: String(v.text || "").substring(0, 2000),
+          keywords: Array.isArray(v.keywords) 
+            ? v.keywords.filter((k: unknown) => typeof k === "string").slice(0, 10).map((k: string) => k.substring(0, 50))
+            : []
+        }));
+
     } catch (parseError) {
-      console.error('Failed to parse AI response:', parseError, aiText);
+      console.error('Failed to parse AI response:', parseError);
       return new Response(
         JSON.stringify({ error: 'Failed to parse AI response' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -120,7 +158,7 @@ Be precise with references (e.g., "James 2:10" not just "James 2"). Include the 
   } catch (error) {
     console.error('Error in bible-verse-ai-search:', error);
     return new Response(
-      JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),
+      JSON.stringify({ error: 'An error occurred while searching for verses' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
