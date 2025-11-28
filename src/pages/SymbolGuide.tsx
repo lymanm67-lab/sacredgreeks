@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Filter, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, Book, ExternalLink, Share2, FileDown, Scale, History, Sparkles } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Filter, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, Book, ExternalLink, Share2, FileDown, Scale, History, Sparkles, Printer } from 'lucide-react';
 import { symbolGuideContent, ritualGuideContent, symbolCategories, culturalComparisons, culturalComparisonCategories, SymbolEntry, RitualEntry, CulturalComparisonEntry } from '@/data/symbolGuideContent';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -243,6 +243,106 @@ const SymbolGuide = () => {
     URL.revokeObjectURL(url);
     
     toast.success('Bookmarks exported successfully!');
+  };
+
+  const exportComparisonsPDF = () => {
+    const comparisonsToExport = comparisonCategory === 'all' 
+      ? culturalComparisons 
+      : culturalComparisons.filter(c => c.category === comparisonCategory);
+
+    const categoryGroups = comparisonsToExport.reduce((acc, comparison) => {
+      const cat = culturalComparisonCategories.find(c => c.id === comparison.category)?.label || comparison.category;
+      if (!acc[cat]) acc[cat] = [];
+      acc[cat].push(comparison);
+      return acc;
+    }, {} as Record<string, CulturalComparisonEntry[]>);
+
+    const content: string[] = [
+      '═'.repeat(60),
+      '',
+      '        CULTURAL COMPARISONS DISCUSSION GUIDE',
+      '        Sacred Greeks - Faith & Greek Life Together',
+      '',
+      '═'.repeat(60),
+      '',
+      `Generated: ${new Date().toLocaleDateString()}`,
+      '',
+      '─'.repeat(60),
+      '',
+      'PURPOSE OF THIS GUIDE',
+      '',
+      'Christians already use many symbols and practices with pre-Christian',
+      'or pagan origins—from wedding rings to church architecture to brand',
+      'logos. These comparisons help expose inconsistent logic when Greek',
+      'letters are singled out as "demonic" while other ancient symbols',
+      'are freely embraced.',
+      '',
+      'Use this guide in your Bible study, small group, or personal',
+      'reflection to think critically about how we engage with culture.',
+      '',
+      '═'.repeat(60),
+      '',
+    ];
+
+    Object.entries(categoryGroups).forEach(([category, items]) => {
+      content.push(`▸ ${category.toUpperCase()}`);
+      content.push('─'.repeat(60));
+      content.push('');
+
+      items.forEach((comparison, index) => {
+        content.push(`${index + 1}. ${comparison.symbol}`);
+        content.push('');
+        content.push('   ANCIENT CONNECTION:');
+        content.push(`   ${comparison.ancientConnection}`);
+        content.push('');
+        content.push('   HOW IT SHOWS UP TODAY:');
+        content.push(`   ${comparison.modernUsage}`);
+        content.push('');
+        content.push('   HOW THIS HELPS YOU:');
+        content.push(`   ${comparison.appUsage}`);
+        content.push('');
+        content.push('   ┄'.repeat(30));
+        content.push('');
+      });
+
+      content.push('');
+    });
+
+    content.push('═'.repeat(60));
+    content.push('');
+    content.push('DISCUSSION QUESTIONS FOR YOUR GROUP');
+    content.push('');
+    content.push('1. Which comparison surprised you the most? Why?');
+    content.push('');
+    content.push('2. Have you ever been challenged about Greek letters but not');
+    content.push('   about wedding rings or Nike shoes? How did you respond?');
+    content.push('');
+    content.push('3. Read Romans 14:5-6. How does this passage apply to symbols');
+    content.push('   and practices that have changed meaning over time?');
+    content.push('');
+    content.push('4. What is the difference between using a symbol and');
+    content.push('   worshipping what it originally represented?');
+    content.push('');
+    content.push('5. How can you graciously share these insights with someone');
+    content.push('   who believes all Greek letters are inherently sinful?');
+    content.push('');
+    content.push('═'.repeat(60));
+    content.push('');
+    content.push('Learn more at: www.sacredgreeks.org');
+    content.push('Book: "Sacred, Not Sinful" by Dr. Lyman Montgomery');
+    content.push('');
+
+    const blob = new Blob([content.join('\n')], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `sacred-greeks-cultural-comparisons-${new Date().toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    toast.success('Discussion guide exported! Print or share with your group.');
   };
 
   const filteredSymbols = useMemo(() => {
@@ -668,14 +768,27 @@ const SymbolGuide = () => {
           <TabsContent value="comparisons" className="space-y-4">
             <Card className="mb-4 bg-gradient-to-r from-amber-500/10 to-sacred/10 border-sacred/20">
               <CardContent className="pt-6">
-                <h3 className="font-semibold mb-2 flex items-center gap-2">
-                  <Scale className="w-5 h-5 text-sacred" />
-                  Why This Matters
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  Christians already use many symbols and practices with pre-Christian or pagan origins—from wedding rings to church architecture to brand logos. 
-                  These comparisons help expose inconsistent logic when Greek letters are singled out as "demonic" while other ancient symbols are freely embraced.
-                </p>
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1">
+                    <h3 className="font-semibold mb-2 flex items-center gap-2">
+                      <Scale className="w-5 h-5 text-sacred" />
+                      Why This Matters
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Christians already use many symbols and practices with pre-Christian or pagan origins—from wedding rings to church architecture to brand logos. 
+                      These comparisons help expose inconsistent logic when Greek letters are singled out as "demonic" while other ancient symbols are freely embraced.
+                    </p>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="gap-2 shrink-0"
+                    onClick={exportComparisonsPDF}
+                  >
+                    <Printer className="w-4 h-4" />
+                    Print Guide
+                  </Button>
+                </div>
               </CardContent>
             </Card>
             
