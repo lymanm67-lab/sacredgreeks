@@ -15,6 +15,39 @@ import { FloatingCTA } from "@/components/ui/FloatingCTA";
 import { StatsSection } from "@/components/landing/StatsSection";
 import { ShareSection } from "@/components/landing/ShareSection";
 
+// Core features for the new user journey
+const coreFeatures = [
+  {
+    title: "30-Day Journey",
+    description: "Daily readings, scriptures, and reflections walking you through the P.R.O.O.F. framework",
+    icon: Calendar,
+    link: "/journey",
+    color: "from-sacred to-warm-blue",
+    badge: "Start Here",
+  },
+  {
+    title: "Myth Buster Library",
+    description: "Searchable biblical responses to common accusations about Greek life",
+    icon: BookOpen,
+    link: "/myth-buster",
+    color: "from-purple-500 to-violet-600",
+  },
+  {
+    title: "Symbol & Ritual Guide",
+    description: "Christian perspectives on Greek symbolism with guidance on participation",
+    icon: Sparkles,
+    link: "/symbol-guide",
+    color: "from-amber-500 to-orange-600",
+  },
+  {
+    title: "Ask Dr. Lyman",
+    description: "Submit questions and get curated answers on theology, family, and campus ministry",
+    icon: Users,
+    link: "/ask-dr-lyman",
+    color: "from-teal-500 to-emerald-600",
+  },
+];
+
 const features = [
   {
     title: "Resources Hub",
@@ -274,6 +307,49 @@ const Index = () => {
           </div>
         </div>
       )}
+
+      {/* Core Features - The Real-Life Scene Solution */}
+      <div className="container mx-auto px-4 py-16 bg-gradient-to-b from-muted/30 to-background">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-8">
+            <Badge className="bg-sacred/10 text-sacred border-sacred/20 mb-4">For the Christian Greek at Midnight</Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              You Don't Have to <span className="gradient-text">Choose</span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Scrolling through denouncement videos? Feeling torn between your faith and your letters? This app is for you.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+            {coreFeatures.map((feature, index) => (
+              <Link key={feature.title} to={feature.link}>
+                <Card className="h-full transition-all hover:shadow-xl hover:scale-105 border-2 hover:border-sacred/50 cursor-pointer group overflow-hidden">
+                  <div className={`h-2 bg-gradient-to-r ${feature.color}`} />
+                  <CardHeader className="space-y-3 pb-2">
+                    <div className="flex items-start justify-between">
+                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg`}>
+                        <feature.icon className="w-6 h-6 text-white" />
+                      </div>
+                      {feature.badge && (
+                        <Badge className="bg-sacred text-white">{feature.badge}</Badge>
+                      )}
+                    </div>
+                    <CardTitle className="text-lg group-hover:text-sacred transition-colors">
+                      {feature.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-sm">
+                      {feature.description}
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
 
       {/* Features Section */}
       <div className="container mx-auto px-4 py-16">

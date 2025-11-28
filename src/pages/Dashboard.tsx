@@ -190,6 +190,42 @@ const Dashboard = () => {
   // Define quick actions with distinct, vibrant colors
   const quickActions = [
     {
+      id: '30-day-journey',
+      title: '30-Day Journey',
+      description: 'Daily readings through P.R.O.O.F. framework',
+      icon: Calendar,
+      href: '/journey',
+      iconColor: 'text-white',
+      iconBg: 'bg-gradient-to-br from-sacred to-warm-blue',
+    },
+    {
+      id: 'myth-buster',
+      title: 'Myth Buster',
+      description: 'Biblical responses to common accusations',
+      icon: BookOpen,
+      href: '/myth-buster',
+      iconColor: 'text-white',
+      iconBg: 'bg-gradient-to-br from-purple-500 to-violet-600',
+    },
+    {
+      id: 'symbol-guide',
+      title: 'Symbol Guide',
+      description: 'Christian perspectives on Greek symbolism',
+      icon: Lightbulb,
+      href: '/symbol-guide',
+      iconColor: 'text-white',
+      iconBg: 'bg-gradient-to-br from-amber-500 to-orange-600',
+    },
+    {
+      id: 'ask-dr-lyman',
+      title: 'Ask Dr. Lyman',
+      description: 'Submit questions, get curated answers',
+      icon: MessageSquare,
+      href: '/ask-dr-lyman',
+      iconColor: 'text-white',
+      iconBg: 'bg-gradient-to-br from-teal-500 to-emerald-600',
+    },
+    {
       id: 'new-assessment',
       title: 'New Assessment',
       description: 'Discover your 5 Persona Types Architecture',
