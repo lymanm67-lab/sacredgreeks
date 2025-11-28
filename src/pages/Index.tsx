@@ -391,26 +391,6 @@ const Index = () => {
             </Link>
           )}
 
-          {/* Mobile-First Healing Resources in Hero */}
-          <div className="mt-10 md:hidden">
-            <div className="text-center mb-4">
-              <Badge className="bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/30">
-                <HeartHandshake className="w-3 h-3 mr-1" />
-                Need Support?
-              </Badge>
-            </div>
-            <Link to="/family-ministry-fallout">
-              <div className="p-4 rounded-xl bg-gradient-to-br from-amber-500/10 to-rose-500/10 border border-amber-500/30 hover:border-amber-500/60 transition-all hover:scale-105 group">
-                <div className="flex items-start gap-3">
-                  <HandHeart className="w-10 h-10 text-amber-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                  <div>
-                    <p className="font-semibold text-sm text-foreground">Family, Ministry & Church Hurt Healing</p>
-                    <p className="text-xs text-muted-foreground mt-1">Navigate damaged relationships, process spiritual trauma, and find healing with guided prayers, journaling, and real testimonies</p>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          </div>
         </div>
 
         {/* Mobile Install CTA */}
