@@ -33,6 +33,7 @@ const WhatsAppIcon = ({ className }: { className?: string }) => (
 export function ShareSection() {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
+  const [showSocial, setShowSocial] = useState(false);
   const appUrl = 'https://sacredgreekslife.com';
   const shareMessage = `A gift from Dr. Lyman Montgomery – the Sacred Greeks Life App helps you navigate the tension between Greek life and faith. Features daily devotionals, prayer tools, and Bible study resources to grow spiritually while honoring both your faith and fraternity/sorority. For Greek life members and supporters: ${appUrl}`;
   const shortShareText = `A gift from Dr. Lyman Montgomery – the Sacred Greeks Life App helps you navigate the tension between Greek life and faith. For Greek life members and supporters!`;
@@ -80,7 +81,6 @@ export function ShareSection() {
           url: appUrl,
         });
       } catch (error) {
-        // User cancelled or error
         console.log('Share cancelled');
       }
     } else {
@@ -89,23 +89,19 @@ export function ShareSection() {
   };
 
   const handleFacebookShare = () => {
-    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(appUrl)}`;
-    window.open(url, '_blank', 'width=600,height=400');
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(appUrl)}`, '_blank', 'width=600,height=400');
   };
 
   const handleXShare = () => {
-    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shortShareText)}&url=${encodeURIComponent(appUrl)}`;
-    window.open(url, '_blank', 'width=600,height=400');
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shortShareText)}&url=${encodeURIComponent(appUrl)}`, '_blank', 'width=600,height=400');
   };
 
   const handleLinkedInShare = () => {
-    const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(appUrl)}`;
-    window.open(url, '_blank', 'width=600,height=400');
+    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(appUrl)}`, '_blank', 'width=600,height=400');
   };
 
   const handleWhatsAppShare = () => {
-    const url = `https://wa.me/?text=${encodeURIComponent(shareMessage)}`;
-    window.open(url, '_blank');
+    window.open(`https://wa.me/?text=${encodeURIComponent(shareMessage)}`, '_blank');
   };
 
   return (
@@ -116,122 +112,98 @@ export function ShareSection() {
             Share With Your Chapter
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Help your brothers and sisters grow in faith. Share Sacred Greeks Life with your chapter members.
+            Help your brothers and sisters grow in faith.
           </p>
         </div>
 
-        {/* Social Media Icon Buttons */}
-        <TooltipProvider>
-          <div className="flex justify-center gap-2 mb-4">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={handleFacebookShare}
-                  className="btn-bounce hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2]"
-                >
-                  <FacebookIcon className="w-4 h-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Share on Facebook</TooltipContent>
-            </Tooltip>
-
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={handleXShare}
-                  className="btn-bounce hover:bg-black hover:text-white hover:border-black"
-                >
-                  <XIcon className="w-4 h-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Share on X</TooltipContent>
-            </Tooltip>
-
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={handleLinkedInShare}
-                  className="btn-bounce hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]"
-                >
-                  <LinkedInIcon className="w-4 h-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Share on LinkedIn</TooltipContent>
-            </Tooltip>
-
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={handleWhatsAppShare}
-                  className="btn-bounce hover:bg-[#25D366] hover:text-white hover:border-[#25D366]"
-                >
-                  <WhatsAppIcon className="w-4 h-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Share on WhatsApp</TooltipContent>
-            </Tooltip>
-          </div>
-        </TooltipProvider>
-
-        <div className="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto">
+        <div className="flex flex-wrap justify-center gap-3 max-w-xl mx-auto">
           <Button 
             onClick={handleSMSShare}
-            className="bg-sacred hover:bg-sacred/90 btn-bounce"
+            className="bg-sacred hover:bg-sacred/90"
           >
             <MessageSquare className="w-4 h-4 mr-2" />
-            Text a Friend
+            Text
           </Button>
 
           <Button 
             variant="outline" 
             onClick={handleCopyLink}
-            className="btn-bounce"
           >
-            {copied ? (
-              <Check className="w-4 h-4 mr-2 text-green-500" />
-            ) : (
-              <Copy className="w-4 h-4 mr-2" />
-            )}
-            {copied ? 'Copied!' : 'Copy Link'}
+            {copied ? <Check className="w-4 h-4 mr-2 text-green-500" /> : <Copy className="w-4 h-4 mr-2" />}
+            {copied ? 'Copied!' : 'Copy'}
           </Button>
 
-          <Link to="/qr-code">
-            <Button variant="outline" className="btn-bounce">
-              <QrCode className="w-4 h-4 mr-2" />
-              QR Code
-            </Button>
-          </Link>
-
-          <Button 
-            variant="outline" 
-            onClick={handleEmailShare}
-            className="btn-bounce"
-          >
+          <Button variant="outline" onClick={handleEmailShare}>
             <Mail className="w-4 h-4 mr-2" />
             Email
           </Button>
 
+          <Link to="/qr-code">
+            <Button variant="outline">
+              <QrCode className="w-4 h-4 mr-2" />
+              QR
+            </Button>
+          </Link>
+
+          {/* Social Media Dropdown */}
+          <TooltipProvider>
+            <div className="relative">
+              <Button 
+                variant="outline" 
+                onClick={() => setShowSocial(!showSocial)}
+                className={showSocial ? 'bg-muted' : ''}
+              >
+                <Share2 className="w-4 h-4 mr-2" />
+                Social
+              </Button>
+              {showSocial && (
+                <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 flex gap-1 bg-card border rounded-lg p-2 shadow-lg z-10">
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button size="icon" variant="ghost" onClick={handleFacebookShare} className="hover:bg-[#1877F2] hover:text-white h-9 w-9">
+                        <FacebookIcon className="w-4 h-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Facebook</TooltipContent>
+                  </Tooltip>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button size="icon" variant="ghost" onClick={handleXShare} className="hover:bg-black hover:text-white h-9 w-9">
+                        <XIcon className="w-4 h-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>X</TooltipContent>
+                  </Tooltip>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button size="icon" variant="ghost" onClick={handleLinkedInShare} className="hover:bg-[#0A66C2] hover:text-white h-9 w-9">
+                        <LinkedInIcon className="w-4 h-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>LinkedIn</TooltipContent>
+                  </Tooltip>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button size="icon" variant="ghost" onClick={handleWhatsAppShare} className="hover:bg-[#25D366] hover:text-white h-9 w-9">
+                        <WhatsAppIcon className="w-4 h-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>WhatsApp</TooltipContent>
+                  </Tooltip>
+                </div>
+              )}
+            </div>
+          </TooltipProvider>
+
           {typeof navigator !== 'undefined' && 'share' in navigator && (
-            <Button 
-              variant="outline" 
-              onClick={handleNativeShare}
-              className="btn-bounce md:hidden"
-            >
+            <Button variant="outline" onClick={handleNativeShare} className="md:hidden">
               <Share2 className="w-4 h-4 mr-2" />
-              Share
+              More
             </Button>
           )}
         </div>
 
-        <div className="mt-8 text-center">
+        <div className="mt-6 text-center">
           <p className="text-sm text-muted-foreground">
             <span className="font-medium text-foreground">{appUrl}</span>
           </p>
