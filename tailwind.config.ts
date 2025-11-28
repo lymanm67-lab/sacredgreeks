@@ -68,6 +68,14 @@ export default {
           medium: "hsl(var(--status-medium))",
           low: "hsl(var(--status-low))",
         },
+        badge: {
+          success: "hsl(var(--badge-success))",
+          "success-foreground": "hsl(var(--badge-success-foreground))",
+          warning: "hsl(var(--badge-warning))",
+          "warning-foreground": "hsl(var(--badge-warning-foreground))",
+          danger: "hsl(var(--badge-danger))",
+          "danger-foreground": "hsl(var(--badge-danger-foreground))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

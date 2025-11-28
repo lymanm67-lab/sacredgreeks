@@ -52,6 +52,14 @@ All colors MUST be HSL.
     --status-medium: 43 96% 56%;
     --status-low: 142 71% 45%;
     
+    /* Badge colors */
+    --badge-success: 158 64% 42%;
+    --badge-success-foreground: 158 64% 20%;
+    --badge-warning: 43 96% 56%;
+    --badge-warning-foreground: 43 96% 25%;
+    --badge-danger: 0 84% 60%;
+    --badge-danger-foreground: 0 84% 30%;
+    
     /* Warm accent colors */
     --gold: 220 10% 90%;
     --gold-foreground: 225 60% 15%;
@@ -121,6 +129,15 @@ All colors MUST be HSL.
     --gradient-card: linear-gradient(145deg, hsl(225 40% 12%) 0%, hsl(225 40% 15%) 100%);
     --gradient-sacred: linear-gradient(135deg, hsl(225 73% 47%) 0%, hsl(210 100% 55%) 100%);
     --gradient-warm: linear-gradient(135deg, hsl(225 73% 47%) 0%, hsl(0 0% 85%) 100%);
+    
+    /* Badge colors (dark mode) */
+    --badge-success: 158 64% 52%;
+    --badge-success-foreground: 158 64% 85%;
+    --badge-warning: 43 96% 60%;
+    --badge-warning-foreground: 43 96% 85%;
+    --badge-danger: 0 72% 55%;
+    --badge-danger-foreground: 0 72% 90%;
+    
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
