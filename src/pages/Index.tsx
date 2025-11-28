@@ -426,6 +426,17 @@ const Index = () => {
               <Link to="/privacy" className="text-muted-foreground hover:text-sacred transition-colors">
                 Privacy Policy
               </Link>
+              <Link to="/terms" className="text-muted-foreground hover:text-sacred transition-colors">
+                Terms of Service
+              </Link>
+              <a
+                href="https://chatgpt.com/g/g-683eb25d5914819097a1c08dae64f36f-sacred-greeks-life-assistant"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-sacred transition-colors"
+              >
+                ChatGPT Assistant
+              </a>
               <a
                 href="https://sacredgreeks.com/#card-xr13vgv4m5slqey"
                 target="_blank"

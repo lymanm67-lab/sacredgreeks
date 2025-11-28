@@ -38,7 +38,8 @@ import {
   Lightbulb,
   User,
   Mic,
-  Mail
+  Mail,
+  Bot
 } from "lucide-react";
 
 interface ResourceItem {
@@ -111,6 +112,16 @@ const resources: ResourceItem[] = [
     badge: "Featured",
     category: "about",
     tags: ["Media", "Documentary", "Film"],
+  },
+  {
+    title: "ChatGPT AI Assistant",
+    description: "Ask questions about the P.R.O.O.F. framework, Sacred Greeks, and navigating faith in Greek life using our AI-powered ChatGPT assistant",
+    url: "https://chatgpt.com/g/g-683eb25d5914819097a1c08dae64f36f-sacred-greeks-life-assistant",
+    icon: Bot,
+    requiresAuth: false,
+    badge: "New",
+    category: "about",
+    tags: ["AI", "Assistant", "ChatGPT"],
   },
   
   // Book Info Section
