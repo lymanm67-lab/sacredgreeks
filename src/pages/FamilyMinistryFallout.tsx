@@ -31,6 +31,116 @@ interface AssessmentQuestion {
   leaveIndicator: string;
 }
 
+// Talking points for leaving gracefully
+const leavingGracefullyPoints = [
+  {
+    title: "Honor Your Covenant Without Worshiping It",
+    description: "You made commitments. Those commitments can be released without being renounced. The difference matters.",
+    guidance: "Say: 'I'm stepping back from active participation, but I honor the relationships and values we shared. My departure is about my personal spiritual journey, not a judgment on yours.'"
+  },
+  {
+    title: "Exit Through the Front Door",
+    description: "Don't ghost. Don't fade away and let rumors fill the silence. Have direct conversations with key brothers/sisters.",
+    guidance: "Say: 'I want you to hear this from me directly, not through the grapevine. I'm making a change in my involvement, and I wanted to respect you enough to tell you why.'"
+  },
+  {
+    title: "Name What You're Keeping",
+    description: "Leaving doesn't mean erasing. The friendships, the growth, the service—those were real and remain part of your story.",
+    guidance: "Say: 'I'm not pretending the last [X] years didn't happen. I grew in ways I couldn't have elsewhere. I'm making a change going forward, not rewriting history.'"
+  },
+  {
+    title: "Don't Become a Missionary Against Your Own",
+    description: "Some people leave and then spend years trying to 'rescue' others. This creates the very damage you're trying to avoid.",
+    guidance: "Say: 'I've made my decision for my own conscience. I'm not asking anyone else to make the same choice. If you want to talk about my journey, I'm open, but I'm not recruiting.'"
+  },
+  {
+    title: "Set Boundaries on Public Declarations",
+    description: "You don't owe the internet your testimony. A public denouncement video may feel cathartic but often causes harm to others still walking faithfully.",
+    guidance: "Say: 'I'm not going to make public statements that weaponize my experience against people I love. My decision is between me and God, not content for social media.'"
+  }
+];
+
+// Key distinction between leaving and denouncing
+const leavingVsDenouncingPoints = [
+  {
+    category: "Intent",
+    leaving: "Following your conscience where God is leading you",
+    denouncing: "Declaring that everyone in the organization is deceived or sinning"
+  },
+  {
+    category: "Tone",
+    leaving: "Humble uncertainty: 'This is what I believe God is calling me to do'",
+    denouncing: "Prophetic certainty: 'God showed me this is demonic and you need to leave too'"
+  },
+  {
+    category: "Relationships",
+    leaving: "Preserved. You can still love and respect your brothers/sisters",
+    denouncing: "Damaged. Public declarations often sever relationships permanently"
+  },
+  {
+    category: "Story",
+    leaving: "Your membership was a chapter in your story, not a mistake to erase",
+    denouncing: "Your membership was deception, and everyone needs to know"
+  },
+  {
+    category: "Others' Choices",
+    leaving: "Respected. You don't pressure others to make your decision",
+    denouncing: "Judged. Others are seen as 'not as far along' spiritually"
+  },
+  {
+    category: "Platform",
+    leaving: "Private conversations with those who matter",
+    denouncing: "Public videos, testimonies, warnings to strangers"
+  }
+];
+
+// Idea evaluation scenarios
+interface IdeaEvaluation {
+  scenario: string;
+  context: string;
+  goodApproach: string;
+  problematicApproach: string;
+  whyItMatters: string;
+}
+
+const ideaEvaluations: IdeaEvaluation[] = [
+  {
+    scenario: "Responding to a Parent",
+    context: "Your mother texts: 'I saw another video about Greek organizations being occult. When are you going to leave?'",
+    goodApproach: "Mom, I know this worries you because you love me. I've actually studied these claims carefully and prayed through them. I'm not dismissing your concern—I'm just asking for your trust that I'm taking this seriously before God. Can we talk about what specifically worries you most?",
+    problematicApproach: "Mom, you don't know what you're talking about. Those videos are made by people who were never Greek. Stop sending me this stuff.",
+    whyItMatters: "The good approach honors the relationship and opens dialogue. The problematic approach wins the battle but loses the war—it makes her feel dismissed rather than heard."
+  },
+  {
+    scenario: "Responding to a Pastor",
+    context: "Your pastor says: 'We can't have you leading Bible study while you're affiliated with that organization.'",
+    goodApproach: "Pastor, I respect your authority here and I'm not going to fight you on this. Can you help me understand: is this based on a specific Scripture that disqualifies me, or is this a wisdom call you're making for the church? I want to submit appropriately, but I also need to understand what standard I'm being held to.",
+    problematicApproach: "That's not fair. You're letting [other person] serve and they [other issue]. Why are you singling me out?",
+    whyItMatters: "The good approach seeks understanding while maintaining respect. It also clarifies whether this is a scriptural mandate or a leadership preference—an important distinction."
+  },
+  {
+    scenario: "Responding to a Social Media Tag",
+    context: "A friend tags you in a viral denouncement video with the comment: 'Praying for you 🙏'",
+    goodApproach: "[Private message]: Hey, I saw you tagged me in that video. I appreciate that you're thinking of me. I've actually looked into a lot of this content and have come to different conclusions. I'm happy to talk privately if you want to understand where I'm coming from, but I'd prefer not to have this conversation in public comments.",
+    problematicApproach: "[Public comment]: This video is full of misinformation. Not everything you see online is true. Do your research before spreading fear.",
+    whyItMatters: "Public rebuttals rarely change minds and often escalate conflict. Moving to private conversation preserves the friendship and avoids making your position a spectacle."
+  },
+  {
+    scenario: "Posting About Your Decision to Leave",
+    context: "You've decided to step back from active membership and want to share your journey.",
+    goodApproach: "After much prayer and reflection, I've made the decision to step back from active involvement in my organization. This isn't a judgment on anyone else's choice—it's me following where I believe God is leading me. I'm grateful for the friendships and growth from my time there. If you're walking through something similar and want to talk, I'm here.",
+    problematicApproach: "God delivered me from [organization name]! If you're in a Greek organization, please hear my testimony about what I was really involved in. Share this so others can be set free! 🙌 #delivered #truth #exposed",
+    whyItMatters: "The good approach shares your journey without weaponizing it. The problematic approach makes your testimony a recruitment tool against your former brothers/sisters."
+  },
+  {
+    scenario: "When Someone Asks Why You Joined",
+    context: "At church, someone asks: 'Why would you join something like that in the first place?'",
+    goodApproach: "Honestly, I joined because I saw an opportunity to build community, serve others, and grow as a leader. Those motivations haven't changed—I just express them through my organization alongside my faith. I'd be happy to share more about what we actually do if you're genuinely curious.",
+    problematicApproach: "Why does everyone keep asking me that? I don't have to justify myself to you.",
+    whyItMatters: "Curiosity is an opportunity. Defensiveness confirms suspicion. The good approach invites understanding rather than shutting down conversation."
+  }
+];
+
 const assessmentQuestions: AssessmentQuestion[] = [
   {
     id: "conscience",
@@ -772,6 +882,53 @@ export default function FamilyMinistryFallout() {
                               </div>
                             </div>
 
+                            {/* Conditional guidance based on results */}
+                            {leaveCount > stayCount && (
+                              <div className="bg-amber-50 dark:bg-amber-950/30 rounded-lg p-4 border border-amber-200 dark:border-amber-800">
+                                <h4 className="font-medium mb-3 flex items-center gap-2">
+                                  <AlertTriangle className="w-4 h-4 text-amber-600" />
+                                  Important: Before You Act
+                                </h4>
+                                <ul className="space-y-2 text-sm text-muted-foreground">
+                                  <li className="flex items-start gap-2">
+                                    <CheckCircle2 className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
+                                    <span><strong>Read the "Leaving vs. Denouncing" section below</strong> — they are NOT the same</span>
+                                  </li>
+                                  <li className="flex items-start gap-2">
+                                    <CheckCircle2 className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
+                                    <span>Review the "How to Leave Without Damaging Brotherhood/Sisterhood" talking points</span>
+                                  </li>
+                                  <li className="flex items-start gap-2">
+                                    <CheckCircle2 className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
+                                    <span>Use the "Idea Evaluation" tool before posting anything publicly</span>
+                                  </li>
+                                </ul>
+                              </div>
+                            )}
+
+                            {stayCount > leaveCount && (
+                              <div className="bg-green-50 dark:bg-green-950/30 rounded-lg p-4 border border-green-200 dark:border-green-800">
+                                <h4 className="font-medium mb-3 flex items-center gap-2">
+                                  <CheckCircle2 className="w-4 h-4 text-green-600" />
+                                  Walking Forward with Confidence
+                                </h4>
+                                <ul className="space-y-2 text-sm text-muted-foreground">
+                                  <li className="flex items-start gap-2">
+                                    <CheckCircle2 className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                                    <span>Use the "Idea Evaluation" tool when responding to critics or concerned family</span>
+                                  </li>
+                                  <li className="flex items-start gap-2">
+                                    <CheckCircle2 className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                                    <span>Check the "Redemptive Conversations" tab for language to use with pastors and parents</span>
+                                  </li>
+                                  <li className="flex items-start gap-2">
+                                    <CheckCircle2 className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                                    <span>Take the full P.R.O.O.F. Assessment for deeper framework on handling objections</span>
+                                  </li>
+                                </ul>
+                              </div>
+                            )}
+
                             <div className="bg-muted/50 rounded-lg p-4">
                               <h4 className="font-medium mb-2">What Now?</h4>
                               <ul className="space-y-2 text-sm text-muted-foreground">
@@ -854,6 +1011,153 @@ export default function FamilyMinistryFallout() {
                     Your conviction before God is what matters—not the approval of the loudest voice in your life.
                   </p>
                 </div>
+              </CardContent>
+            </Card>
+
+            {/* Leaving vs. Denouncing - Critical Distinction */}
+            <Card className="border-amber-200 dark:border-amber-800">
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <AlertTriangle className="w-5 h-5 text-amber-600" />
+                  Critical: Leaving vs. Denouncing
+                </CardTitle>
+                <CardDescription>
+                  These are NOT the same thing. Understanding the difference protects relationships and honors truth.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="bg-amber-50 dark:bg-amber-950/30 rounded-lg p-4 border-l-4 border-amber-500">
+                  <p className="text-sm">
+                    <strong>You can follow your conscience out of an organization without burning bridges, 
+                    destroying relationships, or positioning yourself as a prophet called to rescue everyone else.</strong>
+                  </p>
+                </div>
+                
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left py-3 px-4 font-semibold">Aspect</th>
+                        <th className="text-left py-3 px-4 font-semibold text-green-600">Leaving Gracefully</th>
+                        <th className="text-left py-3 px-4 font-semibold text-red-600">Denouncing</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {leavingVsDenouncingPoints.map((point, idx) => (
+                        <tr key={idx} className="border-b last:border-0">
+                          <td className="py-3 px-4 font-medium">{point.category}</td>
+                          <td className="py-3 px-4 text-muted-foreground bg-green-50/50 dark:bg-green-950/20">{point.leaving}</td>
+                          <td className="py-3 px-4 text-muted-foreground bg-red-50/50 dark:bg-red-950/20">{point.denouncing}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* How to Leave Without Damaging Brotherhood/Sisterhood */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <HandHeart className="w-5 h-5 text-sacred" />
+                  How to Leave Without Damaging Brotherhood/Sisterhood
+                </CardTitle>
+                <CardDescription>
+                  If you've discerned that leaving is right for you, here's how to do it with integrity
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <Accordion type="single" collapsible className="w-full">
+                  {leavingGracefullyPoints.map((point, idx) => (
+                    <AccordionItem key={idx} value={`leaving-${idx}`}>
+                      <AccordionTrigger className="text-left">
+                        <div className="flex items-center gap-2">
+                          <div className="w-6 h-6 rounded-full bg-sacred/20 flex items-center justify-center text-sacred text-sm font-bold">
+                            {idx + 1}
+                          </div>
+                          <span className="font-medium">{point.title}</span>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent className="space-y-4 pl-8">
+                        <p className="text-muted-foreground">{point.description}</p>
+                        <div className="bg-green-50 dark:bg-green-950/30 rounded-lg p-4 border border-green-200 dark:border-green-800">
+                          <p className="font-medium text-sm text-green-700 dark:text-green-400 mb-2">Language you can use:</p>
+                          <p className="text-sm italic">{point.guidance}</p>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </CardContent>
+            </Card>
+
+            {/* Idea Evaluation Tool */}
+            <Card className="border-sacred/30 bg-gradient-to-br from-sacred/5 to-transparent">
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <Lightbulb className="w-5 h-5 text-sacred" />
+                  Idea Evaluation: What to Say (and What Not to Say)
+                </CardTitle>
+                <CardDescription>
+                  This is where Sacred Greeks differs from generic devotionals—practical language for real situations
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="bg-muted/50 rounded-lg p-4 border-l-4 border-sacred">
+                  <p className="text-sm text-muted-foreground">
+                    <strong className="text-foreground">The Sacred Greeks Difference:</strong> An app that offers "idea evaluation" 
+                    for how to respond, what to post, and what to say to a pastor or parent is a different category 
+                    from a generic devotional. These scenarios come from real conversations Christian Greeks have faced.
+                  </p>
+                </div>
+
+                <Accordion type="single" collapsible className="w-full">
+                  {ideaEvaluations.map((eval_, idx) => (
+                    <AccordionItem key={idx} value={`eval-${idx}`}>
+                      <AccordionTrigger className="text-left">
+                        <div className="flex items-center gap-2">
+                          <MessageCircle className="w-5 h-5 text-sacred" />
+                          <span className="font-medium">{eval_.scenario}</span>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent className="space-y-4">
+                        <div className="bg-muted/30 rounded-lg p-4">
+                          <p className="font-medium text-sm mb-2">The Situation:</p>
+                          <p className="text-sm text-muted-foreground italic">{eval_.context}</p>
+                        </div>
+                        
+                        <div className="grid md:grid-cols-2 gap-4">
+                          <div className="bg-green-50 dark:bg-green-950/30 rounded-lg p-4 border border-green-200 dark:border-green-800">
+                            <div className="flex items-center gap-2 mb-2">
+                              <CheckCircle2 className="w-4 h-4 text-green-600" />
+                              <p className="font-medium text-sm text-green-700 dark:text-green-400">Good Approach:</p>
+                            </div>
+                            <p className="text-sm">{eval_.goodApproach}</p>
+                          </div>
+                          
+                          <div className="bg-red-50 dark:bg-red-950/30 rounded-lg p-4 border border-red-200 dark:border-red-800">
+                            <div className="flex items-center gap-2 mb-2">
+                              <AlertTriangle className="w-4 h-4 text-red-600" />
+                              <p className="font-medium text-sm text-red-700 dark:text-red-400">Problematic Approach:</p>
+                            </div>
+                            <p className="text-sm">{eval_.problematicApproach}</p>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-sacred/5 rounded-lg p-4 border border-sacred/20">
+                          <div className="flex items-start gap-2">
+                            <Lightbulb className="w-4 h-4 text-sacred mt-0.5 flex-shrink-0" />
+                            <div>
+                              <p className="font-medium text-sm">Why This Matters:</p>
+                              <p className="text-sm text-muted-foreground">{eval_.whyItMatters}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
               </CardContent>
             </Card>
           </TabsContent>
