@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
 
 interface Particle {
   id: number;
@@ -10,7 +10,24 @@ interface Particle {
   opacity: number;
 }
 
-export const FloatingParticles = () => {
+interface FloatingParticlesProps {
+  enableParallax?: boolean;
+}
+
+export const FloatingParticles = ({ enableParallax = true }: FloatingParticlesProps) => {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    if (!enableParallax) return;
+    
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [enableParallax]);
+
   const particles = useMemo<Particle[]>(() => {
     return Array.from({ length: 20 }, (_, i) => ({
       id: i,
@@ -22,6 +39,11 @@ export const FloatingParticles = () => {
       opacity: Math.random() * 0.5 + 0.1,
     }));
   }, []);
+
+  // Calculate parallax offset based on scroll position
+  const parallaxOffset = enableParallax ? scrollY * 0.3 : 0;
+  const parallaxOffsetSlow = enableParallax ? scrollY * 0.15 : 0;
+  const parallaxOffsetFast = enableParallax ? scrollY * 0.5 : 0;
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -37,13 +59,23 @@ export const FloatingParticles = () => {
             opacity: particle.opacity,
             animationDuration: `${particle.duration}s`,
             animationDelay: `${particle.delay}s`,
+            transform: `translateY(${parallaxOffset * (particle.id % 3 === 0 ? 1 : particle.id % 3 === 1 ? 0.5 : 0.75)}px)`,
           }}
         />
       ))}
-      {/* Larger glowing orbs */}
-      <div className="absolute w-32 h-32 bg-sacred/10 rounded-full blur-3xl top-1/4 left-1/4 animate-float-slow" />
-      <div className="absolute w-24 h-24 bg-purple-500/10 rounded-full blur-3xl top-1/2 right-1/4 animate-float-slow-reverse" />
-      <div className="absolute w-40 h-40 bg-amber-500/5 rounded-full blur-3xl bottom-1/4 left-1/3 animate-float-medium" />
+      {/* Larger glowing orbs with parallax */}
+      <div 
+        className="absolute w-32 h-32 bg-sacred/10 rounded-full blur-3xl top-1/4 left-1/4 animate-float-slow"
+        style={{ transform: `translateY(${parallaxOffsetSlow}px)` }}
+      />
+      <div 
+        className="absolute w-24 h-24 bg-purple-500/10 rounded-full blur-3xl top-1/2 right-1/4 animate-float-slow-reverse"
+        style={{ transform: `translateY(${parallaxOffsetFast}px)` }}
+      />
+      <div 
+        className="absolute w-40 h-40 bg-amber-500/5 rounded-full blur-3xl bottom-1/4 left-1/3 animate-float-medium"
+        style={{ transform: `translateY(${parallaxOffset}px)` }}
+      />
     </div>
   );
 };

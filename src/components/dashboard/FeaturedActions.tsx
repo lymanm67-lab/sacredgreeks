@@ -24,20 +24,12 @@ const featuredActions = [
     gradient: 'from-purple-500 to-violet-600',
   },
   {
-    id: 'family-fallout',
-    title: 'Family & Ministry Fallout',
-    description: 'Navigate damaged relationships & rebuild trust',
-    icon: Users,
-    href: '/family-ministry-fallout',
-    gradient: 'from-amber-500 to-orange-600',
-  },
-  {
-    id: 'church-hurt',
-    title: 'Church Hurt Healing',
-    description: 'Process trauma with guided prayers & testimonies',
+    id: 'family-church-healing',
+    title: 'Family & Church Hurt Healing',
+    description: 'Navigate damaged relationships, process trauma & rebuild trust',
     icon: HeartHandshake,
-    href: '/church-hurt-healing',
-    gradient: 'from-teal-500 to-cyan-600',
+    href: '/family-ministry-fallout',
+    gradient: 'from-teal-500 to-amber-500',
   },
   {
     id: 'daily-devotional',
@@ -65,6 +57,18 @@ const featuredActions = [
   },
 ];
 
+const iconAnimationVariants = {
+  initial: { scale: 1, rotate: 0 },
+  hover: { 
+    scale: 1.15, 
+    rotate: [0, -10, 10, -5, 5, 0],
+    transition: { 
+      rotate: { duration: 0.5, ease: "easeInOut" as const },
+      scale: { duration: 0.2 }
+    }
+  }
+};
+
 export const FeaturedActions = () => {
   return (
     <div className="space-y-4">
@@ -90,12 +94,17 @@ export const FeaturedActions = () => {
                 description={action.description}
                 trigger={
                   <div className="cursor-pointer">
-                    <Card className="group relative overflow-hidden border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer h-[260px] flex flex-col">
+                    <Card className="group relative overflow-hidden border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer h-[260px] flex flex-col feature-card">
                       <div className="p-6 space-y-4 flex-1 flex flex-col">
-                        {/* Icon */}
-                        <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${action.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0`}>
+                        {/* Icon with animation */}
+                        <motion.div 
+                          className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${action.gradient} flex items-center justify-center shadow-lg flex-shrink-0`}
+                          variants={iconAnimationVariants}
+                          initial="initial"
+                          whileHover="hover"
+                        >
                           <action.icon className="w-7 h-7 text-white" />
-                        </div>
+                        </motion.div>
                         
                         {/* Content */}
                         <div className="space-y-2 flex-1 overflow-hidden">
@@ -121,12 +130,17 @@ export const FeaturedActions = () => {
                 rel="noopener noreferrer"
                 className="block"
               >
-                <Card className="group relative overflow-hidden border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer h-[260px] flex flex-col">
+                <Card className="group relative overflow-hidden border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer h-[260px] flex flex-col feature-card">
                   <div className="p-6 space-y-4 flex-1 flex flex-col">
-                    {/* Icon */}
-                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${action.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0`}>
+                    {/* Icon with animation */}
+                    <motion.div 
+                      className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${action.gradient} flex items-center justify-center shadow-lg flex-shrink-0`}
+                      variants={iconAnimationVariants}
+                      initial="initial"
+                      whileHover="hover"
+                    >
                       <action.icon className="w-7 h-7 text-white" />
-                    </div>
+                    </motion.div>
                     
                     {/* Content */}
                     <div className="space-y-2 flex-1 overflow-hidden">
@@ -145,12 +159,17 @@ export const FeaturedActions = () => {
               </a>
             ) : (
               <Link to={action.href} className="block">
-                <Card className="group relative overflow-hidden border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer h-[260px] flex flex-col">
+                <Card className="group relative overflow-hidden border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer h-[260px] flex flex-col feature-card">
                   <div className="p-6 space-y-4 flex-1 flex flex-col">
-                    {/* Icon */}
-                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${action.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0`}>
+                    {/* Icon with animation */}
+                    <motion.div 
+                      className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${action.gradient} flex items-center justify-center shadow-lg flex-shrink-0`}
+                      variants={iconAnimationVariants}
+                      initial="initial"
+                      whileHover="hover"
+                    >
                       <action.icon className="w-7 h-7 text-white" />
-                    </div>
+                    </motion.div>
                     
                     {/* Content */}
                     <div className="space-y-2 flex-1 overflow-hidden">
