@@ -6,11 +6,14 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Progress } from "@/components/ui/progress";
+import { Textarea } from "@/components/ui/textarea";
 import { ResponseCoach } from "@/components/ResponseCoach";
 import { ConversationPractice } from "@/components/response-coach/ConversationPractice";
 import { SavedResponsesList } from "@/components/response-coach/SavedResponsesList";
 import { useSavedResponses } from "@/hooks/use-saved-responses";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import { 
   Home, 
   Heart, 
@@ -29,7 +32,10 @@ import {
   Sparkles,
   Bot,
   Mic,
-  Bookmark
+  Bookmark,
+  PenLine,
+  Volume2,
+  Play
 } from "lucide-react";
 
 interface AssessmentQuestion {
@@ -200,11 +206,146 @@ const assessmentQuestions: AssessmentQuestion[] = [
   }
 ];
 
+// Church Hurt Healing Data
+const guidedPrayers = [
+  {
+    id: "lament",
+    title: "A Prayer of Lament",
+    category: "Processing Pain",
+    description: "For when the rejection feels overwhelming",
+    prayer: `Lord, I come to You with a heavy heart.
+
+I trusted my church family to understand, to ask questions, to walk with me—and instead I received judgment, accusations, and rejection.
+
+It hurts, Lord. It hurts to be called unfaithful by people who never asked about my faith. It hurts to be labeled when I've tried to live with integrity.
+
+You know what it feels like to be misunderstood. You were called demon-possessed by religious leaders. You were rejected by those You came to save.
+
+Meet me in this pain. Don't let bitterness take root. Help me grieve what I've lost without losing myself.
+
+I don't understand why this happened, but I trust that You are still good, still present, still working.
+
+In Jesus' name, Amen.`,
+    scripture: "Psalm 13:1-2 - 'How long, Lord? Will you forget me forever? How long will you hide your face from me?'"
+  },
+  {
+    id: "forgiveness",
+    title: "A Prayer for the Journey Toward Forgiveness",
+    category: "Releasing Bitterness",
+    description: "For when you're ready to begin releasing resentment",
+    prayer: `Father, I don't feel ready to forgive, but I'm willing to begin.
+
+The words spoken over me—"occult," "ungodly," "deceived"—they echo in my mind. The relationships that ended, the doors that closed, the looks of disappointment—they left wounds.
+
+But I know that unforgiveness chains me to the very people who hurt me. I don't want to carry this weight forever.
+
+So I bring it to You. Not because I'm over it, but because I know I can't heal holding onto it.
+
+Give me Your eyes for those who wounded me. Many believed they were protecting the faith. Some were afraid. Others simply didn't know better.
+
+Help me release them—not because they deserve it, but because You've released me from so much more.
+
+This is a process, Lord. Walk me through it, one day at a time.
+
+In Jesus' name, Amen.`,
+    scripture: "Ephesians 4:31-32 - 'Get rid of all bitterness, rage and anger... Be kind and compassionate to one another, forgiving each other, just as in Christ God forgave you.'"
+  },
+  {
+    id: "identity",
+    title: "A Prayer for Restored Identity",
+    category: "Reclaiming Truth",
+    description: "For when accusations have shaken your sense of self",
+    prayer: `God, the accusations have made me question everything.
+
+Am I deceived? Am I compromised? Have I dishonored You?
+
+The enemy would love for me to live in perpetual doubt, second-guessing every decision, every friendship, every commitment.
+
+But Your Word says I am a new creation. I am hidden with Christ in God. I am not what others have called me.
+
+Help me separate conviction from condemnation. If there's genuine sin, reveal it—I want to repent. But if these are false accusations, help me stand firm.
+
+Remind me who I am in You:
+- Chosen, not rejected
+- Beloved, not condemned  
+- Called, not compromised
+
+Let Your truth be louder than their labels.
+
+In Jesus' name, Amen.`,
+    scripture: "Romans 8:1 - 'Therefore, there is now no condemnation for those who are in Christ Jesus.'"
+  }
+];
+
+const journalingPrompts = [
+  {
+    category: "Processing the Experience",
+    prompts: [
+      "Describe the moment you first realized your church community viewed your BGLO membership negatively. What did that feel like?",
+      "What specific words or phrases were used about you or your organization that hurt the most?",
+      "If you could go back and have the conversation differently, what would you say?"
+    ]
+  },
+  {
+    category: "Examining Your Faith",
+    prompts: [
+      "Has this experience strengthened or weakened your faith? Be honest.",
+      "What truths about God have become more real to you through this pain?",
+      "Have you confused 'church hurt' with 'God hurt'? How might you separate the two?"
+    ]
+  },
+  {
+    category: "Moving Forward",
+    prompts: [
+      "What would it look like for you to be 'fully healed' from this experience?",
+      "What have you learned about yourself that you couldn't have learned any other way?",
+      "If you could help one person going through the same thing, what would you tell them?"
+    ]
+  }
+];
+
+const healingResources = [
+  {
+    title: "Understanding Religious Trauma",
+    description: "Recognizing the difference between conviction and spiritual manipulation",
+    icon: Shield,
+    content: [
+      "Religious trauma occurs when spiritual authority is used to harm rather than heal",
+      "Signs include: persistent shame, fear of questioning, loss of trust in all spiritual leaders",
+      "Healing requires separating God's character from human misrepresentation"
+    ]
+  },
+  {
+    title: "Rebuilding Spiritual Practices",
+    description: "Re-engaging with faith after painful church experiences",
+    icon: Sparkles,
+    content: [
+      "Start small—even 5 minutes of Scripture reading counts",
+      "Try new expressions of worship that don't carry painful associations",
+      "Give yourself permission to wrestle, doubt, and question"
+    ]
+  },
+  {
+    title: "Finding Safe Community",
+    description: "Identifying churches that practice healthy discernment",
+    icon: Users,
+    content: [
+      "Look for curiosity over condemnation",
+      "Healthy churches ask questions before making pronouncements",
+      "Leaders who admit 'I don't know' are often safer than those with all the answers"
+    ]
+  }
+];
+
 export default function FamilyMinistryFallout() {
   const { user } = useAuth();
+  const { toast } = useToast();
   const { savedResponses, loading: savedLoading, deleteResponse, updateNotes } = useSavedResponses();
   const [assessmentAnswers, setAssessmentAnswers] = useState<Record<string, "stay" | "leave" | null>>({});
   const [showResults, setShowResults] = useState(false);
+  const [journalEntry, setJournalEntry] = useState("");
+  const [selectedPrompt, setSelectedPrompt] = useState<string | null>(null);
+  const [savedEntries, setSavedEntries] = useState<Array<{ prompt: string; entry: string; date: string }>>([]);
 
   const answeredCount = Object.values(assessmentAnswers).filter(v => v !== null).length;
   const stayCount = Object.values(assessmentAnswers).filter(v => v === "stay").length;
@@ -212,6 +353,46 @@ export default function FamilyMinistryFallout() {
 
   const handleAnswer = (questionId: string, answer: "stay" | "leave") => {
     setAssessmentAnswers(prev => ({ ...prev, [questionId]: answer }));
+  };
+
+  const handleSaveJournalEntry = async () => {
+    if (!journalEntry.trim() || !selectedPrompt) return;
+    
+    if (user) {
+      try {
+        const { error } = await supabase
+          .from('prayer_journal')
+          .insert({
+            user_id: user.id,
+            title: selectedPrompt.slice(0, 50) + '...',
+            content: journalEntry,
+            prayer_type: 'confession'
+          });
+
+        if (error) throw error;
+        
+        toast({
+          title: "Entry Saved",
+          description: "Your journal entry has been saved to your prayer journal.",
+        });
+      } catch (error) {
+        console.error('Error saving journal entry:', error);
+        toast({
+          title: "Error",
+          description: "Failed to save entry. Please try again.",
+          variant: "destructive"
+        });
+        return;
+      }
+    }
+
+    setSavedEntries(prev => [...prev, {
+      prompt: selectedPrompt,
+      entry: journalEntry,
+      date: new Date().toLocaleDateString()
+    }]);
+    setJournalEntry("");
+    setSelectedPrompt(null);
   };
 
   const getResultMessage = () => {
@@ -324,34 +505,46 @@ export default function FamilyMinistryFallout() {
 
         {/* Main Content Tabs */}
         <Tabs defaultValue="damaged" className="space-y-8">
-          <TabsList className="grid w-full grid-cols-3 md:grid-cols-7 h-auto gap-2 bg-transparent">
-            <TabsTrigger value="damaged" className="data-[state=active]:bg-sacred data-[state=active]:text-white flex flex-col py-3 h-auto">
+          <TabsList className="grid w-full grid-cols-5 md:grid-cols-10 h-auto gap-1 bg-transparent">
+            <TabsTrigger value="damaged" className="data-[state=active]:bg-sacred data-[state=active]:text-white flex flex-col py-2 h-auto">
               <Users className="w-4 h-4 mb-1" />
-              <span className="text-xs">Damaged Relationships</span>
+              <span className="text-[10px] md:text-xs">Relationships</span>
             </TabsTrigger>
-            <TabsTrigger value="conversations" className="data-[state=active]:bg-sacred data-[state=active]:text-white flex flex-col py-3 h-auto">
+            <TabsTrigger value="conversations" className="data-[state=active]:bg-sacred data-[state=active]:text-white flex flex-col py-2 h-auto">
               <MessageCircle className="w-4 h-4 mb-1" />
-              <span className="text-xs">Redemptive Conversations</span>
+              <span className="text-[10px] md:text-xs">Conversations</span>
             </TabsTrigger>
-            <TabsTrigger value="trust" className="data-[state=active]:bg-sacred data-[state=active]:text-white flex flex-col py-3 h-auto">
+            <TabsTrigger value="trust" className="data-[state=active]:bg-sacred data-[state=active]:text-white flex flex-col py-2 h-auto">
               <Church className="w-4 h-4 mb-1" />
-              <span className="text-xs">Rebuilding Trust</span>
+              <span className="text-[10px] md:text-xs">Trust</span>
             </TabsTrigger>
-            <TabsTrigger value="assessment" className="data-[state=active]:bg-sacred data-[state=active]:text-white flex flex-col py-3 h-auto">
+            <TabsTrigger value="assessment" className="data-[state=active]:bg-sacred data-[state=active]:text-white flex flex-col py-2 h-auto">
               <Scale className="w-4 h-4 mb-1" />
-              <span className="text-xs">Stay/Leave Assessment</span>
+              <span className="text-[10px] md:text-xs">Assessment</span>
             </TabsTrigger>
-            <TabsTrigger value="coach" className="data-[state=active]:bg-sacred data-[state=active]:text-white flex flex-col py-3 h-auto">
+            <TabsTrigger value="prayers" className="data-[state=active]:bg-amber-500 data-[state=active]:text-white flex flex-col py-2 h-auto">
+              <Heart className="w-4 h-4 mb-1" />
+              <span className="text-[10px] md:text-xs">Prayers</span>
+            </TabsTrigger>
+            <TabsTrigger value="journaling" className="data-[state=active]:bg-amber-500 data-[state=active]:text-white flex flex-col py-2 h-auto">
+              <PenLine className="w-4 h-4 mb-1" />
+              <span className="text-[10px] md:text-xs">Journal</span>
+            </TabsTrigger>
+            <TabsTrigger value="resources" className="data-[state=active]:bg-amber-500 data-[state=active]:text-white flex flex-col py-2 h-auto">
+              <BookOpen className="w-4 h-4 mb-1" />
+              <span className="text-[10px] md:text-xs">Resources</span>
+            </TabsTrigger>
+            <TabsTrigger value="coach" className="data-[state=active]:bg-sacred data-[state=active]:text-white flex flex-col py-2 h-auto">
               <Bot className="w-4 h-4 mb-1" />
-              <span className="text-xs">AI Response Coach</span>
+              <span className="text-[10px] md:text-xs">AI Coach</span>
             </TabsTrigger>
-            <TabsTrigger value="practice" className="data-[state=active]:bg-sacred data-[state=active]:text-white flex flex-col py-3 h-auto">
+            <TabsTrigger value="practice" className="data-[state=active]:bg-sacred data-[state=active]:text-white flex flex-col py-2 h-auto">
               <Mic className="w-4 h-4 mb-1" />
-              <span className="text-xs">Practice Mode</span>
+              <span className="text-[10px] md:text-xs">Practice</span>
             </TabsTrigger>
-            <TabsTrigger value="saved" className="data-[state=active]:bg-sacred data-[state=active]:text-white flex flex-col py-3 h-auto relative">
+            <TabsTrigger value="saved" className="data-[state=active]:bg-sacred data-[state=active]:text-white flex flex-col py-2 h-auto relative">
               <Bookmark className="w-4 h-4 mb-1" />
-              <span className="text-xs">Saved Responses</span>
+              <span className="text-[10px] md:text-xs">Saved</span>
               {savedResponses.length > 0 && (
                 <span className="absolute -top-1 -right-1 w-4 h-4 bg-sacred text-white text-[10px] rounded-full flex items-center justify-center">
                   {savedResponses.length}
@@ -1311,6 +1504,198 @@ export default function FamilyMinistryFallout() {
                 </CardContent>
               </Card>
             )}
+          </TabsContent>
+
+          {/* Guided Prayers Tab */}
+          <TabsContent value="prayers" className="space-y-6">
+            <div className="text-center mb-8">
+              <Badge className="bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/30 mb-3">
+                <Heart className="w-3 h-3 mr-1" />
+                Church Hurt Healing
+              </Badge>
+              <h2 className="text-2xl font-bold">Guided Prayers for Healing</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto mt-2">
+                Words for when you don't have your own. These prayers are designed to help you process pain, 
+                release bitterness, and reconnect with God's presence.
+              </p>
+            </div>
+            
+            <div className="space-y-6">
+              {guidedPrayers.map((prayer) => (
+                <Card key={prayer.id} className="border-amber-500/20 bg-gradient-to-br from-amber-500/5 to-transparent">
+                  <CardHeader>
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <Badge variant="outline" className="mb-2 border-amber-500/50 text-amber-600">
+                          {prayer.category}
+                        </Badge>
+                        <CardTitle className="text-xl">{prayer.title}</CardTitle>
+                        <CardDescription>{prayer.description}</CardDescription>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="bg-muted/50 rounded-lg p-6 whitespace-pre-wrap text-foreground/90 italic leading-relaxed">
+                      {prayer.prayer}
+                    </div>
+                    <div className="flex items-start gap-2 p-3 bg-sacred/10 rounded-lg">
+                      <BookOpen className="w-4 h-4 text-sacred mt-0.5 flex-shrink-0" />
+                      <p className="text-sm text-muted-foreground">{prayer.scripture}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+
+          {/* Journaling Tab */}
+          <TabsContent value="journaling" className="space-y-6">
+            <div className="text-center mb-8">
+              <Badge className="bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/30 mb-3">
+                <PenLine className="w-3 h-3 mr-1" />
+                Reflective Practice
+              </Badge>
+              <h2 className="text-2xl font-bold">Healing Journal</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto mt-2">
+                Writing helps process pain. Choose a prompt below and let your thoughts flow freely.
+                {user && " Your entries will be saved to your prayer journal."}
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-6">
+              {/* Prompt Selection */}
+              <div className="space-y-4">
+                <h3 className="font-semibold">Choose a Prompt</h3>
+                {journalingPrompts.map((category) => (
+                  <Card key={category.category}>
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-lg">{category.category}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      {category.prompts.map((prompt, idx) => (
+                        <Button
+                          key={idx}
+                          variant={selectedPrompt === prompt ? "default" : "outline"}
+                          className={`w-full text-left justify-start h-auto py-3 whitespace-normal ${
+                            selectedPrompt === prompt ? "bg-amber-500 hover:bg-amber-600" : ""
+                          }`}
+                          onClick={() => setSelectedPrompt(prompt)}
+                        >
+                          <span className="text-sm">{prompt}</span>
+                        </Button>
+                      ))}
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+
+              {/* Writing Area */}
+              <div className="space-y-4">
+                <h3 className="font-semibold">Your Response</h3>
+                {selectedPrompt ? (
+                  <Card className="border-amber-500/20">
+                    <CardHeader>
+                      <CardDescription className="italic">"{selectedPrompt}"</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <Textarea
+                        placeholder="Start writing... Let your thoughts flow freely without judgment."
+                        className="min-h-[250px] resize-none"
+                        value={journalEntry}
+                        onChange={(e) => setJournalEntry(e.target.value)}
+                      />
+                      <Button
+                        onClick={handleSaveJournalEntry}
+                        disabled={!journalEntry.trim()}
+                        className="w-full bg-amber-500 hover:bg-amber-600"
+                      >
+                        <CheckCircle2 className="w-4 h-4 mr-2" />
+                        Save Entry
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  <Card className="border-dashed">
+                    <CardContent className="flex flex-col items-center justify-center py-12">
+                      <PenLine className="w-12 h-12 text-muted-foreground/50 mb-4" />
+                      <p className="text-muted-foreground text-center">
+                        Select a prompt from the left to begin writing
+                      </p>
+                    </CardContent>
+                  </Card>
+                )}
+
+                {savedEntries.length > 0 && (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Recent Entries</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      {savedEntries.slice(-3).reverse().map((entry, idx) => (
+                        <div key={idx} className="p-3 bg-muted/50 rounded-lg">
+                          <p className="text-xs text-muted-foreground mb-1">{entry.date}</p>
+                          <p className="text-sm italic mb-2">"{entry.prompt.slice(0, 50)}..."</p>
+                          <p className="text-sm">{entry.entry.slice(0, 100)}...</p>
+                        </div>
+                      ))}
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
+            </div>
+          </TabsContent>
+
+          {/* Healing Resources Tab */}
+          <TabsContent value="resources" className="space-y-6">
+            <div className="text-center mb-8">
+              <Badge className="bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/30 mb-3">
+                <BookOpen className="w-3 h-3 mr-1" />
+                Educational Content
+              </Badge>
+              <h2 className="text-2xl font-bold">Healing Resources</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto mt-2">
+                Understanding what you're experiencing is the first step toward healing.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              {healingResources.map((resource) => (
+                <Card key={resource.title} className="border-amber-500/20 bg-gradient-to-br from-amber-500/5 to-transparent">
+                  <CardHeader>
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-rose-500 flex items-center justify-center mb-3">
+                      <resource.icon className="w-6 h-6 text-white" />
+                    </div>
+                    <CardTitle className="text-lg">{resource.title}</CardTitle>
+                    <CardDescription>{resource.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-2">
+                      {resource.content.map((item, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-sm">
+                          <CheckCircle2 className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <Card className="mt-8 border-rose-500/20 bg-gradient-to-br from-rose-500/5 to-transparent">
+              <CardContent className="flex flex-col md:flex-row items-center gap-6 py-8">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-rose-500 to-red-600 flex items-center justify-center flex-shrink-0">
+                  <Shield className="w-8 h-8 text-white" />
+                </div>
+                <div className="text-center md:text-left">
+                  <h3 className="font-bold text-lg mb-2">Need Professional Support?</h3>
+                  <p className="text-muted-foreground">
+                    If you're experiencing severe distress, consider speaking with a therapist who understands religious trauma. 
+                    Organizations like the Religious Trauma Institute can help you find qualified professionals.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
         </Tabs>
 

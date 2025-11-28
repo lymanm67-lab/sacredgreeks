@@ -52,7 +52,6 @@ const PodcastAppearances = lazy(() => import("./pages/PodcastAppearances"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const FamilyMinistryFallout = lazy(() => import("./pages/FamilyMinistryFallout"));
-const ChurchHurtHealing = lazy(() => import("./pages/ChurchHurtHealing"));
 const Journey = lazy(() => import("./pages/Journey"));
 const MythBuster = lazy(() => import("./pages/MythBuster"));
 const SymbolGuide = lazy(() => import("./pages/SymbolGuide"));
@@ -114,7 +113,7 @@ const App = () => (
                     <Route path="/resources" element={<Resources />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/family-ministry-fallout" element={<FamilyMinistryFallout />} />
-                    <Route path="/church-hurt-healing" element={<ChurchHurtHealing />} />
+                    <Route path="/church-hurt-healing" element={<FamilyMinistryFallout />} />
                     <Route path="/journey" element={<Journey />} />
                     <Route path="/myth-buster" element={<MythBuster />} />
                     <Route path="/symbol-guide" element={<SymbolGuide />} />

@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Heart, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library, Lock, HandHeart, HeartHandshake, ChevronUp, Quote, Phone, MessageCircle, PenLine } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
 import { ShareHealingStoryDialog } from "@/components/ShareHealingStoryDialog";
+import { ApprovedHealingStories } from "@/components/ApprovedHealingStories";
 import { MobileQRCode } from "@/components/MobileQRCode";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import logo from "@/assets/sacred-greeks-logo.png";
@@ -58,23 +59,15 @@ const coreFeatures = [
   },
 ];
 
-// Healing & Support resources - prominent placement
+// Healing & Support resources - combined into single comprehensive resource
 const healingResources = [
   {
-    title: "Family & Ministry Fallout",
-    description: "Navigate damaged relationships, rebuild trust, and have redemptive conversations with family and church",
+    title: "Family, Ministry & Church Hurt Healing",
+    description: "Navigate damaged relationships, process spiritual trauma with guided prayers, journaling prompts, and real testimonies from Christian Greeks who've walked this path",
     icon: HandHeart,
     link: "/family-ministry-fallout",
     color: "from-amber-500 to-rose-500",
-    badge: "New",
-  },
-  {
-    title: "Church Hurt Healing",
-    description: "Process trauma with guided prayers, journaling prompts, and real testimonies from Christian Greeks",
-    icon: HeartHandshake,
-    link: "/church-hurt-healing",
-    color: "from-teal-500 to-cyan-600",
-    badge: "New",
+    badge: "Comprehensive",
   },
 ];
 
@@ -735,6 +728,11 @@ const Index = () => {
                   Available 24/7 • Free • Confidential
                 </p>
               </div>
+            </div>
+
+            {/* Approved Healing Stories from Community */}
+            <div className="mt-8">
+              <ApprovedHealingStories />
             </div>
           </div>
         </div>
