@@ -18,11 +18,13 @@ import {
   Clock,
   Tag,
   Loader2,
-  X
+  X,
+  Plus
 } from "lucide-react";
 import { useExternalLinks } from "@/hooks/use-external-links";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import SuggestVideoDialog from "@/components/video-library/SuggestVideoDialog";
 
 interface VideoItem {
   id: string;
@@ -247,14 +249,15 @@ const VideoLibrary = () => {
             Explore our curated collection of videos on faith, Greek life, symbols, and more.
           </p>
           
-          {/* AI Assist Button */}
-          <Dialog open={aiDialogOpen} onOpenChange={setAiDialogOpen}>
-            <DialogTrigger asChild>
-              <Button className="gap-2 bg-gradient-to-r from-sacred to-warm-blue hover:opacity-90">
-                <Sparkles className="w-4 h-4" />
-                AI Video Picker
-              </Button>
-            </DialogTrigger>
+          {/* Action Buttons */}
+          <div className="flex items-center justify-center gap-3 flex-wrap">
+            <Dialog open={aiDialogOpen} onOpenChange={setAiDialogOpen}>
+              <DialogTrigger asChild>
+                <Button className="gap-2 bg-gradient-to-r from-sacred to-warm-blue hover:opacity-90">
+                  <Sparkles className="w-4 h-4" />
+                  AI Video Picker
+                </Button>
+              </DialogTrigger>
             <DialogContent className="max-w-lg">
               <DialogHeader>
                 <DialogTitle className="flex items-center gap-2">
@@ -333,7 +336,10 @@ const VideoLibrary = () => {
                 )}
               </div>
             </DialogContent>
-          </Dialog>
+            </Dialog>
+            
+            <SuggestVideoDialog />
+          </div>
         </div>
 
         {/* Search and Filters */}

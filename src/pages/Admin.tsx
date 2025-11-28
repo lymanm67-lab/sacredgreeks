@@ -10,7 +10,8 @@ import { ResourceSuggestionsManager } from "@/components/admin/ResourceSuggestio
 import { UserManagement } from "@/components/admin/UserManagement";
 import { QASubmissionsManager } from "@/components/admin/QASubmissionsManager";
 import { HealingStoriesManager } from "@/components/admin/HealingStoriesManager";
-import { Home, Users, FileText, Lightbulb, MessageSquare, Heart } from "lucide-react";
+import VideoSuggestionsManager from "@/components/admin/VideoSuggestionsManager";
+import { Home, Users, FileText, Lightbulb, MessageSquare, Heart, Video } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -138,7 +139,7 @@ const Admin = () => {
 
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="users" className="space-y-6">
-          <TabsList className="grid w-full max-w-3xl grid-cols-5">
+          <TabsList className="grid w-full max-w-4xl grid-cols-6">
             <TabsTrigger value="users" className="flex items-center gap-2">
               <Users className="h-4 w-4" />
               Users
@@ -154,6 +155,10 @@ const Admin = () => {
             <TabsTrigger value="healing" className="flex items-center gap-2">
               <Heart className="h-4 w-4" />
               Healing
+            </TabsTrigger>
+            <TabsTrigger value="videos" className="flex items-center gap-2">
+              <Video className="h-4 w-4" />
+              Videos
             </TabsTrigger>
             <TabsTrigger value="resources" className="flex items-center gap-2">
               <Lightbulb className="h-4 w-4" />
@@ -233,6 +238,10 @@ const Admin = () => {
 
           <TabsContent value="healing">
             <HealingStoriesManager />
+          </TabsContent>
+
+          <TabsContent value="videos">
+            <VideoSuggestionsManager />
           </TabsContent>
 
           <TabsContent value="resources">
