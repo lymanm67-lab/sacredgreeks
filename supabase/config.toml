@@ -107,3 +107,15 @@ verify_jwt = false
 
 [functions.send-qa-answer-notification]
 verify_jwt = false
+
+[functions.notify-video-suggestion]
+verify_jwt = false
+
+[functions.notify-healing-story]
+verify_jwt = false
+
+[functions.notify-story-approved]
+verify_jwt = false
+
+[functions.recommend-video]
+verify_jwt = false
