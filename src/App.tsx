@@ -61,6 +61,7 @@ const Subscription = lazy(() => import("./pages/Subscription"));
 const ShatteredMasks = lazy(() => import("./pages/ShatteredMasks"));
 const SharedSymbolBookmarks = lazy(() => import("./pages/SharedSymbolBookmarks"));
 const VideoLibrary = lazy(() => import("./pages/VideoLibrary"));
+const BetaLaunchChecklist = lazy(() => import("./pages/BetaLaunchChecklist"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -238,6 +239,14 @@ const App = () => (
                       element={
                         <ProtectedRoute>
                           <Admin />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/beta-checklist"
+                      element={
+                        <ProtectedRoute>
+                          <BetaLaunchChecklist />
                         </ProtectedRoute>
                       }
                     />
