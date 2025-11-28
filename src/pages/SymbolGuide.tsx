@@ -5,13 +5,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Filter, Lightbulb } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Filter, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2 } from 'lucide-react';
 import { symbolGuideContent, ritualGuideContent, symbolCategories, SymbolEntry, RitualEntry } from '@/data/symbolGuideContent';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import DiscernmentGuidanceDialog from '@/components/symbol-guide/DiscernmentGuidanceDialog';
+import BookmarkNotesDialog from '@/components/symbol-guide/BookmarkNotesDialog';
 
 const cautionLevels = [
   { id: 'all', label: 'All Levels', icon: null },
@@ -35,6 +37,7 @@ interface SymbolBookmark {
   id: string;
   bookmark_type: string;
   content_json: BookmarkContent;
+  notes: string | null;
 }
 
 const SymbolGuide = () => {
@@ -43,6 +46,15 @@ const SymbolGuide = () => {
   const [symbolCategory, setSymbolCategory] = useState('all');
   const [cautionLevel, setCautionLevel] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [bookmarksOpen, setBookmarksOpen] = useState(false);
+  const [notesDialog, setNotesDialog] = useState<{
+    open: boolean;
+    itemId: string;
+    itemType: 'symbol' | 'ritual';
+    itemName: string;
+    notes: string;
+    bookmarkId?: string;
+  }>({ open: false, itemId: '', itemType: 'symbol', itemName: '', notes: '' });
 
   // Fetch bookmarks
   const { data: bookmarks = [] } = useQuery({
@@ -58,7 +70,8 @@ const SymbolGuide = () => {
       return (data || []).map(b => ({
         id: b.id,
         bookmark_type: b.bookmark_type,
-        content_json: b.content_json as unknown as BookmarkContent
+        content_json: b.content_json as unknown as BookmarkContent,
+        notes: b.notes
       })) as SymbolBookmark[];
     },
     enabled: !!user,
@@ -66,20 +79,34 @@ const SymbolGuide = () => {
 
   // Add bookmark mutation
   const addBookmark = useMutation({
-    mutationFn: async ({ itemId, itemType }: { itemId: string; itemType: 'symbol' | 'ritual' }) => {
+    mutationFn: async ({ itemId, itemType, notes }: { itemId: string; itemType: 'symbol' | 'ritual'; notes?: string }) => {
       if (!user) throw new Error('Must be logged in');
       const { error } = await supabase.from('bookmarks').insert({
         user_id: user.id,
         bookmark_type: 'symbol-guide',
         content_json: { itemId, itemType },
+        notes: notes || null,
       });
       if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['symbol-guide-bookmarks'] });
-      toast.success('Bookmarked for reference');
+      toast.success('Bookmarked with notes');
     },
     onError: () => toast.error('Failed to bookmark'),
+  });
+
+  // Update bookmark notes mutation
+  const updateBookmarkNotes = useMutation({
+    mutationFn: async ({ bookmarkId, notes }: { bookmarkId: string; notes: string }) => {
+      const { error } = await supabase.from('bookmarks').update({ notes }).eq('id', bookmarkId);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['symbol-guide-bookmarks'] });
+      toast.success('Notes updated');
+    },
+    onError: () => toast.error('Failed to update notes'),
   });
 
   // Remove bookmark mutation
@@ -95,24 +122,54 @@ const SymbolGuide = () => {
     onError: () => toast.error('Failed to remove bookmark'),
   });
 
-  const isBookmarked = (itemId: string, itemType: 'symbol' | 'ritual') => {
+  const getBookmark = (itemId: string, itemType: 'symbol' | 'ritual') => {
     return bookmarks.find(b => 
       b.content_json.itemId === itemId && 
       b.content_json.itemType === itemType
     );
   };
 
-  const toggleBookmark = (itemId: string, itemType: 'symbol' | 'ritual') => {
+  const handleBookmarkClick = (itemId: string, itemType: 'symbol' | 'ritual', itemName: string) => {
     if (!user) {
       toast.error('Please sign in to bookmark items');
       return;
     }
-    const existing = isBookmarked(itemId, itemType);
+    const existing = getBookmark(itemId, itemType);
     if (existing) {
-      removeBookmark.mutate(existing.id);
+      // Open dialog to edit notes
+      setNotesDialog({
+        open: true,
+        itemId,
+        itemType,
+        itemName,
+        notes: existing.notes || '',
+        bookmarkId: existing.id
+      });
     } else {
-      addBookmark.mutate({ itemId, itemType });
+      // Open dialog to add with notes
+      setNotesDialog({
+        open: true,
+        itemId,
+        itemType,
+        itemName,
+        notes: ''
+      });
     }
+  };
+
+  const handleSaveNotes = (notes: string) => {
+    if (notesDialog.bookmarkId) {
+      updateBookmarkNotes.mutate({ bookmarkId: notesDialog.bookmarkId, notes });
+    } else {
+      addBookmark.mutate({ itemId: notesDialog.itemId, itemType: notesDialog.itemType, notes });
+    }
+  };
+
+  const getItemDetails = (bookmark: SymbolBookmark) => {
+    if (bookmark.content_json.itemType === 'symbol') {
+      return symbolGuideContent.find(s => s.id === bookmark.content_json.itemId);
+    }
+    return ritualGuideContent.find(r => r.id === bookmark.content_json.itemId);
   };
 
   const filteredSymbols = useMemo(() => {
@@ -139,7 +196,7 @@ const SymbolGuide = () => {
   }, [cautionLevel, searchQuery]);
 
   const renderSymbolCard = (symbol: SymbolEntry) => {
-    const bookmarked = isBookmarked(symbol.id, 'symbol');
+    const bookmark = getBookmark(symbol.id, 'symbol');
     return (
       <Card key={symbol.id}>
         <CardHeader className="pb-2">
@@ -151,9 +208,9 @@ const SymbolGuide = () => {
                   variant="ghost"
                   size="icon"
                   className="h-8 w-8"
-                  onClick={() => toggleBookmark(symbol.id, 'symbol')}
+                  onClick={() => handleBookmarkClick(symbol.id, 'symbol', symbol.name)}
                 >
-                  {bookmarked ? (
+                  {bookmark ? (
                     <BookmarkCheck className="w-4 h-4 text-sacred" />
                   ) : (
                     <Bookmark className="w-4 h-4" />
@@ -196,7 +253,7 @@ const SymbolGuide = () => {
   };
 
   const renderRitualCard = (ritual: RitualEntry) => {
-    const bookmarked = isBookmarked(ritual.id, 'ritual');
+    const bookmark = getBookmark(ritual.id, 'ritual');
     return (
       <Card key={ritual.id}>
         <CardHeader className="pb-2">
@@ -208,9 +265,9 @@ const SymbolGuide = () => {
                   variant="ghost"
                   size="icon"
                   className="h-8 w-8"
-                  onClick={() => toggleBookmark(ritual.id, 'ritual')}
+                  onClick={() => handleBookmarkClick(ritual.id, 'ritual', ritual.name)}
                 >
-                  {bookmarked ? (
+                  {bookmark ? (
                     <BookmarkCheck className="w-4 h-4 text-sacred" />
                   ) : (
                     <Bookmark className="w-4 h-4" />
@@ -284,6 +341,69 @@ const SymbolGuide = () => {
           </CardContent>
         </Card>
 
+        {/* Bookmarks Section - Only show if user is logged in and has bookmarks */}
+        {user && bookmarks.length > 0 && (
+          <Collapsible open={bookmarksOpen} onOpenChange={setBookmarksOpen} className="mb-6">
+            <Card>
+              <CollapsibleTrigger asChild>
+                <CardHeader className="cursor-pointer hover:bg-muted/30 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Bookmark className="w-5 h-5 text-sacred" />
+                      <CardTitle className="text-base">My Bookmarks ({bookmarks.length})</CardTitle>
+                    </div>
+                    {bookmarksOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                  </div>
+                </CardHeader>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <CardContent className="pt-0 space-y-3">
+                  {bookmarks.map(bookmark => {
+                    const item = getItemDetails(bookmark);
+                    if (!item) return null;
+                    return (
+                      <div key={bookmark.id} className="p-3 bg-muted/30 rounded-lg space-y-2">
+                        <div className="flex items-start justify-between gap-2">
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span className="font-medium text-sm">{item.name}</span>
+                              <Badge variant="outline" className="text-xs capitalize">{bookmark.content_json.itemType}</Badge>
+                              <CautionBadge level={item.cautionLevel} />
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7"
+                              onClick={() => handleBookmarkClick(bookmark.content_json.itemId, bookmark.content_json.itemType, item.name)}
+                            >
+                              <Edit2 className="w-3 h-3" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7 text-destructive hover:text-destructive"
+                              onClick={() => removeBookmark.mutate(bookmark.id)}
+                            >
+                              <Trash2 className="w-3 h-3" />
+                            </Button>
+                          </div>
+                        </div>
+                        {bookmark.notes && (
+                          <div className="text-xs text-muted-foreground bg-background/50 p-2 rounded border border-border/50">
+                            <span className="font-medium text-foreground">My notes:</span> {bookmark.notes}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </CardContent>
+              </CollapsibleContent>
+            </Card>
+          </Collapsible>
+        )}
+
         <div className="space-y-4 mb-6">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -356,6 +476,16 @@ const SymbolGuide = () => {
           </TabsContent>
         </Tabs>
       </main>
+
+      {/* Notes Dialog */}
+      <BookmarkNotesDialog
+        open={notesDialog.open}
+        onOpenChange={(open) => setNotesDialog(prev => ({ ...prev, open }))}
+        itemName={notesDialog.itemName}
+        initialNotes={notesDialog.notes}
+        onSave={handleSaveNotes}
+        isEditing={!!notesDialog.bookmarkId}
+      />
     </div>
   );
 };
