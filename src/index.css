@@ -539,3 +539,49 @@ html {
 .feature-card:hover {
   animation: borderGlow 2s ease-in-out infinite;
 }
+
+/* Gradient Shift Animations */
+@keyframes gradientShiftBg {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.1;
+  }
+  50% {
+    transform: translate(50px, 30px) scale(1.1);
+    opacity: 0.15;
+  }
+}
+
+@keyframes gradientShiftReverseBg {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.08;
+  }
+  50% {
+    transform: translate(-40px, -20px) scale(1.15);
+    opacity: 0.12;
+  }
+}
+
+@keyframes gradientPulseBg {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.05;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.1;
+  }
+}
+
+.animate-gradient-shift {
+  animation: gradientShiftBg 20s ease-in-out infinite;
+}
+
+.animate-gradient-shift-reverse {
+  animation: gradientShiftReverseBg 25s ease-in-out infinite;
+}
+
+.animate-gradient-pulse {
+  animation: gradientPulseBg 15s ease-in-out infinite;
+}
