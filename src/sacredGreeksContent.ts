@@ -1,6 +1,6 @@
-export type Scenario = "clip" | "pressure" | "event";
+export type Scenario = "clip" | "pressure" | "event" | "denounce" | "symbol";
 
-export type ResultType = "steady_language" | "high_pressure" | "ministry_idea";
+export type ResultType = "steady_language" | "high_pressure" | "ministry_idea" | "symbol_clarity";
 
 export interface ScriptureItem {
   ref: string;
@@ -53,7 +53,7 @@ export interface ResultContent {
 
 export const sacredGreeksResults: Record<
   Scenario,
-  Record<ResultType, ResultContent>
+  Partial<Record<ResultType, ResultContent>>
 > = {
   clip: {
     steady_language: {
@@ -818,6 +818,643 @@ export const sacredGreeksResults: Record<
           url: "https://youtu.be/_3C9q8ZmLnk",
           description:
             "Practical tips for leading faith-based events in Greek organizations.",
+        },
+      ],
+    },
+
+    symbol_clarity: {
+      headline: "You are asking the right questions about symbols",
+      intro:
+        "You have noticed something about a symbol, ritual, or gesture that concerns you. That is a sign of spiritual sensitivity, not paranoia. Not everything that looks unfamiliar is demonic, and not everything that feels comfortable is safe. Here is how to think through it with Scripture and wisdom.",
+
+      scriptureToolkit: [
+        {
+          ref: "1 Corinthians 10:23-24",
+          summary: "All things are lawful, but not all things are helpful.",
+          whenToUse:
+            "Use when you want to evaluate whether something is beneficial, not just whether it is technically okay.",
+        },
+        {
+          ref: "Romans 14:5",
+          summary: "Each one should be fully convinced in their own mind.",
+          whenToUse:
+            "Use when you need to make a conscience-level decision and do not want to simply follow the crowd.",
+        },
+      ],
+
+      sampleResponses: [
+        {
+          label: "When someone dismisses your concern",
+          objection: "You are overthinking this.",
+          youCanSay:
+            "I appreciate that you are comfortable with this, but I am not ready to move forward until I have clarity. Can you help me understand the meaning and history behind it?",
+        },
+      ],
+
+      proofPoints: [
+        {
+          label: "Process",
+          text: "Do research. Ask questions. Do not let fear drive the inquiry, but do not ignore your conscience either.",
+        },
+        {
+          label: "Rituals",
+          text: "Ask what the symbol or ritual means today in your chapter, not just what someone online claims it means.",
+        },
+        {
+          label: "Oaths",
+          text: "If a symbol represents something you cannot affirm, you have the right to abstain or ask for clarity.",
+        },
+        {
+          label: "Obscurity",
+          text: "You do not have to accept mystery for mystery's sake. It is okay to want understanding.",
+        },
+        {
+          label: "Founding",
+          text: "History matters, but how something is practiced today also matters. Both deserve examination.",
+        },
+      ],
+
+      prayer:
+        "Lord, give me discernment. Show me what honors You and what does not. Protect me from fear and from compromise. Help me walk in the light. Amen.",
+
+      videos: [
+        {
+          title: "Understanding Symbols in Greek Life",
+          url: "https://youtu.be/_3C9q8ZmLnk",
+          description:
+            "How to evaluate symbols and rituals through a biblical lens.",
+        },
+      ],
+    },
+  },
+
+  denounce: {
+    steady_language: {
+      headline: "You are wrestling with the right question",
+      intro:
+        "Should I stay or should I go? That is not a question you can answer in a moment of panic or under someone else's pressure. This is a decision that deserves prayer, study, and honest reflection. You are not running from God by taking time. You are honoring Him by seeking clarity.",
+
+      scriptureToolkit: [
+        {
+          ref: "Ecclesiastes 3:1",
+          summary: "There is a time for everything.",
+          whenToUse:
+            "Use when you want to affirm that timing matters and that not every season calls for the same action.",
+        },
+        {
+          ref: "Proverbs 3:5-6",
+          summary: "Trust in the Lord with all your heart and lean not on your own understanding.",
+          whenToUse:
+            "Use when you need to remind yourself that clarity will come from God, not just your own analysis.",
+        },
+        {
+          ref: "James 1:5-6",
+          summary: "If any of you lacks wisdom, let him ask God.",
+          whenToUse:
+            "Use when you need confidence that God will answer your request for guidance.",
+        },
+      ],
+
+      sampleResponses: [
+        {
+          label: "To those who ask why you haven't left",
+          objection: "If it was wrong, you would have left by now.",
+          youCanSay:
+            "I am not staying out of stubbornness. I am staying because I have not yet been convicted by Scripture or the Holy Spirit that leaving is required. I am open to being wrong, but I will not move based on someone else's conviction.",
+        },
+        {
+          label: "To those who ask why you haven't denounced publicly",
+          objection: "You owe everyone an explanation.",
+          youCanSay:
+            "I owe God obedience and my brothers and sisters respect. I do not owe the internet a performance. When or if I make a decision, I will handle it with integrity, not theater.",
+        },
+      ],
+
+      proofPoints: [
+        {
+          label: "Process",
+          text: "Take inventory of your Greek experience. What has it produced in your life? Where has it helped you grow? Where has it caused you to stumble?",
+        },
+        {
+          label: "Rituals",
+          text: "Have you been asked to do things that violate your conscience? Have you been able to abstain without consequence?",
+        },
+        {
+          label: "Oaths",
+          text: "Are there promises you made that conflict with Scripture? If so, how can you honor God while being honest about what you agreed to?",
+        },
+        {
+          label: "Obscurity",
+          text: "Is your faith visible in Greek spaces? Are you free to be Christian, or do you hide?",
+        },
+        {
+          label: "Founding",
+          text: "You did not write the history, but you are writing the present. Can you do so faithfully?",
+        },
+      ],
+
+      prayer:
+        "Lord, I do not want to run ahead of You or fall behind. Show me what faithfulness looks like in this season. If staying honors You, give me peace. If leaving is required, give me courage. Amen.",
+
+      videos: [
+        {
+          title: "Should Christians Denounce BGLOs?",
+          url: "https://youtu.be/_3C9q8ZmLnk",
+          description:
+            "A thoughtful look at the denouncement question with biblical clarity.",
+        },
+      ],
+    },
+
+    high_pressure: {
+      headline: "Do not make vows under pressure",
+      intro:
+        "You are being pushed toward a decision right now. Maybe someone is telling you that your salvation depends on it. Maybe you feel like you need to prove something to God or to people. That is not how God works. The Holy Spirit convicts but does not manipulate. If you need to leave, God will make that clear. But do not make a vow you are not ready to keep.",
+
+      scriptureToolkit: [
+        {
+          ref: "Matthew 5:37",
+          summary: "Let your yes be yes and your no be no.",
+          whenToUse:
+            "Use when you want to affirm that vows matter and should not be made lightly or under pressure.",
+        },
+        {
+          ref: "Galatians 1:10",
+          summary: "Am I trying to please people or God?",
+          whenToUse:
+            "Use when you feel torn between what others want and what you believe is right.",
+        },
+        {
+          ref: "2 Timothy 1:7",
+          summary: "God has not given us a spirit of fear.",
+          whenToUse:
+            "Use when fear is driving your decision-making and you need to recenter on faith.",
+        },
+      ],
+
+      sampleResponses: [
+        {
+          label: "When someone demands a public denouncement",
+          objection: "You need to denounce right now or you are not serious.",
+          youCanSay:
+            "I take this seriously, which is why I will not make a rushed public statement. If God leads me to leave, I will. But I will not perform for an audience or make vows I am not ready to keep.",
+        },
+      ],
+
+      proofPoints: [
+        {
+          label: "Process",
+          text: "Slow down. Pray. Fast. Talk to wise believers who know you, not just people with opinions online.",
+        },
+        {
+          label: "Rituals",
+          text: "If something in your chapter violates your conscience, you can address it without making a blanket denouncement.",
+        },
+        {
+          label: "Oaths",
+          text: "Do not break one vow in fear and then make a new vow in panic. That is not repentance, that is reaction.",
+        },
+        {
+          label: "Obscurity",
+          text: "Your decision does not have to be public to be real. Walk in integrity, not performance.",
+        },
+        {
+          label: "Founding",
+          text: "You are not responsible for what the founders did. You are responsible for what you do now.",
+        },
+      ],
+
+      prayer:
+        "Father, I feel pressure from all sides. Quiet the noise. Help me hear Your voice. Protect me from making vows in fear. Lead me in truth. Amen.",
+
+      videos: [
+        {
+          title: "Pressure Is Not Prophecy",
+          url: "https://youtu.be/PLQG1lOu-48",
+          description:
+            "How to discern between godly conviction and human manipulation when it comes to leaving.",
+        },
+      ],
+    },
+
+    ministry_idea: {
+      headline: "Maybe the call is not to leave but to lead",
+      intro:
+        "What if God is not calling you out, but calling you up? Some Christians are called to leave Greek life. Others are called to stay and be salt and light. If you are wrestling with this question, consider whether your presence could be redemptive. Not every dark room needs you to leave it. Some need you to turn on a light.",
+
+      scriptureToolkit: [
+        {
+          ref: "Matthew 5:13-14",
+          summary: "You are the salt of the earth. You are the light of the world.",
+          whenToUse:
+            "Use when you want to affirm that your presence in Greek spaces can be prophetic, not just problematic.",
+        },
+        {
+          ref: "1 Corinthians 7:17",
+          summary: "Each person should remain in the situation the Lord has assigned to them.",
+          whenToUse:
+            "Use when you want to affirm that God can call you to stay where you are and be faithful there.",
+        },
+      ],
+
+      sampleResponses: [
+        {
+          label: "When someone says you should just leave",
+          objection: "If you really loved Jesus you would walk away.",
+          youCanSay:
+            "I understand why you see it that way. But I believe God has me here for a reason. I am not hiding my faith. I am trying to bring Jesus into a space that needs Him.",
+        },
+      ],
+
+      proofPoints: [
+        {
+          label: "Process",
+          text: "If you stay, stay on mission. What would it look like to make disciples in your chapter?",
+        },
+        {
+          label: "Rituals",
+          text: "You can challenge unhealthy practices from within. You do not have to leave to have influence.",
+        },
+        {
+          label: "Oaths",
+          text: "Your highest loyalty is to Christ. Everything else serves that.",
+        },
+        {
+          label: "Obscurity",
+          text: "Be visible as a believer. Do not hide your light to fit in.",
+        },
+        {
+          label: "Founding",
+          text: "You can honor the legacy while also reforming it. That is prophetic leadership.",
+        },
+      ],
+
+      prayer:
+        "Lord, if You are calling me to stay and serve, give me courage and clarity. Let me be salt and light in this space. Use me for Your glory. Amen.",
+
+      videos: [
+        {
+          title: "Salt and Light in Greek Life",
+          url: "https://youtu.be/_3C9q8ZmLnk",
+          description:
+            "What it means to be a redemptive presence in Greek organizations.",
+        },
+      ],
+    },
+
+    symbol_clarity: {
+      headline: "Symbols alone do not determine your calling",
+      intro:
+        "You may have heard that certain symbols or rituals in Greek life are demonic. That is worth examining, but it is not the whole story. The question is not just what a symbol meant a hundred years ago. It is what it means in your heart and in your chapter today. Here is how to think through it.",
+
+      scriptureToolkit: [
+        {
+          ref: "1 Corinthians 8:4-6",
+          summary: "An idol is nothing. There is only one God.",
+          whenToUse:
+            "Use when you want to affirm that symbols do not have inherent power over you if your heart belongs to Christ.",
+        },
+        {
+          ref: "Romans 14:14",
+          summary: "Nothing is unclean in itself, but it is unclean for anyone who thinks it unclean.",
+          whenToUse:
+            "Use when you want to navigate conscience-level decisions about symbols and practices.",
+        },
+      ],
+
+      sampleResponses: [
+        {
+          label: "When someone says your org's symbols are demonic",
+          objection: "That hand sign is a sign of the devil.",
+          youCanSay:
+            "I have looked into it. In my chapter, it represents unity and pride in our history. I do not worship it or give it spiritual power. If you have evidence that it is being used for something sinister, I am open to hearing it.",
+        },
+      ],
+
+      proofPoints: [
+        {
+          label: "Process",
+          text: "Do not let one TikTok video define what you believe. Study, pray, and ask questions.",
+        },
+        {
+          label: "Rituals",
+          text: "Symbols mean what we make them mean. What does this symbol mean in your chapter, in your heart?",
+        },
+        {
+          label: "Oaths",
+          text: "If you are uncomfortable with a symbol, you have the right to abstain or ask for clarity.",
+        },
+        {
+          label: "Obscurity",
+          text: "Mystery is not the same as darkness. But if something is being hidden from you, that is worth examining.",
+        },
+        {
+          label: "Founding",
+          text: "History matters, but so does present practice. Evaluate both.",
+        },
+      ],
+
+      prayer:
+        "Lord, give me wisdom about symbols and rituals. Help me not to worship created things or fear them unnecessarily. Keep my heart fixed on You alone. Amen.",
+
+      videos: [
+        {
+          title: "Are BGLO Symbols Demonic?",
+          url: "https://youtu.be/_3C9q8ZmLnk",
+          description:
+            "A biblical and historical look at Greek symbols and what they mean for Christians.",
+        },
+      ],
+    },
+  },
+
+  symbol: {
+    steady_language: {
+      headline: "You are wise to ask about this",
+      intro:
+        "Symbols, rituals, and gestures carry meaning. You are not being paranoid by asking what they mean. But you are also not required to panic just because someone online said something scary. Here is how to examine these things with Scripture and wisdom.",
+
+      scriptureToolkit: [
+        {
+          ref: "1 John 4:1",
+          summary: "Test the spirits to see whether they are from God.",
+          whenToUse:
+            "Use when you want to affirm that spiritual discernment is good, not paranoid.",
+        },
+        {
+          ref: "Philippians 4:8",
+          summary: "Whatever is true, noble, right, pure, lovely, admirable—think about such things.",
+          whenToUse:
+            "Use when you want to focus on truth rather than speculation or fear.",
+        },
+        {
+          ref: "1 Corinthians 8:4",
+          summary: "We know that an idol is nothing at all in the world.",
+          whenToUse:
+            "Use when you want to affirm that symbols do not have inherent power over Christians who belong to Christ.",
+        },
+      ],
+
+      sampleResponses: [
+        {
+          label: "When someone says your hand sign is demonic",
+          objection: "That gesture is a sign of the occult.",
+          youCanSay:
+            "I have heard that claim. In my research, I found that many gestures have multiple meanings across cultures. In my chapter, it represents unity. I do not give it spiritual power. But I am open to learning more if you have credible sources.",
+        },
+        {
+          label: "When someone says your shield has pagan symbols",
+          objection: "Those images come from false religions.",
+          youCanSay:
+            "I understand the concern. Many symbols used today have ancient origins. The question is what they mean now, in this context. I do not worship my shield. It represents values I hold dear like scholarship and service. But I am always willing to examine what I affirm.",
+        },
+      ],
+
+      proofPoints: [
+        {
+          label: "Process",
+          text: "Do not accept accusations or defenses without doing your own research. Ask questions, study history, and pray.",
+        },
+        {
+          label: "Rituals",
+          text: "Ask what the ritual means today in your chapter. Not just what it meant in 1906 or what someone online claims.",
+        },
+        {
+          label: "Oaths",
+          text: "If a symbol represents something you cannot affirm before God, you have the freedom to abstain or clarify your participation.",
+        },
+        {
+          label: "Obscurity",
+          text: "Mystery is not inherently evil, but if something is being hidden from you, you have a right to ask why.",
+        },
+        {
+          label: "Founding",
+          text: "History is complex. Founders were human. Evaluate the symbol by Scripture, not just by origin stories.",
+        },
+      ],
+
+      prayer:
+        "Lord, give me discernment. Help me not to be driven by fear or by carelessness. Show me what honors You and what does not. Guide my conscience with Your Word. Amen.",
+
+      videos: [
+        {
+          title: "Symbol Guide: A Biblical Approach",
+          url: "https://youtu.be/_3C9q8ZmLnk",
+          description:
+            "How to evaluate Greek symbols and rituals through a Christian lens.",
+        },
+      ],
+    },
+
+    high_pressure: {
+      headline: "Fear is not the same as discernment",
+      intro:
+        "You may have seen a video or heard a sermon that terrified you about the symbols in Greek life. That fear is real, but it is not the same as godly discernment. The Holy Spirit convicts—He does not terrorize. Here is how to process your concerns without being driven by panic.",
+
+      scriptureToolkit: [
+        {
+          ref: "2 Timothy 1:7",
+          summary: "God has not given us a spirit of fear, but of power, love, and self-discipline.",
+          whenToUse:
+            "Use when fear is driving your decision-making and you need to recenter on faith.",
+        },
+        {
+          ref: "Isaiah 41:10",
+          summary: "Fear not, for I am with you.",
+          whenToUse:
+            "Use when you feel overwhelmed by accusations and need to remember God's presence.",
+        },
+        {
+          ref: "Psalm 139:23-24",
+          summary: "Search me, God, and know my heart.",
+          whenToUse:
+            "Use when you want to invite God to reveal anything in your life that needs to change.",
+        },
+      ],
+
+      sampleResponses: [
+        {
+          label: "When someone says you are serving demons",
+          objection: "You are in covenant with darkness.",
+          youCanSay:
+            "I take spiritual warfare seriously, but I also take Scripture seriously. I have examined my membership before God. I have not given worship to anything but Jesus. If you believe I am in sin, I am open to a conversation rooted in Scripture, not fear.",
+        },
+      ],
+
+      proofPoints: [
+        {
+          label: "Process",
+          text: "Slow down. Fear makes us reactive. Take time to pray, study, and get wise counsel before making vows.",
+        },
+        {
+          label: "Rituals",
+          text: "If a ritual or symbol has genuinely violated your conscience, address it. But do not assume the worst just because someone said so online.",
+        },
+        {
+          label: "Oaths",
+          text: "Do not make new vows out of fear. Repentance is real, but panic is not the same as conviction.",
+        },
+        {
+          label: "Obscurity",
+          text: "You do not have to stay silent about your questions. Ask your chapter. Ask your pastor. Seek understanding.",
+        },
+        {
+          label: "Founding",
+          text: "The enemy wants you afraid. God wants you free. Examine everything, but do not be enslaved by fear.",
+        },
+      ],
+
+      prayer:
+        "Father, I am scared. I do not know what to believe. Quiet the noise in my mind. Show me Your truth. Protect me from the enemy's lies and from human manipulation. Lead me in peace. Amen.",
+
+      videos: [
+        {
+          title: "When Fear Takes Over",
+          url: "https://youtu.be/PLQG1lOu-48",
+          description:
+            "How to process fear-based claims about Greek symbols with biblical clarity.",
+        },
+      ],
+    },
+
+    ministry_idea: {
+      headline: "Use your questions to help others",
+      intro:
+        "Your curiosity about symbols and rituals could be a gift to your chapter. Maybe God is calling you to lead conversations that bring clarity, not confusion. Here is how to turn your questions into ministry opportunities.",
+
+      scriptureToolkit: [
+        {
+          ref: "Colossians 4:5-6",
+          summary: "Walk in wisdom toward outsiders, making the best use of the time.",
+          whenToUse:
+            "Use when you want to lead discussions about faith and Greek life with wisdom and grace.",
+        },
+        {
+          ref: "Titus 2:7-8",
+          summary: "In everything set them an example by doing what is good.",
+          whenToUse:
+            "Use when you want your questions to lead to growth, not division.",
+        },
+      ],
+
+      sampleResponses: [
+        {
+          label: "When proposing a discussion to your chapter",
+          objection: "We do not need to talk about religion.",
+          youCanSay:
+            "I am not trying to turn our chapter into a church. But I have heard questions about what our symbols mean. I think it would be healthy to have an honest conversation. No judgment, just clarity.",
+        },
+      ],
+
+      proofPoints: [
+        {
+          label: "Process",
+          text: "Frame the conversation around curiosity, not accusation. People respond better to questions than lectures.",
+        },
+        {
+          label: "Rituals",
+          text: "Help your chapter understand what your rituals mean and do not mean. Clarity honors everyone.",
+        },
+        {
+          label: "Oaths",
+          text: "Remind your chapter that integrity matters. If we stand by values, we should be able to explain them.",
+        },
+        {
+          label: "Obscurity",
+          text: "Bring light where there is confusion. That is leadership.",
+        },
+        {
+          label: "Founding",
+          text: "You can honor your history and still ask honest questions. That is not disloyalty—it is maturity.",
+        },
+      ],
+
+      prayer:
+        "Lord, use my questions to bring clarity and unity. Help me lead with grace. Let this be a moment of growth for my chapter. Amen.",
+
+      videos: [
+        {
+          title: "Leading Conversations About Symbols",
+          url: "https://youtu.be/_3C9q8ZmLnk",
+          description:
+            "How to facilitate discussions about faith, symbols, and Greek life in your chapter.",
+        },
+      ],
+    },
+
+    symbol_clarity: {
+      headline: "Here is what you need to know about this symbol",
+      intro:
+        "You came here because a specific symbol, ritual, or gesture is troubling you. That is wisdom, not weakness. Not everything that looks unfamiliar is evil, and not everything that feels comfortable is safe. Here is how to evaluate what you have seen or heard with Scripture and discernment.",
+
+      scriptureToolkit: [
+        {
+          ref: "1 Corinthians 10:25-27",
+          summary: "Eat anything sold in the meat market without raising questions of conscience.",
+          whenToUse:
+            "Use when you want to understand the principle of conscience and liberty in disputable matters.",
+        },
+        {
+          ref: "Romans 14:22-23",
+          summary: "Blessed is the one who does not condemn himself by what he approves.",
+          whenToUse:
+            "Use when you want to examine your own conscience about a specific practice.",
+        },
+        {
+          ref: "Acts 17:11",
+          summary: "They examined the Scriptures every day to see if what Paul said was true.",
+          whenToUse:
+            "Use when you want to model noble inquiry—testing claims by Scripture, not emotion.",
+        },
+      ],
+
+      sampleResponses: [
+        {
+          label: "When someone makes a claim about your symbol",
+          objection: "That symbol has demonic origins.",
+          youCanSay:
+            "I have heard that claim. I am looking into it. Can you point me to credible historical sources? I want to understand the facts, not just accept or reject accusations.",
+        },
+        {
+          label: "When you are unsure about participating",
+          objection: "Everyone else is doing it.",
+          youCanSay:
+            "I need to be fully convinced in my own mind before I participate. I am not judging anyone else. I just want to act with a clear conscience.",
+        },
+      ],
+
+      proofPoints: [
+        {
+          label: "Process",
+          text: "Research the symbol from multiple sources—historical, academic, and Christian perspectives. Do not rely on one viral video.",
+        },
+        {
+          label: "Rituals",
+          text: "Ask your chapter what this symbol or ritual means to them. Meaning is not always fixed—it is also practiced.",
+        },
+        {
+          label: "Oaths",
+          text: "If you are uncomfortable, you can abstain without denouncing your whole membership. Set a boundary with integrity.",
+        },
+        {
+          label: "Obscurity",
+          text: "If something is being kept secret from you, you have a right to ask why. Mystery should not mean manipulation.",
+        },
+        {
+          label: "Founding",
+          text: "Founders borrowed from many traditions—classical, Christian, and cultural. Evaluate each element by Scripture, not just by surface appearance.",
+        },
+      ],
+
+      prayer:
+        "Lord, I bring this symbol before You. Show me what it means, what it represents, and whether it honors You. Give me wisdom to act with integrity. Amen.",
+
+      videos: [
+        {
+          title: "Symbol Deep Dive: A Christian Perspective",
+          url: "https://youtu.be/_3C9q8ZmLnk",
+          description:
+            "A thoughtful examination of common Greek symbols and their meaning for Christians.",
         },
       ],
     },

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -7,7 +7,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { SacredGreeksAnswers } from "@/types/assessment";
-import { assessmentStep2Schema } from "@/lib/validation";
 import { useToast } from "@/hooks/use-toast";
 
 const roles = [
@@ -29,6 +28,17 @@ const emotions = [
   "Defensive",
   "Hopeful",
   "Numb",
+  "Peaceful",
+  "Anxious",
+  "Determined",
+];
+
+const supportLevels = [
+  "Strong support from all (church, family, chapter)",
+  "Some support, but mixed reactions",
+  "Little support, mostly opposition",
+  "I feel alone in this",
+  "I haven't shared this with anyone yet",
 ];
 
 interface SacredGreeksStep2Props {
@@ -42,53 +52,58 @@ export function SacredGreeksStep2({ scenario, onComplete, onBack }: SacredGreeks
   const [formData, setFormData] = useState<{
     role: string;
     situation: string;
+    whoInvolved: string;
+    alreadyDone: string;
     emotions: string[];
+    desiredOutcome: string;
+    supportLevel: string;
     scenarioSpecific: Record<string, string>;
   }>({
     role: "",
     situation: "",
+    whoInvolved: "",
+    alreadyDone: "",
     emotions: [],
+    desiredOutcome: "",
+    supportLevel: "",
     scenarioSpecific: {},
   });
 
   // Honeypot spam protection
   const [honeypot, setHoneypot] = useState("");
   const [startTime] = useState(Date.now());
-  const [website, setWebsite] = useState(""); // Another honeypot field
+  const [website, setWebsite] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     // Honeypot spam detection
     if (honeypot || website) {
-      // Bot detected - silently fail
       console.log("Spam detected");
       return;
     }
 
-    // Timing check - real users take at least 3 seconds
+    // Timing check - real users take at least 5 seconds
     const timeSpent = Date.now() - startTime;
-    if (timeSpent < 3000) {
+    if (timeSpent < 5000) {
       toast({
-        title: 'Too Fast',
-        description: 'Please take your time to fill out the form.',
+        title: 'Please take your time',
+        description: 'Take a moment to thoughtfully answer each question.',
         variant: 'destructive',
       });
       return;
     }
     
-    try {
-      assessmentStep2Schema.parse(formData);
-      onComplete(formData);
-    } catch (error) {
-      if (error instanceof Error) {
-        toast({
-          title: 'Validation Error',
-          description: error.message,
-          variant: 'destructive',
-        });
-      }
+    if (!isFormValid()) {
+      toast({
+        title: 'Incomplete',
+        description: 'Please answer all required questions.',
+        variant: 'destructive',
+      });
+      return;
     }
+    
+    onComplete(formData);
   };
 
   const toggleEmotion = (emotion: string) => {
@@ -111,15 +126,38 @@ export function SacredGreeksStep2({ scenario, onComplete, onBack }: SacredGreeks
   };
 
   const isFormValid = () => {
-    return formData.role && formData.situation && formData.emotions.length > 0;
+    return (
+      formData.role && 
+      formData.situation && 
+      formData.emotions.length > 0 &&
+      formData.desiredOutcome &&
+      formData.supportLevel
+    );
+  };
+
+  const getPlaceholderText = () => {
+    switch (scenario) {
+      case "clip":
+        return "Example: I watched a sermon that said all BGLOs are demonic and now I'm questioning everything about my membership.";
+      case "denounce":
+        return "Example: I've been a member for 10 years and lately I'm wondering if God wants me to leave or stay and make a difference.";
+      case "pressure":
+        return "Example: My pastor told me I need to publicly denounce my letters or I'm not truly saved.";
+      case "event":
+        return "Example: I want to host a Bible study for believers in my chapter but I'm worried about mixing faith and Greek life.";
+      case "symbol":
+        return "Example: Someone told me our hand sign is a demonic symbol and now I don't know what to believe.";
+      default:
+        return "Describe your situation in your own words...";
+    }
   };
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-2xl">Share Your Story</CardTitle>
+        <CardTitle className="text-2xl">Capture Your Situation</CardTitle>
         <CardDescription>
-          Help us understand where you are so we can offer the most relevant guidance
+          Help us understand where you are so we can offer the most relevant biblical guidance
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -144,6 +182,7 @@ export function SacredGreeksStep2({ scenario, onComplete, onBack }: SacredGreeks
             />
           </div>
 
+          {/* Question 1: Role */}
           <div className="space-y-2">
             <Label htmlFor="role">Which best describes you?</Label>
             <Select value={formData.role} onValueChange={(value) => setFormData({ ...formData, role: value })}>
@@ -160,26 +199,46 @@ export function SacredGreeksStep2({ scenario, onComplete, onBack }: SacredGreeks
             </Select>
           </div>
 
+          {/* Question 2: Describe what is happening */}
           <div className="space-y-2">
-            <Label htmlFor="situation">In one or two sentences, describe what is happening</Label>
+            <Label htmlFor="situation">1. Describe what is happening in your own words</Label>
             <Textarea
               id="situation"
               value={formData.situation}
               onChange={(e) => setFormData({ ...formData, situation: e.target.value })}
-              placeholder={
-                scenario === "clip"
-                  ? "Example: I watched a sermon that said all BGLOs are demonic and now I'm questioning everything about my membership."
-                  : scenario === "pressure"
-                  ? "Example: My pastor told me I need to publicly denounce my letters or I'm not truly saved."
-                  : "Example: I want to host a Bible study for believers in my chapter but I'm worried about mixing faith and Greek life."
-              }
+              placeholder={getPlaceholderText()}
               rows={3}
               required
             />
           </div>
 
+          {/* Question 3: Who else is involved */}
+          <div className="space-y-2">
+            <Label htmlFor="whoInvolved">2. Who else is involved or watching this situation?</Label>
+            <Textarea
+              id="whoInvolved"
+              value={formData.whoInvolved}
+              onChange={(e) => setFormData({ ...formData, whoInvolved: e.target.value })}
+              placeholder="Example: My spouse, my pastor, my chapter brothers/sisters, my parents..."
+              rows={2}
+            />
+          </div>
+
+          {/* Question 4: What have you already done */}
+          <div className="space-y-2">
+            <Label htmlFor="alreadyDone">3. What have you already done or said?</Label>
+            <Textarea
+              id="alreadyDone"
+              value={formData.alreadyDone}
+              onChange={(e) => setFormData({ ...formData, alreadyDone: e.target.value })}
+              placeholder="Example: I've been avoiding the conversation, I've started researching, I've prayed about it..."
+              rows={2}
+            />
+          </div>
+
+          {/* Question 5: How are you feeling (emotions) */}
           <div className="space-y-3">
-            <Label>Right now, which words fit how you feel? (Select all that apply)</Label>
+            <Label>4. How are you feeling right now? (Select all that apply)</Label>
             <div className="flex flex-wrap gap-2">
               {emotions.map((emotion) => (
                 <Badge
@@ -198,8 +257,40 @@ export function SacredGreeksStep2({ scenario, onComplete, onBack }: SacredGreeks
             </div>
           </div>
 
+          {/* Question 6: Desired outcome */}
+          <div className="space-y-2">
+            <Label htmlFor="desiredOutcome">5. What outcome are you hoping for?</Label>
+            <Textarea
+              id="desiredOutcome"
+              value={formData.desiredOutcome}
+              onChange={(e) => setFormData({ ...formData, desiredOutcome: e.target.value })}
+              placeholder="Example: I want peace about my decision, I want to know how to respond, I want clarity on what God wants..."
+              rows={2}
+              required
+            />
+          </div>
+
+          {/* Question 7: Support level */}
+          <div className="space-y-2">
+            <Label htmlFor="supportLevel">6. How much support do you have from church, family, and chapter?</Label>
+            <Select value={formData.supportLevel} onValueChange={(value) => setFormData({ ...formData, supportLevel: value })}>
+              <SelectTrigger id="supportLevel">
+                <SelectValue placeholder="Select your support level" />
+              </SelectTrigger>
+              <SelectContent>
+                {supportLevels.map((level) => (
+                  <SelectItem key={level} value={level}>
+                    {level}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Scenario-specific questions */}
           {scenario === "clip" && (
-            <>
+            <div className="space-y-4 p-4 bg-muted/30 rounded-lg">
+              <p className="text-sm font-medium text-muted-foreground">Additional context about the content:</p>
               <div className="space-y-2">
                 <Label htmlFor="contentType">What type of content was it?</Label>
                 <Select
@@ -212,70 +303,85 @@ export function SacredGreeksStep2({ scenario, onComplete, onBack }: SacredGreeks
                   <SelectContent>
                     <SelectItem value="sermon">Sermon</SelectItem>
                     <SelectItem value="youtube">YouTube video</SelectItem>
-                    <SelectItem value="tiktok">TikTok</SelectItem>
-                    <SelectItem value="article">Article</SelectItem>
-                    <SelectItem value="conversation">Conversation</SelectItem>
+                    <SelectItem value="tiktok">TikTok / Social Media</SelectItem>
+                    <SelectItem value="article">Article or blog</SelectItem>
+                    <SelectItem value="conversation">Personal conversation</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="claim">What was the main claim?</Label>
-                <Textarea
-                  id="claim"
-                  value={formData.scenarioSpecific.claim || ""}
-                  onChange={(e) => updateScenarioField("claim", e.target.value)}
-                  placeholder="What did they say about BGLOs?"
-                  rows={2}
-                />
-              </div>
-            </>
+            </div>
           )}
 
-          {scenario === "pressure" && (
-            <>
+          {scenario === "denounce" && (
+            <div className="space-y-4 p-4 bg-muted/30 rounded-lg">
+              <p className="text-sm font-medium text-muted-foreground">Help us understand your position:</p>
               <div className="space-y-2">
-                <Label htmlFor="pressureFrom">Who is pressuring you?</Label>
+                <Label htmlFor="currentBelief">What do you currently believe about your membership?</Label>
                 <Select
-                  value={formData.scenarioSpecific.pressureFrom || ""}
-                  onValueChange={(value) => updateScenarioField("pressureFrom", value)}
+                  value={formData.scenarioSpecific.currentBelief || ""}
+                  onValueChange={(value) => updateScenarioField("currentBelief", value)}
                 >
-                  <SelectTrigger id="pressureFrom">
-                    <SelectValue placeholder="Select person" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="pastor">Pastor</SelectItem>
-                    <SelectItem value="parent">Parent</SelectItem>
-                    <SelectItem value="spouse">Spouse</SelectItem>
-                    <SelectItem value="friend">Friend</SelectItem>
-                    <SelectItem value="influencer">Online influencer</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="belief">What do you currently believe in your heart about membership?</Label>
-                <Select
-                  value={formData.scenarioSpecific.belief || ""}
-                  onValueChange={(value) => updateScenarioField("belief", value)}
-                >
-                  <SelectTrigger id="belief">
+                  <SelectTrigger id="currentBelief">
                     <SelectValue placeholder="Select your belief" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="sin">I believe it is sin</SelectItem>
-                    <SelectItem value="christ_honoring">I believe it can be Christ-honoring</SelectItem>
-                    <SelectItem value="not sure">Not sure</SelectItem>
+                    <SelectItem value="sinful">I believe it may be sinful</SelectItem>
+                    <SelectItem value="honorable">I believe it can honor Christ</SelectItem>
+                    <SelectItem value="unsure">I'm genuinely unsure</SelectItem>
+                    <SelectItem value="examining">I'm actively examining everything</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
-            </>
+              <div className="space-y-2">
+                <Label htmlFor="yearsActive">How long have you been a member?</Label>
+                <Select
+                  value={formData.scenarioSpecific.yearsActive || ""}
+                  onValueChange={(value) => updateScenarioField("yearsActive", value)}
+                >
+                  <SelectTrigger id="yearsActive">
+                    <SelectValue placeholder="Select duration" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="new">Less than 2 years</SelectItem>
+                    <SelectItem value="moderate">2-5 years</SelectItem>
+                    <SelectItem value="established">5-15 years</SelectItem>
+                    <SelectItem value="veteran">15+ years</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          )}
+
+          {scenario === "pressure" && (
+            <div className="space-y-4 p-4 bg-muted/30 rounded-lg">
+              <p className="text-sm font-medium text-muted-foreground">About the pressure you're facing:</p>
+              <div className="space-y-2">
+                <Label htmlFor="pressureSource">Who is primarily pressuring you?</Label>
+                <Select
+                  value={formData.scenarioSpecific.pressureSource || ""}
+                  onValueChange={(value) => updateScenarioField("pressureSource", value)}
+                >
+                  <SelectTrigger id="pressureSource">
+                    <SelectValue placeholder="Select person" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="pastor">Pastor or church leader</SelectItem>
+                    <SelectItem value="parent">Parent</SelectItem>
+                    <SelectItem value="spouse">Spouse or partner</SelectItem>
+                    <SelectItem value="friend">Close friend</SelectItem>
+                    <SelectItem value="online">Online voices / influencers</SelectItem>
+                    <SelectItem value="multiple">Multiple people</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
           )}
 
           {scenario === "event" && (
-            <>
+            <div className="space-y-4 p-4 bg-muted/30 rounded-lg">
+              <p className="text-sm font-medium text-muted-foreground">About your event idea:</p>
               <div className="space-y-2">
-                <Label htmlFor="eventType">What type of event?</Label>
+                <Label htmlFor="eventType">What type of event are you planning?</Label>
                 <Select
                   value={formData.scenarioSpecific.eventType || ""}
                   onValueChange={(value) => updateScenarioField("eventType", value)}
@@ -284,26 +390,51 @@ export function SacredGreeksStep2({ scenario, onComplete, onBack }: SacredGreeks
                     <SelectValue placeholder="Select type" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="prayer">Prayer service</SelectItem>
+                    <SelectItem value="prayer">Prayer service or gathering</SelectItem>
                     <SelectItem value="bible_study">Bible study</SelectItem>
-                    <SelectItem value="memorial">Memorial service</SelectItem>
-                    <SelectItem value="service">Service project</SelectItem>
-                    <SelectItem value="panel">Faith panel</SelectItem>
+                    <SelectItem value="memorial">Memorial or remembrance service</SelectItem>
+                    <SelectItem value="service">Service project with faith focus</SelectItem>
+                    <SelectItem value="panel">Faith discussion or panel</SelectItem>
+                    <SelectItem value="retreat">Spiritual retreat</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
+            </div>
+          )}
 
+          {scenario === "symbol" && (
+            <div className="space-y-4 p-4 bg-muted/30 rounded-lg">
+              <p className="text-sm font-medium text-muted-foreground">About your concern:</p>
               <div className="space-y-2">
-                <Label htmlFor="concern">What is your main concern?</Label>
+                <Label htmlFor="symbolType">What type of symbol, ritual, or gesture concerns you?</Label>
+                <Select
+                  value={formData.scenarioSpecific.symbolType || ""}
+                  onValueChange={(value) => updateScenarioField("symbolType", value)}
+                >
+                  <SelectTrigger id="symbolType">
+                    <SelectValue placeholder="Select type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="handsign">Hand sign or gesture</SelectItem>
+                    <SelectItem value="shield">Shield or crest imagery</SelectItem>
+                    <SelectItem value="ritual">Ritual or ceremony</SelectItem>
+                    <SelectItem value="greeting">Greeting or call</SelectItem>
+                    <SelectItem value="founders">Founder references</SelectItem>
+                    <SelectItem value="general">General practices</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="symbolConcern">What specifically concerns you about it?</Label>
                 <Textarea
-                  id="concern"
-                  value={formData.scenarioSpecific.concern || ""}
-                  onChange={(e) => updateScenarioField("concern", e.target.value)}
-                  placeholder="What worries you most about this event?"
+                  id="symbolConcern"
+                  value={formData.scenarioSpecific.symbolConcern || ""}
+                  onChange={(e) => updateScenarioField("symbolConcern", e.target.value)}
+                  placeholder="What have you heard or what worries you?"
                   rows={2}
                 />
               </div>
-            </>
+            </div>
           )}
 
           <div className="flex justify-between pt-4">
@@ -316,7 +447,7 @@ export function SacredGreeksStep2({ scenario, onComplete, onBack }: SacredGreeks
               disabled={!isFormValid()}
               className="bg-sacred hover:bg-sacred/90 text-sacred-foreground"
             >
-              See P.R.O.O.F. Guidance
+              See Your Guidance
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </div>

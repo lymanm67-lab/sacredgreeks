@@ -51,6 +51,14 @@ export const assessmentStep2Schema = z.object({
     .trim()
     .min(1, 'Situation description is required')
     .max(2000, 'Situation must be less than 2000 characters'),
+  whoInvolved: z.string().max(500).optional(),
+  alreadyDone: z.string().max(1000).optional(),
   emotions: z.array(z.string()).min(1, 'Please select at least one emotion'),
+  desiredOutcome: z.string()
+    .trim()
+    .min(1, 'Please share your desired outcome')
+    .max(1000, 'Outcome must be less than 1000 characters'),
+  supportLevel: z.string()
+    .min(1, 'Please select your support level'),
   scenarioSpecific: z.record(z.string(), z.string().max(1000, 'Field must be less than 1000 characters'))
 });
