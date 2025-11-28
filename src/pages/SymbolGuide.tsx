@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Filter, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2 } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Filter, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, Book, ExternalLink, Share2 } from 'lucide-react';
 import { symbolGuideContent, ritualGuideContent, symbolCategories, SymbolEntry, RitualEntry } from '@/data/symbolGuideContent';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -14,6 +14,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import DiscernmentGuidanceDialog from '@/components/symbol-guide/DiscernmentGuidanceDialog';
 import BookmarkNotesDialog from '@/components/symbol-guide/BookmarkNotesDialog';
+import ShareBookmarksDialog from '@/components/symbol-guide/ShareBookmarksDialog';
 
 const cautionLevels = [
   { id: 'all', label: 'All Levels', icon: null },
@@ -172,6 +173,13 @@ const SymbolGuide = () => {
     return ritualGuideContent.find(r => r.id === bookmark.content_json.itemId);
   };
 
+  const getScriptureLink = (reference: string) => {
+    // Extract just the book and verse reference (e.g., "Revelation 1:8" from "Revelation 1:8 - ...")
+    const match = reference.match(/^([^-]+)/);
+    const cleanRef = match ? match[1].trim() : reference;
+    return `/bible-study?search=${encodeURIComponent(cleanRef)}`;
+  };
+
   const filteredSymbols = useMemo(() => {
     return symbolGuideContent.filter(s => {
       const matchesCategory = symbolCategory === 'all' || s.category === symbolCategory;
@@ -245,7 +253,20 @@ const SymbolGuide = () => {
             />
           )}
           {symbol.scripturalContext && (
-            <p className="text-xs text-muted-foreground italic">{symbol.scripturalContext}</p>
+            <div className="bg-sacred/5 p-3 rounded-lg border border-sacred/20">
+              <div className="flex items-start justify-between gap-2">
+                <p className="text-xs text-foreground italic flex-1">
+                  <Book className="w-3 h-3 inline mr-1 text-sacred" />
+                  {symbol.scripturalContext}
+                </p>
+                <Link to={getScriptureLink(symbol.scripturalContext)}>
+                  <Button variant="ghost" size="sm" className="gap-1 text-xs h-7 px-2">
+                    <ExternalLink className="w-3 h-3" />
+                    Study
+                  </Button>
+                </Link>
+              </div>
+            </div>
           )}
         </CardContent>
       </Card>
@@ -352,7 +373,23 @@ const SymbolGuide = () => {
                       <Bookmark className="w-5 h-5 text-sacred" />
                       <CardTitle className="text-base">My Bookmarks ({bookmarks.length})</CardTitle>
                     </div>
-                    {bookmarksOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                    <div className="flex items-center gap-2">
+                      <ShareBookmarksDialog 
+                        bookmarkIds={bookmarks.map(b => b.id)}
+                        trigger={
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            className="gap-1 h-8"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <Share2 className="w-4 h-4" />
+                            Share
+                          </Button>
+                        }
+                      />
+                      {bookmarksOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                    </div>
                   </div>
                 </CardHeader>
               </CollapsibleTrigger>
