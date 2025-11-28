@@ -60,6 +60,7 @@ const ContentHub = lazy(() => import("./pages/ContentHub"));
 const Subscription = lazy(() => import("./pages/Subscription"));
 const ShatteredMasks = lazy(() => import("./pages/ShatteredMasks"));
 const SharedSymbolBookmarks = lazy(() => import("./pages/SharedSymbolBookmarks"));
+const VideoLibrary = lazy(() => import("./pages/VideoLibrary"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -126,6 +127,7 @@ const App = () => (
                     <Route path="/pricing" element={<Subscription />} />
                     <Route path="/shattered-masks" element={<ShatteredMasks />} />
                     <Route path="/shared-symbols/:shareToken" element={<SharedSymbolBookmarks />} />
+                    <Route path="/video-library" element={<VideoLibrary />} />
                     <Route
                       path="/prayer-guide"
                       element={
