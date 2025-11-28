@@ -1092,6 +1092,10 @@ export type Database = {
       }
       cleanup_old_rate_limits: { Args: never; Returns: undefined }
       generate_referral_code: { Args: never; Returns: string }
+      get_submission_email_if_consented: {
+        Args: { submission_id: string }
+        Returns: string
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
