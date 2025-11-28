@@ -51,8 +51,9 @@ serve(async (req) => {
   }
 
   try {
-    // SECURITY: Validate cron secret OR admin authentication
+    // SECURITY: Validate cron secret, anon key (for pg_cron), OR admin authentication
     const cronSecret = Deno.env.get("CRON_SECRET");
+    const anonKey = Deno.env.get("SUPABASE_ANON_KEY");
     const providedSecret = req.headers.get("x-cron-secret");
     const authHeader = req.headers.get("authorization");
     
@@ -63,7 +64,12 @@ serve(async (req) => {
       isAuthorized = true;
     }
     
-    // Check for admin user if no cron secret
+    // Check for anon key (used by pg_cron)
+    if (!isAuthorized && authHeader && anonKey && authHeader === `Bearer ${anonKey}`) {
+      isAuthorized = true;
+    }
+    
+    // Check for admin user if no cron secret or anon key match
     if (!isAuthorized && authHeader) {
       const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
       const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY") ?? "";
