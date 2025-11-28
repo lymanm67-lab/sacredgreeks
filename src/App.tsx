@@ -50,6 +50,7 @@ const Resources = lazy(() => import("./pages/Resources"));
 const About = lazy(() => import("./pages/About"));
 const PodcastAppearances = lazy(() => import("./pages/PodcastAppearances"));
 const Privacy = lazy(() => import("./pages/Privacy"));
+const Terms = lazy(() => import("./pages/Terms"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -94,6 +95,7 @@ const App = () => (
                     <Route path="/reset-password" element={<ResetPassword />} />
                     <Route path="/faq" element={<FAQ />} />
                     <Route path="/privacy" element={<Privacy />} />
+                    <Route path="/terms" element={<Terms />} />
                     <Route path="/install" element={<Install />} />
                     <Route path="/shared/:token" element={<SharedResult />} />
                     <Route path="/study" element={<StudyGuide />} />
