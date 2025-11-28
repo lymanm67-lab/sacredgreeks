@@ -416,6 +416,39 @@ export type Database = {
         }
         Relationships: []
       }
+      journey_progress: {
+        Row: {
+          completed: boolean
+          completed_at: string | null
+          created_at: string
+          day_number: number
+          id: string
+          reflection_notes: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean
+          completed_at?: string | null
+          created_at?: string
+          day_number: number
+          id?: string
+          reflection_notes?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed?: boolean
+          completed_at?: string | null
+          created_at?: string
+          day_number?: number
+          id?: string
+          reflection_notes?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       prayer_journal: {
         Row: {
           answered: boolean | null
@@ -621,6 +654,54 @@ export type Database = {
           prayer_reminders?: boolean
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      qa_submissions: {
+        Row: {
+          answer: string | null
+          answered_at: string | null
+          answered_by: string | null
+          category: string
+          created_at: string
+          email: string | null
+          id: string
+          is_featured: boolean
+          is_public: boolean
+          question: string
+          status: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          answer?: string | null
+          answered_at?: string | null
+          answered_by?: string | null
+          category?: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          is_featured?: boolean
+          is_public?: boolean
+          question: string
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          answer?: string | null
+          answered_at?: string | null
+          answered_by?: string | null
+          category?: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          is_featured?: boolean
+          is_public?: boolean
+          question?: string
+          status?: string
+          updated_at?: string
+          user_id?: string | null
         }
         Relationships: []
       }
