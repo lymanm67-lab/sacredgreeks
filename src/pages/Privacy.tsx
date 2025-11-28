@@ -138,6 +138,29 @@ const Privacy = () => {
 
           <Card>
             <CardHeader>
+              <CardTitle>AI Assistant & ChatGPT GPT</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-muted-foreground">
+                Sacred Greeks Life offers AI-powered features including an in-app AI assistant and a ChatGPT GPT ("Sacred Greeks Life Assistant").
+              </p>
+              <div>
+                <h3 className="font-semibold mb-2">What We Collect</h3>
+                <p className="text-muted-foreground">When you interact with our AI features, your questions are processed to provide helpful responses. We do not store conversation history from the ChatGPT GPT.</p>
+              </div>
+              <div>
+                <h3 className="font-semibold mb-2">Third-Party Processing</h3>
+                <p className="text-muted-foreground">AI responses are generated using third-party AI services. Your questions may be processed by these services according to their privacy policies. We recommend reviewing OpenAI's privacy policy for ChatGPT interactions.</p>
+              </div>
+              <div>
+                <h3 className="font-semibold mb-2">No Personal Data Required</h3>
+                <p className="text-muted-foreground">You can use the ChatGPT GPT without providing personal information. The GPT provides general information about Sacred Greeks Life and the P.R.O.O.F. framework.</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
               <CardTitle>Changes to This Policy</CardTitle>
             </CardHeader>
             <CardContent>
