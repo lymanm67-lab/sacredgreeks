@@ -112,10 +112,21 @@ const VideoSuggestionsManager = () => {
 
       if (error) throw error;
 
+      // Send email notification (fire and forget)
+      supabase.functions.invoke("notify-video-suggestion", {
+        body: {
+          suggestionId: suggestion.id,
+          status: newStatus,
+          adminNotes: adminNotes || undefined,
+        },
+      }).catch((err) => {
+        console.error("Failed to send notification:", err);
+      });
+
       toast.success(
         newStatus === "approved"
-          ? "Video approved! You can now add it to the library."
-          : "Video suggestion rejected."
+          ? "Video approved! Notification sent to user."
+          : "Video suggestion rejected. Notification sent to user."
       );
       
       setSelectedSuggestion(null);
