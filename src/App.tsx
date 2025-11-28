@@ -58,6 +58,7 @@ const SymbolGuide = lazy(() => import("./pages/SymbolGuide"));
 const AskDrLyman = lazy(() => import("./pages/AskDrLyman"));
 const ContentHub = lazy(() => import("./pages/ContentHub"));
 const Subscription = lazy(() => import("./pages/Subscription"));
+const ShatteredMasks = lazy(() => import("./pages/ShatteredMasks"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -122,6 +123,7 @@ const App = () => (
                     <Route path="/content-hub" element={<ContentHub />} />
                     <Route path="/subscription" element={<Subscription />} />
                     <Route path="/pricing" element={<Subscription />} />
+                    <Route path="/shattered-masks" element={<ShatteredMasks />} />
                     <Route
                       path="/prayer-guide"
                       element={
