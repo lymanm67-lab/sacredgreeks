@@ -310,7 +310,7 @@ const Index = () => {
             
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-foreground leading-tight animate-fade-in-up-delay-2">
               Sacred Greeks{' '}
-              <span className="gradient-text">Life App</span>
+              <span className="hero-title-gradient">Life App</span>
             </h1>
             
             <p className="text-xl md:text-2xl text-muted-foreground font-medium animate-fade-in-up-delay-3 max-w-2xl mx-auto">
@@ -454,7 +454,7 @@ const Index = () => {
           <div className="text-center mb-8">
             <Badge className="bg-sky-500/20 text-sky-400 border-sky-400/30 mb-4">For the Christian Greek at Midnight</Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              You Don't Have to <span className="bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">Choose</span>
+              You Don't Have to <span className="shimmer-text">Choose</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Scrolling through denouncement videos? Feeling torn between your faith and your letters? This app is for you.
