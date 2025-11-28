@@ -3,7 +3,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library, Lock, HandHeart } from "lucide-react";
+import { Heart, Users, Sparkles, LogIn, LayoutDashboard, BookOpen, ListChecks, TrendingUp, Calendar, ArrowRight, CheckCircle2, Smartphone, Headphones, Library, Lock, HandHeart, HeartHandshake } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
 import { MobileQRCode } from "@/components/MobileQRCode";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -39,6 +39,15 @@ const features = [
     icon: HandHeart,
     link: "/family-ministry-fallout",
     color: "text-amber-500",
+    requiresAuth: false,
+    badge: "New",
+  },
+  {
+    title: "Church Hurt Healing",
+    description: "Process trauma with guided prayers, journaling prompts, and real testimonies from Christian Greeks",
+    icon: HeartHandshake,
+    link: "/church-hurt-healing",
+    color: "text-teal-500",
     requiresAuth: false,
     badge: "New",
   },

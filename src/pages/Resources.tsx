@@ -85,6 +85,16 @@ const resources: ResourceItem[] = [
     tags: ["Healing", "Relationships", "About"],
   },
   {
+    title: "Church Hurt Healing",
+    description: "Process trauma from harsh church responses with guided prayers, journaling prompts, and real testimonies from Christian Greeks",
+    url: "/church-hurt-healing",
+    icon: Heart,
+    requiresAuth: false,
+    badge: "New",
+    category: "about",
+    tags: ["Healing", "Trauma", "About"],
+  },
+  {
     title: "Dr. Lyman Montgomery Media Kit",
     description: "Speaker bio, credentials, booking information, and media resources for Dr. Lyman Montgomery",
     url: "https://gamma.app/embed/biu8ffusrj97br1",
