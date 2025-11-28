@@ -405,7 +405,7 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
             {coreFeatures.map((feature, index) => (
               <Link key={feature.title} to={feature.link}>
                 <Card className="h-full transition-all hover:shadow-xl hover:scale-105 border-2 hover:border-sacred/50 cursor-pointer group overflow-hidden">
@@ -416,7 +416,7 @@ const Index = () => {
                         <feature.icon className="w-6 h-6 text-white" />
                       </div>
                       {feature.badge && (
-                        <Badge className="bg-sacred text-white">{feature.badge}</Badge>
+                        <Badge className="bg-sacred text-white animate-pulse">{feature.badge}</Badge>
                       )}
                     </div>
                     <CardTitle className="text-lg group-hover:text-sacred transition-colors">
@@ -432,48 +432,43 @@ const Index = () => {
               </Link>
             ))}
           </div>
-        </div>
-      </div>
 
-      {/* Healing & Support Resources - Prominent Placement */}
-      <div id="healing-resources" className="container mx-auto px-4 py-12 scroll-mt-20">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <Badge className="bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20 mb-4">Support & Restoration</Badge>
-            <h2 className="text-2xl md:text-3xl font-bold mb-3">
-              Healing for the <span className="gradient-text">Wounded</span>
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Resources for navigating family tension, church rejection, and spiritual wounds from your Greek journey.
-            </p>
-          </div>
+          {/* Healing & Support Resources - Integrated into Core Features */}
+          <div id="healing-resources" className="scroll-mt-20">
+            <div className="text-center mb-6">
+              <Badge className="bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20 mb-3">Support & Restoration</Badge>
+              <h3 className="text-xl md:text-2xl font-bold">
+                Healing for the <span className="text-amber-500">Wounded</span>
+              </h3>
+            </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {healingResources.map((resource) => (
-              <Link key={resource.title} to={resource.link}>
-                <Card className="h-full transition-all hover:shadow-xl hover:scale-105 border-2 hover:border-amber-500/50 cursor-pointer group overflow-hidden bg-gradient-to-br from-background to-amber-50/5 dark:to-amber-950/10">
-                  <div className={`h-2 bg-gradient-to-r ${resource.color}`} />
-                  <CardHeader className="space-y-3">
-                    <div className="flex items-start justify-between">
-                      <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${resource.color} flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg`}>
-                        <resource.icon className="w-7 h-7 text-white" />
+            <div className="grid md:grid-cols-2 gap-4 max-w-3xl mx-auto">
+              {healingResources.map((resource) => (
+                <Link key={resource.title} to={resource.link}>
+                  <Card className="h-full transition-all hover:shadow-xl hover:scale-105 border-2 border-amber-500/30 hover:border-amber-500/60 cursor-pointer group overflow-hidden bg-gradient-to-br from-amber-500/5 to-rose-500/5 dark:from-amber-950/20 dark:to-rose-950/20">
+                    <div className={`h-2 bg-gradient-to-r ${resource.color}`} />
+                    <CardHeader className="space-y-3 pb-2">
+                      <div className="flex items-start justify-between">
+                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${resource.color} flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg`}>
+                          <resource.icon className="w-6 h-6 text-white" />
+                        </div>
+                        {resource.badge && (
+                          <Badge className="bg-amber-500 text-white animate-pulse">{resource.badge}</Badge>
+                        )}
                       </div>
-                      {resource.badge && (
-                        <Badge className="bg-amber-500 text-white">{resource.badge}</Badge>
-                      )}
-                    </div>
-                    <CardTitle className="text-xl group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-                      {resource.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-base">
-                      {resource.description}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
+                      <CardTitle className="text-lg group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                        {resource.title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <CardDescription className="text-sm">
+                        {resource.description}
+                      </CardDescription>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </div>
