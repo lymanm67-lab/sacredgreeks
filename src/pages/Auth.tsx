@@ -71,17 +71,27 @@ const Auth = () => {
       const { error } = await signUp(validated.email, validated.password, validated.fullName);
 
       if (error) {
-        toast({
-          title: 'Error signing up',
-          description: error.message,
-          variant: 'destructive',
-        });
+        // Handle specific error cases
+        if (error.message?.includes('already registered')) {
+          toast({
+            title: 'Account exists',
+            description: 'This email is already registered. Please sign in instead.',
+            variant: 'destructive',
+          });
+        } else {
+          toast({
+            title: 'Error signing up',
+            description: error.message,
+            variant: 'destructive',
+          });
+        }
       } else {
         toast({
-          title: 'Welcome!',
-          description: 'Your account has been created successfully.',
+          title: 'Check your email!',
+          description: 'We sent you a verification link. Please check your inbox to confirm your account.',
+          duration: 8000,
         });
-        navigate(redirectUrl);
+        // Don't navigate - user needs to verify email first
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
