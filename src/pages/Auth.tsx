@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Heart, Home, Eye, EyeOff, CheckCircle2 } from 'lucide-react';
+import { Heart, Home, Eye, EyeOff, CheckCircle2, Mail, RefreshCw } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { z } from 'zod';
@@ -37,6 +37,8 @@ const Auth = () => {
   const [resetPassword, setResetPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [savedEmail, setSavedEmail] = useState('');
+  const [pendingVerification, setPendingVerification] = useState<string | null>(null);
+  const [resendingEmail, setResendingEmail] = useState(false);
   const { signUp, signIn } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -86,12 +88,12 @@ const Auth = () => {
           });
         }
       } else {
+        setPendingVerification(validated.email);
         toast({
           title: 'Check your email!',
           description: 'We sent you a verification link. Please check your inbox to confirm your account.',
           duration: 8000,
         });
-        // Don't navigate - user needs to verify email first
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -104,6 +106,42 @@ const Auth = () => {
     }
 
     setIsLoading(false);
+  };
+
+  const handleResendVerification = async () => {
+    if (!pendingVerification) return;
+    
+    setResendingEmail(true);
+    try {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: pendingVerification,
+        options: {
+          emailRedirectTo: `${window.location.origin}/dashboard`
+        }
+      });
+
+      if (error) {
+        toast({
+          title: 'Error',
+          description: error.message,
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'Email sent!',
+          description: 'We sent a new verification link to your email.',
+        });
+      }
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to resend verification email',
+        variant: 'destructive',
+      });
+    } finally {
+      setResendingEmail(false);
+    }
   };
 
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -419,63 +457,114 @@ const Auth = () => {
             <TabsContent value="signup">
               <Card>
                 <CardHeader>
-                  <CardTitle>Create account</CardTitle>
-                  <CardDescription>Start your journey with Sacred Greeks</CardDescription>
+                  <CardTitle>{pendingVerification ? 'Check your email' : 'Create account'}</CardTitle>
+                  <CardDescription>
+                    {pendingVerification 
+                      ? 'We sent you a verification link' 
+                      : 'Start your journey with Sacred Greeks'}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <form onSubmit={handleSignUp} className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="signup-name">Full Name</Label>
-                      <Input
-                        id="signup-name"
-                        name="fullName"
-                        type="text"
-                        placeholder="Your name"
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="signup-email">Email</Label>
-                      <Input
-                        id="signup-email"
-                        name="email"
-                        type="email"
-                        placeholder="you@example.com"
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="signup-password">Password</Label>
-                      <div className="relative">
-                        <Input
-                          id="signup-password"
-                          name="password"
-                          type={showPassword ? "text" : "password"}
-                          placeholder="••••••••"
-                          minLength={8}
-                          required
-                          className="pr-10"
-                          value={signupPassword}
-                          onChange={(e) => setSignupPassword(e.target.value)}
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                        >
-                          {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                        </button>
+                  {pendingVerification ? (
+                    <div className="space-y-6 text-center py-4">
+                      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sacred/10">
+                        <Mail className="w-8 h-8 text-sacred" />
                       </div>
-                      <PasswordStrengthIndicator password={signupPassword} />
+                      <div className="space-y-2">
+                        <p className="text-foreground font-medium">
+                          Verification email sent to:
+                        </p>
+                        <p className="text-sacred font-semibold">
+                          {pendingVerification}
+                        </p>
+                      </div>
+                      <p className="text-sm text-muted-foreground max-w-sm mx-auto">
+                        Click the link in your email to verify your account. 
+                        Check your spam folder if you don't see it.
+                      </p>
+                      <div className="space-y-3">
+                        <Button
+                          variant="outline"
+                          onClick={handleResendVerification}
+                          disabled={resendingEmail}
+                          className="w-full"
+                        >
+                          {resendingEmail ? (
+                            <>
+                              <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                              Sending...
+                            </>
+                          ) : (
+                            <>
+                              <RefreshCw className="h-4 w-4 mr-2" />
+                              Resend verification email
+                            </>
+                          )}
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          onClick={() => setPendingVerification(null)}
+                          className="w-full text-muted-foreground"
+                        >
+                          Use a different email
+                        </Button>
+                      </div>
                     </div>
-                    <Button
-                      type="submit"
-                      className="w-full bg-sacred hover:bg-sacred/90"
-                      disabled={isLoading}
-                    >
-                      {isLoading ? 'Creating account...' : 'Sign Up'}
-                    </Button>
-                  </form>
+                  ) : (
+                    <form onSubmit={handleSignUp} className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="signup-name">Full Name</Label>
+                        <Input
+                          id="signup-name"
+                          name="fullName"
+                          type="text"
+                          placeholder="Your name"
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="signup-email">Email</Label>
+                        <Input
+                          id="signup-email"
+                          name="email"
+                          type="email"
+                          placeholder="you@example.com"
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="signup-password">Password</Label>
+                        <div className="relative">
+                          <Input
+                            id="signup-password"
+                            name="password"
+                            type={showPassword ? "text" : "password"}
+                            placeholder="••••••••"
+                            minLength={8}
+                            required
+                            className="pr-10"
+                            value={signupPassword}
+                            onChange={(e) => setSignupPassword(e.target.value)}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                          >
+                            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                          </button>
+                        </div>
+                        <PasswordStrengthIndicator password={signupPassword} />
+                      </div>
+                      <Button
+                        type="submit"
+                        className="w-full bg-sacred hover:bg-sacred/90"
+                        disabled={isLoading}
+                      >
+                        {isLoading ? 'Creating account...' : 'Sign Up'}
+                      </Button>
+                    </form>
+                  )}
                 </CardContent>
               </Card>
             </TabsContent>
