@@ -288,7 +288,7 @@ const Index = () => {
         
         <div className="container mx-auto px-4 py-16 md:py-24 relative">
           <div className="max-w-4xl mx-auto text-center space-y-6">
-            <Badge className="bg-sacred/10 text-sacred hover:bg-sacred/20 border-sacred/20 animate-fade-in-up" variant="outline">
+            <Badge className="bg-sacred/10 text-sacred hover:bg-sacred/20 border-sacred/20 animate-fade-in-up shadow-[0_0_15px_rgba(59,130,246,0.4)] hover:shadow-[0_0_25px_rgba(59,130,246,0.5)] transition-shadow" variant="outline">
               ✨ Trusted by Christians in Greek Life
             </Badge>
             
@@ -454,7 +454,7 @@ const Index = () => {
           <div className="text-center mb-8">
             <Badge className="bg-sky-500/20 text-sky-400 border-sky-400/30 mb-4">For the Christian Greek at Midnight</Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              You Don't Have to <span className="gradient-text">Choose</span>
+              You Don't Have to <span className="bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 bg-clip-text text-transparent">Choose</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Scrolling through denouncement videos? Feeling torn between your faith and your letters? This app is for you.
