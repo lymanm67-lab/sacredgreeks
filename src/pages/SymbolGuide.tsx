@@ -8,7 +8,7 @@ import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle } from 'lucide-react
 import { symbolGuideContent, ritualGuideContent, symbolCategories } from '@/data/symbolGuideContent';
 
 const CautionBadge = ({ level }: { level: string }) => {
-  if (level === 'low') return <Badge className="bg-green-500/20 text-green-700 border-green-500/30"><CheckCircle className="w-3 h-3 mr-1" /> Low Concern</Badge>;
+  if (level === 'low') return <Badge className="bg-emerald-500/30 text-emerald-600 dark:text-emerald-400 border-emerald-500/50"><CheckCircle className="w-3 h-3 mr-1" /> Low Concern</Badge>;
   if (level === 'medium') return <Badge className="bg-amber-500/20 text-amber-700 border-amber-500/30"><AlertCircle className="w-3 h-3 mr-1" /> Use Discernment</Badge>;
   return <Badge className="bg-red-500/20 text-red-700 border-red-500/30"><AlertTriangle className="w-3 h-3 mr-1" /> Caution Needed</Badge>;
 };
