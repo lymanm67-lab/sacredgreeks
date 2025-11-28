@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
-import { Heart, BookOpen, Library, Book, MessageCircle, Sparkles, Users } from 'lucide-react';
+import { Heart, BookOpen, Library, Book, MessageCircle, Sparkles, Users, HeartHandshake } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ExternalContentModal } from '@/components/ui/ExternalContentModal';
 
@@ -30,6 +30,14 @@ const featuredActions = [
     icon: Users,
     href: '/family-ministry-fallout',
     gradient: 'from-amber-500 to-orange-600',
+  },
+  {
+    id: 'church-hurt',
+    title: 'Church Hurt Healing',
+    description: 'Process trauma with guided prayers & testimonies',
+    icon: HeartHandshake,
+    href: '/church-hurt-healing',
+    gradient: 'from-teal-500 to-cyan-600',
   },
   {
     id: 'daily-devotional',
