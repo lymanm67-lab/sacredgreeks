@@ -452,7 +452,7 @@ const Index = () => {
       <div id="core-features" className="container mx-auto px-4 py-16 bg-gradient-to-b from-muted/30 to-background scroll-mt-20">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
-            <Badge className="bg-sacred/10 text-sacred border-sacred/20 mb-4">For the Christian Greek at Midnight</Badge>
+            <Badge className="bg-sky-500/20 text-sky-400 border-sky-400/30 mb-4">For the Christian Greek at Midnight</Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               You Don't Have to <span className="gradient-text">Choose</span>
             </h2>
