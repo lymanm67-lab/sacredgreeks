@@ -7,11 +7,12 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { MessageSquare, Check, Star, Eye, RefreshCw, Search } from "lucide-react";
+import { MessageSquare, Check, Star, Eye, RefreshCw, Search, Mail, Send } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
 import { formatDistanceToNow } from "date-fns";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface QASubmission {
   id: string;
@@ -33,9 +34,11 @@ export const QASubmissionsManager = () => {
   const [answer, setAnswer] = useState("");
   const [isPublic, setIsPublic] = useState(false);
   const [isFeatured, setIsFeatured] = useState(false);
+  const [notifyUser, setNotifyUser] = useState(true);
   const [saving, setSaving] = useState(false);
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [dialogTab, setDialogTab] = useState<"edit" | "preview">("edit");
   const { toast } = useToast();
 
   useEffect(() => {
@@ -68,15 +71,15 @@ export const QASubmissionsManager = () => {
     setAnswer(submission.answer || "");
     setIsPublic(submission.is_public);
     setIsFeatured(submission.is_featured);
+    setNotifyUser(!!submission.email);
+    setDialogTab("edit");
   };
 
-  const saveAnswer = async () => {
+  const saveAnswer = async (sendNotification: boolean = false) => {
     if (!selectedSubmission) return;
     
     setSaving(true);
     try {
-      const wasAlreadyAnswered = !!selectedSubmission.answer;
-      
       const { error } = await supabase
         .from('qa_submissions')
         .update({
@@ -90,8 +93,8 @@ export const QASubmissionsManager = () => {
 
       if (error) throw error;
 
-      // Send email notification if this is a new answer and user provided email
-      if (answer && !wasAlreadyAnswered && selectedSubmission.email) {
+      // Send email notification if requested and user has email
+      if (answer && sendNotification && notifyUser && selectedSubmission.email) {
         try {
           const { error: notifyError } = await supabase.functions.invoke('send-qa-answer-notification', {
             body: {
@@ -124,7 +127,9 @@ export const QASubmissionsManager = () => {
       } else {
         toast({
           title: "Success",
-          description: "Answer saved successfully",
+          description: sendNotification && !selectedSubmission.email 
+            ? "Answer saved (no email to notify)" 
+            : "Answer saved successfully",
         });
       }
 
@@ -139,6 +144,42 @@ export const QASubmissionsManager = () => {
     } finally {
       setSaving(false);
     }
+  };
+
+  const renderEmailPreview = () => {
+    if (!selectedSubmission || !answer) return null;
+    
+    return (
+      <div className="border rounded-lg overflow-hidden bg-background">
+        <div className="bg-gradient-to-r from-[#1e3a5f] to-[#2d5a87] p-6 text-center">
+          <h3 className="text-[#d4af37] text-lg font-semibold mb-1">Your Question Has Been Answered!</h3>
+          <p className="text-white/90 text-sm">Ask Dr. Lyman - Sacred Greeks</p>
+        </div>
+        
+        <div className="p-6 space-y-4 bg-muted/30">
+          <div className="bg-background rounded-lg p-4 border-l-4 border-[#d4af37]">
+            <p className="text-sm font-semibold text-[#1e3a5f] mb-1">Your Question:</p>
+            <p className="text-muted-foreground italic text-sm">"{selectedSubmission.question}"</p>
+            <Badge className="mt-2 bg-[#e8f4f8] text-[#1e3a5f] text-xs">{selectedSubmission.category}</Badge>
+          </div>
+          
+          <div className="bg-background rounded-lg p-4 border-l-4 border-[#2d5a87]">
+            <p className="text-sm font-semibold text-[#1e3a5f] mb-1">Dr. Lyman's Answer:</p>
+            <p className="text-foreground text-sm whitespace-pre-wrap">{answer}</p>
+          </div>
+          
+          <div className="text-center pt-2">
+            <Button className="bg-gradient-to-r from-[#d4af37] to-[#c9a227] text-[#1e3a5f] font-semibold">
+              View Full Answer
+            </Button>
+          </div>
+          
+          <p className="text-center text-muted-foreground text-xs pt-4 border-t">
+            Thank you for engaging with Sacred Greeks. Your questions help us all grow in faith together.
+          </p>
+        </div>
+      </div>
+    );
   };
 
   const filteredSubmissions = submissions.filter(sub => {
@@ -257,68 +298,104 @@ export const QASubmissionsManager = () => {
         )}
 
         <Dialog open={!!selectedSubmission} onOpenChange={() => setSelectedSubmission(null)}>
-          <DialogContent className="max-w-2xl">
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Answer Question</DialogTitle>
             </DialogHeader>
             
             {selectedSubmission && (
-              <div className="space-y-4">
-                <div className="bg-muted/50 rounded-lg p-4 space-y-2">
-                  <div className="flex items-center gap-2">
-                    <Badge variant="secondary">{selectedSubmission.category}</Badge>
+              <Tabs value={dialogTab} onValueChange={(v) => setDialogTab(v as "edit" | "preview")}>
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="edit">Edit Answer</TabsTrigger>
+                  <TabsTrigger value="preview" disabled={!answer}>
+                    <Mail className="h-4 w-4 mr-2" />
+                    Email Preview
+                  </TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="edit" className="space-y-4 mt-4">
+                  <div className="bg-muted/50 rounded-lg p-4 space-y-2">
+                    <div className="flex items-center gap-2">
+                      <Badge variant="secondary">{selectedSubmission.category}</Badge>
+                      {selectedSubmission.email && (
+                        <span className="text-xs text-muted-foreground">{selectedSubmission.email}</span>
+                      )}
+                    </div>
+                    <p className="font-medium">{selectedSubmission.question}</p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Answer</Label>
+                    <Textarea
+                      value={answer}
+                      onChange={(e) => setAnswer(e.target.value)}
+                      placeholder="Type your answer here..."
+                      rows={6}
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-4">
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <div className="flex items-center space-x-2">
+                        <Switch
+                          id="is-public"
+                          checked={isPublic}
+                          onCheckedChange={setIsPublic}
+                        />
+                        <Label htmlFor="is-public" className="flex items-center gap-2">
+                          <Eye className="h-4 w-4" />
+                          Make Public
+                        </Label>
+                      </div>
+                      
+                      <div className="flex items-center space-x-2">
+                        <Switch
+                          id="is-featured"
+                          checked={isFeatured}
+                          onCheckedChange={setIsFeatured}
+                        />
+                        <Label htmlFor="is-featured" className="flex items-center gap-2">
+                          <Star className="h-4 w-4" />
+                          Feature Answer
+                        </Label>
+                      </div>
+                    </div>
+                    
                     {selectedSubmission.email && (
-                      <span className="text-xs text-muted-foreground">{selectedSubmission.email}</span>
+                      <div className="flex items-center space-x-2 pt-2 border-t">
+                        <Switch
+                          id="notify-user"
+                          checked={notifyUser}
+                          onCheckedChange={setNotifyUser}
+                        />
+                        <Label htmlFor="notify-user" className="flex items-center gap-2">
+                          <Send className="h-4 w-4" />
+                          Send email notification to user
+                        </Label>
+                      </div>
                     )}
                   </div>
-                  <p className="font-medium">{selectedSubmission.question}</p>
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Answer</Label>
-                  <Textarea
-                    value={answer}
-                    onChange={(e) => setAnswer(e.target.value)}
-                    placeholder="Type your answer here..."
-                    rows={6}
-                  />
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id="is-public"
-                      checked={isPublic}
-                      onCheckedChange={setIsPublic}
-                    />
-                    <Label htmlFor="is-public" className="flex items-center gap-2">
-                      <Eye className="h-4 w-4" />
-                      Make Public
-                    </Label>
-                  </div>
-                  
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id="is-featured"
-                      checked={isFeatured}
-                      onCheckedChange={setIsFeatured}
-                    />
-                    <Label htmlFor="is-featured" className="flex items-center gap-2">
-                      <Star className="h-4 w-4" />
-                      Feature Answer
-                    </Label>
-                  </div>
-                </div>
-              </div>
+                </TabsContent>
+                
+                <TabsContent value="preview" className="mt-4">
+                  {renderEmailPreview()}
+                </TabsContent>
+              </Tabs>
             )}
 
-            <DialogFooter>
+            <DialogFooter className="flex-col sm:flex-row gap-2">
               <Button variant="outline" onClick={() => setSelectedSubmission(null)}>
                 Cancel
               </Button>
-              <Button onClick={saveAnswer} disabled={saving}>
-                {saving ? "Saving..." : "Save Answer"}
+              <Button onClick={() => saveAnswer(false)} disabled={saving} variant="secondary">
+                {saving ? "Saving..." : "Save Only"}
               </Button>
+              {selectedSubmission?.email && (
+                <Button onClick={() => saveAnswer(true)} disabled={saving || !answer}>
+                  <Send className="h-4 w-4 mr-2" />
+                  {saving ? "Saving..." : "Save & Notify"}
+                </Button>
+              )}
             </DialogFooter>
           </DialogContent>
         </Dialog>
