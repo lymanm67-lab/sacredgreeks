@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Progress } from "@/components/ui/progress";
+import { ResponseCoach } from "@/components/ResponseCoach";
 import { 
   Home, 
   Heart, 
@@ -21,7 +22,8 @@ import {
   CheckCircle2,
   ArrowRight,
   Quote,
-  Sparkles
+  Sparkles,
+  Bot
 } from "lucide-react";
 
 interface AssessmentQuestion {
@@ -314,7 +316,7 @@ export default function FamilyMinistryFallout() {
 
         {/* Main Content Tabs */}
         <Tabs defaultValue="damaged" className="space-y-8">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 h-auto gap-2 bg-transparent">
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 h-auto gap-2 bg-transparent">
             <TabsTrigger value="damaged" className="data-[state=active]:bg-sacred data-[state=active]:text-white flex flex-col py-3 h-auto">
               <Users className="w-4 h-4 mb-1" />
               <span className="text-xs">Damaged Relationships</span>
@@ -330,6 +332,10 @@ export default function FamilyMinistryFallout() {
             <TabsTrigger value="assessment" className="data-[state=active]:bg-sacred data-[state=active]:text-white flex flex-col py-3 h-auto">
               <Scale className="w-4 h-4 mb-1" />
               <span className="text-xs">Stay/Leave Assessment</span>
+            </TabsTrigger>
+            <TabsTrigger value="coach" className="data-[state=active]:bg-sacred data-[state=active]:text-white flex flex-col py-3 h-auto">
+              <Bot className="w-4 h-4 mb-1" />
+              <span className="text-xs">AI Response Coach</span>
             </TabsTrigger>
           </TabsList>
 
@@ -1158,6 +1164,44 @@ export default function FamilyMinistryFallout() {
                     </AccordionItem>
                   ))}
                 </Accordion>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* AI Response Coach Tab */}
+          <TabsContent value="coach" className="space-y-6">
+            <div className="text-center mb-6">
+              <Badge variant="outline" className="mb-4 border-sacred/50 text-sacred">
+                <Bot className="w-3 h-3 mr-1" />
+                AI-Powered
+              </Badge>
+              <h2 className="text-2xl font-bold">Before You Say It, Get Feedback</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto mt-2">
+                Type what you're planning to say to a parent, pastor, friend, or on social media, 
+                and get personalized AI feedback on tone, approach, and potential improvements.
+              </p>
+            </div>
+            
+            <ResponseCoach />
+
+            <Card className="bg-muted/30 border-dashed">
+              <CardContent className="p-6 text-center">
+                <Lightbulb className="w-8 h-8 text-sacred mx-auto mb-3" />
+                <h4 className="font-semibold mb-2">Why Use the Response Coach?</h4>
+                <div className="grid md:grid-cols-3 gap-4 text-sm text-muted-foreground">
+                  <div>
+                    <p className="font-medium text-foreground">Catch Blind Spots</p>
+                    <p>We often don't hear how we sound to others until it's too late</p>
+                  </div>
+                  <div>
+                    <p className="font-medium text-foreground">Preserve Relationships</p>
+                    <p>The goal isn't winning—it's keeping the door open</p>
+                  </div>
+                  <div>
+                    <p className="font-medium text-foreground">Reflect Christ</p>
+                    <p>Your response is your witness, even in conflict</p>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
