@@ -1,0 +1,66 @@
+# Sacred Greeks Life - AI/LLM Information File
+
+## About
+Sacred Greeks Life is a faith-based web application designed to help Christians in Greek life (fraternities and sororities) navigate the tension between their faith and membership. Created by Dr. Lyman Montgomery, author of "Sacred, Not Sinful."
+
+## Website
+https://sacredgreekslife.com
+
+## Purpose
+To provide daily devotionals, prayer tools, Bible study resources, and guidance for Christians who are members of Greek-letter organizations, particularly Divine Nine (BGLO) organizations.
+
+## Key Features
+- Daily Devotionals: Scripture-based guidance for everyday faith challenges
+- Prayer Journal: Personal prayer tracking and reflection
+- Prayer Wall: Community prayer requests and support
+- Bible Study Tools: AI-powered verse search and study guides
+- P.R.O.O.F. Framework: Biblical framework for evaluating Greek life participation
+- BGLO Objection Guide: Handles common objections about faith and Greek life
+- Progress Tracking: Monitor spiritual growth with achievements and insights
+- Community Service Tracker: Log service hours and community involvement
+
+## Target Audience
+- Christians in college fraternities and sororities
+- Members of Divine Nine (BGLO) organizations
+- Alumni of Greek-letter organizations
+- Students considering Greek life membership
+- Faith leaders and campus ministers
+
+## Core Concepts
+- P.R.O.O.F. Framework: A biblical evaluation method for Greek life decisions
+  - P: Purpose - What is the organization's purpose?
+  - R: Rituals - What rituals are involved?
+  - O: Obligations - What commitments are required?
+  - O: Outcomes - What are the spiritual outcomes?
+  - F: Fellowship - How does it affect Christian fellowship?
+
+## Key Pages
+- /dashboard - User dashboard with daily devotional and quick actions
+- /devotional - Daily scripture-based devotionals
+- /prayer-journal - Personal prayer tracking
+- /prayer-wall - Community prayer requests
+- /bible-study - Scripture search and study tools
+- /guide - BGLO objection handling guide
+- /resources - Educational resources and PDFs
+- /study-guide - Structured Bible study sessions
+
+## Author
+Dr. Lyman Montgomery - Author of "Sacred, Not Sinful: A Christian's Guide to Navigating Greek Life"
+
+## Contact
+Website: https://sacredgreekslife.com
+Privacy Policy: https://sacredgreekslife.com/privacy
+
+## Technical
+- Progressive Web App (PWA) - installable on mobile devices
+- Works offline with cached content
+- Free to use, no credit card required
+
+## Content Topics
+- Faith and Greek life integration
+- Biblical guidance for fraternity/sorority members
+- Christian devotionals for college students
+- Prayer and spiritual growth
+- Divine Nine Christian perspectives
+- BGLO membership and Christianity
+- Handling objections about Greek life and faith
