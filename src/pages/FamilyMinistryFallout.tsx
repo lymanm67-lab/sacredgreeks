@@ -7,6 +7,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Progress } from "@/components/ui/progress";
 import { ResponseCoach } from "@/components/ResponseCoach";
+import { ConversationPractice } from "@/components/response-coach/ConversationPractice";
+import { SavedResponsesList } from "@/components/response-coach/SavedResponsesList";
+import { useSavedResponses } from "@/hooks/use-saved-responses";
+import { useAuth } from "@/contexts/AuthContext";
 import { 
   Home, 
   Heart, 
@@ -23,7 +27,9 @@ import {
   ArrowRight,
   Quote,
   Sparkles,
-  Bot
+  Bot,
+  Mic,
+  Bookmark
 } from "lucide-react";
 
 interface AssessmentQuestion {
@@ -195,6 +201,8 @@ const assessmentQuestions: AssessmentQuestion[] = [
 ];
 
 export default function FamilyMinistryFallout() {
+  const { user } = useAuth();
+  const { savedResponses, loading: savedLoading, deleteResponse, updateNotes } = useSavedResponses();
   const [assessmentAnswers, setAssessmentAnswers] = useState<Record<string, "stay" | "leave" | null>>({});
   const [showResults, setShowResults] = useState(false);
 
@@ -316,7 +324,7 @@ export default function FamilyMinistryFallout() {
 
         {/* Main Content Tabs */}
         <Tabs defaultValue="damaged" className="space-y-8">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 h-auto gap-2 bg-transparent">
+          <TabsList className="grid w-full grid-cols-3 md:grid-cols-7 h-auto gap-2 bg-transparent">
             <TabsTrigger value="damaged" className="data-[state=active]:bg-sacred data-[state=active]:text-white flex flex-col py-3 h-auto">
               <Users className="w-4 h-4 mb-1" />
               <span className="text-xs">Damaged Relationships</span>
@@ -336,6 +344,19 @@ export default function FamilyMinistryFallout() {
             <TabsTrigger value="coach" className="data-[state=active]:bg-sacred data-[state=active]:text-white flex flex-col py-3 h-auto">
               <Bot className="w-4 h-4 mb-1" />
               <span className="text-xs">AI Response Coach</span>
+            </TabsTrigger>
+            <TabsTrigger value="practice" className="data-[state=active]:bg-sacred data-[state=active]:text-white flex flex-col py-3 h-auto">
+              <Mic className="w-4 h-4 mb-1" />
+              <span className="text-xs">Practice Mode</span>
+            </TabsTrigger>
+            <TabsTrigger value="saved" className="data-[state=active]:bg-sacred data-[state=active]:text-white flex flex-col py-3 h-auto relative">
+              <Bookmark className="w-4 h-4 mb-1" />
+              <span className="text-xs">Saved Responses</span>
+              {savedResponses.length > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-sacred text-white text-[10px] rounded-full flex items-center justify-center">
+                  {savedResponses.length}
+                </span>
+              )}
             </TabsTrigger>
           </TabsList>
 
@@ -1204,6 +1225,92 @@ export default function FamilyMinistryFallout() {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          {/* Practice Mode Tab */}
+          <TabsContent value="practice" className="space-y-6">
+            <div className="text-center mb-6">
+              <Badge variant="outline" className="mb-4 border-sacred/50 text-sacred">
+                <Mic className="w-3 h-3 mr-1" />
+                Voice-Enabled Practice
+              </Badge>
+              <h2 className="text-2xl font-bold">Practice Before the Real Conversation</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto mt-2">
+                Have a simulated conversation with an AI playing the role of a concerned parent, pastor, 
+                or friend. Use voice or text input to practice your responses in real-time.
+              </p>
+            </div>
+            
+            <ConversationPractice />
+
+            <Card className="bg-muted/30 border-dashed">
+              <CardContent className="p-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="font-semibold mb-3 flex items-center gap-2">
+                      <Mic className="w-4 h-4 text-sacred" />
+                      Voice Input
+                    </h4>
+                    <p className="text-sm text-muted-foreground">
+                      Click the Voice button to speak your responses naturally. The AI will 
+                      transcribe your words and respond in character. Great for practicing 
+                      the actual words you'll use.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-3 flex items-center gap-2">
+                      <MessageCircle className="w-4 h-4 text-sacred" />
+                      Text Input
+                    </h4>
+                    <p className="text-sm text-muted-foreground">
+                      Prefer to type? Use the text input to compose your responses. 
+                      The AI will respond with the same conversational dynamics, helping 
+                      you prepare for various reactions.
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Saved Responses Tab */}
+          <TabsContent value="saved" className="space-y-6">
+            <div className="text-center mb-6">
+              <Badge variant="outline" className="mb-4 border-sacred/50 text-sacred">
+                <Bookmark className="w-3 h-3 mr-1" />
+                Your Reference Library
+              </Badge>
+              <h2 className="text-2xl font-bold">Saved Response Coach Results</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto mt-2">
+                Review your saved AI feedback before difficult conversations. 
+                Reference the improved responses and suggestions when you need them most.
+              </p>
+            </div>
+            
+            {user ? (
+              <SavedResponsesList 
+                responses={savedResponses}
+                onDelete={deleteResponse}
+                onUpdateNotes={updateNotes}
+                loading={savedLoading}
+              />
+            ) : (
+              <Card className="border-dashed">
+                <CardContent className="flex flex-col items-center justify-center py-12">
+                  <Bookmark className="w-12 h-12 text-muted-foreground/50 mb-4" />
+                  <h3 className="font-semibold mb-2">Sign In to Save Responses</h3>
+                  <p className="text-muted-foreground text-center max-w-md">
+                    Create an account or sign in to save your Response Coach results 
+                    and access them before difficult conversations.
+                  </p>
+                  <Link to="/auth">
+                    <Button className="mt-4 bg-sacred hover:bg-sacred/90">
+                      Sign In / Sign Up
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+            )}
           </TabsContent>
         </Tabs>
 
