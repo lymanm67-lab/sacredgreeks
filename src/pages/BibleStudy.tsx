@@ -21,6 +21,7 @@ import { SavedSearchesList } from '@/components/bible-study/SavedSearchesList';
 import { useAutoCompleteChallenge } from '@/hooks/use-auto-complete-challenge';
 import { VoiceInputButton } from '@/components/VoiceInputButton';
 import { ListenButton } from '@/components/ListenButton';
+import { PremiumGate } from '@/components/PremiumGate';
 
 const readingPlans = [
   {
@@ -291,6 +292,7 @@ const BibleStudy = () => {
   };
 
   return (
+    <PremiumGate featureName="AI Bible Study Tools">
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
       <PullToRefreshIndicator 
         isPulling={isPulling}
@@ -759,10 +761,11 @@ const BibleStudy = () => {
                 </CardContent>
               </Card>
             </TabsContent>
-          </Tabs>
+        </Tabs>
         </div>
       </main>
     </div>
+    </PremiumGate>
   );
 };
 

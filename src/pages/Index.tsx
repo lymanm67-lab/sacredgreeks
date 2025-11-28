@@ -38,18 +38,11 @@ const coreFeatures = [
     badge: "Start Here",
   },
   {
-    title: "Myth Buster Library",
-    description: "Searchable biblical responses to common accusations about Greek life",
-    icon: BookOpen,
+    title: "Symbols, Rituals & Myths Library",
+    description: "Biblical responses to accusations, Christian perspectives on Greek symbolism, and guidance on participation",
+    icon: Library,
     link: "/myth-buster",
     color: "from-purple-500 to-violet-600",
-  },
-  {
-    title: "Symbol & Ritual Guide",
-    description: "Christian perspectives on Greek symbolism with guidance on participation",
-    icon: Sparkles,
-    link: "/symbol-guide",
-    color: "from-amber-500 to-orange-600",
   },
   {
     title: "Family, Ministry & Church Hurt Healing",

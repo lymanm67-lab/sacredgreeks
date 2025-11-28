@@ -11,6 +11,7 @@ import { calculateSacredGreeksScores } from "@/lib/scoring";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
+import { PremiumGate } from "@/components/PremiumGate";
 
 const steps = [
   { label: "Scenario", description: "Choose your situation" },
@@ -93,6 +94,7 @@ const Guide = () => {
   };
 
   return (
+    <PremiumGate featureName="Response Coach">
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b border-border bg-card">
@@ -144,6 +146,7 @@ const Guide = () => {
         </div>
       </main>
     </div>
+    </PremiumGate>
   );
 };
 

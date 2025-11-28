@@ -41,6 +41,7 @@ import { ShareAppCard } from '@/components/dashboard/ShareAppCard';
 import { ReferralCard } from '@/components/dashboard/ReferralCard';
 import { FeaturedArticle } from '@/components/dashboard/FeaturedArticle';
 import { RecentlyViewed } from '@/components/dashboard/RecentlyViewed';
+import { SubscriptionBadge } from '@/components/dashboard/SubscriptionBadge';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -391,6 +392,7 @@ const Dashboard = () => {
               </span>
             </Link>
             <div className="flex items-center gap-2">
+              <SubscriptionBadge />
               <MobileQRCode />
               <Link to="/profile">
                 <Button variant="ghost" size="sm" className="hover:bg-sacred/10">
