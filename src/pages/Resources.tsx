@@ -75,6 +75,16 @@ const resources: ResourceItem[] = [
     tags: ["Framework", "About"],
   },
   {
+    title: "Family & Ministry Fallout",
+    description: "Navigate damaged relationships, have redemptive conversations, and rebuild trust with family and church communities",
+    url: "/family-ministry-fallout",
+    icon: MessageSquare,
+    requiresAuth: false,
+    badge: "New",
+    category: "about",
+    tags: ["Healing", "Relationships", "About"],
+  },
+  {
     title: "Dr. Lyman Montgomery Media Kit",
     description: "Speaker bio, credentials, booking information, and media resources for Dr. Lyman Montgomery",
     url: "https://gamma.app/embed/biu8ffusrj97br1",
