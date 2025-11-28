@@ -1,0 +1,163 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Sacred Greeks Life API",
+    "description": "API for ChatGPT GPT to interact with Sacred Greeks Life - a faith-based app helping Christians navigate Greek life using the P.R.O.O.F. framework.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Sacred Greeks Life",
+      "url": "https://sacredgreekslife.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://mrwbbwdvtndgaewwwdko.supabase.co/functions/v1",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/chatgpt-action/info": {
+      "get": {
+        "operationId": "getAppInfo",
+        "summary": "Get Sacred Greeks Life app information",
+        "description": "Returns complete information about Sacred Greeks Life including features, P.R.O.O.F. framework, FAQ, and target audience.",
+        "responses": {
+          "200": {
+            "description": "Successful response with app information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chatgpt-action/ask": {
+      "post": {
+        "operationId": "askQuestion",
+        "summary": "Ask a question about Sacred Greeks Life",
+        "description": "Submit a question about Sacred Greeks Life and receive an AI-powered answer with relevant feature links.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["question"],
+                "properties": {
+                  "question": {
+                    "type": "string",
+                    "description": "The question to ask about Sacred Greeks Life"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with answer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - question is required"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AppInfo": {
+        "type": "object",
+        "properties": {
+          "app": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "tagline": { "type": "string" },
+              "description": { "type": "string" },
+              "author": { "type": "string" },
+              "book": { "type": "string" },
+              "website": { "type": "string" },
+              "documentary": { "type": "string" }
+            }
+          },
+          "proof_framework": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "description": { "type": "string" },
+              "components": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "letter": { "type": "string" },
+                    "name": { "type": "string" },
+                    "description": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "features": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "url": { "type": "string" },
+                "description": { "type": "string" }
+              }
+            }
+          },
+          "faq": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "q": { "type": "string" },
+                "a": { "type": "string" }
+              }
+            }
+          },
+          "target_audience": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      },
+      "QuestionResponse": {
+        "type": "object",
+        "properties": {
+          "question": { "type": "string" },
+          "answer": { "type": "string" },
+          "app_website": { "type": "string" },
+          "related_features": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "url": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
