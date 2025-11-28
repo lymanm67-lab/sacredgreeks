@@ -625,6 +625,46 @@ const Index = () => {
               );
             })}
           </div>
+
+          {/* Healing Resources - Also visible in this section */}
+          <div className="mt-10 max-w-4xl mx-auto">
+            <div className="text-center mb-6">
+              <Badge className="bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/30 mb-3">
+                <HeartHandshake className="w-3 h-3 mr-1" />
+                Support & Restoration
+              </Badge>
+              <h3 className="text-xl md:text-2xl font-bold">
+                Healing for the <span className="text-amber-500">Wounded</span>
+              </h3>
+            </div>
+            <div className="grid md:grid-cols-2 gap-6">
+              {healingResources.map((resource) => (
+                <Link key={resource.title} to={resource.link}>
+                  <Card className="h-full transition-all hover:shadow-xl hover:scale-105 border-2 border-amber-500/30 hover:border-amber-500/60 cursor-pointer group overflow-hidden bg-gradient-to-br from-amber-500/5 to-rose-500/5 dark:from-amber-950/20 dark:to-rose-950/20">
+                    <div className={`h-2 bg-gradient-to-r ${resource.color}`} />
+                    <CardHeader className="space-y-3">
+                      <div className="flex items-start justify-between">
+                        <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${resource.color} flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg`}>
+                          <resource.icon className="w-7 h-7 text-white" />
+                        </div>
+                        {resource.badge && (
+                          <Badge className="bg-amber-500 text-white animate-pulse">{resource.badge}</Badge>
+                        )}
+                      </div>
+                      <CardTitle className="text-xl group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                        {resource.title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <CardDescription className="text-base">
+                        {resource.description}
+                      </CardDescription>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
