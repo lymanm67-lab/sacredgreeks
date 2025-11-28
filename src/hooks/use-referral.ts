@@ -102,7 +102,7 @@ export function useReferral(options?: UseReferralOptions) {
   };
 
   const getReferralLink = () => {
-    const baseUrl = 'https://www.sacredgreekslife.com';
+    const baseUrl = 'https://sacredgreekslife.com';
     return referralCode ? `${baseUrl}/auth?ref=${referralCode}` : baseUrl;
   };
 

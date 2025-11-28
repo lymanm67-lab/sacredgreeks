@@ -33,7 +33,7 @@ const WhatsAppIcon = ({ className }: { className?: string }) => (
 export function ShareSection() {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
-  const appUrl = 'https://www.sacredgreekslife.com';
+  const appUrl = 'https://sacredgreekslife.com';
   const shareMessage = `A gift from Dr. Lyman Montgomery – the Sacred Greeks Life App helps you navigate the tension between Greek life and faith. Features daily devotionals, prayer tools, and Bible study resources to grow spiritually while honoring both your faith and fraternity/sorority. For Greek life members and supporters: ${appUrl}`;
   const shortShareText = `A gift from Dr. Lyman Montgomery – the Sacred Greeks Life App helps you navigate the tension between Greek life and faith. For Greek life members and supporters!`;
 

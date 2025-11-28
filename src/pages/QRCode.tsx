@@ -10,7 +10,7 @@ import logo from '@/assets/sacred-greeks-logo.png';
 const QRCodePage = () => {
   const { toast } = useToast();
   const qrRef = useRef<HTMLDivElement>(null);
-  const appUrl = 'https://www.sacredgreekslife.com';
+  const appUrl = 'https://sacredgreekslife.com';
 
   const handleDownload = async () => {
     if (!qrRef.current) return;
