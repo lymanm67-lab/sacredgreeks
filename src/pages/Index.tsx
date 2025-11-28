@@ -23,10 +23,10 @@ import { ShareSection } from "@/components/landing/ShareSection";
 
 // Mobile section navigation items
 const sectionNav = [
-  { id: "core-features", label: "Core Tools" },
-  { id: "healing-resources", label: "Healing" },
-  { id: "more-features", label: "More" },
-  { id: "testimonials", label: "Stories" },
+  { id: "core-features", label: "Tools", icon: null },
+  { id: "healing-resources", label: "Support", icon: HeartHandshake, isHighlighted: true },
+  { id: "more-features", label: "More", icon: null },
+  { id: "testimonials", label: "Stories", icon: null },
 ];
 
 // Core features for the new user journey - reorganized per user request
@@ -225,13 +225,18 @@ const Index = () => {
             <button
               key={section.id}
               onClick={() => scrollToSection(section.id)}
-              className={`px-3 py-1.5 text-xs font-medium rounded-full transition-all duration-200 ${
-                activeSection === section.id 
-                  ? 'bg-sacred text-white scale-105' 
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted active:scale-95'
+              className={`px-3 py-1.5 text-xs font-medium rounded-full transition-all duration-200 flex items-center gap-1.5 ${
+                section.isHighlighted 
+                  ? activeSection === section.id
+                    ? 'bg-gradient-to-r from-amber-500 to-rose-500 text-white scale-105 shadow-lg shadow-amber-500/30'
+                    : 'bg-gradient-to-r from-amber-500/20 to-rose-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30 hover:from-amber-500/30 hover:to-rose-500/30'
+                  : activeSection === section.id 
+                    ? 'bg-sacred text-white scale-105' 
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted active:scale-95'
               }`}
               style={{ animationDelay: `${index * 50}ms` }}
             >
+              {section.icon && <section.icon className="w-3 h-3" />}
               {section.label}
             </button>
           ))}
