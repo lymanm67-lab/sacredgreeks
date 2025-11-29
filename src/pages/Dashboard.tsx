@@ -42,6 +42,7 @@ import { ReferralCard } from '@/components/dashboard/ReferralCard';
 import { FeaturedArticle } from '@/components/dashboard/FeaturedArticle';
 import { RecentlyViewed } from '@/components/dashboard/RecentlyViewed';
 import { SubscriptionBadge } from '@/components/dashboard/SubscriptionBadge';
+import { OrgWelcomeCard } from '@/components/dashboard/OrgWelcomeCard';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -425,6 +426,11 @@ const Dashboard = () => {
             <HeroSection />
           </div>
 
+          {/* Organization Welcome Card */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.05s' }}>
+            <OrgWelcomeCard />
+          </div>
+
           {/* Featured Actions - Prominent */}
           <div ref={featuredScroll.ref} className={`scroll-animate ${featuredScroll.isVisible ? 'visible' : ''} animate-fade-in`} style={{ animationDelay: '0.1s' }}>
             <FeaturedActions isLoading={loading} />
@@ -773,7 +779,7 @@ const Dashboard = () => {
         </div>
       </main>
 
-      <Onboarding open={showOnboarding && !isChecking} onComplete={completeOnboarding} />
+      <Onboarding open={showOnboarding && !isChecking} onComplete={completeOnboarding} userId={user?.id} />
     </div>
   );
 };
