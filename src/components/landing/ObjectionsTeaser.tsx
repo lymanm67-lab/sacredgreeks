@@ -139,7 +139,7 @@ export function ObjectionsTeaser() {
               Handle <span className="gradient-text">BGLO Objections</span> with Grace
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Get AI-powered coaching on how to respond. Try it now — see your scores instantly.
+              Practice responding with proven frameworks. Try it now — see your scores instantly.
             </p>
           </div>
 
