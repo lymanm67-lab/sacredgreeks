@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -46,6 +46,7 @@ const BETA_FEATURES = [
 
 export default function BetaSignup() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -54,7 +55,7 @@ export default function BetaSignup() {
     email: "",
     fullName: "",
     organization: "",
-    referralCode: "",
+    referralCode: searchParams.get('ref') || "",
     agreeToTerms: false,
     agreeToEmails: true
   });
@@ -98,6 +99,28 @@ export default function BetaSignup() {
 
         if (betaError) {
           console.error("Beta tester record error:", betaError);
+        }
+
+        // If referred, create referral record and reward referrer
+        if (formData.referralCode) {
+          // Find the referrer by beta code
+          const { data: referrerData } = await supabase
+            .from("beta_testers")
+            .select("user_id")
+            .eq("beta_code", formData.referralCode.toUpperCase())
+            .single();
+          
+          if (referrerData) {
+            // Create referral record
+            await supabase.from("referrals").insert({
+              referrer_id: referrerData.user_id,
+              referred_user_id: authData.user.id,
+              referral_code: formData.referralCode.toUpperCase(),
+              status: "converted",
+              reward_earned: 50,
+              converted_at: new Date().toISOString()
+            });
+          }
         }
 
         // Send notification emails (non-blocking)
