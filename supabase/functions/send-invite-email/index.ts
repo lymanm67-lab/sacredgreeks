@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "https://esm.sh/resend@4.0.0";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -20,9 +21,42 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Authentication check
+    const supabaseClient = createClient(
+      Deno.env.get("SUPABASE_URL") ?? "",
+      Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+      { global: { headers: { Authorization: req.headers.get("Authorization")! } } }
+    );
+
+    const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+    if (authError || !user) {
+      console.error("Authentication failed:", authError?.message);
+      return new Response(
+        JSON.stringify({ error: "Unauthorized" }),
+        { status: 401, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
     const { inviterName, inviterEmail, recipientEmail }: InviteEmailRequest = await req.json();
 
-    console.log(`Sending invite from ${inviterEmail} to ${recipientEmail}`);
+    // Validate that the inviter email matches the authenticated user
+    if (user.email !== inviterEmail) {
+      console.error("Email mismatch: authenticated user email doesn't match inviter email");
+      return new Response(
+        JSON.stringify({ error: "Forbidden: You can only send invites from your own email" }),
+        { status: 403, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    // Input validation
+    if (!recipientEmail || typeof recipientEmail !== "string" || !recipientEmail.includes("@")) {
+      return new Response(
+        JSON.stringify({ error: "Invalid recipient email" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    console.log(`Authenticated user ${user.email} sending invite to ${recipientEmail}`);
 
     const signupUrl = `${req.headers.get("origin") || "https://sacred-greeks.com"}/auth`;
 
