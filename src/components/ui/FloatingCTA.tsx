@@ -32,13 +32,16 @@ export const FloatingCTA = ({ scrollThreshold = 600 }: FloatingCTAProps) => {
         "animate-fade-in-up"
       )}
     >
-      <Link to="/auth">
+      <Link to="/beta-signup" className="group">
         <Button
           size="lg"
-          className="bg-sacred hover:bg-sacred/90 text-sacred-foreground shadow-2xl shadow-sacred/30 hover:shadow-sacred/50 transition-all hover:scale-105 group"
+          className="bg-sacred hover:bg-sacred/90 text-sacred-foreground shadow-2xl shadow-sacred/30 hover:shadow-sacred/50 transition-all hover:scale-105 flex flex-col h-auto py-3"
         >
-          Start Free
-          <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+          <span className="flex items-center">
+            Become a Beta Tester
+            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+          </span>
+          <span className="text-xs font-normal opacity-80">Free early access</span>
         </Button>
       </Link>
       <Button

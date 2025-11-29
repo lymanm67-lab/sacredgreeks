@@ -274,9 +274,9 @@ const Index = () => {
                       Sign In
                     </Button>
                   </Link>
-                  <Link to="/auth">
+                  <Link to="/beta-signup">
                     <Button className="bg-sacred hover:bg-sacred/90 text-sacred-foreground shadow-lg shadow-sacred/20" size="sm">
-                      Get Started
+                      Join Beta
                     </Button>
                   </Link>
                 </>
@@ -375,10 +375,13 @@ const Index = () => {
 
           {!user && (
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-              <Link to="/beta-signup">
-                <Button size="lg" className="bg-sacred hover:bg-sacred/90 text-sacred-foreground text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all btn-bounce hover:scale-105">
-                  Join the Beta
-                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              <Link to="/beta-signup" className="group">
+                <Button size="lg" className="bg-sacred hover:bg-sacred/90 text-sacred-foreground text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all btn-bounce hover:scale-105 flex flex-col h-auto">
+                  <span className="flex items-center">
+                    Become a Beta Tester
+                    <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                  <span className="text-xs font-normal opacity-80 mt-1">Free early access • Shape the app • Exclusive features</span>
                 </Button>
               </Link>
               <Link to="/guide">
