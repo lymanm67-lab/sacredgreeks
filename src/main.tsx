@@ -1,14 +1,7 @@
-import * as React from "react";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-
-// Force React singleton to prevent multiple instances
-if (typeof window !== 'undefined') {
-  (window as any).React = React;
-  (window as any).__REACT_DEVTOOLS_GLOBAL_HOOK__ = (window as any).__REACT_DEVTOOLS_GLOBAL_HOOK__ || { isDisabled: true };
-}
 
 const container = document.getElementById("root");
 if (container) {
