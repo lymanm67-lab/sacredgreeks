@@ -23,8 +23,9 @@ import { ObjectionsTeaser } from "@/components/landing/ObjectionsTeaser";
 
 // Mobile section navigation items
 const sectionNav = [
+  { id: "objections-teaser", label: "Try It", icon: null, isHighlighted: true },
   { id: "core-features", label: "Tools", icon: null },
-  { id: "healing-resources", label: "Support", icon: HeartHandshake, isHighlighted: true },
+  { id: "healing-resources", label: "Support", icon: HeartHandshake },
   { id: "more-features", label: "More", icon: null },
   { id: "testimonials", label: "Stories", icon: null },
 ];
