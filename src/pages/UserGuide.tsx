@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   ArrowLeft, 
   Download, 
@@ -19,7 +18,14 @@ import {
   Trophy,
   CheckCircle2,
   ChevronRight,
-  Sparkles
+  Sparkles,
+  Shield,
+  Users,
+  MessageCircle,
+  HelpCircle,
+  Library,
+  HandHeart,
+  GraduationCap
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useToast } from "@/hooks/use-toast";
@@ -31,6 +37,14 @@ import devotionalScreenshot from "@/assets/guide/devotional-screenshot.png";
 import journeyScreenshot from "@/assets/guide/journey-screenshot.png";
 import bibleStudyScreenshot from "@/assets/guide/bible-study-screenshot.png";
 import achievementsScreenshot from "@/assets/guide/achievements-screenshot.png";
+import mythBusterScreenshot from "@/assets/guide/myth-buster-screenshot.png";
+import symbolGuideScreenshot from "@/assets/guide/symbol-guide-screenshot.png";
+import studyGuideScreenshot from "@/assets/guide/study-guide-screenshot.png";
+import serviceTrackerScreenshot from "@/assets/guide/service-tracker-screenshot.png";
+import prayerWallScreenshot from "@/assets/guide/prayer-wall-screenshot.png";
+import responseCoachScreenshot from "@/assets/guide/response-coach-screenshot.png";
+import askExpertScreenshot from "@/assets/guide/ask-expert-screenshot.png";
+import resourcesScreenshot from "@/assets/guide/resources-screenshot.png";
 
 const guideContent = [
   {
@@ -39,6 +53,7 @@ const guideContent = [
     icon: Home,
     screenshot: dashboardScreenshot,
     description: "Your central hub for all Sacred Greeks features",
+    category: "Getting Started",
     steps: [
       "After signing in, you'll land on your personalized dashboard",
       "View your daily verse and devotional at the top",
@@ -58,6 +73,7 @@ const guideContent = [
     icon: Calendar,
     screenshot: devotionalScreenshot,
     description: "Start each day with Scripture-based reflections",
+    category: "Daily Practice",
     steps: [
       "Access daily devotionals from the dashboard or menu",
       "Read the Scripture passage for the day",
@@ -77,6 +93,7 @@ const guideContent = [
     icon: PenLine,
     screenshot: prayerJournalScreenshot,
     description: "Track your prayers and see God's faithfulness",
+    category: "Daily Practice",
     steps: [
       "Create new prayer entries with title and description",
       "Categorize prayers by type (personal, family, chapter, etc.)",
@@ -91,11 +108,32 @@ const guideContent = [
     ]
   },
   {
+    id: "prayer-wall",
+    title: "Prayer Wall Community",
+    icon: Users,
+    screenshot: prayerWallScreenshot,
+    description: "Share and support prayer requests with the community",
+    category: "Community",
+    steps: [
+      "Browse prayer requests from the community",
+      "Click 'Pray' to commit to praying for a request",
+      "Send encouragement messages to those in need",
+      "Post your own prayer requests (anonymous option available)",
+      "Celebrate answered prayers together"
+    ],
+    tips: [
+      "Check the prayer wall daily to support others",
+      "Use anonymous posting for sensitive requests",
+      "Follow up on requests you've prayed for"
+    ]
+  },
+  {
     id: "journey",
     title: "30-Day Journey",
     icon: BookOpen,
     screenshot: journeyScreenshot,
     description: "A structured path through the P.R.O.O.F. framework",
+    category: "Training",
     steps: [
       "Start day 1 to begin your journey",
       "Complete daily readings and reflections",
@@ -110,11 +148,72 @@ const guideContent = [
     ]
   },
   {
+    id: "study-guide",
+    title: "5-Session Study Guide",
+    icon: GraduationCap,
+    screenshot: studyGuideScreenshot,
+    description: "Comprehensive biblical framework for group or individual study",
+    category: "Training",
+    steps: [
+      "Start with Session 1: Introduction to the P.R.O.O.F. framework",
+      "Read the Scripture passages and key points",
+      "Complete the discussion questions",
+      "Use the reflection prompts for deeper understanding",
+      "Track completion and earn your certificate"
+    ],
+    tips: [
+      "Great for small groups or chapter Bible studies",
+      "Download materials for offline access",
+      "Complete all sessions to earn your certificate"
+    ]
+  },
+  {
+    id: "myth-buster",
+    title: "Myth Buster Library",
+    icon: Shield,
+    screenshot: mythBusterScreenshot,
+    description: "Biblical responses to common accusations about Greek life",
+    category: "Resources",
+    steps: [
+      "Search for specific topics or accusations",
+      "Browse by category (hazing, rituals, values, etc.)",
+      "Read the biblical perspective and response",
+      "Save helpful responses to your bookmarks",
+      "Share with others who have questions"
+    ],
+    tips: [
+      "Use the search feature for quick answers",
+      "Practice responses with the Response Coach",
+      "Save your most-needed responses for quick access"
+    ]
+  },
+  {
+    id: "symbol-guide",
+    title: "Symbol & Ritual Guide",
+    icon: Sparkles,
+    screenshot: symbolGuideScreenshot,
+    description: "Christian perspectives on Greek symbolism with guidance",
+    category: "Resources",
+    steps: [
+      "Browse symbols by category or organization",
+      "Read the historical and cultural context",
+      "Understand the Christian perspective",
+      "View the discernment guidance for participation",
+      "Bookmark symbols for quick reference"
+    ],
+    tips: [
+      "Study symbols before chapter events",
+      "Use the comparison feature for similar symbols",
+      "Share insights with chapter members"
+    ]
+  },
+  {
     id: "bible-study",
     title: "AI Bible Study Tools",
     icon: Search,
     screenshot: bibleStudyScreenshot,
     description: "Get AI-powered verse searches and study recommendations",
+    category: "Resources",
     steps: [
       "Enter a topic, question, or theme to search",
       "Browse AI-suggested relevant verses",
@@ -129,11 +228,92 @@ const guideContent = [
     ]
   },
   {
+    id: "response-coach",
+    title: "Response Coach",
+    icon: MessageCircle,
+    screenshot: responseCoachScreenshot,
+    description: "Practice responding to tough questions with AI feedback",
+    category: "Training",
+    steps: [
+      "Select a scenario or question to practice",
+      "Type your response to the prompt",
+      "Receive AI-powered feedback on your response",
+      "View suggested improvements and biblical references",
+      "Save successful responses for future reference"
+    ],
+    tips: [
+      "Practice before family gatherings or campus events",
+      "Focus on grace-filled responses",
+      "Review saved responses before conversations"
+    ]
+  },
+  {
+    id: "ask-dr-lyman",
+    title: "Ask Dr. Lyman",
+    icon: HelpCircle,
+    screenshot: askExpertScreenshot,
+    description: "Submit questions and get curated answers from Dr. Lyman",
+    category: "Resources",
+    steps: [
+      "Submit your question about faith and Greek life",
+      "Browse previously answered questions",
+      "Filter by category (theology, family, campus ministry)",
+      "Get notified when your question is answered",
+      "Share helpful answers with others"
+    ],
+    tips: [
+      "Check the FAQ before submitting new questions",
+      "Be specific about your situation",
+      "Browse featured answers for common concerns"
+    ]
+  },
+  {
+    id: "service-tracker",
+    title: "Service Tracker",
+    icon: HandHeart,
+    screenshot: serviceTrackerScreenshot,
+    description: "Log and track your community service hours",
+    category: "Community",
+    steps: [
+      "Add new service events with date and hours",
+      "Categorize by type (chapter, community, church)",
+      "Track your total hours and impact",
+      "Set service goals and monitor progress",
+      "Export reports for chapter requirements"
+    ],
+    tips: [
+      "Log service hours immediately after events",
+      "Include photos and reflections",
+      "Share service opportunities with chapter"
+    ]
+  },
+  {
+    id: "resources",
+    title: "Resources Hub",
+    icon: Library,
+    screenshot: resourcesScreenshot,
+    description: "Access articles, PDFs, and external resources",
+    category: "Resources",
+    steps: [
+      "Browse resources by category",
+      "Download PDFs for offline reading",
+      "Access external links to trusted sources",
+      "Save favorites to your bookmarks",
+      "Suggest new resources for the community"
+    ],
+    tips: [
+      "Download key resources for offline access",
+      "Use the search to find specific topics",
+      "Check back regularly for new additions"
+    ]
+  },
+  {
     id: "achievements",
     title: "Achievements & Progress",
     icon: Trophy,
     screenshot: achievementsScreenshot,
     description: "Track your spiritual growth with gamification",
+    category: "Progress",
     steps: [
       "View all available achievements in the trophy room",
       "Complete actions to unlock new badges",
@@ -149,10 +329,25 @@ const guideContent = [
   }
 ];
 
+const categories = [
+  { id: "all", label: "All Sections" },
+  { id: "Getting Started", label: "Getting Started" },
+  { id: "Daily Practice", label: "Daily Practice" },
+  { id: "Training", label: "Training" },
+  { id: "Resources", label: "Resources" },
+  { id: "Community", label: "Community" },
+  { id: "Progress", label: "Progress" }
+];
+
 const UserGuide = () => {
   const { toast } = useToast();
   const printRef = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState("dashboard");
+  const [selectedCategory, setSelectedCategory] = useState("all");
+
+  const filteredContent = selectedCategory === "all" 
+    ? guideContent 
+    : guideContent.filter(c => c.category === selectedCategory);
 
   const handlePrint = () => {
     const printContent = printRef.current;
@@ -196,7 +391,7 @@ const UserGuide = () => {
               margin-bottom: 40px;
             }
             .screenshot {
-              max-width: 300px;
+              max-width: 250px;
               border: 1px solid #ddd;
               border-radius: 8px;
               margin: 20px 0;
@@ -213,11 +408,32 @@ const UserGuide = () => {
               border-radius: 8px;
               margin: 15px 0;
             }
+            .category-badge {
+              display: inline-block;
+              background: #e0e7ff;
+              color: #3730a3;
+              padding: 2px 10px;
+              border-radius: 12px;
+              font-size: 12px;
+              margin-bottom: 8px;
+            }
             ul {
               padding-left: 20px;
             }
             li {
               margin-bottom: 8px;
+            }
+            .toc {
+              background: #f1f5f9;
+              padding: 20px;
+              border-radius: 8px;
+              margin-bottom: 30px;
+            }
+            .toc h2 {
+              margin-top: 0;
+            }
+            .toc ul {
+              columns: 2;
             }
             .footer {
               margin-top: 40px;
@@ -232,12 +448,20 @@ const UserGuide = () => {
           </style>
         </head>
         <body>
-          <h1>📖 Sacred Greeks Life App - User Guide</h1>
-          <p>Your complete guide to navigating faith and Greek life with the Sacred Greeks Life App.</p>
+          <h1>📖 Sacred Greeks Life App - Complete User Guide</h1>
+          <p>Your comprehensive guide to navigating faith and Greek life with the Sacred Greeks Life App.</p>
           
-          ${guideContent.map(section => `
+          <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+              ${guideContent.map((section, index) => `<li>${index + 1}. ${section.title}</li>`).join('')}
+            </ul>
+          </div>
+          
+          ${guideContent.map((section, index) => `
             <div class="section">
-              <h2>${section.title}</h2>
+              <span class="category-badge">${section.category}</span>
+              <h2>${index + 1}. ${section.title}</h2>
               <p><strong>${section.description}</strong></p>
               <img src="${section.screenshot}" alt="${section.title}" class="screenshot" />
               
@@ -277,7 +501,6 @@ const UserGuide = () => {
   };
 
   const handleDownloadPDF = () => {
-    // Use browser print to PDF functionality
     handlePrint();
     toast({
       title: "Save as PDF",
@@ -286,34 +509,46 @@ const UserGuide = () => {
   };
 
   const handleDownloadPowerPoint = () => {
-    // Generate a simple HTML that can be imported to PowerPoint
     const pptxContent = `
-Sacred Greeks Life App - User Guide Presentation
+SACRED GREEKS LIFE APP - COMPLETE USER GUIDE
+=============================================
+
+PRESENTATION OUTLINE - ${guideContent.length} SLIDES
 
 ${guideContent.map((section, index) => `
-=== Slide ${index + 1}: ${section.title} ===
+=== SLIDE ${index + 1}: ${section.title.toUpperCase()} ===
+Category: ${section.category}
 
 ${section.description}
 
-Steps:
+HOW TO USE:
 ${section.steps.map((step, i) => `${i + 1}. ${step}`).join('\n')}
 
-Tips:
+PRO TIPS:
 ${section.tips.map(tip => `• ${tip}`).join('\n')}
 
 ---
 `).join('\n')}
 
-=== Final Slide ===
+=== FINAL SLIDE: GET STARTED ===
+
+Ready to begin your journey?
+
+1. Download the Sacred Greeks Life App
+2. Create your free account
+3. Complete the 30-Day Journey
+4. Engage with the community
+
+Visit: sacredgreeks.com
+
 Thank you for using Sacred Greeks Life App!
-Visit sacredgreeks.com for more resources.
     `.trim();
 
     const blob = new Blob([pptxContent], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'Sacred-Greeks-User-Guide-Slides.txt';
+    a.download = 'Sacred-Greeks-User-Guide-Presentation.txt';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -340,8 +575,8 @@ Visit sacredgreeks.com for more resources.
                 </Button>
               </Link>
               <div>
-                <h1 className="text-xl font-bold text-foreground">User Guide</h1>
-                <p className="text-sm text-muted-foreground">Learn how to use Sacred Greeks Life App</p>
+                <h1 className="text-xl font-bold text-foreground">Complete User Guide</h1>
+                <p className="text-sm text-muted-foreground">{guideContent.length} sections covering all features</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -360,7 +595,7 @@ Visit sacredgreeks.com for more resources.
               Export Options
             </CardTitle>
             <CardDescription>
-              Download or print this guide for offline reference
+              Download or print this comprehensive guide for offline reference
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -381,17 +616,31 @@ Visit sacredgreeks.com for more resources.
           </CardContent>
         </Card>
 
+        {/* Category Filter */}
+        <div className="mb-6 flex flex-wrap gap-2">
+          {categories.map((cat) => (
+            <Badge
+              key={cat.id}
+              variant={selectedCategory === cat.id ? "default" : "outline"}
+              className="cursor-pointer hover:bg-sacred/20 transition-colors"
+              onClick={() => setSelectedCategory(cat.id)}
+            >
+              {cat.label}
+            </Badge>
+          ))}
+        </div>
+
         {/* Main Content */}
         <div className="grid lg:grid-cols-4 gap-6" ref={printRef}>
           {/* Navigation Sidebar */}
           <Card className="lg:col-span-1 h-fit lg:sticky lg:top-24">
             <CardHeader className="pb-3">
-              <CardTitle className="text-base">Guide Sections</CardTitle>
+              <CardTitle className="text-base">Guide Sections ({filteredContent.length})</CardTitle>
             </CardHeader>
             <CardContent className="p-0">
-              <ScrollArea className="h-[400px] lg:h-auto">
+              <ScrollArea className="h-[500px] lg:h-auto lg:max-h-[60vh]">
                 <div className="space-y-1 p-4 pt-0">
-                  {guideContent.map((section) => (
+                  {filteredContent.map((section) => (
                     <button
                       key={section.id}
                       onClick={() => setActiveSection(section.id)}
@@ -402,9 +651,14 @@ Visit sacredgreeks.com for more resources.
                       }`}
                     >
                       <section.icon className="h-4 w-4 flex-shrink-0" />
-                      <span className="text-sm font-medium truncate">{section.title}</span>
+                      <div className="flex-1 min-w-0">
+                        <span className="text-sm font-medium truncate block">{section.title}</span>
+                        <span className={`text-xs ${activeSection === section.id ? "text-white/70" : "text-muted-foreground"}`}>
+                          {section.category}
+                        </span>
+                      </div>
                       {activeSection === section.id && (
-                        <ChevronRight className="h-4 w-4 ml-auto" />
+                        <ChevronRight className="h-4 w-4 ml-auto flex-shrink-0" />
                       )}
                     </button>
                   ))}
@@ -417,19 +671,24 @@ Visit sacredgreeks.com for more resources.
           <div className="lg:col-span-3 space-y-6">
             <Card>
               <CardHeader>
-                <div className="flex items-start justify-between">
+                <div className="flex items-start justify-between flex-wrap gap-4">
                   <div className="flex items-center gap-3">
                     <div className="p-2.5 bg-sacred/10 rounded-lg">
                       <activeContent.icon className="h-6 w-6 text-sacred" />
                     </div>
                     <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <Badge variant="secondary" className="text-xs">
+                          {activeContent.category}
+                        </Badge>
+                      </div>
                       <CardTitle className="text-2xl">{activeContent.title}</CardTitle>
                       <CardDescription className="text-base mt-1">
                         {activeContent.description}
                       </CardDescription>
                     </div>
                   </div>
-                  <Badge variant="secondary" className="text-xs">
+                  <Badge variant="outline" className="text-xs">
                     Section {guideContent.findIndex(c => c.id === activeSection) + 1} of {guideContent.length}
                   </Badge>
                 </div>
@@ -518,7 +777,7 @@ Visit sacredgreeks.com for more resources.
                 <CardTitle className="text-lg">Ready to Get Started?</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid sm:grid-cols-2 gap-3">
+                <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-3">
                   <Link to="/auth">
                     <Button variant="outline" className="w-full justify-start">
                       <Home className="h-4 w-4 mr-2" />
@@ -534,7 +793,7 @@ Visit sacredgreeks.com for more resources.
                   <Link to="/journey">
                     <Button variant="outline" className="w-full justify-start">
                       <BookOpen className="h-4 w-4 mr-2" />
-                      Start 30-Day Journey
+                      Start Journey
                     </Button>
                   </Link>
                   <Link to="/faq">
