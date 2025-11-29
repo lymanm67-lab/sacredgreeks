@@ -69,6 +69,13 @@ const coreFeatures = [
     link: "/ask-dr-lyman",
     color: "from-teal-500 to-emerald-600",
   },
+  {
+    title: "Prayer Journal",
+    description: "Track your prayers, record answers, and grow in your relationship with God",
+    icon: PenLine,
+    link: "/prayer-journal",
+    color: "from-rose-500 to-pink-600",
+  },
 ];
 
 const features = [
@@ -368,9 +375,9 @@ const Index = () => {
 
           {!user && (
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-              <Link to="/auth">
+              <Link to="/beta-signup">
                 <Button size="lg" className="bg-sacred hover:bg-sacred/90 text-sacred-foreground text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all btn-bounce hover:scale-105">
-                  Start Your Journey Free
+                  Join the Beta
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>

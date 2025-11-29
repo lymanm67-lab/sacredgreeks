@@ -11,7 +11,8 @@ import { UserManagement } from "@/components/admin/UserManagement";
 import { QASubmissionsManager } from "@/components/admin/QASubmissionsManager";
 import { HealingStoriesManager } from "@/components/admin/HealingStoriesManager";
 import VideoSuggestionsManager from "@/components/admin/VideoSuggestionsManager";
-import { Home, Users, FileText, Lightbulb, MessageSquare, Heart, Video, Rocket } from "lucide-react";
+import { BetaTestersManager } from "@/components/admin/BetaTestersManager";
+import { Home, Users, FileText, Lightbulb, MessageSquare, Heart, Video, Rocket, FlaskConical } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -147,35 +148,43 @@ const Admin = () => {
 
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="users" className="space-y-6">
-          <TabsList className="grid w-full max-w-4xl grid-cols-6">
+          <TabsList className="grid w-full max-w-5xl grid-cols-7">
             <TabsTrigger value="users" className="flex items-center gap-2">
               <Users className="h-4 w-4" />
-              Users
+              <span className="hidden sm:inline">Users</span>
+            </TabsTrigger>
+            <TabsTrigger value="beta" className="flex items-center gap-2">
+              <FlaskConical className="h-4 w-4" />
+              <span className="hidden sm:inline">Beta</span>
             </TabsTrigger>
             <TabsTrigger value="submissions" className="flex items-center gap-2">
               <FileText className="h-4 w-4" />
-              Submissions
+              <span className="hidden sm:inline">Submissions</span>
             </TabsTrigger>
             <TabsTrigger value="qa" className="flex items-center gap-2">
               <MessageSquare className="h-4 w-4" />
-              Q&A
+              <span className="hidden sm:inline">Q&A</span>
             </TabsTrigger>
             <TabsTrigger value="healing" className="flex items-center gap-2">
               <Heart className="h-4 w-4" />
-              Healing
+              <span className="hidden sm:inline">Healing</span>
             </TabsTrigger>
             <TabsTrigger value="videos" className="flex items-center gap-2">
               <Video className="h-4 w-4" />
-              Videos
+              <span className="hidden sm:inline">Videos</span>
             </TabsTrigger>
             <TabsTrigger value="resources" className="flex items-center gap-2">
               <Lightbulb className="h-4 w-4" />
-              Resources
+              <span className="hidden sm:inline">Resources</span>
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="users">
             <UserManagement />
+          </TabsContent>
+
+          <TabsContent value="beta">
+            <BetaTestersManager />
           </TabsContent>
 
           <TabsContent value="submissions">
