@@ -1,5 +1,6 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "../_shared/rate-limiter.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -15,6 +16,16 @@ serve(async (req) => {
   }
 
   try {
+    // SECURITY: Rate limiting
+    const clientId = getClientIdentifier(req);
+    const rateLimitResult = checkRateLimit(clientId, 'ai_search');
+    
+    if (!rateLimitResult.allowed) {
+      console.log(`Rate limit exceeded for Bible search: ${clientId}`);
+      return rateLimitResponse(corsHeaders, rateLimitResult.resetIn,
+        'Too many search requests. Please wait a moment before trying again.');
+    }
+
     const body = await req.json();
     const { query } = body;
     
