@@ -288,19 +288,19 @@ export function ObjectionsTeaser() {
                     </div>
                   </div>
 
-                  {/* Locked: Improved Response */}
+                  {/* Locked: Proven Response */}
                   <div className="relative">
                     <div className="bg-green-50 dark:bg-green-950/30 rounded-xl p-4 border border-green-200 dark:border-green-800 blur-[2px] select-none pointer-events-none">
                       <div className="flex items-center gap-2 mb-2">
                         <Sparkles className="w-4 h-4 text-sacred" />
-                        <span className="text-sm font-medium text-green-700 dark:text-green-400">AI-Improved Response</span>
+                        <span className="text-sm font-medium text-green-700 dark:text-green-400">Suggested Response</span>
                       </div>
                       <p className="text-sm text-muted-foreground">"I appreciate you sharing your concern with me. I've actually researched this deeply and want to share what I've found. The Bible teaches us in 1 Thessalonians 5:21 to..."</p>
                     </div>
                     <div className="absolute inset-0 flex items-center justify-center bg-background/60 rounded-xl">
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Lock className="w-4 h-4" />
-                        <span>Copy-ready improved response</span>
+                        <span>Proven response template</span>
                       </div>
                     </div>
                   </div>
@@ -343,8 +343,8 @@ export function ObjectionsTeaser() {
                     <div className="flex items-start gap-2">
                       <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                       <div>
-                        <p className="text-sm font-medium">AI-Improved Response</p>
-                        <p className="text-xs text-muted-foreground">Copy-paste ready version</p>
+                        <p className="text-sm font-medium">Proven Response Template</p>
+                        <p className="text-xs text-muted-foreground">Field-tested, ready to use</p>
                       </div>
                     </div>
                   </div>
