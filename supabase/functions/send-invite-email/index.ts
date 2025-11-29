@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "https://esm.sh/resend@4.0.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "../_shared/rate-limiter.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -68,6 +69,14 @@ const validateInput = (data: InviteEmailRequest): ValidationError[] => {
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Rate limiting - strict for invite emails to prevent spam
+  const clientId = getClientIdentifier(req);
+  const rateLimit = checkRateLimit(clientId, 'email_invite');
+  if (!rateLimit.allowed) {
+    console.warn(`Rate limit exceeded for invite email from: ${clientId}`);
+    return rateLimitResponse(corsHeaders, rateLimit.resetIn, 'Too many invite requests. Please wait before sending more invites.');
   }
 
   try {
