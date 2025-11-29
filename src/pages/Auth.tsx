@@ -7,11 +7,12 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Heart, Home, Eye, EyeOff, CheckCircle2, Mail, RefreshCw } from 'lucide-react';
+import { Heart, Home, Eye, EyeOff, CheckCircle2, Mail, RefreshCw, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { z } from 'zod';
 import { PasswordStrengthIndicator } from '@/components/PasswordStrengthIndicator';
+import { usePasswordBreachCheck } from '@/hooks/use-password-breach-check';
 
 const authSchema = z.object({
   email: z.string().email('Invalid email address').max(255, 'Email must be less than 255 characters'),
@@ -42,6 +43,7 @@ const Auth = () => {
   const { signUp, signIn } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { checkPassword, isChecking: isCheckingBreach, breachCount, reset: resetBreachCheck } = usePasswordBreachCheck();
 
   useEffect(() => {
     const mode = searchParams.get('mode');
@@ -69,6 +71,20 @@ const Auth = () => {
 
     try {
       const validated = authSchema.parse({ email, password, fullName });
+
+      // Check password against HaveIBeenPwned database
+      const { isBreached, count } = await checkPassword(validated.password);
+      
+      if (isBreached) {
+        toast({
+          title: 'Password has been exposed',
+          description: `This password has appeared in ${count.toLocaleString()} data breaches. Please choose a different password for your security.`,
+          variant: 'destructive',
+          duration: 10000,
+        });
+        setIsLoading(false);
+        return;
+      }
 
       const { error } = await signUp(validated.email, validated.password, validated.fullName);
 
@@ -202,6 +218,20 @@ const Auth = () => {
     try {
       const validated = passwordResetSchema.parse({ password, confirmPassword });
 
+      // Check password against HaveIBeenPwned database
+      const { isBreached, count } = await checkPassword(validated.password);
+      
+      if (isBreached) {
+        toast({
+          title: 'Password has been exposed',
+          description: `This password has appeared in ${count.toLocaleString()} data breaches. Please choose a different password for your security.`,
+          variant: 'destructive',
+          duration: 10000,
+        });
+        setIsLoading(false);
+        return;
+      }
+
       const { error } = await supabase.auth.updateUser({ password: validated.password });
 
       if (error) {
@@ -272,7 +302,10 @@ const Auth = () => {
                         required
                         className="pr-10"
                         value={resetPassword}
-                        onChange={(e) => setResetPassword(e.target.value)}
+                        onChange={(e) => {
+                          setResetPassword(e.target.value);
+                          resetBreachCheck();
+                        }}
                       />
                       <button
                         type="button"
@@ -283,6 +316,14 @@ const Auth = () => {
                       </button>
                     </div>
                     <PasswordStrengthIndicator password={resetPassword} />
+                    {breachCount !== null && breachCount > 0 && (
+                      <div className="flex items-start gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-md">
+                        <AlertTriangle className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
+                        <p className="text-sm text-destructive">
+                          This password was found in {breachCount.toLocaleString()} data breaches. Please choose a different password.
+                        </p>
+                      </div>
+                    )}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="confirmPassword">Confirm Password</Label>
@@ -308,9 +349,9 @@ const Auth = () => {
                   <Button
                     type="submit"
                     className="w-full bg-sacred hover:bg-sacred/90"
-                    disabled={isLoading}
+                    disabled={isLoading || isCheckingBreach}
                   >
-                    {isLoading ? 'Updating...' : 'Update Password'}
+                    {isCheckingBreach ? 'Checking password security...' : isLoading ? 'Updating...' : 'Update Password'}
                   </Button>
                 </form>
               </CardContent>
@@ -544,7 +585,10 @@ const Auth = () => {
                             required
                             className="pr-10"
                             value={signupPassword}
-                            onChange={(e) => setSignupPassword(e.target.value)}
+                            onChange={(e) => {
+                              setSignupPassword(e.target.value);
+                              resetBreachCheck();
+                            }}
                           />
                           <button
                             type="button"
@@ -555,13 +599,21 @@ const Auth = () => {
                           </button>
                         </div>
                         <PasswordStrengthIndicator password={signupPassword} />
+                        {breachCount !== null && breachCount > 0 && (
+                          <div className="flex items-start gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-md">
+                            <AlertTriangle className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
+                            <p className="text-sm text-destructive">
+                              This password was found in {breachCount.toLocaleString()} data breaches. Please choose a different password.
+                            </p>
+                          </div>
+                        )}
                       </div>
                       <Button
                         type="submit"
                         className="w-full bg-sacred hover:bg-sacred/90"
-                        disabled={isLoading}
+                        disabled={isLoading || isCheckingBreach}
                       >
-                        {isLoading ? 'Creating account...' : 'Sign Up'}
+                        {isCheckingBreach ? 'Checking password security...' : isLoading ? 'Creating account...' : 'Sign Up'}
                       </Button>
                     </form>
                   )}
