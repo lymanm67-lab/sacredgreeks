@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Home, User } from 'lucide-react';
+import { Home, User, Users } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
 import { NotificationSettings } from '@/components/NotificationSettings';
@@ -14,6 +14,7 @@ import { InviteFriendsDialog } from '@/components/InviteFriendsDialog';
 import { SocialMediaConnect } from '@/components/SocialMediaConnect';
 import { JourneyReminderSettings } from '@/components/JourneyReminderSettings';
 import { StudyReminderSettings } from '@/components/StudyReminderSettings';
+import { GreekOrganizationSelector } from '@/components/GreekOrganizationSelector';
 
 const profileSchema = z.object({
   full_name: z.string().min(1, 'Name is required').max(100, 'Name must be less than 100 characters'),
@@ -27,6 +28,14 @@ const Profile = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [loadingProfile, setLoadingProfile] = useState(true);
+  
+  // Greek organization state
+  const [greekCouncil, setGreekCouncil] = useState('');
+  const [greekOrganization, setGreekOrganization] = useState('');
+  const [chapterName, setChapterName] = useState('');
+  const [initiationYear, setInitiationYear] = useState<number | null>(null);
+  const [memberStatus, setMemberStatus] = useState('active');
+  const [savingGreek, setSavingGreek] = useState(false);
 
   useEffect(() => {
     loadProfile();
@@ -38,7 +47,7 @@ const Profile = () => {
     try {
       const { data, error } = await supabase
         .from('profiles')
-        .select('full_name, email')
+        .select('full_name, email, greek_council, greek_organization, chapter_name, initiation_year, member_status')
         .eq('id', user.id)
         .maybeSingle();
 
@@ -47,6 +56,11 @@ const Profile = () => {
       if (data) {
         setFullName(data.full_name || '');
         setEmail(data.email || user.email || '');
+        setGreekCouncil(data.greek_council || '');
+        setGreekOrganization(data.greek_organization || '');
+        setChapterName(data.chapter_name || '');
+        setInitiationYear(data.initiation_year || null);
+        setMemberStatus(data.member_status || 'active');
       } else {
         setEmail(user.email || '');
       }
@@ -97,6 +111,40 @@ const Profile = () => {
       }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSaveGreekInfo = async () => {
+    if (!user) return;
+    setSavingGreek(true);
+
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({
+          greek_council: greekCouncil || null,
+          greek_organization: greekOrganization || null,
+          chapter_name: chapterName || null,
+          initiation_year: initiationYear,
+          member_status: memberStatus,
+        })
+        .eq('id', user.id);
+
+      if (error) throw error;
+
+      toast({
+        title: 'Greek affiliation updated',
+        description: 'Your organization information has been saved.',
+      });
+    } catch (error) {
+      console.error('Error saving Greek info:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to save organization information.',
+        variant: 'destructive',
+      });
+    } finally {
+      setSavingGreek(false);
     }
   };
 
@@ -173,6 +221,40 @@ const Profile = () => {
                   {loading ? 'Saving...' : 'Save Changes'}
                 </Button>
               </form>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Users className="h-5 w-5 text-sacred" />
+                Greek Organization
+              </CardTitle>
+              <CardDescription>
+                Tell us about your Greek affiliation for personalized content
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <GreekOrganizationSelector
+                selectedCouncil={greekCouncil}
+                selectedOrganization={greekOrganization}
+                chapterName={chapterName}
+                initiationYear={initiationYear}
+                memberStatus={memberStatus}
+                onCouncilChange={setGreekCouncil}
+                onOrganizationChange={setGreekOrganization}
+                onChapterChange={setChapterName}
+                onYearChange={setInitiationYear}
+                onStatusChange={setMemberStatus}
+                compact
+              />
+              <Button 
+                onClick={handleSaveGreekInfo} 
+                disabled={savingGreek}
+                className="bg-sacred hover:bg-sacred/90"
+              >
+                {savingGreek ? 'Saving...' : 'Save Organization Info'}
+              </Button>
             </CardContent>
           </Card>
 

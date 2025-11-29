@@ -641,24 +641,39 @@ export type Database = {
       }
       profiles: {
         Row: {
+          chapter_name: string | null
           created_at: string | null
           email: string | null
           full_name: string | null
+          greek_council: string | null
+          greek_organization: string | null
           id: string
+          initiation_year: number | null
+          member_status: string | null
           updated_at: string | null
         }
         Insert: {
+          chapter_name?: string | null
           created_at?: string | null
           email?: string | null
           full_name?: string | null
+          greek_council?: string | null
+          greek_organization?: string | null
           id: string
+          initiation_year?: number | null
+          member_status?: string | null
           updated_at?: string | null
         }
         Update: {
+          chapter_name?: string | null
           created_at?: string | null
           email?: string | null
           full_name?: string | null
+          greek_council?: string | null
+          greek_organization?: string | null
           id?: string
+          initiation_year?: number | null
+          member_status?: string | null
           updated_at?: string | null
         }
         Relationships: []
