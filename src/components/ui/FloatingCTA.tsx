@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { BetaBenefitsDialog } from '@/components/BetaBenefitsDialog';
 
 interface FloatingCTAProps {
   show?: boolean;
@@ -32,10 +32,10 @@ export const FloatingCTA = ({ scrollThreshold = 600 }: FloatingCTAProps) => {
         "animate-fade-in-up"
       )}
     >
-      <Link to="/beta-signup" className="group">
+      <BetaBenefitsDialog>
         <Button
           size="lg"
-          className="bg-sacred hover:bg-sacred/90 text-sacred-foreground shadow-2xl shadow-sacred/30 hover:shadow-sacred/50 transition-all hover:scale-105 flex flex-col h-auto py-3"
+          className="bg-sacred hover:bg-sacred/90 text-sacred-foreground shadow-2xl shadow-sacred/30 hover:shadow-sacred/50 transition-all hover:scale-105 flex flex-col h-auto py-3 group"
         >
           <span className="flex items-center">
             Become a Beta Tester
@@ -43,7 +43,7 @@ export const FloatingCTA = ({ scrollThreshold = 600 }: FloatingCTAProps) => {
           </span>
           <span className="text-xs font-normal opacity-80">Free early access</span>
         </Button>
-      </Link>
+      </BetaBenefitsDialog>
       <Button
         size="icon"
         variant="outline"
