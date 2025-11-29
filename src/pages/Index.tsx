@@ -19,6 +19,7 @@ import { FloatingCTA } from "@/components/ui/FloatingCTA";
 import { ScrollIndicator } from "@/components/ui/ScrollIndicator";
 import { StatsSection } from "@/components/landing/StatsSection";
 import { ShareSection } from "@/components/landing/ShareSection";
+import { ObjectionsTeaser } from "@/components/landing/ObjectionsTeaser";
 
 // Mobile section navigation items
 const sectionNav = [
@@ -384,11 +385,12 @@ const Index = () => {
                   <span className="text-xs font-normal opacity-80 mt-1">Free early access • Shape the app • Exclusive features</span>
                 </Button>
               </Link>
-              <Link to="/guide">
-                <Button size="lg" variant="outline" className="text-lg px-8 py-6 btn-bounce hover:scale-105">
-                  Handle BGLO Objections
-                </Button>
-              </Link>
+              <button 
+                onClick={() => document.getElementById('objections-teaser')?.scrollIntoView({ behavior: 'smooth' })}
+                className="inline-flex items-center justify-center text-lg px-8 py-6 btn-bounce hover:scale-105 rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors"
+              >
+                Handle BGLO Objections
+              </button>
             </div>
           )}
 
@@ -421,6 +423,13 @@ const Index = () => {
 
       {/* Stats Section */}
       {!user && <StatsSection />}
+
+      {/* BGLO Objections Teaser - Demo for non-authenticated */}
+      {!user && (
+        <div id="objections-teaser">
+          <ObjectionsTeaser />
+        </div>
+      )}
 
       {/* Benefits Section */}
       {!user && (
