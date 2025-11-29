@@ -3,6 +3,17 @@ import { Resend } from "https://esm.sh/resend@4.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
+// HTML escape function to prevent XSS
+const escapeHtml = (text: string): string => {
+  if (!text) return '';
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+};
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
@@ -65,15 +76,15 @@ const handler = async (req: Request): Promise<Response> => {
           <div style="background: #f8f9fa; padding: 30px; border-radius: 0 0 12px 12px;">
             <div style="background: #ffffff; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #f59e0b;">
               <p style="margin: 0 0 8px 0; font-weight: 600; color: #1e3a5f;">Story Title:</p>
-              <p style="margin: 0; color: #333; font-size: 18px;">${storyTitle}</p>
+              <p style="margin: 0; color: #333; font-size: 18px;">${escapeHtml(storyTitle)}</p>
             </div>
             
             <div style="background: #ffffff; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
               <p style="margin: 0 0 8px 0; font-weight: 600; color: #1e3a5f;">Details:</p>
               <ul style="margin: 0; padding-left: 20px; color: #555;">
-                <li><strong>Healing Type:</strong> ${getHealingTypeLabel(healingType)}</li>
-                <li><strong>Author:</strong> ${authorName || "Anonymous"}</li>
-                ${authorEmail ? `<li><strong>Email:</strong> ${authorEmail}</li>` : ""}
+                <li><strong>Healing Type:</strong> ${escapeHtml(getHealingTypeLabel(healingType))}</li>
+                <li><strong>Author:</strong> ${escapeHtml(authorName || "Anonymous")}</li>
+                ${authorEmail ? `<li><strong>Email:</strong> ${escapeHtml(authorEmail)}</li>` : ""}
               </ul>
             </div>
             
@@ -113,7 +124,7 @@ const handler = async (req: Request): Promise<Response> => {
             
             <div style="background: #f8f9fa; padding: 30px; border-radius: 0 0 12px 12px;">
               <p style="color: #333; margin-bottom: 20px;">
-                Dear ${authorName || "Friend"},
+                Dear ${escapeHtml(authorName || "Friend")},
               </p>
               
               <p style="color: #555; margin-bottom: 20px;">
@@ -122,8 +133,8 @@ const handler = async (req: Request): Promise<Response> => {
               
               <div style="background: #ffffff; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #d4af37;">
                 <p style="margin: 0 0 8px 0; font-weight: 600; color: #1e3a5f;">Your Story:</p>
-                <p style="margin: 0; color: #333;">"${storyTitle}"</p>
-                <span style="display: inline-block; margin-top: 10px; background: #fef3c7; color: #92400e; padding: 4px 12px; border-radius: 20px; font-size: 12px;">${getHealingTypeLabel(healingType)}</span>
+                <p style="margin: 0; color: #333;">"${escapeHtml(storyTitle)}"</p>
+                <span style="display: inline-block; margin-top: 10px; background: #fef3c7; color: #92400e; padding: 4px 12px; border-radius: 20px; font-size: 12px;">${escapeHtml(getHealingTypeLabel(healingType))}</span>
               </div>
               
               <p style="color: #555; margin-bottom: 20px;">
