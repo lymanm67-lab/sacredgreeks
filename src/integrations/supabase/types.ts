@@ -464,6 +464,57 @@ export type Database = {
         }
         Relationships: []
       }
+      forum_notifications: {
+        Row: {
+          created_at: string
+          discussion_id: string | null
+          id: string
+          is_read: boolean | null
+          message: string
+          notification_type: string
+          reply_id: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          discussion_id?: string | null
+          id?: string
+          is_read?: boolean | null
+          message: string
+          notification_type: string
+          reply_id?: string | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          discussion_id?: string | null
+          id?: string
+          is_read?: boolean | null
+          message?: string
+          notification_type?: string
+          reply_id?: string | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_notifications_discussion_id_fkey"
+            columns: ["discussion_id"]
+            isOneToOne: false
+            referencedRelation: "forum_discussions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "forum_notifications_reply_id_fkey"
+            columns: ["reply_id"]
+            isOneToOne: false
+            referencedRelation: "forum_replies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       forum_replies: {
         Row: {
           content: string
