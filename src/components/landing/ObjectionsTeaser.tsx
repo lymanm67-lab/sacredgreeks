@@ -307,14 +307,49 @@ export function ObjectionsTeaser() {
                 </div>
 
                 {/* CTA to Unlock */}
-                <div className="bg-gradient-to-r from-sacred/10 via-purple-500/10 to-sacred/10 rounded-xl p-6 border border-sacred/20 text-center space-y-4">
-                  <h4 className="text-lg font-bold">
-                    Want to see your full report?
-                  </h4>
-                  <p className="text-sm text-muted-foreground max-w-md mx-auto">
-                    Sign up free to unlock detailed feedback, specific suggestions, and an AI-improved version of your response.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <div className="bg-gradient-to-r from-sacred/10 via-purple-500/10 to-sacred/10 rounded-xl p-6 border border-sacred/20 space-y-5">
+                  <div className="text-center">
+                    <h4 className="text-xl font-bold mb-1">
+                      Unlock Your Full Report
+                    </h4>
+                    <p className="text-sm text-muted-foreground">
+                      Sign up free to see everything
+                    </p>
+                  </div>
+                  
+                  {/* What's Included */}
+                  <div className="grid sm:grid-cols-2 gap-3 text-left">
+                    <div className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium">Detailed Tone Analysis</p>
+                        <p className="text-xs text-muted-foreground">See exactly where your tone lands</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium">Strengths & Weaknesses</p>
+                        <p className="text-xs text-muted-foreground">Know what's working and what's not</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium">Specific Suggestions</p>
+                        <p className="text-xs text-muted-foreground">Better phrasing examples you can use</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium">AI-Improved Response</p>
+                        <p className="text-xs text-muted-foreground">Copy-paste ready version</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
                     <Link to="/beta-signup">
                       <Button size="lg" className="bg-sacred hover:bg-sacred/90 text-sacred-foreground shadow-lg hover:shadow-xl transition-all w-full sm:w-auto">
                         <span>See Full Report</span>
