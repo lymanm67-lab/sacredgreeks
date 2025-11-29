@@ -3,9 +3,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
-const scenarios = [
+export interface Scenario {
+  value: string;
+  label: string;
+  description: string;
+  councilSpecific?: boolean;
+}
+
+const defaultScenarios: Scenario[] = [
   { 
     value: "clip", 
     label: "I am thinking about responding to a denouncement video",
@@ -35,23 +43,31 @@ const scenarios = [
 
 interface SacredGreeksStep1Props {
   onComplete: (scenario: string) => void;
+  scenarios?: Scenario[];
+  councilName?: string;
 }
 
-export function SacredGreeksStep1({ onComplete }: SacredGreeksStep1Props) {
+export function SacredGreeksStep1({ onComplete, scenarios, councilName }: SacredGreeksStep1Props) {
   const [selected, setSelected] = useState<string>("");
+  
+  const displayScenarios = scenarios && scenarios.length > 0 ? scenarios : defaultScenarios;
 
   return (
     <Card>
       <CardHeader>
         <CardTitle className="text-2xl">Choose Your Situation</CardTitle>
         <CardDescription>
-          Select what best describes where you are right now
+          {councilName ? (
+            <>Scenarios tailored for <span className="font-medium text-sacred">{councilName}</span> members</>
+          ) : (
+            "Select what best describes where you are right now"
+          )}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <RadioGroup value={selected} onValueChange={setSelected}>
           <div className="space-y-3">
-            {scenarios.map((scenario) => (
+            {displayScenarios.map((scenario) => (
               <div
                 key={scenario.value}
                 className="border rounded-lg p-4 hover:bg-muted/50 transition-colors cursor-pointer"
@@ -60,12 +76,20 @@ export function SacredGreeksStep1({ onComplete }: SacredGreeksStep1Props) {
                 <div className="flex items-start space-x-3">
                   <RadioGroupItem value={scenario.value} id={scenario.value} className="mt-1" />
                   <div className="flex-1">
-                    <Label
-                      htmlFor={scenario.value}
-                      className="cursor-pointer text-base font-medium block mb-1"
-                    >
-                      {scenario.label}
-                    </Label>
+                    <div className="flex items-center gap-2 mb-1">
+                      <Label
+                        htmlFor={scenario.value}
+                        className="cursor-pointer text-base font-medium"
+                      >
+                        {scenario.label}
+                      </Label>
+                      {scenario.councilSpecific && (
+                        <Badge variant="secondary" className="text-xs flex items-center gap-1">
+                          <Sparkles className="w-3 h-3" />
+                          For You
+                        </Badge>
+                      )}
+                    </div>
                     <p className="text-sm text-muted-foreground">{scenario.description}</p>
                   </div>
                 </div>

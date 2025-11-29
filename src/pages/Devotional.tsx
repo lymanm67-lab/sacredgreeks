@@ -17,6 +17,7 @@ import { useAutoCompleteChallenge } from '@/hooks/use-auto-complete-challenge';
 import { BreadcrumbNav } from '@/components/ui/breadcrumb-nav';
 import { ListenButton } from '@/components/ListenButton';
 import { VoiceInputButton } from '@/components/VoiceInputButton';
+import { OrgDevotionalContent } from '@/components/devotional/OrgDevotionalContent';
 
 interface Devotional {
   id: string;
@@ -30,6 +31,11 @@ interface Devotional {
   prayer: string;
 }
 
+interface UserProfile {
+  greek_council: string | null;
+  greek_organization: string | null;
+}
+
 const Devotional = () => {
   const { user } = useAuth();
   const { awardPoints } = useGamification();
@@ -39,6 +45,7 @@ const Devotional = () => {
   const [loading, setLoading] = useState(true);
   const [notes, setNotes] = useState('');
   const [savingNotes, setSavingNotes] = useState(false);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const { toast } = useToast();
 
   // Pull to refresh
@@ -56,7 +63,22 @@ const Devotional = () => {
 
   useEffect(() => {
     loadDevotional();
-  }, []);
+    loadUserProfile();
+  }, [user]);
+
+  const loadUserProfile = async () => {
+    if (!user) return;
+    
+    const { data } = await supabase
+      .from('profiles')
+      .select('greek_council, greek_organization')
+      .eq('id', user.id)
+      .maybeSingle();
+    
+    if (data) {
+      setUserProfile(data);
+    }
+  };
 
   const loadDevotional = async () => {
     try {
@@ -260,6 +282,14 @@ const Devotional = () => {
               />
             </div>
           </div>
+
+          {/* Org-Specific Content */}
+          {userProfile?.greek_council && (
+            <OrgDevotionalContent 
+              councilId={userProfile.greek_council}
+              organizationName={userProfile.greek_organization || undefined}
+            />
+          )}
 
           {/* Scripture */}
           <Card className="border-2 border-sacred/20">
