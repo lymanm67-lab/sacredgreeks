@@ -23,6 +23,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
   ArrowLeft,
   MessageSquare,
   Plus,
@@ -31,14 +37,20 @@ import {
   Filter,
   Users,
   Pin,
+  PinOff,
   Send,
   ChevronDown,
   ChevronUp,
+  Award,
+  MoreVertical,
+  Shield,
+  CheckCircle2,
 } from "lucide-react";
 import { toast } from "sonner";
 import { GREEK_COUNCILS } from "@/data/greekOrganizations";
 import { formatDistanceToNow } from "date-fns";
 import { useGamification } from "@/hooks/use-gamification";
+import { ForumNotifications } from "@/components/forum/ForumNotifications";
 
 interface Discussion {
   id: string;
@@ -94,6 +106,22 @@ const Forum = () => {
   const [newCategory, setNewCategory] = useState("general");
   const [replyContent, setReplyContent] = useState<Record<string, string>>({});
 
+  // Check if user is admin
+  const { data: isAdmin = false } = useQuery({
+    queryKey: ["is-admin", user?.id],
+    queryFn: async () => {
+      if (!user) return false;
+      const { data } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", user.id)
+        .eq("role", "admin")
+        .maybeSingle();
+      return !!data;
+    },
+    enabled: !!user,
+  });
+
   const { data: userProfile } = useQuery({
     queryKey: ["forum-user-profile", user?.id],
     queryFn: async () => {
@@ -127,7 +155,6 @@ const Forum = () => {
       const { data, error } = await query;
       if (error) throw error;
 
-      // Fetch profiles separately
       const userIds = [...new Set((data || []).map((d) => d.user_id))];
       const { data: profiles } = await supabase
         .from("profiles")
@@ -150,11 +177,11 @@ const Forum = () => {
         .from("forum_replies")
         .select("*")
         .eq("discussion_id", expandedDiscussion)
+        .order("is_best_answer", { ascending: false })
         .order("created_at", { ascending: true });
 
       if (error) throw error;
 
-      // Fetch profiles
       const userIds = [...new Set((data || []).map((r) => r.user_id))];
       const { data: profiles } = await supabase
         .from("profiles")
@@ -218,17 +245,65 @@ const Forum = () => {
     onError: () => toast.error("Failed to post reply"),
   });
 
+  const togglePinMutation = useMutation({
+    mutationFn: async ({ discussionId, isPinned }: { discussionId: string; isPinned: boolean }) => {
+      const { error } = await supabase
+        .from("forum_discussions")
+        .update({ is_pinned: !isPinned })
+        .eq("id", discussionId);
+      if (error) throw error;
+    },
+    onSuccess: (_, { isPinned }) => {
+      queryClient.invalidateQueries({ queryKey: ["forum-discussions"] });
+      toast.success(isPinned ? "Discussion unpinned" : "Discussion pinned");
+    },
+    onError: () => toast.error("Failed to update discussion"),
+  });
+
+  const toggleBestAnswerMutation = useMutation({
+    mutationFn: async ({ replyId, isBestAnswer }: { replyId: string; isBestAnswer: boolean }) => {
+      const { error } = await supabase
+        .from("forum_replies")
+        .update({ is_best_answer: !isBestAnswer })
+        .eq("id", replyId);
+      if (error) throw error;
+
+      // Send notification if marking as best answer
+      if (!isBestAnswer) {
+        const reply = replies.find((r) => r.id === replyId);
+        if (reply && reply.user_id !== user?.id) {
+          await supabase.from("forum_notifications").insert({
+            user_id: reply.user_id,
+            discussion_id: expandedDiscussion,
+            reply_id: replyId,
+            notification_type: "best_answer",
+            title: "Your answer was marked as best!",
+            message: "Your reply was marked as the best answer",
+          });
+        }
+      }
+    },
+    onSuccess: (_, { isBestAnswer }) => {
+      queryClient.invalidateQueries({ queryKey: ["forum-replies"] });
+      toast.success(isBestAnswer ? "Best answer removed" : "Marked as best answer");
+    },
+    onError: () => toast.error("Failed to update reply"),
+  });
+
   const handleExpandDiscussion = async (discussionId: string) => {
     if (expandedDiscussion === discussionId) {
       setExpandedDiscussion(null);
     } else {
       setExpandedDiscussion(discussionId);
-      // Increment view count
       await supabase
         .from("forum_discussions")
         .update({ view_count: discussions.find((d) => d.id === discussionId)?.view_count! + 1 })
         .eq("id", discussionId);
     }
+  };
+
+  const canMarkBestAnswer = (discussion: Discussion) => {
+    return isAdmin || discussion.user_id === user?.id;
   };
 
   if (!user) {
@@ -259,58 +334,69 @@ const Forum = () => {
               </Button>
             </Link>
             <div>
-              <h1 className="text-2xl font-bold">Community Forum</h1>
+              <h1 className="text-2xl font-bold flex items-center gap-2">
+                Community Forum
+                {isAdmin && (
+                  <Badge variant="secondary" className="text-xs">
+                    <Shield className="h-3 w-3 mr-1" />
+                    Admin
+                  </Badge>
+                )}
+              </h1>
               <p className="text-muted-foreground text-sm">
                 Connect and discuss with fellow members
               </p>
             </div>
           </div>
 
-          <Dialog open={newDiscussionOpen} onOpenChange={setNewDiscussionOpen}>
-            <DialogTrigger asChild>
-              <Button>
-                <Plus className="h-4 w-4 mr-2" />
-                New Discussion
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Start a Discussion</DialogTitle>
-              </DialogHeader>
-              <div className="space-y-4 pt-4">
-                <Input
-                  placeholder="Discussion title"
-                  value={newTitle}
-                  onChange={(e) => setNewTitle(e.target.value)}
-                />
-                <Textarea
-                  placeholder="Share your thoughts..."
-                  value={newContent}
-                  onChange={(e) => setNewContent(e.target.value)}
-                  rows={4}
-                />
-                <Select value={newCategory} onValueChange={setNewCategory}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {CATEGORIES.map((cat) => (
-                      <SelectItem key={cat.value} value={cat.value}>
-                        {cat.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Button
-                  className="w-full"
-                  onClick={() => createDiscussionMutation.mutate()}
-                  disabled={!newTitle.trim() || !newContent.trim()}
-                >
-                  Post Discussion
+          <div className="flex items-center gap-2">
+            <ForumNotifications />
+            <Dialog open={newDiscussionOpen} onOpenChange={setNewDiscussionOpen}>
+              <DialogTrigger asChild>
+                <Button>
+                  <Plus className="h-4 w-4 mr-2" />
+                  New Discussion
                 </Button>
-              </div>
-            </DialogContent>
-          </Dialog>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Start a Discussion</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4 pt-4">
+                  <Input
+                    placeholder="Discussion title"
+                    value={newTitle}
+                    onChange={(e) => setNewTitle(e.target.value)}
+                  />
+                  <Textarea
+                    placeholder="Share your thoughts..."
+                    value={newContent}
+                    onChange={(e) => setNewContent(e.target.value)}
+                    rows={4}
+                  />
+                  <Select value={newCategory} onValueChange={setNewCategory}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {CATEGORIES.map((cat) => (
+                        <SelectItem key={cat.value} value={cat.value}>
+                          {cat.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Button
+                    className="w-full"
+                    onClick={() => createDiscussionMutation.mutate()}
+                    disabled={!newTitle.trim() || !newContent.trim()}
+                  >
+                    Post Discussion
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
         </div>
 
         {/* Filters */}
@@ -369,7 +455,7 @@ const Forum = () => {
             </Card>
           ) : (
             discussions.map((discussion) => (
-              <Card key={discussion.id} className="overflow-hidden">
+              <Card key={discussion.id} className={`overflow-hidden ${discussion.is_pinned ? "border-primary/50" : ""}`}>
                 <div
                   className="p-4 cursor-pointer hover:bg-muted/50 transition-colors"
                   onClick={() => handleExpandDiscussion(discussion.id)}
@@ -378,7 +464,10 @@ const Forum = () => {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
                         {discussion.is_pinned && (
-                          <Pin className="h-4 w-4 text-primary" />
+                          <Badge variant="default" className="text-xs">
+                            <Pin className="h-3 w-3 mr-1" />
+                            Pinned
+                          </Badge>
                         )}
                         <h3 className="font-semibold truncate">{discussion.title}</h3>
                       </div>
@@ -400,19 +489,53 @@ const Forum = () => {
                         <span>by {discussion.profiles?.full_name || "Anonymous"}</span>
                       </div>
                     </div>
-                    <div className="flex flex-col items-end gap-1 text-xs text-muted-foreground">
-                      <span className="flex items-center gap-1">
-                        <Eye className="h-3 w-3" />
-                        {discussion.view_count}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <MessageSquare className="h-3 w-3" />
-                        {discussion.reply_count}
-                      </span>
-                      {expandedDiscussion === discussion.id ? (
-                        <ChevronUp className="h-4 w-4" />
-                      ) : (
-                        <ChevronDown className="h-4 w-4" />
+                    <div className="flex items-start gap-2">
+                      <div className="flex flex-col items-end gap-1 text-xs text-muted-foreground">
+                        <span className="flex items-center gap-1">
+                          <Eye className="h-3 w-3" />
+                          {discussion.view_count}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <MessageSquare className="h-3 w-3" />
+                          {discussion.reply_count}
+                        </span>
+                        {expandedDiscussion === discussion.id ? (
+                          <ChevronUp className="h-4 w-4" />
+                        ) : (
+                          <ChevronDown className="h-4 w-4" />
+                        )}
+                      </div>
+                      {isAdmin && (
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+                            <Button variant="ghost" size="icon" className="h-8 w-8">
+                              <MoreVertical className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                togglePinMutation.mutate({
+                                  discussionId: discussion.id,
+                                  isPinned: discussion.is_pinned,
+                                });
+                              }}
+                            >
+                              {discussion.is_pinned ? (
+                                <>
+                                  <PinOff className="h-4 w-4 mr-2" />
+                                  Unpin Discussion
+                                </>
+                              ) : (
+                                <>
+                                  <Pin className="h-4 w-4 mr-2" />
+                                  Pin Discussion
+                                </>
+                              )}
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       )}
                     </div>
                   </div>
@@ -434,19 +557,45 @@ const Forum = () => {
                         {replies.map((reply) => (
                           <div
                             key={reply.id}
-                            className="bg-background rounded-lg p-3 border"
+                            className={`bg-background rounded-lg p-3 border ${
+                              reply.is_best_answer ? "border-green-500 bg-green-50 dark:bg-green-950/20" : ""
+                            }`}
                           >
+                            {reply.is_best_answer && (
+                              <div className="flex items-center gap-1 text-green-600 text-xs font-medium mb-2">
+                                <CheckCircle2 className="h-4 w-4" />
+                                Best Answer
+                              </div>
+                            )}
                             <p className="text-sm whitespace-pre-wrap mb-2">
                               {reply.content}
                             </p>
-                            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                              <span>{reply.profiles?.full_name || "Anonymous"}</span>
-                              <span>•</span>
-                              <span>
-                                {formatDistanceToNow(new Date(reply.created_at), {
-                                  addSuffix: true,
-                                })}
-                              </span>
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                <span>{reply.profiles?.full_name || "Anonymous"}</span>
+                                <span>•</span>
+                                <span>
+                                  {formatDistanceToNow(new Date(reply.created_at), {
+                                    addSuffix: true,
+                                  })}
+                                </span>
+                              </div>
+                              {canMarkBestAnswer(discussion) && (
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-7 text-xs"
+                                  onClick={() =>
+                                    toggleBestAnswerMutation.mutate({
+                                      replyId: reply.id,
+                                      isBestAnswer: reply.is_best_answer,
+                                    })
+                                  }
+                                >
+                                  <Award className="h-3 w-3 mr-1" />
+                                  {reply.is_best_answer ? "Remove Best" : "Mark Best"}
+                                </Button>
+                              )}
                             </div>
                           </div>
                         ))}
