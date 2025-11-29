@@ -641,6 +641,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          affiliation_type: string | null
           chapter_name: string | null
           created_at: string | null
           email: string | null
@@ -653,6 +654,7 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
+          affiliation_type?: string | null
           chapter_name?: string | null
           created_at?: string | null
           email?: string | null
@@ -665,6 +667,7 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
+          affiliation_type?: string | null
           chapter_name?: string | null
           created_at?: string | null
           email?: string | null

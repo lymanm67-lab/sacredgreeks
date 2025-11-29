@@ -6,13 +6,15 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Home, Heart, Plus, Filter } from 'lucide-react';
+import { Home, Heart, Plus, Filter, Users } from 'lucide-react';
 import { toast } from 'sonner';
 import { PrayerRequestCard } from '@/components/prayer-wall/PrayerRequestCard';
 import { CreatePrayerRequestDialog } from '@/components/prayer-wall/CreatePrayerRequestDialog';
 import { usePullToRefresh } from '@/hooks/use-pull-to-refresh';
 import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
 import { BreadcrumbNav } from '@/components/ui/breadcrumb-nav';
+import { OrgPrayerFilter } from '@/components/prayer-wall/OrgPrayerFilter';
+import { GREEK_COUNCILS } from '@/data/greekOrganizations';
 
 interface PrayerRequest {
   id: string;
@@ -30,10 +32,17 @@ interface PrayerRequest {
   profiles?: {
     full_name: string | null;
     email: string | null;
+    greek_council: string | null;
+    greek_organization: string | null;
   };
   prayer_support?: Array<{
     user_id: string;
   }>;
+}
+
+interface UserOrgInfo {
+  greekCouncil: string | null;
+  greekOrganization: string | null;
 }
 
 const PrayerWall = () => {
@@ -42,6 +51,8 @@ const PrayerWall = () => {
   const [loading, setLoading] = useState(true);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('all');
+  const [orgFilter, setOrgFilter] = useState('all');
+  const [userOrg, setUserOrg] = useState<UserOrgInfo | null>(null);
 
   // Pull to refresh
   const handleRefresh = async () => {
@@ -54,6 +65,9 @@ const PrayerWall = () => {
   });
 
   useEffect(() => {
+    if (user) {
+      loadUserOrg();
+    }
     loadPrayerRequests();
 
     // Set up realtime subscription
@@ -77,6 +91,23 @@ const PrayerWall = () => {
     };
   }, [user]);
 
+  const loadUserOrg = async () => {
+    if (!user) return;
+    
+    const { data } = await supabase
+      .from('profiles')
+      .select('greek_council, greek_organization')
+      .eq('id', user.id)
+      .maybeSingle();
+
+    if (data) {
+      setUserOrg({
+        greekCouncil: data.greek_council,
+        greekOrganization: data.greek_organization,
+      });
+    }
+  };
+
   const loadPrayerRequests = async () => {
     try {
       // Load prayer requests with user's prayer support
@@ -90,12 +121,12 @@ const PrayerWall = () => {
 
       if (error) throw error;
 
-      // Fetch profiles separately for each request
+      // Fetch profiles separately for each request (including Greek org info)
       const requestsWithProfiles = await Promise.all(
         (data || []).map(async (request) => {
           const { data: profile } = await supabase
             .from('profiles')
-            .select('full_name, email')
+            .select('full_name, email, greek_council, greek_organization')
             .eq('id', request.user_id)
             .maybeSingle();
 
@@ -121,12 +152,23 @@ const PrayerWall = () => {
     toast.success('Prayer request shared with the community');
   };
 
+  // Apply both tab and org filters
   const filteredRequests = requests.filter(request => {
-    if (activeTab === 'all') return true;
-    if (activeTab === 'mine') return request.user_id === user?.id;
-    if (activeTab === 'answered') return request.answered;
-    if (activeTab === 'active') return !request.answered;
-    return true;
+    // Tab filter
+    let passesTabFilter = true;
+    if (activeTab === 'mine') passesTabFilter = request.user_id === user?.id;
+    else if (activeTab === 'answered') passesTabFilter = request.answered;
+    else if (activeTab === 'active') passesTabFilter = !request.answered;
+
+    // Org filter
+    let passesOrgFilter = true;
+    if (orgFilter === 'my-org' && userOrg?.greekOrganization) {
+      passesOrgFilter = request.profiles?.greek_organization === userOrg.greekOrganization;
+    } else if (orgFilter === 'my-council' && userOrg?.greekCouncil) {
+      passesOrgFilter = request.profiles?.greek_council === userOrg.greekCouncil;
+    }
+
+    return passesTabFilter && passesOrgFilter;
   });
 
   const stats = {
@@ -260,20 +302,27 @@ const PrayerWall = () => {
 
           {/* Tabs for filtering */}
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="all">
-                All ({stats.total})
-              </TabsTrigger>
-              <TabsTrigger value="active">
-                Active ({stats.active})
-              </TabsTrigger>
-              <TabsTrigger value="answered">
-                Answered ({stats.answered})
-              </TabsTrigger>
-              <TabsTrigger value="mine">
-                Mine ({stats.mine})
-              </TabsTrigger>
-            </TabsList>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+              <TabsList className="grid w-full sm:w-auto grid-cols-4">
+                <TabsTrigger value="all">
+                  All ({stats.total})
+                </TabsTrigger>
+                <TabsTrigger value="active">
+                  Active ({stats.active})
+                </TabsTrigger>
+                <TabsTrigger value="answered">
+                  Answered ({stats.answered})
+                </TabsTrigger>
+                <TabsTrigger value="mine">
+                  Mine ({stats.mine})
+                </TabsTrigger>
+              </TabsList>
+              
+              {/* Organization Filter */}
+              {userOrg?.greekCouncil && (
+                <OrgPrayerFilter value={orgFilter} onChange={setOrgFilter} />
+              )}
+            </div>
 
             <TabsContent value={activeTab} className="space-y-4 mt-6">
               {loading ? (

@@ -257,6 +257,15 @@ const Dashboard = () => {
       iconBg: 'bg-gradient-to-br from-fuchsia-500 to-pink-600',
     },
     {
+      id: 'org-community',
+      title: 'Greek Community',
+      description: 'Connect with other Sacred Greeks',
+      icon: Users,
+      href: '/community',
+      iconColor: 'text-white',
+      iconBg: 'bg-gradient-to-br from-sacred to-warm-blue',
+    },
+    {
       id: 'bglo-objections',
       title: 'Handle Objections',
       description: 'Navigate BGLO challenges with PROOF',

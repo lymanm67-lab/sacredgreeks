@@ -66,6 +66,7 @@ const BetaLaunchChecklist = lazy(() => import("./pages/BetaLaunchChecklist"));
 const BetaSignup = lazy(() => import("./pages/BetaSignup"));
 const BetaDashboard = lazy(() => import("./pages/BetaDashboard"));
 const UserGuide = lazy(() => import("./pages/UserGuide"));
+const OrgCommunity = lazy(() => import("./pages/OrgCommunity"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -262,6 +263,14 @@ const App = () => (
                       element={
                         <ProtectedRoute>
                           <BetaLaunchChecklist />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/community"
+                      element={
+                        <ProtectedRoute>
+                          <OrgCommunity />
                         </ProtectedRoute>
                       }
                     />
