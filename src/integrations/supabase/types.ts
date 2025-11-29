@@ -20,6 +20,7 @@ export type Database = {
           achievement_type: string
           created_at: string
           description: string
+          greek_council: string | null
           icon: string
           id: string
           points_required: number
@@ -30,6 +31,7 @@ export type Database = {
           achievement_type: string
           created_at?: string
           description: string
+          greek_council?: string | null
           icon: string
           id?: string
           points_required: number
@@ -40,6 +42,7 @@ export type Database = {
           achievement_type?: string
           created_at?: string
           description?: string
+          greek_council?: string | null
           icon?: string
           id?: string
           points_required?: number
@@ -415,6 +418,89 @@ export type Database = {
           verse_text?: string
         }
         Relationships: []
+      }
+      forum_discussions: {
+        Row: {
+          category: string
+          content: string
+          created_at: string
+          greek_council: string | null
+          greek_organization: string | null
+          id: string
+          is_pinned: boolean | null
+          reply_count: number | null
+          title: string
+          updated_at: string
+          user_id: string
+          view_count: number | null
+        }
+        Insert: {
+          category?: string
+          content: string
+          created_at?: string
+          greek_council?: string | null
+          greek_organization?: string | null
+          id?: string
+          is_pinned?: boolean | null
+          reply_count?: number | null
+          title: string
+          updated_at?: string
+          user_id: string
+          view_count?: number | null
+        }
+        Update: {
+          category?: string
+          content?: string
+          created_at?: string
+          greek_council?: string | null
+          greek_organization?: string | null
+          id?: string
+          is_pinned?: boolean | null
+          reply_count?: number | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+          view_count?: number | null
+        }
+        Relationships: []
+      }
+      forum_replies: {
+        Row: {
+          content: string
+          created_at: string
+          discussion_id: string
+          id: string
+          is_best_answer: boolean | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          discussion_id: string
+          id?: string
+          is_best_answer?: boolean | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          discussion_id?: string
+          id?: string
+          is_best_answer?: boolean | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_replies_discussion_id_fkey"
+            columns: ["discussion_id"]
+            isOneToOne: false
+            referencedRelation: "forum_discussions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       healing_stories: {
         Row: {

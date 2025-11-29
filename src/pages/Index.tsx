@@ -141,8 +141,8 @@ const features = [
 const benefits = [
   "Personalized Experience: Org-specific devotionals, study guides & prayer templates tailored to your Greek council",
   "Daily Spiritual Tools: Devotionals, Bible study, prayer guides & journals for consistent spiritual growth",
-  "Community Features: Prayer Wall with org filters, service tracking & shared support with brothers and sisters",
-  "Personal Growth: Track progress with insights, achievements, streaks & council-specific recommendations",
+  "Community Features: Discussion forum, Prayer Wall with org filters & service tracking with brothers and sisters",
+  "Org Achievements: Earn council-specific badges for prayer, study, service & community milestones",
   "P.R.O.O.F. Framework: Navigate Greek life challenges with biblical guidance customized for your organization"
 ];
 

@@ -1,8 +1,10 @@
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Users, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { GamificationBar } from "@/components/GamificationBar";
 import { AchievementsList } from "@/components/AchievementsList";
+import { OrgAchievementsList } from "@/components/OrgAchievementsList";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Achievements = () => {
   return (
@@ -24,7 +26,25 @@ const Achievements = () => {
 
         <div className="space-y-6">
           <GamificationBar />
-          <AchievementsList />
+          
+          <Tabs defaultValue="all" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 max-w-md">
+              <TabsTrigger value="all" className="flex items-center gap-2">
+                <Trophy className="h-4 w-4" />
+                All Achievements
+              </TabsTrigger>
+              <TabsTrigger value="org" className="flex items-center gap-2">
+                <Users className="h-4 w-4" />
+                My Organization
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="all" className="mt-6">
+              <AchievementsList />
+            </TabsContent>
+            <TabsContent value="org" className="mt-6">
+              <OrgAchievementsList />
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </div>
