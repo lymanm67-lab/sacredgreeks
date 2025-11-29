@@ -29,6 +29,59 @@ interface HealingStoryNotificationRequest {
 
 const ADMIN_EMAIL = Deno.env.get("ADMIN_EMAIL") || "info@sacredgreeks.com";
 
+// Valid healing types
+const VALID_HEALING_TYPES = [
+  'church_hurt',
+  'ministry_fallout', 
+  'spiritual_trauma',
+  'faith_reconciliation',
+  'identity_journey',
+  'community_healing',
+  'other'
+];
+
+// Input validation
+interface ValidationError {
+  field: string;
+  message: string;
+}
+
+const validateInput = (data: HealingStoryNotificationRequest): ValidationError[] => {
+  const errors: ValidationError[] = [];
+  
+  // storyTitle: required, max 200 chars
+  if (!data.storyTitle || typeof data.storyTitle !== 'string') {
+    errors.push({ field: 'storyTitle', message: 'Story title is required' });
+  } else if (data.storyTitle.length > 200) {
+    errors.push({ field: 'storyTitle', message: 'Story title must be 200 characters or less' });
+  }
+  
+  // healingType: required, must be valid type
+  if (!data.healingType || typeof data.healingType !== 'string') {
+    errors.push({ field: 'healingType', message: 'Healing type is required' });
+  } else if (!VALID_HEALING_TYPES.includes(data.healingType)) {
+    errors.push({ field: 'healingType', message: 'Invalid healing type' });
+  }
+  
+  // authorName: optional, max 100 chars
+  if (data.authorName && typeof data.authorName === 'string' && data.authorName.length > 100) {
+    errors.push({ field: 'authorName', message: 'Author name must be 100 characters or less' });
+  }
+  
+  // authorEmail: optional, valid email format, max 255 chars
+  if (data.authorEmail) {
+    if (typeof data.authorEmail !== 'string') {
+      errors.push({ field: 'authorEmail', message: 'Invalid email format' });
+    } else if (data.authorEmail.length > 255) {
+      errors.push({ field: 'authorEmail', message: 'Email must be 255 characters or less' });
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.authorEmail)) {
+      errors.push({ field: 'authorEmail', message: 'Invalid email format' });
+    }
+  }
+  
+  return errors;
+};
+
 const getHealingTypeLabel = (type: string): string => {
   const types: Record<string, string> = {
     church_hurt: "Church Hurt",
@@ -51,9 +104,21 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { storyTitle, healingType, authorName, authorEmail }: HealingStoryNotificationRequest = await req.json();
+    const data: HealingStoryNotificationRequest = await req.json();
+    
+    // Validate input
+    const validationErrors = validateInput(data);
+    if (validationErrors.length > 0) {
+      console.error("Validation failed:", validationErrors);
+      return new Response(
+        JSON.stringify({ error: "Validation failed", details: validationErrors }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+    
+    const { storyTitle, healingType, authorName, authorEmail } = data;
 
-    console.log(`New healing story submitted: ${storyTitle}`);
+    console.log(`New healing story submitted: ${storyTitle.substring(0, 50)}...`);
 
     // Send notification to admin
     const adminEmailResponse = await resend.emails.send({
