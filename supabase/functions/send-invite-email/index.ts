@@ -26,6 +26,45 @@ interface InviteEmailRequest {
   recipientEmail: string;
 }
 
+// Input validation
+interface ValidationError {
+  field: string;
+  message: string;
+}
+
+const validateInput = (data: InviteEmailRequest): ValidationError[] => {
+  const errors: ValidationError[] = [];
+  
+  // inviterName: required, max 100 chars
+  if (!data.inviterName || typeof data.inviterName !== 'string') {
+    errors.push({ field: 'inviterName', message: 'Inviter name is required' });
+  } else if (data.inviterName.trim().length === 0) {
+    errors.push({ field: 'inviterName', message: 'Inviter name cannot be empty' });
+  } else if (data.inviterName.length > 100) {
+    errors.push({ field: 'inviterName', message: 'Inviter name must be 100 characters or less' });
+  }
+  
+  // inviterEmail: required, valid email format, max 255 chars
+  if (!data.inviterEmail || typeof data.inviterEmail !== 'string') {
+    errors.push({ field: 'inviterEmail', message: 'Inviter email is required' });
+  } else if (data.inviterEmail.length > 255) {
+    errors.push({ field: 'inviterEmail', message: 'Inviter email must be 255 characters or less' });
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.inviterEmail)) {
+    errors.push({ field: 'inviterEmail', message: 'Invalid inviter email format' });
+  }
+  
+  // recipientEmail: required, valid email format, max 255 chars
+  if (!data.recipientEmail || typeof data.recipientEmail !== 'string') {
+    errors.push({ field: 'recipientEmail', message: 'Recipient email is required' });
+  } else if (data.recipientEmail.length > 255) {
+    errors.push({ field: 'recipientEmail', message: 'Recipient email must be 255 characters or less' });
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.recipientEmail)) {
+    errors.push({ field: 'recipientEmail', message: 'Invalid recipient email format' });
+  }
+  
+  return errors;
+};
+
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -48,7 +87,19 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    const { inviterName, inviterEmail, recipientEmail }: InviteEmailRequest = await req.json();
+    const data: InviteEmailRequest = await req.json();
+    
+    // Validate input
+    const validationErrors = validateInput(data);
+    if (validationErrors.length > 0) {
+      console.error("Validation failed:", validationErrors);
+      return new Response(
+        JSON.stringify({ error: "Validation failed", details: validationErrors }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+    
+    const { inviterName, inviterEmail, recipientEmail } = data;
 
     // Validate that the inviter email matches the authenticated user
     if (user.email !== inviterEmail) {
@@ -56,14 +107,6 @@ const handler = async (req: Request): Promise<Response> => {
       return new Response(
         JSON.stringify({ error: "Forbidden: You can only send invites from your own email" }),
         { status: 403, headers: { "Content-Type": "application/json", ...corsHeaders } }
-      );
-    }
-
-    // Input validation
-    if (!recipientEmail || typeof recipientEmail !== "string" || !recipientEmail.includes("@")) {
-      return new Response(
-        JSON.stringify({ error: "Invalid recipient email" }),
-        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
 

@@ -27,6 +27,44 @@ interface ApprovalNotificationRequest {
   isFeatured?: boolean;
 }
 
+// Input validation
+interface ValidationError {
+  field: string;
+  message: string;
+}
+
+const validateInput = (data: ApprovalNotificationRequest): ValidationError[] => {
+  const errors: ValidationError[] = [];
+  
+  // storyTitle: required, max 200 chars
+  if (!data.storyTitle || typeof data.storyTitle !== 'string') {
+    errors.push({ field: 'storyTitle', message: 'Story title is required' });
+  } else if (data.storyTitle.length > 200) {
+    errors.push({ field: 'storyTitle', message: 'Story title must be 200 characters or less' });
+  }
+  
+  // authorEmail: required, valid email format, max 255 chars
+  if (!data.authorEmail || typeof data.authorEmail !== 'string') {
+    errors.push({ field: 'authorEmail', message: 'Author email is required' });
+  } else if (data.authorEmail.length > 255) {
+    errors.push({ field: 'authorEmail', message: 'Email must be 255 characters or less' });
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.authorEmail)) {
+    errors.push({ field: 'authorEmail', message: 'Invalid email format' });
+  }
+  
+  // authorName: optional, max 100 chars
+  if (data.authorName && typeof data.authorName === 'string' && data.authorName.length > 100) {
+    errors.push({ field: 'authorName', message: 'Author name must be 100 characters or less' });
+  }
+  
+  // isFeatured: optional, must be boolean if provided
+  if (data.isFeatured !== undefined && typeof data.isFeatured !== 'boolean') {
+    errors.push({ field: 'isFeatured', message: 'isFeatured must be a boolean' });
+  }
+  
+  return errors;
+};
+
 const handler = async (req: Request): Promise<Response> => {
   console.log("notify-story-approved function called");
 
@@ -36,7 +74,19 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { storyTitle, authorName, authorEmail, isFeatured }: ApprovalNotificationRequest = await req.json();
+    const data: ApprovalNotificationRequest = await req.json();
+    
+    // Validate input
+    const validationErrors = validateInput(data);
+    if (validationErrors.length > 0) {
+      console.error("Validation failed:", validationErrors);
+      return new Response(
+        JSON.stringify({ error: "Validation failed", details: validationErrors }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+    
+    const { storyTitle, authorName, authorEmail, isFeatured } = data;
 
     if (!authorEmail) {
       console.log("No author email provided, skipping notification");
