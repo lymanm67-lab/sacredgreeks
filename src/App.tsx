@@ -65,6 +65,7 @@ const VideoLibrary = lazy(() => import("./pages/VideoLibrary"));
 const BetaLaunchChecklist = lazy(() => import("./pages/BetaLaunchChecklist"));
 const BetaSignup = lazy(() => import("./pages/BetaSignup"));
 const BetaDashboard = lazy(() => import("./pages/BetaDashboard"));
+const UserGuide = lazy(() => import("./pages/UserGuide"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -133,6 +134,7 @@ const App = () => (
                     <Route path="/shattered-masks" element={<ShatteredMasks />} />
                     <Route path="/shared-symbols/:shareToken" element={<SharedSymbolBookmarks />} />
                     <Route path="/video-library" element={<VideoLibrary />} />
+                    <Route path="/user-guide" element={<UserGuide />} />
                     <Route path="/beta-signup" element={<BetaSignup />} />
                     <Route
                       path="/beta-dashboard"
