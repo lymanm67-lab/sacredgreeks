@@ -14,6 +14,7 @@ import { AnalyticsProvider } from "@/components/AnalyticsProvider";
 import { AIAssistantWidget } from "@/components/AIAssistantWidget";
 import { OfflineIndicator } from "@/components/ui/OfflineIndicator";
 import { CelebrationProvider } from "@/contexts/CelebrationContext";
+import { BetaFeedbackWidget } from "@/components/BetaFeedbackWidget";
 import { Loader2 } from "lucide-react";
 
 // Eager load critical pages
@@ -63,6 +64,7 @@ const SharedSymbolBookmarks = lazy(() => import("./pages/SharedSymbolBookmarks")
 const VideoLibrary = lazy(() => import("./pages/VideoLibrary"));
 const BetaLaunchChecklist = lazy(() => import("./pages/BetaLaunchChecklist"));
 const BetaSignup = lazy(() => import("./pages/BetaSignup"));
+const BetaDashboard = lazy(() => import("./pages/BetaDashboard"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -98,6 +100,7 @@ const App = () => (
             <OfflineIndicator />
             <AIAssistantWidget />
             <BrowserRouter>
+              <BetaFeedbackWidget />
               <CookieConsent />
               <AnalyticsProvider>
                 <Suspense fallback={<PageLoader />}>
@@ -131,6 +134,14 @@ const App = () => (
                     <Route path="/shared-symbols/:shareToken" element={<SharedSymbolBookmarks />} />
                     <Route path="/video-library" element={<VideoLibrary />} />
                     <Route path="/beta-signup" element={<BetaSignup />} />
+                    <Route
+                      path="/beta-dashboard"
+                      element={
+                        <ProtectedRoute>
+                          <BetaDashboard />
+                        </ProtectedRoute>
+                      }
+                    />
                     <Route
                       path="/prayer-guide"
                       element={
