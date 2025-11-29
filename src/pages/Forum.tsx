@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -23,11 +23,27 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   ArrowLeft,
   MessageSquare,
@@ -45,6 +61,9 @@ import {
   MoreVertical,
   Shield,
   CheckCircle2,
+  Pencil,
+  Trash2,
+  AtSign,
 } from "lucide-react";
 import { toast } from "sonner";
 import { GREEK_COUNCILS } from "@/data/greekOrganizations";
@@ -83,6 +102,12 @@ interface Reply {
   };
 }
 
+interface UserProfile {
+  id: string;
+  full_name: string | null;
+  greek_organization: string | null;
+}
+
 const CATEGORIES = [
   { value: "general", label: "General Discussion" },
   { value: "faith", label: "Faith & Greek Life" },
@@ -92,6 +117,33 @@ const CATEGORIES = [
   { value: "testimony", label: "Testimonies" },
   { value: "questions", label: "Questions" },
 ];
+
+// Parse @mentions from content
+const parseMentions = (content: string): string[] => {
+  const mentionRegex = /@\[([^\]]+)\]\(([^)]+)\)/g;
+  const mentions: string[] = [];
+  let match;
+  while ((match = mentionRegex.exec(content)) !== null) {
+    mentions.push(match[2]); // user_id
+  }
+  return mentions;
+};
+
+// Render content with highlighted mentions
+const renderContentWithMentions = (content: string) => {
+  const parts = content.split(/(@\[[^\]]+\]\([^)]+\))/g);
+  return parts.map((part, index) => {
+    const mentionMatch = part.match(/@\[([^\]]+)\]\(([^)]+)\)/);
+    if (mentionMatch) {
+      return (
+        <span key={index} className="text-primary font-medium bg-primary/10 px-1 rounded">
+          @{mentionMatch[1]}
+        </span>
+      );
+    }
+    return part;
+  });
+};
 
 const Forum = () => {
   const { user } = useAuth();
@@ -105,6 +157,24 @@ const Forum = () => {
   const [newContent, setNewContent] = useState("");
   const [newCategory, setNewCategory] = useState("general");
   const [replyContent, setReplyContent] = useState<Record<string, string>>({});
+  
+  // Edit states
+  const [editingDiscussion, setEditingDiscussion] = useState<Discussion | null>(null);
+  const [editDiscussionTitle, setEditDiscussionTitle] = useState("");
+  const [editDiscussionContent, setEditDiscussionContent] = useState("");
+  const [editingReply, setEditingReply] = useState<Reply | null>(null);
+  const [editReplyContent, setEditReplyContent] = useState("");
+  
+  // Delete states
+  const [deletingDiscussion, setDeletingDiscussion] = useState<Discussion | null>(null);
+  const [deletingReply, setDeletingReply] = useState<Reply | null>(null);
+  
+  // Mention states
+  const [mentionQuery, setMentionQuery] = useState("");
+  const [showMentionPopover, setShowMentionPopover] = useState(false);
+  const [mentionPosition, setMentionPosition] = useState({ top: 0, left: 0 });
+  const [activeMentionField, setActiveMentionField] = useState<string | null>(null);
+  const textareaRefs = useRef<Record<string, HTMLTextAreaElement | null>>({});
 
   // Check if user is admin
   const { data: isAdmin = false } = useQuery({
@@ -134,6 +204,21 @@ const Forum = () => {
       return data;
     },
     enabled: !!user,
+  });
+
+  // Search users for mentions
+  const { data: mentionUsers = [] } = useQuery({
+    queryKey: ["mention-users", mentionQuery],
+    queryFn: async () => {
+      if (!mentionQuery || mentionQuery.length < 2) return [];
+      const { data } = await supabase
+        .from("profiles")
+        .select("id, full_name, greek_organization")
+        .ilike("full_name", `%${mentionQuery}%`)
+        .limit(5);
+      return (data || []) as UserProfile[];
+    },
+    enabled: mentionQuery.length >= 2,
   });
 
   const { data: discussions = [], isLoading } = useQuery({
@@ -197,18 +282,39 @@ const Forum = () => {
     enabled: !!expandedDiscussion,
   });
 
+  // Send mention notifications
+  const sendMentionNotifications = async (content: string, discussionId: string, replyId?: string) => {
+    const mentionedUserIds = parseMentions(content);
+    const uniqueUserIds = [...new Set(mentionedUserIds)].filter(id => id !== user?.id);
+    
+    for (const userId of uniqueUserIds) {
+      await supabase.from("forum_notifications").insert({
+        user_id: userId,
+        discussion_id: discussionId,
+        reply_id: replyId || null,
+        notification_type: "mention",
+        title: "You were mentioned!",
+        message: `${userProfile?.full_name || "Someone"} mentioned you in a discussion`,
+      });
+    }
+  };
+
   const createDiscussionMutation = useMutation({
     mutationFn: async () => {
       if (!user) throw new Error("Must be logged in");
-      const { error } = await supabase.from("forum_discussions").insert({
+      const { data, error } = await supabase.from("forum_discussions").insert({
         user_id: user.id,
         title: newTitle,
         content: newContent,
         category: newCategory,
         greek_council: userProfile?.greek_council,
         greek_organization: userProfile?.greek_organization,
-      });
+      }).select().single();
       if (error) throw error;
+      
+      // Send mention notifications
+      await sendMentionNotifications(newContent, data.id);
+      return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["forum-discussions"] });
@@ -222,18 +328,65 @@ const Forum = () => {
     onError: () => toast.error("Failed to create discussion"),
   });
 
+  const updateDiscussionMutation = useMutation({
+    mutationFn: async ({ id, title, content }: { id: string; title: string; content: string }) => {
+      const { error } = await supabase
+        .from("forum_discussions")
+        .update({ title, content, updated_at: new Date().toISOString() })
+        .eq("id", id)
+        .eq("user_id", user?.id);
+      if (error) throw error;
+      
+      // Send mention notifications for new mentions
+      await sendMentionNotifications(content, id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["forum-discussions"] });
+      setEditingDiscussion(null);
+      toast.success("Discussion updated!");
+    },
+    onError: () => toast.error("Failed to update discussion"),
+  });
+
+  const deleteDiscussionMutation = useMutation({
+    mutationFn: async (discussionId: string) => {
+      // First delete related replies
+      await supabase.from("forum_replies").delete().eq("discussion_id", discussionId);
+      // Then delete the discussion
+      const { error } = await supabase
+        .from("forum_discussions")
+        .delete()
+        .eq("id", discussionId)
+        .eq("user_id", user?.id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["forum-discussions"] });
+      setDeletingDiscussion(null);
+      if (expandedDiscussion === deletingDiscussion?.id) {
+        setExpandedDiscussion(null);
+      }
+      toast.success("Discussion deleted!");
+    },
+    onError: () => toast.error("Failed to delete discussion"),
+  });
+
   const createReplyMutation = useMutation({
     mutationFn: async (discussionId: string) => {
       if (!user) throw new Error("Must be logged in");
       const content = replyContent[discussionId];
       if (!content?.trim()) throw new Error("Reply cannot be empty");
 
-      const { error } = await supabase.from("forum_replies").insert({
+      const { data, error } = await supabase.from("forum_replies").insert({
         discussion_id: discussionId,
         user_id: user.id,
         content: content.trim(),
-      });
+      }).select().single();
       if (error) throw error;
+      
+      // Send mention notifications
+      await sendMentionNotifications(content, discussionId, data.id);
+      return data;
     },
     onSuccess: (_, discussionId) => {
       queryClient.invalidateQueries({ queryKey: ["forum-replies"] });
@@ -243,6 +396,46 @@ const Forum = () => {
       awardPoints({ points: 5, actionType: "forum_reply" });
     },
     onError: () => toast.error("Failed to post reply"),
+  });
+
+  const updateReplyMutation = useMutation({
+    mutationFn: async ({ id, content }: { id: string; content: string }) => {
+      const { error } = await supabase
+        .from("forum_replies")
+        .update({ content, updated_at: new Date().toISOString() })
+        .eq("id", id)
+        .eq("user_id", user?.id);
+      if (error) throw error;
+      
+      // Send mention notifications for new mentions
+      if (expandedDiscussion) {
+        await sendMentionNotifications(content, expandedDiscussion, id);
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["forum-replies"] });
+      setEditingReply(null);
+      toast.success("Reply updated!");
+    },
+    onError: () => toast.error("Failed to update reply"),
+  });
+
+  const deleteReplyMutation = useMutation({
+    mutationFn: async (replyId: string) => {
+      const { error } = await supabase
+        .from("forum_replies")
+        .delete()
+        .eq("id", replyId)
+        .eq("user_id", user?.id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["forum-replies"] });
+      queryClient.invalidateQueries({ queryKey: ["forum-discussions"] });
+      setDeletingReply(null);
+      toast.success("Reply deleted!");
+    },
+    onError: () => toast.error("Failed to delete reply"),
   });
 
   const togglePinMutation = useMutation({
@@ -304,6 +497,70 @@ const Forum = () => {
 
   const canMarkBestAnswer = (discussion: Discussion) => {
     return isAdmin || discussion.user_id === user?.id;
+  };
+
+  const handleTextareaChange = useCallback((fieldId: string, value: string, setter: (value: string) => void) => {
+    setter(value);
+    
+    // Check for @ mention trigger
+    const textarea = textareaRefs.current[fieldId];
+    if (textarea) {
+      const cursorPos = textarea.selectionStart;
+      const textBeforeCursor = value.substring(0, cursorPos);
+      const mentionMatch = textBeforeCursor.match(/@(\w*)$/);
+      
+      if (mentionMatch) {
+        setMentionQuery(mentionMatch[1]);
+        setActiveMentionField(fieldId);
+        setShowMentionPopover(true);
+        
+        // Calculate position
+        const rect = textarea.getBoundingClientRect();
+        setMentionPosition({
+          top: rect.bottom + window.scrollY,
+          left: rect.left + window.scrollX,
+        });
+      } else {
+        setShowMentionPopover(false);
+        setMentionQuery("");
+      }
+    }
+  }, []);
+
+  const insertMention = useCallback((fieldId: string, user: UserProfile, currentValue: string, setter: (value: string) => void) => {
+    const textarea = textareaRefs.current[fieldId];
+    if (textarea) {
+      const cursorPos = textarea.selectionStart;
+      const textBeforeCursor = currentValue.substring(0, cursorPos);
+      const textAfterCursor = currentValue.substring(cursorPos);
+      
+      // Remove the partial @mention
+      const newTextBefore = textBeforeCursor.replace(/@\w*$/, '');
+      const mention = `@[${user.full_name || 'User'}](${user.id})`;
+      const newValue = newTextBefore + mention + ' ' + textAfterCursor;
+      
+      setter(newValue);
+      setShowMentionPopover(false);
+      setMentionQuery("");
+      
+      // Focus back on textarea
+      setTimeout(() => {
+        textarea.focus();
+        const newCursorPos = newTextBefore.length + mention.length + 1;
+        textarea.setSelectionRange(newCursorPos, newCursorPos);
+      }, 0);
+    }
+  }, []);
+
+  const startEditDiscussion = (discussion: Discussion) => {
+    setEditingDiscussion(discussion);
+    setEditDiscussionTitle(discussion.title);
+    setEditDiscussionContent(discussion.content);
+  };
+
+  const startEditReply = (reply: Reply) => {
+    setEditingReply(reply);
+    setEditReplyContent(reply.content);
   };
 
   if (!user) {
@@ -368,12 +625,19 @@ const Forum = () => {
                     value={newTitle}
                     onChange={(e) => setNewTitle(e.target.value)}
                   />
-                  <Textarea
-                    placeholder="Share your thoughts..."
-                    value={newContent}
-                    onChange={(e) => setNewContent(e.target.value)}
-                    rows={4}
-                  />
+                  <div className="relative">
+                    <Textarea
+                      ref={(el) => { textareaRefs.current['new-discussion'] = el; }}
+                      placeholder="Share your thoughts... Use @ to mention someone"
+                      value={newContent}
+                      onChange={(e) => handleTextareaChange('new-discussion', e.target.value, setNewContent)}
+                      rows={4}
+                    />
+                    <div className="absolute bottom-2 right-2 text-xs text-muted-foreground flex items-center gap-1">
+                      <AtSign className="h-3 w-3" />
+                      to mention
+                    </div>
+                  </div>
                   <Select value={newCategory} onValueChange={setNewCategory}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select category" />
@@ -398,6 +662,157 @@ const Forum = () => {
             </Dialog>
           </div>
         </div>
+
+        {/* Mention Popover */}
+        {showMentionPopover && mentionUsers.length > 0 && (
+          <div
+            className="fixed z-50 bg-popover border rounded-md shadow-md p-1 min-w-[200px]"
+            style={{ top: mentionPosition.top, left: mentionPosition.left }}
+          >
+            {mentionUsers.map((mentionUser) => (
+              <button
+                key={mentionUser.id}
+                className="w-full text-left px-3 py-2 hover:bg-muted rounded text-sm flex items-center gap-2"
+                onClick={() => {
+                  if (activeMentionField === 'new-discussion') {
+                    insertMention('new-discussion', mentionUser, newContent, setNewContent);
+                  } else if (activeMentionField === 'edit-discussion') {
+                    insertMention('edit-discussion', mentionUser, editDiscussionContent, setEditDiscussionContent);
+                  } else if (activeMentionField === 'edit-reply') {
+                    insertMention('edit-reply', mentionUser, editReplyContent, setEditReplyContent);
+                  } else if (activeMentionField?.startsWith('reply-')) {
+                    const discussionId = activeMentionField.replace('reply-', '');
+                    insertMention(activeMentionField, mentionUser, replyContent[discussionId] || '', (val) =>
+                      setReplyContent((prev) => ({ ...prev, [discussionId]: val }))
+                    );
+                  }
+                }}
+              >
+                <Users className="h-4 w-4 text-muted-foreground" />
+                <span>{mentionUser.full_name || 'Unknown User'}</span>
+                {mentionUser.greek_organization && (
+                  <span className="text-xs text-muted-foreground">({mentionUser.greek_organization})</span>
+                )}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Edit Discussion Dialog */}
+        <Dialog open={!!editingDiscussion} onOpenChange={(open) => !open && setEditingDiscussion(null)}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Edit Discussion</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 pt-4">
+              <Input
+                placeholder="Discussion title"
+                value={editDiscussionTitle}
+                onChange={(e) => setEditDiscussionTitle(e.target.value)}
+              />
+              <div className="relative">
+                <Textarea
+                  ref={(el) => { textareaRefs.current['edit-discussion'] = el; }}
+                  placeholder="Share your thoughts... Use @ to mention someone"
+                  value={editDiscussionContent}
+                  onChange={(e) => handleTextareaChange('edit-discussion', e.target.value, setEditDiscussionContent)}
+                  rows={4}
+                />
+                <div className="absolute bottom-2 right-2 text-xs text-muted-foreground flex items-center gap-1">
+                  <AtSign className="h-3 w-3" />
+                  to mention
+                </div>
+              </div>
+              <Button
+                className="w-full"
+                onClick={() => editingDiscussion && updateDiscussionMutation.mutate({
+                  id: editingDiscussion.id,
+                  title: editDiscussionTitle,
+                  content: editDiscussionContent,
+                })}
+                disabled={!editDiscussionTitle.trim() || !editDiscussionContent.trim()}
+              >
+                Save Changes
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Edit Reply Dialog */}
+        <Dialog open={!!editingReply} onOpenChange={(open) => !open && setEditingReply(null)}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Edit Reply</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 pt-4">
+              <div className="relative">
+                <Textarea
+                  ref={(el) => { textareaRefs.current['edit-reply'] = el; }}
+                  placeholder="Edit your reply... Use @ to mention someone"
+                  value={editReplyContent}
+                  onChange={(e) => handleTextareaChange('edit-reply', e.target.value, setEditReplyContent)}
+                  rows={4}
+                />
+                <div className="absolute bottom-2 right-2 text-xs text-muted-foreground flex items-center gap-1">
+                  <AtSign className="h-3 w-3" />
+                  to mention
+                </div>
+              </div>
+              <Button
+                className="w-full"
+                onClick={() => editingReply && updateReplyMutation.mutate({
+                  id: editingReply.id,
+                  content: editReplyContent,
+                })}
+                disabled={!editReplyContent.trim()}
+              >
+                Save Changes
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Delete Discussion Alert */}
+        <AlertDialog open={!!deletingDiscussion} onOpenChange={(open) => !open && setDeletingDiscussion(null)}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete Discussion</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to delete this discussion? This will also delete all replies and cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                onClick={() => deletingDiscussion && deleteDiscussionMutation.mutate(deletingDiscussion.id)}
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        {/* Delete Reply Alert */}
+        <AlertDialog open={!!deletingReply} onOpenChange={(open) => !open && setDeletingReply(null)}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete Reply</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to delete this reply? This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                onClick={() => deletingReply && deleteReplyMutation.mutate(deletingReply.id)}
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
 
         {/* Filters */}
         <Card className="p-4 mb-6">
@@ -472,7 +887,7 @@ const Forum = () => {
                         <h3 className="font-semibold truncate">{discussion.title}</h3>
                       </div>
                       <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
-                        {discussion.content}
+                        {renderContentWithMentions(discussion.content)}
                       </p>
                       <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                         <Badge variant="secondary">{discussion.category}</Badge>
@@ -505,7 +920,7 @@ const Forum = () => {
                           <ChevronDown className="h-4 w-4" />
                         )}
                       </div>
-                      {isAdmin && (
+                      {(isAdmin || discussion.user_id === user?.id) && (
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
                             <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -513,27 +928,53 @@ const Forum = () => {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
-                            <DropdownMenuItem
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                togglePinMutation.mutate({
-                                  discussionId: discussion.id,
-                                  isPinned: discussion.is_pinned,
-                                });
-                              }}
-                            >
-                              {discussion.is_pinned ? (
-                                <>
-                                  <PinOff className="h-4 w-4 mr-2" />
-                                  Unpin Discussion
-                                </>
-                              ) : (
-                                <>
-                                  <Pin className="h-4 w-4 mr-2" />
-                                  Pin Discussion
-                                </>
-                              )}
-                            </DropdownMenuItem>
+                            {discussion.user_id === user?.id && (
+                              <>
+                                <DropdownMenuItem
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    startEditDiscussion(discussion);
+                                  }}
+                                >
+                                  <Pencil className="h-4 w-4 mr-2" />
+                                  Edit Discussion
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                  className="text-destructive"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setDeletingDiscussion(discussion);
+                                  }}
+                                >
+                                  <Trash2 className="h-4 w-4 mr-2" />
+                                  Delete Discussion
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                              </>
+                            )}
+                            {isAdmin && (
+                              <DropdownMenuItem
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  togglePinMutation.mutate({
+                                    discussionId: discussion.id,
+                                    isPinned: discussion.is_pinned,
+                                  });
+                                }}
+                              >
+                                {discussion.is_pinned ? (
+                                  <>
+                                    <PinOff className="h-4 w-4 mr-2" />
+                                    Unpin Discussion
+                                  </>
+                                ) : (
+                                  <>
+                                    <Pin className="h-4 w-4 mr-2" />
+                                    Pin Discussion
+                                  </>
+                                )}
+                              </DropdownMenuItem>
+                            )}
                           </DropdownMenuContent>
                         </DropdownMenu>
                       )}
@@ -545,7 +986,7 @@ const Forum = () => {
                 {expandedDiscussion === discussion.id && (
                   <div className="border-t bg-muted/30 p-4 space-y-4">
                     <div className="prose prose-sm max-w-none">
-                      <p className="whitespace-pre-wrap">{discussion.content}</p>
+                      <p className="whitespace-pre-wrap">{renderContentWithMentions(discussion.content)}</p>
                     </div>
 
                     {/* Replies */}
@@ -568,7 +1009,7 @@ const Forum = () => {
                               </div>
                             )}
                             <p className="text-sm whitespace-pre-wrap mb-2">
-                              {reply.content}
+                              {renderContentWithMentions(reply.content)}
                             </p>
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-2 text-xs text-muted-foreground">
@@ -580,22 +1021,46 @@ const Forum = () => {
                                   })}
                                 </span>
                               </div>
-                              {canMarkBestAnswer(discussion) && (
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  className="h-7 text-xs"
-                                  onClick={() =>
-                                    toggleBestAnswerMutation.mutate({
-                                      replyId: reply.id,
-                                      isBestAnswer: reply.is_best_answer,
-                                    })
-                                  }
-                                >
-                                  <Award className="h-3 w-3 mr-1" />
-                                  {reply.is_best_answer ? "Remove Best" : "Mark Best"}
-                                </Button>
-                              )}
+                              <div className="flex items-center gap-1">
+                                {reply.user_id === user?.id && (
+                                  <>
+                                    <Button
+                                      variant="ghost"
+                                      size="sm"
+                                      className="h-7 text-xs"
+                                      onClick={() => startEditReply(reply)}
+                                    >
+                                      <Pencil className="h-3 w-3 mr-1" />
+                                      Edit
+                                    </Button>
+                                    <Button
+                                      variant="ghost"
+                                      size="sm"
+                                      className="h-7 text-xs text-destructive hover:text-destructive"
+                                      onClick={() => setDeletingReply(reply)}
+                                    >
+                                      <Trash2 className="h-3 w-3 mr-1" />
+                                      Delete
+                                    </Button>
+                                  </>
+                                )}
+                                {canMarkBestAnswer(discussion) && (
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="h-7 text-xs"
+                                    onClick={() =>
+                                      toggleBestAnswerMutation.mutate({
+                                        replyId: reply.id,
+                                        isBestAnswer: reply.is_best_answer,
+                                      })
+                                    }
+                                  >
+                                    <Award className="h-3 w-3 mr-1" />
+                                    {reply.is_best_answer ? "Remove Best" : "Mark Best"}
+                                  </Button>
+                                )}
+                              </div>
                             </div>
                           </div>
                         ))}
@@ -604,18 +1069,26 @@ const Forum = () => {
 
                     {/* Reply Input */}
                     <div className="flex gap-2">
-                      <Textarea
-                        placeholder="Write a reply..."
-                        value={replyContent[discussion.id] || ""}
-                        onChange={(e) =>
-                          setReplyContent((prev) => ({
-                            ...prev,
-                            [discussion.id]: e.target.value,
-                          }))
-                        }
-                        rows={2}
-                        className="flex-1"
-                      />
+                      <div className="flex-1 relative">
+                        <Textarea
+                          ref={(el) => { textareaRefs.current[`reply-${discussion.id}`] = el; }}
+                          placeholder="Write a reply... Use @ to mention someone"
+                          value={replyContent[discussion.id] || ""}
+                          onChange={(e) =>
+                            handleTextareaChange(`reply-${discussion.id}`, e.target.value, (val) =>
+                              setReplyContent((prev) => ({
+                                ...prev,
+                                [discussion.id]: val,
+                              }))
+                            )
+                          }
+                          rows={2}
+                          className="pr-16"
+                        />
+                        <div className="absolute bottom-2 right-2 text-xs text-muted-foreground flex items-center gap-1">
+                          <AtSign className="h-3 w-3" />
+                        </div>
+                      </div>
                       <Button
                         size="icon"
                         onClick={() => createReplyMutation.mutate(discussion.id)}

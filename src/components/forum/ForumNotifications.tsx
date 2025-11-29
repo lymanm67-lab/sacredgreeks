@@ -9,7 +9,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Bell, Check, MessageSquare, Pin, Award, Trash2 } from "lucide-react";
+import { Bell, Check, MessageSquare, Pin, Award, Trash2, AtSign } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { Link } from "react-router-dom";
 
@@ -123,6 +123,8 @@ export const ForumNotifications = () => {
         return <Pin className="h-4 w-4 text-amber-500" />;
       case "best_answer":
         return <Award className="h-4 w-4 text-green-500" />;
+      case "mention":
+        return <AtSign className="h-4 w-4 text-purple-500" />;
       default:
         return <Bell className="h-4 w-4 text-muted-foreground" />;
     }
