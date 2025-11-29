@@ -7,6 +7,63 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Valid prayer categories
+const VALID_CATEGORIES = [
+  'thanksgiving', 'protection', 'healing', 'fear', 
+  'strength', 'wisdom', 'forgiveness', 'relationships'
+] as const;
+
+type PrayerCategory = typeof VALID_CATEGORIES[number];
+
+// Input validation
+interface PrayerInput {
+  category: PrayerCategory;
+  situation?: string;
+  userName?: string;
+}
+
+function validatePrayerInput(data: unknown): { valid: true; data: PrayerInput } | { valid: false; error: string } {
+  if (!data || typeof data !== 'object') {
+    return { valid: false, error: 'Invalid request body' };
+  }
+
+  const { category, situation, userName } = data as Record<string, unknown>;
+
+  // Validate category
+  if (!category || typeof category !== 'string' || !VALID_CATEGORIES.includes(category as PrayerCategory)) {
+    return { valid: false, error: `Invalid category. Must be one of: ${VALID_CATEGORIES.join(', ')}` };
+  }
+
+  // Validate situation (optional, max 1000 chars)
+  if (situation !== undefined) {
+    if (typeof situation !== 'string') {
+      return { valid: false, error: 'Situation must be a string' };
+    }
+    if (situation.length > 1000) {
+      return { valid: false, error: 'Situation must be 1000 characters or less' };
+    }
+  }
+
+  // Validate userName (optional, max 100 chars)
+  if (userName !== undefined) {
+    if (typeof userName !== 'string') {
+      return { valid: false, error: 'User name must be a string' };
+    }
+    if (userName.length > 100) {
+      return { valid: false, error: 'User name must be 100 characters or less' };
+    }
+  }
+
+  return {
+    valid: true,
+    data: {
+      category: category as PrayerCategory,
+      situation: situation as string | undefined,
+      userName: userName as string | undefined,
+    }
+  };
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -23,7 +80,18 @@ serve(async (req) => {
         'Too many prayer generation requests. Please wait a moment before trying again.');
     }
 
-    const { category, situation, userName } = await req.json();
+    // SECURITY: Input validation
+    const requestBody = await req.json();
+    const validation = validatePrayerInput(requestBody);
+    
+    if (!validation.valid) {
+      return new Response(
+        JSON.stringify({ error: validation.error }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const { category, situation, userName } = validation.data;
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
 
     if (!LOVABLE_API_KEY) {
