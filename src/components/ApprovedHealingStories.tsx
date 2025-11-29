@@ -26,16 +26,14 @@ export function ApprovedHealingStories() {
         // Use the secure public view that excludes email addresses
         // and only shows stories with both approved=true AND consent_to_publish=true
         const { data, error } = await supabase
-          .from("healing_stories" as const)
+          .from("healing_stories_public")
           .select("id, name, organization, story_title, story_content, healing_type, featured")
-          .eq("approved", true)
-          .eq("consent_to_publish", true)
           .order("featured", { ascending: false })
           .order("created_at", { ascending: false })
           .limit(10);
 
         if (error) throw error;
-        setStories(data || []);
+        setStories((data as HealingStory[]) || []);
       } catch (error) {
         console.error("Error loading stories:", error);
       } finally {

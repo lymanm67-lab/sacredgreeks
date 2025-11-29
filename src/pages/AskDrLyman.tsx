@@ -36,11 +36,10 @@ const AskDrLyman = () => {
   }, [user]);
 
   const loadPublicAnswers = async () => {
+    // Use secure view that excludes email addresses
     const { data } = await supabase
-      .from('qa_submissions')
+      .from('qa_public_answers')
       .select('*')
-      .eq('is_public', true)
-      .eq('status', 'answered')
       .order('answered_at', { ascending: false })
       .limit(20);
     setPublicAnswers(data || []);
