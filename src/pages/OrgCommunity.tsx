@@ -306,7 +306,19 @@ const OrgCommunity = () => {
               )}
 
               {/* Quick Links */}
-              <div className="grid md:grid-cols-3 gap-4">
+              <div className="grid md:grid-cols-4 gap-4">
+                <Link to="/forum">
+                  <Card className="hover:border-sacred/50 transition-colors cursor-pointer h-full">
+                    <CardContent className="pt-6 flex items-center gap-4">
+                      <MessageSquare className="h-8 w-8 text-indigo-500" />
+                      <div>
+                        <h3 className="font-semibold">Discussion Forum</h3>
+                        <p className="text-sm text-muted-foreground">Join conversations</p>
+                      </div>
+                      <ChevronRight className="h-5 w-5 text-muted-foreground ml-auto" />
+                    </CardContent>
+                  </Card>
+                </Link>
                 <Link to="/prayer-wall">
                   <Card className="hover:border-sacred/50 transition-colors cursor-pointer h-full">
                     <CardContent className="pt-6 flex items-center gap-4">
@@ -331,13 +343,13 @@ const OrgCommunity = () => {
                     </CardContent>
                   </Card>
                 </Link>
-                <Link to="/ask-dr-lyman">
+                <Link to="/achievements">
                   <Card className="hover:border-sacred/50 transition-colors cursor-pointer h-full">
                     <CardContent className="pt-6 flex items-center gap-4">
-                      <MessageSquare className="h-8 w-8 text-purple-500" />
+                      <Sparkles className="h-8 w-8 text-amber-500" />
                       <div>
-                        <h3 className="font-semibold">Ask Dr. Lyman</h3>
-                        <p className="text-sm text-muted-foreground">Get expert answers</p>
+                        <h3 className="font-semibold">Org Achievements</h3>
+                        <p className="text-sm text-muted-foreground">Earn badges</p>
                       </div>
                       <ChevronRight className="h-5 w-5 text-muted-foreground ml-auto" />
                     </CardContent>

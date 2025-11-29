@@ -308,23 +308,43 @@ const guideContent = [
     ]
   },
   {
+    id: "forum",
+    title: "Discussion Forum",
+    icon: MessageCircle,
+    screenshot: resourcesScreenshot, // Using resources screenshot as placeholder
+    description: "Join community conversations with fellow Greek members",
+    category: "Community",
+    steps: [
+      "Browse discussions by category or council",
+      "Start a new discussion on any topic",
+      "Reply to existing threads and engage with members",
+      "Filter discussions by your council for relevant content",
+      "Earn achievements for forum participation"
+    ],
+    tips: [
+      "Share your experiences to encourage others",
+      "Ask questions - someone has likely faced the same challenge",
+      "Keep discussions grace-filled and constructive"
+    ]
+  },
+  {
     id: "achievements",
-    title: "Achievements & Progress",
+    title: "Achievements & Org Badges",
     icon: Trophy,
     screenshot: achievementsScreenshot,
-    description: "Track your spiritual growth with gamification",
+    description: "Earn org-specific badges and track your spiritual growth",
     category: "Progress",
     steps: [
-      "View all available achievements in the trophy room",
-      "Complete actions to unlock new badges",
+      "View all achievements including org-specific badges",
+      "Complete council-specific challenges (NPHC, NPC, NIC, etc.)",
       "Track your points and current level",
-      "Compare progress with your chapter or friends",
+      "Unlock badges for prayer, study, service, and community",
       "Celebrate milestones with special animations"
     ],
     tips: [
-      "Focus on consistency over quantity",
-      "Check the daily challenges for bonus points",
-      "Share achievements to encourage others"
+      "Check the 'My Organization' tab for council-specific badges",
+      "Complete daily challenges for bonus points",
+      "Share achievements to encourage other Greeks"
     ]
   }
 ];

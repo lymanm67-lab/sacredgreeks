@@ -266,6 +266,15 @@ const Dashboard = () => {
       iconBg: 'bg-gradient-to-br from-sacred to-warm-blue',
     },
     {
+      id: 'forum',
+      title: 'Discussion Forum',
+      description: 'Join conversations with the community',
+      icon: MessageCircle,
+      href: '/forum',
+      iconColor: 'text-white',
+      iconBg: 'bg-gradient-to-br from-indigo-500 to-purple-600',
+    },
+    {
       id: 'bglo-objections',
       title: 'Handle Objections',
       description: 'Navigate BGLO challenges with PROOF',

@@ -67,6 +67,7 @@ const BetaSignup = lazy(() => import("./pages/BetaSignup"));
 const BetaDashboard = lazy(() => import("./pages/BetaDashboard"));
 const UserGuide = lazy(() => import("./pages/UserGuide"));
 const OrgCommunity = lazy(() => import("./pages/OrgCommunity"));
+const Forum = lazy(() => import("./pages/Forum"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -271,6 +272,14 @@ const App = () => (
                       element={
                         <ProtectedRoute>
                           <OrgCommunity />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/forum"
+                      element={
+                        <ProtectedRoute>
+                          <Forum />
                         </ProtectedRoute>
                       }
                     />
