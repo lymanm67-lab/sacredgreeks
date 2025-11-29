@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { BetaOnboarding } from "@/components/BetaOnboarding";
 
 const BETA_FEATURES = [
   {
@@ -47,6 +48,8 @@ export default function BetaSignup() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [userId, setUserId] = useState<string | undefined>();
   const [formData, setFormData] = useState({
     email: "",
     fullName: "",
@@ -72,6 +75,7 @@ export default function BetaSignup() {
         email: formData.email,
         password: Math.random().toString(36).slice(-12) + "A1!", // Temporary password
         options: {
+          emailRedirectTo: `${window.location.origin}/dashboard`,
           data: {
             full_name: formData.fullName
           }
@@ -81,6 +85,8 @@ export default function BetaSignup() {
       if (authError) throw authError;
 
       if (authData.user) {
+        setUserId(authData.user.id);
+        
         // Create beta tester record
         const { error: betaError } = await supabase
           .from("beta_testers")
@@ -93,9 +99,20 @@ export default function BetaSignup() {
         if (betaError) {
           console.error("Beta tester record error:", betaError);
         }
+
+        // Send notification emails (non-blocking)
+        supabase.functions.invoke("notify-beta-signup", {
+          body: {
+            testerName: formData.fullName,
+            testerEmail: formData.email,
+            organization: formData.organization || undefined,
+            referredBy: formData.referralCode || undefined
+          }
+        }).catch(err => console.error("Notification error:", err));
       }
 
       setSubmitted(true);
+      setShowOnboarding(true);
       toast.success("Welcome to the beta program!");
     } catch (error: any) {
       console.error("Signup error:", error);
@@ -109,30 +126,42 @@ export default function BetaSignup() {
     }
   };
 
+  const handleOnboardingComplete = () => {
+    setShowOnboarding(false);
+    navigate("/dashboard");
+  };
+
   if (submitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-background to-muted/30 flex items-center justify-center p-4">
-        <Card className="max-w-lg w-full text-center">
-          <CardContent className="pt-12 pb-8">
-            <div className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-6">
-              <CheckCircle2 className="w-10 h-10 text-green-500" />
-            </div>
-            <h2 className="text-2xl font-bold mb-3">You're on the List! 🎉</h2>
-            <p className="text-muted-foreground mb-6">
-              Check your email for a confirmation link. Once confirmed, you'll have full access to the Sacred Greeks beta.
-            </p>
-            <div className="space-y-3">
-              <Button onClick={() => navigate("/auth")} className="w-full">
-                Sign In Now
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-              <Button variant="outline" onClick={() => navigate("/")}>
-                Return Home
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <>
+        <BetaOnboarding 
+          open={showOnboarding} 
+          onComplete={handleOnboardingComplete}
+          userId={userId}
+        />
+        <div className="min-h-screen bg-gradient-to-b from-background to-muted/30 flex items-center justify-center p-4">
+          <Card className="max-w-lg w-full text-center">
+            <CardContent className="pt-12 pb-8">
+              <div className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-6">
+                <CheckCircle2 className="w-10 h-10 text-green-500" />
+              </div>
+              <h2 className="text-2xl font-bold mb-3">You're on the List! 🎉</h2>
+              <p className="text-muted-foreground mb-6">
+                Check your email for a confirmation link. Once confirmed, you'll have full access to the Sacred Greeks beta.
+              </p>
+              <div className="space-y-3">
+                <Button onClick={() => setShowOnboarding(true)} className="w-full">
+                  Continue Onboarding
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+                <Button variant="outline" onClick={() => navigate("/auth")}>
+                  Sign In Instead
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </>
     );
   }
 
