@@ -7,12 +7,13 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Heart, Home, Eye, EyeOff, CheckCircle2, Mail, RefreshCw, AlertTriangle } from 'lucide-react';
+import { Heart, Home, Eye, EyeOff, CheckCircle2, Mail, RefreshCw, AlertTriangle, Ban } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { z } from 'zod';
 import { PasswordStrengthIndicator } from '@/components/PasswordStrengthIndicator';
 import { usePasswordBreachCheck } from '@/hooks/use-password-breach-check';
+import { useDisposableEmailCheck } from '@/hooks/use-disposable-email-check';
 
 const authSchema = z.object({
   email: z.string().email('Invalid email address').max(255, 'Email must be less than 255 characters'),
@@ -40,10 +41,12 @@ const Auth = () => {
   const [savedEmail, setSavedEmail] = useState('');
   const [pendingVerification, setPendingVerification] = useState<string | null>(null);
   const [resendingEmail, setResendingEmail] = useState(false);
+  const [signupEmail, setSignupEmail] = useState('');
   const { signUp, signIn } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const { checkPassword, isChecking: isCheckingBreach, breachCount, reset: resetBreachCheck } = usePasswordBreachCheck();
+  const { checkEmail, isDisposable, checkedDomain, reset: resetDisposableCheck } = useDisposableEmailCheck();
 
   useEffect(() => {
     const mode = searchParams.get('mode');
@@ -71,6 +74,19 @@ const Auth = () => {
 
     try {
       const validated = authSchema.parse({ email, password, fullName });
+
+      // Check for disposable email
+      const { isDisposable: isDisposableEmail } = checkEmail(validated.email);
+      if (isDisposableEmail) {
+        toast({
+          title: 'Disposable email not allowed',
+          description: 'Please use a permanent email address to create your account. Temporary or disposable emails are not accepted.',
+          variant: 'destructive',
+          duration: 8000,
+        });
+        setIsLoading(false);
+        return;
+      }
 
       // Check password against HaveIBeenPwned database
       const { isBreached, count } = await checkPassword(validated.password);
@@ -571,7 +587,26 @@ const Auth = () => {
                           type="email"
                           placeholder="you@example.com"
                           required
+                          value={signupEmail}
+                          onChange={(e) => {
+                            setSignupEmail(e.target.value);
+                            if (e.target.value.includes('@')) {
+                              checkEmail(e.target.value);
+                            } else {
+                              resetDisposableCheck();
+                            }
+                          }}
+                          className={isDisposable ? 'border-destructive focus-visible:ring-destructive' : ''}
                         />
+                        {isDisposable && (
+                          <div className="flex items-start gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-md">
+                            <Ban className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
+                            <div className="text-sm text-destructive">
+                              <p className="font-medium">Disposable email not allowed</p>
+                              <p className="text-destructive/80">Please use a permanent email address. Domains like {checkedDomain} are not accepted.</p>
+                            </div>
+                          </div>
+                        )}
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="signup-password">Password</Label>
@@ -611,7 +646,7 @@ const Auth = () => {
                       <Button
                         type="submit"
                         className="w-full bg-sacred hover:bg-sacred/90"
-                        disabled={isLoading || isCheckingBreach}
+                        disabled={isLoading || isCheckingBreach || isDisposable === true}
                       >
                         {isCheckingBreach ? 'Checking password security...' : isLoading ? 'Creating account...' : 'Sign Up'}
                       </Button>
