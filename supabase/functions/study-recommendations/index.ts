@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.84.0";
+import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "../_shared/rate-limiter.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -10,6 +11,15 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
+    // SECURITY: Rate limiting
+    const clientId = getClientIdentifier(req);
+    const rateLimitResult = checkRateLimit(clientId, 'ai_recommendations');
+    
+    if (!rateLimitResult.allowed) {
+      console.log(`Rate limit exceeded for study recommendations: ${clientId}`);
+      return rateLimitResponse(corsHeaders, rateLimitResult.resetIn,
+        'Too many recommendation requests. Please wait a moment before trying again.');
+    }
     const supabaseClient = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
       Deno.env.get("SUPABASE_ANON_KEY") ?? "",

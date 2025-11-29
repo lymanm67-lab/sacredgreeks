@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "../_shared/rate-limiter.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -11,6 +12,16 @@ serve(async (req) => {
   }
 
   try {
+    // SECURITY: Rate limiting (stricter for response coach due to longer responses)
+    const clientId = getClientIdentifier(req);
+    const rateLimitResult = checkRateLimit(clientId, 'ai_coach');
+    
+    if (!rateLimitResult.allowed) {
+      console.log(`Rate limit exceeded for response coach: ${clientId}`);
+      return rateLimitResponse(corsHeaders, rateLimitResult.resetIn,
+        'Too many coaching requests. Please wait a moment before trying again.');
+    }
+
     const { userResponse, context, scenario } = await req.json();
     
     if (!userResponse || !context || !scenario) {

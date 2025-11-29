@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "../_shared/rate-limiter.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -65,6 +66,16 @@ serve(async (req) => {
   }
 
   try {
+    // SECURITY: Rate limiting
+    const clientId = getClientIdentifier(req);
+    const rateLimitResult = checkRateLimit(clientId, 'ai_recommendations');
+    
+    if (!rateLimitResult.allowed) {
+      console.log(`Rate limit exceeded for resource recommendations: ${clientId}`);
+      return rateLimitResponse(corsHeaders, rateLimitResult.resetIn,
+        'Too many recommendation requests. Please wait a moment before trying again.');
+    }
+
     const body = await req.json();
     const { currentResource, allResources } = body;
 

@@ -1,5 +1,6 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "../_shared/rate-limiter.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -12,6 +13,16 @@ serve(async (req) => {
   }
 
   try {
+    // SECURITY: Rate limiting
+    const clientId = getClientIdentifier(req);
+    const rateLimitResult = checkRateLimit(clientId, 'ai_prayer');
+    
+    if (!rateLimitResult.allowed) {
+      console.log(`Rate limit exceeded for prayer generation: ${clientId}`);
+      return rateLimitResponse(corsHeaders, rateLimitResult.resetIn,
+        'Too many prayer generation requests. Please wait a moment before trying again.');
+    }
+
     const { category, situation, userName } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
 
