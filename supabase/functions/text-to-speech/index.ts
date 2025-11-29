@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -6,16 +7,53 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
+const MAX_TEXT_LENGTH = 5000;
+const VALID_VOICES = ["alloy", "echo", "fable", "onyx", "nova", "shimmer"];
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
 
   try {
+    // Authentication check
+    const supabaseClient = createClient(
+      Deno.env.get("SUPABASE_URL") ?? "",
+      Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+      { global: { headers: { Authorization: req.headers.get("Authorization")! } } }
+    );
+
+    const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+    if (authError || !user) {
+      console.error("Authentication failed:", authError?.message);
+      return new Response(
+        JSON.stringify({ error: "Unauthorized - please log in to use text-to-speech" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const { text, voice = "alloy" } = await req.json();
 
-    if (!text) {
-      throw new Error("Text is required");
+    // Input validation
+    if (!text || typeof text !== "string") {
+      return new Response(
+        JSON.stringify({ error: "Text is required and must be a string" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    if (text.length > MAX_TEXT_LENGTH) {
+      return new Response(
+        JSON.stringify({ error: `Text must be ${MAX_TEXT_LENGTH} characters or less. Current length: ${text.length}` }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    if (!VALID_VOICES.includes(voice)) {
+      return new Response(
+        JSON.stringify({ error: `Invalid voice. Must be one of: ${VALID_VOICES.join(", ")}` }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
     const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");
@@ -23,7 +61,7 @@ serve(async (req) => {
       throw new Error("OpenAI API key not configured");
     }
 
-    console.log("Generating speech for text length:", text.length);
+    console.log(`User ${user.email} generating speech for text length: ${text.length}, voice: ${voice}`);
 
     // Generate speech from text using OpenAI
     const response = await fetch("https://api.openai.com/v1/audio/speech", {
