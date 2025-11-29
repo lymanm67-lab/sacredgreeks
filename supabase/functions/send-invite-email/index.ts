@@ -4,6 +4,17 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
+// HTML escape function to prevent XSS
+const escapeHtml = (text: string): string => {
+  if (!text) return '';
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+};
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -85,7 +96,7 @@ const handler = async (req: Request): Promise<Response> => {
               </div>
               <div class="content">
                 <h2 style="color: #111827; margin-top: 0;">Hi there!</h2>
-                <p><strong>${inviterName}</strong> (${inviterEmail}) has invited you to join Sacred Greeks - a comprehensive platform for Greek life leadership development and spiritual growth.</p>
+                <p><strong>${escapeHtml(inviterName)}</strong> (${escapeHtml(inviterEmail)}) has invited you to join Sacred Greeks - a comprehensive platform for Greek life leadership development and spiritual growth.</p>
                 
                 <p><strong>What you'll get access to:</strong></p>
                 <ul style="line-height: 2;">
@@ -106,7 +117,7 @@ const handler = async (req: Request): Promise<Response> => {
                 </p>
               </div>
               <div class="footer">
-                <p>This invitation was sent by ${inviterName}. If you didn't expect this email, you can safely ignore it.</p>
+                <p>This invitation was sent by ${escapeHtml(inviterName)}. If you didn't expect this email, you can safely ignore it.</p>
                 <p>&copy; ${new Date().getFullYear()} Sacred Greeks. All rights reserved.</p>
               </div>
             </div>
