@@ -10,6 +10,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { CheckCircle2, ArrowRight, Sparkles, Users, Calendar, Trophy, BookOpen } from 'lucide-react';
+import { BetaUrgencyIndicator } from './BetaUrgencyIndicator';
 
 const betaBenefits = [
   {
@@ -77,6 +78,9 @@ export const BetaBenefitsDialog = ({ children }: BetaBenefitsDialogProps) => {
             </div>
           ))}
         </div>
+
+        {/* Urgency Indicator */}
+        <BetaUrgencyIndicator />
 
         <div className="flex flex-col gap-3 pt-2">
           <Link to="/beta-signup" onClick={() => setOpen(false)}>

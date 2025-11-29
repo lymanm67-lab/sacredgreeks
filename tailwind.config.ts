@@ -134,6 +134,10 @@ export default {
           "50%": { transform: "scale(1.1) rotate(0deg)", opacity: "1" },
           "100%": { transform: "scale(1) rotate(0deg)", opacity: "1" },
         },
+        "shimmer": {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -143,6 +147,7 @@ export default {
         "scale-in": "scale-in 0.4s ease-out",
         "float": "float 3s ease-in-out infinite",
         "success-check": "success-check 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+        "shimmer": "shimmer 3s infinite",
       },
       backgroundImage: {
         "gradient-hero": "var(--gradient-hero)",
