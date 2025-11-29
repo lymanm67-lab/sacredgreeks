@@ -1,16 +1,60 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
+import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "../_shared/rate-limiter.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+const VALID_BADGE_TYPES = ["study_guide", "devotional", "assessment"] as const;
+type BadgeType = typeof VALID_BADGE_TYPES[number];
+
 interface BadgeRequest {
-  type: "study_guide" | "devotional" | "assessment";
+  type: BadgeType;
   title: string;
   subtitle?: string;
   completionDate?: string;
   userName?: string;
+}
+
+function validateBadgeRequest(data: unknown): { valid: true; data: BadgeRequest } | { valid: false; error: string } {
+  if (!data || typeof data !== 'object') {
+    return { valid: false, error: 'Invalid request body' };
+  }
+
+  const { type, title, subtitle, completionDate, userName } = data as Record<string, unknown>;
+
+  if (!type || typeof type !== 'string' || !VALID_BADGE_TYPES.includes(type as BadgeType)) {
+    return { valid: false, error: `Invalid type. Must be one of: ${VALID_BADGE_TYPES.join(', ')}` };
+  }
+
+  if (!title || typeof title !== 'string' || title.length === 0 || title.length > 200) {
+    return { valid: false, error: 'Title is required and must be 1-200 characters' };
+  }
+
+  if (subtitle !== undefined && (typeof subtitle !== 'string' || subtitle.length > 200)) {
+    return { valid: false, error: 'Subtitle must be a string under 200 characters' };
+  }
+
+  if (completionDate !== undefined && (typeof completionDate !== 'string' || completionDate.length > 50)) {
+    return { valid: false, error: 'Completion date must be a string under 50 characters' };
+  }
+
+  if (userName !== undefined && (typeof userName !== 'string' || userName.length > 100)) {
+    return { valid: false, error: 'User name must be a string under 100 characters' };
+  }
+
+  return {
+    valid: true,
+    data: {
+      type: type as BadgeType,
+      title: title as string,
+      subtitle: subtitle as string | undefined,
+      completionDate: completionDate as string | undefined,
+      userName: userName as string | undefined,
+    }
+  };
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -19,9 +63,53 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { type, title, subtitle, completionDate, userName }: BadgeRequest = await req.json();
+    // SECURITY: Authentication check
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: 'Authorization required' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
 
-    console.log("Generating badge for:", { type, title });
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    });
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid or expired token' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // SECURITY: Rate limiting (5 badge generations per minute per user)
+    const clientId = getClientIdentifier(req, user.id);
+    const rateLimitResult = checkRateLimit(clientId, 'ai_coach'); // Using ai_coach limit (5/min)
+    
+    if (!rateLimitResult.allowed) {
+      console.log(`Rate limit exceeded for badge generation: ${user.id}`);
+      return rateLimitResponse(corsHeaders, rateLimitResult.resetIn,
+        'Too many badge generation requests. Please wait a moment before trying again.');
+    }
+
+    // SECURITY: Input validation
+    const requestBody = await req.json();
+    const validation = validateBadgeRequest(requestBody);
+    
+    if (!validation.valid) {
+      return new Response(
+        JSON.stringify({ error: validation.error }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const { type, title, subtitle, completionDate, userName } = validation.data;
+
+    console.log("Generating badge for user:", user.id, { type, title });
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
@@ -30,16 +118,20 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Create detailed prompt based on achievement type
     let prompt = "";
+    const safeTitle = title.substring(0, 100);
+    const safeSubtitle = subtitle?.substring(0, 100) || '';
+    const safeUserName = userName?.substring(0, 50) || 'Sacred Greeks Member';
+    const safeDate = completionDate?.substring(0, 30) || new Date().toLocaleDateString();
     
     switch (type) {
       case "study_guide":
         prompt = `Create a beautiful, professional achievement badge certificate with a modern design. The design should have:
 - A gradient background from deep purple (#7c3aed) to lighter purple (#a855f7)
 - Sacred geometry or elegant ornamental borders in gold/white
-- Large bold text saying "${title}"
-- Subtitle: "${subtitle || 'Study Guide Completed'}"
-- User name: "${userName || 'Sacred Greeks Member'}"
-- Date completed: "${completionDate || new Date().toLocaleDateString()}"
+- Large bold text saying "${safeTitle}"
+- Subtitle: "${safeSubtitle || 'Study Guide Completed'}"
+- User name: "${safeUserName}"
+- Date completed: "${safeDate}"
 - A ribbon or medal icon at the top
 - Elegant, celebratory design suitable for Instagram sharing (1080x1080px square format)
 - Professional typography with clear hierarchy
@@ -51,11 +143,11 @@ Make it feel special and worthy of sharing on social media.`;
         prompt = `Create a serene, spiritual achievement badge with:
 - A peaceful gradient background from soft blue to warm cream
 - Gentle light rays or sunrise imagery
-- Large text: "${title}"
+- Large text: "${safeTitle}"
 - Subtitle: "Daily Devotional Completed"
-- User name: "${userName || 'Faithful Reader'}"
+- User name: "${safeUserName}"
 - An open book or praying hands icon
-- Date: "${completionDate || new Date().toLocaleDateString()}"
+- Date: "${safeDate}"
 - Calming, meditative design (1080x1080px square)
 - Scripture-inspired decorative elements
 - Soft, warm color palette
@@ -66,11 +158,11 @@ Perfect for sharing spiritual growth milestones.`;
         prompt = `Create an impressive achievement certificate badge with:
 - A bold gradient background from purple to gold
 - Professional academic or achievement-style design
-- Large prominent text: "${title}"
-- Subtitle: "${subtitle || 'Assessment Completed'}"
-- User name: "${userName || 'Achievement Earner'}"
+- Large prominent text: "${safeTitle}"
+- Subtitle: "${safeSubtitle || 'Assessment Completed'}"
+- User name: "${safeUserName}"
 - A shield, star, or trophy icon
-- Date: "${completionDate || new Date().toLocaleDateString()}"
+- Date: "${safeDate}"
 - Sharp, modern design (1080x1080px square)
 - Celebratory elements like confetti or stars
 - Professional color scheme
@@ -104,7 +196,7 @@ Designed to celebrate personal growth and achievement.`;
     }
 
     const aiData = await aiResponse.json();
-    console.log("AI response received");
+    console.log("AI response received for user:", user.id);
 
     // Extract the generated image
     const imageUrl = aiData.choices?.[0]?.message?.images?.[0]?.image_url?.url;

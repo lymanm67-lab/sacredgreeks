@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "../_shared/rate-limiter.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -47,6 +48,26 @@ const FAQ = [
   { q: "Who is it for?", a: "Christians in fraternities/sororities, Divine Nine members, alumni, students considering Greek life, and campus ministers." },
 ];
 
+// Input validation
+const MAX_QUESTION_LENGTH = 1000;
+
+function validateQuestion(question: unknown): { valid: true; question: string } | { valid: false; error: string } {
+  if (!question || typeof question !== 'string') {
+    return { valid: false, error: 'Question is required and must be a string' };
+  }
+  
+  const trimmed = question.trim();
+  if (trimmed.length === 0) {
+    return { valid: false, error: 'Question cannot be empty' };
+  }
+  
+  if (trimmed.length > MAX_QUESTION_LENGTH) {
+    return { valid: false, error: `Question must be ${MAX_QUESTION_LENGTH} characters or less` };
+  }
+  
+  return { valid: true, question: trimmed };
+}
+
 serve(async (req) => {
   // Handle CORS
   if (req.method === "OPTIONS") {
@@ -57,7 +78,7 @@ serve(async (req) => {
     const url = new URL(req.url);
     const path = url.pathname.split("/").pop();
 
-    // Endpoint: Get app info
+    // Endpoint: Get app info (no rate limiting needed - just static info)
     if (path === "info" || req.method === "GET") {
       return new Response(
         JSON.stringify({
@@ -85,14 +106,28 @@ serve(async (req) => {
 
     // Endpoint: Ask a question
     if (path === "ask" && req.method === "POST") {
-      const { question } = await req.json();
+      // SECURITY: Rate limiting (15 questions per minute per IP)
+      const clientId = getClientIdentifier(req);
+      const rateLimitResult = checkRateLimit(clientId, 'ai_search');
+      
+      if (!rateLimitResult.allowed) {
+        console.log(`Rate limit exceeded for ChatGPT action: ${clientId}`);
+        return rateLimitResponse(corsHeaders, rateLimitResult.resetIn,
+          'Too many requests. Please wait a moment before asking another question.');
+      }
 
-      if (!question) {
+      // SECURITY: Input validation
+      const body = await req.json();
+      const validation = validateQuestion(body.question);
+      
+      if (!validation.valid) {
         return new Response(
-          JSON.stringify({ error: "Question is required" }),
+          JSON.stringify({ error: validation.error }),
           { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
         );
       }
+
+      const question = validation.question;
 
       const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
       if (!LOVABLE_API_KEY) {
@@ -174,7 +209,7 @@ Always include relevant links to ${APP_INFO.website} when appropriate. Be helpfu
             path: "/chatgpt-action/ask",
             method: "POST",
             description: "Ask a question about Sacred Greeks Life",
-            body: { question: "string (required)" },
+            body: { question: "string (required, max 1000 characters)" },
           },
         ],
         website: APP_INFO.website,
