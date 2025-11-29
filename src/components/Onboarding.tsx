@@ -3,19 +3,68 @@ import { useNavigate } from 'react-router-dom';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { BookOpen, Heart, FileText, CheckCircle, TrendingUp } from 'lucide-react';
+import { BookOpen, Heart, FileText, CheckCircle, TrendingUp, Users } from 'lucide-react';
+import { GreekOrganizationSelector } from '@/components/GreekOrganizationSelector';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 interface OnboardingProps {
   open: boolean;
   onComplete: () => void;
+  userId?: string;
 }
 
-export function Onboarding({ open, onComplete }: OnboardingProps) {
+export function Onboarding({ open, onComplete, userId }: OnboardingProps) {
   const [step, setStep] = useState(1);
-  const navigate = useNavigate();
-  const totalSteps = 5;
+  const [saving, setSaving] = useState(false);
+  const { toast } = useToast();
+  const totalSteps = 6;
 
-  const handleNext = () => {
+  // Greek organization state
+  const [greekCouncil, setGreekCouncil] = useState('');
+  const [greekOrganization, setGreekOrganization] = useState('');
+  const [chapterName, setChapterName] = useState('');
+  const [initiationYear, setInitiationYear] = useState<number | null>(null);
+  const [memberStatus, setMemberStatus] = useState('active');
+
+  const saveGreekInfo = async () => {
+    if (!userId) return true; // Skip if no user
+
+    setSaving(true);
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .upsert({
+          id: userId,
+          greek_council: greekCouncil || null,
+          greek_organization: greekOrganization || null,
+          chapter_name: chapterName || null,
+          initiation_year: initiationYear,
+          member_status: memberStatus || 'active',
+          updated_at: new Date().toISOString(),
+        });
+
+      if (error) throw error;
+      return true;
+    } catch (error) {
+      console.error('Error saving Greek info:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to save your organization info. You can update it later in your profile.',
+        variant: 'destructive',
+      });
+      return true; // Continue anyway
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleNext = async () => {
+    if (step === 2) {
+      // Save Greek info when leaving step 2
+      await saveGreekInfo();
+    }
+    
     if (step < totalSteps) {
       setStep(step + 1);
     } else {
@@ -23,7 +72,11 @@ export function Onboarding({ open, onComplete }: OnboardingProps) {
     }
   };
 
-  const handleSkip = () => {
+  const handleSkip = async () => {
+    // Save whatever Greek info they've entered
+    if (greekCouncil || greekOrganization) {
+      await saveGreekInfo();
+    }
     onComplete();
   };
 
@@ -31,7 +84,7 @@ export function Onboarding({ open, onComplete }: OnboardingProps) {
 
   return (
     <Dialog open={open} onOpenChange={onComplete}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl">Welcome to Sacred Greeks!</DialogTitle>
         </DialogHeader>
@@ -52,6 +105,33 @@ export function Onboarding({ open, onComplete }: OnboardingProps) {
           )}
 
           {step === 2 && (
+            <div className="space-y-4">
+              <div className="text-center mb-4">
+                <div className="w-20 h-20 mx-auto bg-gradient-to-br from-sacred to-warm-blue rounded-full flex items-center justify-center mb-4">
+                  <Users className="w-10 h-10 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold">Your Greek Affiliation</h3>
+                <p className="text-muted-foreground text-sm">
+                  Tell us about your organization to personalize your experience (optional)
+                </p>
+              </div>
+              <GreekOrganizationSelector
+                selectedCouncil={greekCouncil}
+                selectedOrganization={greekOrganization}
+                chapterName={chapterName}
+                initiationYear={initiationYear}
+                memberStatus={memberStatus}
+                onCouncilChange={setGreekCouncil}
+                onOrganizationChange={setGreekOrganization}
+                onChapterChange={setChapterName}
+                onYearChange={setInitiationYear}
+                onStatusChange={setMemberStatus}
+                compact
+              />
+            </div>
+          )}
+
+          {step === 3 && (
             <div className="space-y-4 text-center">
               <div className="w-20 h-20 mx-auto bg-gradient-to-br from-purple-500 to-violet-600 rounded-full flex items-center justify-center">
                 <Heart className="w-10 h-10 text-white" />
@@ -63,7 +143,7 @@ export function Onboarding({ open, onComplete }: OnboardingProps) {
             </div>
           )}
 
-          {step === 3 && (
+          {step === 4 && (
             <div className="space-y-4 text-center">
               <div className="w-20 h-20 mx-auto bg-gradient-to-br from-rose-500 to-pink-600 rounded-full flex items-center justify-center">
                 <TrendingUp className="w-10 h-10 text-white" />
@@ -75,7 +155,7 @@ export function Onboarding({ open, onComplete }: OnboardingProps) {
             </div>
           )}
 
-          {step === 4 && (
+          {step === 5 && (
             <div className="space-y-4 text-center">
               <div className="w-20 h-20 mx-auto bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center">
                 <FileText className="w-10 h-10 text-white" />
@@ -87,7 +167,7 @@ export function Onboarding({ open, onComplete }: OnboardingProps) {
             </div>
           )}
 
-          {step === 5 && (
+          {step === 6 && (
             <div className="space-y-4 text-center">
               <div className="w-20 h-20 mx-auto bg-gradient-to-br from-yellow-500 to-amber-600 rounded-full flex items-center justify-center">
                 <CheckCircle className="w-10 h-10 text-white" />
@@ -101,11 +181,11 @@ export function Onboarding({ open, onComplete }: OnboardingProps) {
         </div>
 
         <div className="flex justify-between gap-3">
-          <Button variant="outline" onClick={handleSkip}>
+          <Button variant="outline" onClick={handleSkip} disabled={saving}>
             Skip
           </Button>
-          <Button onClick={handleNext} className="bg-sacred hover:bg-sacred/90">
-            {step === totalSteps ? 'Get Started' : 'Next'}
+          <Button onClick={handleNext} className="bg-sacred hover:bg-sacred/90" disabled={saving}>
+            {saving ? 'Saving...' : step === totalSteps ? 'Get Started' : 'Next'}
           </Button>
         </div>
 
