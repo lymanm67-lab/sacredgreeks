@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 
@@ -43,7 +44,55 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    // Authentication check
+    const supabaseClient = createClient(
+      Deno.env.get("SUPABASE_URL") ?? "",
+      Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+      { global: { headers: { Authorization: req.headers.get("Authorization")! } } }
+    );
+
+    const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+    if (authError || !user) {
+      console.error("Authentication failed:", authError?.message);
+      return new Response(
+        JSON.stringify({ error: "Unauthorized" }),
+        { status: 401, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
     const { testerName, testerEmail, organization, referredBy }: BetaSignupNotification = await req.json();
+
+    // Validate that the tester email matches the authenticated user
+    if (user.email !== testerEmail) {
+      console.error("Email mismatch: authenticated user email doesn't match tester email");
+      return new Response(
+        JSON.stringify({ error: "Forbidden: You can only sign up with your own email" }),
+        { status: 403, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    // Input validation
+    if (!testerName || typeof testerName !== "string" || testerName.length > 100) {
+      return new Response(
+        JSON.stringify({ error: "Invalid tester name" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    if (!testerEmail || typeof testerEmail !== "string" || !testerEmail.includes("@")) {
+      return new Response(
+        JSON.stringify({ error: "Invalid tester email" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    if (organization && (typeof organization !== "string" || organization.length > 200)) {
+      return new Response(
+        JSON.stringify({ error: "Invalid organization" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
     const adminEmail = Deno.env.get("ADMIN_EMAIL");
 
     if (!adminEmail) {
@@ -54,7 +103,12 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    console.log(`Sending beta signup notification for: ${testerEmail}`);
+    console.log(`Authenticated user ${user.email} - sending beta signup notification`);
+
+    // Sanitize inputs for HTML
+    const safeTesterName = testerName.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    const safeOrganization = organization?.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    const safeReferredBy = referredBy?.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
     // Send notification to admin
     const adminNotification = await sendEmail(
@@ -67,10 +121,10 @@ const handler = async (req: Request): Promise<Response> => {
           
           <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <h3 style="margin-top: 0; color: #334155;">Tester Details</h3>
-            <p><strong>Name:</strong> ${testerName}</p>
+            <p><strong>Name:</strong> ${safeTesterName}</p>
             <p><strong>Email:</strong> ${testerEmail}</p>
-            ${organization ? `<p><strong>Organization:</strong> ${organization}</p>` : ''}
-            ${referredBy ? `<p><strong>Referred By:</strong> ${referredBy}</p>` : ''}
+            ${safeOrganization ? `<p><strong>Organization:</strong> ${safeOrganization}</p>` : ''}
+            ${safeReferredBy ? `<p><strong>Referred By:</strong> ${safeReferredBy}</p>` : ''}
           </div>
           
           <p style="color: #64748b; font-size: 14px;">
@@ -88,7 +142,7 @@ const handler = async (req: Request): Promise<Response> => {
       "Welcome to the Sacred Greeks Beta! 🙏",
       `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <h1 style="color: #6366f1;">Welcome to Sacred Greeks, ${testerName}!</h1>
+          <h1 style="color: #6366f1;">Welcome to Sacred Greeks, ${safeTesterName}!</h1>
           
           <p>Thank you for joining our beta program! We're excited to have you as one of our early testers.</p>
           
