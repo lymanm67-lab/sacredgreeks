@@ -1199,6 +1199,13 @@ export type Database = {
             referencedRelation: "assessment_submissions"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "shared_results_assessment_id_fkey"
+            columns: ["assessment_id"]
+            isOneToOne: false
+            referencedRelation: "assessment_submissions_safe"
+            referencedColumns: ["id"]
+          },
         ]
       }
       shared_symbol_bookmarks: {
@@ -1556,6 +1563,48 @@ export type Database = {
       }
     }
     Views: {
+      assessment_submissions_safe: {
+        Row: {
+          answers_json: Json | null
+          consent_to_contact: boolean | null
+          created_at: string | null
+          email: string | null
+          id: string | null
+          result_type: string | null
+          scenario: string | null
+          scores_json: Json | null
+          track: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          answers_json?: Json | null
+          consent_to_contact?: boolean | null
+          created_at?: string | null
+          email?: never
+          id?: string | null
+          result_type?: string | null
+          scenario?: string | null
+          scores_json?: Json | null
+          track?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          answers_json?: Json | null
+          consent_to_contact?: boolean | null
+          created_at?: string | null
+          email?: never
+          id?: string | null
+          result_type?: string | null
+          scenario?: string | null
+          scores_json?: Json | null
+          track?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       healing_stories_public: {
         Row: {
           created_at: string | null
@@ -1619,6 +1668,54 @@ export type Database = {
           id?: string | null
           is_featured?: boolean | null
           question?: string | null
+        }
+        Relationships: []
+      }
+      qa_submissions_safe: {
+        Row: {
+          answer: string | null
+          answered_at: string | null
+          answered_by: string | null
+          category: string | null
+          created_at: string | null
+          email: string | null
+          id: string | null
+          is_featured: boolean | null
+          is_public: boolean | null
+          question: string | null
+          status: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          answer?: string | null
+          answered_at?: string | null
+          answered_by?: string | null
+          category?: string | null
+          created_at?: string | null
+          email?: never
+          id?: string | null
+          is_featured?: boolean | null
+          is_public?: boolean | null
+          question?: string | null
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          answer?: string | null
+          answered_at?: string | null
+          answered_by?: string | null
+          category?: string | null
+          created_at?: string | null
+          email?: never
+          id?: string | null
+          is_featured?: boolean | null
+          is_public?: boolean | null
+          question?: string | null
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
