@@ -1485,6 +1485,10 @@ export type Database = {
       cleanup_old_rate_limits: { Args: never; Returns: undefined }
       generate_referral_code: { Args: never; Returns: string }
       generate_symbol_share_token: { Args: never; Returns: string }
+      get_assessment_email_secure: {
+        Args: { submission_id: string }
+        Returns: string
+      }
       get_submission_email_if_consented: {
         Args: { submission_id: string }
         Returns: string
