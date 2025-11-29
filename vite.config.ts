@@ -67,6 +67,7 @@ export default defineConfig(({ mode }) => ({
       'react-dom',
       'react/jsx-runtime',
       'react/jsx-dev-runtime',
+      'framer-motion',
       '@radix-ui/react-context',
       '@radix-ui/react-primitive',
       '@radix-ui/react-slot'
@@ -79,6 +80,7 @@ export default defineConfig(({ mode }) => ({
       'react-dom/client',
       'react/jsx-runtime',
       'react/jsx-dev-runtime',
+      'framer-motion',
       '@radix-ui/react-tooltip',
       '@radix-ui/react-dialog',
       '@radix-ui/react-popover',

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, Sparkles, Star } from 'lucide-react';
 
@@ -9,7 +9,7 @@ interface CelebrationAnimationProps {
   title?: string;
 }
 
-export const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
+export const CelebrationAnimation = ({
   show,
   onComplete,
   points = 10,
