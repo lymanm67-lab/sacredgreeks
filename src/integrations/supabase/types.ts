@@ -918,6 +918,42 @@ export type Database = {
         }
         Relationships: []
       }
+      security_scan_results: {
+        Row: {
+          created_at: string
+          critical_count: number
+          findings_json: Json
+          id: string
+          info_count: number
+          scan_type: string
+          scanned_at: string
+          status: string
+          warning_count: number
+        }
+        Insert: {
+          created_at?: string
+          critical_count?: number
+          findings_json?: Json
+          id?: string
+          info_count?: number
+          scan_type?: string
+          scanned_at?: string
+          status?: string
+          warning_count?: number
+        }
+        Update: {
+          created_at?: string
+          critical_count?: number
+          findings_json?: Json
+          id?: string
+          info_count?: number
+          scan_type?: string
+          scanned_at?: string
+          status?: string
+          warning_count?: number
+        }
+        Relationships: []
+      }
       shared_certificates: {
         Row: {
           assessment_type: string
