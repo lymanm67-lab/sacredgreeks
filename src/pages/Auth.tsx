@@ -589,16 +589,17 @@ const Auth = () => {
                           required
                           value={signupEmail}
                           onChange={(e) => {
-                            setSignupEmail(e.target.value);
-                            if (e.target.value.includes('@')) {
-                              checkEmail(e.target.value);
+                            const value = e.target.value;
+                            setSignupEmail(value);
+                            if (value.includes('@') && value.indexOf('@') < value.length - 1) {
+                              checkEmail(value);
                             } else {
                               resetDisposableCheck();
                             }
                           }}
-                          className={isDisposable ? 'border-destructive focus-visible:ring-destructive' : ''}
+                          className={isDisposable === true ? 'border-destructive focus-visible:ring-destructive' : ''}
                         />
-                        {isDisposable && (
+                        {isDisposable === true && (
                           <div className="flex items-start gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-md">
                             <Ban className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
                             <div className="text-sm text-destructive">

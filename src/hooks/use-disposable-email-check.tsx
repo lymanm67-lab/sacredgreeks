@@ -810,28 +810,35 @@ export function useDisposableEmailCheck() {
   const checkEmail = useCallback((email: string): DisposableEmailCheckResult => {
     setIsChecking(true);
     
-    try {
-      // Extract domain from email
-      const emailLower = email.toLowerCase().trim();
-      const atIndex = emailLower.lastIndexOf('@');
-      
-      if (atIndex === -1) {
-        setIsDisposable(false);
-        setCheckedDomain(null);
-        return { isDisposable: false, domain: null };
-      }
-      
-      const domain = emailLower.substring(atIndex + 1);
-      setCheckedDomain(domain);
-      
-      // Check if domain is in disposable list
-      const isDisposableDomain = DISPOSABLE_EMAIL_DOMAINS.has(domain);
-      setIsDisposable(isDisposableDomain);
-      
-      return { isDisposable: isDisposableDomain, domain };
-    } finally {
+    // Extract domain from email
+    const emailLower = email.toLowerCase().trim();
+    const atIndex = emailLower.lastIndexOf('@');
+    
+    if (atIndex === -1 || atIndex === emailLower.length - 1) {
+      setIsDisposable(false);
+      setCheckedDomain(null);
       setIsChecking(false);
+      return { isDisposable: false, domain: null };
     }
+    
+    const domain = emailLower.substring(atIndex + 1);
+    
+    // Only check if domain has content (not just @)
+    if (!domain || domain.length === 0) {
+      setIsDisposable(false);
+      setCheckedDomain(null);
+      setIsChecking(false);
+      return { isDisposable: false, domain: null };
+    }
+    
+    setCheckedDomain(domain);
+    
+    // Check if domain is in disposable list
+    const isDisposableDomain = DISPOSABLE_EMAIL_DOMAINS.has(domain);
+    setIsDisposable(isDisposableDomain);
+    setIsChecking(false);
+    
+    return { isDisposable: isDisposableDomain, domain };
   }, []);
 
   const reset = useCallback(() => {
