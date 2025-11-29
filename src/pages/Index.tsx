@@ -848,6 +848,9 @@ const Index = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-wrap justify-center gap-6 text-sm">
+              <Link to="/user-guide" className="text-muted-foreground hover:text-sacred transition-colors font-medium">
+                📖 User Guide
+              </Link>
               <Link to="/faq" className="text-muted-foreground hover:text-sacred transition-colors">
                 FAQ
               </Link>

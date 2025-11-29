@@ -6,9 +6,16 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { SuggestResourceDialog } from '@/components/resources/SuggestResourceDialog';
-import { BookOpen, ExternalLink, Download, Search, ArrowUpDown, Heart, Users, HandHeart, Book } from 'lucide-react';
+import { BookOpen, ExternalLink, Download, Search, ArrowUpDown, Heart, Users, HandHeart, Book, FileText } from 'lucide-react';
 
 const resources = [
+  {
+    title: "📖 User Guide",
+    description: "Complete guide on how to use all Sacred Greeks Life App features with screenshots",
+    url: "/user-guide",
+    icon: FileText,
+    category: "Faith"
+  },
   {
     title: "Bible Study Tool",
     description: "Integrated scripture search, daily verses, and reading plans for spiritual growth",
