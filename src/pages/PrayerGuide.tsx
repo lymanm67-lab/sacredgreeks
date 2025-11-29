@@ -9,7 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Home, Sparkles, BookOpen, GraduationCap, Heart, Save, Copy, Check, Loader2, Mic, Music } from 'lucide-react';
+import { Home, Sparkles, BookOpen, GraduationCap, Heart, Save, Copy, Check, Loader2, Mic, Music, Users } from 'lucide-react';
 import { toast } from 'sonner';
 import { prayerTemplates, prayerCategories } from '@/data/prayerTemplates';
 import { prayerMethods } from '@/data/prayerLearning';
@@ -17,6 +17,7 @@ import { VoiceRecordingButton, VoiceInputButton } from '@/components/VoiceInputB
 import { AmbientSoundPlayer } from '@/components/prayer/AmbientSoundPlayer';
 import { PrayAlongKaraoke } from '@/components/prayer/PrayAlongKaraoke';
 import { ListenButton } from '@/components/ListenButton';
+import { OrgPrayerTemplates } from '@/components/prayer/OrgPrayerTemplates';
 
 export default function PrayerGuide() {
   const { user } = useAuth();
@@ -124,11 +125,16 @@ export default function PrayerGuide() {
         </div>
 
         <Tabs defaultValue="ai" className="w-full">
-          <TabsList className="grid w-full grid-cols-5 mb-8">
+          <TabsList className="grid w-full grid-cols-6 mb-8">
             <TabsTrigger value="ai" className="flex items-center gap-2">
               <Sparkles className="w-4 h-4" />
               <span className="hidden sm:inline">AI Prayer</span>
               <span className="sm:hidden">AI</span>
+            </TabsTrigger>
+            <TabsTrigger value="org" className="flex items-center gap-2">
+              <Users className="w-4 h-4" />
+              <span className="hidden sm:inline">My Org</span>
+              <span className="sm:hidden">Org</span>
             </TabsTrigger>
             <TabsTrigger value="pray-along" className="flex items-center gap-2">
               <BookOpen className="w-4 h-4" />
@@ -151,6 +157,15 @@ export default function PrayerGuide() {
               <span className="sm:hidden">Learn</span>
             </TabsTrigger>
           </TabsList>
+
+          {/* Org Prayer Templates Tab */}
+          <TabsContent value="org" className="space-y-6">
+            <OrgPrayerTemplates 
+              onSelectPrayer={(prayer, title) => {
+                handleSavePrayer(prayer, title);
+              }}
+            />
+          </TabsContent>
 
           {/* AI Prayer Guide Tab */}
           <TabsContent value="ai" className="space-y-6">

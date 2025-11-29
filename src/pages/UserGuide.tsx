@@ -52,18 +52,18 @@ const guideContent = [
     title: "Dashboard Overview",
     icon: Home,
     screenshot: dashboardScreenshot,
-    description: "Your central hub for all Sacred Greeks features",
+    description: "Your personalized hub with org-specific content",
     category: "Getting Started",
     steps: [
       "After signing in, you'll land on your personalized dashboard",
+      "See content tailored to your Greek council and organization",
       "View your daily verse and devotional at the top",
       "Quick access cards show your progress and upcoming tasks",
-      "Navigate to any feature using the cards or menu",
-      "Track your streaks and achievements from the stats bar"
+      "Navigate to any feature using the cards or menu"
     ],
     tips: [
-      "Check your dashboard daily for new content",
-      "Use the quick actions for common tasks",
+      "Set your Greek affiliation in your profile for personalized content",
+      "Check your dashboard daily for new org-specific content",
       "Your progress is automatically saved"
     ]
   },
@@ -72,38 +72,38 @@ const guideContent = [
     title: "Daily Devotionals",
     icon: Calendar,
     screenshot: devotionalScreenshot,
-    description: "Start each day with Scripture-based reflections",
+    description: "Org-specific Scripture reflections tailored to your Greek experience",
     category: "Daily Practice",
     steps: [
       "Access daily devotionals from the dashboard or menu",
-      "Read the Scripture passage for the day",
-      "Reflect on the P.R.O.O.F. framework application",
-      "Write your personal notes and thoughts",
+      "See personalized themes for your Greek council (NPHC, NPC, IFC, etc.)",
+      "Read the Scripture passage with org-specific applications",
+      "Reflect on discussion prompts tailored to your Greek experience",
       "Mark as complete to track your progress"
     ],
     tips: [
-      "Set a reminder to read devotionals at the same time each day",
+      "Your devotional content adapts to your Greek affiliation",
       "Use the audio feature to listen while commuting",
-      "Share meaningful devotionals with friends"
+      "Prayer focuses are customized for your organization"
     ]
   },
   {
     id: "prayer-journal",
-    title: "Prayer Journal",
+    title: "Prayer Journal & Org Templates",
     icon: PenLine,
     screenshot: prayerJournalScreenshot,
-    description: "Track your prayers and see God's faithfulness",
+    description: "Track prayers with org-specific templates for your Greek experience",
     category: "Daily Practice",
     steps: [
-      "Create new prayer entries with title and description",
-      "Categorize prayers by type (personal, family, chapter, etc.)",
+      "Access org-specific prayer templates in the Prayer Guide",
+      "Find prayers for chapter meetings, initiations, service events & more",
+      "Create personal prayer entries with title and description",
       "Mark prayers as answered when God responds",
-      "Add thanksgiving notes to answered prayers",
       "Review your prayer history and patterns"
     ],
     tips: [
-      "Be specific in your prayer requests",
-      "Regularly review answered prayers for encouragement",
+      "Use the 'My Org' tab for prayers specific to your council",
+      "Templates cover brotherhood/sisterhood, events, leadership & more",
       "Use voice input for quick entries"
     ]
   },
@@ -152,18 +152,18 @@ const guideContent = [
     title: "5-Session Study Guide",
     icon: GraduationCap,
     screenshot: studyGuideScreenshot,
-    description: "Comprehensive biblical framework for group or individual study",
+    description: "Org-specific biblical framework with tailored applications",
     category: "Training",
     steps: [
       "Start with Session 1: Introduction to the P.R.O.O.F. framework",
       "Read the Scripture passages and key points",
-      "Complete the discussion questions",
-      "Use the reflection prompts for deeper understanding",
+      "View personalized applications for your Greek council",
+      "Complete org-specific discussion questions",
       "Track completion and earn your certificate"
     ],
     tips: [
-      "Great for small groups or chapter Bible studies",
-      "Download materials for offline access",
+      "Each session includes content tailored to your organization",
+      "Great for chapter Bible studies with org-specific prompts",
       "Complete all sessions to earn your certificate"
     ]
   },

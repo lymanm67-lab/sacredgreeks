@@ -16,8 +16,12 @@ import { CertificateDialog } from "@/components/study-guide/CertificateDialog";
 import { AchievementBadgeDialog } from "@/components/AchievementBadgeDialog";
 import { ListenButton } from "@/components/ListenButton";
 import { VoiceInputButton } from "@/components/VoiceInputButton";
+import { OrgStudyGuideContent } from "@/components/study-guide/OrgStudyGuideContent";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 
 const StudyGuide = () => {
+  const { user } = useAuth();
   const {
     isSessionComplete,
     toggleSession,
@@ -35,6 +39,32 @@ const StudyGuide = () => {
   const [answersState, setAnswersState] = useState<Record<string, string>>({});
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [certificateDialogOpen, setCertificateDialogOpen] = useState(false);
+  const [userCouncil, setUserCouncil] = useState<string | null>(null);
+  const [userOrgName, setUserOrgName] = useState<string | null>(null);
+
+  // Load user's Greek council
+  useEffect(() => {
+    const loadUserProfile = async () => {
+      if (!user) return;
+      
+      try {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('greek_council, greek_organization')
+          .eq('id', user.id)
+          .single();
+
+        if (profile) {
+          setUserCouncil(profile.greek_council);
+          setUserOrgName(profile.greek_organization);
+        }
+      } catch (error) {
+        console.error('Error loading profile:', error);
+      }
+    };
+
+    loadUserProfile();
+  }, [user]);
 
   const isAllComplete = completedCount === totalSessions;
 
@@ -355,7 +385,7 @@ const StudyGuide = () => {
                   </AccordionItem>
 
                   {isAuthenticated && (
-                    <AccordionItem value="notes" className="border-0">
+                  <AccordionItem value="notes" className="border-0">
                       <AccordionTrigger className="text-base font-semibold hover:text-sacred">
                         <div className="flex items-center gap-2">
                           <Edit3 className="w-4 h-4" />
@@ -396,6 +426,25 @@ const StudyGuide = () => {
                             {isSavingNotes ? "Saving..." : "Save Notes"}
                           </Button>
                         </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  )}
+
+                  {/* Org-Specific Content */}
+                  {userCouncil && (
+                    <AccordionItem value="org-content" className="border-0">
+                      <AccordionTrigger className="text-base font-semibold hover:text-sacred">
+                        <div className="flex items-center gap-2">
+                          <BookOpen className="w-4 h-4" />
+                          Personalized Application
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <OrgStudyGuideContent 
+                          councilId={userCouncil} 
+                          organizationName={userOrgName || undefined}
+                          sessionId={session.id}
+                        />
                       </AccordionContent>
                     </AccordionItem>
                   )}

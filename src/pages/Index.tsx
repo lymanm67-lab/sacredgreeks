@@ -139,10 +139,11 @@ const features = [
 ];
 
 const benefits = [
+  "Personalized Experience: Org-specific devotionals, study guides & prayer templates tailored to your Greek council",
   "Daily Spiritual Tools: Devotionals, Bible study, prayer guides & journals for consistent spiritual growth",
-  "Community Features: Prayer Wall, service tracking & shared support with brothers and sisters",
-  "Personal Growth: Track progress with insights, achievements, streaks & personalized recommendations",
-  "P.R.O.O.F. Framework: Navigate Greek life challenges with biblical guidance"
+  "Community Features: Prayer Wall with org filters, service tracking & shared support with brothers and sisters",
+  "Personal Growth: Track progress with insights, achievements, streaks & council-specific recommendations",
+  "P.R.O.O.F. Framework: Navigate Greek life challenges with biblical guidance customized for your organization"
 ];
 
 const Index = () => {
