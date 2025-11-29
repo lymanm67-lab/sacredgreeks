@@ -1401,6 +1401,36 @@ export type Database = {
         }
         Relationships: []
       }
+      qa_public_answers: {
+        Row: {
+          answer: string | null
+          answered_at: string | null
+          category: string | null
+          created_at: string | null
+          id: string | null
+          is_featured: boolean | null
+          question: string | null
+        }
+        Insert: {
+          answer?: string | null
+          answered_at?: string | null
+          category?: string | null
+          created_at?: string | null
+          id?: string | null
+          is_featured?: boolean | null
+          question?: string | null
+        }
+        Update: {
+          answer?: string | null
+          answered_at?: string | null
+          category?: string | null
+          created_at?: string | null
+          id?: string | null
+          is_featured?: boolean | null
+          question?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       award_points: {
