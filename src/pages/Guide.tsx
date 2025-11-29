@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ProgressStepper } from "@/components/ui/progress-stepper";
-import { Home } from "lucide-react";
-import { SacredGreeksStep1 } from "@/components/sacred-greeks/SacredGreeksStep1";
+import { Home, Sparkles } from "lucide-react";
+import { SacredGreeksStep1, Scenario } from "@/components/sacred-greeks/SacredGreeksStep1";
 import { SacredGreeksStep2 } from "@/components/sacred-greeks/SacredGreeksStep2";
 import { SacredGreeksResults } from "@/components/sacred-greeks/SacredGreeksResults";
 import { SacredGreeksAnswers } from "@/types/assessment";
@@ -12,6 +12,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { PremiumGate } from "@/components/PremiumGate";
+import { getScenariosForCouncil, getCouncilContent } from "@/data/orgSpecificContent";
+import { Badge } from "@/components/ui/badge";
 
 const steps = [
   { label: "Scenario", description: "Choose your situation" },
@@ -24,8 +26,39 @@ const Guide = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [answers, setAnswers] = useState<Partial<SacredGreeksAnswers>>({});
   const [resultData, setResultData] = useState<any>(null);
+  const [userCouncil, setUserCouncil] = useState<string | null>(null);
+  const [councilScenarios, setCouncilScenarios] = useState<Scenario[]>([]);
   const { toast } = useToast();
   const { user } = useAuth();
+
+  // Load user's Greek council for personalized scenarios
+  useEffect(() => {
+    const loadUserProfile = async () => {
+      if (!user) return;
+      
+      const { data } = await supabase
+        .from('profiles')
+        .select('greek_council')
+        .eq('id', user.id)
+        .maybeSingle();
+      
+      if (data?.greek_council) {
+        setUserCouncil(data.greek_council);
+        
+        // Get council-specific scenarios
+        const orgScenarios = getScenariosForCouncil(data.greek_council);
+        const formattedScenarios: Scenario[] = orgScenarios.map(s => ({
+          value: s.id,
+          label: s.title,
+          description: s.description,
+          councilSpecific: !s.councils.includes('all')
+        }));
+        setCouncilScenarios(formattedScenarios);
+      }
+    };
+    
+    loadUserProfile();
+  }, [user]);
 
   useEffect(() => {
     const scenarioParam = searchParams.get('scenario');
@@ -93,6 +126,8 @@ const Guide = () => {
     setResultData(null);
   };
 
+  const councilContent = userCouncil ? getCouncilContent(userCouncil) : null;
+
   return (
     <PremiumGate featureName="Response Coach">
     <div className="min-h-screen bg-background">
@@ -107,6 +142,12 @@ const Guide = () => {
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-sacred"></div>
               <h1 className="text-lg font-semibold text-foreground">How to Handle BGLO Objections</h1>
+              {userCouncil && councilContent && (
+                <Badge variant="secondary" className="ml-2 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" />
+                  {councilContent.name}
+                </Badge>
+              )}
             </div>
           </div>
         </div>
@@ -123,7 +164,11 @@ const Guide = () => {
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-3xl mx-auto">
           {currentStep === 1 && (
-            <SacredGreeksStep1 onComplete={handleStep1Complete} />
+            <SacredGreeksStep1 
+              onComplete={handleStep1Complete}
+              scenarios={councilScenarios.length > 0 ? councilScenarios : undefined}
+              councilName={councilContent?.name}
+            />
           )}
           
           {currentStep === 2 && answers.scenario && (
