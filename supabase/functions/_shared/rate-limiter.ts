@@ -18,6 +18,11 @@ export const RATE_LIMIT_CONFIGS = {
   ai_search: { maxRequests: 15, windowMs: 60000 }, // 15 per minute
   ai_recommendations: { maxRequests: 10, windowMs: 60000 }, // 10 per minute
   
+  // Email endpoints - strict limits to prevent spam
+  email_notification: { maxRequests: 5, windowMs: 60000 }, // 5 per minute
+  email_invite: { maxRequests: 3, windowMs: 60000 }, // 3 per minute (stricter for invites)
+  email_story: { maxRequests: 2, windowMs: 300000 }, // 2 per 5 minutes (healing stories)
+  
   // Default for other endpoints
   default: { maxRequests: 100, windowMs: 60000 }, // 100 per minute
 } as const;

@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "https://esm.sh/resend@4.0.0";
+import { checkRateLimit, getClientIdentifier, rateLimitResponse } from "../_shared/rate-limiter.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -71,6 +72,14 @@ const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // Rate limiting for approval notifications
+  const clientId = getClientIdentifier(req);
+  const rateLimit = checkRateLimit(clientId, 'email_notification');
+  if (!rateLimit.allowed) {
+    console.warn(`Rate limit exceeded for story approval from: ${clientId}`);
+    return rateLimitResponse(corsHeaders, rateLimit.resetIn, 'Too many requests. Please try again later.');
   }
 
   try {
