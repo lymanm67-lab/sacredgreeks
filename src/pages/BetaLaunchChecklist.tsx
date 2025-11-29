@@ -24,6 +24,7 @@ import {
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useEffect as useReactEffect, useRef } from "react";
 
 interface ChecklistItem {
   id: string;
@@ -128,6 +129,7 @@ const CHECKLIST_SECTIONS: ChecklistSection[] = [
 ];
 
 const STORAGE_KEY = "beta-launch-checklist";
+const NOTIFICATION_SENT_KEY = "beta-launch-notification-sent";
 
 export default function BetaLaunchChecklist() {
   const navigate = useNavigate();
@@ -135,6 +137,8 @@ export default function BetaLaunchChecklist() {
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [notificationSent, setNotificationSent] = useState(false);
+  const notificationSentRef = useRef(false);
 
   useEffect(() => {
     const checkAdmin = async () => {
@@ -162,7 +166,45 @@ export default function BetaLaunchChecklist() {
     if (saved) {
       setCheckedItems(JSON.parse(saved));
     }
+    const sentNotification = localStorage.getItem(NOTIFICATION_SENT_KEY);
+    if (sentNotification) {
+      setNotificationSent(true);
+      notificationSentRef.current = true;
+    }
   }, []);
+
+  // Send email notification when all items complete
+  useReactEffect(() => {
+    const allItems = CHECKLIST_SECTIONS.flatMap(s => s.items);
+    const allChecked = allItems.every(item => checkedItems[item.id]);
+    
+    if (allChecked && allItems.length > 0 && !notificationSentRef.current && Object.keys(checkedItems).length > 0) {
+      notificationSentRef.current = true;
+      setNotificationSent(true);
+      localStorage.setItem(NOTIFICATION_SENT_KEY, "true");
+      
+      // Send notification
+      const sendNotification = async () => {
+        try {
+          const { data, error } = await supabase.functions.invoke("notify-launch-ready", {
+            body: {
+              completedBy: user?.email,
+              completedAt: new Date().toISOString(),
+              totalItems: allItems.length
+            }
+          });
+          
+          if (error) throw error;
+          toast.success("Launch ready notification sent to team!");
+        } catch (err) {
+          console.error("Failed to send notification:", err);
+          toast.error("Failed to send notification email");
+        }
+      };
+      
+      sendNotification();
+    }
+  }, [checkedItems, user?.email]);
 
   const saveProgress = (items: Record<string, boolean>) => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
@@ -205,7 +247,10 @@ export default function BetaLaunchChecklist() {
 
   const resetChecklist = () => {
     setCheckedItems({});
+    setNotificationSent(false);
+    notificationSentRef.current = false;
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(NOTIFICATION_SENT_KEY);
     toast.success("Checklist reset");
   };
 
