@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { BookOpen, Heart, FileText, CheckCircle, TrendingUp, Users } from 'lucide-react';
 import { GreekOrganizationSelector } from '@/components/GreekOrganizationSelector';
+import { AffiliationTypeSelector } from '@/components/AffiliationTypeSelector';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
@@ -18,7 +19,10 @@ export function Onboarding({ open, onComplete, userId }: OnboardingProps) {
   const [step, setStep] = useState(1);
   const [saving, setSaving] = useState(false);
   const { toast } = useToast();
-  const totalSteps = 6;
+  const totalSteps = 7;
+
+  // Affiliation type state
+  const [affiliationType, setAffiliationType] = useState('member');
 
   // Greek organization state
   const [greekCouncil, setGreekCouncil] = useState('');
@@ -36,11 +40,12 @@ export function Onboarding({ open, onComplete, userId }: OnboardingProps) {
         .from('profiles')
         .upsert({
           id: userId,
-          greek_council: greekCouncil || null,
-          greek_organization: greekOrganization || null,
-          chapter_name: chapterName || null,
-          initiation_year: initiationYear,
-          member_status: memberStatus || 'active',
+          affiliation_type: affiliationType,
+          greek_council: affiliationType === 'member' ? (greekCouncil || null) : null,
+          greek_organization: affiliationType === 'member' ? (greekOrganization || null) : null,
+          chapter_name: affiliationType === 'member' ? (chapterName || null) : null,
+          initiation_year: affiliationType === 'member' ? initiationYear : null,
+          member_status: affiliationType === 'member' ? (memberStatus || 'active') : null,
           updated_at: new Date().toISOString(),
         });
 
@@ -50,7 +55,7 @@ export function Onboarding({ open, onComplete, userId }: OnboardingProps) {
       console.error('Error saving Greek info:', error);
       toast({
         title: 'Error',
-        description: 'Failed to save your organization info. You can update it later in your profile.',
+        description: 'Failed to save your info. You can update it later in your profile.',
         variant: 'destructive',
       });
       return true; // Continue anyway
@@ -60,12 +65,18 @@ export function Onboarding({ open, onComplete, userId }: OnboardingProps) {
   };
 
   const handleNext = async () => {
-    if (step === 2) {
-      // Save Greek info when leaving step 2
+    if (step === 3 && affiliationType === 'member') {
+      // Save Greek info when leaving step 3 (org selection for members)
+      await saveGreekInfo();
+    } else if (step === 2 && affiliationType !== 'member') {
+      // Save affiliation type for non-members
       await saveGreekInfo();
     }
     
-    if (step < totalSteps) {
+    // Skip org selection step for non-members
+    if (step === 2 && affiliationType !== 'member') {
+      setStep(4); // Skip to Community Features
+    } else if (step < totalSteps) {
       setStep(step + 1);
     } else {
       onComplete();
@@ -73,10 +84,8 @@ export function Onboarding({ open, onComplete, userId }: OnboardingProps) {
   };
 
   const handleSkip = async () => {
-    // Save whatever Greek info they've entered
-    if (greekCouncil || greekOrganization) {
-      await saveGreekInfo();
-    }
+    // Save whatever info they've entered
+    await saveGreekInfo();
     onComplete();
   };
 
@@ -110,9 +119,28 @@ export function Onboarding({ open, onComplete, userId }: OnboardingProps) {
                 <div className="w-20 h-20 mx-auto bg-gradient-to-br from-sacred to-warm-blue rounded-full flex items-center justify-center mb-4">
                   <Users className="w-10 h-10 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold">Your Greek Affiliation</h3>
+                <h3 className="text-xl font-semibold">Your Connection to Greek Life</h3>
                 <p className="text-muted-foreground text-sm">
-                  Tell us about your organization to personalize your experience (optional)
+                  How are you connected to Greek life?
+                </p>
+              </div>
+              <AffiliationTypeSelector
+                value={affiliationType}
+                onChange={setAffiliationType}
+                compact
+              />
+            </div>
+          )}
+
+          {step === 3 && affiliationType === 'member' && (
+            <div className="space-y-4">
+              <div className="text-center mb-4">
+                <div className="w-20 h-20 mx-auto bg-gradient-to-br from-purple-500 to-violet-600 rounded-full flex items-center justify-center mb-4">
+                  <Users className="w-10 h-10 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold">Your Organization</h3>
+                <p className="text-muted-foreground text-sm">
+                  Tell us about your Greek organization (optional)
                 </p>
               </div>
               <GreekOrganizationSelector
@@ -131,7 +159,7 @@ export function Onboarding({ open, onComplete, userId }: OnboardingProps) {
             </div>
           )}
 
-          {step === 3 && (
+          {step === 4 && (
             <div className="space-y-4 text-center">
               <div className="w-20 h-20 mx-auto bg-gradient-to-br from-purple-500 to-violet-600 rounded-full flex items-center justify-center">
                 <Heart className="w-10 h-10 text-white" />
@@ -143,7 +171,7 @@ export function Onboarding({ open, onComplete, userId }: OnboardingProps) {
             </div>
           )}
 
-          {step === 4 && (
+          {step === 5 && (
             <div className="space-y-4 text-center">
               <div className="w-20 h-20 mx-auto bg-gradient-to-br from-rose-500 to-pink-600 rounded-full flex items-center justify-center">
                 <TrendingUp className="w-10 h-10 text-white" />
@@ -155,7 +183,7 @@ export function Onboarding({ open, onComplete, userId }: OnboardingProps) {
             </div>
           )}
 
-          {step === 5 && (
+          {step === 6 && (
             <div className="space-y-4 text-center">
               <div className="w-20 h-20 mx-auto bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center">
                 <FileText className="w-10 h-10 text-white" />
@@ -167,7 +195,7 @@ export function Onboarding({ open, onComplete, userId }: OnboardingProps) {
             </div>
           )}
 
-          {step === 6 && (
+          {step === 7 && (
             <div className="space-y-4 text-center">
               <div className="w-20 h-20 mx-auto bg-gradient-to-br from-yellow-500 to-amber-600 rounded-full flex items-center justify-center">
                 <CheckCircle className="w-10 h-10 text-white" />

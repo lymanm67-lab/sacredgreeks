@@ -15,6 +15,7 @@ import { SocialMediaConnect } from '@/components/SocialMediaConnect';
 import { JourneyReminderSettings } from '@/components/JourneyReminderSettings';
 import { StudyReminderSettings } from '@/components/StudyReminderSettings';
 import { GreekOrganizationSelector } from '@/components/GreekOrganizationSelector';
+import { AffiliationTypeSelector } from '@/components/AffiliationTypeSelector';
 
 const profileSchema = z.object({
   full_name: z.string().min(1, 'Name is required').max(100, 'Name must be less than 100 characters'),
@@ -30,6 +31,7 @@ const Profile = () => {
   const [loadingProfile, setLoadingProfile] = useState(true);
   
   // Greek organization state
+  const [affiliationType, setAffiliationType] = useState('member');
   const [greekCouncil, setGreekCouncil] = useState('');
   const [greekOrganization, setGreekOrganization] = useState('');
   const [chapterName, setChapterName] = useState('');
@@ -47,7 +49,7 @@ const Profile = () => {
     try {
       const { data, error } = await supabase
         .from('profiles')
-        .select('full_name, email, greek_council, greek_organization, chapter_name, initiation_year, member_status')
+        .select('full_name, email, affiliation_type, greek_council, greek_organization, chapter_name, initiation_year, member_status')
         .eq('id', user.id)
         .maybeSingle();
 
@@ -56,6 +58,7 @@ const Profile = () => {
       if (data) {
         setFullName(data.full_name || '');
         setEmail(data.email || user.email || '');
+        setAffiliationType(data.affiliation_type || 'member');
         setGreekCouncil(data.greek_council || '');
         setGreekOrganization(data.greek_organization || '');
         setChapterName(data.chapter_name || '');
@@ -122,11 +125,12 @@ const Profile = () => {
       const { error } = await supabase
         .from('profiles')
         .update({
-          greek_council: greekCouncil || null,
-          greek_organization: greekOrganization || null,
-          chapter_name: chapterName || null,
-          initiation_year: initiationYear,
-          member_status: memberStatus,
+          affiliation_type: affiliationType,
+          greek_council: affiliationType === 'member' ? (greekCouncil || null) : null,
+          greek_organization: affiliationType === 'member' ? (greekOrganization || null) : null,
+          chapter_name: affiliationType === 'member' ? (chapterName || null) : null,
+          initiation_year: affiliationType === 'member' ? initiationYear : null,
+          member_status: affiliationType === 'member' ? memberStatus : null,
         })
         .eq('id', user.id);
 
@@ -134,13 +138,13 @@ const Profile = () => {
 
       toast({
         title: 'Greek affiliation updated',
-        description: 'Your organization information has been saved.',
+        description: 'Your affiliation information has been saved.',
       });
     } catch (error) {
       console.error('Error saving Greek info:', error);
       toast({
         title: 'Error',
-        description: 'Failed to save organization information.',
+        description: 'Failed to save affiliation information.',
         variant: 'destructive',
       });
     } finally {
@@ -228,32 +232,44 @@ const Profile = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Users className="h-5 w-5 text-sacred" />
-                Greek Organization
+                Greek Life Connection
               </CardTitle>
               <CardDescription>
-                Tell us about your Greek affiliation for personalized content
+                Tell us about your connection to Greek life for personalized content
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <GreekOrganizationSelector
-                selectedCouncil={greekCouncil}
-                selectedOrganization={greekOrganization}
-                chapterName={chapterName}
-                initiationYear={initiationYear}
-                memberStatus={memberStatus}
-                onCouncilChange={setGreekCouncil}
-                onOrganizationChange={setGreekOrganization}
-                onChapterChange={setChapterName}
-                onYearChange={setInitiationYear}
-                onStatusChange={setMemberStatus}
+            <CardContent className="space-y-6">
+              <AffiliationTypeSelector
+                value={affiliationType}
+                onChange={setAffiliationType}
                 compact
               />
+              
+              {affiliationType === 'member' && (
+                <div className="pt-4 border-t">
+                  <h4 className="font-medium mb-4">Organization Details</h4>
+                  <GreekOrganizationSelector
+                    selectedCouncil={greekCouncil}
+                    selectedOrganization={greekOrganization}
+                    chapterName={chapterName}
+                    initiationYear={initiationYear}
+                    memberStatus={memberStatus}
+                    onCouncilChange={setGreekCouncil}
+                    onOrganizationChange={setGreekOrganization}
+                    onChapterChange={setChapterName}
+                    onYearChange={setInitiationYear}
+                    onStatusChange={setMemberStatus}
+                    compact
+                  />
+                </div>
+              )}
+              
               <Button 
                 onClick={handleSaveGreekInfo} 
                 disabled={savingGreek}
                 className="bg-sacred hover:bg-sacred/90"
               >
-                {savingGreek ? 'Saving...' : 'Save Organization Info'}
+                {savingGreek ? 'Saving...' : 'Save Affiliation Info'}
               </Button>
             </CardContent>
           </Card>
