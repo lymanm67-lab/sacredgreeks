@@ -12,7 +12,7 @@ const Terms = () => {
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-2 text-foreground hover:text-sacred transition-colors">
               <Home className="w-5 h-5" />
-              <span className="font-semibold">Sacred Greeks Life</span>
+              <span className="font-semibold">Sacred Greeks Life™</span>
             </Link>
           </div>
         </div>
@@ -131,12 +131,47 @@ const Terms = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle>Intellectual Property</CardTitle>
+              <CardTitle>Intellectual Property & Proprietary Technology</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-muted-foreground">
-                The P.R.O.O.F. framework, "Sacred, Not Sinful" content, and all related materials are the intellectual property of Dr. Lyman Montgomery and Sacred Greeks. You may not reproduce, distribute, or create derivative works without express written permission.
+                All content, features, and technology within Sacred Greeks Life™ are protected by U.S. and international intellectual property laws.
               </p>
+              <div className="space-y-3">
+                <div>
+                  <h3 className="font-semibold mb-2">Trademarks</h3>
+                  <p className="text-muted-foreground">
+                    The following are trademarks of Dr. Lyman Montgomery: Sacred Greeks™, Sacred Greeks Life™, P.R.O.O.F. Framework™, 
+                    Sacred, Not Sinful™, 5 Persona Types Architecture™, and Shattered Masks™. These marks may not be used without prior written permission.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-semibold mb-2">Proprietary Technology</h3>
+                  <p className="text-muted-foreground">
+                    This application contains proprietary algorithms, methodologies, assessment frameworks, and software technology 
+                    that are trade secrets of Sacred Greeks. The P.R.O.O.F. Framework™ assessment methodology, scoring algorithms, 
+                    and personalized guidance systems are protected intellectual property. Patent pending.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-semibold mb-2">Content & Materials</h3>
+                  <p className="text-muted-foreground">
+                    All written content, devotionals, study guides, prayer templates, educational materials, and multimedia content 
+                    are copyrighted works owned by Dr. Lyman Montgomery and Sacred Greeks. You may not reproduce, distribute, 
+                    modify, create derivative works, publicly display, or commercially exploit any content without express written permission.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="font-semibold mb-2">Prohibited Uses</h3>
+                  <ul className="list-disc list-inside text-muted-foreground space-y-1 ml-4">
+                    <li>Reverse engineering, decompiling, or disassembling any software or technology</li>
+                    <li>Copying or adapting the P.R.O.O.F. Framework™ or assessment methodologies</li>
+                    <li>Using trademarks without authorization</li>
+                    <li>Scraping, data mining, or automated extraction of content</li>
+                    <li>Creating competing products based on our methodologies</li>
+                  </ul>
+                </div>
+              </div>
             </CardContent>
           </Card>
 
@@ -212,6 +247,18 @@ const Terms = () => {
               Back to Home
             </Button>
           </Link>
+        </div>
+
+        {/* Footer Notice */}
+        <div className="text-center pt-6 border-t border-border mt-8">
+          <p className="text-xs text-muted-foreground">
+            © {new Date().getFullYear()} Sacred Greeks™. All Rights Reserved.
+          </p>
+          <p className="text-xs text-muted-foreground/70 mt-2 max-w-2xl mx-auto">
+            Sacred Greeks™, Sacred Greeks Life™, P.R.O.O.F. Framework™, Sacred, Not Sinful™, 
+            5 Persona Types Architecture™, and Shattered Masks™ are trademarks of Dr. Lyman Montgomery. 
+            All proprietary technology and methodologies are protected under applicable intellectual property laws. Patent pending.
+          </p>
         </div>
       </div>
     </div>
