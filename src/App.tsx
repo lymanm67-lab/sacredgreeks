@@ -21,6 +21,7 @@ import { DemoModeTour } from "@/components/DemoModeTour";
 import { DemoBanner } from "@/components/DemoBanner";
 import { DemoWalkthroughOverlay } from "@/components/DemoWalkthroughOverlay";
 import { DemoComparisonWrapper } from "@/components/demo/DemoComparisonWrapper";
+import { DemoAnalyticsDashboardWrapper } from "@/components/demo/DemoAnalyticsDashboardWrapper";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Loader2 } from "lucide-react";
 
@@ -121,6 +122,7 @@ const App = () => (
               <DemoBanner />
               <DemoWalkthroughOverlay />
               <DemoComparisonWrapper />
+              <DemoAnalyticsDashboardWrapper />
               <BetaFeedbackWidget />
               <GlobalDemoIndicator />
               <DemoModeTour />

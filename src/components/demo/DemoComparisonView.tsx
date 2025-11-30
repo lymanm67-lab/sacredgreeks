@@ -1,12 +1,14 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { X, ArrowLeftRight, TrendingUp, BookOpen, Heart, Award, Clock } from 'lucide-react';
+import { X, ArrowLeftRight, TrendingUp, BookOpen, Heart, Award, Clock, Download, Image, Copy, Loader2 } from 'lucide-react';
 import { DEMO_SCENARIOS, DemoScenario, useDemoMode } from '@/contexts/DemoModeContext';
 import { generateScenarioDemoData, ScenarioDemoData } from '@/data/demoDataGenerators';
+import { exportToPDF, exportToImage, captureElementAsImage, copyImageToClipboard } from '@/lib/demo-export';
+import { toast } from '@/hooks/use-toast';
 
 interface ScenarioCardProps {
   scenario: DemoScenario;
@@ -153,6 +155,8 @@ export function DemoComparisonView() {
   const { setDemoSetting } = useDemoMode();
   const [leftScenario, setLeftScenario] = useState<DemoScenario>('new-user');
   const [rightScenario, setRightScenario] = useState<DemoScenario>('power-user');
+  const [isExporting, setIsExporting] = useState(false);
+  const comparisonRef = useRef<HTMLDivElement>(null);
 
   const leftData = useMemo(() => generateScenarioDemoData(leftScenario), [leftScenario]);
   const rightData = useMemo(() => generateScenarioDemoData(rightScenario), [rightScenario]);
@@ -161,6 +165,52 @@ export function DemoComparisonView() {
     const temp = leftScenario;
     setLeftScenario(rightScenario);
     setRightScenario(temp);
+  };
+
+  const handleExportPDF = async () => {
+    if (!comparisonRef.current) return;
+    setIsExporting(true);
+    try {
+      await exportToPDF(comparisonRef.current, {
+        filename: `demo-comparison-${leftScenario}-vs-${rightScenario}`,
+        title: `Demo Comparison: ${leftScenario} vs ${rightScenario}`,
+      });
+      toast({ title: 'PDF exported successfully' });
+    } catch (error) {
+      toast({ title: 'Export failed', description: 'Please try again', variant: 'destructive' });
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const handleExportImage = async () => {
+    if (!comparisonRef.current) return;
+    setIsExporting(true);
+    try {
+      await exportToImage(comparisonRef.current, {
+        filename: `demo-comparison-${leftScenario}-vs-${rightScenario}`,
+        format: 'png',
+      });
+      toast({ title: 'Image exported successfully' });
+    } catch (error) {
+      toast({ title: 'Export failed', description: 'Please try again', variant: 'destructive' });
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const handleCopyImage = async () => {
+    if (!comparisonRef.current) return;
+    setIsExporting(true);
+    try {
+      const dataUrl = await captureElementAsImage(comparisonRef.current);
+      await copyImageToClipboard(dataUrl);
+      toast({ title: 'Image copied to clipboard' });
+    } catch (error) {
+      toast({ title: 'Copy failed', description: 'Please try again', variant: 'destructive' });
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   return (
@@ -177,82 +227,117 @@ export function DemoComparisonView() {
               Compare different user journeys side-by-side to understand the app experience
             </p>
           </div>
-          <Button 
-            variant="ghost" 
-            size="icon"
-            onClick={() => setDemoSetting('compareScenarios', false)}
-          >
-            <X className="h-5 w-5" />
-          </Button>
-        </div>
-
-        {/* Swap Button */}
-        <div className="flex justify-center mb-4">
-          <Button variant="outline" size="sm" onClick={swapScenarios} className="gap-2">
-            <ArrowLeftRight className="h-4 w-4" />
-            Swap Scenarios
-          </Button>
-        </div>
-
-        {/* Comparison Grid */}
-        <div className="flex gap-6">
-          <ScenarioCard 
-            scenario={leftScenario} 
-            data={leftData} 
-            onChangeScenario={setLeftScenario}
-            side="left"
-          />
-          
-          <div className="hidden md:flex items-center">
-            <div className="w-px h-full bg-border" />
+          <div className="flex items-center gap-2">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleExportPDF}
+              disabled={isExporting}
+              className="gap-2"
+            >
+              {isExporting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+              PDF
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleExportImage}
+              disabled={isExporting}
+              className="gap-2"
+            >
+              <Image className="h-4 w-4" />
+              Image
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleCopyImage}
+              disabled={isExporting}
+              className="gap-2"
+            >
+              <Copy className="h-4 w-4" />
+              Copy
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={() => setDemoSetting('compareScenarios', false)}
+            >
+              <X className="h-5 w-5" />
+            </Button>
           </div>
-          
-          <ScenarioCard 
-            scenario={rightScenario} 
-            data={rightData} 
-            onChangeScenario={setRightScenario}
-            side="right"
-          />
         </div>
 
-        {/* Comparison Summary */}
-        <Card className="mt-6">
-          <CardHeader>
-            <CardTitle className="text-lg">Quick Comparison</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-              <div className="p-3 bg-muted/50 rounded-lg">
-                <p className="text-xs text-muted-foreground mb-1">Points Difference</p>
-                <p className="text-xl font-bold">
-                  {rightData.stats.totalPoints - leftData.stats.totalPoints > 0 ? '+' : ''}
-                  {rightData.stats.totalPoints - leftData.stats.totalPoints}
-                </p>
-              </div>
-              <div className="p-3 bg-muted/50 rounded-lg">
-                <p className="text-xs text-muted-foreground mb-1">Level Gap</p>
-                <p className="text-xl font-bold">
-                  {rightData.stats.level - leftData.stats.level > 0 ? '+' : ''}
-                  {rightData.stats.level - leftData.stats.level}
-                </p>
-              </div>
-              <div className="p-3 bg-muted/50 rounded-lg">
-                <p className="text-xs text-muted-foreground mb-1">Service Hours Gap</p>
-                <p className="text-xl font-bold">
-                  {rightData.stats.serviceHours - leftData.stats.serviceHours > 0 ? '+' : ''}
-                  {rightData.stats.serviceHours - leftData.stats.serviceHours}h
-                </p>
-              </div>
-              <div className="p-3 bg-muted/50 rounded-lg">
-                <p className="text-xs text-muted-foreground mb-1">Streak Difference</p>
-                <p className="text-xl font-bold">
-                  {rightData.stats.currentStreak - leftData.stats.currentStreak > 0 ? '+' : ''}
-                  {rightData.stats.currentStreak - leftData.stats.currentStreak} days
-                </p>
-              </div>
+        {/* Exportable content */}
+        <div ref={comparisonRef} className="bg-background p-4 rounded-lg">
+          {/* Swap Button */}
+          <div className="flex justify-center mb-4">
+            <Button variant="outline" size="sm" onClick={swapScenarios} className="gap-2">
+              <ArrowLeftRight className="h-4 w-4" />
+              Swap Scenarios
+            </Button>
+          </div>
+
+          {/* Comparison Grid */}
+          <div className="flex gap-6">
+            <ScenarioCard 
+              scenario={leftScenario} 
+              data={leftData} 
+              onChangeScenario={setLeftScenario}
+              side="left"
+            />
+            
+            <div className="hidden md:flex items-center">
+              <div className="w-px h-full bg-border" />
             </div>
-          </CardContent>
-        </Card>
+            
+            <ScenarioCard 
+              scenario={rightScenario} 
+              data={rightData} 
+              onChangeScenario={setRightScenario}
+              side="right"
+            />
+          </div>
+
+          {/* Comparison Summary */}
+          <Card className="mt-6">
+            <CardHeader>
+              <CardTitle className="text-lg">Quick Comparison</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div className="p-3 bg-muted/50 rounded-lg">
+                  <p className="text-xs text-muted-foreground mb-1">Points Difference</p>
+                  <p className="text-xl font-bold">
+                    {rightData.stats.totalPoints - leftData.stats.totalPoints > 0 ? '+' : ''}
+                    {rightData.stats.totalPoints - leftData.stats.totalPoints}
+                  </p>
+                </div>
+                <div className="p-3 bg-muted/50 rounded-lg">
+                  <p className="text-xs text-muted-foreground mb-1">Level Gap</p>
+                  <p className="text-xl font-bold">
+                    {rightData.stats.level - leftData.stats.level > 0 ? '+' : ''}
+                    {rightData.stats.level - leftData.stats.level}
+                  </p>
+                </div>
+                <div className="p-3 bg-muted/50 rounded-lg">
+                  <p className="text-xs text-muted-foreground mb-1">Service Hours Gap</p>
+                  <p className="text-xl font-bold">
+                    {rightData.stats.serviceHours - leftData.stats.serviceHours > 0 ? '+' : ''}
+                    {rightData.stats.serviceHours - leftData.stats.serviceHours}h
+                  </p>
+                </div>
+                <div className="p-3 bg-muted/50 rounded-lg">
+                  <p className="text-xs text-muted-foreground mb-1">Streak Difference</p>
+                  <p className="text-xl font-bold">
+                    {rightData.stats.currentStreak - leftData.stats.currentStreak > 0 ? '+' : ''}
+                    {rightData.stats.currentStreak - leftData.stats.currentStreak} days
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );

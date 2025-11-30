@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode, useRef } from 'react';
 
 export interface DemoFeatures {
   dashboard: boolean;
@@ -17,6 +17,7 @@ export interface DemoSettings {
   preSurveyMode: boolean;
   compareScenarios: boolean;
   analyticsEnabled: boolean;
+  showAnalytics: boolean;
 }
 
 // Preloaded demo data cache
@@ -139,6 +140,9 @@ interface DemoModeContextType {
   preloadScenarioData: (scenario: DemoScenario) => void;
   isDataPreloaded: (scenario: DemoScenario) => boolean;
   dataCache: DemoDataCache;
+  persistentData: PersistentDemoData | null;
+  savePersistentData: (data: Partial<PersistentDemoData>) => void;
+  clearPersistentData: () => void;
 }
 
 const DemoModeContext = createContext<DemoModeContextType | undefined>(undefined);
@@ -149,6 +153,17 @@ const DEMO_TOUR_KEY = 'sacred-greeks-demo-tour-seen';
 const DEMO_SETTINGS_KEY = 'sacred-greeks-demo-settings';
 const DEMO_SCENARIO_KEY = 'sacred-greeks-demo-scenario';
 const DEMO_CACHE_KEY = 'sacred-greeks-demo-cache';
+const DEMO_PERSISTENT_DATA_KEY = 'sacred-greeks-demo-persistent-data';
+
+// Persistent demo data structure
+export interface PersistentDemoData {
+  prayers: any[];
+  achievements: any[];
+  journeyProgress: any[];
+  serviceItems: any[];
+  stats: any;
+  lastUpdated: number;
+}
 
 const DEFAULT_FEATURES: DemoFeatures = {
   dashboard: true,
@@ -167,6 +182,7 @@ const DEFAULT_SETTINGS: DemoSettings = {
   preSurveyMode: false,
   compareScenarios: false,
   analyticsEnabled: true,
+  showAnalytics: false,
 };
 
 export function DemoModeProvider({ children }: { children: ReactNode }) {
@@ -226,6 +242,41 @@ export function DemoModeProvider({ children }: { children: ReactNode }) {
     }
     return {};
   });
+
+  // Persistent demo data
+  const [persistentData, setPersistentData] = useState<PersistentDemoData | null>(() => {
+    const stored = localStorage.getItem(DEMO_PERSISTENT_DATA_KEY);
+    if (stored) {
+      try {
+        return JSON.parse(stored);
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  });
+
+  // Save persistent data
+  const savePersistentData = useCallback((data: Partial<PersistentDemoData>) => {
+    setPersistentData(prev => {
+      const updated = {
+        prayers: data.prayers ?? prev?.prayers ?? [],
+        achievements: data.achievements ?? prev?.achievements ?? [],
+        journeyProgress: data.journeyProgress ?? prev?.journeyProgress ?? [],
+        serviceItems: data.serviceItems ?? prev?.serviceItems ?? [],
+        stats: data.stats ?? prev?.stats ?? null,
+        lastUpdated: Date.now(),
+      };
+      localStorage.setItem(DEMO_PERSISTENT_DATA_KEY, JSON.stringify(updated));
+      return updated;
+    });
+  }, []);
+
+  // Clear persistent data
+  const clearPersistentData = useCallback(() => {
+    setPersistentData(null);
+    localStorage.removeItem(DEMO_PERSISTENT_DATA_KEY);
+  }, []);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -392,6 +443,9 @@ export function DemoModeProvider({ children }: { children: ReactNode }) {
       preloadScenarioData,
       isDataPreloaded,
       dataCache,
+      persistentData,
+      savePersistentData,
+      clearPersistentData,
     }}>
       {children}
     </DemoModeContext.Provider>
