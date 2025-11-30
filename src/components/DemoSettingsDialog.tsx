@@ -12,6 +12,7 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Badge } from '@/components/ui/badge';
 import {
   Settings,
   Play,
@@ -22,8 +23,13 @@ import {
   Download,
   RefreshCw,
   ToggleLeft,
+  Share2,
+  Copy,
+  Check,
+  Loader2,
+  Zap,
 } from 'lucide-react';
-import { useDemoMode, DemoFeatures } from '@/contexts/DemoModeContext';
+import { useDemoMode, DemoFeatures, DEMO_SCENARIOS, DemoScenario } from '@/contexts/DemoModeContext';
 import { useToast } from '@/hooks/use-toast';
 
 const featureLabels: Record<keyof DemoFeatures, string> = {
@@ -45,6 +51,8 @@ interface DemoSettingsDialogProps {
 
 export function DemoSettingsDialog({ trigger }: DemoSettingsDialogProps) {
   const [open, setOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [isPreloading, setIsPreloading] = useState(false);
   const {
     demoFeatures,
     setDemoFeature,
@@ -54,6 +62,11 @@ export function DemoSettingsDialog({ trigger }: DemoSettingsDialogProps) {
     demoSettings,
     setDemoSetting,
     refreshDemoData,
+    currentScenario,
+    setScenario,
+    generateShareLink,
+    preloadScenarioData,
+    isDataPreloaded,
   } = useDemoMode();
   const { toast } = useToast();
 
@@ -66,10 +79,48 @@ export function DemoSettingsDialog({ trigger }: DemoSettingsDialogProps) {
     });
   };
 
+  const handleShareDemo = async () => {
+    const shareLink = generateShareLink();
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: 'Sacred Greeks Demo',
+          text: `Check out Sacred Greeks in ${currentScenario.replace('-', ' ')} demo mode!`,
+          url: shareLink,
+        });
+      } else {
+        await navigator.clipboard.writeText(shareLink);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+        toast({
+          title: 'Demo Link Copied!',
+          description: 'Share this link to let others try the demo.',
+        });
+      }
+    } catch (error) {
+      console.error('Error sharing:', error);
+    }
+  };
+
+  const handlePreloadAll = async () => {
+    setIsPreloading(true);
+    DEMO_SCENARIOS.forEach(scenario => {
+      preloadScenarioData(scenario.id);
+    });
+    setTimeout(() => {
+      setIsPreloading(false);
+      toast({
+        title: 'Data Preloaded',
+        description: 'All demo scenarios are now cached for instant switching.',
+      });
+    }, 1000);
+  };
+
   const handleExportData = () => {
     const exportData = {
       features: demoFeatures,
       settings: demoSettings,
+      scenario: currentScenario,
       exportedAt: new Date().toISOString(),
     };
     const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
@@ -103,7 +154,7 @@ export function DemoSettingsDialog({ trigger }: DemoSettingsDialogProps) {
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-lg">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Settings className="h-5 w-5 text-sacred" />
@@ -116,6 +167,90 @@ export function DemoSettingsDialog({ trigger }: DemoSettingsDialogProps) {
 
         <ScrollArea className="max-h-[60vh] pr-4">
           <div className="space-y-6 py-4">
+            {/* Share Demo */}
+            <div className="space-y-3">
+              <Label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <Share2 className="h-4 w-4 text-emerald-500" />
+                Share Demo
+              </Label>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex-1 justify-center bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border-emerald-500/30 hover:from-emerald-500/20 hover:to-teal-500/20"
+                  onClick={handleShareDemo}
+                >
+                  {copied ? (
+                    <>
+                      <Check className="h-4 w-4 mr-2 text-emerald-500" />
+                      Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-4 w-4 mr-2 text-emerald-500" />
+                      Copy Demo Link
+                    </>
+                  )}
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Share a link with your current scenario ({currentScenario.replace('-', ' ')})
+              </p>
+            </div>
+
+            <Separator />
+
+            {/* Scenario Selection */}
+            <div className="space-y-3">
+              <Label className="text-sm font-semibold text-foreground">Demo Scenarios</Label>
+              <div className="grid grid-cols-2 gap-2">
+                {DEMO_SCENARIOS.map((scenario) => (
+                  <Button
+                    key={scenario.id}
+                    variant={currentScenario === scenario.id ? "default" : "outline"}
+                    size="sm"
+                    className={`justify-start h-auto py-2 px-3 ${
+                      currentScenario === scenario.id 
+                        ? 'bg-sacred hover:bg-sacred/90' 
+                        : ''
+                    }`}
+                    onClick={() => setScenario(scenario.id)}
+                  >
+                    <span className="text-lg mr-2">{scenario.icon}</span>
+                    <div className="flex flex-col items-start text-left">
+                      <span className="text-xs font-medium">{scenario.name}</span>
+                      {isDataPreloaded(scenario.id) && (
+                        <Badge variant="secondary" className="text-[10px] px-1 py-0 mt-0.5">
+                          Cached
+                        </Badge>
+                      )}
+                    </div>
+                  </Button>
+                ))}
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="w-full text-xs"
+                onClick={handlePreloadAll}
+                disabled={isPreloading}
+              >
+                {isPreloading ? (
+                  <>
+                    <Loader2 className="h-3 w-3 mr-2 animate-spin" />
+                    Preloading...
+                  </>
+                ) : (
+                  <>
+                    <Zap className="h-3 w-3 mr-2 text-amber-500" />
+                    Preload All Scenarios
+                  </>
+                )}
+              </Button>
+            </div>
+
+            <Separator />
+
             {/* Tour Actions */}
             <div className="space-y-3">
               <Label className="text-sm font-semibold text-foreground">Tours & Guides</Label>
@@ -177,7 +312,7 @@ export function DemoSettingsDialog({ trigger }: DemoSettingsDialogProps) {
                   <GitCompare className="h-4 w-4 mr-2 text-purple-500" />
                   Compare Scenarios
                   {demoSettings.compareScenarios && (
-                    <span className="ml-auto text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded">Active</span>
+                    <span className="ml-auto text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded dark:bg-purple-900/30 dark:text-purple-300">Active</span>
                   )}
                 </Button>
                 <Button
@@ -191,7 +326,7 @@ export function DemoSettingsDialog({ trigger }: DemoSettingsDialogProps) {
                   <BarChart3 className="h-4 w-4 mr-2 text-emerald-500" />
                   Demo Analytics
                   {demoSettings.analyticsEnabled && (
-                    <span className="ml-auto text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded">On</span>
+                    <span className="ml-auto text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded dark:bg-emerald-900/30 dark:text-emerald-300">On</span>
                   )}
                 </Button>
                 <Button
@@ -209,7 +344,7 @@ export function DemoSettingsDialog({ trigger }: DemoSettingsDialogProps) {
                   <ClipboardList className="h-4 w-4 mr-2 text-orange-500" />
                   Pre-Survey Mode
                   {demoSettings.preSurveyMode && (
-                    <span className="ml-auto text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded">On</span>
+                    <span className="ml-auto text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded dark:bg-orange-900/30 dark:text-orange-300">On</span>
                   )}
                 </Button>
               </div>
