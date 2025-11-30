@@ -119,3 +119,6 @@ verify_jwt = false
 
 [functions.recommend-video]
 verify_jwt = false
+
+[functions.send-targeted-notification]
+verify_jwt = false
