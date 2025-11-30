@@ -21,6 +21,7 @@ import { StatsSection } from "@/components/landing/StatsSection";
 import { ShareSection } from "@/components/landing/ShareSection";
 import { ObjectionsTeaser } from "@/components/landing/ObjectionsTeaser";
 import { BetaBenefitsDialog } from "@/components/BetaBenefitsDialog";
+import { DemoHeaderButton } from "@/components/landing/DemoHeaderButton";
 
 // Mobile section navigation items
 const sectionNav = [
@@ -263,6 +264,7 @@ const Index = () => {
             </div>
             <div className="flex items-center gap-3">
               <ThemeToggle />
+              <DemoHeaderButton />
               <MobileQRCode />
               {user ? (
                 <Link to="/dashboard">
