@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { FlaskConical, X, Settings, Eye, EyeOff } from 'lucide-react';
+import { useState } from 'react';
+import { FlaskConical, Eye, EyeOff, Settings } from 'lucide-react';
 import { useDemoMode } from '@/contexts/DemoModeContext';
 import { Button } from '@/components/ui/button';
 import {
@@ -8,102 +8,36 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Switch } from '@/components/ui/switch';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 
-export function GlobalDemoIndicator() {
+export function DemoHeaderButton() {
   const { isDemoMode, setDemoMode, toggleDemoMode, setHasSeenTour } = useDemoMode();
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
-  
-  // Hide on landing page since it's integrated into the header there
-  if (location.pathname === '/') {
-    return null;
-  }
 
-  return (
-    <>
-      {/* Desktop position - below header for app pages */}
-      <div className="fixed top-20 right-4 z-[100] hidden sm:block">
-        <DemoPopover 
-          isDemoMode={isDemoMode}
-          setDemoMode={setDemoMode}
-          toggleDemoMode={toggleDemoMode}
-          setHasSeenTour={setHasSeenTour}
-          user={user}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          align="end"
-        />
-      </div>
-
-      {/* Mobile position - bottom right, above other floating elements */}
-      <div className="fixed bottom-20 right-4 z-[100] sm:hidden">
-        <DemoPopover 
-          isDemoMode={isDemoMode}
-          setDemoMode={setDemoMode}
-          toggleDemoMode={toggleDemoMode}
-          setHasSeenTour={setHasSeenTour}
-          user={user}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          align="end"
-          isMobile
-        />
-      </div>
-    </>
-  );
-}
-
-interface DemoPopoverProps {
-  isDemoMode: boolean;
-  setDemoMode: (enabled: boolean) => void;
-  toggleDemoMode: () => void;
-  setHasSeenTour: (seen: boolean) => void;
-  user: any;
-  isOpen: boolean;
-  setIsOpen: (open: boolean) => void;
-  align?: "start" | "center" | "end";
-  isMobile?: boolean;
-}
-
-function DemoPopover({ 
-  isDemoMode, 
-  setDemoMode, 
-  toggleDemoMode, 
-  setHasSeenTour, 
-  user, 
-  isOpen, 
-  setIsOpen,
-  align = "end",
-  isMobile = false
-}: DemoPopoverProps) {
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button
           variant={isDemoMode ? "default" : "outline"}
-          size={isMobile ? "default" : "sm"}
-          className={`gap-2 shadow-lg ${
+          size="sm"
+          className={`gap-2 ${
             isDemoMode 
               ? 'bg-amber-500 hover:bg-amber-600 text-amber-950 border-amber-400' 
-              : 'bg-background/90 backdrop-blur-sm border-border hover:bg-accent'
-          } ${isMobile ? 'h-12 px-4 rounded-full' : ''}`}
+              : 'hover:bg-muted'
+          }`}
         >
-          <FlaskConical className={isMobile ? "w-5 h-5" : "w-4 h-4"} />
-          <span className={isMobile ? "text-sm font-medium" : "hidden sm:inline"}>
-            Demo
-          </span>
+          <FlaskConical className="w-4 h-4" />
+          <span className="hidden sm:inline">Demo</span>
           {isDemoMode && (
             <span className="flex h-2 w-2 rounded-full bg-amber-950/60 animate-pulse" />
           )}
         </Button>
       </PopoverTrigger>
       <PopoverContent 
-        className={`${isMobile ? 'w-[calc(100vw-2rem)] max-w-sm' : 'w-72'}`} 
-        align={align}
-        side={isMobile ? "top" : "bottom"}
+        className="w-72" 
+        align="end"
         sideOffset={8}
       >
         <div className="space-y-4">
