@@ -8,15 +8,70 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Plus, Clock, Download, TrendingUp, CalendarIcon, Trash2 } from 'lucide-react';
+import { Plus, Clock, Download, TrendingUp, CalendarIcon, Trash2, FlaskConical } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { format } from 'date-fns';
+import { format, subDays, subMonths } from 'date-fns';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import { cn } from '@/lib/utils';
 import { communityServiceSchema } from '@/lib/validation';
 import { useAutoCompleteChallenge } from '@/hooks/use-auto-complete-challenge';
+import { useDemoMode } from '@/contexts/DemoModeContext';
+
+// Demo data for service tracker
+const DEMO_ACTIVITIES: ServiceActivity[] = [
+  {
+    id: 'demo-1',
+    title: 'Campus Food Drive',
+    description: 'Organized and distributed food packages to students in need',
+    hours: 4,
+    event_date: format(subDays(new Date(), 5), 'yyyy-MM-dd'),
+    completed: true,
+    completed_at: subDays(new Date(), 5).toISOString(),
+    created_at: subDays(new Date(), 5).toISOString(),
+  },
+  {
+    id: 'demo-2',
+    title: 'Community Tutoring',
+    description: 'Provided math and reading tutoring for local elementary students',
+    hours: 3,
+    event_date: format(subDays(new Date(), 12), 'yyyy-MM-dd'),
+    completed: true,
+    completed_at: subDays(new Date(), 12).toISOString(),
+    created_at: subDays(new Date(), 12).toISOString(),
+  },
+  {
+    id: 'demo-3',
+    title: 'Senior Center Visit',
+    description: 'Spent time with seniors, playing games and sharing stories',
+    hours: 2.5,
+    event_date: format(subDays(new Date(), 20), 'yyyy-MM-dd'),
+    completed: true,
+    completed_at: subDays(new Date(), 20).toISOString(),
+    created_at: subDays(new Date(), 20).toISOString(),
+  },
+  {
+    id: 'demo-4',
+    title: 'Neighborhood Cleanup',
+    description: 'Cleaned up litter and beautified the community park',
+    hours: 3,
+    event_date: format(subMonths(new Date(), 1), 'yyyy-MM-dd'),
+    completed: true,
+    completed_at: subMonths(new Date(), 1).toISOString(),
+    created_at: subMonths(new Date(), 1).toISOString(),
+  },
+  {
+    id: 'demo-5',
+    title: 'Homeless Shelter Meal Service',
+    description: 'Prepared and served meals at the local shelter',
+    hours: 5,
+    event_date: format(subMonths(new Date(), 2), 'yyyy-MM-dd'),
+    completed: true,
+    completed_at: subMonths(new Date(), 2).toISOString(),
+    created_at: subMonths(new Date(), 2).toISOString(),
+  },
+];
 
 interface ServiceActivity {
   id: string;
@@ -33,6 +88,7 @@ export default function ServiceTracker() {
   const { user } = useAuth();
   const { toast } = useToast();
   const { completeChallenge } = useAutoCompleteChallenge();
+  const { isDemoMode } = useDemoMode();
   const [activities, setActivities] = useState<ServiceActivity[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -46,8 +102,14 @@ export default function ServiceTracker() {
   useEffect(() => {
     if (user) {
       loadActivities();
+    } else {
+      setLoading(false);
     }
   }, [user]);
+
+  // Use demo data when demo mode is enabled or no real activities
+  const displayActivities = isDemoMode ? DEMO_ACTIVITIES : (activities.length > 0 ? activities : DEMO_ACTIVITIES);
+  const isShowingDemo = isDemoMode || activities.length === 0;
 
   const loadActivities = async () => {
     if (!user) return;
@@ -178,11 +240,11 @@ export default function ServiceTracker() {
     });
   };
 
-  // Statistics
-  const totalHours = activities.reduce((sum, act) => sum + (act.hours || 0), 0);
-  const totalActivities = activities.length;
+  // Statistics - use displayActivities for calculations
+  const totalHours = displayActivities.reduce((sum, act) => sum + (act.hours || 0), 0);
+  const totalActivities = displayActivities.length;
   const currentYear = new Date().getFullYear();
-  const yearActivities = activities.filter(
+  const yearActivities = displayActivities.filter(
     act => act.event_date && new Date(act.event_date).getFullYear() === currentYear
   );
   const yearHours = yearActivities.reduce((sum, act) => sum + (act.hours || 0), 0);
@@ -190,7 +252,7 @@ export default function ServiceTracker() {
   // Monthly data for chart
   const monthlyData = Array.from({ length: 12 }, (_, i) => {
     const month = new Date(currentYear, i, 1);
-    const monthActivities = activities.filter(
+    const monthActivities = displayActivities.filter(
       act => act.event_date && 
         new Date(act.event_date).getMonth() === i &&
         new Date(act.event_date).getFullYear() === currentYear
@@ -215,9 +277,17 @@ export default function ServiceTracker() {
   return (
     <div className="container mx-auto p-4 space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Service Hour Tracker</h1>
-          <p className="text-muted-foreground">Log and track your community service activities</p>
+        <div className="flex items-center gap-3">
+          <div>
+            <h1 className="text-3xl font-bold">Service Hour Tracker</h1>
+            <p className="text-muted-foreground">Log and track your community service activities</p>
+          </div>
+          {isShowingDemo && (
+            <Badge variant="outline" className="bg-amber-500/10 text-amber-600 border-amber-500/30">
+              <FlaskConical className="w-3 h-3 mr-1" />
+              Demo
+            </Badge>
+          )}
         </div>
         <Button onClick={exportToCSV} variant="outline">
           <Download className="w-4 h-4 mr-2" />
@@ -356,13 +426,13 @@ export default function ServiceTracker() {
               <CardTitle>Activity History</CardTitle>
             </CardHeader>
             <CardContent>
-              {activities.length === 0 ? (
+              {displayActivities.length === 0 ? (
                 <div className="text-center py-8 text-muted-foreground">
                   No service activities logged yet. Add your first one above!
                 </div>
               ) : (
                 <div className="space-y-3">
-                  {activities.map((activity) => (
+                  {displayActivities.map((activity) => (
                     <div
                       key={activity.id}
                       className="flex items-start gap-4 p-4 border rounded-lg hover:bg-muted/50 transition-colors"
@@ -383,13 +453,15 @@ export default function ServiceTracker() {
                             : format(new Date(activity.created_at), 'MMMM d, yyyy')}
                         </p>
                       </div>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => deleteActivity(activity.id)}
-                      >
-                        <Trash2 className="w-4 h-4 text-destructive" />
-                      </Button>
+                      {!isShowingDemo && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => deleteActivity(activity.id)}
+                        >
+                          <Trash2 className="w-4 h-4 text-destructive" />
+                        </Button>
+                      )}
                     </div>
                   ))}
                 </div>

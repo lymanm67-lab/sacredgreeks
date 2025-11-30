@@ -16,6 +16,7 @@ import { OfflineIndicator } from "@/components/ui/OfflineIndicator";
 import { CelebrationProvider } from "@/contexts/CelebrationContext";
 import { DemoModeProvider } from "@/contexts/DemoModeContext";
 import { BetaFeedbackWidget } from "@/components/BetaFeedbackWidget";
+import { GlobalDemoIndicator } from "@/components/GlobalDemoIndicator";
 import { Loader2 } from "lucide-react";
 
 // Eager load critical pages
@@ -106,6 +107,7 @@ const App = () => (
             <AIAssistantWidget />
             <BrowserRouter>
               <BetaFeedbackWidget />
+              <GlobalDemoIndicator />
               <CookieConsent />
               <AnalyticsProvider>
                 <Suspense fallback={<PageLoader />}>
