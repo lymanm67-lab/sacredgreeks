@@ -15,13 +15,16 @@ import {
   HandHeart,
   ClipboardList,
   HelpCircle,
-  LogOut
+  LogOut,
+  FlaskConical
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
+import { useDemoMode, DEMO_SCENARIOS } from "@/contexts/DemoModeContext";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
 import { SidebarSearch } from "./SidebarSearch";
 import { useSidebarPreferences } from "@/hooks/use-sidebar-preferences";
 import {
@@ -72,6 +75,9 @@ export function AppSidebar() {
   const location = useLocation();
   const { user, profile, signOut } = useAuth();
   const { preferences } = useSidebarPreferences();
+  const { isDemoMode, toggleDemoMode, currentScenario } = useDemoMode();
+
+  const currentScenarioConfig = DEMO_SCENARIOS.find(s => s.id === currentScenario);
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -128,6 +134,43 @@ export function AppSidebar() {
       </SidebarHeader>
 
       <SidebarSeparator />
+
+      {/* Demo Mode Indicator */}
+      {isDemoMode && (
+        <>
+          <div className={cn(
+            "mx-3 my-2 rounded-lg bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-500/20",
+            collapsed ? "p-2" : "p-3"
+          )}>
+            {collapsed ? (
+              <div className="flex justify-center">
+                <FlaskConical className="h-4 w-4 text-emerald-500 animate-pulse" />
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <FlaskConical className="h-4 w-4 text-emerald-500" />
+                    <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">Demo Mode</span>
+                  </div>
+                  <Switch
+                    checked={isDemoMode}
+                    onCheckedChange={toggleDemoMode}
+                    className="scale-75"
+                  />
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-lg">{currentScenarioConfig?.icon}</span>
+                  <span className="text-[10px] text-muted-foreground truncate">
+                    {currentScenarioConfig?.name}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+          <SidebarSeparator />
+        </>
+      )}
 
       <SidebarContent>
         {preferences.showMain && (
