@@ -4,9 +4,11 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Home, TrendingUp, Calendar, Target } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Home, TrendingUp, Calendar, Target, FlaskConical } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { BreadcrumbNav } from '@/components/ui/breadcrumb-nav';
+import { useDemoMode } from '@/contexts/DemoModeContext';
 import {
   LineChart,
   Line,
@@ -23,6 +25,37 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
+// Demo progress data for the last 30 days
+const generateDemoProgressData = (): ProgressData[] => {
+  const data: ProgressData[] = [];
+  for (let i = 29; i >= 0; i--) {
+    const date = new Date();
+    date.setDate(date.getDate() - i);
+    data.push({
+      date: date.toISOString().split('T')[0],
+      devotional_completed: Math.random() > 0.3,
+      assessments_count: Math.floor(Math.random() * 2),
+      journal_entries_count: Math.floor(Math.random() * 3),
+    });
+  }
+  return data;
+};
+
+const DEMO_PROGRESS_DATA = generateDemoProgressData();
+
+const DEMO_ASSESSMENTS_BY_TYPE = [
+  { name: 'low risk', value: 5 },
+  { name: 'medium risk', value: 3 },
+  { name: 'high risk', value: 1 },
+];
+
+const DEMO_PRAYERS_BY_TYPE = [
+  { name: 'Request', value: 8 },
+  { name: 'Thanksgiving', value: 5 },
+  { name: 'Praise', value: 4 },
+  { name: 'Confession', value: 2 },
+];
+
 interface ProgressData {
   date: string;
   devotional_completed: boolean;
@@ -32,6 +65,7 @@ interface ProgressData {
 
 const Progress = () => {
   const { user } = useAuth();
+  const { isDemoMode } = useDemoMode();
   const [progressData, setProgressData] = useState<ProgressData[]>([]);
   const [assessmentsByType, setAssessmentsByType] = useState<any[]>([]);
   const [prayersByType, setPrayersByType] = useState<any[]>([]);
@@ -39,8 +73,18 @@ const Progress = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    loadProgressData();
+    if (user) {
+      loadProgressData();
+    } else {
+      setLoading(false);
+    }
   }, [user]);
+
+  // Use demo data when demo mode is enabled or no real data
+  const displayProgressData = isDemoMode ? DEMO_PROGRESS_DATA : (progressData.length > 0 ? progressData : DEMO_PROGRESS_DATA);
+  const displayAssessments = isDemoMode ? DEMO_ASSESSMENTS_BY_TYPE : (assessmentsByType.length > 0 ? assessmentsByType : DEMO_ASSESSMENTS_BY_TYPE);
+  const displayPrayers = isDemoMode ? DEMO_PRAYERS_BY_TYPE : (prayersByType.length > 0 ? prayersByType : DEMO_PRAYERS_BY_TYPE);
+  const isShowingDemo = isDemoMode || (progressData.length === 0 && assessmentsByType.length === 0 && prayersByType.length === 0);
 
   const loadProgressData = async () => {
     if (!user) return;
@@ -146,7 +190,15 @@ const Progress = () => {
         <div className="max-w-7xl mx-auto space-y-8">
           {/* Header */}
           <div className="text-center space-y-2">
-            <h1 className="text-4xl font-bold">Your Spiritual Journey</h1>
+            <div className="flex items-center justify-center gap-3">
+              <h1 className="text-4xl font-bold">Your Spiritual Journey</h1>
+              {isShowingDemo && (
+                <Badge variant="outline" className="bg-amber-500/10 text-amber-600 border-amber-500/30">
+                  <FlaskConical className="w-3 h-3 mr-1" />
+                  Demo
+                </Badge>
+              )}
+            </div>
             <p className="text-xl text-muted-foreground">Track your growth and celebrate your progress</p>
           </div>
 
@@ -160,9 +212,9 @@ const Progress = () => {
               <CardDescription>Devotionals completed, assessments taken, and journal entries</CardDescription>
             </CardHeader>
             <CardContent>
-              {progressData.length > 0 ? (
+              {displayProgressData.length > 0 ? (
                 <ResponsiveContainer width="100%" height={300}>
-                  <LineChart data={progressData}>
+                  <LineChart data={displayProgressData}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis
                       dataKey="date"
@@ -195,11 +247,11 @@ const Progress = () => {
                 <CardDescription>Distribution of your assessment outcomes</CardDescription>
               </CardHeader>
               <CardContent>
-                {assessmentsByType.length > 0 ? (
+                {displayAssessments.length > 0 ? (
                   <ResponsiveContainer width="100%" height={250}>
                     <PieChart>
                       <Pie
-                        data={assessmentsByType}
+                        data={displayAssessments}
                         cx="50%"
                         cy="50%"
                         labelLine={false}
@@ -208,7 +260,7 @@ const Progress = () => {
                         fill="#8884d8"
                         dataKey="value"
                       >
-                        {assessmentsByType.map((entry, index) => (
+                        {displayAssessments.map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={COLORS[entry.name as keyof typeof COLORS] || '#8884d8'} />
                         ))}
                       </Pie>
@@ -230,15 +282,15 @@ const Progress = () => {
                 <CardDescription>Your prayer patterns by type</CardDescription>
               </CardHeader>
               <CardContent>
-                {prayersByType.length > 0 ? (
+                {displayPrayers.length > 0 ? (
                   <ResponsiveContainer width="100%" height={250}>
-                    <BarChart data={prayersByType}>
+                    <BarChart data={displayPrayers}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" />
                       <YAxis />
                       <Tooltip contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))' }} />
                       <Bar dataKey="value" fill="#8b5cf6">
-                        {prayersByType.map((entry, index) => (
+                        {displayPrayers.map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={COLORS[entry.name as keyof typeof COLORS] || '#8884d8'} />
                         ))}
                       </Bar>
