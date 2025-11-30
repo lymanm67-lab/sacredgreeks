@@ -52,9 +52,21 @@ Allow: /
 User-agent: Cohere-AI
 Allow: /
 
-# Default - Allow All
+# Default - Allow All with Private Page Exclusions
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /profile
+Disallow: /assessment-history
+Disallow: /offline-settings
+Disallow: /notification-preferences
+Disallow: /analytics
+Disallow: /beta-dashboard
+Disallow: /beta-checklist
+Disallow: /reset-password
+Disallow: /shared/
+Disallow: /shared-symbols/
+Disallow: /bookmarks
 
 # Sitemaps
 Sitemap: https://sacredgreekslife.com/sitemap.xml

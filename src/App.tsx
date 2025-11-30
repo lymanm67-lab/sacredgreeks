@@ -25,6 +25,7 @@ import { DemoOverlayWithTemplate } from "@/components/demo/DemoOverlayWithTempla
 import { DemoFeaturesProvider } from "@/components/demo/DemoFeaturesProvider";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { WhatsNewModal } from "@/components/WhatsNewModal";
+import { GlobalSEO } from "@/components/GlobalSEO";
 import { Loader2 } from "lucide-react";
 
 // Eager load critical pages
@@ -145,6 +146,7 @@ const App = () => (
                     <OfflineIndicator />
                     <AIAssistantWidget />
                     <BrowserRouter>
+                      <GlobalSEO />
                       <DemoBanner />
                       <DemoOverlayWithTemplate />
                       <DemoComparisonWrapper />
