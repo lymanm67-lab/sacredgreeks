@@ -4,6 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { TrendingUp, Calendar, Heart, BookOpen, Trophy, Flame } from 'lucide-react';
+import { useDemoMode } from '@/contexts/DemoModeContext';
 
 interface WeeklyStats {
   devotionalsCompleted: number;
@@ -26,6 +27,7 @@ const DEMO_STATS: WeeklyStats = {
 
 export function WeeklyInsights() {
   const { user } = useAuth();
+  const { isDemoMode } = useDemoMode();
   const [stats, setStats] = useState<WeeklyStats>({
     devotionalsCompleted: 0,
     prayersLogged: 0,
@@ -41,9 +43,17 @@ export function WeeklyInsights() {
     if (user) {
       loadWeeklyStats();
     }
-  }, [user]);
+  }, [user, isDemoMode]);
 
   const loadWeeklyStats = async () => {
+    // If demo mode is enabled, show demo stats
+    if (isDemoMode) {
+      setStats(DEMO_STATS);
+      setIsDemo(true);
+      setLoading(false);
+      return;
+    }
+    
     try {
       const today = new Date();
       const sevenDaysAgo = new Date(today);
