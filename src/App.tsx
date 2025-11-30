@@ -17,7 +17,6 @@ import { CelebrationProvider } from "@/contexts/CelebrationContext";
 import { DemoModeProvider } from "@/contexts/DemoModeContext";
 import { BetaFeedbackWidget } from "@/components/BetaFeedbackWidget";
 import { GlobalDemoIndicator } from "@/components/GlobalDemoIndicator";
-import { DemoModeTour } from "@/components/DemoModeTour";
 import { DemoBanner } from "@/components/DemoBanner";
 import { DemoComparisonWrapper } from "@/components/demo/DemoComparisonWrapper";
 import { DemoAnalyticsDashboardWrapper } from "@/components/demo/DemoAnalyticsDashboardWrapper";
@@ -152,7 +151,6 @@ const App = () => (
                       <DemoAnalyticsDashboardWrapper />
                       <BetaFeedbackWidget />
                       <GlobalDemoIndicator />
-                      <DemoModeTour />
                       <CookieConsent />
                       <WhatsNewModal />
                       <AnalyticsProvider>
