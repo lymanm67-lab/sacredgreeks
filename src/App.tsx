@@ -85,6 +85,7 @@ const TrademarkTracking = lazy(() => import("./pages/TrademarkTracking"));
 const TrademarkUsageGuide = lazy(() => import("./pages/TrademarkUsageGuide"));
 const Changelog = lazy(() => import("./pages/Changelog"));
 const AnalyticsDashboard = lazy(() => import("./pages/AnalyticsDashboard"));
+const NotificationPreferences = lazy(() => import("./pages/NotificationPreferences"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -345,6 +346,14 @@ const App = () => (
                       element={
                         <ProtectedPageWithLayout>
                           <AnalyticsDashboard />
+                        </ProtectedPageWithLayout>
+                      }
+                    />
+                    <Route
+                      path="/notification-preferences"
+                      element={
+                        <ProtectedPageWithLayout>
+                          <NotificationPreferences />
                         </ProtectedPageWithLayout>
                       }
                     />

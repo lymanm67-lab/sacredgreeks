@@ -16,7 +16,8 @@ import {
   ClipboardList,
   HelpCircle,
   LogOut,
-  FlaskConical
+  FlaskConical,
+  Bell
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -65,6 +66,7 @@ const resourceItems = [
 
 const footerItems = [
   { title: "Achievements", url: "/achievements", icon: Trophy },
+  { title: "Notifications", url: "/notification-preferences", icon: Bell },
   { title: "Profile", url: "/profile", icon: User },
   { title: "FAQ", url: "/faq", icon: HelpCircle },
 ];
