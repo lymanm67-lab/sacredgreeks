@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useDemoMode } from '@/contexts/DemoModeContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -14,6 +15,7 @@ import { z } from 'zod';
 import { PasswordStrengthIndicator } from '@/components/PasswordStrengthIndicator';
 import { usePasswordBreachCheck } from '@/hooks/use-password-breach-check';
 import { useDisposableEmailCheck } from '@/hooks/use-disposable-email-check';
+import { cn } from '@/lib/utils';
 
 const authSchema = z.object({
   email: z.string().email('Invalid email address').max(255, 'Email must be less than 255 characters'),
@@ -43,6 +45,7 @@ const Auth = () => {
   const [resendingEmail, setResendingEmail] = useState(false);
   const [signupEmail, setSignupEmail] = useState('');
   const { signUp, signIn } = useAuth();
+  const { isDemoMode } = useDemoMode();
   const navigate = useNavigate();
   const { toast } = useToast();
   const { checkPassword, isChecking: isCheckingBreach, breachCount, reset: resetBreachCheck } = usePasswordBreachCheck();
@@ -279,7 +282,7 @@ const Auth = () => {
 
   if (isResetMode) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-background to-muted flex flex-col">
+      <div className={cn("min-h-screen bg-gradient-to-b from-background to-muted flex flex-col", isDemoMode && "pt-11")}>
         <header className="border-b border-border bg-card">
           <div className="container mx-auto px-4 py-4">
             <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors w-fit">
@@ -379,7 +382,7 @@ const Auth = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted flex flex-col">
+    <div className={cn("min-h-screen bg-gradient-to-b from-background to-muted flex flex-col", isDemoMode && "pt-11")}>
       <header className="border-b border-border bg-card">
         <div className="container mx-auto px-4 py-4">
           <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors w-fit">

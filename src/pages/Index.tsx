@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useSubscription } from "@/hooks/use-subscription";
+import { useDemoMode } from "@/contexts/DemoModeContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -22,6 +23,7 @@ import { ShareSection } from "@/components/landing/ShareSection";
 import { ObjectionsTeaser } from "@/components/landing/ObjectionsTeaser";
 import { BetaBenefitsDialog } from "@/components/BetaBenefitsDialog";
 import { DemoHeaderButton } from "@/components/landing/DemoHeaderButton";
+import { cn } from "@/lib/utils";
 
 // Mobile section navigation items
 const sectionNav = [
@@ -151,6 +153,7 @@ const benefits = [
 const Index = () => {
   const { user } = useAuth();
   const { subscribed, tier } = useSubscription();
+  const { isDemoMode } = useDemoMode();
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
@@ -190,7 +193,10 @@ const Index = () => {
   const heroText = "Your daily companion for integrating faith and Greek life. Get devotionals, guidance, prayer tools, and progress tracking, all grounded in the P.R.O.O.F. framework from Sacred, Not Sinful.";
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/20">
+    <div className={cn(
+      "min-h-screen bg-gradient-to-b from-background via-background to-muted/20",
+      isDemoMode && "pt-11"
+    )}>
       {/* Scroll Progress Indicator */}
       <ScrollProgressIndicator />
       
@@ -254,7 +260,10 @@ const Index = () => {
       </div>
       
       {/* Header with Auth */}
-      <header className="border-b border-border/50 bg-background/80 backdrop-blur-lg sticky top-0 z-50">
+      <header className={cn(
+        "border-b border-border/50 bg-background/80 backdrop-blur-lg sticky z-50",
+        isDemoMode ? "top-11" : "top-0"
+      )}>
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
