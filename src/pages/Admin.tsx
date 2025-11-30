@@ -12,7 +12,8 @@ import { QASubmissionsManager } from "@/components/admin/QASubmissionsManager";
 import { HealingStoriesManager } from "@/components/admin/HealingStoriesManager";
 import VideoSuggestionsManager from "@/components/admin/VideoSuggestionsManager";
 import { BetaTestersManager } from "@/components/admin/BetaTestersManager";
-import { Home, Users, FileText, Lightbulb, MessageSquare, Heart, Video, Rocket, FlaskConical } from "lucide-react";
+import { EngagementScoresDashboard } from "@/components/admin/EngagementScoresDashboard";
+import { Home, Users, FileText, Lightbulb, MessageSquare, Heart, Video, Rocket, FlaskConical, BarChart3, Activity } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -130,6 +131,12 @@ const Admin = () => {
             </Link>
             <h1 className="text-lg font-semibold text-foreground">Sacred Greeks Admin</h1>
             <div className="flex items-center gap-2">
+              <Link to="/analytics">
+                <Button variant="outline" size="sm" className="gap-2">
+                  <BarChart3 className="w-4 h-4" />
+                  Analytics
+                </Button>
+              </Link>
               <Link to="/beta-checklist">
                 <Button variant="outline" size="sm" className="gap-2">
                   <Rocket className="w-4 h-4" />
@@ -148,10 +155,14 @@ const Admin = () => {
 
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="users" className="space-y-6">
-          <TabsList className="grid w-full max-w-5xl grid-cols-7">
+          <TabsList className="grid w-full max-w-6xl grid-cols-9">
             <TabsTrigger value="users" className="flex items-center gap-2">
               <Users className="h-4 w-4" />
               <span className="hidden sm:inline">Users</span>
+            </TabsTrigger>
+            <TabsTrigger value="engagement" className="flex items-center gap-2">
+              <Activity className="h-4 w-4" />
+              <span className="hidden sm:inline">Engagement</span>
             </TabsTrigger>
             <TabsTrigger value="beta" className="flex items-center gap-2">
               <FlaskConical className="h-4 w-4" />
@@ -177,10 +188,18 @@ const Admin = () => {
               <Lightbulb className="h-4 w-4" />
               <span className="hidden sm:inline">Resources</span>
             </TabsTrigger>
+            <TabsTrigger value="analytics" className="flex items-center gap-2">
+              <BarChart3 className="h-4 w-4" />
+              <span className="hidden sm:inline">Analytics</span>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="users">
             <UserManagement />
+          </TabsContent>
+
+          <TabsContent value="engagement">
+            <EngagementScoresDashboard />
           </TabsContent>
 
           <TabsContent value="beta">
@@ -263,6 +282,25 @@ const Admin = () => {
 
           <TabsContent value="resources">
             <ResourceSuggestionsManager />
+          </TabsContent>
+
+          <TabsContent value="analytics">
+            <Card>
+              <CardHeader>
+                <CardTitle>Analytics Overview</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground mb-4">
+                  View detailed analytics on the dedicated Analytics Dashboard.
+                </p>
+                <Link to="/analytics">
+                  <Button className="gap-2">
+                    <BarChart3 className="h-4 w-4" />
+                    Open Full Analytics Dashboard
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
           </TabsContent>
         </Tabs>
       </main>
