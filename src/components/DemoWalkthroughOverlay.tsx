@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { X, ChevronRight, ChevronLeft, Sparkles, MapPin, Volume2, VolumeX, Timer, Award } from 'lucide-react';
+import { X, ChevronRight, ChevronLeft, Sparkles, MapPin, Volume2, VolumeX, Timer, GripVertical, Minimize2, Maximize2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -70,6 +70,11 @@ interface DemoWalkthroughOverlayProps {
   customTemplate?: OnboardingTemplate | null;
 }
 
+interface Position {
+  x: number;
+  y: number;
+}
+
 export function DemoWalkthroughOverlay({ customTemplate }: DemoWalkthroughOverlayProps) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -78,13 +83,20 @@ export function DemoWalkthroughOverlay({ customTemplate }: DemoWalkthroughOverla
   const [isVisible, setIsVisible] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
   const [autoAdvance, setAutoAdvance] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
-  const [autoAdvanceTimer, setAutoAdvanceTimer] = useState<number>(8);
+  const [autoAdvanceTimer] = useState<number>(8);
   const [selectedVoice, setSelectedVoice] = useState<VoiceOption>('alloy');
   const [showCertificate, setShowCertificate] = useState(false);
   const [completionDate, setCompletionDate] = useState<Date | null>(null);
+  
+  // Dragging state
+  const [isMinimized, setIsMinimized] = useState(false);
+  const [position, setPosition] = useState<Position>({ x: 20, y: 20 });
+  const [isDragging, setIsDragging] = useState(false);
+  const dragRef = useRef<HTMLDivElement>(null);
+  const dragStartPos = useRef<Position>({ x: 0, y: 0 });
+  const cardStartPos = useRef<Position>({ x: 0, y: 0 });
 
   // Determine which steps to use
   const walkthroughSteps = customTemplate?.tourSteps || defaultWalkthroughSteps;
@@ -104,7 +116,6 @@ export function DemoWalkthroughOverlay({ customTemplate }: DemoWalkthroughOverla
       if (step.route && location.pathname !== step.route) {
         setIsNavigating(true);
         navigate(step.route);
-        // Allow time for navigation
         setTimeout(() => setIsNavigating(false), 500);
       }
     }
@@ -114,7 +125,7 @@ export function DemoWalkthroughOverlay({ customTemplate }: DemoWalkthroughOverla
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null;
     
-    if (autoAdvance && isVisible && !isNavigating) {
+    if (autoAdvance && isVisible && !isNavigating && !isMinimized) {
       timer = setTimeout(() => {
         if (currentStep < walkthroughSteps.length - 1) {
           setCurrentStep(prev => prev + 1);
@@ -127,7 +138,7 @@ export function DemoWalkthroughOverlay({ customTemplate }: DemoWalkthroughOverla
     return () => {
       if (timer) clearTimeout(timer);
     };
-  }, [autoAdvance, isVisible, currentStep, isNavigating, walkthroughSteps.length, autoAdvanceTimer]);
+  }, [autoAdvance, isVisible, currentStep, isNavigating, walkthroughSteps.length, autoAdvanceTimer, isMinimized]);
 
   // Stop audio when step changes or component unmounts
   useEffect(() => {
@@ -140,11 +151,45 @@ export function DemoWalkthroughOverlay({ customTemplate }: DemoWalkthroughOverla
     };
   }, [currentStep]);
 
+  // Dragging handlers
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest('button')) return;
+    setIsDragging(true);
+    dragStartPos.current = { x: e.clientX, y: e.clientY };
+    cardStartPos.current = { ...position };
+  }, [position]);
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (!isDragging) return;
+    
+    const deltaX = e.clientX - dragStartPos.current.x;
+    const deltaY = e.clientY - dragStartPos.current.y;
+    
+    const newX = Math.max(0, Math.min(window.innerWidth - 100, cardStartPos.current.x + deltaX));
+    const newY = Math.max(0, Math.min(window.innerHeight - 100, cardStartPos.current.y + deltaY));
+    
+    setPosition({ x: newX, y: newY });
+  }, [isDragging]);
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isDragging, handleMouseMove, handleMouseUp]);
+
   const speakDescription = useCallback(async () => {
     const step = walkthroughSteps[currentStep];
     if (!step) return;
 
-    // Stop any existing audio
     if (audioElement) {
       audioElement.pause();
       setAudioElement(null);
@@ -233,7 +278,6 @@ export function DemoWalkthroughOverlay({ customTemplate }: DemoWalkthroughOverla
     setAutoAdvance(false);
     setIsVisible(false);
     setHasSeenTour(true);
-    // If this was the last step, mark template as completed and show certificate
     if (currentStep === walkthroughSteps.length - 1) {
       markTemplateCompleted(activeTemplate);
       setCompletionDate(new Date());
@@ -260,165 +304,220 @@ export function DemoWalkthroughOverlay({ customTemplate }: DemoWalkthroughOverla
     }
   };
 
-  const positionClasses = {
-    center: 'items-center justify-center',
-    top: 'items-start justify-center pt-24',
-    bottom: 'items-end justify-center pb-24',
-    left: 'items-center justify-start pl-8',
-    right: 'items-center justify-end pr-8',
-  };
-
-  return (
-    <div className="fixed inset-0 z-[100] bg-black/30 backdrop-blur-[2px] flex animate-fade-in">
-      <div className={`flex w-full ${positionClasses[step.position]}`}>
-        <Card className="max-w-md mx-4 shadow-2xl border-2 border-emerald-200 dark:border-emerald-800 animate-scale-in bg-card/95 backdrop-blur-sm">
-          <CardContent className="p-6">
-            <div className="flex items-start justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <div className="p-2 rounded-full bg-emerald-100 dark:bg-emerald-900">
-                  <Sparkles className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
-                </div>
-                <span className="text-xs font-medium text-muted-foreground">
-                  Step {currentStep + 1} of {walkthroughSteps.length}
-                </span>
-              </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-8 w-8 p-0"
-                onClick={handleClose}
-              >
-                <X className="h-4 w-4" />
-              </Button>
+  // Minimized view
+  if (isMinimized) {
+    return (
+      <div
+        ref={dragRef}
+        className="fixed z-[100] cursor-move select-none"
+        style={{ left: position.x, top: position.y }}
+        onMouseDown={handleMouseDown}
+      >
+        <Card className="shadow-lg border-2 border-emerald-200 dark:border-emerald-800 bg-card">
+          <CardContent className="p-3 flex items-center gap-3">
+            <GripVertical className="h-4 w-4 text-muted-foreground" />
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-emerald-600" />
+              <span className="text-sm font-medium">Tour: Step {currentStep + 1}/{walkthroughSteps.length}</span>
             </div>
-
-            <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-            <p className="text-muted-foreground mb-4">{step.description}</p>
-
-            {/* Listen button and voice selector */}
-            <div className="flex items-center gap-2 mb-4 flex-wrap">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={isSpeaking ? stopSpeaking : speakDescription}
-                className="flex items-center gap-2"
-              >
-                {isSpeaking ? (
-                  <>
-                    <VolumeX className="h-4 w-4" />
-                    Stop
-                  </>
-                ) : (
-                  <>
-                    <Volume2 className="h-4 w-4" />
-                    Listen
-                  </>
-                )}
-              </Button>
-              
-              {/* Voice selector */}
-              <VoiceSelector 
-                selectedVoice={selectedVoice}
-                onVoiceChange={setSelectedVoice}
-              />
-              
-              {/* Auto-advance toggle */}
-              <div className="flex items-center gap-2 ml-auto">
-                <Switch
-                  id="auto-advance"
-                  checked={autoAdvance}
-                  onCheckedChange={toggleAutoAdvance}
-                />
-                <Label htmlFor="auto-advance" className="text-xs flex items-center gap-1 cursor-pointer">
-                  <Timer className="h-3 w-3" />
-                  Auto
-                </Label>
-              </div>
-            </div>
-
-            {/* Current route indicator */}
-            <div className="flex items-center gap-2 mb-4 p-2 bg-muted/50 rounded-lg">
-              <MapPin className="h-4 w-4 text-muted-foreground" />
-              <span className="text-xs text-muted-foreground">
-                {isNavigating ? 'Navigating...' : `Currently at: ${step.route}`}
-              </span>
-              <Badge variant="outline" className="ml-auto text-[10px]">
-                {step.route}
-              </Badge>
-            </div>
-
-            {/* Progress dots */}
-            <div className="flex justify-center gap-1.5 mb-4">
-              {walkthroughSteps.map((_, index) => (
-                <button
-                  key={index}
-                  className={`h-2 rounded-full transition-all ${
-                    index === currentStep
-                      ? 'w-6 bg-emerald-500'
-                      : index < currentStep
-                      ? 'w-2 bg-emerald-300'
-                      : 'w-2 bg-muted'
-                  }`}
-                  onClick={() => handleGoToStep(index)}
-                  title={walkthroughSteps[index].title}
-                />
-              ))}
-            </div>
-
-            {/* Auto-advance progress bar */}
-            {autoAdvance && !isLastStep && (
-              <div className="mb-4">
-                <div className="h-1 bg-muted rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-emerald-500 transition-all ease-linear"
-                    style={{
-                      width: '100%',
-                      animation: `shrink ${autoAdvanceTimer}s linear forwards`,
-                    }}
-                  />
-                </div>
-                <p className="text-[10px] text-center text-muted-foreground mt-1">
-                  Auto-advancing in {autoAdvanceTimer}s
-                </p>
-              </div>
-            )}
-
-            <div className="flex items-center justify-between">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleSkip}
-                className="text-muted-foreground"
-              >
-                Skip Tour
-              </Button>
-
-              <div className="flex gap-2">
-                {!isFirstStep && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handlePrev}
-                    disabled={isNavigating}
-                  >
-                    <ChevronLeft className="h-4 w-4 mr-1" />
-                    Back
-                  </Button>
-                )}
-                <Button
-                  size="sm"
-                  onClick={handleNext}
-                  disabled={isNavigating}
-                  className="bg-emerald-600 hover:bg-emerald-700"
-                >
-                  {isLastStep ? 'Get Started' : 'Next'}
-                  {!isLastStep && <ChevronRight className="h-4 w-4 ml-1" />}
-                </Button>
-              </div>
-            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-7 w-7 p-0"
+              onClick={() => setIsMinimized(false)}
+            >
+              <Maximize2 className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-7 w-7 p-0"
+              onClick={handleSkip}
+            >
+              <X className="h-4 w-4" />
+            </Button>
           </CardContent>
         </Card>
       </div>
+    );
+  }
+
+  return (
+    <div
+      ref={dragRef}
+      className="fixed z-[100] select-none"
+      style={{ 
+        left: position.x, 
+        top: position.y,
+        cursor: isDragging ? 'grabbing' : 'default',
+      }}
+    >
+      <Card 
+        className="w-[360px] max-w-[calc(100vw-40px)] shadow-2xl border-2 border-emerald-200 dark:border-emerald-800 animate-scale-in bg-card"
+      >
+        <CardContent className="p-4">
+          {/* Drag handle header */}
+          <div 
+            className="flex items-start justify-between mb-3 cursor-grab active:cursor-grabbing"
+            onMouseDown={handleMouseDown}
+          >
+            <div className="flex items-center gap-2">
+              <GripVertical className="h-4 w-4 text-muted-foreground" />
+              <div className="p-1.5 rounded-full bg-emerald-100 dark:bg-emerald-900">
+                <Sparkles className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+              </div>
+              <span className="text-xs font-medium text-muted-foreground">
+                Step {currentStep + 1} of {walkthroughSteps.length}
+              </span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-7 w-7 p-0"
+                onClick={() => setIsMinimized(true)}
+                title="Minimize"
+              >
+                <Minimize2 className="h-3.5 w-3.5" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-7 w-7 p-0"
+                onClick={handleClose}
+              >
+                <X className="h-3.5 w-3.5" />
+              </Button>
+            </div>
+          </div>
+
+          <h3 className="text-lg font-semibold mb-1.5">{step.title}</h3>
+          <p className="text-sm text-muted-foreground mb-3">{step.description}</p>
+
+          {/* Listen button and voice selector */}
+          <div className="flex items-center gap-2 mb-3 flex-wrap">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={isSpeaking ? stopSpeaking : speakDescription}
+              className="flex items-center gap-1.5 h-8 text-xs"
+            >
+              {isSpeaking ? (
+                <>
+                  <VolumeX className="h-3.5 w-3.5" />
+                  Stop
+                </>
+              ) : (
+                <>
+                  <Volume2 className="h-3.5 w-3.5" />
+                  Listen
+                </>
+              )}
+            </Button>
+            
+            <VoiceSelector 
+              selectedVoice={selectedVoice}
+              onVoiceChange={setSelectedVoice}
+            />
+            
+            {/* Auto-advance toggle */}
+            <div className="flex items-center gap-1.5 ml-auto">
+              <Switch
+                id="auto-advance"
+                checked={autoAdvance}
+                onCheckedChange={toggleAutoAdvance}
+                className="scale-90"
+              />
+              <Label htmlFor="auto-advance" className="text-xs flex items-center gap-1 cursor-pointer">
+                <Timer className="h-3 w-3" />
+                Auto
+              </Label>
+            </div>
+          </div>
+
+          {/* Current route indicator */}
+          <div className="flex items-center gap-2 mb-3 p-2 bg-muted/50 rounded-lg">
+            <MapPin className="h-3.5 w-3.5 text-muted-foreground" />
+            <span className="text-xs text-muted-foreground">
+              {isNavigating ? 'Navigating...' : `Currently at: ${step.route}`}
+            </span>
+            <Badge variant="outline" className="ml-auto text-[10px] h-5">
+              {step.route}
+            </Badge>
+          </div>
+
+          {/* Progress dots */}
+          <div className="flex justify-center gap-1 mb-3">
+            {walkthroughSteps.map((_, index) => (
+              <button
+                key={index}
+                className={`h-1.5 rounded-full transition-all ${
+                  index === currentStep
+                    ? 'w-5 bg-emerald-500'
+                    : index < currentStep
+                    ? 'w-1.5 bg-emerald-300'
+                    : 'w-1.5 bg-muted'
+                }`}
+                onClick={() => handleGoToStep(index)}
+                title={walkthroughSteps[index].title}
+              />
+            ))}
+          </div>
+
+          {/* Auto-advance progress bar */}
+          {autoAdvance && !isLastStep && (
+            <div className="mb-3">
+              <div className="h-1 bg-muted rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-emerald-500 transition-all ease-linear"
+                  style={{
+                    width: '100%',
+                    animation: `shrink ${autoAdvanceTimer}s linear forwards`,
+                  }}
+                />
+              </div>
+              <p className="text-[10px] text-center text-muted-foreground mt-1">
+                Auto-advancing in {autoAdvanceTimer}s
+              </p>
+            </div>
+          )}
+
+          <div className="flex items-center justify-between">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleSkip}
+              className="text-muted-foreground text-xs h-8"
+            >
+              Skip Tour
+            </Button>
+
+            <div className="flex gap-2">
+              {!isFirstStep && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handlePrev}
+                  disabled={isNavigating}
+                  className="h-8 text-xs"
+                >
+                  <ChevronLeft className="h-3.5 w-3.5 mr-0.5" />
+                  Back
+                </Button>
+              )}
+              <Button
+                size="sm"
+                onClick={handleNext}
+                disabled={isNavigating}
+                className="bg-emerald-600 hover:bg-emerald-700 h-8 text-xs"
+              >
+                {isLastStep ? 'Get Started' : 'Next'}
+                {!isLastStep && <ChevronRight className="h-3.5 w-3.5 ml-0.5" />}
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       <style>{`
         @keyframes shrink {
