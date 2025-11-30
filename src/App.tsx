@@ -81,6 +81,7 @@ const Forum = lazy(() => import("./pages/Forum"));
 const Legal = lazy(() => import("./pages/Legal"));
 const IPDocumentation = lazy(() => import("./pages/IPDocumentation"));
 const TrademarkTracking = lazy(() => import("./pages/TrademarkTracking"));
+const TrademarkUsageGuide = lazy(() => import("./pages/TrademarkUsageGuide"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -172,6 +173,7 @@ const App = () => (
                     <Route path="/legal" element={<Legal />} />
                     <Route path="/ip-documentation" element={<IPDocumentation />} />
                     <Route path="/trademark-tracking" element={<TrademarkTracking />} />
+                    <Route path="/trademark-usage-guide" element={<TrademarkUsageGuide />} />
                     
                     {/* Protected routes - with sidebar */}
                     <Route
