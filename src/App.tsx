@@ -23,6 +23,7 @@ import { DemoComparisonWrapper } from "@/components/demo/DemoComparisonWrapper";
 import { DemoAnalyticsDashboardWrapper } from "@/components/demo/DemoAnalyticsDashboardWrapper";
 import { DemoTemplateSelectorProvider } from "@/components/demo/DemoTemplateSelectorWrapper";
 import { DemoOverlayWithTemplate } from "@/components/demo/DemoOverlayWithTemplate";
+import { DemoFeaturesProvider } from "@/components/demo/DemoFeaturesProvider";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Loader2 } from "lucide-react";
 
@@ -113,25 +114,26 @@ const App = () => (
         <AuthProvider>
           <DemoModeProvider>
             <DemoTemplateSelectorProvider>
-              <CelebrationProvider>
-                <TooltipProvider>
-                  <Toaster />
-                  <Sonner />
-                  <InstallPrompt />
-                  <OfflineIndicator />
-                  <AIAssistantWidget />
-                  <BrowserRouter>
-                    <DemoBanner />
-                    <DemoOverlayWithTemplate />
-                    <DemoComparisonWrapper />
-                    <DemoAnalyticsDashboardWrapper />
-                    <BetaFeedbackWidget />
-                    <GlobalDemoIndicator />
-                    <DemoModeTour />
-                    <CookieConsent />
-                    <AnalyticsProvider>
-                <Suspense fallback={<PageLoader />}>
-                  <Routes>
+              <DemoFeaturesProvider>
+                <CelebrationProvider>
+                  <TooltipProvider>
+                    <Toaster />
+                    <Sonner />
+                    <InstallPrompt />
+                    <OfflineIndicator />
+                    <AIAssistantWidget />
+                    <BrowserRouter>
+                      <DemoBanner />
+                      <DemoOverlayWithTemplate />
+                      <DemoComparisonWrapper />
+                      <DemoAnalyticsDashboardWrapper />
+                      <BetaFeedbackWidget />
+                      <GlobalDemoIndicator />
+                      <DemoModeTour />
+                      <CookieConsent />
+                      <AnalyticsProvider>
+                  <Suspense fallback={<PageLoader />}>
+                    <Routes>
                     {/* Public routes - no sidebar */}
                     <Route path="/" element={<Index />} />
                     <Route path="/auth" element={<Auth />} />
@@ -311,12 +313,13 @@ const App = () => (
                       }
                     />
                     <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </Suspense>
-              </AnalyticsProvider>
-            </BrowserRouter>
-                </TooltipProvider>
-              </CelebrationProvider>
+                    </Routes>
+                  </Suspense>
+                </AnalyticsProvider>
+              </BrowserRouter>
+                  </TooltipProvider>
+                </CelebrationProvider>
+              </DemoFeaturesProvider>
             </DemoTemplateSelectorProvider>
           </DemoModeProvider>
         </AuthProvider>

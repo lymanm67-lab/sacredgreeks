@@ -31,11 +31,15 @@ import {
   Upload,
   FileJson,
   Layout,
+  User,
+  Edit3,
+  Award,
 } from 'lucide-react';
 import { useDemoMode, DemoFeatures, DEMO_SCENARIOS, DemoScenario } from '@/contexts/DemoModeContext';
 import { useToast } from '@/hooks/use-toast';
 import { validateImportedConfig } from '@/data/demoOnboardingTemplates';
 import { useTemplateSelector } from '@/components/demo/DemoTemplateSelectorWrapper';
+import { useDemoFeatures } from '@/components/demo/DemoFeaturesProvider';
 
 const featureLabels: Record<keyof DemoFeatures, string> = {
   dashboard: 'Dashboard',
@@ -73,8 +77,12 @@ export function DemoSettingsDialog({ trigger }: DemoSettingsDialogProps) {
     generateShareLink,
     preloadScenarioData,
     isDataPreloaded,
+    activePersona,
+    completedTemplate,
+    setShowCertificate,
   } = useDemoMode();
   const { openSelector, setActiveTemplate } = useTemplateSelector();
+  const { openPersonaSelector, openTemplateEditor } = useDemoFeatures();
   const { toast } = useToast();
 
   const handleStartTour = () => {
@@ -334,16 +342,75 @@ export function DemoSettingsDialog({ trigger }: DemoSettingsDialogProps) {
                   variant="outline"
                   size="sm"
                   className="justify-start"
+                  onClick={() => {
+                    setOpen(false);
+                    openTemplateEditor();
+                  }}
+                >
+                  <Edit3 className="h-4 w-4 mr-2 text-indigo-500" />
+                  Template Editor
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="justify-start"
                   onClick={handleImportConfig}
                 >
                   <Upload className="h-4 w-4 mr-2 text-blue-500" />
                   Import Config
                 </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="justify-start"
+                  onClick={() => {
+                    setOpen(false);
+                    openPersonaSelector();
+                  }}
+                >
+                  <User className="h-4 w-4 mr-2 text-teal-500" />
+                  User Personas
+                  {activePersona && (
+                    <Badge variant="secondary" className="ml-auto text-[10px]">
+                      {activePersona.name}
+                    </Badge>
+                  )}
+                </Button>
               </div>
               <p className="text-xs text-muted-foreground">
-                Choose pre-built templates for sales demos, training, or create custom tours
+                Choose pre-built templates, create custom tours, or switch user personas
               </p>
             </div>
+
+            <Separator />
+
+            {/* Certificate */}
+            {completedTemplate && (
+              <>
+                <div className="space-y-3">
+                  <Label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                    <Award className="h-4 w-4 text-amber-500" />
+                    Completion Certificate
+                  </Label>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full justify-start bg-gradient-to-r from-amber-500/10 to-emerald-500/10 border-amber-500/30"
+                    onClick={() => {
+                      setOpen(false);
+                      setShowCertificate(true);
+                    }}
+                  >
+                    <Award className="h-4 w-4 mr-2 text-amber-500" />
+                    View Certificate
+                    <Badge variant="secondary" className="ml-auto text-[10px]">
+                      {completedTemplate.name}
+                    </Badge>
+                  </Button>
+                </div>
+                <Separator />
+              </>
+            )}
 
             <Separator />
 

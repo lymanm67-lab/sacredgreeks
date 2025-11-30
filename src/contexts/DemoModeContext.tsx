@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode, useRef } from 'react';
+import { DemoPersona } from '@/data/demoUserPersonas';
+import { OnboardingTemplate } from '@/data/demoOnboardingTemplates';
 
 export interface DemoFeatures {
   dashboard: boolean;
@@ -143,6 +145,16 @@ interface DemoModeContextType {
   persistentData: PersistentDemoData | null;
   savePersistentData: (data: Partial<PersistentDemoData>) => void;
   clearPersistentData: () => void;
+  // Persona management
+  activePersona: DemoPersona | null;
+  setActivePersona: (persona: DemoPersona | null) => void;
+  // Completion tracking
+  completedTemplate: OnboardingTemplate | null;
+  completionDate: Date | null;
+  markTemplateCompleted: (template: OnboardingTemplate) => void;
+  clearCompletion: () => void;
+  showCertificate: boolean;
+  setShowCertificate: (show: boolean) => void;
 }
 
 const DemoModeContext = createContext<DemoModeContextType | undefined>(undefined);
@@ -154,6 +166,8 @@ const DEMO_SETTINGS_KEY = 'sacred-greeks-demo-settings';
 const DEMO_SCENARIO_KEY = 'sacred-greeks-demo-scenario';
 const DEMO_CACHE_KEY = 'sacred-greeks-demo-cache';
 const DEMO_PERSISTENT_DATA_KEY = 'sacred-greeks-demo-persistent-data';
+const DEMO_PERSONA_KEY = 'sacred-greeks-demo-persona';
+const DEMO_COMPLETION_KEY = 'sacred-greeks-demo-completion';
 
 // Persistent demo data structure
 export interface PersistentDemoData {
@@ -256,6 +270,24 @@ export function DemoModeProvider({ children }: { children: ReactNode }) {
     return null;
   });
 
+  // Active persona
+  const [activePersona, setActivePersonaState] = useState<DemoPersona | null>(() => {
+    const stored = localStorage.getItem(DEMO_PERSONA_KEY);
+    if (stored) {
+      try {
+        return JSON.parse(stored);
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  });
+
+  // Completion tracking
+  const [completedTemplate, setCompletedTemplate] = useState<OnboardingTemplate | null>(null);
+  const [completionDate, setCompletionDate] = useState<Date | null>(null);
+  const [showCertificate, setShowCertificate] = useState(false);
+
   // Save persistent data
   const savePersistentData = useCallback((data: Partial<PersistentDemoData>) => {
     setPersistentData(prev => {
@@ -276,6 +308,35 @@ export function DemoModeProvider({ children }: { children: ReactNode }) {
   const clearPersistentData = useCallback(() => {
     setPersistentData(null);
     localStorage.removeItem(DEMO_PERSISTENT_DATA_KEY);
+  }, []);
+
+  // Set active persona
+  const setActivePersona = useCallback((persona: DemoPersona | null) => {
+    setActivePersonaState(persona);
+    if (persona) {
+      localStorage.setItem(DEMO_PERSONA_KEY, JSON.stringify(persona));
+    } else {
+      localStorage.removeItem(DEMO_PERSONA_KEY);
+    }
+  }, []);
+
+  // Mark template as completed
+  const markTemplateCompleted = useCallback((template: OnboardingTemplate) => {
+    setCompletedTemplate(template);
+    setCompletionDate(new Date());
+    setShowCertificate(true);
+    localStorage.setItem(DEMO_COMPLETION_KEY, JSON.stringify({
+      template,
+      completedAt: new Date().toISOString(),
+    }));
+  }, []);
+
+  // Clear completion
+  const clearCompletion = useCallback(() => {
+    setCompletedTemplate(null);
+    setCompletionDate(null);
+    setShowCertificate(false);
+    localStorage.removeItem(DEMO_COMPLETION_KEY);
   }, []);
 
   useEffect(() => {
@@ -446,6 +507,14 @@ export function DemoModeProvider({ children }: { children: ReactNode }) {
       persistentData,
       savePersistentData,
       clearPersistentData,
+      activePersona,
+      setActivePersona,
+      completedTemplate,
+      completionDate,
+      markTemplateCompleted,
+      clearCompletion,
+      showCertificate,
+      setShowCertificate,
     }}>
       {children}
     </DemoModeContext.Provider>
