@@ -13,6 +13,12 @@ export interface DemoFeatures {
   prayerJournal: boolean;
 }
 
+export interface DemoSettings {
+  preSurveyMode: boolean;
+  compareScenarios: boolean;
+  analyticsEnabled: boolean;
+}
+
 interface DemoModeContextType {
   isDemoMode: boolean;
   setDemoMode: (enabled: boolean) => void;
@@ -24,6 +30,9 @@ interface DemoModeContextType {
   disableAllFeatures: () => void;
   hasSeenTour: boolean;
   setHasSeenTour: (seen: boolean) => void;
+  demoSettings: DemoSettings;
+  setDemoSetting: (setting: keyof DemoSettings, enabled: boolean) => void;
+  refreshDemoData: () => void;
 }
 
 const DemoModeContext = createContext<DemoModeContextType | undefined>(undefined);
@@ -31,6 +40,7 @@ const DemoModeContext = createContext<DemoModeContextType | undefined>(undefined
 const DEMO_MODE_KEY = 'sacred-greeks-demo-mode';
 const DEMO_FEATURES_KEY = 'sacred-greeks-demo-features';
 const DEMO_TOUR_KEY = 'sacred-greeks-demo-tour-seen';
+const DEMO_SETTINGS_KEY = 'sacred-greeks-demo-settings';
 
 const DEFAULT_FEATURES: DemoFeatures = {
   dashboard: true,
@@ -45,8 +55,21 @@ const DEFAULT_FEATURES: DemoFeatures = {
   prayerJournal: true,
 };
 
+const DEFAULT_SETTINGS: DemoSettings = {
+  preSurveyMode: false,
+  compareScenarios: false,
+  analyticsEnabled: true,
+};
+
 export function DemoModeProvider({ children }: { children: ReactNode }) {
   const [isDemoMode, setIsDemoMode] = useState(() => {
+    // Check URL parameter first
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('demo') === 'true') {
+        return true;
+      }
+    }
     const stored = localStorage.getItem(DEMO_MODE_KEY);
     return stored === 'true';
   });
@@ -67,9 +90,33 @@ export function DemoModeProvider({ children }: { children: ReactNode }) {
     return localStorage.getItem(DEMO_TOUR_KEY) === 'true';
   });
 
+  const [demoSettings, setDemoSettings] = useState<DemoSettings>(() => {
+    const stored = localStorage.getItem(DEMO_SETTINGS_KEY);
+    if (stored) {
+      try {
+        return { ...DEFAULT_SETTINGS, ...JSON.parse(stored) };
+      } catch {
+        return DEFAULT_SETTINGS;
+      }
+    }
+    return DEFAULT_SETTINGS;
+  });
+
+  // Check URL parameter on mount and when URL changes
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('demo') === 'true' && !isDemoMode) {
+      setIsDemoMode(true);
+    }
+  }, []);
+
   useEffect(() => {
     localStorage.setItem(DEMO_MODE_KEY, String(isDemoMode));
   }, [isDemoMode]);
+
+  useEffect(() => {
+    localStorage.setItem(DEMO_SETTINGS_KEY, JSON.stringify(demoSettings));
+  }, [demoSettings]);
 
   useEffect(() => {
     localStorage.setItem(DEMO_FEATURES_KEY, JSON.stringify(demoFeatures));
@@ -115,6 +162,20 @@ export function DemoModeProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(DEMO_TOUR_KEY, String(seen));
   };
 
+  const setDemoSetting = (setting: keyof DemoSettings, enabled: boolean) => {
+    setDemoSettings(prev => ({
+      ...prev,
+      [setting]: enabled,
+    }));
+  };
+
+  const refreshDemoData = () => {
+    // Clear and regenerate demo data timestamps to simulate fresh data
+    const refreshKey = 'sacred-greeks-demo-refresh';
+    localStorage.setItem(refreshKey, String(Date.now()));
+    window.dispatchEvent(new CustomEvent('demo-data-refresh'));
+  };
+
   return (
     <DemoModeContext.Provider value={{ 
       isDemoMode, 
@@ -127,6 +188,9 @@ export function DemoModeProvider({ children }: { children: ReactNode }) {
       disableAllFeatures,
       hasSeenTour,
       setHasSeenTour,
+      demoSettings,
+      setDemoSetting,
+      refreshDemoData,
     }}>
       {children}
     </DemoModeContext.Provider>
