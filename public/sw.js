@@ -1,26 +1,37 @@
 // Enhanced Service Worker for PWA with offline support
-const CACHE_NAME = 'sacred-greeks-v5';
+const CACHE_NAME = 'sacred-greeks-v6';
 const RUNTIME_CACHE = 'sacred-greeks-runtime';
 const IMAGE_CACHE = 'sacred-greeks-images';
 
+// Only cache actual static files that exist - NOT SPA routes
 const urlsToCache = [
   '/',
-  '/auth',
-  '/dashboard',
-  '/devotional',
-  '/prayer-journal',
-  '/guide',
+  '/index.html',
   '/offline.html',
+  '/manifest.json',
+  '/icon-192.png',
+  '/icon-512.png',
 ];
 
-// Install event - cache core assets
+// Install event - cache core assets with error handling
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        return cache.addAll(urlsToCache);
+        // Cache each URL individually to prevent one failure from blocking all
+        return Promise.allSettled(
+          urlsToCache.map(url => 
+            cache.add(url).catch(err => {
+              console.warn(`Failed to cache ${url}:`, err);
+              return null;
+            })
+          )
+        );
       })
       .then(() => self.skipWaiting())
+      .catch(err => {
+        console.error('Service worker install failed:', err);
+      })
   );
 });
 
@@ -48,22 +59,33 @@ self.addEventListener('message', (event) => {
   }
 });
 
-// Fetch event - network first, fallback to cache
+// Fetch event - network first for navigation, cache for assets
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Skip cross-origin requests
-  if (url.origin !== location.origin) {
+  // Skip non-GET requests
+  if (request.method !== 'GET') {
     return;
   }
 
+  // Skip cross-origin requests except for trusted CDNs
+  if (url.origin !== location.origin) {
+    // Allow caching for common CDNs
+    if (!url.hostname.includes('fonts.googleapis.com') && 
+        !url.hostname.includes('fonts.gstatic.com')) {
+      return;
+    }
+  }
+
   // Handle API requests with network-first strategy
-  if (request.url.includes('/api/') || request.url.includes('supabase')) {
+  if (request.url.includes('/api/') || 
+      request.url.includes('supabase') ||
+      request.url.includes('/rest/') ||
+      request.url.includes('/functions/')) {
     event.respondWith(
       fetch(request)
         .then((response) => {
-          // Clone and cache successful responses
           if (response.ok) {
             const responseClone = response.clone();
             caches.open(RUNTIME_CACHE).then((cache) => {
@@ -73,7 +95,6 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch(() => {
-          // Fallback to cache if network fails
           return caches.match(request);
         })
     );
@@ -95,18 +116,32 @@ self.addEventListener('fetch', (event) => {
             });
           }
           return response;
+        }).catch(() => {
+          // Return a placeholder or empty response for failed images
+          return new Response('', { status: 404 });
         });
       })
     );
     return;
   }
 
-  // Handle navigation requests
+  // Handle navigation requests - network first, fallback to index.html for SPA
   if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request)
+        .then((response) => {
+          // Cache successful navigation responses
+          if (response.ok) {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(request, responseClone);
+            });
+          }
+          return response;
+        })
         .catch(() => {
-          return caches.match(request)
+          // For SPA, return the cached index.html for all navigation
+          return caches.match('/index.html')
             .then((response) => {
               return response || caches.match('/offline.html');
             });
@@ -115,22 +150,23 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Default strategy: cache-first
+  // Default strategy: stale-while-revalidate for better performance
   event.respondWith(
     caches.match(request)
-      .then((response) => {
-        if (response) {
-          return response;
-        }
-        return fetch(request).then((response) => {
-          if (response.ok) {
-            const responseClone = response.clone();
-            caches.open(RUNTIME_CACHE).then((cache) => {
-              cache.put(request, responseClone);
-            });
-          }
-          return response;
-        });
+      .then((cachedResponse) => {
+        const fetchPromise = fetch(request)
+          .then((networkResponse) => {
+            if (networkResponse.ok) {
+              const responseClone = networkResponse.clone();
+              caches.open(RUNTIME_CACHE).then((cache) => {
+                cache.put(request, responseClone);
+              });
+            }
+            return networkResponse;
+          })
+          .catch(() => cachedResponse);
+        
+        return cachedResponse || fetchPromise;
       })
   );
 });
@@ -143,7 +179,6 @@ self.addEventListener('sync', (event) => {
 });
 
 async function syncAssessments() {
-  // Sync any pending assessments when back online
   const cache = await caches.open(RUNTIME_CACHE);
   const keys = await cache.keys();
   const pendingRequests = keys.filter(req => 
@@ -199,13 +234,11 @@ self.addEventListener('notificationclick', (event) => {
     event.waitUntil(
       clients.matchAll({ type: 'window', includeUncontrolled: true })
         .then((clientList) => {
-          // Check if there's already a window open
           for (const client of clientList) {
             if (client.url === urlToOpen && 'focus' in client) {
               return client.focus();
             }
           }
-          // If not, open a new window
           if (clients.openWindow) {
             return clients.openWindow(urlToOpen);
           }
@@ -223,7 +256,6 @@ self.addEventListener('periodicsync', (event) => {
 
 async function checkForAppUpdates() {
   try {
-    // Notify clients about potential updates
     const clients = await self.clients.matchAll();
     clients.forEach(client => {
       client.postMessage({
