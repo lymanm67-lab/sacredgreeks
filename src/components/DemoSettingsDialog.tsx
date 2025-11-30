@@ -34,6 +34,8 @@ import {
   User,
   Edit3,
   Award,
+  Video,
+  Wrench,
 } from 'lucide-react';
 import { useDemoMode, DemoFeatures, DEMO_SCENARIOS, DemoScenario } from '@/contexts/DemoModeContext';
 import { useToast } from '@/hooks/use-toast';
@@ -417,7 +419,7 @@ export function DemoSettingsDialog({ trigger }: DemoSettingsDialogProps) {
             {/* Tour Actions */}
             <div className="space-y-3">
               <Label className="text-sm font-semibold text-foreground">Tours & Guides</Label>
-              <div className="grid grid-cols-1 gap-2">
+              <div className="grid grid-cols-2 gap-2">
                 <Button
                   variant="outline"
                   size="sm"
@@ -425,7 +427,19 @@ export function DemoSettingsDialog({ trigger }: DemoSettingsDialogProps) {
                   onClick={handleStartTour}
                 >
                   <Play className="h-4 w-4 mr-2 text-green-500" />
-                  Start Interactive Tour
+                  Start Tour
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="justify-start"
+                  onClick={() => {
+                    setOpen(false);
+                    openTemplateEditor();
+                  }}
+                >
+                  <Wrench className="h-4 w-4 mr-2 text-indigo-500" />
+                  Tour Builder
                 </Button>
                 <Button
                   variant="outline"
@@ -441,6 +455,18 @@ export function DemoSettingsDialog({ trigger }: DemoSettingsDialogProps) {
                 >
                   <Map className="h-4 w-4 mr-2 text-blue-500" />
                   Free Exploration
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="justify-start"
+                  onClick={() => {
+                    setOpen(false);
+                    setDemoSetting('showSessionRecorder', true);
+                  }}
+                >
+                  <Video className="h-4 w-4 mr-2 text-red-500" />
+                  Session Recording
                 </Button>
               </div>
             </div>
