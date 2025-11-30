@@ -22,6 +22,7 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { SidebarSearch } from "./SidebarSearch";
 import {
   Sidebar,
   SidebarContent,
@@ -105,7 +106,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon" className="border-r border-border">
-      <SidebarHeader className="p-4">
+      <SidebarHeader className="p-4 space-y-4">
         <NavLink to="/dashboard" className="flex items-center gap-3">
           <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-sacred to-sacred/70 flex items-center justify-center shrink-0">
             <span className="text-white font-bold text-sm">SG</span>
@@ -121,6 +122,7 @@ export function AppSidebar() {
             </div>
           )}
         </NavLink>
+        <SidebarSearch collapsed={collapsed} />
       </SidebarHeader>
 
       <SidebarSeparator />
