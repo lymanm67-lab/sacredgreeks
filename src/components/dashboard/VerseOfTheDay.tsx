@@ -17,6 +17,50 @@ interface DailyVerse {
   image_url: string | null;
 }
 
+// Fallback verses for demo/empty state
+const FALLBACK_VERSES: DailyVerse[] = [
+  {
+    id: 'fallback-1',
+    verse_ref: 'Proverbs 27:17',
+    verse_text: 'As iron sharpens iron, so one person sharpens another.',
+    theme: 'Brotherhood & Fellowship',
+    reflection: 'True fellowship isn\'t just about good times—it\'s about mutual growth. In Greek life, we have the unique opportunity to sharpen one another spiritually while honoring our organizational commitments.',
+    image_url: null,
+  },
+  {
+    id: 'fallback-2',
+    verse_ref: 'Colossians 3:23-24',
+    verse_text: 'Whatever you do, work at it with all your heart, as working for the Lord, not for human masters.',
+    theme: 'Excellence & Service',
+    reflection: 'Whether studying, serving your chapter, or worshiping God, bring your full effort. Excellence in Greek life and faith aren\'t competing goals—they flow from the same source.',
+    image_url: null,
+  },
+  {
+    id: 'fallback-3',
+    verse_ref: 'Romans 12:2',
+    verse_text: 'Do not conform to the pattern of this world, but be transformed by the renewing of your mind.',
+    theme: 'Transformation',
+    reflection: 'Being in Greek life means navigating cultural pressures while staying rooted in faith. Let your mind be renewed daily through Scripture and prayer.',
+    image_url: null,
+  },
+  {
+    id: 'fallback-4',
+    verse_ref: '1 Corinthians 10:31',
+    verse_text: 'So whether you eat or drink or whatever you do, do it all for the glory of God.',
+    theme: 'Living for God\'s Glory',
+    reflection: 'Every step show, every service project, every chapter meeting can glorify God when done with the right heart and intention.',
+    image_url: null,
+  },
+  {
+    id: 'fallback-5',
+    verse_ref: 'Hebrews 10:24-25',
+    verse_text: 'And let us consider how we may spur one another on toward love and good deeds, not giving up meeting together.',
+    theme: 'Community',
+    reflection: 'Both your Greek organization and your faith community call you to gather, encourage, and push each other toward growth. These aren\'t competing callings.',
+    image_url: null,
+  },
+];
+
 export function VerseOfTheDay() {
   const { user } = useAuth();
   const [verse, setVerse] = useState<DailyVerse | null>(null);
@@ -41,9 +85,21 @@ export function VerseOfTheDay() {
         .maybeSingle();
 
       if (error) throw error;
-      setVerse(data);
+      
+      if (data) {
+        setVerse(data);
+      } else {
+        // Use fallback verse based on day of year for variety
+        const dayOfYear = Math.floor((new Date().getTime() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
+        const fallbackIndex = dayOfYear % FALLBACK_VERSES.length;
+        setVerse(FALLBACK_VERSES[fallbackIndex]);
+      }
     } catch (error) {
       console.error('Error loading verse:', error);
+      // Use fallback on error too
+      const dayOfYear = Math.floor((new Date().getTime() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
+      const fallbackIndex = dayOfYear % FALLBACK_VERSES.length;
+      setVerse(FALLBACK_VERSES[fallbackIndex]);
     } finally {
       setLoading(false);
     }

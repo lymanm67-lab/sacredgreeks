@@ -51,6 +51,14 @@ interface DashboardStats {
   currentStreak: number;
 }
 
+// Demo stats for new users with no activity
+const DEMO_STATS: DashboardStats = {
+  assessmentCount: 2,
+  prayerCount: 5,
+  devotionalCompleted: true,
+  currentStreak: 3,
+};
+
 const Dashboard = () => {
   const { user, signOut } = useAuth();
   const { toast } = useToast();
@@ -64,6 +72,7 @@ const Dashboard = () => {
   });
   const [recentAssessments, setRecentAssessments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isDemoStats, setIsDemoStats] = useState(false);
 
   // Pull to refresh
   const handleRefresh = async () => {
@@ -162,12 +171,28 @@ const Dashboard = () => {
         }
       }
 
-      setStats({
+      const actualStats = {
         assessmentCount: assessmentCount || 0,
         prayerCount: prayerCount || 0,
         devotionalCompleted: progressData?.devotional_completed || false,
         currentStreak: streak,
-      });
+      };
+      
+      // Check if user has no activity - show demo stats
+      const hasNoActivity = 
+        (assessmentCount || 0) === 0 && 
+        (prayerCount || 0) === 0 && 
+        !progressData?.devotional_completed &&
+        streak === 0;
+      
+      if (hasNoActivity) {
+        setStats(DEMO_STATS);
+        setIsDemoStats(true);
+      } else {
+        setStats(actualStats);
+        setIsDemoStats(false);
+      }
+      
       setRecentAssessments(assessments || []);
     } catch (error) {
       console.error('Error loading dashboard data:', error);
@@ -490,31 +515,39 @@ const Dashboard = () => {
           </div>
 
           {/* Key Stats - Reduced to 3 most motivating */}
-          <div ref={statsScroll.ref} className={`scroll-animate ${statsScroll.isVisible ? 'visible' : ''} grid gap-6 grid-cols-1 md:grid-cols-3 auto-rows-fr animate-fade-in`} style={{ animationDelay: '0.4s' }}>
-            <StatsCard
-              title="Current Streak"
-              value={stats.currentStreak}
-              subtitle="Days in a row"
-              icon={TrendingUp}
-              gradient="from-status-low to-warm-blue"
-              delay="0s"
-            />
-            <StatsCard
-              title="Assessments"
-              value={stats.assessmentCount}
-              subtitle="Total completed"
-              icon={FileText}
-              gradient="from-sacred to-warm-blue"
-              delay="0.1s"
-            />
-            <StatsCard
-              title="Today's Devotional"
-              value={stats.devotionalCompleted ? '✓' : '○'}
-              subtitle={stats.devotionalCompleted ? 'Completed today' : 'Not yet completed'}
-              icon={BookOpen}
-              gradient="from-sacred to-secondary"
-              delay="0.2s"
-            />
+          <div ref={statsScroll.ref} className={`scroll-animate ${statsScroll.isVisible ? 'visible' : ''} space-y-3 animate-fade-in`} style={{ animationDelay: '0.4s' }}>
+            {isDemoStats && (
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <span className="px-2 py-0.5 bg-amber-500/10 text-amber-600 rounded text-xs font-medium">Sample Data</span>
+                <span>Complete activities to see your real stats</span>
+              </div>
+            )}
+            <div className="grid gap-6 grid-cols-1 md:grid-cols-3 auto-rows-fr">
+              <StatsCard
+                title="Current Streak"
+                value={stats.currentStreak}
+                subtitle={isDemoStats ? "Sample streak" : "Days in a row"}
+                icon={TrendingUp}
+                gradient="from-status-low to-warm-blue"
+                delay="0s"
+              />
+              <StatsCard
+                title="Assessments"
+                value={stats.assessmentCount}
+                subtitle={isDemoStats ? "Sample count" : "Total completed"}
+                icon={FileText}
+                gradient="from-sacred to-warm-blue"
+                delay="0.1s"
+              />
+              <StatsCard
+                title="Today's Devotional"
+                value={stats.devotionalCompleted ? '✓' : '○'}
+                subtitle={isDemoStats ? "Sample status" : stats.devotionalCompleted ? 'Completed today' : 'Not yet completed'}
+                icon={BookOpen}
+                gradient="from-sacred to-secondary"
+                delay="0.2s"
+              />
+            </div>
           </div>
 
           {/* Quick Check In */}

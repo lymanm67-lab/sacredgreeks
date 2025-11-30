@@ -15,10 +15,18 @@ interface UserOrgInfo {
   chapterName: string | null;
 }
 
+// Demo org info for users without org setup
+const DEMO_ORG_INFO: UserOrgInfo = {
+  greekCouncil: 'nphc',
+  greekOrganization: 'Alpha Phi Alpha',
+  chapterName: 'Beta',
+};
+
 export function OrgWelcomeCard() {
   const { user } = useAuth();
   const [orgInfo, setOrgInfo] = useState<UserOrgInfo | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isDemo, setIsDemo] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -36,22 +44,35 @@ export function OrgWelcomeCard() {
         .eq('id', user.id)
         .maybeSingle();
 
-      if (data) {
+      if (data && data.greek_council) {
         setOrgInfo({
           greekCouncil: data.greek_council,
           greekOrganization: data.greek_organization,
           chapterName: data.chapter_name,
         });
+        setIsDemo(false);
+      } else {
+        // Show demo data if no org is set
+        setOrgInfo(DEMO_ORG_INFO);
+        setIsDemo(true);
       }
     } catch (error) {
       console.error('Error loading org info:', error);
+      // Show demo on error
+      setOrgInfo(DEMO_ORG_INFO);
+      setIsDemo(true);
     } finally {
       setLoading(false);
     }
   };
 
-  // Don't show if no org info
-  if (loading || !orgInfo?.greekCouncil) {
+  // Show loading skeleton
+  if (loading) {
+    return null;
+  }
+
+  // Don't show if still no org info
+  if (!orgInfo?.greekCouncil) {
     return null;
   }
 
@@ -68,7 +89,14 @@ export function OrgWelcomeCard() {
   const randomTip = tips[Math.floor(Math.random() * tips.length)];
 
   return (
-    <Card className="border-sacred/20 bg-gradient-to-br from-sacred/5 to-warm-blue/5">
+    <Card className={`border-sacred/20 bg-gradient-to-br from-sacred/5 to-warm-blue/5 ${isDemo ? 'relative overflow-hidden' : ''}`}>
+      {isDemo && (
+        <div className="absolute top-2 right-2 z-10">
+          <Badge variant="secondary" className="text-xs bg-amber-500/10 text-amber-600 border-amber-500/20">
+            Sample
+          </Badge>
+        </div>
+      )}
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
@@ -95,14 +123,16 @@ export function OrgWelcomeCard() {
               </CardDescription>
             </div>
           </div>
-          <Badge variant="outline" className="text-xs border-sacred/30 text-sacred">
-            {councilData?.name || 'Greek'}
-          </Badge>
+          {!isDemo && (
+            <Badge variant="outline" className="text-xs border-sacred/30 text-sacred">
+              {councilData?.name || 'Greek'}
+            </Badge>
+          )}
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-sm text-muted-foreground">
-          {welcomeMessage}
+          {isDemo ? 'This is a preview of organization-specific content. Set up your profile to see personalized guidance!' : welcomeMessage}
         </p>
         
         <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
@@ -118,16 +148,25 @@ export function OrgWelcomeCard() {
         </div>
 
         <div className="flex items-center justify-between pt-2">
-          <Link to="/guide">
-            <Button variant="outline" size="sm" className="gap-2">
-              <Sparkles className="w-4 h-4" />
-              Explore Scenarios
-              <ChevronRight className="w-4 h-4" />
-            </Button>
-          </Link>
+          {isDemo ? (
+            <Link to="/profile">
+              <Button size="sm" className="gap-2 bg-sacred hover:bg-sacred/90">
+                <Users className="w-4 h-4" />
+                Set Up Your Profile
+              </Button>
+            </Link>
+          ) : (
+            <Link to="/guide">
+              <Button variant="outline" size="sm" className="gap-2">
+                <Sparkles className="w-4 h-4" />
+                Explore Scenarios
+                <ChevronRight className="w-4 h-4" />
+              </Button>
+            </Link>
+          )}
           <Link to="/profile">
             <Button variant="ghost" size="sm" className="text-muted-foreground">
-              Update Affiliation
+              {isDemo ? 'Skip for now' : 'Update Affiliation'}
             </Button>
           </Link>
         </div>

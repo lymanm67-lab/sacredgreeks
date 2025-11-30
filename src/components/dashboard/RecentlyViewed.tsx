@@ -3,12 +3,38 @@ import { Button } from "@/components/ui/button";
 import { Clock, ExternalLink, Trash2, BookOpen } from "lucide-react";
 import { useResourceHistory } from "@/hooks/use-resource-history";
 import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow, subHours } from "date-fns";
+
+// Demo items to show when history is empty
+const DEMO_RECENTLY_VIEWED = [
+  {
+    url: 'https://gamma.app/embed/12fobc2w0gro04i',
+    title: 'Repentance, Repair & Renewal Checklist',
+    category: 'Spiritual Growth',
+    viewedAt: subHours(new Date(), 2).toISOString(),
+  },
+  {
+    url: '/myth-buster',
+    title: 'Myth Buster Library',
+    category: 'Biblical Responses',
+    viewedAt: subHours(new Date(), 5).toISOString(),
+  },
+  {
+    url: '/symbol-guide',
+    title: 'Symbol & Ritual Guide',
+    category: 'Greek Symbolism',
+    viewedAt: subHours(new Date(), 12).toISOString(),
+  },
+];
 
 export const RecentlyViewed = () => {
   const { history, clearHistory } = useResourceHistory();
+  
+  // Use demo data when history is empty
+  const displayHistory = history.length > 0 ? history : DEMO_RECENTLY_VIEWED;
+  const isDemo = history.length === 0;
 
-  if (history.length === 0) {
+  if (displayHistory.length === 0) {
     return null;
   }
 
@@ -18,25 +44,29 @@ export const RecentlyViewed = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Clock className="w-5 h-5 text-sacred" />
-            <CardTitle className="text-lg">Recently Viewed</CardTitle>
+            <CardTitle className="text-lg">
+              {isDemo ? 'Popular Resources' : 'Recently Viewed'}
+            </CardTitle>
           </div>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={clearHistory}
-            className="text-muted-foreground hover:text-destructive"
-          >
-            <Trash2 className="w-4 h-4 mr-1" />
-            Clear
-          </Button>
+          {!isDemo && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={clearHistory}
+              className="text-muted-foreground hover:text-destructive"
+            >
+              <Trash2 className="w-4 h-4 mr-1" />
+              Clear
+            </Button>
+          )}
         </div>
         <CardDescription>
-          Continue where you left off
+          {isDemo ? 'Explore these frequently accessed resources' : 'Continue where you left off'}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
-          {history.slice(0, 5).map((item, index) => (
+          {displayHistory.slice(0, 5).map((item, index) => (
             <ExternalContentModal
               key={`${item.url}-${index}`}
               url={item.url}

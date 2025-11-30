@@ -14,6 +14,16 @@ interface WeeklyStats {
   currentStreak: number;
 }
 
+// Demo stats for new users
+const DEMO_STATS: WeeklyStats = {
+  devotionalsCompleted: 3,
+  prayersLogged: 5,
+  studySessionsCompleted: 2,
+  checkInDays: 4,
+  totalPoints: 150,
+  currentStreak: 3,
+};
+
 export function WeeklyInsights() {
   const { user } = useAuth();
   const [stats, setStats] = useState<WeeklyStats>({
@@ -25,6 +35,7 @@ export function WeeklyInsights() {
     currentStreak: 0,
   });
   const [loading, setLoading] = useState(true);
+  const [isDemo, setIsDemo] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -113,6 +124,18 @@ export function WeeklyInsights() {
         totalPoints: gamificationData?.total_points || 0,
         currentStreak: streak,
       });
+      
+      // Check if user has no activity - show demo data
+      const hasNoActivity = 
+        (devotionalCount || 0) === 0 && 
+        (prayerCount || 0) === 0 && 
+        (studyCount || 0) === 0 && 
+        (checkInCount || 0) === 0;
+      
+      if (hasNoActivity) {
+        setStats(DEMO_STATS);
+        setIsDemo(true);
+      }
     } catch (error) {
       console.error('Error loading weekly stats:', error);
     } finally {
@@ -192,10 +215,12 @@ export function WeeklyInsights() {
             <TrendingUp className="h-5 w-5" />
             Weekly Insights
           </CardTitle>
-          <Badge variant="secondary">Last 7 Days</Badge>
+          <Badge variant="secondary">
+            {isDemo ? 'Sample Data' : 'Last 7 Days'}
+          </Badge>
         </div>
         <p className="text-sm text-muted-foreground">
-          Your spiritual growth summary
+          {isDemo ? 'Here\'s what your progress could look like' : 'Your spiritual growth summary'}
         </p>
       </CardHeader>
       <CardContent>
@@ -228,7 +253,11 @@ export function WeeklyInsights() {
         {/* Encouragement message */}
         <div className="mt-4 p-3 bg-primary/5 rounded-lg border border-primary/20">
           <p className="text-sm text-center">
-            {stats.devotionalsCompleted >= 5 ? (
+            {isDemo ? (
+              <span className="text-muted-foreground">
+                📊 This is sample data. Complete activities to see your real progress!
+              </span>
+            ) : stats.devotionalsCompleted >= 5 ? (
               <span className="font-medium text-primary">
                 🎉 Amazing consistency this week! Keep it up!
               </span>
