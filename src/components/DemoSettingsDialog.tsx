@@ -302,15 +302,24 @@ export function DemoSettingsDialog({ trigger }: DemoSettingsDialogProps) {
                   size="sm"
                   className="justify-start"
                   onClick={() => {
-                    setDemoSetting('compareScenarios', !demoSettings.compareScenarios);
-                    toast({
-                      title: demoSettings.compareScenarios ? 'Compare Mode Disabled' : 'Compare Mode Enabled',
-                      description: 'Toggle side-by-side scenario comparison.',
-                    });
+                    if (!demoSettings.compareScenarios) {
+                      setDemoSetting('compareScenarios', true);
+                      setOpen(false);
+                      toast({
+                        title: 'Compare Mode Enabled',
+                        description: 'View scenarios side-by-side.',
+                      });
+                    } else {
+                      setDemoSetting('compareScenarios', false);
+                      toast({
+                        title: 'Compare Mode Disabled',
+                        description: 'Comparison view closed.',
+                      });
+                    }
                   }}
                 >
                   <GitCompare className="h-4 w-4 mr-2 text-purple-500" />
-                  Compare Scenarios
+                  {demoSettings.compareScenarios ? 'Close Comparison' : 'Compare Scenarios'}
                   {demoSettings.compareScenarios && (
                     <span className="ml-auto text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded dark:bg-purple-900/30 dark:text-purple-300">Active</span>
                   )}
