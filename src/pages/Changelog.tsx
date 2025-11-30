@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
+import { SEOHead, pageSEO } from "@/components/SEOHead";
+import { AnimatedSection } from "@/components/ui/AnimatedSection";
 
 interface ChangelogEntry {
   version: string;
@@ -133,6 +135,7 @@ export default function Changelog() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead {...pageSEO.changelog} />
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <Button
           variant="ghost"
@@ -143,56 +146,60 @@ export default function Changelog() {
           Back
         </Button>
 
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">Changelog</h1>
-          <p className="text-muted-foreground">
-            Track all updates, improvements, and new features added to Sacred Greeks.
-          </p>
-        </div>
+        <AnimatedSection animation="fade-up">
+          <div className="mb-8">
+            <h1 className="text-4xl font-bold mb-2">Changelog</h1>
+            <p className="text-muted-foreground">
+              Track all updates, improvements, and new features added to Sacred Greeks.
+            </p>
+          </div>
+        </AnimatedSection>
 
         <div className="space-y-6">
           {changelog.map((entry, index) => (
-            <Card key={entry.version} className={index === 0 ? "border-primary" : ""}>
-              <CardHeader>
-                <div className="flex items-center justify-between flex-wrap gap-2">
-                  <div className="flex items-center gap-3">
-                    <Badge className={typeColors[entry.type]}>
-                      v{entry.version}
-                    </Badge>
-                    <CardTitle className="text-xl">{entry.title}</CardTitle>
-                  </div>
-                  <div className="flex items-center text-muted-foreground text-sm">
-                    <Calendar className="mr-1 h-4 w-4" />
-                    {new Date(entry.date).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                  </div>
-                </div>
-                {index === 0 && (
-                  <CardDescription className="text-primary font-medium">
-                    Latest Release
-                  </CardDescription>
-                )}
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2">
-                  {entry.changes.map((change, changeIndex) => (
-                    <li key={changeIndex} className="flex items-start gap-2">
-                      <Badge 
-                        variant="outline" 
-                        className={`${categoryColors[change.category]} shrink-0 mt-0.5`}
-                      >
-                        {categoryIcons[change.category]}
-                        <span className="ml-1 capitalize">{change.category}</span>
+            <AnimatedSection key={entry.version} animation="fade-up" delay={index * 100}>
+              <Card className={index === 0 ? "border-primary" : ""}>
+                <CardHeader>
+                  <div className="flex items-center justify-between flex-wrap gap-2">
+                    <div className="flex items-center gap-3">
+                      <Badge className={typeColors[entry.type]}>
+                        v{entry.version}
                       </Badge>
-                      <span className="text-foreground">{change.description}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
+                      <CardTitle className="text-xl">{entry.title}</CardTitle>
+                    </div>
+                    <div className="flex items-center text-muted-foreground text-sm">
+                      <Calendar className="mr-1 h-4 w-4" />
+                      {new Date(entry.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </div>
+                  </div>
+                  {index === 0 && (
+                    <CardDescription className="text-primary font-medium">
+                      Latest Release
+                    </CardDescription>
+                  )}
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2">
+                    {entry.changes.map((change, changeIndex) => (
+                      <li key={changeIndex} className="flex items-start gap-2">
+                        <Badge 
+                          variant="outline" 
+                          className={`${categoryColors[change.category]} shrink-0 mt-0.5`}
+                        >
+                          {categoryIcons[change.category]}
+                          <span className="ml-1 capitalize">{change.category}</span>
+                        </Badge>
+                        <span className="text-foreground">{change.description}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            </AnimatedSection>
           ))}
         </div>
 

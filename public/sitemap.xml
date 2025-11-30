@@ -2,127 +2,241 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://sacredgreekslife.com/</loc>
-    <lastmod>2025-01-28</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://sacredgreekslife.com/auth</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2024-11-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sacredgreekslife.com/dashboard</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2024-11-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://sacredgreekslife.com/guide</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2024-11-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://sacredgreekslife.com/user-guide</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://sacredgreekslife.com/devotional</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2024-11-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://sacredgreekslife.com/prayer-journal</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2024-11-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sacredgreekslife.com/prayer-wall</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2024-11-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sacredgreekslife.com/prayer-guide</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2024-11-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sacredgreekslife.com/bible-study</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2024-11-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://sacredgreekslife.com/study-guide</loc>
-    <lastmod>2025-01-28</lastmod>
+    <loc>https://sacredgreekslife.com/study</loc>
+    <lastmod>2024-11-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sacredgreekslife.com/resources</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2024-11-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sacredgreekslife.com/articles</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2024-11-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://sacredgreekslife.com/assessment-history</loc>
-    <lastmod>2025-01-28</lastmod>
+    <loc>https://sacredgreekslife.com/video-library</loc>
+    <lastmod>2024-11-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://sacredgreekslife.com/bookmarks</loc>
-    <lastmod>2025-01-28</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://sacredgreekslife.com/forum</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/community</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sacredgreekslife.com/achievements</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2024-11-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sacredgreekslife.com/progress</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2024-11-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sacredgreekslife.com/profile</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2024-11-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://sacredgreekslife.com/bookmarks</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/symbol-guide</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/myth-buster</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/journey</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/service-tracker</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/ask-dr-lyman</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/content-hub</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/shattered-masks</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://sacredgreekslife.com/install</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2024-11-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sacredgreekslife.com/about</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2024-11-30</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sacredgreekslife.com/faq</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/changelog</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/subscription</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/beta-signup</loc>
+    <lastmod>2024-11-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://sacredgreekslife.com/privacy</loc>
-    <lastmod>2025-01-28</lastmod>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/terms</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/legal</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/podcast</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/podcast-appearances</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/did-you-know</loc>
+    <lastmod>2024-11-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/qr-code</loc>
+    <lastmod>2024-11-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>

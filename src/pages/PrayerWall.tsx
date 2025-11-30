@@ -17,6 +17,8 @@ import { OrgPrayerFilter } from '@/components/prayer-wall/OrgPrayerFilter';
 import { GREEK_COUNCILS } from '@/data/greekOrganizations';
 import { useDemoMode } from '@/contexts/DemoModeContext';
 import { usePrayerWallRealtime } from '@/hooks/use-realtime-notifications';
+import { SEOHead, pageSEO } from '@/components/SEOHead';
+import { AnimatedSection } from '@/components/ui/AnimatedSection';
 
 interface PrayerRequest {
   id: string;
@@ -327,6 +329,7 @@ const PrayerWall = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-accent/5">
+      <SEOHead {...pageSEO.prayerWall} />
       <PullToRefreshIndicator
         isPulling={isPulling}
         isRefreshing={isRefreshing}
