@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -45,6 +45,9 @@ import { RecentlyViewed } from '@/components/dashboard/RecentlyViewed';
 import { SubscriptionBadge } from '@/components/dashboard/SubscriptionBadge';
 import { OrgWelcomeCard } from '@/components/dashboard/OrgWelcomeCard';
 import { useDemoMode } from '@/contexts/DemoModeContext';
+import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
+import { prefetchCommonRoutes } from '@/hooks/use-prefetch';
+import { NetworkErrorHandler } from '@/components/ui/NetworkErrorHandler';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -76,15 +79,25 @@ const Dashboard = () => {
   const [recentAssessments, setRecentAssessments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [isDemoStats, setIsDemoStats] = useState(false);
+  const [loadError, setLoadError] = useState<Error | null>(null);
+
+  // Keyboard shortcuts for power users
+  useKeyboardShortcuts();
+
+  // Prefetch common routes when dashboard loads
+  useEffect(() => {
+    prefetchCommonRoutes();
+  }, []);
 
   // Pull to refresh
-  const handleRefresh = async () => {
+  const handleRefresh = useCallback(async () => {
+    setLoadError(null);
     await loadDashboardData();
     toast({
       title: 'Dashboard refreshed',
       description: 'Your data has been updated',
     });
-  };
+  }, [toast]);
 
   const { isPulling, isRefreshing, pullDistance, canRefresh } = usePullToRefresh({
     onRefresh: handleRefresh,
@@ -206,11 +219,13 @@ const Dashboard = () => {
       }
       
       setRecentAssessments(assessments || []);
+      setLoadError(null);
     } catch (error) {
       console.error('Error loading dashboard data:', error);
+      setLoadError(error instanceof Error ? error : new Error('Failed to load dashboard data'));
       toast({
         title: 'Error',
-        description: 'Failed to load dashboard data',
+        description: 'Failed to load dashboard data. Pull down to refresh.',
         variant: 'destructive',
       });
     } finally {
