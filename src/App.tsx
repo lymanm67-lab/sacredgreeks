@@ -18,6 +18,7 @@ import { DemoModeProvider } from "@/contexts/DemoModeContext";
 import { BetaFeedbackWidget } from "@/components/BetaFeedbackWidget";
 import { GlobalDemoIndicator } from "@/components/GlobalDemoIndicator";
 import { DemoModeTour } from "@/components/DemoModeTour";
+import { DemoBanner } from "@/components/DemoBanner";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Loader2 } from "lucide-react";
 
@@ -115,6 +116,7 @@ const App = () => (
             <OfflineIndicator />
             <AIAssistantWidget />
             <BrowserRouter>
+              <DemoBanner />
               <BetaFeedbackWidget />
               <GlobalDemoIndicator />
               <DemoModeTour />
