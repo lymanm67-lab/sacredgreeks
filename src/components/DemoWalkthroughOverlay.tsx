@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { X, ChevronRight, ChevronLeft, Sparkles, MapPin, Volume2, VolumeX, Play, Pause, Timer } from 'lucide-react';
+import { X, ChevronRight, ChevronLeft, Sparkles, MapPin, Volume2, VolumeX, Timer, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -10,6 +10,8 @@ import { useDemoMode } from '@/contexts/DemoModeContext';
 import { TourStep, OnboardingTemplate, ONBOARDING_TEMPLATES } from '@/data/demoOnboardingTemplates';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { VoiceSelector, VoiceOption } from '@/components/demo/VoiceSelector';
+import { DemoCompletionCertificate } from '@/components/demo/DemoCompletionCertificate';
 
 // Default walkthrough steps (legacy support)
 const defaultWalkthroughSteps: TourStep[] = [
@@ -80,6 +82,9 @@ export function DemoWalkthroughOverlay({ customTemplate }: DemoWalkthroughOverla
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
   const [autoAdvanceTimer, setAutoAdvanceTimer] = useState<number>(8);
+  const [selectedVoice, setSelectedVoice] = useState<VoiceOption>('alloy');
+  const [showCertificate, setShowCertificate] = useState(false);
+  const [completionDate, setCompletionDate] = useState<Date | null>(null);
 
   // Determine which steps to use
   const walkthroughSteps = customTemplate?.tourSteps || defaultWalkthroughSteps;
@@ -151,7 +156,7 @@ export function DemoWalkthroughOverlay({ customTemplate }: DemoWalkthroughOverla
       const { data, error } = await supabase.functions.invoke('text-to-speech', {
         body: {
           text: `${step.title}. ${step.description}`,
-          voice: 'alloy',
+          voice: selectedVoice,
         },
       });
 
@@ -179,7 +184,7 @@ export function DemoWalkthroughOverlay({ customTemplate }: DemoWalkthroughOverla
       setIsSpeaking(false);
       toast.error('Unable to play audio narration');
     }
-  }, [currentStep, walkthroughSteps, audioElement]);
+  }, [currentStep, walkthroughSteps, audioElement, selectedVoice]);
 
   const stopSpeaking = useCallback(() => {
     if (audioElement) {
@@ -188,6 +193,18 @@ export function DemoWalkthroughOverlay({ customTemplate }: DemoWalkthroughOverla
       setIsSpeaking(false);
     }
   }, [audioElement]);
+
+  // Show certificate if tour is completed
+  if (showCertificate && completionDate) {
+    return (
+      <DemoCompletionCertificate
+        template={activeTemplate}
+        persona={null}
+        completedAt={completionDate}
+        onClose={() => setShowCertificate(false)}
+      />
+    );
+  }
 
   if (!isVisible) return null;
 
@@ -216,9 +233,11 @@ export function DemoWalkthroughOverlay({ customTemplate }: DemoWalkthroughOverla
     setAutoAdvance(false);
     setIsVisible(false);
     setHasSeenTour(true);
-    // If this was the last step, mark template as completed
+    // If this was the last step, mark template as completed and show certificate
     if (currentStep === walkthroughSteps.length - 1) {
       markTemplateCompleted(activeTemplate);
+      setCompletionDate(new Date());
+      setShowCertificate(true);
     }
   };
 
@@ -276,8 +295,8 @@ export function DemoWalkthroughOverlay({ customTemplate }: DemoWalkthroughOverla
             <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
             <p className="text-muted-foreground mb-4">{step.description}</p>
 
-            {/* Listen button */}
-            <div className="flex items-center gap-2 mb-4">
+            {/* Listen button and voice selector */}
+            <div className="flex items-center gap-2 mb-4 flex-wrap">
               <Button
                 variant="outline"
                 size="sm"
@@ -296,6 +315,12 @@ export function DemoWalkthroughOverlay({ customTemplate }: DemoWalkthroughOverla
                   </>
                 )}
               </Button>
+              
+              {/* Voice selector */}
+              <VoiceSelector 
+                selectedVoice={selectedVoice}
+                onVoiceChange={setSelectedVoice}
+              />
               
               {/* Auto-advance toggle */}
               <div className="flex items-center gap-2 ml-auto">
