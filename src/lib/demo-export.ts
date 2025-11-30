@@ -6,18 +6,68 @@ export interface ExportOptions {
   title?: string;
   format?: 'pdf' | 'png' | 'jpeg';
   quality?: number;
+  includeWatermark?: boolean;
+}
+
+const WATERMARK_TEXT = "Sacred Greeks™ - Proprietary & Confidential";
+const WATERMARK_SUBTEXT = "© " + new Date().getFullYear() + " Dr. Lyman Montgomery. All Rights Reserved.";
+
+function addWatermarkToCanvas(canvas: HTMLCanvasElement): HTMLCanvasElement {
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return canvas;
+
+  // Save current state
+  ctx.save();
+
+  // Semi-transparent watermark
+  ctx.globalAlpha = 0.15;
+  ctx.fillStyle = '#000000';
+  ctx.font = 'bold 24px Arial';
+  ctx.textAlign = 'center';
+
+  // Diagonal watermark pattern
+  const text = WATERMARK_TEXT;
+  const diagonalSpacing = 300;
+  
+  ctx.translate(canvas.width / 2, canvas.height / 2);
+  ctx.rotate(-Math.PI / 6); // 30 degrees
+
+  for (let y = -canvas.height; y < canvas.height * 2; y += diagonalSpacing) {
+    for (let x = -canvas.width; x < canvas.width * 2; x += diagonalSpacing) {
+      ctx.fillText(text, x, y);
+    }
+  }
+
+  ctx.restore();
+
+  // Add corner watermark (more visible)
+  ctx.save();
+  ctx.globalAlpha = 0.6;
+  ctx.fillStyle = '#666666';
+  ctx.font = '12px Arial';
+  ctx.textAlign = 'right';
+  ctx.fillText(WATERMARK_TEXT, canvas.width - 20, canvas.height - 40);
+  ctx.fillText(WATERMARK_SUBTEXT, canvas.width - 20, canvas.height - 20);
+  ctx.restore();
+
+  return canvas;
 }
 
 export async function captureElementAsImage(
   element: HTMLElement,
   options: ExportOptions = {}
 ): Promise<string> {
-  const canvas = await html2canvas(element, {
+  let canvas = await html2canvas(element, {
     scale: 2,
     useCORS: true,
     allowTaint: true,
     backgroundColor: '#ffffff',
   });
+  
+  // Add watermark by default
+  if (options.includeWatermark !== false) {
+    canvas = addWatermarkToCanvas(canvas);
+  }
   
   const format = options.format === 'jpeg' ? 'image/jpeg' : 'image/png';
   return canvas.toDataURL(format, options.quality || 0.95);
@@ -29,12 +79,17 @@ export async function exportToPDF(
 ): Promise<void> {
   const { filename = 'demo-comparison', title = 'Demo Scenario Comparison' } = options;
   
-  const canvas = await html2canvas(element, {
+  let canvas = await html2canvas(element, {
     scale: 2,
     useCORS: true,
     allowTaint: true,
     backgroundColor: '#ffffff',
   });
+  
+  // Add watermark by default
+  if (options.includeWatermark !== false) {
+    canvas = addWatermarkToCanvas(canvas);
+  }
   
   const imgData = canvas.toDataURL('image/png');
   const imgWidth = canvas.width;
@@ -62,20 +117,25 @@ export async function exportToPDF(
     format: 'a4',
   });
   
+  // Add proprietary header
+  pdf.setFontSize(8);
+  pdf.setTextColor(150, 150, 150);
+  pdf.text('PROPRIETARY & CONFIDENTIAL - Sacred Greeks™', 14, 10);
+  
   // Add title
   pdf.setFontSize(20);
   pdf.setTextColor(40, 40, 40);
-  pdf.text(title, 14, 20);
+  pdf.text(title, 14, 22);
   
   // Add timestamp
   pdf.setFontSize(10);
   pdf.setTextColor(128, 128, 128);
-  pdf.text(`Generated: ${new Date().toLocaleString()}`, 14, 28);
+  pdf.text(`Generated: ${new Date().toLocaleString()}`, 14, 30);
   
   // Add the captured image
-  const yOffset = 35;
+  const yOffset = 38;
   const maxWidth = orientation === 'l' ? 270 : 180;
-  const maxHeight = orientation === 'l' ? 160 : 230;
+  const maxHeight = orientation === 'l' ? 150 : 220;
   
   let finalWidth = maxWidth;
   let finalHeight = finalWidth / aspectRatio;
@@ -86,6 +146,21 @@ export async function exportToPDF(
   }
   
   pdf.addImage(imgData, 'PNG', 14, yOffset, finalWidth, finalHeight);
+  
+  // Add footer watermark
+  const pageHeight = orientation === 'l' ? 210 : 297;
+  pdf.setFontSize(8);
+  pdf.setTextColor(150, 150, 150);
+  pdf.text(
+    `© ${new Date().getFullYear()} Sacred Greeks™ - Dr. Lyman Montgomery. All Rights Reserved. Patent Pending.`,
+    14,
+    pageHeight - 10
+  );
+  pdf.text(
+    'Unauthorized reproduction or distribution is strictly prohibited.',
+    14,
+    pageHeight - 5
+  );
   
   pdf.save(`${filename}.pdf`);
 }

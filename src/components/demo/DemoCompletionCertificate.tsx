@@ -137,13 +137,26 @@ export function DemoCompletionCertificate({
           ref={certificateRef}
           className="bg-gradient-to-br from-amber-50 via-white to-emerald-50 dark:from-amber-950/30 dark:via-background dark:to-emerald-950/30 border-4 border-double border-amber-400 dark:border-amber-600 rounded-lg p-8 mb-6 relative overflow-hidden"
         >
+          {/* Watermark Pattern */}
+          <div className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.05]">
+            <div className="absolute inset-0 flex items-center justify-center transform -rotate-45">
+              <div className="text-center space-y-8">
+                {[...Array(5)].map((_, i) => (
+                  <p key={i} className="text-lg font-bold text-black dark:text-white whitespace-nowrap">
+                    Sacred Greeks™ • PROPRIETARY • Sacred Greeks™ • PROPRIETARY • Sacred Greeks™
+                  </p>
+                ))}
+              </div>
+            </div>
+          </div>
+
           {/* Decorative corners */}
           <div className="absolute top-4 left-4 w-12 h-12 border-l-2 border-t-2 border-amber-400 dark:border-amber-600" />
           <div className="absolute top-4 right-4 w-12 h-12 border-r-2 border-t-2 border-amber-400 dark:border-amber-600" />
           <div className="absolute bottom-4 left-4 w-12 h-12 border-l-2 border-b-2 border-amber-400 dark:border-amber-600" />
           <div className="absolute bottom-4 right-4 w-12 h-12 border-r-2 border-b-2 border-amber-400 dark:border-amber-600" />
 
-          <div className="text-center space-y-4">
+          <div className="text-center space-y-4 relative z-10">
             {/* Logo/Icon */}
             <div className="flex justify-center">
               <div className="h-16 w-16 rounded-full bg-gradient-to-br from-amber-400 to-emerald-500 flex items-center justify-center">
@@ -157,7 +170,7 @@ export function DemoCompletionCertificate({
                 Certificate of Completion
               </p>
               <h3 className="text-3xl font-serif font-bold text-foreground mt-2">
-                Sacred Greeks
+                Sacred Greeks™
               </h3>
             </div>
 
@@ -209,6 +222,12 @@ export function DemoCompletionCertificate({
                 <CheckCircle2 className="h-3 w-3 mr-1" />
                 Verified Completion
               </Badge>
+            </div>
+
+            {/* Proprietary Notice */}
+            <div className="pt-4 text-xs text-muted-foreground/60">
+              <p>© {new Date().getFullYear()} Sacred Greeks™ • Dr. Lyman Montgomery</p>
+              <p>Proprietary Content • All Rights Reserved</p>
             </div>
           </div>
         </div>
