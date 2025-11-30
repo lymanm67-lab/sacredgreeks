@@ -19,7 +19,7 @@ interface UserOrgInfo {
 // Demo org info for users without org setup
 const DEMO_ORG_INFO: UserOrgInfo = {
   greekCouncil: 'nphc',
-  greekOrganization: 'Alpha Phi Alpha',
+  greekOrganization: 'Phi Beta Sigma',
   chapterName: 'Beta',
 };
 

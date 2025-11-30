@@ -129,14 +129,14 @@ const DEMO_DISCUSSIONS: Discussion[] = [
     content: 'Pledge season is demanding and I find myself skipping my quiet time with God. Any tips from those who\'ve navigated this successfully?',
     category: 'faith',
     greek_council: 'nphc',
-    greek_organization: 'Alpha Phi Alpha',
+    greek_organization: 'Phi Beta Sigma',
     is_pinned: true,
     view_count: 156,
     reply_count: 12,
     created_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
     profiles: {
       full_name: 'Marcus Johnson',
-      greek_organization: 'Alpha Phi Alpha',
+      greek_organization: 'Phi Beta Sigma',
     },
   },
   {

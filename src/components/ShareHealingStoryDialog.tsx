@@ -149,7 +149,7 @@ export function ShareHealingStoryDialog({ children }: ShareHealingStoryDialogPro
               <Label htmlFor="organization">Organization (Optional)</Label>
               <Input
                 id="organization"
-                placeholder="e.g., Alpha Phi Alpha"
+                placeholder="e.g., Phi Beta Sigma"
                 value={formData.organization}
                 onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
               />
