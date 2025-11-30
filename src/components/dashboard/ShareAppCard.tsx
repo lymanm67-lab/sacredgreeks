@@ -71,16 +71,22 @@ export function ShareAppCard() {
           <MessageSquare className="w-4 h-4 mr-2" />
           Text a Friend
         </Button>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-3 gap-2">
+          <Link to="/share-toolkit" className="w-full">
+            <Button variant="outline" className="w-full text-xs px-2">
+              <Share2 className="w-4 h-4 mr-1" />
+              Toolkit
+            </Button>
+          </Link>
           <Link to="/install" className="w-full">
-            <Button variant="outline" className="w-full">
-              <Smartphone className="w-4 h-4 mr-2" />
+            <Button variant="outline" className="w-full text-xs px-2">
+              <Smartphone className="w-4 h-4 mr-1" />
               Install
             </Button>
           </Link>
           <Link to="/qr-code" className="w-full">
-            <Button variant="outline" className="w-full">
-              <QrCode className="w-4 h-4 mr-2" />
+            <Button variant="outline" className="w-full text-xs px-2">
+              <QrCode className="w-4 h-4 mr-1" />
               QR Code
             </Button>
           </Link>

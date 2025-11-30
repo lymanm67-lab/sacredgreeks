@@ -377,6 +377,24 @@ export const routeRegistry: RouteConfig[] = [
     priority: 0.4,
     isProtected: false,
   },
+  {
+    path: '/install-guide',
+    title: 'Install Guide',
+    description: 'Simple step-by-step guide to install Sacred Greeks Life on your iPhone or Android device.',
+    keywords: 'install guide, iPhone install, Android install, PWA guide',
+    changefreq: 'monthly',
+    priority: 0.5,
+    isProtected: false,
+  },
+  {
+    path: '/share-toolkit',
+    title: 'Share Toolkit',
+    description: 'Ready-to-use templates for sharing Sacred Greeks Life. Text messages, emails, and social media posts.',
+    keywords: 'share app, invite friends, share templates, outreach',
+    changefreq: 'monthly',
+    priority: 0.6,
+    isProtected: false,
+  },
 
   // User account pages
   {
