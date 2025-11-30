@@ -21,6 +21,7 @@ import { FeaturesSection } from "@/components/landing/FeaturesSection";
 import { HealingResourcesSection } from "@/components/landing/HealingResourcesSection";
 import { Footer } from "@/components/landing/Footer";
 import { FinalCTA } from "@/components/landing/FinalCTA";
+import { ComparisonSection } from "@/components/landing/ComparisonSection";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { cn } from "@/lib/utils";
 
@@ -28,6 +29,7 @@ import { cn } from "@/lib/utils";
 const sectionNav = [
   { id: "objections-teaser", label: "Try It", icon: null, isHighlighted: true },
   { id: "core-features", label: "Tools", icon: null },
+  { id: "comparison", label: "Compare", icon: null },
   { id: "healing-resources", label: "Support", icon: HeartHandshake },
   { id: "more-features", label: "More", icon: null },
   { id: "testimonials", label: "Stories", icon: null },
@@ -198,6 +200,13 @@ const Index = () => {
       <AnimatedSection animation="fade-up" delay={100}>
         <FeaturesSection />
       </AnimatedSection>
+
+      {/* Comparison Section - Marketing */}
+      {!user && (
+        <AnimatedSection animation="fade-up" delay={100}>
+          <ComparisonSection />
+        </AnimatedSection>
+      )}
 
       {/* Healing Resources */}
       <AnimatedSection animation="fade-up" delay={100}>
