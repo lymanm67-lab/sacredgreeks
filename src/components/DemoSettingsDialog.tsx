@@ -329,14 +329,16 @@ export function DemoSettingsDialog({ trigger }: DemoSettingsDialogProps) {
                   size="sm"
                   className="justify-start"
                   onClick={() => {
-                    setDemoSetting('analyticsEnabled', !demoSettings.analyticsEnabled);
+                    setDemoSetting('showAnalytics', true);
+                    setOpen(false);
+                    toast({
+                      title: 'Analytics Dashboard Opened',
+                      description: 'View demo usage statistics.',
+                    });
                   }}
                 >
                   <BarChart3 className="h-4 w-4 mr-2 text-emerald-500" />
-                  Demo Analytics
-                  {demoSettings.analyticsEnabled && (
-                    <span className="ml-auto text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded dark:bg-emerald-900/30 dark:text-emerald-300">On</span>
-                  )}
+                  View Analytics Dashboard
                 </Button>
                 <Button
                   variant="outline"
