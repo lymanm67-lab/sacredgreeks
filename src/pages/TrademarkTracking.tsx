@@ -1,29 +1,39 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 import { 
   Home, 
   Scale, 
   Clock, 
-  CheckCircle2, 
   AlertCircle, 
   FileText,
   Calendar,
   Bell,
-  ExternalLink,
-  ChevronRight
+  Edit2,
+  Save,
+  Shield
 } from "lucide-react";
-import { format, addMonths, differenceInDays } from "date-fns";
+import { format, differenceInDays } from "date-fns";
+import { useAdminCheck } from "@/components/AdminRoute";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
+
+type TrademarkStatus = "filed" | "examination" | "published" | "registered" | "pending-response";
 
 interface TrademarkApplication {
   id: string;
   name: string;
   serialNumber: string;
   filingDate: Date;
-  status: "filed" | "examination" | "published" | "registered" | "pending-response";
+  status: TrademarkStatus;
   class: string;
   nextDeadline?: Date;
   deadlineType?: string;
@@ -31,7 +41,7 @@ interface TrademarkApplication {
   notes?: string;
 }
 
-const trademarkApplications: TrademarkApplication[] = [
+const initialTrademarks: TrademarkApplication[] = [
   {
     id: "1",
     name: "Sacred Greeks™",
@@ -106,7 +116,15 @@ const trademarkApplications: TrademarkApplication[] = [
   }
 ];
 
-const getStatusColor = (status: TrademarkApplication["status"]) => {
+const statusOptions: { value: TrademarkStatus; label: string }[] = [
+  { value: "filed", label: "Filed - Awaiting Review" },
+  { value: "examination", label: "Under Examination" },
+  { value: "published", label: "Published for Opposition" },
+  { value: "registered", label: "Registered" },
+  { value: "pending-response", label: "Response Required" }
+];
+
+const getStatusColor = (status: TrademarkStatus) => {
   switch (status) {
     case "registered":
       return "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-200";
@@ -121,33 +139,101 @@ const getStatusColor = (status: TrademarkApplication["status"]) => {
   }
 };
 
-const getStatusLabel = (status: TrademarkApplication["status"]) => {
+const getStatusLabel = (status: TrademarkStatus) => {
+  return statusOptions.find(s => s.value === status)?.label || status;
+};
+
+const getProgressForStatus = (status: TrademarkStatus) => {
   switch (status) {
-    case "filed":
-      return "Filed - Awaiting Review";
-    case "examination":
-      return "Under Examination";
-    case "published":
-      return "Published for Opposition";
-    case "registered":
-      return "Registered";
-    case "pending-response":
-      return "Response Required";
-    default:
-      return status;
+    case "filed": return 20;
+    case "examination": return 45;
+    case "published": return 70;
+    case "registered": return 100;
+    case "pending-response": return 50;
+    default: return 0;
   }
 };
 
 const TrademarkTracking = () => {
-  const [selectedMark, setSelectedMark] = useState<string | null>(null);
+  const { user, loading: authLoading } = useAuth();
+  const { isAdmin, loading: adminLoading } = useAdminCheck();
+  const { toast } = useToast();
+  const [trademarks, setTrademarks] = useState<TrademarkApplication[]>(initialTrademarks);
+  const [editingTrademark, setEditingTrademark] = useState<TrademarkApplication | null>(null);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
 
-  const upcomingDeadlines = trademarkApplications
+  // Loading state
+  if (authLoading || adminLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-center space-y-4">
+          <div className="w-16 h-16 border-4 border-sacred border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="text-muted-foreground">Verifying access...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Redirect if not logged in
+  if (!user) {
+    return <Navigate to="/auth" replace />;
+  }
+
+  // Access denied for non-admins
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-center space-y-4 max-w-md px-4">
+          <div className="p-4 rounded-full bg-destructive/10 w-fit mx-auto">
+            <Shield className="w-12 h-12 text-destructive" />
+          </div>
+          <h1 className="text-2xl font-bold text-foreground">Admin Access Required</h1>
+          <p className="text-muted-foreground">
+            Trademark tracking is restricted to administrators only. Please contact an administrator if you need access.
+          </p>
+          <Link to="/">
+            <Button variant="outline" className="gap-2 mt-4">
+              <Home className="w-4 h-4" />
+              Return Home
+            </Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const handleEditTrademark = (tm: TrademarkApplication) => {
+    setEditingTrademark({ ...tm });
+    setEditDialogOpen(true);
+  };
+
+  const handleSaveChanges = () => {
+    if (!editingTrademark) return;
+
+    setTrademarks(prev => 
+      prev.map(tm => 
+        tm.id === editingTrademark.id 
+          ? { ...editingTrademark, progress: getProgressForStatus(editingTrademark.status) }
+          : tm
+      )
+    );
+    
+    setEditDialogOpen(false);
+    setEditingTrademark(null);
+    
+    toast({
+      title: "Trademark Updated",
+      description: `${editingTrademark.name} has been updated successfully.`,
+    });
+  };
+
+  const upcomingDeadlines = trademarks
     .filter(tm => tm.nextDeadline && differenceInDays(tm.nextDeadline, new Date()) > 0)
     .sort((a, b) => differenceInDays(a.nextDeadline!, b.nextDeadline!))
     .slice(0, 5);
 
   const totalProgress = Math.round(
-    trademarkApplications.reduce((sum, tm) => sum + tm.progress, 0) / trademarkApplications.length
+    trademarks.reduce((sum, tm) => sum + tm.progress, 0) / trademarks.length
   );
 
   return (
@@ -160,7 +246,11 @@ const TrademarkTracking = () => {
               <Home className="w-5 h-5" />
               <span className="font-semibold">Sacred Greeks Life™</span>
             </Link>
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2">
+              <Badge variant="secondary" className="gap-1">
+                <Shield className="w-3 h-3" />
+                Admin
+              </Badge>
               <Link to="/ip-documentation">
                 <Button variant="ghost" size="sm">IP Docs</Button>
               </Link>
@@ -180,7 +270,7 @@ const TrademarkTracking = () => {
             </div>
             <div>
               <h1 className="text-3xl font-bold text-foreground">Trademark Tracking</h1>
-              <p className="text-muted-foreground">Monitor registration status and deadlines</p>
+              <p className="text-muted-foreground">Monitor registration status and manage deadlines</p>
             </div>
           </div>
         </div>
@@ -190,7 +280,7 @@ const TrademarkTracking = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="text-center">
-                <p className="text-3xl font-bold text-sacred">{trademarkApplications.length}</p>
+                <p className="text-3xl font-bold text-sacred">{trademarks.length}</p>
                 <p className="text-sm text-muted-foreground">Total Applications</p>
               </div>
             </CardContent>
@@ -199,7 +289,7 @@ const TrademarkTracking = () => {
             <CardContent className="pt-6">
               <div className="text-center">
                 <p className="text-3xl font-bold text-emerald-500">
-                  {trademarkApplications.filter(tm => tm.status === "registered").length}
+                  {trademarks.filter(tm => tm.status === "registered").length}
                 </p>
                 <p className="text-sm text-muted-foreground">Registered</p>
               </div>
@@ -209,7 +299,7 @@ const TrademarkTracking = () => {
             <CardContent className="pt-6">
               <div className="text-center">
                 <p className="text-3xl font-bold text-amber-500">
-                  {trademarkApplications.filter(tm => ["filed", "examination", "published"].includes(tm.status)).length}
+                  {trademarks.filter(tm => ["filed", "examination", "published"].includes(tm.status)).length}
                 </p>
                 <p className="text-sm text-muted-foreground">Pending</p>
               </div>
@@ -284,12 +374,12 @@ const TrademarkTracking = () => {
               Trademark Applications
             </CardTitle>
             <CardDescription>
-              Complete list of trademark applications and their status
+              Click edit to update registration status and details
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {trademarkApplications.map((tm) => (
+              {trademarks.map((tm) => (
                 <div 
                   key={tm.id}
                   className="p-4 rounded-lg border border-border bg-muted/20 hover:bg-muted/40 transition-colors"
@@ -299,9 +389,20 @@ const TrademarkTracking = () => {
                       <h3 className="font-bold text-lg">{tm.name}</h3>
                       <p className="text-sm text-muted-foreground">Serial: {tm.serialNumber} • {tm.class}</p>
                     </div>
-                    <Badge className={getStatusColor(tm.status)}>
-                      {getStatusLabel(tm.status)}
-                    </Badge>
+                    <div className="flex items-center gap-2">
+                      <Badge className={getStatusColor(tm.status)}>
+                        {getStatusLabel(tm.status)}
+                      </Badge>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="gap-1"
+                        onClick={() => handleEditTrademark(tm)}
+                      >
+                        <Edit2 className="w-3 h-3" />
+                        Edit
+                      </Button>
+                    </div>
                   </div>
                   
                   <div className="mb-3">
@@ -335,6 +436,80 @@ const TrademarkTracking = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* Edit Dialog */}
+        <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Edit Trademark</DialogTitle>
+            </DialogHeader>
+            {editingTrademark && (
+              <div className="space-y-4">
+                <div>
+                  <Label>Trademark Name</Label>
+                  <Input value={editingTrademark.name} disabled className="mt-1" />
+                </div>
+                
+                <div>
+                  <Label>Serial Number</Label>
+                  <Input 
+                    value={editingTrademark.serialNumber}
+                    onChange={(e) => setEditingTrademark(prev => prev ? {...prev, serialNumber: e.target.value} : null)}
+                    className="mt-1"
+                  />
+                </div>
+                
+                <div>
+                  <Label>Status</Label>
+                  <Select 
+                    value={editingTrademark.status}
+                    onValueChange={(value: TrademarkStatus) => setEditingTrademark(prev => prev ? {...prev, status: value} : null)}
+                  >
+                    <SelectTrigger className="mt-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {statusOptions.map(option => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div>
+                  <Label>Deadline Type</Label>
+                  <Input 
+                    value={editingTrademark.deadlineType || ""}
+                    onChange={(e) => setEditingTrademark(prev => prev ? {...prev, deadlineType: e.target.value} : null)}
+                    className="mt-1"
+                  />
+                </div>
+                
+                <div>
+                  <Label>Notes</Label>
+                  <Textarea 
+                    value={editingTrademark.notes || ""}
+                    onChange={(e) => setEditingTrademark(prev => prev ? {...prev, notes: e.target.value} : null)}
+                    className="mt-1"
+                    rows={3}
+                  />
+                </div>
+
+                <div className="flex justify-end gap-2 pt-4">
+                  <Button variant="outline" onClick={() => setEditDialogOpen(false)}>
+                    Cancel
+                  </Button>
+                  <Button onClick={handleSaveChanges} className="gap-2">
+                    <Save className="w-4 h-4" />
+                    Save Changes
+                  </Button>
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
 
         {/* Registration Process */}
         <Card className="mt-8">
@@ -370,7 +545,13 @@ const TrademarkTracking = () => {
           </CardContent>
         </Card>
 
-        <div className="mt-8 flex justify-center gap-4">
+        <div className="mt-8 flex flex-wrap justify-center gap-4">
+          <Link to="/trademark-usage-guide">
+            <Button variant="outline" className="gap-2">
+              <FileText className="w-4 h-4" />
+              Usage Guide
+            </Button>
+          </Link>
           <Link to="/ip-documentation">
             <Button variant="outline" className="gap-2">
               IP Documentation
@@ -395,7 +576,7 @@ const TrademarkTracking = () => {
             © {new Date().getFullYear()} Sacred Greeks™. All Rights Reserved.
           </p>
           <p className="text-xs text-muted-foreground/70 mt-2">
-            Trademark tracking information is for internal reference only.
+            Trademark tracking information is for internal administrative use only.
           </p>
         </div>
       </div>
