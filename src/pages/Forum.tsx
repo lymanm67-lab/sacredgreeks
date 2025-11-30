@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useDemoMode } from "@/contexts/DemoModeContext";
 import {
   Select,
   SelectContent,
@@ -64,6 +65,7 @@ import {
   Pencil,
   Trash2,
   AtSign,
+  FlaskConical,
 } from "lucide-react";
 import { toast } from "sonner";
 import { GREEK_COUNCILS } from "@/data/greekOrganizations";
@@ -118,6 +120,122 @@ const CATEGORIES = [
   { value: "questions", label: "Questions" },
 ];
 
+// Demo discussions for demo mode
+const DEMO_DISCUSSIONS: Discussion[] = [
+  {
+    id: 'demo-1',
+    user_id: 'demo-user-1',
+    title: 'How do you maintain daily devotions during pledge season?',
+    content: 'Pledge season is demanding and I find myself skipping my quiet time with God. Any tips from those who\'ve navigated this successfully?',
+    category: 'faith',
+    greek_council: 'nphc',
+    greek_organization: 'Alpha Phi Alpha',
+    is_pinned: true,
+    view_count: 156,
+    reply_count: 12,
+    created_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    profiles: {
+      full_name: 'Marcus Johnson',
+      greek_organization: 'Alpha Phi Alpha',
+    },
+  },
+  {
+    id: 'demo-2',
+    user_id: 'demo-user-2',
+    title: 'Starting a weekly prayer call for my chapter',
+    content: 'I want to start a weekly prayer call for interested members. Has anyone done this before? Looking for advice on structure and how to invite people.',
+    category: 'chapter',
+    greek_council: 'nphc',
+    greek_organization: 'Delta Sigma Theta',
+    is_pinned: false,
+    view_count: 89,
+    reply_count: 8,
+    created_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    profiles: {
+      full_name: 'Jasmine Williams',
+      greek_organization: 'Delta Sigma Theta',
+    },
+  },
+  {
+    id: 'demo-3',
+    user_id: 'demo-user-3',
+    title: 'Testimony: God\'s faithfulness through probate',
+    content: 'I want to share how God carried me through my probate season. Despite the challenges, He showed up in ways I never expected. My faith is stronger now than ever.',
+    category: 'testimony',
+    greek_council: 'nphc',
+    greek_organization: 'Kappa Alpha Psi',
+    is_pinned: false,
+    view_count: 234,
+    reply_count: 15,
+    created_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+    profiles: {
+      full_name: 'David Thompson',
+      greek_organization: 'Kappa Alpha Psi',
+    },
+  },
+  {
+    id: 'demo-4',
+    user_id: 'demo-user-4',
+    title: 'Best community service ideas that align with faith?',
+    content: 'Our chapter wants to do service projects that reflect our Christian values. What are some impactful ideas that combine Greek service with ministry?',
+    category: 'service',
+    greek_council: 'nphc',
+    greek_organization: 'Zeta Phi Beta',
+    is_pinned: false,
+    view_count: 112,
+    reply_count: 6,
+    created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    profiles: {
+      full_name: 'Angela Davis',
+      greek_organization: 'Zeta Phi Beta',
+    },
+  },
+  {
+    id: 'demo-5',
+    user_id: 'demo-user-5',
+    title: 'Resources for explaining Greek life to church family?',
+    content: 'My pastor and some church members have questions about my involvement in Greek life. What resources have helped you explain the biblical perspective?',
+    category: 'questions',
+    greek_council: 'nphc',
+    greek_organization: 'Phi Beta Sigma',
+    is_pinned: false,
+    view_count: 178,
+    reply_count: 11,
+    created_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    profiles: {
+      full_name: 'Robert Wilson',
+      greek_organization: 'Phi Beta Sigma',
+    },
+  },
+];
+
+const DEMO_REPLIES: Reply[] = [
+  {
+    id: 'demo-reply-1',
+    discussion_id: 'demo-1',
+    user_id: 'demo-user-2',
+    content: 'I set a non-negotiable 15 minutes first thing in the morning. Even on the busiest days, I protect this time. It\'s not about quantity, it\'s about consistency.',
+    is_best_answer: true,
+    created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    profiles: {
+      full_name: 'Jasmine Williams',
+      greek_organization: 'Delta Sigma Theta',
+    },
+  },
+  {
+    id: 'demo-reply-2',
+    discussion_id: 'demo-1',
+    user_id: 'demo-user-3',
+    content: 'Audio devotionals and podcasts were a game-changer for me. I listen while getting ready or walking to class. The Bible app has great daily plans!',
+    is_best_answer: false,
+    created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    profiles: {
+      full_name: 'David Thompson',
+      greek_organization: 'Kappa Alpha Psi',
+    },
+  },
+];
+
 // Parse @mentions from content
 const parseMentions = (content: string): string[] => {
   const mentionRegex = /@\[([^\]]+)\]\(([^)]+)\)/g;
@@ -147,6 +265,7 @@ const renderContentWithMentions = (content: string) => {
 
 const Forum = () => {
   const { user } = useAuth();
+  const { isDemoMode } = useDemoMode();
   const queryClient = useQueryClient();
   const { awardPoints } = useGamification();
   const [filterCategory, setFilterCategory] = useState<string>("all");
@@ -222,8 +341,20 @@ const Forum = () => {
   });
 
   const { data: discussions = [], isLoading } = useQuery({
-    queryKey: ["forum-discussions", filterCategory, filterCouncil],
+    queryKey: ["forum-discussions", filterCategory, filterCouncil, isDemoMode],
     queryFn: async () => {
+      // If demo mode, return demo discussions
+      if (isDemoMode) {
+        let filtered = [...DEMO_DISCUSSIONS];
+        if (filterCategory !== "all") {
+          filtered = filtered.filter(d => d.category === filterCategory);
+        }
+        if (filterCouncil !== "all") {
+          filtered = filtered.filter(d => d.greek_council === filterCouncil);
+        }
+        return filtered;
+      }
+      
       let query = supabase
         .from("forum_discussions")
         .select("*")
@@ -240,6 +371,18 @@ const Forum = () => {
       const { data, error } = await query;
       if (error) throw error;
 
+      // If no real discussions, return demo data
+      if (!data || data.length === 0) {
+        let filtered = [...DEMO_DISCUSSIONS];
+        if (filterCategory !== "all") {
+          filtered = filtered.filter(d => d.category === filterCategory);
+        }
+        if (filterCouncil !== "all") {
+          filtered = filtered.filter(d => d.greek_council === filterCouncil);
+        }
+        return filtered;
+      }
+
       const userIds = [...new Set((data || []).map((d) => d.user_id))];
       const { data: profiles } = await supabase
         .from("profiles")
@@ -255,9 +398,15 @@ const Forum = () => {
   });
 
   const { data: replies = [] } = useQuery({
-    queryKey: ["forum-replies", expandedDiscussion],
+    queryKey: ["forum-replies", expandedDiscussion, isDemoMode],
     queryFn: async () => {
       if (!expandedDiscussion) return [];
+      
+      // If demo mode or demo discussion, return demo replies
+      if (isDemoMode || expandedDiscussion.startsWith('demo-')) {
+        return DEMO_REPLIES.filter(r => r.discussion_id === expandedDiscussion);
+      }
+      
       const { data, error } = await supabase
         .from("forum_replies")
         .select("*")
