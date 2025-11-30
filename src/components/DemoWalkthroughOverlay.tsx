@@ -67,13 +67,14 @@ interface DemoWalkthroughOverlayProps {
 export function DemoWalkthroughOverlay({ customTemplate }: DemoWalkthroughOverlayProps) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isDemoMode, hasSeenTour, setHasSeenTour, currentScenario } = useDemoMode();
+  const { isDemoMode, hasSeenTour, setHasSeenTour, currentScenario, markTemplateCompleted } = useDemoMode();
   const [currentStep, setCurrentStep] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
 
   // Determine which steps to use
   const walkthroughSteps = customTemplate?.tourSteps || defaultWalkthroughSteps;
+  const activeTemplate = customTemplate || ONBOARDING_TEMPLATES.find(t => t.scenario === currentScenario) || ONBOARDING_TEMPLATES[0];
 
   useEffect(() => {
     if (isDemoMode && !hasSeenTour) {
@@ -118,10 +119,15 @@ export function DemoWalkthroughOverlay({ customTemplate }: DemoWalkthroughOverla
   const handleClose = () => {
     setIsVisible(false);
     setHasSeenTour(true);
+    // If this was the last step, mark template as completed
+    if (currentStep === walkthroughSteps.length - 1) {
+      markTemplateCompleted(activeTemplate);
+    }
   };
 
   const handleSkip = () => {
-    handleClose();
+    setIsVisible(false);
+    setHasSeenTour(true);
   };
 
   const handleGoToStep = (index: number) => {
