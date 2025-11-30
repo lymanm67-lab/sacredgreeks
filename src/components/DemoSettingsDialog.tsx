@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -28,9 +28,14 @@ import {
   Check,
   Loader2,
   Zap,
+  Upload,
+  FileJson,
+  Layout,
 } from 'lucide-react';
 import { useDemoMode, DemoFeatures, DEMO_SCENARIOS, DemoScenario } from '@/contexts/DemoModeContext';
 import { useToast } from '@/hooks/use-toast';
+import { validateImportedConfig } from '@/data/demoOnboardingTemplates';
+import { useTemplateSelector } from '@/components/demo/DemoTemplateSelectorWrapper';
 
 const featureLabels: Record<keyof DemoFeatures, string> = {
   dashboard: 'Dashboard',
@@ -53,6 +58,7 @@ export function DemoSettingsDialog({ trigger }: DemoSettingsDialogProps) {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isPreloading, setIsPreloading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const {
     demoFeatures,
     setDemoFeature,
@@ -68,6 +74,7 @@ export function DemoSettingsDialog({ trigger }: DemoSettingsDialogProps) {
     preloadScenarioData,
     isDataPreloaded,
   } = useDemoMode();
+  const { openSelector, setActiveTemplate } = useTemplateSelector();
   const { toast } = useToast();
 
   const handleStartTour = () => {
@@ -77,6 +84,55 @@ export function DemoSettingsDialog({ trigger }: DemoSettingsDialogProps) {
       title: 'Demo Tour Started',
       description: 'Follow the guided tour to explore features.',
     });
+  };
+
+  const handleOpenTemplates = () => {
+    setOpen(false);
+    openSelector();
+  };
+
+  const handleImportConfig = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const content = e.target?.result as string;
+        const parsed = JSON.parse(content);
+        
+        if (validateImportedConfig(parsed)) {
+          setActiveTemplate(parsed);
+          setHasSeenTour(false);
+          setOpen(false);
+          toast({
+            title: 'Template Imported',
+            description: `${parsed.name} has been loaded. Starting tour...`,
+          });
+        } else {
+          toast({
+            title: 'Invalid Template',
+            description: 'The file format is not valid.',
+            variant: 'destructive',
+          });
+        }
+      } catch (err) {
+        toast({
+          title: 'Import Failed',
+          description: 'Could not parse the JSON file.',
+          variant: 'destructive',
+        });
+      }
+    };
+    reader.readAsText(file);
+    
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   const handleShareDemo = async () => {
@@ -251,6 +307,46 @@ export function DemoSettingsDialog({ trigger }: DemoSettingsDialogProps) {
 
             <Separator />
 
+            {/* Templates & Import */}
+            <div className="space-y-3">
+              <Label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <Layout className="h-4 w-4 text-purple-500" />
+                Onboarding Templates
+              </Label>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".json"
+                className="hidden"
+                onChange={handleFileChange}
+              />
+              <div className="grid grid-cols-2 gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="justify-start"
+                  onClick={handleOpenTemplates}
+                >
+                  <Layout className="h-4 w-4 mr-2 text-purple-500" />
+                  Browse Templates
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="justify-start"
+                  onClick={handleImportConfig}
+                >
+                  <Upload className="h-4 w-4 mr-2 text-blue-500" />
+                  Import Config
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Choose pre-built templates for sales demos, training, or create custom tours
+              </p>
+            </div>
+
+            <Separator />
+
             {/* Tour Actions */}
             <div className="space-y-3">
               <Label className="text-sm font-semibold text-foreground">Tours & Guides</Label>
@@ -268,15 +364,6 @@ export function DemoSettingsDialog({ trigger }: DemoSettingsDialogProps) {
                   variant="outline"
                   size="sm"
                   className="justify-start"
-                  onClick={handleStartTour}
-                >
-                  <Map className="h-4 w-4 mr-2 text-blue-500" />
-                  Start Demo Tour
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="justify-start"
                   onClick={() => {
                     setOpen(false);
                     toast({
@@ -285,8 +372,8 @@ export function DemoSettingsDialog({ trigger }: DemoSettingsDialogProps) {
                     });
                   }}
                 >
-                  <Play className="h-4 w-4 mr-2 text-sacred" />
-                  Start Demo
+                  <Map className="h-4 w-4 mr-2 text-blue-500" />
+                  Free Exploration
                 </Button>
               </div>
             </div>
