@@ -4,7 +4,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Home, BookOpen, Check, FileText } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Home, BookOpen, Check, FileText, FlaskConical } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
@@ -18,6 +19,20 @@ import { BreadcrumbNav } from '@/components/ui/breadcrumb-nav';
 import { ListenButton } from '@/components/ListenButton';
 import { VoiceInputButton } from '@/components/VoiceInputButton';
 import { OrgDevotionalContent } from '@/components/devotional/OrgDevotionalContent';
+import { useDemoMode } from '@/contexts/DemoModeContext';
+
+// Demo devotional data
+const DEMO_DEVOTIONAL: Devotional = {
+  id: 'demo-devotional',
+  date: new Date().toISOString().split('T')[0],
+  title: 'Walking in Integrity',
+  scripture_ref: 'Proverbs 11:3',
+  scripture_text: 'The integrity of the upright guides them, but the unfaithful are destroyed by their duplicity.',
+  reflection: 'In Greek life, we often talk about the values our organizations were founded upon - integrity, scholarship, service, and brotherhood/sisterhood. Today\'s verse reminds us that integrity isn\'t just a buzzword; it\'s a guiding light that illuminates our path. When we walk with integrity, we don\'t have to worry about remembering which version of ourselves we showed to different people. Our character remains consistent whether we\'re at a chapter meeting, in class, or out with friends.',
+  proof_focus: 'Purpose',
+  application: 'Today, examine one area of your life where your actions might not align with your stated values. It could be in your academics, your relationships, or your leadership roles. Ask God to reveal any "duplicity" in your heart and commit to taking one concrete step toward greater integrity.',
+  prayer: 'Lord, I confess that I sometimes struggle to be the same person in every situation. Help me to walk with such integrity that my character remains consistent. Guide me today to make choices that honor You and reflect the values I claim to hold. Give me courage to be authentic, even when it\'s difficult. In Jesus\' name, Amen.',
+};
 
 interface Devotional {
   id: string;
@@ -40,6 +55,7 @@ const Devotional = () => {
   const { user } = useAuth();
   const { awardPoints } = useGamification();
   const { completeChallenge } = useAutoCompleteChallenge();
+  const { isDemoMode } = useDemoMode();
   const [devotional, setDevotional] = useState<Devotional | null>(null);
   const [completed, setCompleted] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -47,6 +63,10 @@ const Devotional = () => {
   const [savingNotes, setSavingNotes] = useState(false);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const { toast } = useToast();
+
+  // Use demo devotional when demo mode is enabled or no real devotional
+  const displayDevotional = isDemoMode ? DEMO_DEVOTIONAL : (devotional || DEMO_DEVOTIONAL);
+  const isShowingDemo = isDemoMode || !devotional;
 
   // Pull to refresh
   const handleRefresh = async () => {
@@ -213,25 +233,7 @@ const Devotional = () => {
     );
   }
 
-  if (!devotional) {
-    return (
-      <div className="min-h-screen bg-background">
-        <header className="border-b border-border bg-card">
-          <div className="container mx-auto px-4 py-4">
-            <Link to="/dashboard" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
-              <Home className="w-4 h-4" />
-              <span className="text-sm font-medium">Dashboard</span>
-            </Link>
-          </div>
-        </header>
-        <div className="container mx-auto px-4 py-16 text-center">
-          <BookOpen className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
-          <h1 className="text-2xl font-bold mb-2">No Devotional Today</h1>
-          <p className="text-muted-foreground">Check back tomorrow for a new reflection</p>
-        </div>
-      </div>
-    );
-  }
+  // Remove the no devotional fallback since we always show demo data
 
   return (
     <div className="min-h-screen bg-background">
@@ -257,25 +259,33 @@ const Devotional = () => {
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sacred/10 mb-4">
               <BookOpen className="w-8 h-8 text-sacred" />
             </div>
-            <p className="text-sm text-muted-foreground">
-              {new Date(devotional.date).toLocaleDateString('en-US', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-              })}
-            </p>
-            <h1 className="text-4xl font-bold">{devotional.title}</h1>
+            <div className="flex items-center justify-center gap-2">
+              <p className="text-sm text-muted-foreground">
+                {new Date(displayDevotional.date).toLocaleDateString('en-US', { 
+                  weekday: 'long', 
+                  year: 'numeric', 
+                  month: 'long', 
+                  day: 'numeric' 
+                })}
+              </p>
+              {isShowingDemo && (
+                <Badge variant="outline" className="bg-amber-500/10 text-amber-600 border-amber-500/30">
+                  <FlaskConical className="w-3 h-3 mr-1" />
+                  Demo
+                </Badge>
+              )}
+            </div>
+            <h1 className="text-4xl font-bold">{displayDevotional.title}</h1>
             <p className="text-xl text-sacred font-medium">
-              P.R.O.O.F. Focus: {devotional.proof_focus}
+              P.R.O.O.F. Focus: {displayDevotional.proof_focus}
             </p>
             
             {/* Listen to Full Devotional */}
             <div className="pt-4">
               <ListenButton
-                text={`${devotional.title}. Scripture: ${devotional.scripture_ref}. ${devotional.scripture_text}. Reflection: ${devotional.reflection}. Today's Application: ${devotional.application}. Prayer: ${devotional.prayer}`}
-                itemId={`devotional-${devotional.id}`}
-                title={`Daily Devotional: ${devotional.title}`}
+                text={`${displayDevotional.title}. Scripture: ${displayDevotional.scripture_ref}. ${displayDevotional.scripture_text}. Reflection: ${displayDevotional.reflection}. Today's Application: ${displayDevotional.application}. Prayer: ${displayDevotional.prayer}`}
+                itemId={`devotional-${displayDevotional.id}`}
+                title={`Daily Devotional: ${displayDevotional.title}`}
                 voice="onyx"
                 variant="default"
                 className="bg-sacred hover:bg-sacred/90 text-sacred-foreground"
@@ -295,10 +305,10 @@ const Devotional = () => {
           <Card className="border-2 border-sacred/20">
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle className="text-lg">{devotional.scripture_ref}</CardTitle>
+                <CardTitle className="text-lg">{displayDevotional.scripture_ref}</CardTitle>
                 <ListenButton
-                  text={`${devotional.scripture_ref}. ${devotional.scripture_text}`}
-                  itemId={`scripture-${devotional.id}`}
+                  text={`${displayDevotional.scripture_ref}. ${displayDevotional.scripture_text}`}
+                  itemId={`scripture-${displayDevotional.id}`}
                   title="Scripture"
                   showLabel={false}
                   size="sm"
@@ -307,7 +317,7 @@ const Devotional = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-lg leading-relaxed italic">{devotional.scripture_text}</p>
+              <p className="text-lg leading-relaxed italic">{displayDevotional.scripture_text}</p>
             </CardContent>
           </Card>
 
@@ -317,8 +327,8 @@ const Devotional = () => {
               <div className="flex items-center justify-between">
                 <CardTitle>Reflection</CardTitle>
                 <ListenButton
-                  text={devotional.reflection}
-                  itemId={`reflection-${devotional.id}`}
+                  text={displayDevotional.reflection}
+                  itemId={`reflection-${displayDevotional.id}`}
                   title="Reflection"
                   showLabel={false}
                   size="sm"
@@ -327,7 +337,7 @@ const Devotional = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="leading-relaxed">{devotional.reflection}</p>
+              <p className="leading-relaxed">{displayDevotional.reflection}</p>
             </CardContent>
           </Card>
 
@@ -337,8 +347,8 @@ const Devotional = () => {
               <div className="flex items-center justify-between">
                 <CardTitle>Today's Application</CardTitle>
                 <ListenButton
-                  text={devotional.application}
-                  itemId={`application-${devotional.id}`}
+                  text={displayDevotional.application}
+                  itemId={`application-${displayDevotional.id}`}
                   title="Today's Application"
                   showLabel={false}
                   size="sm"
@@ -347,7 +357,7 @@ const Devotional = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="leading-relaxed">{devotional.application}</p>
+              <p className="leading-relaxed">{displayDevotional.application}</p>
             </CardContent>
           </Card>
 
@@ -357,8 +367,8 @@ const Devotional = () => {
               <div className="flex items-center justify-between">
                 <CardTitle>Prayer</CardTitle>
                 <ListenButton
-                  text={devotional.prayer}
-                  itemId={`prayer-${devotional.id}`}
+                  text={displayDevotional.prayer}
+                  itemId={`prayer-${displayDevotional.id}`}
                   title="Prayer"
                   showLabel={false}
                   size="sm"
@@ -367,12 +377,12 @@ const Devotional = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="leading-relaxed italic">{devotional.prayer}</p>
+              <p className="leading-relaxed italic">{displayDevotional.prayer}</p>
             </CardContent>
           </Card>
 
           {/* Personal Notes */}
-          {user && (
+          {(user || isShowingDemo) && (
             <Card className="border-2 border-warm-blue/20">
               <CardHeader>
                 <div className="flex items-center gap-2">
@@ -384,45 +394,52 @@ const Devotional = () => {
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <Label htmlFor="devotional-notes" className="text-sm text-muted-foreground">
-                      Write your personal reflections, prayers, or insights from today&apos;s devotional
+                      {isShowingDemo ? 'Sample notes section - sign in to save your reflections' : 'Write your personal reflections, prayers, or insights from today\'s devotional'}
                     </Label>
-                    <VoiceInputButton
-                      onTranscript={setNotes}
-                      existingText={notes}
-                      appendMode={true}
-                    />
+                    {!isShowingDemo && (
+                      <VoiceInputButton
+                        onTranscript={setNotes}
+                        existingText={notes}
+                        appendMode={true}
+                      />
+                    )}
                   </div>
                   <Textarea
                     id="devotional-notes"
-                    placeholder="What is God speaking to you today? How will you apply this to your life? (or tap the mic to dictate)"
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
+                    placeholder={isShowingDemo ? "This devotional really challenged me to examine my integrity..." : "What is God speaking to you today? How will you apply this to your life? (or tap the mic to dictate)"}
+                    value={isShowingDemo ? "This devotional really challenged me to examine my integrity in my Greek organization. I want to be the same person whether I'm at chapter meetings or out with friends." : notes}
+                    onChange={(e) => !isShowingDemo && setNotes(e.target.value)}
                     rows={6}
                     className="mt-2 resize-none"
+                    readOnly={isShowingDemo}
                   />
                 </div>
-                <Button
-                  onClick={saveNotes}
-                  disabled={savingNotes}
-                  variant="outline"
-                  className="w-full sm:w-auto"
-                >
-                  {savingNotes ? 'Saving...' : 'Save Notes'}
-                </Button>
+                {!isShowingDemo && (
+                  <Button
+                    onClick={saveNotes}
+                    disabled={savingNotes}
+                    variant="outline"
+                    className="w-full sm:w-auto"
+                  >
+                    {savingNotes ? 'Saving...' : 'Save Notes'}
+                  </Button>
+                )}
               </CardContent>
             </Card>
           )}
 
           {/* Actions Row */}
-          {user && (
+          {(user || isShowingDemo) && (
             <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
               <Button
-                onClick={markComplete}
-                disabled={completed}
+                onClick={!isShowingDemo ? markComplete : undefined}
+                disabled={completed || isShowingDemo}
                 className="bg-sacred hover:bg-sacred/90"
                 size="lg"
               >
-                {completed ? (
+                {isShowingDemo ? (
+                  'Sign in to Track Progress'
+                ) : completed ? (
                   <>
                     <Check className="w-5 h-5 mr-2" />
                     Completed
@@ -432,11 +449,11 @@ const Devotional = () => {
                 )}
               </Button>
               
-              {completed && devotional && (
+              {(completed || isShowingDemo) && displayDevotional && (
                 <>
                   <SocialShareDialog
-                    title={`Today's Devotional: ${devotional.title}`}
-                    description={`Just completed today's devotional on ${devotional.proof_focus}. Growing in faith daily! 📖✨`}
+                    title={`Today's Devotional: ${displayDevotional.title}`}
+                    description={`Just completed today's devotional on ${displayDevotional.proof_focus}. Growing in faith daily! 📖✨`}
                     hashtags={["SacredGreeks", "Devotional", "Faith", "DailyBread"]}
                     trigger={
                       <Button variant="outline" size="lg">
@@ -446,7 +463,7 @@ const Devotional = () => {
                   />
                   <AchievementBadgeDialog
                     type="devotional"
-                    title={devotional.title}
+                    title={displayDevotional.title}
                     subtitle="Daily Devotional"
                     completionDate={new Date().toLocaleDateString()}
                     trigger={

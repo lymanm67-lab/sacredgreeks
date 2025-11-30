@@ -8,14 +8,28 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Textarea } from '@/components/ui/textarea';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { ArrowLeft, CheckCircle2, Circle, BookOpen, Heart, Lock } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Circle, BookOpen, Heart, Lock, FlaskConical } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { journeyContent } from '@/data/journeyContent';
 import { ListenButton } from '@/components/ListenButton';
+import { useDemoMode } from '@/contexts/DemoModeContext';
+
+// Demo progress data - shows first 8 days completed with sample notes
+const DEMO_PROGRESS: Record<number, { completed: boolean; notes: string }> = {
+  1: { completed: true, notes: 'This really opened my eyes to how faith and Greek life can work together.' },
+  2: { completed: true, notes: 'The scripture today was exactly what I needed to hear.' },
+  3: { completed: true, notes: 'Learning to lead with integrity is challenging but necessary.' },
+  4: { completed: true, notes: '' },
+  5: { completed: true, notes: 'Great discussion points for our next chapter meeting!' },
+  6: { completed: true, notes: '' },
+  7: { completed: true, notes: 'Brotherhood/Sisterhood through faith is powerful.' },
+  8: { completed: true, notes: 'Applying this to my daily interactions on campus.' },
+};
 
 const Journey = () => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { isDemoMode } = useDemoMode();
   const [progress, setProgress] = useState<Record<number, { completed: boolean; notes: string }>>({});
   const [loading, setLoading] = useState(true);
 
@@ -23,6 +37,10 @@ const Journey = () => {
     if (user) loadProgress();
     else setLoading(false);
   }, [user]);
+
+  // Use demo progress when demo mode is enabled or no real progress
+  const displayProgress = isDemoMode ? DEMO_PROGRESS : (Object.keys(progress).length > 0 ? progress : DEMO_PROGRESS);
+  const isShowingDemo = isDemoMode || Object.keys(progress).length === 0;
 
   const loadProgress = async () => {
     if (!user) return;
@@ -74,7 +92,7 @@ const Journey = () => {
     setProgress(prev => ({ ...prev, [day]: { ...prev[day], notes, completed: prev[day]?.completed || false } }));
   };
 
-  const completedDays = Object.values(progress).filter(p => p.completed).length;
+  const completedDays = Object.values(displayProgress).filter(p => p.completed).length;
   const progressPercent = (completedDays / 30) * 100;
 
   return (
@@ -84,9 +102,17 @@ const Journey = () => {
           <Link to="/">
             <Button variant="ghost" size="icon"><ArrowLeft className="w-5 h-5" /></Button>
           </Link>
-          <div>
-            <h1 className="text-xl font-bold">30-Day "Sacred, Not Sinful" Journey</h1>
-            <p className="text-sm text-muted-foreground">Daily readings, scriptures & reflections</p>
+          <div className="flex items-center gap-3">
+            <div>
+              <h1 className="text-xl font-bold">30-Day "Sacred, Not Sinful" Journey</h1>
+              <p className="text-sm text-muted-foreground">Daily readings, scriptures & reflections</p>
+            </div>
+            {isShowingDemo && (
+              <Badge variant="outline" className="bg-amber-500/10 text-amber-600 border-amber-500/30">
+                <FlaskConical className="w-3 h-3 mr-1" />
+                Demo
+              </Badge>
+            )}
           </div>
         </div>
       </header>
@@ -120,13 +146,13 @@ const Journey = () => {
         {/* Journey Days */}
         <div className="space-y-4">
           {journeyContent.map((day) => (
-            <Card key={day.day} className={progress[day.day]?.completed ? 'border-sacred/50 bg-sacred/5' : ''}>
+            <Card key={day.day} className={displayProgress[day.day]?.completed ? 'border-sacred/50 bg-sacred/5' : ''}>
               <CardHeader className="pb-2">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    {user && (
-                      <button onClick={() => toggleDay(day.day)} className="mt-1">
-                        {progress[day.day]?.completed ? (
+                    {(user || isShowingDemo) && (
+                      <button onClick={() => !isShowingDemo && toggleDay(day.day)} className="mt-1" disabled={isShowingDemo}>
+                        {displayProgress[day.day]?.completed ? (
                           <CheckCircle2 className="w-6 h-6 text-sacred" />
                         ) : (
                           <Circle className="w-6 h-6 text-muted-foreground" />
@@ -168,15 +194,16 @@ const Journey = () => {
                         <h4 className="font-semibold mb-2">Prayer</h4>
                         <p className="text-sm italic">{day.prayer}</p>
                       </div>
-                      {user && (
+                      {(user || isShowingDemo) && (
                         <div>
                           <h4 className="font-semibold mb-2">My Reflections</h4>
                           <Textarea
-                            placeholder="Write your thoughts..."
-                            value={progress[day.day]?.notes || ''}
-                            onChange={(e) => setProgress(prev => ({ ...prev, [day.day]: { ...prev[day.day], notes: e.target.value, completed: prev[day.day]?.completed || false } }))}
-                            onBlur={(e) => saveNotes(day.day, e.target.value)}
+                            placeholder={isShowingDemo ? "Sample reflection notes..." : "Write your thoughts..."}
+                            value={isShowingDemo ? (displayProgress[day.day]?.notes || '') : (progress[day.day]?.notes || '')}
+                            onChange={(e) => !isShowingDemo && setProgress(prev => ({ ...prev, [day.day]: { ...prev[day.day], notes: e.target.value, completed: prev[day.day]?.completed || false } }))}
+                            onBlur={(e) => !isShowingDemo && saveNotes(day.day, e.target.value)}
                             className="min-h-[100px]"
+                            readOnly={isShowingDemo}
                           />
                         </div>
                       )}
