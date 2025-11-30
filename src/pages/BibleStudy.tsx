@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Heart, Search, Book, BookOpen, Calendar, ArrowLeft, ExternalLink, Loader2, Sparkles, Bookmark, BookmarkCheck } from 'lucide-react';
+import { Heart, Search, Book, BookOpen, Calendar, ArrowLeft, ExternalLink, Loader2, Sparkles, Bookmark, BookmarkCheck, FlaskConical } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { ExternalContentModal } from '@/components/ui/ExternalContentModal';
 import { useExternalLinks } from '@/hooks/use-external-links';
@@ -22,6 +22,46 @@ import { useAutoCompleteChallenge } from '@/hooks/use-auto-complete-challenge';
 import { VoiceInputButton } from '@/components/VoiceInputButton';
 import { ListenButton } from '@/components/ListenButton';
 import { PremiumGate } from '@/components/PremiumGate';
+import { useDemoMode } from '@/contexts/DemoModeContext';
+
+// Demo data for Bible Study
+const DEMO_DAILY_VERSE = {
+  reference: 'Philippians 4:13',
+  text: 'I can do all things through Christ which strengtheneth me.',
+  translation_name: 'King James Version'
+};
+
+const DEMO_SAVED_SEARCHES = [
+  {
+    id: 'demo-1',
+    search_query: 'love one another',
+    search_type: 'ai',
+    results_json: [
+      { reference: 'John 13:34', text: 'A new commandment I give unto you, That ye love one another; as I have loved you, that ye also love one another.' },
+      { reference: '1 John 4:7', text: 'Beloved, let us love one another: for love is of God; and every one that loveth is born of God, and knoweth God.' }
+    ],
+    created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
+  },
+  {
+    id: 'demo-2',
+    search_query: 'Romans 8:28',
+    search_type: 'reference',
+    results_json: [
+      { reference: 'Romans 8:28', text: 'And we know that all things work together for good to them that love God, to them who are the called according to his purpose.', translation: 'King James Version' }
+    ],
+    created_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString()
+  },
+  {
+    id: 'demo-3',
+    search_query: 'strength',
+    search_type: 'phrase',
+    results_json: [
+      { ref: 'Isaiah 41:10', text: 'Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.' },
+      { ref: 'Philippians 4:13', text: 'I can do all things through Christ which strengtheneth me.' }
+    ],
+    created_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+  }
+];
 
 const readingPlans = [
   {
@@ -58,6 +98,7 @@ const BibleStudy = () => {
   const { toast } = useToast();
   const { openExternalLink } = useExternalLinks();
   const { completeChallenge } = useAutoCompleteChallenge();
+  const { isDemoMode } = useDemoMode();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -67,6 +108,11 @@ const BibleStudy = () => {
   const [phraseResults, setPhraseResults] = useState<any[]>([]);
   const [aiResults, setAiResults] = useState<any[]>([]);
   const { savedSearches, loading: savedLoading, saveSearch, deleteSearch, isSearchSaved } = useSavedBibleSearches();
+
+  // Use demo data when demo mode is enabled
+  const displayVerse = isDemoMode ? DEMO_DAILY_VERSE : dailyVerse;
+  const displaySavedSearches = isDemoMode ? DEMO_SAVED_SEARCHES : (savedSearches.length > 0 ? savedSearches : DEMO_SAVED_SEARCHES);
+  const isShowingDemoSearches = isDemoMode || savedSearches.length === 0;
 
   // Pull to refresh
   const handleRefresh = async () => {
@@ -343,33 +389,43 @@ const BibleStudy = () => {
                 <div className="flex items-center justify-center py-8">
                   <Loader2 className="w-6 h-6 animate-spin text-sacred" />
                 </div>
-              ) : dailyVerse ? (
+              ) : displayVerse ? (
                 <div className="space-y-4">
                   <blockquote className="text-lg italic border-l-4 border-sacred pl-4 py-2">
-                    "{dailyVerse.text}"
+                    "{displayVerse.text}"
                   </blockquote>
                   <div className="flex items-center justify-between flex-wrap gap-2">
-                    <Badge className="bg-sacred/10 text-sacred border-sacred/20">
-                      {dailyVerse.reference}
-                    </Badge>
+                    <div className="flex items-center gap-2">
+                      <Badge className="bg-sacred/10 text-sacred border-sacred/20">
+                        {displayVerse.reference}
+                      </Badge>
+                      {isDemoMode && (
+                        <Badge variant="outline" className="bg-amber-500/10 text-amber-600 border-amber-500/30">
+                          <FlaskConical className="w-3 h-3 mr-1" />
+                          Demo
+                        </Badge>
+                      )}
+                    </div>
                     <div className="flex items-center gap-2">
                       <ListenButton
-                        text={`${dailyVerse.reference}. ${dailyVerse.text}`}
+                        text={`${displayVerse.reference}. ${displayVerse.text}`}
                         itemId={`bible-daily-verse`}
                         title="Daily Verse"
                         showLabel={false}
                         size="sm"
                         variant="ghost"
                       />
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={fetchDailyVerse}
-                        className="gap-2"
-                      >
-                        <Sparkles className="w-4 h-4" />
-                        Get Another Verse
-                      </Button>
+                      {!isDemoMode && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={fetchDailyVerse}
+                          className="gap-2"
+                        >
+                          <Sparkles className="w-4 h-4" />
+                          Get Another Verse
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -684,23 +740,35 @@ const BibleStudy = () => {
             <TabsContent value="saved" className="space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Bookmark className="w-5 h-5 text-sacred" />
-                    Saved Searches
-                  </CardTitle>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <CardTitle className="flex items-center gap-2">
+                        <Bookmark className="w-5 h-5 text-sacred" />
+                        Saved Searches
+                      </CardTitle>
+                      {isShowingDemoSearches && (
+                        <Badge variant="outline" className="bg-amber-500/10 text-amber-600 border-amber-500/30">
+                          <FlaskConical className="w-3 h-3 mr-1" />
+                          Demo
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
                   <CardDescription>
-                    Quick access to your previously saved Bible searches
+                    {isShowingDemoSearches 
+                      ? 'Sample saved searches - save your own searches to build your collection'
+                      : 'Quick access to your previously saved Bible searches'}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {savedLoading ? (
+                  {savedLoading && !isDemoMode ? (
                     <div className="flex items-center justify-center py-8">
                       <Loader2 className="w-6 h-6 animate-spin text-sacred" />
                     </div>
                   ) : (
                     <SavedSearchesList
-                      searches={savedSearches}
-                      onDelete={deleteSearch}
+                      searches={displaySavedSearches}
+                      onDelete={isShowingDemoSearches ? () => {} : deleteSearch}
                       onLoadSearch={handleLoadSearch}
                     />
                   )}
