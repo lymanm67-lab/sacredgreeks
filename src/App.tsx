@@ -26,6 +26,7 @@ import { DemoFeaturesProvider } from "@/components/demo/DemoFeaturesProvider";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { WhatsNewModal } from "@/components/WhatsNewModal";
 import { GlobalSEO } from "@/components/GlobalSEO";
+import { UpdateNotification } from "@/components/UpdateNotification";
 import { Loader2 } from "lucide-react";
 
 // Eager load critical pages
@@ -155,6 +156,7 @@ const App = () => (
                       <GlobalDemoIndicator />
                       <CookieConsent />
                       <WhatsNewModal />
+                      <UpdateNotification />
                       <AnalyticsProvider>
                   <Suspense fallback={<PageLoader />}>
                     <Routes>
