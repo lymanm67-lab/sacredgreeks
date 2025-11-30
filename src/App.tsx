@@ -19,9 +19,10 @@ import { BetaFeedbackWidget } from "@/components/BetaFeedbackWidget";
 import { GlobalDemoIndicator } from "@/components/GlobalDemoIndicator";
 import { DemoModeTour } from "@/components/DemoModeTour";
 import { DemoBanner } from "@/components/DemoBanner";
-import { DemoWalkthroughOverlay } from "@/components/DemoWalkthroughOverlay";
 import { DemoComparisonWrapper } from "@/components/demo/DemoComparisonWrapper";
 import { DemoAnalyticsDashboardWrapper } from "@/components/demo/DemoAnalyticsDashboardWrapper";
+import { DemoTemplateSelectorProvider } from "@/components/demo/DemoTemplateSelectorWrapper";
+import { DemoOverlayWithTemplate } from "@/components/demo/DemoOverlayWithTemplate";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Loader2 } from "lucide-react";
 
@@ -111,23 +112,24 @@ const App = () => (
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <DemoModeProvider>
-            <CelebrationProvider>
-              <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <InstallPrompt />
-            <OfflineIndicator />
-            <AIAssistantWidget />
-            <BrowserRouter>
-              <DemoBanner />
-              <DemoWalkthroughOverlay />
-              <DemoComparisonWrapper />
-              <DemoAnalyticsDashboardWrapper />
-              <BetaFeedbackWidget />
-              <GlobalDemoIndicator />
-              <DemoModeTour />
-              <CookieConsent />
-              <AnalyticsProvider>
+            <DemoTemplateSelectorProvider>
+              <CelebrationProvider>
+                <TooltipProvider>
+                  <Toaster />
+                  <Sonner />
+                  <InstallPrompt />
+                  <OfflineIndicator />
+                  <AIAssistantWidget />
+                  <BrowserRouter>
+                    <DemoBanner />
+                    <DemoOverlayWithTemplate />
+                    <DemoComparisonWrapper />
+                    <DemoAnalyticsDashboardWrapper />
+                    <BetaFeedbackWidget />
+                    <GlobalDemoIndicator />
+                    <DemoModeTour />
+                    <CookieConsent />
+                    <AnalyticsProvider>
                 <Suspense fallback={<PageLoader />}>
                   <Routes>
                     {/* Public routes - no sidebar */}
@@ -313,8 +315,9 @@ const App = () => (
                 </Suspense>
               </AnalyticsProvider>
             </BrowserRouter>
-              </TooltipProvider>
-            </CelebrationProvider>
+                </TooltipProvider>
+              </CelebrationProvider>
+            </DemoTemplateSelectorProvider>
           </DemoModeProvider>
         </AuthProvider>
       </QueryClientProvider>

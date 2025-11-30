@@ -1,60 +1,79 @@
 import { useState, useEffect } from 'react';
-import { X, ChevronRight, ChevronLeft, Sparkles } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { X, ChevronRight, ChevronLeft, Sparkles, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { useDemoMode } from '@/contexts/DemoModeContext';
+import { TourStep, OnboardingTemplate, ONBOARDING_TEMPLATES } from '@/data/demoOnboardingTemplates';
 
-interface WalkthroughStep {
-  id: string;
-  title: string;
-  description: string;
-  target?: string;
-  position: 'center' | 'top' | 'bottom';
-}
-
-const walkthroughSteps: WalkthroughStep[] = [
+// Default walkthrough steps (legacy support)
+const defaultWalkthroughSteps: TourStep[] = [
   {
     id: 'welcome',
     title: 'Welcome to Demo Mode!',
     description: 'Explore Sacred Greeks with sample data. This walkthrough will guide you through the key features.',
+    route: '/',
     position: 'center',
   },
   {
     id: 'dashboard',
     title: 'Your Dashboard',
     description: 'Access your personalized dashboard with daily devotionals, prayer journal, and progress tracking.',
+    route: '/dashboard',
     position: 'top',
   },
   {
-    id: 'features',
-    title: 'Explore Features',
-    description: 'Try out Bible Study, Prayer Wall, Service Tracker, and more with pre-loaded sample data.',
+    id: 'devotional',
+    title: 'Daily Devotional',
+    description: 'Start each day with scripture and reflection. Build your streak by completing devotionals!',
+    route: '/devotional',
     position: 'center',
   },
   {
-    id: 'scenarios',
-    title: 'Demo Scenarios',
-    description: 'Switch between different user scenarios (New User, Power User, Greek Leader) to see varied experiences.',
+    id: 'prayer-journal',
+    title: 'Prayer Journal',
+    description: 'Keep track of your prayers and mark them as answered. A private space for your spiritual journey.',
+    route: '/prayer-journal',
     position: 'center',
   },
   {
-    id: 'settings',
-    title: 'Demo Settings',
-    description: 'Customize your demo experience using the settings in the green banner above.',
-    position: 'top',
+    id: 'prayer-wall',
+    title: 'Community Prayer Wall',
+    description: 'Share prayer requests with your community and support others in their faith journey.',
+    route: '/prayer-wall',
+    position: 'center',
+  },
+  {
+    id: 'achievements',
+    title: 'Achievements & Progress',
+    description: 'Earn badges, track streaks, and level up as you grow in your faith journey.',
+    route: '/achievements',
+    position: 'center',
   },
   {
     id: 'complete',
     title: 'You\'re Ready!',
     description: 'Start exploring! When you\'re done, click "Exit" in the banner to return to normal mode.',
+    route: '/dashboard',
     position: 'center',
   },
 ];
 
-export function DemoWalkthroughOverlay() {
-  const { isDemoMode, hasSeenTour, setHasSeenTour } = useDemoMode();
+interface DemoWalkthroughOverlayProps {
+  customTemplate?: OnboardingTemplate | null;
+}
+
+export function DemoWalkthroughOverlay({ customTemplate }: DemoWalkthroughOverlayProps) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { isDemoMode, hasSeenTour, setHasSeenTour, currentScenario } = useDemoMode();
   const [currentStep, setCurrentStep] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  // Determine which steps to use
+  const walkthroughSteps = customTemplate?.tourSteps || defaultWalkthroughSteps;
 
   useEffect(() => {
     if (isDemoMode && !hasSeenTour) {
@@ -62,6 +81,19 @@ export function DemoWalkthroughOverlay() {
       setCurrentStep(0);
     }
   }, [isDemoMode, hasSeenTour]);
+
+  // Navigate to the step's route when step changes
+  useEffect(() => {
+    if (isVisible && walkthroughSteps[currentStep]) {
+      const step = walkthroughSteps[currentStep];
+      if (step.route && location.pathname !== step.route) {
+        setIsNavigating(true);
+        navigate(step.route);
+        // Allow time for navigation
+        setTimeout(() => setIsNavigating(false), 500);
+      }
+    }
+  }, [currentStep, isVisible, walkthroughSteps, navigate, location.pathname]);
 
   if (!isVisible) return null;
 
@@ -92,10 +124,16 @@ export function DemoWalkthroughOverlay() {
     handleClose();
   };
 
+  const handleGoToStep = (index: number) => {
+    setCurrentStep(index);
+  };
+
   const positionClasses = {
     center: 'items-center justify-center',
     top: 'items-start justify-center pt-24',
     bottom: 'items-end justify-center pb-24',
+    left: 'items-center justify-start pl-8',
+    right: 'items-center justify-end pr-8',
   };
 
   return (
@@ -123,7 +161,18 @@ export function DemoWalkthroughOverlay() {
             </div>
 
             <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-            <p className="text-muted-foreground mb-6">{step.description}</p>
+            <p className="text-muted-foreground mb-4">{step.description}</p>
+
+            {/* Current route indicator */}
+            <div className="flex items-center gap-2 mb-4 p-2 bg-muted/50 rounded-lg">
+              <MapPin className="h-4 w-4 text-muted-foreground" />
+              <span className="text-xs text-muted-foreground">
+                {isNavigating ? 'Navigating...' : `Currently at: ${step.route}`}
+              </span>
+              <Badge variant="outline" className="ml-auto text-[10px]">
+                {step.route}
+              </Badge>
+            </div>
 
             {/* Progress dots */}
             <div className="flex justify-center gap-1.5 mb-4">
@@ -137,7 +186,8 @@ export function DemoWalkthroughOverlay() {
                       ? 'w-2 bg-emerald-300'
                       : 'w-2 bg-muted'
                   }`}
-                  onClick={() => setCurrentStep(index)}
+                  onClick={() => handleGoToStep(index)}
+                  title={walkthroughSteps[index].title}
                 />
               ))}
             </div>
@@ -158,6 +208,7 @@ export function DemoWalkthroughOverlay() {
                     variant="outline"
                     size="sm"
                     onClick={handlePrev}
+                    disabled={isNavigating}
                   >
                     <ChevronLeft className="h-4 w-4 mr-1" />
                     Back
@@ -166,6 +217,7 @@ export function DemoWalkthroughOverlay() {
                 <Button
                   size="sm"
                   onClick={handleNext}
+                  disabled={isNavigating}
                   className="bg-emerald-600 hover:bg-emerald-700"
                 >
                   {isLastStep ? 'Get Started' : 'Next'}
