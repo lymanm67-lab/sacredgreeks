@@ -28,6 +28,7 @@ import { usePullToRefresh } from '@/hooks/use-pull-to-refresh';
 import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
 import { DailyChallengesWidget } from '@/components/dashboard/DailyChallengesWidget';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
+import { SEOHead, pageSEO } from '@/components/SEOHead';
 import { VerseOfTheDay } from '@/components/dashboard/VerseOfTheDay';
 import { QuickCheckIn } from '@/components/dashboard/QuickCheckIn';
 import { WeeklyInsights } from '@/components/dashboard/WeeklyInsights';
@@ -460,6 +461,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
+      <SEOHead {...pageSEO.dashboard} />
       <PullToRefreshIndicator 
         isPulling={isPulling}
         isRefreshing={isRefreshing}

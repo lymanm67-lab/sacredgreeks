@@ -21,6 +21,7 @@ import { FeaturesSection } from "@/components/landing/FeaturesSection";
 import { HealingResourcesSection } from "@/components/landing/HealingResourcesSection";
 import { Footer } from "@/components/landing/Footer";
 import { FinalCTA } from "@/components/landing/FinalCTA";
+import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { cn } from "@/lib/utils";
 
 // Mobile section navigation items
@@ -161,42 +162,68 @@ const Index = () => {
       <LandingHeroSection user={user} />
 
       {/* Stats Section */}
-      {!user && <StatsSection />}
+      {!user && (
+        <AnimatedSection animation="fade-up" delay={100}>
+          <StatsSection />
+        </AnimatedSection>
+      )}
 
       {/* BGLO Objections Teaser */}
       {!user && (
-        <div id="objections-teaser">
-          <ObjectionsTeaser />
-        </div>
+        <AnimatedSection animation="fade-up" delay={150}>
+          <div id="objections-teaser">
+            <ObjectionsTeaser />
+          </div>
+        </AnimatedSection>
       )}
 
       {/* Benefits Section */}
-      {!user && <BenefitsSection />}
+      {!user && (
+        <AnimatedSection animation="fade-up" delay={200}>
+          <BenefitsSection />
+        </AnimatedSection>
+      )}
 
       {/* Core Features */}
-      <CoreFeaturesSection />
+      <AnimatedSection animation="fade-up" delay={100}>
+        <CoreFeaturesSection />
+      </AnimatedSection>
 
       {/* Subscription Banner */}
-      <SubscriptionBanner user={user} subscribed={subscribed} />
+      <AnimatedSection animation="zoom-in" delay={150}>
+        <SubscriptionBanner user={user} subscribed={subscribed} />
+      </AnimatedSection>
 
       {/* Features Section */}
-      <FeaturesSection />
+      <AnimatedSection animation="fade-up" delay={100}>
+        <FeaturesSection />
+      </AnimatedSection>
 
       {/* Healing Resources */}
-      <div className="container mx-auto px-4">
-        <HealingResourcesSection />
-      </div>
+      <AnimatedSection animation="fade-up" delay={100}>
+        <div className="container mx-auto px-4">
+          <HealingResourcesSection />
+        </div>
+      </AnimatedSection>
 
       {/* Testimonials */}
-      <div id="testimonials" className="scroll-mt-20">
-        <Testimonials />
-      </div>
+      <AnimatedSection animation="fade-up" delay={100}>
+        <div id="testimonials" className="scroll-mt-20">
+          <Testimonials />
+        </div>
+      </AnimatedSection>
 
       {/* Share Section */}
-      <ShareSection />
+      <AnimatedSection animation="zoom-in" delay={100}>
+        <ShareSection />
+      </AnimatedSection>
 
       {/* Final CTA */}
-      {!user && <FinalCTA />}
+      {!user && (
+        <AnimatedSection animation="blur-in" delay={100}>
+          <FinalCTA />
+        </AnimatedSection>
+      )}
 
       {/* Footer */}
       <Footer />
