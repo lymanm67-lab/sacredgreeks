@@ -18,6 +18,7 @@ import { DemoModeProvider } from "@/contexts/DemoModeContext";
 import { BetaFeedbackWidget } from "@/components/BetaFeedbackWidget";
 import { GlobalDemoIndicator } from "@/components/GlobalDemoIndicator";
 import { DemoModeTour } from "@/components/DemoModeTour";
+import { AppLayout } from "@/components/layout/AppLayout";
 import { Loader2 } from "lucide-react";
 
 // Eager load critical pages
@@ -82,6 +83,13 @@ const PageLoader = () => (
   </div>
 );
 
+// Protected route wrapper with AppLayout
+const ProtectedPageWithLayout = ({ children }: { children: React.ReactNode }) => (
+  <ProtectedRoute>
+    <AppLayout>{children}</AppLayout>
+  </ProtectedRoute>
+);
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -114,6 +122,7 @@ const App = () => (
               <AnalyticsProvider>
                 <Suspense fallback={<PageLoader />}>
                   <Routes>
+                    {/* Public routes - no sidebar */}
                     <Route path="/" element={<Index />} />
                     <Route path="/auth" element={<Auth />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
@@ -144,149 +153,151 @@ const App = () => (
                     <Route path="/video-library" element={<VideoLibrary />} />
                     <Route path="/user-guide" element={<UserGuide />} />
                     <Route path="/beta-signup" element={<BetaSignup />} />
+                    <Route path="/guide" element={<Guide />} />
+                    
+                    {/* Protected routes - with sidebar */}
+                    <Route
+                      path="/dashboard"
+                      element={
+                        <ProtectedPageWithLayout>
+                          <Dashboard />
+                        </ProtectedPageWithLayout>
+                      }
+                    />
                     <Route
                       path="/beta-dashboard"
                       element={
-                        <ProtectedRoute>
+                        <ProtectedPageWithLayout>
                           <BetaDashboard />
-                        </ProtectedRoute>
+                        </ProtectedPageWithLayout>
                       }
                     />
                     <Route
                       path="/prayer-guide"
                       element={
-                        <ProtectedRoute>
+                        <ProtectedPageWithLayout>
                           <PrayerGuide />
-                        </ProtectedRoute>
+                        </ProtectedPageWithLayout>
                       }
                     />
                     <Route
                       path="/achievements"
                       element={
-                        <ProtectedRoute>
+                        <ProtectedPageWithLayout>
                           <Achievements />
-                        </ProtectedRoute>
-                      }
-                    />
-                    <Route path="/guide" element={<Guide />} />
-                    <Route
-                      path="/dashboard"
-                      element={
-                        <ProtectedRoute>
-                          <Dashboard />
-                        </ProtectedRoute>
+                        </ProtectedPageWithLayout>
                       }
                     />
                     <Route
                       path="/devotional"
                       element={
-                        <ProtectedRoute>
+                        <ProtectedPageWithLayout>
                           <Devotional />
-                        </ProtectedRoute>
+                        </ProtectedPageWithLayout>
                       }
                     />
                     <Route
                       path="/prayer-journal"
                       element={
-                        <ProtectedRoute>
+                        <ProtectedPageWithLayout>
                           <PrayerJournal />
-                        </ProtectedRoute>
+                        </ProtectedPageWithLayout>
                       }
                     />
                     <Route
                       path="/prayer-wall"
                       element={
-                        <ProtectedRoute>
+                        <ProtectedPageWithLayout>
                           <PrayerWall />
-                        </ProtectedRoute>
+                        </ProtectedPageWithLayout>
                       }
                     />
                     <Route
                       path="/assessment-history"
                       element={
-                        <ProtectedRoute>
+                        <ProtectedPageWithLayout>
                           <AssessmentHistory />
-                        </ProtectedRoute>
+                        </ProtectedPageWithLayout>
                       }
                     />
                     <Route
                       path="/profile"
                       element={
-                        <ProtectedRoute>
+                        <ProtectedPageWithLayout>
                           <Profile />
-                        </ProtectedRoute>
+                        </ProtectedPageWithLayout>
                       }
                     />
                     <Route
                       path="/bookmarks"
                       element={
-                        <ProtectedRoute>
+                        <ProtectedPageWithLayout>
                           <Bookmarks />
-                        </ProtectedRoute>
+                        </ProtectedPageWithLayout>
                       }
                     />
                     <Route
                       path="/bible-study"
                       element={
-                        <ProtectedRoute>
+                        <ProtectedPageWithLayout>
                           <BibleStudy />
-                        </ProtectedRoute>
+                        </ProtectedPageWithLayout>
                       }
                     />
                     <Route
                       path="/offline-settings"
                       element={
-                        <ProtectedRoute>
+                        <ProtectedPageWithLayout>
                           <OfflineSettings />
-                        </ProtectedRoute>
+                        </ProtectedPageWithLayout>
                       }
                     />
                     <Route
                       path="/service-tracker"
                       element={
-                        <ProtectedRoute>
+                        <ProtectedPageWithLayout>
                           <ServiceTracker />
-                        </ProtectedRoute>
+                        </ProtectedPageWithLayout>
                       }
                     />
                     <Route
                       path="/progress"
                       element={
-                        <ProtectedRoute>
+                        <ProtectedPageWithLayout>
                           <Progress />
-                        </ProtectedRoute>
+                        </ProtectedPageWithLayout>
                       }
                     />
                     <Route
                       path="/admin"
                       element={
-                        <ProtectedRoute>
+                        <ProtectedPageWithLayout>
                           <Admin />
-                        </ProtectedRoute>
+                        </ProtectedPageWithLayout>
                       }
                     />
                     <Route
                       path="/beta-checklist"
                       element={
-                        <ProtectedRoute>
+                        <ProtectedPageWithLayout>
                           <BetaLaunchChecklist />
-                        </ProtectedRoute>
+                        </ProtectedPageWithLayout>
                       }
                     />
                     <Route
                       path="/community"
                       element={
-                        <ProtectedRoute>
+                        <ProtectedPageWithLayout>
                           <OrgCommunity />
-                        </ProtectedRoute>
+                        </ProtectedPageWithLayout>
                       }
                     />
                     <Route
                       path="/forum"
                       element={
-                        <ProtectedRoute>
+                        <ProtectedPageWithLayout>
                           <Forum />
-                        </ProtectedRoute>
+                        </ProtectedPageWithLayout>
                       }
                     />
                     <Route path="*" element={<NotFound />} />
