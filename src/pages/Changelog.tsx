@@ -19,8 +19,23 @@ interface ChangelogEntry {
 
 const changelog: ChangelogEntry[] = [
   {
-    version: "2.0.0",
+    version: "2.1.0",
     date: "2024-11-30",
+    title: "iOS Installation Fix & SEO Improvements",
+    type: "minor",
+    changes: [
+      { category: "fix", description: "Fixed Safari 'cannot find network' error when installing on iPhone" },
+      { category: "feature", description: "Dynamic sitemap generator that auto-updates when pages are added" },
+      { category: "feature", description: "Structured data (JSON-LD) for rich search snippets" },
+      { category: "feature", description: "Comprehensive SEO meta tags for all 45+ pages" },
+      { category: "feature", description: "PWA validation tests to prevent future installation issues" },
+      { category: "improvement", description: "Service worker now handles SPA routes correctly" },
+      { category: "improvement", description: "Better offline fallback experience" },
+    ]
+  },
+  {
+    version: "2.0.0",
+    date: "2024-11-28",
     title: "Real-Time Community Features",
     type: "major",
     changes: [
