@@ -20,6 +20,7 @@ export interface DemoSettings {
   compareScenarios: boolean;
   analyticsEnabled: boolean;
   showAnalytics: boolean;
+  showSessionRecorder: boolean;
 }
 
 // Preloaded demo data cache
@@ -197,6 +198,7 @@ const DEFAULT_SETTINGS: DemoSettings = {
   compareScenarios: false,
   analyticsEnabled: true,
   showAnalytics: false,
+  showSessionRecorder: false,
 };
 
 export function DemoModeProvider({ children }: { children: ReactNode }) {
