@@ -18,8 +18,8 @@ export function GlobalDemoIndicator() {
 
   return (
     <>
-      {/* Desktop position - top right */}
-      <div className="fixed top-4 right-4 z-50 hidden sm:block">
+      {/* Desktop position - top right, below header */}
+      <div className="fixed top-20 right-4 z-[100] hidden sm:block">
         <DemoPopover 
           isDemoMode={isDemoMode}
           setDemoMode={setDemoMode}
@@ -33,7 +33,7 @@ export function GlobalDemoIndicator() {
       </div>
 
       {/* Mobile position - bottom right, above other floating elements */}
-      <div className="fixed bottom-20 right-4 z-50 sm:hidden">
+      <div className="fixed bottom-20 right-4 z-[100] sm:hidden">
         <DemoPopover 
           isDemoMode={isDemoMode}
           setDemoMode={setDemoMode}
