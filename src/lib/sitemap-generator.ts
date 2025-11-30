@@ -1,5 +1,7 @@
-// Auto-generate sitemap from routes
-// This runs at build time or can be triggered manually
+// Dynamic sitemap generator using route registry
+// Automatically generates sitemap from registered routes
+
+import { routeRegistry, getPublicRoutes, type RouteConfig } from './seo/route-registry';
 
 export interface SitemapEntry {
   loc: string;
@@ -8,90 +10,113 @@ export interface SitemapEntry {
   priority: number;
 }
 
-// Define all routes with their SEO properties
-export const siteRoutes: SitemapEntry[] = [
-  // High priority - main pages
-  { loc: '/', lastmod: new Date().toISOString().split('T')[0], changefreq: 'weekly', priority: 1.0 },
-  { loc: '/auth', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.8 },
-  { loc: '/dashboard', lastmod: new Date().toISOString().split('T')[0], changefreq: 'weekly', priority: 0.9 },
-  { loc: '/guide', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.9 },
-  { loc: '/user-guide', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.8 },
-  
-  // Daily content
-  { loc: '/devotional', lastmod: new Date().toISOString().split('T')[0], changefreq: 'daily', priority: 0.9 },
-  { loc: '/prayer-wall', lastmod: new Date().toISOString().split('T')[0], changefreq: 'daily', priority: 0.8 },
-  { loc: '/forum', lastmod: new Date().toISOString().split('T')[0], changefreq: 'daily', priority: 0.8 },
-  
-  // Weekly updated content
-  { loc: '/prayer-journal', lastmod: new Date().toISOString().split('T')[0], changefreq: 'weekly', priority: 0.8 },
-  { loc: '/prayer-guide', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.8 },
-  { loc: '/bible-study', lastmod: new Date().toISOString().split('T')[0], changefreq: 'weekly', priority: 0.8 },
-  { loc: '/study', lastmod: new Date().toISOString().split('T')[0], changefreq: 'weekly', priority: 0.8 },
-  { loc: '/resources', lastmod: new Date().toISOString().split('T')[0], changefreq: 'weekly', priority: 0.8 },
-  { loc: '/articles', lastmod: new Date().toISOString().split('T')[0], changefreq: 'weekly', priority: 0.7 },
-  { loc: '/video-library', lastmod: new Date().toISOString().split('T')[0], changefreq: 'weekly', priority: 0.7 },
-  { loc: '/achievements', lastmod: new Date().toISOString().split('T')[0], changefreq: 'weekly', priority: 0.7 },
-  { loc: '/progress', lastmod: new Date().toISOString().split('T')[0], changefreq: 'weekly', priority: 0.7 },
-  { loc: '/journey', lastmod: new Date().toISOString().split('T')[0], changefreq: 'weekly', priority: 0.8 },
-  { loc: '/service-tracker', lastmod: new Date().toISOString().split('T')[0], changefreq: 'weekly', priority: 0.7 },
-  { loc: '/changelog', lastmod: new Date().toISOString().split('T')[0], changefreq: 'weekly', priority: 0.6 },
-  { loc: '/podcast', lastmod: new Date().toISOString().split('T')[0], changefreq: 'weekly', priority: 0.7 },
-  { loc: '/did-you-know', lastmod: new Date().toISOString().split('T')[0], changefreq: 'weekly', priority: 0.6 },
-  
-  // Community
-  { loc: '/community', lastmod: new Date().toISOString().split('T')[0], changefreq: 'daily', priority: 0.7 },
-  
-  // Profile & settings
-  { loc: '/profile', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.6 },
-  { loc: '/bookmarks', lastmod: new Date().toISOString().split('T')[0], changefreq: 'weekly', priority: 0.6 },
-  
-  // Tools & guides
-  { loc: '/symbol-guide', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.7 },
-  { loc: '/myth-buster', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.7 },
-  { loc: '/ask-dr-lyman', lastmod: new Date().toISOString().split('T')[0], changefreq: 'weekly', priority: 0.8 },
-  { loc: '/content-hub', lastmod: new Date().toISOString().split('T')[0], changefreq: 'weekly', priority: 0.7 },
-  { loc: '/shattered-masks', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.7 },
-  
-  // Subscription & signup
-  { loc: '/subscription', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.7 },
-  { loc: '/beta-signup', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.7 },
-  { loc: '/install', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.7 },
-  { loc: '/analytics', lastmod: new Date().toISOString().split('T')[0], changefreq: 'daily', priority: 0.6 },
-  
-  // Static pages
-  { loc: '/about', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.7 },
-  { loc: '/faq', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.7 },
-  { loc: '/podcast-appearances', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.6 },
-  { loc: '/qr-code', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.5 },
-  
-  // Legal
-  { loc: '/privacy', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.5 },
-  { loc: '/terms', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.5 },
-  { loc: '/legal', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.4 },
-];
-
 const BASE_URL = 'https://sacredgreekslife.com';
 
+// Convert route registry to sitemap entries
+function routeToSitemapEntry(route: RouteConfig): SitemapEntry {
+  return {
+    loc: route.path,
+    lastmod: new Date().toISOString().split('T')[0],
+    changefreq: route.changefreq,
+    priority: route.priority,
+  };
+}
+
+// Get all sitemap entries (excludes noindex pages)
+export function getSitemapEntries(): SitemapEntry[] {
+  return getPublicRoutes().map(routeToSitemapEntry);
+}
+
+// Legacy export for backward compatibility
+export const siteRoutes: SitemapEntry[] = getSitemapEntries();
+
+// Generate XML sitemap
 export function generateSitemapXML(): string {
-  const urls = siteRoutes.map(route => `  <url>
-    <loc>${BASE_URL}${route.loc}</loc>
-    <lastmod>${route.lastmod}</lastmod>
-    <changefreq>${route.changefreq}</changefreq>
-    <priority>${route.priority}</priority>
+  const entries = getSitemapEntries();
+  
+  const urls = entries.map(entry => `  <url>
+    <loc>${BASE_URL}${entry.loc}</loc>
+    <lastmod>${entry.lastmod}</lastmod>
+    <changefreq>${entry.changefreq}</changefreq>
+    <priority>${entry.priority}</priority>
   </url>`).join('\n');
 
   return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 ${urls}
 </urlset>`;
 }
 
+// Generate sitemap index for large sites
+export function generateSitemapIndex(sitemapUrls: string[]): string {
+  const sitemaps = sitemapUrls.map(url => `  <sitemap>
+    <loc>${url}</loc>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+  </sitemap>`).join('\n');
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemaps}
+</sitemapindex>`;
+}
+
 // Function to get route metadata for SEO
 export function getRouteMetadata(path: string): SitemapEntry | undefined {
-  return siteRoutes.find(route => route.loc === path);
+  const entry = getSitemapEntries().find(entry => entry.loc === path);
+  return entry;
 }
 
 // Export count for tracking
 export function getTotalRoutes(): number {
-  return siteRoutes.length;
+  return routeRegistry.length;
+}
+
+// Get public route count
+export function getPublicRouteCount(): number {
+  return getPublicRoutes().length;
+}
+
+// Generate robots.txt content
+export function generateRobotsTxt(): string {
+  return `# Robots.txt for Sacred Greeks Life
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /profile
+Disallow: /assessment-history
+Disallow: /offline-settings
+Disallow: /notification-preferences
+Disallow: /analytics
+Disallow: /beta-dashboard
+Disallow: /beta-checklist
+Disallow: /reset-password
+
+# Sitemap
+Sitemap: ${BASE_URL}/sitemap.xml
+
+# Crawl-delay (optional, for politeness)
+Crawl-delay: 1
+`;
+}
+
+// Utility to check for missing routes
+export function findMissingRoutes(appRoutes: string[]): string[] {
+  const registeredPaths = new Set(routeRegistry.map(r => r.path));
+  return appRoutes.filter(route => !registeredPaths.has(route) && !route.includes(':'));
+}
+
+// Console utility to print sitemap status
+export function printSitemapStatus(): void {
+  const total = getTotalRoutes();
+  const publicCount = getPublicRouteCount();
+  const noindexCount = total - publicCount;
+  
+  console.log(`📍 Sitemap Status:
+  Total routes: ${total}
+  Public (indexed): ${publicCount}
+  Private (noindex): ${noindexCount}
+  `);
 }

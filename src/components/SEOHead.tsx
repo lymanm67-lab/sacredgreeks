@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { getRouteConfig } from '@/lib/seo/route-registry';
+import { generateStructuredData, generateOrganizationSchema, generateBreadcrumbSchema } from '@/lib/seo/structured-data';
 
 interface SEOHeadProps {
   title?: string;
@@ -8,12 +10,18 @@ interface SEOHeadProps {
   image?: string;
   type?: 'website' | 'article' | 'profile';
   noindex?: boolean;
+  structuredDataType?: 'WebPage' | 'Article' | 'FAQPage' | 'AboutPage' | 'Organization' | 'WebApplication';
+  faqItems?: Array<{ question: string; answer: string }>;
+  breadcrumbs?: Array<{ name: string; url: string }>;
+  datePublished?: string;
+  dateModified?: string;
+  author?: string;
 }
 
 const defaultMeta = {
   title: 'Sacred Greeks Life App - Daily Devotionals & Faith Guidance',
   description: 'Your daily companion for navigating faith and Greek life. Get devotionals, biblical guidance, prayer tools, and progress tracking grounded in the P.R.O.O.F. framework.',
-  keywords: 'Sacred Greeks, Greek life, Christian fraternity, Christian sorority, BGLO, Divine Nine, faith and Greek life',
+  keywords: 'Sacred Greeks, Greek life, Christian fraternity, Christian sorority, BGLO, Divine Nine, faith and Greek life, daily devotional',
   image: 'https://sacredgreekslife.com/icon-512.png',
   baseUrl: 'https://sacredgreekslife.com'
 };
@@ -24,15 +32,30 @@ export function SEOHead({
   keywords,
   image,
   type = 'website',
-  noindex = false
+  noindex = false,
+  structuredDataType,
+  faqItems,
+  breadcrumbs,
+  datePublished,
+  dateModified,
+  author,
 }: SEOHeadProps) {
   const location = useLocation();
   
-  const fullTitle = title 
-    ? `${title} | Sacred Greeks Life` 
+  // Get route config for automatic SEO
+  const routeConfig = getRouteConfig(location.pathname);
+  
+  // Use props > route config > defaults
+  const pageTitle = title || routeConfig?.title;
+  const pageDescription = description || routeConfig?.description || defaultMeta.description;
+  const pageKeywords = keywords || routeConfig?.keywords;
+  const pageNoindex = noindex || routeConfig?.noindex || false;
+  const dataType = structuredDataType || routeConfig?.structuredDataType;
+  
+  const fullTitle = pageTitle 
+    ? pageTitle.includes('Sacred Greeks') ? pageTitle : `${pageTitle} | Sacred Greeks Life`
     : defaultMeta.title;
   
-  const fullDescription = description || defaultMeta.description;
   const fullImage = image || defaultMeta.image;
   const canonicalUrl = `${defaultMeta.baseUrl}${location.pathname}`;
 
@@ -53,24 +76,45 @@ export function SEOHead({
       element.setAttribute('content', content);
     };
 
+    // Helper to add/update JSON-LD structured data
+    const updateStructuredData = (id: string, data: object) => {
+      let script = document.querySelector(`script[data-schema="${id}"]`) as HTMLScriptElement;
+      
+      if (!script) {
+        script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.setAttribute('data-schema', id);
+        document.head.appendChild(script);
+      }
+      script.textContent = JSON.stringify(data);
+    };
+
     // Update standard meta tags
-    updateMeta('description', fullDescription);
-    if (keywords) {
-      updateMeta('keywords', `${keywords}, ${defaultMeta.keywords}`);
+    updateMeta('description', pageDescription);
+    if (pageKeywords) {
+      updateMeta('keywords', `${pageKeywords}, ${defaultMeta.keywords}`);
+    } else {
+      updateMeta('keywords', defaultMeta.keywords);
     }
-    updateMeta('robots', noindex ? 'noindex, nofollow' : 'index, follow');
+    updateMeta('robots', pageNoindex ? 'noindex, nofollow' : 'index, follow');
+    updateMeta('author', 'Sacred Greeks Life');
+    updateMeta('viewport', 'width=device-width, initial-scale=1, maximum-scale=5');
 
     // Update Open Graph tags
     updateMeta('og:title', fullTitle, true);
-    updateMeta('og:description', fullDescription, true);
+    updateMeta('og:description', pageDescription, true);
     updateMeta('og:image', fullImage, true);
     updateMeta('og:url', canonicalUrl, true);
     updateMeta('og:type', type, true);
+    updateMeta('og:site_name', 'Sacred Greeks Life', true);
+    updateMeta('og:locale', 'en_US', true);
 
     // Update Twitter tags
+    updateMeta('twitter:card', 'summary_large_image');
     updateMeta('twitter:title', fullTitle);
-    updateMeta('twitter:description', fullDescription);
+    updateMeta('twitter:description', pageDescription);
     updateMeta('twitter:image', fullImage);
+    updateMeta('twitter:site', '@sacredgreeks');
 
     // Update canonical link
     let canonical = document.querySelector('link[rel="canonical"]');
@@ -81,16 +125,46 @@ export function SEOHead({
     }
     canonical.setAttribute('href', canonicalUrl);
 
-    // Cleanup function to reset to defaults when component unmounts
+    // Add Organization structured data (global)
+    updateStructuredData('organization', generateOrganizationSchema());
+
+    // Add page-specific structured data
+    if (dataType) {
+      const structuredData = generateStructuredData({
+        type: dataType,
+        name: pageTitle,
+        description: pageDescription,
+        url: canonicalUrl,
+        faqItems,
+        datePublished,
+        dateModified,
+        author,
+      });
+      updateStructuredData('page', structuredData);
+    }
+
+    // Add breadcrumb structured data
+    if (breadcrumbs && breadcrumbs.length > 0) {
+      updateStructuredData('breadcrumbs', generateBreadcrumbSchema(breadcrumbs));
+    } else if (location.pathname !== '/') {
+      // Auto-generate breadcrumbs
+      const autoBreadcrumbs = [
+        { name: 'Home', url: '/' },
+        { name: pageTitle || 'Page', url: location.pathname }
+      ];
+      updateStructuredData('breadcrumbs', generateBreadcrumbSchema(autoBreadcrumbs));
+    }
+
+    // Cleanup function
     return () => {
       document.title = defaultMeta.title;
     };
-  }, [fullTitle, fullDescription, fullImage, canonicalUrl, keywords, type, noindex]);
+  }, [fullTitle, pageDescription, fullImage, canonicalUrl, pageKeywords, type, pageNoindex, dataType, faqItems, breadcrumbs, datePublished, dateModified, author, location.pathname, pageTitle]);
 
   return null;
 }
 
-// Page-specific SEO configurations
+// Export page SEO configs for backward compatibility
 export const pageSEO = {
   dashboard: {
     title: 'Dashboard',
