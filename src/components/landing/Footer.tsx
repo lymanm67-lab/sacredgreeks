@@ -113,6 +113,8 @@ export function Footer() {
             <span>•</span>
             <Link to="/ip-documentation" className="hover:text-sacred transition-colors">IP Documentation</Link>
             <span>•</span>
+            <Link to="/changelog" className="hover:text-sacred transition-colors">Changelog</Link>
+            <span>•</span>
             <span>Patent Pending</span>
           </div>
         </div>

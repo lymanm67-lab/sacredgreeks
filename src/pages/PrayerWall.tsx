@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Home, Heart, Plus, Filter, Users, FlaskConical } from 'lucide-react';
+import { Home, Heart, Plus, Filter, Users, FlaskConical, Bell } from 'lucide-react';
 import { toast } from 'sonner';
 import { PrayerRequestCard } from '@/components/prayer-wall/PrayerRequestCard';
 import { CreatePrayerRequestDialog } from '@/components/prayer-wall/CreatePrayerRequestDialog';
@@ -16,6 +16,7 @@ import { BreadcrumbNav } from '@/components/ui/breadcrumb-nav';
 import { OrgPrayerFilter } from '@/components/prayer-wall/OrgPrayerFilter';
 import { GREEK_COUNCILS } from '@/data/greekOrganizations';
 import { useDemoMode } from '@/contexts/DemoModeContext';
+import { usePrayerWallRealtime } from '@/hooks/use-realtime-notifications';
 
 interface PrayerRequest {
   id: string;
@@ -154,33 +155,23 @@ const PrayerWall = () => {
     onRefresh: handleRefresh
   });
 
+  // Real-time updates callback
+  const handleRealtimeUpdate = useCallback(() => {
+    loadPrayerRequests();
+    toast.info('Prayer wall updated', {
+      description: 'New activity on the prayer wall',
+      icon: <Bell className="h-4 w-4" />,
+    });
+  }, []);
+
+  // Use the real-time hook (only when not in demo mode and user is logged in)
+  usePrayerWallRealtime(isDemoMode ? () => {} : handleRealtimeUpdate);
+
   useEffect(() => {
     if (user) {
       loadUserOrg();
     }
     loadPrayerRequests();
-
-    // Set up realtime subscription (only if not in demo mode)
-    if (!isDemoMode) {
-      const channel = supabase
-        .channel('prayer-requests-changes')
-        .on(
-          'postgres_changes',
-          {
-            event: '*',
-            schema: 'public',
-            table: 'prayer_requests'
-          },
-          () => {
-            loadPrayerRequests();
-          }
-        )
-        .subscribe();
-
-      return () => {
-        supabase.removeChannel(channel);
-      };
-    }
   }, [user, isDemoMode]);
 
   const loadUserOrg = async () => {
