@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Share2, Plus, Smartphone, MoreVertical, Download, ArrowLeft } from 'lucide-react';
+import { Share2, Plus, Smartphone, MoreVertical, Download, ArrowLeft, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ListenButton } from '@/components/ListenButton';
+import { InstallDemo } from '@/components/InstallDemo';
 import { useNavigate } from 'react-router-dom';
 
 const iphoneInstructions = `Here's how to install Sacred Greeks Life on your iPhone. 
@@ -61,12 +62,19 @@ export default function InstallGuide() {
           <p className="text-gray-500 text-sm mb-4">Step-by-step instructions</p>
           
           {/* Listen Button */}
-          <ListenButton 
-            text={platform === 'iphone' ? iphoneInstructions : androidInstructions}
-            itemId={`install-guide-${platform}`}
-            title={`${platform === 'iphone' ? 'iPhone' : 'Android'} Installation Guide`}
-            showLabel={true}
-          />
+          <div className="flex justify-center gap-2">
+            <ListenButton 
+              text={platform === 'iphone' ? iphoneInstructions : androidInstructions}
+              itemId={`install-guide-${platform}`}
+              title={`${platform === 'iphone' ? 'iPhone' : 'Android'} Installation Guide`}
+              showLabel={true}
+            />
+          </div>
+        </div>
+
+        {/* Visual Demo */}
+        <div className="mb-6">
+          <InstallDemo platform={platform} />
         </div>
 
         {/* Platform Tabs */}
