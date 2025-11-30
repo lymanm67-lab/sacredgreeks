@@ -17,6 +17,7 @@ import { CelebrationProvider } from "@/contexts/CelebrationContext";
 import { DemoModeProvider } from "@/contexts/DemoModeContext";
 import { BetaFeedbackWidget } from "@/components/BetaFeedbackWidget";
 import { GlobalDemoIndicator } from "@/components/GlobalDemoIndicator";
+import { DemoModeTour } from "@/components/DemoModeTour";
 import { Loader2 } from "lucide-react";
 
 // Eager load critical pages
@@ -108,6 +109,7 @@ const App = () => (
             <BrowserRouter>
               <BetaFeedbackWidget />
               <GlobalDemoIndicator />
+              <DemoModeTour />
               <CookieConsent />
               <AnalyticsProvider>
                 <Suspense fallback={<PageLoader />}>

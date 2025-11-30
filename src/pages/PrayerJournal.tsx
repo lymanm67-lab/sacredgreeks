@@ -19,7 +19,8 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Home, Plus, Check, Trash2, Search, Download, Volume2, Loader2, History, Filter } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Home, Plus, Check, Trash2, Search, Download, Volume2, Loader2, History, Filter, FlaskConical } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { prayerJournalSchema } from '@/lib/validation';
 import { useGamification } from '@/hooks/use-gamification';
@@ -31,6 +32,8 @@ import { usePrayerAudio } from '@/hooks/use-prayer-audio';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { VoiceInputButton } from '@/components/VoiceInputButton';
 import { ListenButton } from '@/components/ListenButton';
+import { useDemoMode } from '@/contexts/DemoModeContext';
+import { DEMO_PRAYERS } from '@/data/demoPrayerJournalData';
 
 interface Prayer {
   id: string;
@@ -46,6 +49,7 @@ const PrayerJournal = () => {
   const { user } = useAuth();
   const { awardPoints } = useGamification();
   const { completeChallenge } = useAutoCompleteChallenge();
+  const { isDemoMode, demoFeatures } = useDemoMode();
   const [prayers, setPrayers] = useState<Prayer[]>([]);
   const [filteredPrayers, setFilteredPrayers] = useState<Prayer[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -57,6 +61,11 @@ const PrayerJournal = () => {
   const [prayerContent, setPrayerContent] = useState('');
   const { toast } = useToast();
   const { playPrayer, isPlaying, isLoading: audioLoading, currentPrayerId } = usePrayerAudio();
+
+  // Determine if showing demo data
+  const showDemoData = isDemoMode && demoFeatures.prayerJournal;
+  const displayPrayers = showDemoData ? DEMO_PRAYERS : prayers;
+  const isShowingDemo = showDemoData || (!loading && prayers.length === 0 && DEMO_PRAYERS.length > 0);
 
   // Pull to refresh
   const handleRefresh = async () => {
@@ -77,7 +86,8 @@ const PrayerJournal = () => {
 
   useEffect(() => {
     // Filter prayers based on search query, tab, and type
-    let filtered = prayers;
+    const prayersToFilter = showDemoData ? DEMO_PRAYERS : prayers;
+    let filtered = prayersToFilter;
 
     // Filter by tab (all, answered, unanswered)
     if (activeTab === 'answered') {
@@ -103,7 +113,7 @@ const PrayerJournal = () => {
     }
 
     setFilteredPrayers(filtered);
-  }, [searchQuery, prayers, activeTab, filterType]);
+  }, [searchQuery, prayers, activeTab, filterType, showDemoData]);
 
   const loadPrayers = async () => {
     if (!user) return;
@@ -317,9 +327,17 @@ const PrayerJournal = () => {
         <div className="max-w-4xl mx-auto space-y-6">
           {/* Header */}
           <div className="flex items-center justify-between flex-wrap gap-4">
-            <div>
-              <h1 className="text-4xl font-bold">Prayer Journal</h1>
-              <p className="text-muted-foreground mt-2">Record your prayers and see God's faithfulness</p>
+            <div className="flex items-center gap-3">
+              <div>
+                <h1 className="text-4xl font-bold">Prayer Journal</h1>
+                <p className="text-muted-foreground mt-2">Record your prayers and see God's faithfulness</p>
+              </div>
+              {isShowingDemo && (
+                <Badge variant="outline" className="bg-amber-500/10 text-amber-600 border-amber-500/30">
+                  <FlaskConical className="w-3 h-3 mr-1" />
+                  Demo
+                </Badge>
+              )}
             </div>
             <div className="flex gap-2">
               <Button variant="outline" onClick={handleExport} disabled={prayers.length === 0}>
@@ -425,20 +443,20 @@ const PrayerJournal = () => {
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="all">
-                All ({prayers.length})
+                All ({displayPrayers.length})
               </TabsTrigger>
               <TabsTrigger value="unanswered">
-                Active ({prayers.filter(p => !p.answered).length})
+                Active ({displayPrayers.filter(p => !p.answered).length})
               </TabsTrigger>
               <TabsTrigger value="answered">
                 <History className="w-4 h-4 mr-2" />
-                Answered ({prayers.filter(p => p.answered).length})
+                Answered ({displayPrayers.filter(p => p.answered).length})
               </TabsTrigger>
             </TabsList>
 
             <TabsContent value={activeTab} className="mt-6">
               {/* Prayers List */}
-              {filteredPrayers.length === 0 && prayers.length === 0 ? (
+              {filteredPrayers.length === 0 && displayPrayers.length === 0 ? (
                 <Card>
                   <CardContent className="text-center py-12">
                     <p className="text-muted-foreground mb-4">No prayers yet. Start your prayer journal today!</p>
@@ -483,7 +501,7 @@ const PrayerJournal = () => {
                               size="sm"
                               variant="outline"
                             />
-                            {!prayer.answered && (
+                            {!prayer.answered && !showDemoData && (
                               <Button
                                 size="sm"
                                 variant="outline"
@@ -492,13 +510,15 @@ const PrayerJournal = () => {
                                 <Check className="w-4 h-4" />
                               </Button>
                             )}
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => setDeleteId(prayer.id)}
-                            >
-                              <Trash2 className="w-4 h-4 text-destructive" />
-                            </Button>
+                            {!showDemoData && (
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => setDeleteId(prayer.id)}
+                              >
+                                <Trash2 className="w-4 h-4 text-destructive" />
+                              </Button>
+                            )}
                           </div>
                         </div>
                       </CardHeader>

@@ -63,7 +63,10 @@ interface UserAchievement {
 export const useGamification = () => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
-  const { isDemoMode } = useDemoMode();
+  const { isDemoMode, demoFeatures } = useDemoMode();
+
+  // Determine if showing demo data for achievements
+  const showDemoData = isDemoMode && demoFeatures.achievements;
 
   const { data: stats, isLoading: statsLoading } = useQuery({
     queryKey: ["gamification-stats", user?.id],
@@ -174,10 +177,10 @@ export const useGamification = () => {
   });
 
   // Use demo data when demo mode is enabled or no real data
-  const displayStats = isDemoMode ? DEMO_STATS : (stats || DEMO_STATS);
-  const displayAchievements = isDemoMode ? DEMO_USER_ACHIEVEMENTS : (achievements.length > 0 ? achievements : DEMO_USER_ACHIEVEMENTS);
+  const displayStats = showDemoData ? DEMO_STATS : (stats || DEMO_STATS);
+  const displayAchievements = showDemoData ? DEMO_USER_ACHIEVEMENTS : (achievements.length > 0 ? achievements : DEMO_USER_ACHIEVEMENTS);
   const displayAllAchievements = allAchievements.length > 0 ? allAchievements : DEMO_ALL_ACHIEVEMENTS;
-  const isShowingDemo = isDemoMode || !stats || achievements.length === 0;
+  const isShowingDemo = showDemoData || !stats || achievements.length === 0;
 
   const pointsToNextLevel = displayStats
     ? Math.max(0, (displayStats.current_level * 100) - displayStats.total_points)
@@ -191,8 +194,8 @@ export const useGamification = () => {
     stats: displayStats,
     achievements: displayAchievements,
     allAchievements: displayAllAchievements,
-    statsLoading: statsLoading && !isDemoMode,
-    achievementsLoading: achievementsLoading && !isDemoMode,
+    statsLoading: statsLoading && !showDemoData,
+    achievementsLoading: achievementsLoading && !showDemoData,
     awardPoints: awardPointsMutation.mutate,
     pointsToNextLevel,
     levelProgress,
