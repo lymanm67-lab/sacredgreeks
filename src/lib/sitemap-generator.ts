@@ -56,6 +56,7 @@ export const siteRoutes: SitemapEntry[] = [
   { loc: '/subscription', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.7 },
   { loc: '/beta-signup', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.7 },
   { loc: '/install', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.7 },
+  { loc: '/analytics', lastmod: new Date().toISOString().split('T')[0], changefreq: 'daily', priority: 0.6 },
   
   // Static pages
   { loc: '/about', lastmod: new Date().toISOString().split('T')[0], changefreq: 'monthly', priority: 0.7 },

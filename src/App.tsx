@@ -25,6 +25,7 @@ import { DemoTemplateSelectorProvider } from "@/components/demo/DemoTemplateSele
 import { DemoOverlayWithTemplate } from "@/components/demo/DemoOverlayWithTemplate";
 import { DemoFeaturesProvider } from "@/components/demo/DemoFeaturesProvider";
 import { AppLayout } from "@/components/layout/AppLayout";
+import { WhatsNewModal } from "@/components/WhatsNewModal";
 import { Loader2 } from "lucide-react";
 
 // Eager load critical pages
@@ -83,6 +84,7 @@ const IPDocumentation = lazy(() => import("./pages/IPDocumentation"));
 const TrademarkTracking = lazy(() => import("./pages/TrademarkTracking"));
 const TrademarkUsageGuide = lazy(() => import("./pages/TrademarkUsageGuide"));
 const Changelog = lazy(() => import("./pages/Changelog"));
+const AnalyticsDashboard = lazy(() => import("./pages/AnalyticsDashboard"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -151,6 +153,7 @@ const App = () => (
                       <GlobalDemoIndicator />
                       <DemoModeTour />
                       <CookieConsent />
+                      <WhatsNewModal />
                       <AnalyticsProvider>
                   <Suspense fallback={<PageLoader />}>
                     <Routes>
@@ -334,6 +337,14 @@ const App = () => (
                       element={
                         <ProtectedPageWithLayout>
                           <Forum />
+                        </ProtectedPageWithLayout>
+                      }
+                    />
+                    <Route
+                      path="/analytics"
+                      element={
+                        <ProtectedPageWithLayout>
+                          <AnalyticsDashboard />
                         </ProtectedPageWithLayout>
                       }
                     />
