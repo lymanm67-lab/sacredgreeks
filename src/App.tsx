@@ -19,6 +19,7 @@ import { BetaFeedbackWidget } from "@/components/BetaFeedbackWidget";
 import { GlobalDemoIndicator } from "@/components/GlobalDemoIndicator";
 import { DemoModeTour } from "@/components/DemoModeTour";
 import { DemoBanner } from "@/components/DemoBanner";
+import { DemoWalkthroughOverlay } from "@/components/DemoWalkthroughOverlay";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Loader2 } from "lucide-react";
 
@@ -117,6 +118,7 @@ const App = () => (
             <AIAssistantWidget />
             <BrowserRouter>
               <DemoBanner />
+              <DemoWalkthroughOverlay />
               <BetaFeedbackWidget />
               <GlobalDemoIndicator />
               <DemoModeTour />

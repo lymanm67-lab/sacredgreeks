@@ -41,14 +41,14 @@ export function DemoBanner() {
   };
 
   return (
-    <div className="bg-gradient-to-r from-amber-500 to-amber-600 text-amber-950 px-4 py-2 sticky top-0 z-[60] animate-pulse-subtle">
+    <div className="bg-gradient-to-r from-emerald-500/90 to-teal-500/90 text-white px-4 py-2 sticky top-0 z-[60] animate-pulse-subtle">
       <div className="container mx-auto flex items-center justify-between gap-4">
         <div className="flex items-center gap-2 min-w-0">
           <FlaskConical className="h-4 w-4 shrink-0 animate-bounce" />
           <span className="font-medium text-sm truncate">
             Demo Mode Active
           </span>
-          <span className="text-amber-900/80 text-sm hidden sm:inline">
+          <span className="text-white/80 text-sm hidden sm:inline">
             — viewing sample data
           </span>
         </div>
@@ -59,7 +59,7 @@ export function DemoBanner() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-7 px-2 sm:px-3 text-amber-950 hover:bg-amber-400/50 hover:text-amber-950"
+                className="h-7 px-2 sm:px-3 text-white hover:bg-white/20 hover:text-white"
               >
                 <Settings className="h-4 w-4 sm:mr-1.5" />
                 <span className="hidden sm:inline text-xs">Settings</span>
@@ -70,7 +70,7 @@ export function DemoBanner() {
           <Button
             variant="ghost"
             size="sm"
-            className="h-7 px-2 sm:px-3 text-amber-950 hover:bg-amber-400/50 hover:text-amber-950"
+            className="h-7 px-2 sm:px-3 text-white hover:bg-white/20 hover:text-white"
             onClick={handleShare}
           >
             <Share2 className="h-4 w-4 sm:mr-1.5" />
@@ -80,7 +80,7 @@ export function DemoBanner() {
           <Button
             variant="ghost"
             size="sm"
-            className="h-7 px-2 sm:px-3 text-amber-950 hover:bg-amber-400/50 hover:text-amber-950"
+            className="h-7 px-2 sm:px-3 text-white hover:bg-white/20 hover:text-white"
             onClick={handleExit}
           >
             <X className="h-4 w-4 sm:mr-1.5" />
