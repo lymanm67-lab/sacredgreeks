@@ -631,6 +631,57 @@ export type Database = {
         }
         Relationships: []
       }
+      notification_campaigns: {
+        Row: {
+          created_at: string
+          created_by: string
+          description: string | null
+          id: string
+          message_body: string
+          message_title: string
+          name: string
+          recipients_count: number | null
+          scheduled_at: string | null
+          sent_at: string | null
+          sent_count: number | null
+          status: string
+          target_segments: string[]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          description?: string | null
+          id?: string
+          message_body: string
+          message_title: string
+          name: string
+          recipients_count?: number | null
+          scheduled_at?: string | null
+          sent_at?: string | null
+          sent_count?: number | null
+          status?: string
+          target_segments?: string[]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          id?: string
+          message_body?: string
+          message_title?: string
+          name?: string
+          recipients_count?: number | null
+          scheduled_at?: string | null
+          sent_at?: string | null
+          sent_count?: number | null
+          status?: string
+          target_segments?: string[]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       prayer_journal: {
         Row: {
           answered: boolean | null
@@ -923,6 +974,48 @@ export type Database = {
           endpoint?: string
           id?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      reengagement_templates: {
+        Row: {
+          created_at: string
+          days_inactive: number
+          id: string
+          is_active: boolean
+          last_run_at: string | null
+          message_body: string
+          message_title: string
+          name: string
+          target_segment: string
+          trigger_type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          days_inactive?: number
+          id?: string
+          is_active?: boolean
+          last_run_at?: string | null
+          message_body: string
+          message_title: string
+          name: string
+          target_segment: string
+          trigger_type: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          days_inactive?: number
+          id?: string
+          is_active?: boolean
+          last_run_at?: string | null
+          message_body?: string
+          message_title?: string
+          name?: string
+          target_segment?: string
+          trigger_type?: string
+          updated_at?: string
         }
         Relationships: []
       }

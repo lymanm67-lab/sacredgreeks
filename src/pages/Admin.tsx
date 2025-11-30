@@ -13,7 +13,9 @@ import { HealingStoriesManager } from "@/components/admin/HealingStoriesManager"
 import VideoSuggestionsManager from "@/components/admin/VideoSuggestionsManager";
 import { BetaTestersManager } from "@/components/admin/BetaTestersManager";
 import { EngagementScoresDashboard } from "@/components/admin/EngagementScoresDashboard";
-import { Home, Users, FileText, Lightbulb, MessageSquare, Heart, Video, Rocket, FlaskConical, BarChart3, Activity } from "lucide-react";
+import { NotificationCampaigns } from "@/components/admin/NotificationCampaigns";
+import { ReengagementCampaigns } from "@/components/admin/ReengagementCampaigns";
+import { Home, Users, FileText, Lightbulb, MessageSquare, Heart, Video, Rocket, FlaskConical, BarChart3, Activity, Bell, RefreshCw } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -155,7 +157,7 @@ const Admin = () => {
 
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="users" className="space-y-6">
-          <TabsList className="grid w-full max-w-6xl grid-cols-9">
+          <TabsList className="flex flex-wrap gap-1 h-auto p-1">
             <TabsTrigger value="users" className="flex items-center gap-2">
               <Users className="h-4 w-4" />
               <span className="hidden sm:inline">Users</span>
@@ -163,6 +165,14 @@ const Admin = () => {
             <TabsTrigger value="engagement" className="flex items-center gap-2">
               <Activity className="h-4 w-4" />
               <span className="hidden sm:inline">Engagement</span>
+            </TabsTrigger>
+            <TabsTrigger value="campaigns" className="flex items-center gap-2">
+              <Bell className="h-4 w-4" />
+              <span className="hidden sm:inline">Campaigns</span>
+            </TabsTrigger>
+            <TabsTrigger value="reengagement" className="flex items-center gap-2">
+              <RefreshCw className="h-4 w-4" />
+              <span className="hidden sm:inline">Re-engage</span>
             </TabsTrigger>
             <TabsTrigger value="beta" className="flex items-center gap-2">
               <FlaskConical className="h-4 w-4" />
@@ -200,6 +210,14 @@ const Admin = () => {
 
           <TabsContent value="engagement">
             <EngagementScoresDashboard />
+          </TabsContent>
+
+          <TabsContent value="campaigns">
+            <NotificationCampaigns />
+          </TabsContent>
+
+          <TabsContent value="reengagement">
+            <ReengagementCampaigns />
           </TabsContent>
 
           <TabsContent value="beta">
