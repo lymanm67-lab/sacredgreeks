@@ -36,6 +36,43 @@ interface CheckIn {
   updated_at: string;
 }
 
+// Fallback challenges for demo/empty state
+const FALLBACK_CHALLENGES: Challenge[] = [
+  {
+    id: 'fallback-prayer',
+    title: 'Morning Prayer',
+    description: 'Start your day with prayer for your brothers/sisters and your chapter',
+    challenge_type: 'prayer',
+    points_reward: 10,
+    icon: 'flame',
+    requirements_json: { type: 'prayer' },
+    date: new Date().toISOString().split('T')[0],
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: 'fallback-devotional',
+    title: 'Daily Devotional',
+    description: 'Read today\'s devotional and reflect on the P.R.O.O.F. framework',
+    challenge_type: 'devotional',
+    points_reward: 15,
+    icon: 'target',
+    requirements_json: { type: 'devotional' },
+    date: new Date().toISOString().split('T')[0],
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: 'fallback-checkin',
+    title: 'Complete Check-In',
+    description: 'Track your daily spiritual activities in the Quick Check-In',
+    challenge_type: 'check_in',
+    points_reward: 10,
+    icon: 'star',
+    requirements_json: { type: 'check_in' },
+    date: new Date().toISOString().split('T')[0],
+    created_at: new Date().toISOString(),
+  },
+];
+
 export function DailyChallengesWidget() {
   const { user } = useAuth();
   const { awardPoints } = useGamification();
@@ -72,10 +109,17 @@ export function DailyChallengesWidget() {
 
       if (checkInError && checkInError.code !== 'PGRST116') throw checkInError;
 
-      setChallenges((challengesData || []) as Challenge[]);
+      // Use fallback challenges if none exist for today
+      const finalChallenges = (challengesData && challengesData.length > 0) 
+        ? challengesData as Challenge[]
+        : FALLBACK_CHALLENGES;
+      
+      setChallenges(finalChallenges);
       setCheckIn(checkInData as CheckIn | null);
     } catch (error) {
       console.error('Error loading challenges:', error);
+      // Use fallback challenges on error
+      setChallenges(FALLBACK_CHALLENGES);
     } finally {
       setLoading(false);
     }
