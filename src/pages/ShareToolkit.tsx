@@ -8,6 +8,19 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { SEOHead } from '@/components/SEOHead';
 import QRCode from 'react-qr-code';
+import { ListenButton } from '@/components/ListenButton';
+
+const toolkitInstructions = `Welcome to the Share Toolkit! Here's how to use it to spread the word about Sacred Greeks Life.
+
+At the top, you'll find Quick Actions. Tap Copy Link to copy the app URL to your clipboard. Tap Install Guide to view step-by-step installation instructions you can share. Tap QR Code for a scannable code perfect for in-person sharing.
+
+Below that is a QR Code you can screenshot and send via text. People can scan it with their phone camera to open the app instantly.
+
+The main section has three tabs: Text Messages, Emails, and Social Media. Each tab contains ready-to-use templates for different audiences like Greek members, church leaders, parents, and more.
+
+To use a template, find the one that fits your audience, tap Copy Message, and paste it into your text, email, or social media post. Feel free to personalize it with your own experience.
+
+Pro tip: For older recipients who may struggle with technology, use the Installation Help template which provides clear step-by-step instructions. You can also send them the Install Guide link directly.`;
 
 interface Template {
   id: string;
@@ -230,10 +243,20 @@ export default function ShareToolkit() {
         </Button>
 
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Share Toolkit</h1>
-          <p className="text-muted-foreground">
-            Ready-to-use templates to share Sacred Greeks Life with others
-          </p>
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <h1 className="text-3xl font-bold mb-2">Share Toolkit</h1>
+              <p className="text-muted-foreground">
+                Ready-to-use templates to share Sacred Greeks Life with others
+              </p>
+            </div>
+            <ListenButton 
+              text={toolkitInstructions}
+              itemId="share-toolkit-instructions"
+              title="How to Use This Toolkit"
+              showLabel={true}
+            />
+          </div>
         </div>
 
         {/* Quick Actions */}
