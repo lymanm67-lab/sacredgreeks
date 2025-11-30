@@ -48,6 +48,7 @@ import { useDemoMode } from '@/contexts/DemoModeContext';
 import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
 import { prefetchCommonRoutes } from '@/hooks/use-prefetch';
 import { NetworkErrorHandler } from '@/components/ui/NetworkErrorHandler';
+import { useRealtimeNotifications } from '@/hooks/use-realtime-notifications';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -83,6 +84,9 @@ const Dashboard = () => {
 
   // Keyboard shortcuts for power users
   useKeyboardShortcuts();
+
+  // Real-time notifications for community updates (only when not in demo mode)
+  useRealtimeNotifications({ showToasts: !isDemoMode });
 
   // Prefetch common routes when dashboard loads
   useEffect(() => {
