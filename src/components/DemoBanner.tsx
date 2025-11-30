@@ -41,7 +41,7 @@ export function DemoBanner() {
   };
 
   return (
-    <div className="bg-gradient-to-r from-emerald-500/90 to-teal-500/90 text-white px-4 py-2 sticky top-0 z-[60] animate-pulse-subtle">
+    <div className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-2.5 fixed top-0 left-0 right-0 z-[9999] animate-pulse-subtle shadow-lg">
       <div className="container mx-auto flex items-center justify-between gap-4">
         <div className="flex items-center gap-2 min-w-0">
           <FlaskConical className="h-4 w-4 shrink-0 animate-bounce" />
