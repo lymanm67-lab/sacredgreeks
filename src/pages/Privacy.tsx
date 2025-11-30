@@ -9,7 +9,7 @@ const Privacy = () => {
         <div className="container mx-auto px-4 py-4">
           <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
             <Home className="w-4 h-4" />
-            <span className="text-sm font-medium">Home</span>
+            <span className="text-sm font-medium">Sacred Greeks Life™ - Home</span>
           </Link>
         </div>
       </header>
@@ -172,6 +172,27 @@ const Privacy = () => {
 
           <Card>
             <CardHeader>
+              <CardTitle>Proprietary Technology</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-muted-foreground">
+                Sacred Greeks Life™ contains proprietary technology and intellectual property:
+              </p>
+              <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                <li><strong>P.R.O.O.F. Framework™</strong> - Our proprietary assessment methodology and guidance system</li>
+                <li><strong>5 Persona Types Architecture™</strong> - Personality assessment framework</li>
+                <li><strong>Shattered Masks™</strong> - Archetype assessment system</li>
+                <li>Proprietary algorithms for personalized spiritual guidance</li>
+                <li>Custom AI training data and response frameworks</li>
+              </ul>
+              <p className="text-muted-foreground text-sm">
+                This technology is protected under U.S. and international intellectual property laws. Patent pending.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
               <CardTitle>Contact Us</CardTitle>
             </CardHeader>
             <CardContent>
@@ -180,6 +201,16 @@ const Privacy = () => {
               </p>
             </CardContent>
           </Card>
+
+          {/* Footer Notice */}
+          <div className="text-center pt-6 border-t border-border mt-8">
+            <p className="text-xs text-muted-foreground">
+              © {new Date().getFullYear()} Sacred Greeks™. All Rights Reserved.
+            </p>
+            <p className="text-xs text-muted-foreground/70 mt-2">
+              Sacred Greeks™, Sacred Greeks Life™, P.R.O.O.F. Framework™, and related marks are trademarks of Dr. Lyman Montgomery.
+            </p>
+          </div>
         </div>
       </main>
     </div>
