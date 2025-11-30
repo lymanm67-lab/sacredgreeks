@@ -4,7 +4,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark, Book, Clock, Lightbulb, Library, MessageCircle, Users, Play, Drama } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark, Book, Clock, Lightbulb, Library, MessageCircle, Users, Play, Drama, FlaskConical } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { HeroSection } from '@/components/dashboard/HeroSection';
 import { StatsCard } from '@/components/dashboard/StatsCard';
@@ -449,12 +450,22 @@ const Dashboard = () => {
       <header className="border-b border-border/50 bg-card/50 backdrop-blur-lg sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group">
-              <Heart className="w-5 h-5 text-sacred group-hover:scale-110 transition-transform" />
-              <span className="font-semibold bg-gradient-to-r from-sacred to-warm-blue bg-clip-text text-transparent">
-                Sacred Greeks
-              </span>
-            </Link>
+            <div className="flex items-center gap-3">
+              <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group">
+                <Heart className="w-5 h-5 text-sacred group-hover:scale-110 transition-transform" />
+                <span className="font-semibold bg-gradient-to-r from-sacred to-warm-blue bg-clip-text text-transparent">
+                  Sacred Greeks
+                </span>
+              </Link>
+              {isDemoMode && (
+                <Link to="/profile">
+                  <Badge variant="secondary" className="text-xs bg-amber-500/10 text-amber-600 border-amber-500/20 hover:bg-amber-500/20 cursor-pointer transition-colors">
+                    <FlaskConical className="w-3 h-3 mr-1" />
+                    Demo Mode
+                  </Badge>
+                </Link>
+              )}
+            </div>
             <div className="flex items-center gap-2">
               <SubscriptionBadge />
               <MobileQRCode />
