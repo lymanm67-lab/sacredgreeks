@@ -65,7 +65,7 @@ const DEMO_PRAYER_REQUESTS: PrayerRequest[] = [
       full_name: 'Marcus Johnson',
       email: null,
       greek_council: 'nphc',
-      greek_organization: 'Alpha Phi Alpha',
+      greek_organization: 'Phi Beta Sigma',
     },
     prayer_support: [],
   },

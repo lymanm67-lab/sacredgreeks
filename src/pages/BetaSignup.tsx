@@ -281,7 +281,7 @@ export default function BetaSignup() {
                     <Label htmlFor="organization">Organization / Chapter (Optional)</Label>
                     <Input
                       id="organization"
-                      placeholder="e.g., Alpha Phi Alpha - Beta Chapter"
+                      placeholder="e.g., Phi Beta Sigma - Beta Chapter"
                       value={formData.organization}
                       onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
                     />
