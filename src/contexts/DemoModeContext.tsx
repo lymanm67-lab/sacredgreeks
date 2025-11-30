@@ -19,6 +19,96 @@ export interface DemoSettings {
   analyticsEnabled: boolean;
 }
 
+export type DemoScenario = 'new-user' | 'power-user' | 'greek-leader' | 'custom';
+
+export interface DemoScenarioConfig {
+  id: DemoScenario;
+  name: string;
+  description: string;
+  icon: string;
+  features: DemoFeatures;
+  dataLevel: 'minimal' | 'moderate' | 'full';
+}
+
+export const DEMO_SCENARIOS: DemoScenarioConfig[] = [
+  {
+    id: 'new-user',
+    name: 'New User',
+    description: 'Fresh start with minimal data, perfect for onboarding demos',
+    icon: '🌱',
+    features: {
+      dashboard: true,
+      prayerWall: false,
+      forum: false,
+      bibleStudy: true,
+      serviceTracker: false,
+      journey: true,
+      achievements: false,
+      progress: false,
+      devotional: true,
+      prayerJournal: false,
+    },
+    dataLevel: 'minimal',
+  },
+  {
+    id: 'power-user',
+    name: 'Power User',
+    description: 'Active user with rich history and achievements',
+    icon: '⚡',
+    features: {
+      dashboard: true,
+      prayerWall: true,
+      forum: true,
+      bibleStudy: true,
+      serviceTracker: true,
+      journey: true,
+      achievements: true,
+      progress: true,
+      devotional: true,
+      prayerJournal: true,
+    },
+    dataLevel: 'full',
+  },
+  {
+    id: 'greek-leader',
+    name: 'Greek Leader',
+    description: 'Chapter leader with community management features',
+    icon: '👑',
+    features: {
+      dashboard: true,
+      prayerWall: true,
+      forum: true,
+      bibleStudy: true,
+      serviceTracker: true,
+      journey: true,
+      achievements: true,
+      progress: true,
+      devotional: true,
+      prayerJournal: true,
+    },
+    dataLevel: 'full',
+  },
+  {
+    id: 'custom',
+    name: 'Custom',
+    description: 'Customize your own demo experience',
+    icon: '⚙️',
+    features: {
+      dashboard: true,
+      prayerWall: true,
+      forum: true,
+      bibleStudy: true,
+      serviceTracker: true,
+      journey: true,
+      achievements: true,
+      progress: true,
+      devotional: true,
+      prayerJournal: true,
+    },
+    dataLevel: 'moderate',
+  },
+];
+
 interface DemoModeContextType {
   isDemoMode: boolean;
   setDemoMode: (enabled: boolean) => void;
@@ -33,6 +123,9 @@ interface DemoModeContextType {
   demoSettings: DemoSettings;
   setDemoSetting: (setting: keyof DemoSettings, enabled: boolean) => void;
   refreshDemoData: () => void;
+  currentScenario: DemoScenario;
+  setScenario: (scenario: DemoScenario) => void;
+  startWalkthrough: () => void;
 }
 
 const DemoModeContext = createContext<DemoModeContextType | undefined>(undefined);
@@ -41,6 +134,7 @@ const DEMO_MODE_KEY = 'sacred-greeks-demo-mode';
 const DEMO_FEATURES_KEY = 'sacred-greeks-demo-features';
 const DEMO_TOUR_KEY = 'sacred-greeks-demo-tour-seen';
 const DEMO_SETTINGS_KEY = 'sacred-greeks-demo-settings';
+const DEMO_SCENARIO_KEY = 'sacred-greeks-demo-scenario';
 
 const DEFAULT_FEATURES: DemoFeatures = {
   dashboard: true,
@@ -63,7 +157,6 @@ const DEFAULT_SETTINGS: DemoSettings = {
 
 export function DemoModeProvider({ children }: { children: ReactNode }) {
   const [isDemoMode, setIsDemoMode] = useState(() => {
-    // Check URL parameter first
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.get('demo') === 'true') {
@@ -72,6 +165,11 @@ export function DemoModeProvider({ children }: { children: ReactNode }) {
     }
     const stored = localStorage.getItem(DEMO_MODE_KEY);
     return stored === 'true';
+  });
+
+  const [currentScenario, setCurrentScenario] = useState<DemoScenario>(() => {
+    const stored = localStorage.getItem(DEMO_SCENARIO_KEY);
+    return (stored as DemoScenario) || 'power-user';
   });
 
   const [demoFeatures, setDemoFeatures] = useState<DemoFeatures>(() => {
@@ -102,7 +200,6 @@ export function DemoModeProvider({ children }: { children: ReactNode }) {
     return DEFAULT_SETTINGS;
   });
 
-  // Check URL parameter on mount and when URL changes
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('demo') === 'true' && !isDemoMode) {
@@ -122,6 +219,10 @@ export function DemoModeProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(DEMO_FEATURES_KEY, JSON.stringify(demoFeatures));
   }, [demoFeatures]);
 
+  useEffect(() => {
+    localStorage.setItem(DEMO_SCENARIO_KEY, currentScenario);
+  }, [currentScenario]);
+
   const setDemoMode = (enabled: boolean) => {
     setIsDemoMode(enabled);
   };
@@ -135,6 +236,7 @@ export function DemoModeProvider({ children }: { children: ReactNode }) {
       ...prev,
       [feature]: enabled,
     }));
+    setCurrentScenario('custom');
   };
 
   const resetDemoFeatures = () => {
@@ -170,10 +272,21 @@ export function DemoModeProvider({ children }: { children: ReactNode }) {
   };
 
   const refreshDemoData = () => {
-    // Clear and regenerate demo data timestamps to simulate fresh data
     const refreshKey = 'sacred-greeks-demo-refresh';
     localStorage.setItem(refreshKey, String(Date.now()));
     window.dispatchEvent(new CustomEvent('demo-data-refresh'));
+  };
+
+  const setScenario = (scenario: DemoScenario) => {
+    setCurrentScenario(scenario);
+    const scenarioConfig = DEMO_SCENARIOS.find(s => s.id === scenario);
+    if (scenarioConfig) {
+      setDemoFeatures(scenarioConfig.features);
+    }
+  };
+
+  const startWalkthrough = () => {
+    setHasSeenTour(false);
   };
 
   return (
@@ -191,6 +304,9 @@ export function DemoModeProvider({ children }: { children: ReactNode }) {
       demoSettings,
       setDemoSetting,
       refreshDemoData,
+      currentScenario,
+      setScenario,
+      startWalkthrough,
     }}>
       {children}
     </DemoModeContext.Provider>
