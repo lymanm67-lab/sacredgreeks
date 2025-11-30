@@ -85,6 +85,7 @@ const IPDocumentation = lazy(() => import("./pages/IPDocumentation"));
 const TrademarkTracking = lazy(() => import("./pages/TrademarkTracking"));
 const TrademarkUsageGuide = lazy(() => import("./pages/TrademarkUsageGuide"));
 const Changelog = lazy(() => import("./pages/Changelog"));
+const InstallGuide = lazy(() => import("./pages/InstallGuide"));
 const AnalyticsDashboard = lazy(() => import("./pages/AnalyticsDashboard"));
 const NotificationPreferences = lazy(() => import("./pages/NotificationPreferences"));
 
@@ -197,6 +198,7 @@ const App = () => (
                     <Route path="/trademark-tracking" element={<TrademarkTracking />} />
                     <Route path="/trademark-usage-guide" element={<TrademarkUsageGuide />} />
                     <Route path="/changelog" element={<Changelog />} />
+                    <Route path="/install-guide" element={<InstallGuide />} />
                     
                     {/* Protected routes - with sidebar */}
                     <Route
