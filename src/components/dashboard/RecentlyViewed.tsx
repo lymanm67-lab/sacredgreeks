@@ -4,6 +4,7 @@ import { Clock, ExternalLink, Trash2, BookOpen } from "lucide-react";
 import { useResourceHistory } from "@/hooks/use-resource-history";
 import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
 import { formatDistanceToNow, subHours } from "date-fns";
+import { useDemoMode } from "@/contexts/DemoModeContext";
 
 // Demo items to show when history is empty
 const DEMO_RECENTLY_VIEWED = [
@@ -29,10 +30,11 @@ const DEMO_RECENTLY_VIEWED = [
 
 export const RecentlyViewed = () => {
   const { history, clearHistory } = useResourceHistory();
+  const { isDemoMode } = useDemoMode();
   
-  // Use demo data when history is empty
-  const displayHistory = history.length > 0 ? history : DEMO_RECENTLY_VIEWED;
-  const isDemo = history.length === 0;
+  // Use demo data when history is empty or demo mode is enabled
+  const displayHistory = (isDemoMode || history.length === 0) ? DEMO_RECENTLY_VIEWED : history;
+  const isDemo = isDemoMode || history.length === 0;
 
   if (displayHistory.length === 0) {
     return null;

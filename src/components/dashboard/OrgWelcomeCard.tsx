@@ -8,6 +8,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { getCouncilContent, getFaithIntegrationTips, getWelcomeMessage } from '@/data/orgSpecificContent';
 import { GREEK_COUNCILS, getOrganizationsByCouncil } from '@/data/greekOrganizations';
+import { useDemoMode } from '@/contexts/DemoModeContext';
 
 interface UserOrgInfo {
   greekCouncil: string | null;
@@ -24,6 +25,7 @@ const DEMO_ORG_INFO: UserOrgInfo = {
 
 export function OrgWelcomeCard() {
   const { user } = useAuth();
+  const { isDemoMode } = useDemoMode();
   const [orgInfo, setOrgInfo] = useState<UserOrgInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const [isDemo, setIsDemo] = useState(false);
@@ -32,10 +34,18 @@ export function OrgWelcomeCard() {
     if (user) {
       loadOrgInfo();
     }
-  }, [user]);
+  }, [user, isDemoMode]);
 
   const loadOrgInfo = async () => {
     if (!user) return;
+    
+    // If demo mode is enabled, show demo data
+    if (isDemoMode) {
+      setOrgInfo(DEMO_ORG_INFO);
+      setIsDemo(true);
+      setLoading(false);
+      return;
+    }
     
     try {
       const { data, error } = await supabase

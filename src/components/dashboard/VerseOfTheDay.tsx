@@ -7,6 +7,7 @@ import { BookOpen, Share2, Bookmark, BookmarkCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import { useAuth } from '@/contexts/AuthContext';
 import { ListenButton } from '@/components/ListenButton';
+import { useDemoMode } from '@/contexts/DemoModeContext';
 
 interface DailyVerse {
   id: string;
@@ -63,6 +64,7 @@ const FALLBACK_VERSES: DailyVerse[] = [
 
 export function VerseOfTheDay() {
   const { user } = useAuth();
+  const { isDemoMode } = useDemoMode();
   const [verse, setVerse] = useState<DailyVerse | null>(null);
   const [loading, setLoading] = useState(true);
   const [bookmarked, setBookmarked] = useState(false);
@@ -72,9 +74,18 @@ export function VerseOfTheDay() {
     if (user) {
       checkBookmark();
     }
-  }, [user]);
+  }, [user, isDemoMode]);
 
   const loadVerse = async () => {
+    // If demo mode is enabled, always show fallback
+    if (isDemoMode) {
+      const dayOfYear = Math.floor((new Date().getTime() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
+      const fallbackIndex = dayOfYear % FALLBACK_VERSES.length;
+      setVerse(FALLBACK_VERSES[fallbackIndex]);
+      setLoading(false);
+      return;
+    }
+    
     try {
       const today = new Date().toISOString().split('T')[0];
 

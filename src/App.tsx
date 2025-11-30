@@ -14,6 +14,7 @@ import { AnalyticsProvider } from "@/components/AnalyticsProvider";
 import { AIAssistantWidget } from "@/components/AIAssistantWidget";
 import { OfflineIndicator } from "@/components/ui/OfflineIndicator";
 import { CelebrationProvider } from "@/contexts/CelebrationContext";
+import { DemoModeProvider } from "@/contexts/DemoModeContext";
 import { BetaFeedbackWidget } from "@/components/BetaFeedbackWidget";
 import { Loader2 } from "lucide-react";
 
@@ -95,8 +96,9 @@ const App = () => (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <CelebrationProvider>
-            <TooltipProvider>
+          <DemoModeProvider>
+            <CelebrationProvider>
+              <TooltipProvider>
             <Toaster />
             <Sonner />
             <InstallPrompt />
@@ -288,8 +290,9 @@ const App = () => (
                 </Suspense>
               </AnalyticsProvider>
             </BrowserRouter>
-            </TooltipProvider>
-          </CelebrationProvider>
+              </TooltipProvider>
+            </CelebrationProvider>
+          </DemoModeProvider>
         </AuthProvider>
       </QueryClientProvider>
     </ThemeProvider>

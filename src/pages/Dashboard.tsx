@@ -43,6 +43,7 @@ import { FeaturedArticle } from '@/components/dashboard/FeaturedArticle';
 import { RecentlyViewed } from '@/components/dashboard/RecentlyViewed';
 import { SubscriptionBadge } from '@/components/dashboard/SubscriptionBadge';
 import { OrgWelcomeCard } from '@/components/dashboard/OrgWelcomeCard';
+import { useDemoMode } from '@/contexts/DemoModeContext';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -62,6 +63,7 @@ const DEMO_STATS: DashboardStats = {
 const Dashboard = () => {
   const { user, signOut } = useAuth();
   const { toast } = useToast();
+  const { isDemoMode } = useDemoMode();
   const { showOnboarding, completeOnboarding, isChecking } = useOnboarding();
   const { toggleFavorite, isFavorite } = useFavorites();
   const [stats, setStats] = useState<DashboardStats>({
@@ -102,10 +104,19 @@ const Dashboard = () => {
     if (user) {
       loadDashboardData();
     }
-  }, [user]);
+  }, [user, isDemoMode]);
 
   const loadDashboardData = async () => {
     if (!user) return;
+
+    // If demo mode is enabled, show demo stats
+    if (isDemoMode) {
+      setStats(DEMO_STATS);
+      setIsDemoStats(true);
+      setRecentAssessments([]);
+      setLoading(false);
+      return;
+    }
 
     try {
       const today = new Date().toISOString().split('T')[0];

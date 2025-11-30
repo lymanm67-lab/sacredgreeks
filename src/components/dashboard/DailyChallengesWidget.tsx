@@ -9,6 +9,7 @@ import { Trophy, Target, CheckCircle2, Flame, Star, ArrowRight } from 'lucide-re
 import { useGamification } from '@/hooks/use-gamification';
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
+import { useDemoMode } from '@/contexts/DemoModeContext';
 
 interface Challenge {
   id: string;
@@ -75,6 +76,7 @@ const FALLBACK_CHALLENGES: Challenge[] = [
 
 export function DailyChallengesWidget() {
   const { user } = useAuth();
+  const { isDemoMode } = useDemoMode();
   const { awardPoints } = useGamification();
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [checkIn, setCheckIn] = useState<CheckIn | null>(null);
@@ -84,9 +86,17 @@ export function DailyChallengesWidget() {
     if (user) {
       loadChallenges();
     }
-  }, [user]);
+  }, [user, isDemoMode]);
 
   const loadChallenges = async () => {
+    // If demo mode is enabled, always show fallback challenges
+    if (isDemoMode) {
+      setChallenges(FALLBACK_CHALLENGES);
+      setCheckIn(null);
+      setLoading(false);
+      return;
+    }
+    
     try {
       const today = new Date().toISOString().split('T')[0];
 
