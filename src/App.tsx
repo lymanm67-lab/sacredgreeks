@@ -78,6 +78,9 @@ const BetaDashboard = lazy(() => import("./pages/BetaDashboard"));
 const UserGuide = lazy(() => import("./pages/UserGuide"));
 const OrgCommunity = lazy(() => import("./pages/OrgCommunity"));
 const Forum = lazy(() => import("./pages/Forum"));
+const Legal = lazy(() => import("./pages/Legal"));
+const IPDocumentation = lazy(() => import("./pages/IPDocumentation"));
+const TrademarkTracking = lazy(() => import("./pages/TrademarkTracking"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -166,6 +169,9 @@ const App = () => (
                     <Route path="/user-guide" element={<UserGuide />} />
                     <Route path="/beta-signup" element={<BetaSignup />} />
                     <Route path="/guide" element={<Guide />} />
+                    <Route path="/legal" element={<Legal />} />
+                    <Route path="/ip-documentation" element={<IPDocumentation />} />
+                    <Route path="/trademark-tracking" element={<TrademarkTracking />} />
                     
                     {/* Protected routes - with sidebar */}
                     <Route

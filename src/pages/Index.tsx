@@ -972,9 +972,13 @@ const Index = () => {
 
             {/* Legal Links */}
             <div className="flex flex-wrap justify-center gap-4 text-xs text-muted-foreground/60">
+              <Link to="/legal" className="hover:text-sacred transition-colors">Legal Center</Link>
+              <span>•</span>
               <Link to="/terms" className="hover:text-sacred transition-colors">Terms of Service</Link>
               <span>•</span>
               <Link to="/privacy" className="hover:text-sacred transition-colors">Privacy Policy</Link>
+              <span>•</span>
+              <Link to="/ip-documentation" className="hover:text-sacred transition-colors">IP Documentation</Link>
               <span>•</span>
               <span>Patent Pending</span>
             </div>
