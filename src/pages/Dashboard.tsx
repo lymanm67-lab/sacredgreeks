@@ -31,6 +31,7 @@ import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 import { SEOHead, pageSEO } from '@/components/SEOHead';
 import { VerseOfTheDay } from '@/components/dashboard/VerseOfTheDay';
 import { QuickCheckIn } from '@/components/dashboard/QuickCheckIn';
+import { DailyEngagementWidget } from '@/components/dashboard/DailyEngagementWidget';
 import { WeeklyInsights } from '@/components/dashboard/WeeklyInsights';
 import { FeaturedActions } from '@/components/dashboard/FeaturedActions';
 import { GettingStartedChecklist } from '@/components/dashboard/GettingStartedChecklist';
@@ -593,8 +594,13 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Quick Check In */}
+          {/* Daily Engagement Widget - Streak & Quick Morning */}
           <div ref={checkInScroll.ref} className={`scroll-animate ${checkInScroll.isVisible ? 'visible' : ''} animate-fade-in`} style={{ animationDelay: '0.5s' }}>
+            <DailyEngagementWidget />
+          </div>
+
+          {/* Quick Check In */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.55s' }}>
             <QuickCheckIn />
           </div>
 
