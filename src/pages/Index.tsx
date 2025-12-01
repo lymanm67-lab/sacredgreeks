@@ -22,16 +22,17 @@ import { HealingResourcesSection } from "@/components/landing/HealingResourcesSe
 import { Footer } from "@/components/landing/Footer";
 import { FinalCTA } from "@/components/landing/FinalCTA";
 import { ComparisonSection } from "@/components/landing/ComparisonSection";
+import { DailyValueSection } from "@/components/landing/DailyValueSection";
+import { HomeScreenBenefits } from "@/components/landing/HomeScreenBenefits";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { cn } from "@/lib/utils";
 
 // Mobile section navigation items
 const sectionNav = [
-  { id: "objections-teaser", label: "Try It", icon: null, isHighlighted: true },
+  { id: "daily-value", label: "Why", icon: null, isHighlighted: true },
   { id: "core-features", label: "Tools", icon: null },
   { id: "comparison", label: "Compare", icon: null },
   { id: "healing-resources", label: "Support", icon: HeartHandshake },
-  { id: "more-features", label: "More", icon: null },
   { id: "testimonials", label: "Stories", icon: null },
 ];
 
@@ -163,10 +164,31 @@ const Index = () => {
       {/* Hero Section */}
       <LandingHeroSection user={user} />
 
+      {/* Daily Value Section - Answers "Why keep on home screen?" */}
+      {!user && (
+        <AnimatedSection animation="fade-up" delay={100}>
+          <DailyValueSection />
+        </AnimatedSection>
+      )}
+
       {/* Stats Section */}
       {!user && (
         <AnimatedSection animation="fade-up" delay={100}>
           <StatsSection />
+        </AnimatedSection>
+      )}
+
+      {/* Benefits Section */}
+      {!user && (
+        <AnimatedSection animation="fade-up" delay={150}>
+          <BenefitsSection />
+        </AnimatedSection>
+      )}
+
+      {/* Home Screen Benefits - PWA advantages */}
+      {!user && (
+        <AnimatedSection animation="fade-up" delay={100}>
+          <HomeScreenBenefits />
         </AnimatedSection>
       )}
 
@@ -176,13 +198,6 @@ const Index = () => {
           <div id="objections-teaser">
             <ObjectionsTeaser />
           </div>
-        </AnimatedSection>
-      )}
-
-      {/* Benefits Section */}
-      {!user && (
-        <AnimatedSection animation="fade-up" delay={200}>
-          <BenefitsSection />
         </AnimatedSection>
       )}
 

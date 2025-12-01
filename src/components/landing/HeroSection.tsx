@@ -12,7 +12,7 @@ interface LandingHeroSectionProps {
   user: any;
 }
 
-const heroText = "Your daily companion for integrating faith and Greek life. Get devotionals, guidance, prayer tools, and progress tracking, all grounded in the P.R.O.O.F. framework from Sacred, Not Sinful.";
+const heroText = "Start each day with devotionals made for Greek Christians. Track your spiritual growth. Access prayer tools instantly. The one app that honors both your faith and your letters—right from your home screen.";
 
 export function LandingHeroSection({ user }: LandingHeroSectionProps) {
   return (
@@ -55,8 +55,8 @@ export function LandingHeroSection({ user }: LandingHeroSectionProps) {
             </h1>
             
             <p className="text-xl md:text-2xl text-muted-foreground font-medium animate-fade-in-up-delay-3">
-              You love Jesus. You love your letters.{' '}
-              <span className="text-foreground">Navigate both with clarity and confidence.</span>
+              Your daily companion for faith + Greek life.{' '}
+              <span className="text-foreground">One tap. Every morning. Real growth.</span>
             </p>
             
             <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed animate-fade-in">
