@@ -631,6 +631,42 @@ export type Database = {
         }
         Relationships: []
       }
+      morning_notification_settings: {
+        Row: {
+          created_at: string | null
+          enabled: boolean | null
+          id: string
+          include_streak_reminder: boolean | null
+          include_verse_preview: boolean | null
+          notification_time: string | null
+          timezone: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          enabled?: boolean | null
+          id?: string
+          include_streak_reminder?: boolean | null
+          include_verse_preview?: boolean | null
+          notification_time?: string | null
+          timezone?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          enabled?: boolean | null
+          id?: string
+          include_streak_reminder?: boolean | null
+          include_verse_preview?: boolean | null
+          notification_time?: string | null
+          timezone?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       notification_campaigns: {
         Row: {
           created_at: string
@@ -1526,7 +1562,11 @@ export type Database = {
         Row: {
           created_at: string
           current_level: number
+          current_streak: number | null
           id: string
+          last_engagement_date: string | null
+          longest_streak: number | null
+          streak_updated_at: string | null
           total_points: number
           updated_at: string
           user_id: string
@@ -1534,7 +1574,11 @@ export type Database = {
         Insert: {
           created_at?: string
           current_level?: number
+          current_streak?: number | null
           id?: string
+          last_engagement_date?: string | null
+          longest_streak?: number | null
+          streak_updated_at?: string | null
           total_points?: number
           updated_at?: string
           user_id: string
@@ -1542,7 +1586,11 @@ export type Database = {
         Update: {
           created_at?: string
           current_level?: number
+          current_streak?: number | null
           id?: string
+          last_engagement_date?: string | null
+          longest_streak?: number | null
+          streak_updated_at?: string | null
           total_points?: number
           updated_at?: string
           user_id?: string
@@ -1845,6 +1893,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      update_user_streak: { Args: { _user_id: string }; Returns: Json }
     }
     Enums: {
       app_role: "admin" | "user"
