@@ -580,6 +580,45 @@ export type Database = {
           },
         ]
       }
+      gifted_subscriptions: {
+        Row: {
+          created_at: string
+          expires_at: string | null
+          gifted_by: string
+          id: string
+          is_active: boolean
+          reason: string | null
+          starts_at: string
+          tier: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string | null
+          gifted_by: string
+          id?: string
+          is_active?: boolean
+          reason?: string | null
+          starts_at?: string
+          tier: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string | null
+          gifted_by?: string
+          id?: string
+          is_active?: boolean
+          reason?: string | null
+          starts_at?: string
+          tier?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       healing_stories: {
         Row: {
           approved: boolean
