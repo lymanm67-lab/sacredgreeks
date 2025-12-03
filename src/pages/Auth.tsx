@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Heart, Home, Eye, EyeOff, CheckCircle2, Mail, RefreshCw, AlertTriangle, Ban } from 'lucide-react';
+import { Heart, Home, Eye, EyeOff, CheckCircle2, Mail, RefreshCw, AlertTriangle, Ban, Info, ExternalLink } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { z } from 'zod';
@@ -336,11 +336,30 @@ const Auth = () => {
                     </div>
                     <PasswordStrengthIndicator password={resetPassword} />
                     {breachCount !== null && breachCount > 0 && (
-                      <div className="flex items-start gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-md">
-                        <AlertTriangle className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
-                        <p className="text-sm text-destructive">
-                          This password was found in {breachCount.toLocaleString()} data breaches. Please choose a different password.
-                        </p>
+                      <div className="space-y-2">
+                        <div className="flex items-start gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-md">
+                          <AlertTriangle className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
+                          <div className="text-sm text-destructive space-y-1">
+                            <p className="font-medium">Password exposed in {breachCount.toLocaleString()} data breaches</p>
+                            <p className="text-destructive/80">This password has been leaked and could be used in credential stuffing attacks.</p>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-2 p-3 bg-muted/50 border border-border rounded-md">
+                          <Info className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                          <div className="text-xs text-muted-foreground space-y-1">
+                            <p className="font-medium">Why can't we show which breaches?</p>
+                            <p>For security, password checks use k-anonymity—only a partial hash is sent to the breach database, never your actual password. This means we can detect IF a password was leaked, but not WHERE or WHEN.</p>
+                            <a 
+                              href="https://haveibeenpwned.com/Passwords" 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-primary hover:underline"
+                            >
+                              Check your email for breach details
+                              <ExternalLink className="h-3 w-3" />
+                            </a>
+                          </div>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -639,11 +658,30 @@ const Auth = () => {
                         </div>
                         <PasswordStrengthIndicator password={signupPassword} />
                         {breachCount !== null && breachCount > 0 && (
-                          <div className="flex items-start gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-md">
-                            <AlertTriangle className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
-                            <p className="text-sm text-destructive">
-                              This password was found in {breachCount.toLocaleString()} data breaches. Please choose a different password.
-                            </p>
+                          <div className="space-y-2">
+                            <div className="flex items-start gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-md">
+                              <AlertTriangle className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
+                              <div className="text-sm text-destructive space-y-1">
+                                <p className="font-medium">Password exposed in {breachCount.toLocaleString()} data breaches</p>
+                                <p className="text-destructive/80">This password has been leaked and could be used in credential stuffing attacks. Please choose a different password.</p>
+                              </div>
+                            </div>
+                            <div className="flex items-start gap-2 p-3 bg-muted/50 border border-border rounded-md">
+                              <Info className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                              <div className="text-xs text-muted-foreground space-y-1">
+                                <p className="font-medium">Why can't we show which breaches?</p>
+                                <p>For security, password checks use k-anonymity—only a partial hash is sent to the breach database, never your actual password. This means we can detect IF a password was leaked, but not WHERE or WHEN.</p>
+                                <a 
+                                  href="https://haveibeenpwned.com/Passwords" 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 text-primary hover:underline"
+                                >
+                                  Check your email for breach details
+                                  <ExternalLink className="h-3 w-3" />
+                                </a>
+                              </div>
+                            </div>
                           </div>
                         )}
                       </div>
