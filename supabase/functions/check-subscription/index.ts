@@ -51,6 +51,41 @@ serve(async (req) => {
     if (!user?.email) throw new Error("User not authenticated or email not available");
     logStep("User authenticated", { userId: user.id, email: user.email });
 
+    // Check for gifted subscriptions first
+    const { data: giftedSub, error: giftedError } = await supabaseClient
+      .from('gifted_subscriptions')
+      .select('*')
+      .eq('user_id', user.id)
+      .eq('is_active', true)
+      .or('expires_at.is.null,expires_at.gt.now()')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (giftedError) {
+      logStep("Error checking gifted subscriptions", { error: giftedError.message });
+    }
+
+    if (giftedSub) {
+      logStep("Found active gifted subscription", { 
+        tier: giftedSub.tier, 
+        expiresAt: giftedSub.expires_at 
+      });
+      return new Response(JSON.stringify({
+        subscribed: true,
+        tier: giftedSub.tier,
+        product_id: null,
+        subscription_end: giftedSub.expires_at,
+        is_trialing: false,
+        status: 'gifted',
+        is_gifted: true
+      }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      });
+    }
+
+    // Check Stripe subscriptions
     const stripe = new Stripe(stripeKey, { apiVersion: "2025-08-27.basil" });
     const customers = await stripe.customers.list({ email: user.email, limit: 1 });
     
