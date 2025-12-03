@@ -19,6 +19,43 @@ interface ChangelogEntry {
 
 const changelog: ChangelogEntry[] = [
   {
+    version: "2.4.0",
+    date: "2024-12-03",
+    title: "Admin Gifting & Feature Customization",
+    type: "minor",
+    changes: [
+      { category: "feature", description: "Admin gift subscription manager - gift Pro or Ministry access to users" },
+      { category: "feature", description: "Tiered feature customization - personalize your dashboard experience" },
+      { category: "feature", description: "Free users can hide up to 5 features, Pro/Ministry get unlimited customization" },
+      { category: "improvement", description: "Subscription system now checks gifted subscriptions automatically" },
+      { category: "security", description: "RLS policies for feature preferences and gifted subscriptions" },
+    ]
+  },
+  {
+    version: "2.3.0",
+    date: "2024-12-02",
+    title: "Enhanced Dashboard & Personalization",
+    type: "minor",
+    changes: [
+      { category: "feature", description: "Personalization survey for new users" },
+      { category: "feature", description: "Dashboard adapts based on user preferences" },
+      { category: "improvement", description: "Improved quick actions organization" },
+      { category: "improvement", description: "Better mobile responsiveness across all pages" },
+    ]
+  },
+  {
+    version: "2.2.0",
+    date: "2024-12-01",
+    title: "Demo Mode & Onboarding Improvements",
+    type: "minor",
+    changes: [
+      { category: "feature", description: "Interactive demo mode for exploring features without signup" },
+      { category: "feature", description: "Demo walkthrough overlay with guided tour" },
+      { category: "improvement", description: "Streamlined onboarding flow" },
+      { category: "improvement", description: "Better first-time user experience" },
+    ]
+  },
+  {
     version: "2.1.0",
     date: "2024-11-30",
     title: "iOS Installation Fix & SEO Improvements",
