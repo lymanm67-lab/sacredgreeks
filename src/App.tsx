@@ -89,6 +89,7 @@ const InstallGuide = lazy(() => import("./pages/InstallGuide"));
 const ShareToolkit = lazy(() => import("./pages/ShareToolkit"));
 const AnalyticsDashboard = lazy(() => import("./pages/AnalyticsDashboard"));
 const NotificationPreferences = lazy(() => import("./pages/NotificationPreferences"));
+const CoachingApplication = lazy(() => import("./pages/CoachingApplication"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -201,6 +202,7 @@ const App = () => (
                     <Route path="/changelog" element={<Changelog />} />
                     <Route path="/install-guide" element={<InstallGuide />} />
                     <Route path="/share-toolkit" element={<ShareToolkit />} />
+                    <Route path="/coaching-application" element={<CoachingApplication />} />
                     
                     {/* Protected routes - with sidebar */}
                     <Route

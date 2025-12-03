@@ -8,6 +8,7 @@ export interface SurveyAnswers {
   alumniStatus?: string;
   challenge: string;
   helpNeeded: string[];
+  coachingType?: string;
 }
 
 export function useLandingSurvey() {
