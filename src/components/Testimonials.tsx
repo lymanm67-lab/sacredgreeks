@@ -7,19 +7,7 @@ const testimonials = [
     name: 'Pastor Demetrius Logwood',
     org: 'Charity Missionary Baptist Church',
     initials: 'DL',
-    text: 'This rigorous research bridges the gap between Black Greek Letter Organizations and the church community. Sacred Greeks reminds us that spreading the gospel takes on many forms and that faith and commitment can honor both Christ and BGLOs.',
-  },
-  {
-    name: 'Lyn Lanier',
-    org: 'Sigma Gamma Rho Sorority, Inc.',
-    initials: 'LL',
-    text: 'This resource reassures us that our membership does not make us less Christian, but can actually strengthen our witness as salt and light in spaces the church often overlooks.',
-  },
-  {
-    name: 'Dr. Le-Ann M. Harris',
-    org: 'Delta Sigma Theta Sorority Inc.',
-    initials: 'LH',
-    text: 'Sacred Greeks provides powerful support for the ongoing dialogue about faith, culture, and Black Greek Letter Organizations. The daily guidance and P.R.O.O.F. framework offer clarity where there has often been confusion.',
+    text: 'This rigorous research bridges the gap between Black Greek Letter Organizations and the church community. Sacred Greeks reminds us that spreading the gospel takes on many forms.',
   },
   {
     name: 'Alexis Allen',
@@ -27,19 +15,13 @@ const testimonials = [
     initials: 'AA',
     text: 'Ignorance has had the mic too long, and Sacred Greeks finally cuts it off. You get biblical guidance, clarity, and confidence to walk boldly in your calling without apology.',
   },
-  {
-    name: 'Rev. Dr. David Fox',
-    org: 'Phi Beta Sigma Fraternity, Inc.',
-    initials: 'DF',
-    text: 'Sacred Greeks provides practical tools and theological depth that help members of Black Greek Letter Organizations reconcile their cultural heritage with Christian faith in their daily lives.',
-  },
 ];
 
 export const Testimonials = () => {
   return (
     <section className="py-16 bg-muted/30">
       <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12 animate-fade-in">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               What Others Are Saying…
@@ -49,7 +31,7 @@ export const Testimonials = () => {
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-3">
             {/* Video Testimonial */}
             <Card className="overflow-hidden border-2 border-sacred/20 animate-fade-in">
               <CardContent className="p-0">
