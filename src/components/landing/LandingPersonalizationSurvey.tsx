@@ -21,10 +21,13 @@ import {
   ArrowLeft,
   UserCheck,
   UserX,
-  RefreshCw
+  RefreshCw,
+  UsersRound,
+  UserCog
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SurveyAnswers } from '@/hooks/use-landing-survey';
+import { useNavigate } from 'react-router-dom';
 
 interface LandingPersonalizationSurveyProps {
   open: boolean;
@@ -132,26 +135,51 @@ const helpOptions = [
     description: 'Healing Resources & Support',
     icon: HeartHandshake,
   },
+  {
+    value: 'coaching',
+    label: 'Coaching',
+    description: 'Personal or group guidance from experts',
+    icon: UsersRound,
+  },
+];
+
+const coachingTypeOptions = [
+  {
+    value: 'group',
+    label: 'Group Coaching',
+    description: 'Learn alongside others in a supportive community setting',
+    icon: UsersRound,
+  },
+  {
+    value: 'personalized',
+    label: 'Personalized Coaching',
+    description: 'One-on-one guidance tailored to your specific situation',
+    icon: UserCog,
+  },
 ];
 
 export function LandingPersonalizationSurvey({ open, onComplete, onSkip }: LandingPersonalizationSurveyProps) {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [journey, setJourney] = useState('');
   const [alumniStatus, setAlumniStatus] = useState('');
   const [challenge, setChallenge] = useState('');
   const [helpNeeded, setHelpNeeded] = useState<string[]>([]);
+  const [coachingType, setCoachingType] = useState('');
 
-  // Dynamic step calculation based on alumni selection
+  // Dynamic step calculation based on selections
   const isAlumni = journey === 'alumni';
-  const totalSteps = isAlumni ? 4 : 3;
+  const needsCoachingStep = helpNeeded.includes('coaching');
   
-  // Map logical step to display step
-  const getDisplayStep = () => {
-    if (!isAlumni) return step;
-    return step; // When alumni, we have 4 steps
+  const getTotalSteps = () => {
+    let steps = 3; // Base: journey, challenge, help
+    if (isAlumni) steps += 1; // Alumni status
+    if (needsCoachingStep) steps += 1; // Coaching type
+    return steps;
   };
   
-  const progress = (getDisplayStep() / totalSteps) * 100;
+  const totalSteps = getTotalSteps();
+  const progress = (getCurrentQuestionNumber() / totalSteps) * 100;
 
   const handleNext = () => {
     if (step === 1 && isAlumni) {
@@ -163,12 +191,22 @@ export function LandingPersonalizationSurvey({ open, onComplete, onSkip }: Landi
     } else if (step === 3) {
       setStep(4); // Go to help needed
     } else if (step === 4) {
-      onComplete({ journey, alumniStatus: isAlumni ? alumniStatus : undefined, challenge, helpNeeded });
+      if (helpNeeded.includes('coaching')) {
+        setStep(5); // Go to coaching type selection
+      } else {
+        onComplete({ journey, alumniStatus: isAlumni ? alumniStatus : undefined, challenge, helpNeeded });
+      }
+    } else if (step === 5) {
+      // Complete with coaching type and redirect to application
+      onComplete({ journey, alumniStatus: isAlumni ? alumniStatus : undefined, challenge, helpNeeded, coachingType });
+      navigate('/coaching-application');
     }
   };
 
   const handleBack = () => {
-    if (step === 4) {
+    if (step === 5) {
+      setStep(4);
+    } else if (step === 4) {
       setStep(3);
     } else if (step === 3 && isAlumni) {
       setStep(2);
@@ -185,6 +223,10 @@ export function LandingPersonalizationSurvey({ open, onComplete, onSkip }: Landi
         ? prev.filter(v => v !== value)
         : [...prev, value]
     );
+    // Reset coaching type if coaching is deselected
+    if (value === 'coaching' && helpNeeded.includes('coaching')) {
+      setCoachingType('');
+    }
   };
 
   const canProceed = () => {
@@ -193,18 +235,19 @@ export function LandingPersonalizationSurvey({ open, onComplete, onSkip }: Landi
       case 2: return !!alumniStatus;
       case 3: return !!challenge;
       case 4: return helpNeeded.length > 0;
+      case 5: return !!coachingType;
       default: return false;
     }
   };
   
-  const getCurrentQuestionNumber = () => {
-    if (!isAlumni) {
-      if (step === 1) return 1;
-      if (step === 3) return 2;
-      if (step === 4) return 3;
-    }
+  function getCurrentQuestionNumber() {
+    if (step === 1) return 1;
+    if (step === 2 && isAlumni) return 2;
+    if (step === 3) return isAlumni ? 3 : 2;
+    if (step === 4) return isAlumni ? 4 : 3;
+    if (step === 5) return totalSteps;
     return step;
-  };
+  }
 
   return (
     <Dialog open={open} onOpenChange={() => {}}>
@@ -384,6 +427,45 @@ export function LandingPersonalizationSurvey({ open, onComplete, onSkip }: Landi
               </div>
             </div>
           )}
+
+          {step === 5 && (
+            <div className="space-y-4">
+              <div className="text-center space-y-2">
+                <h3 className="text-lg font-semibold">What type of coaching are you interested in?</h3>
+                <p className="text-sm text-muted-foreground">Select the option that best fits your needs</p>
+              </div>
+              <div className="grid gap-3">
+                {coachingTypeOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    onClick={() => setCoachingType(option.value)}
+                    className={cn(
+                      "flex items-start gap-4 p-4 rounded-xl border-2 transition-all duration-200 text-left",
+                      coachingType === option.value
+                        ? "border-sacred bg-sacred/5 shadow-md shadow-sacred/10"
+                        : "border-border hover:border-sacred/50 hover:bg-muted/50"
+                    )}
+                  >
+                    <div className={cn(
+                      "p-2 rounded-lg transition-colors",
+                      coachingType === option.value ? "bg-sacred text-white" : "bg-muted text-muted-foreground"
+                    )}>
+                      <option.icon className="w-5 h-5" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">{option.label}</span>
+                        {coachingType === option.value && (
+                          <Check className="w-4 h-4 text-sacred" />
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground mt-0.5">{option.description}</p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="flex items-center justify-between pt-2">
@@ -401,7 +483,11 @@ export function LandingPersonalizationSurvey({ open, onComplete, onSkip }: Landi
             disabled={!canProceed()}
             className="bg-sacred hover:bg-sacred/90 text-sacred-foreground gap-2"
           >
-            {step === totalSteps ? 'Get Started' : 'Continue'}
+            {step === 5 
+              ? 'Continue to Application' 
+              : (step === 4 && !helpNeeded.includes('coaching')) 
+                ? 'Get Started' 
+                : 'Continue'}
             <ArrowRight className="w-4 h-4" />
           </Button>
         </div>
