@@ -18,7 +18,10 @@ import {
   HeartHandshake,
   Check,
   ArrowRight,
-  ArrowLeft
+  ArrowLeft,
+  UserCheck,
+  UserX,
+  RefreshCw
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SurveyAnswers } from '@/hooks/use-landing-survey';
@@ -53,6 +56,27 @@ const journeyOptions = [
     label: 'Pastor/Ministry leader',
     description: 'Seeking to understand and support',
     icon: Church,
+  },
+];
+
+const alumniStatusOptions = [
+  {
+    value: 'active',
+    label: 'Active',
+    description: 'Still involved with my chapter or alumni association',
+    icon: UserCheck,
+  },
+  {
+    value: 'inactive',
+    label: 'Inactive',
+    description: 'Not currently involved but still connected',
+    icon: UserX,
+  },
+  {
+    value: 'reconnecting',
+    label: 'Reconnecting',
+    description: 'Looking to re-engage with my fraternity or sorority',
+    icon: RefreshCw,
   },
 ];
 
@@ -113,23 +137,45 @@ const helpOptions = [
 export function LandingPersonalizationSurvey({ open, onComplete, onSkip }: LandingPersonalizationSurveyProps) {
   const [step, setStep] = useState(1);
   const [journey, setJourney] = useState('');
+  const [alumniStatus, setAlumniStatus] = useState('');
   const [challenge, setChallenge] = useState('');
   const [helpNeeded, setHelpNeeded] = useState<string[]>([]);
 
-  const totalSteps = 3;
-  const progress = (step / totalSteps) * 100;
+  // Dynamic step calculation based on alumni selection
+  const isAlumni = journey === 'alumni';
+  const totalSteps = isAlumni ? 4 : 3;
+  
+  // Map logical step to display step
+  const getDisplayStep = () => {
+    if (!isAlumni) return step;
+    return step; // When alumni, we have 4 steps
+  };
+  
+  const progress = (getDisplayStep() / totalSteps) * 100;
 
   const handleNext = () => {
-    if (step < totalSteps) {
-      setStep(step + 1);
-    } else {
-      onComplete({ journey, challenge, helpNeeded });
+    if (step === 1 && isAlumni) {
+      setStep(2); // Go to alumni status question
+    } else if (step === 2 && isAlumni) {
+      setStep(3); // Go to challenge question
+    } else if (step === 1 && !isAlumni) {
+      setStep(3); // Skip alumni status, go to challenge
+    } else if (step === 3) {
+      setStep(4); // Go to help needed
+    } else if (step === 4) {
+      onComplete({ journey, alumniStatus: isAlumni ? alumniStatus : undefined, challenge, helpNeeded });
     }
   };
 
   const handleBack = () => {
-    if (step > 1) {
-      setStep(step - 1);
+    if (step === 4) {
+      setStep(3);
+    } else if (step === 3 && isAlumni) {
+      setStep(2);
+    } else if (step === 3 && !isAlumni) {
+      setStep(1);
+    } else if (step === 2) {
+      setStep(1);
     }
   };
 
@@ -144,10 +190,20 @@ export function LandingPersonalizationSurvey({ open, onComplete, onSkip }: Landi
   const canProceed = () => {
     switch (step) {
       case 1: return !!journey;
-      case 2: return !!challenge;
-      case 3: return helpNeeded.length > 0;
+      case 2: return !!alumniStatus;
+      case 3: return !!challenge;
+      case 4: return helpNeeded.length > 0;
       default: return false;
     }
+  };
+  
+  const getCurrentQuestionNumber = () => {
+    if (!isAlumni) {
+      if (step === 1) return 1;
+      if (step === 3) return 2;
+      if (step === 4) return 3;
+    }
+    return step;
   };
 
   return (
@@ -156,7 +212,7 @@ export function LandingPersonalizationSurvey({ open, onComplete, onSkip }: Landi
         <DialogHeader className="space-y-3">
           <div className="flex items-center justify-between">
             <Badge variant="secondary" className="text-xs">
-              Question {step} of {totalSteps}
+              Question {getCurrentQuestionNumber()} of {totalSteps}
             </Badge>
             <Button variant="ghost" size="sm" onClick={onSkip} className="text-muted-foreground hover:text-foreground">
               Skip for now
@@ -209,7 +265,46 @@ export function LandingPersonalizationSurvey({ open, onComplete, onSkip }: Landi
             </div>
           )}
 
-          {step === 2 && (
+          {step === 2 && isAlumni && (
+            <div className="space-y-4">
+              <div className="text-center space-y-2">
+                <h3 className="text-lg font-semibold">How would you describe your current involvement?</h3>
+                <p className="text-sm text-muted-foreground">This helps us tailor resources for your situation</p>
+              </div>
+              <div className="grid gap-3">
+                {alumniStatusOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    onClick={() => setAlumniStatus(option.value)}
+                    className={cn(
+                      "flex items-start gap-4 p-4 rounded-xl border-2 transition-all duration-200 text-left",
+                      alumniStatus === option.value
+                        ? "border-sacred bg-sacred/5 shadow-md shadow-sacred/10"
+                        : "border-border hover:border-sacred/50 hover:bg-muted/50"
+                    )}
+                  >
+                    <div className={cn(
+                      "p-2 rounded-lg transition-colors",
+                      alumniStatus === option.value ? "bg-sacred text-white" : "bg-muted text-muted-foreground"
+                    )}>
+                      <option.icon className="w-5 h-5" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">{option.label}</span>
+                        {alumniStatus === option.value && (
+                          <Check className="w-4 h-4 text-sacred" />
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground mt-0.5">{option.description}</p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {step === 3 && (
             <div className="space-y-4">
               <div className="text-center space-y-2">
                 <h3 className="text-lg font-semibold">What's your biggest challenge right now?</h3>
@@ -248,7 +343,7 @@ export function LandingPersonalizationSurvey({ open, onComplete, onSkip }: Landi
             </div>
           )}
 
-          {step === 3 && (
+          {step === 4 && (
             <div className="space-y-4">
               <div className="text-center space-y-2">
                 <h3 className="text-lg font-semibold">What would help you most today?</h3>
