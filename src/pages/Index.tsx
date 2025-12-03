@@ -2,13 +2,11 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useDemoMode } from "@/contexts/DemoModeContext";
 import { useLandingSurvey } from "@/hooks/use-landing-survey";
-import { HeartHandshake, ChevronUp } from "lucide-react";
+import { ChevronUp } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
 import { MobileQRCode } from "@/components/MobileQRCode";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import logo from "@/assets/sacred-greeks-logo.png";
-import { ScrollProgressIndicator } from "@/components/ui/ScrollProgressIndicator";
-import { FloatingCTA } from "@/components/ui/FloatingCTA";
 import { DemoHeaderButton } from "@/components/landing/DemoHeaderButton";
 import { LandingHeroSection } from "@/components/landing/HeroSection";
 import { CoreFeaturesSection } from "@/components/landing/CoreFeaturesSection";
@@ -16,49 +14,22 @@ import { HealingResourcesSection } from "@/components/landing/HealingResourcesSe
 import { Footer } from "@/components/landing/Footer";
 import { FinalCTA } from "@/components/landing/FinalCTA";
 import { LandingPersonalizationSurvey } from "@/components/landing/LandingPersonalizationSurvey";
-import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { cn } from "@/lib/utils";
-
-// Mobile section navigation items - simplified to 3
-const sectionNav = [
-  { id: "core-features", label: "Tools", icon: null },
-  { id: "healing-resources", label: "Support", icon: HeartHandshake },
-  { id: "testimonials", label: "Stories", icon: null },
-];
 
 const Index = () => {
   const { user } = useAuth();
   const { isDemoMode } = useDemoMode();
   const { showSurvey, completeSurvey, skipSurvey } = useLandingSurvey();
-  const [showMobileNav, setShowMobileNav] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowMobileNav(window.scrollY > 400);
-      
-      const sections = sectionNav.map(s => document.getElementById(s.id));
-      const scrollPos = window.scrollY + 150;
-      
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i];
-        if (section && section.offsetTop <= scrollPos) {
-          setActiveSection(sectionNav[i].id);
-          break;
-        }
-      }
+      setShowBackToTop(window.scrollY > 400);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -66,55 +37,23 @@ const Index = () => {
 
   return (
     <div className={cn(
-      "min-h-screen bg-gradient-to-b from-background via-background to-muted/20",
+      "min-h-screen bg-background",
       isDemoMode && "pt-11"
     )}>
-      <ScrollProgressIndicator />
-      
-      {!user && <FloatingCTA scrollThreshold={600} />}
-
       {/* Back to Top Button */}
       <button
         onClick={scrollToTop}
-        className={`fixed bottom-6 right-6 z-40 p-3 bg-sacred text-white rounded-full shadow-lg shadow-sacred/30 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-sacred/40 ${
-          showMobileNav ? 'opacity-100 translate-y-0 animate-[bounce_0.5s_ease-out]' : 'opacity-0 translate-y-4 pointer-events-none'
-        } hidden md:flex items-center justify-center`}
+        className={`fixed bottom-6 right-6 z-40 p-3 bg-sacred text-white rounded-full shadow-lg transition-all duration-300 hover:scale-110 ${
+          showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+        }`}
         aria-label="Back to top"
       >
         <ChevronUp className="h-5 w-5" />
       </button>
-
-      {/* Mobile Section Navigation */}
-      <div className={`fixed bottom-4 left-1/2 -translate-x-1/2 z-40 md:hidden transition-all duration-500 ease-out ${showMobileNav ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'}`}>
-        <div className="flex items-center gap-1 bg-background/95 backdrop-blur-lg border border-border/50 rounded-full px-2 py-1.5 shadow-lg animate-fade-in">
-          {sectionNav.map((section, index) => (
-            <button
-              key={section.id}
-              onClick={() => scrollToSection(section.id)}
-              className={`px-3 py-1.5 text-xs font-medium rounded-full transition-all duration-200 flex items-center gap-1.5 ${
-                activeSection === section.id 
-                  ? 'bg-sacred text-white scale-105' 
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted active:scale-95'
-              }`}
-              style={{ animationDelay: `${index * 50}ms` }}
-            >
-              {section.icon && <section.icon className="w-3 h-3" />}
-              {section.label}
-            </button>
-          ))}
-          <button
-            onClick={scrollToTop}
-            className="p-1.5 text-muted-foreground hover:text-sacred hover:bg-sacred/10 rounded-full ml-1 transition-all duration-200 active:scale-90"
-            aria-label="Back to top"
-          >
-            <ChevronUp className="h-4 w-4" />
-          </button>
-        </div>
-      </div>
       
       {/* Header */}
       <header className={cn(
-        "border-b border-border/50 bg-background/80 backdrop-blur-lg sticky z-50",
+        "border-b border-border/50 bg-background/95 backdrop-blur-sm sticky z-50",
         isDemoMode ? "top-11" : "top-0"
       )}>
         <div className="container mx-auto px-4 py-3">
@@ -124,7 +63,7 @@ const Index = () => {
                 <img src={logo} alt="Sacred Greeks" className="h-6 w-auto brightness-0 invert" loading="lazy" />
               </div>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <ThemeToggle />
               <DemoHeaderButton />
               <MobileQRCode />
@@ -138,30 +77,20 @@ const Index = () => {
       <LandingHeroSection user={user} />
 
       {/* Core Features - 4 Free Tools */}
-      <AnimatedSection animation="fade-up" delay={100}>
-        <CoreFeaturesSection />
-      </AnimatedSection>
+      <CoreFeaturesSection />
 
-      {/* Healing Resources */}
-      <AnimatedSection animation="fade-up" delay={100}>
-        <div className="container mx-auto px-4">
-          <HealingResourcesSection />
-        </div>
-      </AnimatedSection>
+      {/* Healing Resources - Simplified */}
+      <div className="container mx-auto px-4 py-12">
+        <HealingResourcesSection />
+      </div>
 
       {/* Testimonials */}
-      <AnimatedSection animation="fade-up" delay={100}>
-        <div id="testimonials" className="scroll-mt-20">
-          <Testimonials />
-        </div>
-      </AnimatedSection>
+      <div id="testimonials" className="py-12">
+        <Testimonials />
+      </div>
 
       {/* Final CTA */}
-      {!user && (
-        <AnimatedSection animation="blur-in" delay={100}>
-          <FinalCTA />
-        </AnimatedSection>
-      )}
+      {!user && <FinalCTA />}
 
       {/* Footer */}
       <Footer />
@@ -188,7 +117,7 @@ function HeaderAuthButtons({ user }: { user: any }) {
   if (user) {
     return (
       <Link to="/dashboard">
-        <Button className="bg-sacred hover:bg-sacred/90 text-sacred-foreground shadow-lg shadow-sacred/20 hover:shadow-xl hover:shadow-sacred/30 transition-all">
+        <Button className="bg-sacred hover:bg-sacred/90 text-sacred-foreground shadow-lg shadow-sacred/20" size="sm">
           <LayoutDashboard className="w-4 h-4 mr-2" />
           Dashboard
         </Button>
@@ -198,14 +127,14 @@ function HeaderAuthButtons({ user }: { user: any }) {
 
   return (
     <>
-      <Link to="/auth">
-        <Button variant="ghost" size="sm" className="hover:bg-muted">
+      <Link to="/auth" className="hidden sm:block">
+        <Button variant="ghost" size="sm">
           Sign In
         </Button>
       </Link>
       <BetaBenefitsDialog>
-        <Button className="bg-sacred hover:bg-sacred/90 text-sacred-foreground shadow-lg shadow-sacred/20" size="sm">
-          Become a Beta Tester
+        <Button className="bg-sacred hover:bg-sacred/90 text-sacred-foreground" size="sm">
+          Get Started
         </Button>
       </BetaBenefitsDialog>
     </>
