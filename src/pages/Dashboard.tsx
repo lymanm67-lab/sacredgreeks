@@ -51,6 +51,8 @@ import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
 import { prefetchCommonRoutes } from '@/hooks/use-prefetch';
 import { NetworkErrorHandler } from '@/components/ui/NetworkErrorHandler';
 import { useRealtimeNotifications } from '@/hooks/use-realtime-notifications';
+import { usePersonalization } from '@/hooks/use-personalization';
+import { PersonalizedWelcome } from '@/components/dashboard/PersonalizedWelcome';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -73,6 +75,7 @@ const Dashboard = () => {
   const { isDemoMode } = useDemoMode();
   const { showOnboarding, completeOnboarding, isChecking } = useOnboarding();
   const { toggleFavorite, isFavorite } = useFavorites();
+  const { personalization, hasCompletedSurvey } = usePersonalization();
   const [stats, setStats] = useState<DashboardStats>({
     assessmentCount: 0,
     prayerCount: 0,
@@ -442,8 +445,21 @@ const Dashboard = () => {
     },
   ];
 
-  // Sort actions: favorites first, then the rest
+  // Sort actions: personalized priority first, then favorites, then the rest
   const sortedActions = [...quickActions].sort((a, b) => {
+    // Personalized priority (highest)
+    const aPriority = personalization?.priorityActions.indexOf(a.id) ?? -1;
+    const bPriority = personalization?.priorityActions.indexOf(b.id) ?? -1;
+    
+    // If both are in priority list, sort by their position
+    if (aPriority !== -1 && bPriority !== -1) {
+      return aPriority - bPriority;
+    }
+    // Priority items come first
+    if (aPriority !== -1) return -1;
+    if (bPriority !== -1) return 1;
+    
+    // Then favorites
     const aFav = isFavorite(a.id) ? 1 : 0;
     const bFav = isFavorite(b.id) ? 1 : 0;
     return bFav - aFav;
@@ -508,10 +524,22 @@ const Dashboard = () => {
 
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-7xl mx-auto space-y-12">
-          {/* Hero Section - Full Width */}
-          <div ref={heroScroll.ref} className={`scroll-animate ${heroScroll.isVisible ? 'visible' : ''} animate-fade-in`}>
-            <HeroSection />
-          </div>
+          {/* Personalized Welcome - Show if survey completed */}
+          {hasCompletedSurvey && personalization && (
+            <div className="animate-fade-in">
+              <PersonalizedWelcome 
+                personalization={personalization} 
+                userName={user?.user_metadata?.full_name}
+              />
+            </div>
+          )}
+
+          {/* Hero Section - Full Width (only if no personalization) */}
+          {!hasCompletedSurvey && (
+            <div ref={heroScroll.ref} className={`scroll-animate ${heroScroll.isVisible ? 'visible' : ''} animate-fade-in`}>
+              <HeroSection />
+            </div>
+          )}
 
           {/* Organization Welcome Card */}
           <div className="animate-fade-in" style={{ animationDelay: '0.05s' }}>
