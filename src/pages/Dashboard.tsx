@@ -54,6 +54,7 @@ import { useRealtimeNotifications } from '@/hooks/use-realtime-notifications';
 import { usePersonalization } from '@/hooks/use-personalization';
 import { PersonalizedWelcome, PersonalizationPrompt } from '@/components/dashboard/PersonalizedWelcome';
 import { useFeaturePreferences } from '@/hooks/use-feature-preferences';
+import { FeatureCustomizationPrompt } from '@/components/dashboard/FeatureCustomizationPrompt';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -542,6 +543,13 @@ const Dashboard = () => {
           {!hasCompletedSurvey && (
             <div className="animate-fade-in">
               <PersonalizationPrompt />
+            </div>
+          )}
+
+          {/* Feature Customization Prompt - Show after survey completed */}
+          {hasCompletedSurvey && (
+            <div className="animate-fade-in">
+              <FeatureCustomizationPrompt />
             </div>
           )}
 
