@@ -53,6 +53,7 @@ import { NetworkErrorHandler } from '@/components/ui/NetworkErrorHandler';
 import { useRealtimeNotifications } from '@/hooks/use-realtime-notifications';
 import { usePersonalization } from '@/hooks/use-personalization';
 import { PersonalizedWelcome, PersonalizationPrompt } from '@/components/dashboard/PersonalizedWelcome';
+import { useFeaturePreferences } from '@/hooks/use-feature-preferences';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -76,6 +77,7 @@ const Dashboard = () => {
   const { showOnboarding, completeOnboarding, isChecking } = useOnboarding();
   const { toggleFavorite, isFavorite } = useFavorites();
   const { personalization, hasCompletedSurvey } = usePersonalization();
+  const { isFeatureVisible, isFeatureAvailable } = useFeaturePreferences();
   const [stats, setStats] = useState<DashboardStats>({
     assessmentCount: 0,
     prayerCount: 0,
@@ -445,25 +447,27 @@ const Dashboard = () => {
     },
   ];
 
-  // Sort actions: personalized priority first, then favorites, then the rest
-  const sortedActions = [...quickActions].sort((a, b) => {
-    // Personalized priority (highest)
-    const aPriority = personalization?.priorityActions.indexOf(a.id) ?? -1;
-    const bPriority = personalization?.priorityActions.indexOf(b.id) ?? -1;
-    
-    // If both are in priority list, sort by their position
-    if (aPriority !== -1 && bPriority !== -1) {
-      return aPriority - bPriority;
-    }
-    // Priority items come first
-    if (aPriority !== -1) return -1;
-    if (bPriority !== -1) return 1;
-    
-    // Then favorites
-    const aFav = isFavorite(a.id) ? 1 : 0;
-    const bFav = isFavorite(b.id) ? 1 : 0;
-    return bFav - aFav;
-  });
+  // Sort and filter actions: filter by visibility, then personalized priority, then favorites
+  const sortedActions = [...quickActions]
+    .filter(action => isFeatureVisible(action.id))
+    .sort((a, b) => {
+      // Personalized priority (highest)
+      const aPriority = personalization?.priorityActions.indexOf(a.id) ?? -1;
+      const bPriority = personalization?.priorityActions.indexOf(b.id) ?? -1;
+      
+      // If both are in priority list, sort by their position
+      if (aPriority !== -1 && bPriority !== -1) {
+        return aPriority - bPriority;
+      }
+      // Priority items come first
+      if (aPriority !== -1) return -1;
+      if (bPriority !== -1) return 1;
+      
+      // Then favorites
+      const aFav = isFavorite(a.id) ? 1 : 0;
+      const bFav = isFavorite(b.id) ? 1 : 0;
+      return bFav - aFav;
+    });
 
   if (loading) {
     return (
