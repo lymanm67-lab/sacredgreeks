@@ -6,7 +6,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sparkles, Rocket, Bug, Shield, Zap } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 
-const APP_VERSION = '1.4.0';
+const APP_VERSION = '2.4.0';
 const VERSION_STORAGE_KEY = 'last-seen-version';
 
 interface ChangelogEntry {
@@ -21,38 +21,46 @@ interface ChangelogEntry {
 // Recent changelog entries to show
 const recentChanges: ChangelogEntry[] = [
   {
-    version: '1.4.0',
-    date: '2025-11-30',
-    highlights: ['Real-time notifications', 'Enhanced analytics', 'Draggable tour guide'],
+    version: '2.4.0',
+    date: '2024-12-03',
+    highlights: ['Admin Gift Subscriptions', 'Feature Customization', 'Tiered Access'],
     features: [
-      'Real-time notifications for prayer wall and forum updates',
-      'Enhanced analytics tracking with Supabase integration',
-      'Auto-generated sitemap for better SEO',
-      'Draggable and collapsible demo tour guide',
-    ],
-    fixes: [
-      'Tour guide no longer blocks page content',
-      'Improved form validation error display',
-    ],
-    improvements: [
-      'Better error handling with retry options',
-      'Keyboard shortcuts for quick navigation',
-      'Smart route prefetching for faster page loads',
-    ],
-  },
-  {
-    version: '1.3.0',
-    date: '2025-11-28',
-    highlights: ['Changelog page', 'E2E testing', 'SEO improvements'],
-    features: [
-      'New Changelog page to track updates',
-      'End-to-end testing with Playwright',
-      'SEO meta tags and structured data',
+      'Admin gift subscription manager - gift Pro or Ministry access to users',
+      'Tiered feature customization - personalize your dashboard experience',
+      'Free users can hide up to 5 features, Pro/Ministry get unlimited',
     ],
     fixes: [],
     improvements: [
-      'Scroll animations for better UX',
-      'Improved accessibility with skip links',
+      'Subscription system now checks gifted subscriptions automatically',
+      'Better RLS policies for feature preferences',
+    ],
+  },
+  {
+    version: '2.3.0',
+    date: '2024-12-02',
+    highlights: ['Personalization', 'Dashboard Updates', 'Mobile Improvements'],
+    features: [
+      'Personalization survey for new users',
+      'Dashboard adapts based on user preferences',
+    ],
+    fixes: [],
+    improvements: [
+      'Improved quick actions organization',
+      'Better mobile responsiveness across all pages',
+    ],
+  },
+  {
+    version: '2.2.0',
+    date: '2024-12-01',
+    highlights: ['Demo Mode', 'Guided Tour', 'Onboarding'],
+    features: [
+      'Interactive demo mode for exploring features without signup',
+      'Demo walkthrough overlay with guided tour',
+    ],
+    fixes: [],
+    improvements: [
+      'Streamlined onboarding flow',
+      'Better first-time user experience',
     ],
   },
 ];
