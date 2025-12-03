@@ -24,11 +24,8 @@ export function useLandingSurvey() {
     }
     
     if (!completed) {
-      // Small delay to not overwhelm on first load
-      const timer = setTimeout(() => {
-        setShowSurvey(true);
-      }, 2000);
-      return () => clearTimeout(timer);
+      // Show immediately on landing page
+      setShowSurvey(true);
     }
   }, []);
 
