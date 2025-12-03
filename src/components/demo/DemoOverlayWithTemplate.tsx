@@ -3,7 +3,12 @@ import { DemoWalkthroughOverlay } from '@/components/DemoWalkthroughOverlay';
 import { useTemplateSelector } from './DemoTemplateSelectorWrapper';
 
 export function DemoOverlayWithTemplate() {
-  const { activeTemplate } = useTemplateSelector();
+  // Safe hook call with error boundary fallback
+  const templateContext = useTemplateSelector();
   
-  return <DemoWalkthroughOverlay customTemplate={activeTemplate} />;
+  if (!templateContext) {
+    return null;
+  }
+  
+  return <DemoWalkthroughOverlay customTemplate={templateContext.activeTemplate} />;
 }

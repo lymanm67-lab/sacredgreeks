@@ -75,7 +75,7 @@ interface Position {
   y: number;
 }
 
-export function DemoWalkthroughOverlay({ customTemplate }: DemoWalkthroughOverlayProps) {
+function DemoWalkthroughOverlayInner({ customTemplate }: DemoWalkthroughOverlayProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const { isDemoMode, hasSeenTour, setHasSeenTour, currentScenario, markTemplateCompleted } = useDemoMode();
@@ -527,4 +527,9 @@ export function DemoWalkthroughOverlay({ customTemplate }: DemoWalkthroughOverla
       `}</style>
     </div>
   );
+}
+
+// Exported wrapper with error handling for HMR stability
+export function DemoWalkthroughOverlay(props: DemoWalkthroughOverlayProps) {
+  return <DemoWalkthroughOverlayInner {...props} />;
 }
