@@ -18,6 +18,7 @@ import { GreekOrganizationSelector } from '@/components/GreekOrganizationSelecto
 import { AffiliationTypeSelector } from '@/components/AffiliationTypeSelector';
 import { DemoModeToggle } from '@/components/DemoModeToggle';
 import { SidebarCustomization } from '@/components/SidebarCustomization';
+import { PersonalizationSettings } from '@/components/PersonalizationSettings';
 
 const profileSchema = z.object({
   full_name: z.string().min(1, 'Name is required').max(100, 'Name must be less than 100 characters'),
@@ -275,6 +276,8 @@ const Profile = () => {
               </Button>
             </CardContent>
           </Card>
+
+          <PersonalizationSettings />
 
           <DemoModeToggle />
 

@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useDemoMode } from "@/contexts/DemoModeContext";
-import { useLandingSurvey } from "@/hooks/use-landing-survey";
+import { useLandingSurvey, SurveyAnswers } from "@/hooks/use-landing-survey";
+import { useNavigate } from "react-router-dom";
 import { ChevronUp } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
 import { MobileQRCode } from "@/components/MobileQRCode";
@@ -19,6 +20,7 @@ import { cn } from "@/lib/utils";
 const Index = () => {
   const { user } = useAuth();
   const { isDemoMode } = useDemoMode();
+  const navigate = useNavigate();
   const { showSurvey, completeSurvey, skipSurvey } = useLandingSurvey();
   const [showBackToTop, setShowBackToTop] = useState(false);
 
@@ -33,6 +35,18 @@ const Index = () => {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleSurveyComplete = (answers: SurveyAnswers) => {
+    completeSurvey(answers);
+    // Redirect to sign-up page after completing survey
+    navigate('/auth?mode=signup');
+  };
+
+  const handleSurveySkip = () => {
+    skipSurvey();
+    // Also redirect to sign-up if skipped
+    navigate('/auth?mode=signup');
   };
 
   return (
@@ -99,8 +113,8 @@ const Index = () => {
       {!user && (
         <LandingPersonalizationSurvey
           open={showSurvey}
-          onComplete={completeSurvey}
-          onSkip={skipSurvey}
+          onComplete={handleSurveyComplete}
+          onSkip={handleSurveySkip}
         />
       )}
     </div>
