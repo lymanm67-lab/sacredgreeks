@@ -32,8 +32,33 @@ export const Testimonials = () => {
           </div>
 
           <div className="grid gap-6 md:grid-cols-3">
-            {/* Video Testimonial */}
-            <Card className="overflow-hidden border-2 border-sacred/20 animate-fade-in">
+            {/* First Quote */}
+            <Card
+              className="relative hover:shadow-xl transition-all duration-300 border-2 hover:border-sacred/30 hover:scale-105 animate-fade-in"
+            >
+              <CardContent className="pt-4 pb-4">
+                <Quote className="w-8 h-8 text-sacred/20 mb-3 transition-transform duration-300 hover:scale-110" />
+                <p className="text-base mb-4 leading-relaxed italic">
+                  "{testimonials[0].text}"
+                </p>
+                <div className="flex items-center gap-3">
+                  <Avatar className="w-10 h-10 bg-sacred/10 transition-transform duration-300 hover:scale-110">
+                    <AvatarFallback className="bg-sacred/20 text-sacred font-semibold text-sm">
+                      {testimonials[0].initials}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <p className="font-semibold text-sm">{testimonials[0].name}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {testimonials[0].org}
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Video Testimonial - Center */}
+            <Card className="overflow-hidden border-2 border-sacred/20 animate-fade-in" style={{ animationDelay: '0.15s' }}>
               <CardContent className="p-0">
                 <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                   <iframe
@@ -51,33 +76,31 @@ export const Testimonials = () => {
               </CardContent>
             </Card>
 
-            {testimonials.map((testimonial, index) => (
-              <Card
-                key={index}
-                className="relative hover:shadow-xl transition-all duration-300 border-2 hover:border-sacred/30 hover:scale-105 animate-fade-in"
-                style={{ animationDelay: `${(index + 1) * 0.15}s` }}
-              >
-                <CardContent className="pt-4 pb-4">
-                  <Quote className="w-8 h-8 text-sacred/20 mb-3 transition-transform duration-300 hover:scale-110" />
-                  <p className="text-base mb-4 leading-relaxed italic">
-                    "{testimonial.text}"
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <Avatar className="w-10 h-10 bg-sacred/10 transition-transform duration-300 hover:scale-110">
-                      <AvatarFallback className="bg-sacred/20 text-sacred font-semibold text-sm">
-                        {testimonial.initials}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="font-semibold text-sm">{testimonial.name}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {testimonial.org}
-                      </p>
-                    </div>
+            {/* Second Quote */}
+            <Card
+              className="relative hover:shadow-xl transition-all duration-300 border-2 hover:border-sacred/30 hover:scale-105 animate-fade-in"
+              style={{ animationDelay: '0.3s' }}
+            >
+              <CardContent className="pt-4 pb-4">
+                <Quote className="w-8 h-8 text-sacred/20 mb-3 transition-transform duration-300 hover:scale-110" />
+                <p className="text-base mb-4 leading-relaxed italic">
+                  "{testimonials[1].text}"
+                </p>
+                <div className="flex items-center gap-3">
+                  <Avatar className="w-10 h-10 bg-sacred/10 transition-transform duration-300 hover:scale-110">
+                    <AvatarFallback className="bg-sacred/20 text-sacred font-semibold text-sm">
+                      {testimonials[1].initials}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <p className="font-semibold text-sm">{testimonials[1].name}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {testimonials[1].org}
+                    </p>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
