@@ -200,7 +200,7 @@ export function LandingPersonalizationSurvey({ open, onComplete, onSkip }: Landi
   const needsCoachingStep = helpNeeded.includes('coaching');
   
   const getTotalSteps = () => {
-    let steps = 3; // Base: journey, challenge, help
+    let steps = 4; // Base: journey, challenge, help, confirmation
     if (isAlumni) steps += 1; // Alumni status
     if (needsCoachingStep) steps += 1; // Coaching type
     return steps;
@@ -222,17 +222,23 @@ export function LandingPersonalizationSurvey({ open, onComplete, onSkip }: Landi
       if (helpNeeded.includes('coaching')) {
         setStep(5); // Go to coaching type selection
       } else {
-        onComplete({ journey, alumniStatus: isAlumni ? alumniStatus : undefined, challenge, helpNeeded });
+        setStep(6); // Go to confirmation step
       }
     } else if (step === 5) {
-      // Complete with coaching type and redirect to application
-      onComplete({ journey, alumniStatus: isAlumni ? alumniStatus : undefined, challenge, helpNeeded, coachingType });
-      navigate('/coaching-application');
+      setStep(6); // Go to confirmation step
+    } else if (step === 6) {
+      // Complete and redirect to signup
+      onComplete({ journey, alumniStatus: isAlumni ? alumniStatus : undefined, challenge, helpNeeded, coachingType: needsCoachingStep ? coachingType : undefined });
+      if (needsCoachingStep) {
+        navigate('/coaching-application');
+      }
     }
   };
 
   const handleBack = () => {
-    if (step === 5) {
+    if (step === 6) {
+      setStep(needsCoachingStep ? 5 : 4);
+    } else if (step === 5) {
       setStep(4);
     } else if (step === 4) {
       setStep(3);
@@ -264,6 +270,7 @@ export function LandingPersonalizationSurvey({ open, onComplete, onSkip }: Landi
       case 3: return !!challenge;
       case 4: return helpNeeded.length > 0;
       case 5: return !!coachingType;
+      case 6: return true; // Confirmation step always allows proceed
       default: return false;
     }
   };
@@ -273,9 +280,17 @@ export function LandingPersonalizationSurvey({ open, onComplete, onSkip }: Landi
     if (step === 2 && isAlumni) return 2;
     if (step === 3) return isAlumni ? 3 : 2;
     if (step === 4) return isAlumni ? 4 : 3;
-    if (step === 5) return totalSteps;
+    if (step === 5) return isAlumni ? 5 : 4;
+    if (step === 6) return totalSteps;
     return step;
   }
+
+  // Helper to get labels for confirmation display
+  const getJourneyLabel = () => journeyOptions.find(o => o.value === journey)?.label || journey;
+  const getAlumniLabel = () => alumniStatusOptions.find(o => o.value === alumniStatus)?.label || alumniStatus;
+  const getChallengeLabel = () => challengeOptions.find(o => o.value === challenge)?.label || challenge;
+  const getHelpLabels = () => helpNeeded.map(h => helpOptions.find(o => o.value === h)?.label || h);
+  const getCoachingLabel = () => coachingTypeOptions.find(o => o.value === coachingType)?.label || coachingType;
 
   return (
     <Dialog open={open} onOpenChange={() => {}}>
@@ -545,6 +560,71 @@ export function LandingPersonalizationSurvey({ open, onComplete, onSkip }: Landi
               </div>
             </div>
           )}
+
+          {step === 6 && (
+            <div className="space-y-4">
+              <div className="text-center space-y-2">
+                <div className="w-12 h-12 rounded-full bg-sacred/10 flex items-center justify-center mx-auto">
+                  <Check className="w-6 h-6 text-sacred" />
+                </div>
+                <h3 className="text-lg font-semibold">Review Your Selections</h3>
+                <p className="text-sm text-muted-foreground">
+                  Here's what you've shared - you can edit these anytime in your profile settings after signing up
+                </p>
+              </div>
+              
+              <div className="space-y-3 bg-muted/50 rounded-xl p-4">
+                <div className="flex items-start gap-3">
+                  <Users className="w-4 h-4 text-sacred mt-0.5 shrink-0" />
+                  <div>
+                    <p className="text-xs text-muted-foreground">Your Journey</p>
+                    <p className="font-medium">{getJourneyLabel()}</p>
+                    {isAlumni && alumniStatus && (
+                      <p className="text-sm text-muted-foreground">{getAlumniLabel()}</p>
+                    )}
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <Shield className="w-4 h-4 text-sacred mt-0.5 shrink-0" />
+                  <div>
+                    <p className="text-xs text-muted-foreground">Main Challenge</p>
+                    <p className="font-medium">{getChallengeLabel()}</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-3">
+                  <Sparkles className="w-4 h-4 text-sacred mt-0.5 shrink-0" />
+                  <div>
+                    <p className="text-xs text-muted-foreground">Help Needed</p>
+                    <div className="flex flex-wrap gap-1.5 mt-1">
+                      {getHelpLabels().map((label, index) => (
+                        <Badge key={index} variant="secondary" className="text-xs">
+                          {label}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                
+                {needsCoachingStep && coachingType && (
+                  <div className="flex items-start gap-3">
+                    <UserCog className="w-4 h-4 text-sacred mt-0.5 shrink-0" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Coaching Preference</p>
+                      <p className="font-medium">{getCoachingLabel()}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+              
+              <div className="text-center pt-2">
+                <p className="text-xs text-muted-foreground">
+                  Your dashboard will be personalized based on these preferences
+                </p>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="flex items-center justify-between pt-2">
@@ -562,11 +642,9 @@ export function LandingPersonalizationSurvey({ open, onComplete, onSkip }: Landi
             disabled={!canProceed()}
             className="bg-sacred hover:bg-sacred/90 text-sacred-foreground gap-2"
           >
-            {step === 5 
-              ? 'Continue to Application' 
-              : (step === 4 && !helpNeeded.includes('coaching')) 
-                ? 'Get Started' 
-                : 'Continue'}
+            {step === 6 
+              ? (needsCoachingStep ? 'Continue to Application' : 'Create Account')
+              : 'Continue'}
             <ArrowRight className="w-4 h-4" />
           </Button>
         </div>
