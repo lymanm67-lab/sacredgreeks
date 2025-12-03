@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useDemoMode } from "@/contexts/DemoModeContext";
+import { useLandingSurvey } from "@/hooks/use-landing-survey";
 import { HeartHandshake, ChevronUp } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
 import { MobileQRCode } from "@/components/MobileQRCode";
@@ -14,6 +15,7 @@ import { CoreFeaturesSection } from "@/components/landing/CoreFeaturesSection";
 import { HealingResourcesSection } from "@/components/landing/HealingResourcesSection";
 import { Footer } from "@/components/landing/Footer";
 import { FinalCTA } from "@/components/landing/FinalCTA";
+import { LandingPersonalizationSurvey } from "@/components/landing/LandingPersonalizationSurvey";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { cn } from "@/lib/utils";
 
@@ -27,6 +29,7 @@ const sectionNav = [
 const Index = () => {
   const { user } = useAuth();
   const { isDemoMode } = useDemoMode();
+  const { showSurvey, completeSurvey, skipSurvey } = useLandingSurvey();
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
@@ -162,6 +165,15 @@ const Index = () => {
 
       {/* Footer */}
       <Footer />
+
+      {/* Personalization Survey for new visitors */}
+      {!user && (
+        <LandingPersonalizationSurvey
+          open={showSurvey}
+          onComplete={completeSurvey}
+          onSkip={skipSurvey}
+        />
+      )}
     </div>
   );
 };
