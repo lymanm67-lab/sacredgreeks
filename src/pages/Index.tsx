@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { useSubscription } from "@/hooks/use-subscription";
 import { useDemoMode } from "@/contexts/DemoModeContext";
 import { HeartHandshake, ChevronUp } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
@@ -9,36 +8,24 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import logo from "@/assets/sacred-greeks-logo.png";
 import { ScrollProgressIndicator } from "@/components/ui/ScrollProgressIndicator";
 import { FloatingCTA } from "@/components/ui/FloatingCTA";
-import { StatsSection } from "@/components/landing/StatsSection";
-import { ShareSection } from "@/components/landing/ShareSection";
-import { ObjectionsTeaser } from "@/components/landing/ObjectionsTeaser";
 import { DemoHeaderButton } from "@/components/landing/DemoHeaderButton";
 import { LandingHeroSection } from "@/components/landing/HeroSection";
-import { BenefitsSection } from "@/components/landing/BenefitsSection";
 import { CoreFeaturesSection } from "@/components/landing/CoreFeaturesSection";
-import { SubscriptionBanner } from "@/components/landing/SubscriptionBanner";
-import { FeaturesSection } from "@/components/landing/FeaturesSection";
 import { HealingResourcesSection } from "@/components/landing/HealingResourcesSection";
 import { Footer } from "@/components/landing/Footer";
 import { FinalCTA } from "@/components/landing/FinalCTA";
-import { ComparisonSection } from "@/components/landing/ComparisonSection";
-import { DailyValueSection } from "@/components/landing/DailyValueSection";
-import { HomeScreenBenefits } from "@/components/landing/HomeScreenBenefits";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { cn } from "@/lib/utils";
 
-// Mobile section navigation items
+// Mobile section navigation items - simplified to 3
 const sectionNav = [
-  { id: "daily-value", label: "Why", icon: null, isHighlighted: true },
   { id: "core-features", label: "Tools", icon: null },
-  { id: "comparison", label: "Compare", icon: null },
   { id: "healing-resources", label: "Support", icon: HeartHandshake },
   { id: "testimonials", label: "Stories", icon: null },
 ];
 
 const Index = () => {
   const { user } = useAuth();
-  const { subscribed } = useSubscription();
   const { isDemoMode } = useDemoMode();
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -83,19 +70,6 @@ const Index = () => {
       
       {!user && <FloatingCTA scrollThreshold={600} />}
 
-      {/* Floating Support Button */}
-      <button
-        onClick={() => scrollToSection('healing-resources')}
-        className={`fixed bottom-24 md:bottom-20 left-4 z-40 flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-amber-500 to-rose-500 text-white rounded-full shadow-lg shadow-amber-500/30 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-amber-500/40 ${
-          showMobileNav ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 pointer-events-none'
-        }`}
-        aria-label="Need support?"
-      >
-        <HeartHandshake className="h-4 w-4" />
-        <span className="text-sm font-medium hidden sm:inline">Need Support?</span>
-        <span className="text-sm font-medium sm:hidden">Support</span>
-      </button>
-
       {/* Back to Top Button */}
       <button
         onClick={scrollToTop}
@@ -115,13 +89,9 @@ const Index = () => {
               key={section.id}
               onClick={() => scrollToSection(section.id)}
               className={`px-3 py-1.5 text-xs font-medium rounded-full transition-all duration-200 flex items-center gap-1.5 ${
-                section.isHighlighted 
-                  ? activeSection === section.id
-                    ? 'bg-gradient-to-r from-amber-500 to-rose-500 text-white scale-105 shadow-lg shadow-amber-500/30'
-                    : 'bg-gradient-to-r from-amber-500/20 to-rose-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30 hover:from-amber-500/30 hover:to-rose-500/30'
-                  : activeSection === section.id 
-                    ? 'bg-sacred text-white scale-105' 
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted active:scale-95'
+                activeSection === section.id 
+                  ? 'bg-sacred text-white scale-105' 
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted active:scale-95'
               }`}
               style={{ animationDelay: `${index * 50}ms` }}
             >
@@ -164,64 +134,10 @@ const Index = () => {
       {/* Hero Section */}
       <LandingHeroSection user={user} />
 
-      {/* Daily Value Section - Answers "Why keep on home screen?" */}
-      {!user && (
-        <AnimatedSection animation="fade-up" delay={100}>
-          <DailyValueSection />
-        </AnimatedSection>
-      )}
-
-      {/* Stats Section */}
-      {!user && (
-        <AnimatedSection animation="fade-up" delay={100}>
-          <StatsSection />
-        </AnimatedSection>
-      )}
-
-      {/* Benefits Section */}
-      {!user && (
-        <AnimatedSection animation="fade-up" delay={150}>
-          <BenefitsSection />
-        </AnimatedSection>
-      )}
-
-      {/* Home Screen Benefits - PWA advantages */}
-      {!user && (
-        <AnimatedSection animation="fade-up" delay={100}>
-          <HomeScreenBenefits />
-        </AnimatedSection>
-      )}
-
-      {/* BGLO Objections Teaser */}
-      {!user && (
-        <AnimatedSection animation="fade-up" delay={150}>
-          <div id="objections-teaser">
-            <ObjectionsTeaser />
-          </div>
-        </AnimatedSection>
-      )}
-
-      {/* Core Features */}
+      {/* Core Features - 4 Free Tools */}
       <AnimatedSection animation="fade-up" delay={100}>
         <CoreFeaturesSection />
       </AnimatedSection>
-
-      {/* Subscription Banner */}
-      <AnimatedSection animation="zoom-in" delay={150}>
-        <SubscriptionBanner user={user} subscribed={subscribed} />
-      </AnimatedSection>
-
-      {/* Features Section */}
-      <AnimatedSection animation="fade-up" delay={100}>
-        <FeaturesSection />
-      </AnimatedSection>
-
-      {/* Comparison Section - Marketing */}
-      {!user && (
-        <AnimatedSection animation="fade-up" delay={100}>
-          <ComparisonSection />
-        </AnimatedSection>
-      )}
 
       {/* Healing Resources */}
       <AnimatedSection animation="fade-up" delay={100}>
@@ -235,11 +151,6 @@ const Index = () => {
         <div id="testimonials" className="scroll-mt-20">
           <Testimonials />
         </div>
-      </AnimatedSection>
-
-      {/* Share Section */}
-      <AnimatedSection animation="zoom-in" delay={100}>
-        <ShareSection />
       </AnimatedSection>
 
       {/* Final CTA */}

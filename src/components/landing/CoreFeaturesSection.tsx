@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
-import { Calendar, BookOpen, Sparkles, Users, PenLine, Drama, LucideIcon } from "lucide-react";
+import { Calendar, BookOpen, Sun, Drama, LucideIcon } from "lucide-react";
 
 interface CoreFeature {
   title: string;
@@ -35,50 +35,36 @@ const coreFeatures: CoreFeature[] = [
     badge: "Foundation",
   },
   {
+    title: "Daily Devotional",
+    description: "Start each morning with scripture and reflection designed for Christian Greeks",
+    icon: Sun,
+    link: "/devotional",
+    color: "from-amber-500 to-orange-500",
+    badge: "Daily",
+  },
+  {
     title: "Myth Buster Library",
     description: "Searchable biblical responses to common accusations about Greek life",
     icon: BookOpen,
     link: "/myth-buster",
     color: "from-purple-500 to-violet-600",
   },
-  {
-    title: "Symbol & Ritual Guide",
-    description: "Christian perspectives on Greek symbolism with guidance on participation",
-    icon: Sparkles,
-    link: "/symbol-guide",
-    color: "from-amber-500 to-orange-600",
-  },
-  {
-    title: "Ask Dr. Lyman",
-    description: "Submit questions and get curated answers on theology, family, and campus ministry",
-    icon: Users,
-    link: "/ask-dr-lyman",
-    color: "from-teal-500 to-emerald-600",
-  },
-  {
-    title: "Prayer Journal",
-    description: "Track your prayers, record answers, and grow in your relationship with God",
-    icon: PenLine,
-    link: "/prayer-journal",
-    color: "from-rose-500 to-pink-600",
-  },
 ];
 
 export function CoreFeaturesSection() {
   return (
     <div id="core-features" className="container mx-auto px-4 py-16 bg-gradient-to-b from-muted/30 to-background scroll-mt-20">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-8">
-          <Badge className="bg-sky-500/20 text-sky-400 border-sky-400/30 mb-4">For the Christian Greek at Midnight</Badge>
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            You Don't Have to <span className="shimmer-text">Choose</span>
+            4 Free Tools to <span className="shimmer-text">Get Started</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Scrolling through denouncement videos? Feeling torn between your faith and your letters? This app is for you.
+            Everything you need to navigate faith and Greek life with confidence.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           {coreFeatures.map((feature) => {
             const cardContent = (
               <Card className="feature-card h-full transition-all hover:scale-[1.03] border-2 cursor-pointer group overflow-hidden">
@@ -92,7 +78,7 @@ export function CoreFeaturesSection() {
                       <Badge className="bg-sacred text-white animate-pulse">{feature.badge}</Badge>
                     )}
                   </div>
-                  <CardTitle className="text-lg group-hover:text-sacred transition-colors">
+                  <CardTitle className="text-base group-hover:text-sacred transition-colors">
                     {feature.title}
                   </CardTitle>
                 </CardHeader>
