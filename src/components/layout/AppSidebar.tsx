@@ -28,6 +28,7 @@ import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { SidebarSearch } from "./SidebarSearch";
 import { useSidebarPreferences } from "@/hooks/use-sidebar-preferences";
+import { useFeaturePreferences } from "@/hooks/use-feature-preferences";
 import {
   Sidebar,
   SidebarContent,
@@ -43,32 +44,33 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
+// Map nav items to feature IDs for filtering
 const mainNavItems = [
-  { title: "Dashboard", url: "/dashboard", icon: Home },
-  { title: "Journey", url: "/journey", icon: Compass },
-  { title: "Devotional", url: "/devotional", icon: BookOpen },
-  { title: "Prayer Journal", url: "/prayer-journal", icon: Heart },
-  { title: "Bible Study", url: "/bible-study", icon: Book },
+  { title: "Dashboard", url: "/dashboard", icon: Home, featureId: null }, // Always visible
+  { title: "Journey", url: "/journey", icon: Compass, featureId: '30-day-journey' },
+  { title: "Devotional", url: "/devotional", icon: BookOpen, featureId: 'daily-devotional' },
+  { title: "Prayer Journal", url: "/prayer-journal", icon: Heart, featureId: 'prayer-journal' },
+  { title: "Bible Study", url: "/bible-study", icon: Book, featureId: 'bible-study' },
 ];
 
 const communityItems = [
-  { title: "Prayer Wall", url: "/prayer-wall", icon: HandHeart },
-  { title: "Forum", url: "/forum", icon: MessageSquare },
-  { title: "Community", url: "/community", icon: Users },
+  { title: "Prayer Wall", url: "/prayer-wall", icon: HandHeart, featureId: 'prayer-wall' },
+  { title: "Forum", url: "/forum", icon: MessageSquare, featureId: 'forum' },
+  { title: "Community", url: "/community", icon: Users, featureId: 'org-community' },
 ];
 
 const resourceItems = [
-  { title: "Resources", url: "/resources", icon: Library },
-  { title: "Symbol Guide", url: "/symbol-guide", icon: Shapes },
-  { title: "Video Library", url: "/video-library", icon: Video },
-  { title: "Study Guide", url: "/study", icon: ClipboardList },
+  { title: "Resources", url: "/resources", icon: Library, featureId: null }, // Always visible
+  { title: "Symbol Guide", url: "/symbol-guide", icon: Shapes, featureId: 'symbol-guide' },
+  { title: "Video Library", url: "/video-library", icon: Video, featureId: 'did-you-know' },
+  { title: "Study Guide", url: "/study", icon: ClipboardList, featureId: null }, // Always visible
 ];
 
 const footerItems = [
-  { title: "Achievements", url: "/achievements", icon: Trophy },
-  { title: "Notifications", url: "/notification-preferences", icon: Bell },
-  { title: "Profile", url: "/profile", icon: User },
-  { title: "FAQ", url: "/faq", icon: HelpCircle },
+  { title: "Achievements", url: "/achievements", icon: Trophy, featureId: 'achievements' },
+  { title: "Notifications", url: "/notification-preferences", icon: Bell, featureId: null },
+  { title: "Profile", url: "/profile", icon: User, featureId: null },
+  { title: "FAQ", url: "/faq", icon: HelpCircle, featureId: null },
 ];
 
 export function AppSidebar() {
@@ -78,10 +80,25 @@ export function AppSidebar() {
   const { user, profile, signOut } = useAuth();
   const { preferences } = useSidebarPreferences();
   const { isDemoMode, toggleDemoMode, currentScenario } = useDemoMode();
+  const { isFeatureVisible } = useFeaturePreferences();
 
   const currentScenarioConfig = DEMO_SCENARIOS.find(s => s.id === currentScenario);
 
   const isActive = (path: string) => location.pathname === path;
+
+  // Filter nav items based on feature visibility
+  const filterNavItems = (items: typeof mainNavItems) => {
+    return items.filter(item => {
+      // Always show items without a featureId
+      if (!item.featureId) return true;
+      return isFeatureVisible(item.featureId);
+    });
+  };
+
+  const filteredMainNav = filterNavItems(mainNavItems);
+  const filteredCommunityNav = filterNavItems(communityItems);
+  const filteredResourceNav = filterNavItems(resourceItems);
+  const filteredFooterNav = filterNavItems(footerItems);
 
   const getInitials = () => {
     if (profile?.full_name) {
@@ -175,12 +192,12 @@ export function AppSidebar() {
       )}
 
       <SidebarContent>
-        {preferences.showMain && (
+        {preferences.showMain && filteredMainNav.length > 0 && (
           <SidebarGroup>
             <SidebarGroupLabel>Main</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {mainNavItems.map((item) => (
+                {filteredMainNav.map((item) => (
                   <NavItem key={item.url} item={item} />
                 ))}
               </SidebarMenu>
@@ -188,12 +205,12 @@ export function AppSidebar() {
           </SidebarGroup>
         )}
 
-        {preferences.showCommunity && (
+        {preferences.showCommunity && filteredCommunityNav.length > 0 && (
           <SidebarGroup>
             <SidebarGroupLabel>Community</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {communityItems.map((item) => (
+                {filteredCommunityNav.map((item) => (
                   <NavItem key={item.url} item={item} />
                 ))}
               </SidebarMenu>
@@ -201,12 +218,12 @@ export function AppSidebar() {
           </SidebarGroup>
         )}
 
-        {preferences.showResources && (
+        {preferences.showResources && filteredResourceNav.length > 0 && (
           <SidebarGroup>
             <SidebarGroupLabel>Resources</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {resourceItems.map((item) => (
+                {filteredResourceNav.map((item) => (
                   <NavItem key={item.url} item={item} />
                 ))}
               </SidebarMenu>
@@ -220,7 +237,7 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {footerItems.map((item) => (
+              {filteredFooterNav.map((item) => (
                 <NavItem key={item.url} item={item} />
               ))}
               <SidebarMenuItem>
