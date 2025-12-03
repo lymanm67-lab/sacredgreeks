@@ -19,13 +19,17 @@ export function useLandingSurvey() {
     const completed = localStorage.getItem(SURVEY_COMPLETED_KEY);
     const savedAnswers = localStorage.getItem(SURVEY_KEY);
     
+    console.log('[Survey] completed:', completed, 'savedAnswers:', !!savedAnswers);
+    
     if (savedAnswers) {
       setSurveyAnswers(JSON.parse(savedAnswers));
     }
     
     if (!completed) {
-      // Show immediately on landing page
+      console.log('[Survey] Showing survey - not completed yet');
       setShowSurvey(true);
+    } else {
+      console.log('[Survey] Survey already completed/skipped');
     }
   }, []);
 
