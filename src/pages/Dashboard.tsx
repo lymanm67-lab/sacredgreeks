@@ -52,7 +52,7 @@ import { prefetchCommonRoutes } from '@/hooks/use-prefetch';
 import { NetworkErrorHandler } from '@/components/ui/NetworkErrorHandler';
 import { useRealtimeNotifications } from '@/hooks/use-realtime-notifications';
 import { usePersonalization } from '@/hooks/use-personalization';
-import { PersonalizedWelcome } from '@/components/dashboard/PersonalizedWelcome';
+import { PersonalizedWelcome, PersonalizationPrompt } from '@/components/dashboard/PersonalizedWelcome';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -531,6 +531,13 @@ const Dashboard = () => {
                 personalization={personalization} 
                 userName={user?.user_metadata?.full_name}
               />
+            </div>
+          )}
+
+          {/* Personalization Prompt - Show if survey NOT completed */}
+          {!hasCompletedSurvey && (
+            <div className="animate-fade-in">
+              <PersonalizationPrompt />
             </div>
           )}
 
