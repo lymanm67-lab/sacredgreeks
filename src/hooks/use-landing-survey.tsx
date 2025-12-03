@@ -5,6 +5,7 @@ const SURVEY_COMPLETED_KEY = 'sacred_greeks_survey_completed';
 
 export interface SurveyAnswers {
   journey: string;
+  alumniStatus?: string;
   challenge: string;
   helpNeeded: string[];
 }
