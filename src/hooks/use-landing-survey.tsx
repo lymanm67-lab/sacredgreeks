@@ -16,20 +16,25 @@ export function useLandingSurvey() {
   const [surveyAnswers, setSurveyAnswers] = useState<SurveyAnswers | null>(null);
 
   useEffect(() => {
+    // Check for force show via URL param (for testing)
+    const urlParams = new URLSearchParams(window.location.search);
+    const forceShow = urlParams.get('survey') === 'true';
+    
+    if (forceShow) {
+      localStorage.removeItem(SURVEY_COMPLETED_KEY);
+      setShowSurvey(true);
+      return;
+    }
+    
     const completed = localStorage.getItem(SURVEY_COMPLETED_KEY);
     const savedAnswers = localStorage.getItem(SURVEY_KEY);
-    
-    console.log('[Survey] completed:', completed, 'savedAnswers:', !!savedAnswers);
     
     if (savedAnswers) {
       setSurveyAnswers(JSON.parse(savedAnswers));
     }
     
     if (!completed) {
-      console.log('[Survey] Showing survey - not completed yet');
       setShowSurvey(true);
-    } else {
-      console.log('[Survey] Survey already completed/skipped');
     }
   }, []);
 
