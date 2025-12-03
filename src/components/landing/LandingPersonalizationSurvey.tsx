@@ -23,11 +23,15 @@ import {
   UserX,
   RefreshCw,
   UsersRound,
-  UserCog
+  UserCog,
+  Volume2,
+  Loader2,
+  Bot
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SurveyAnswers } from '@/hooks/use-landing-survey';
 import { useNavigate } from 'react-router-dom';
+import { useTextToSpeech } from '@/hooks/use-text-to-speech';
 
 interface LandingPersonalizationSurveyProps {
   open: boolean;
@@ -114,31 +118,36 @@ const helpOptions = [
   {
     value: 'quick-answers',
     label: 'Quick answers to criticism',
-    description: 'Myth Buster & Objection Practice',
+    shortDesc: 'Myth Buster & Objection Practice',
+    fullDescription: 'Myth Buster debunks common misconceptions about Greek organizations with biblical truth. Objection Practice helps you rehearse confident, faith-based responses to critics—whether family, church members, or others questioning your membership.',
     icon: MessageSquare,
   },
   {
     value: 'daily-guidance',
     label: 'Daily spiritual guidance',
-    description: 'Devotionals & 30-Day Journey',
+    shortDesc: 'Devotionals & 30-Day Journey',
+    fullDescription: 'Start each day with scripture-based devotionals tailored for Greek Christians. The 30-Day Journey is a structured program using the P.R.O.O.F. framework to help you integrate your faith and Greek identity step by step.',
     icon: Calendar,
   },
   {
     value: 'symbols',
     label: 'Understanding symbols & rituals',
-    description: 'Symbol Guide & Context',
+    shortDesc: 'Symbol Guide & Context',
+    fullDescription: 'The Symbol Guide provides Christian perspectives on Greek letters, hand signs, and rituals. Understand the historical context and how to approach these elements from a faith-informed viewpoint without compromising your beliefs.',
     icon: Eye,
   },
   {
     value: 'healing',
     label: 'Processing hurt or conflict',
-    description: 'Healing Resources & Support',
+    shortDesc: 'Healing Resources & Support',
+    fullDescription: 'Resources for those experiencing family rifts, church rejection, or internal conflict about their Greek membership. Includes guided reflections, community support, and pathways to reconciliation and peace.',
     icon: HeartHandshake,
   },
   {
     value: 'coaching',
     label: 'Coaching',
-    description: 'Personal or group guidance from experts',
+    shortDesc: 'Personal or group guidance',
+    fullDescription: 'Connect with experienced coaches who understand both Greek life and Christian faith. Get personalized advice for your specific situation, whether navigating family conversations or growing as a faith-driven leader in your chapter.',
     icon: UsersRound,
   },
 ];
@@ -160,14 +169,33 @@ const coachingTypeOptions = [
 
 export function LandingPersonalizationSurvey({ open, onComplete, onSkip }: LandingPersonalizationSurveyProps) {
   const navigate = useNavigate();
+  const { speak, isPlaying, isLoading, stop } = useTextToSpeech();
   const [step, setStep] = useState(1);
   const [journey, setJourney] = useState('');
   const [alumniStatus, setAlumniStatus] = useState('');
   const [challenge, setChallenge] = useState('');
   const [helpNeeded, setHelpNeeded] = useState<string[]>([]);
   const [coachingType, setCoachingType] = useState('');
+  const [showAiSuggestion, setShowAiSuggestion] = useState(false);
 
-  // Dynamic step calculation based on selections
+  const handleListen = (text: string, id: string) => {
+    if (isPlaying === id) {
+      stop();
+    } else {
+      speak(text, id);
+    }
+  };
+
+  const getAiRecommendation = () => {
+    // Based on challenge, recommend help options
+    const recommendations: Record<string, string[]> = {
+      'disapproval': ['quick-answers', 'healing'],
+      'torn': ['symbols', 'daily-guidance'],
+      'responses': ['quick-answers', 'symbols'],
+      'growth': ['daily-guidance', 'coaching'],
+    };
+    return recommendations[challenge] || [];
+  };
   const isAlumni = journey === 'alumni';
   const needsCoachingStep = helpNeeded.includes('coaching');
   
@@ -390,38 +418,89 @@ export function LandingPersonalizationSurvey({ open, onComplete, onSkip }: Landi
             <div className="space-y-4">
               <div className="text-center space-y-2">
                 <h3 className="text-lg font-semibold">What would help you most today?</h3>
-                <p className="text-sm text-muted-foreground">Select all that apply - we'll create your personalized dashboard</p>
+                <p className="text-sm text-muted-foreground">Select all that apply - tap the speaker icon to hear details</p>
               </div>
+              
+              {/* AI Assist Button */}
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full gap-2 border-sacred/30 text-sacred hover:bg-sacred/5"
+                onClick={() => {
+                  const recommended = getAiRecommendation();
+                  setHelpNeeded(recommended);
+                  setShowAiSuggestion(true);
+                }}
+              >
+                <Bot className="w-4 h-4" />
+                AI Assist - Recommend based on my challenge
+              </Button>
+              
+              {showAiSuggestion && helpNeeded.length > 0 && (
+                <p className="text-xs text-center text-sacred">
+                  Based on your challenge, we recommend the highlighted options. Feel free to adjust!
+                </p>
+              )}
+              
               <div className="grid gap-3">
                 {helpOptions.map((option) => {
                   const isSelected = helpNeeded.includes(option.value);
+                  const listenId = `help-${option.value}`;
+                  const isCurrentlyPlaying = isPlaying === listenId;
+                  const isCurrentlyLoading = isLoading === listenId;
+                  
                   return (
-                    <button
+                    <div
                       key={option.value}
-                      onClick={() => toggleHelpOption(option.value)}
                       className={cn(
-                        "flex items-start gap-4 p-4 rounded-xl border-2 transition-all duration-200 text-left",
+                        "rounded-xl border-2 transition-all duration-200",
                         isSelected
                           ? "border-sacred bg-sacred/5 shadow-md shadow-sacred/10"
-                          : "border-border hover:border-sacred/50 hover:bg-muted/50"
+                          : "border-border hover:border-sacred/50"
                       )}
                     >
-                      <div className={cn(
-                        "p-2 rounded-lg transition-colors",
-                        isSelected ? "bg-sacred text-white" : "bg-muted text-muted-foreground"
-                      )}>
-                        <option.icon className="w-5 h-5" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium">{option.label}</span>
-                          {isSelected && (
-                            <Check className="w-4 h-4 text-sacred" />
-                          )}
+                      <button
+                        onClick={() => toggleHelpOption(option.value)}
+                        className="flex items-start gap-4 p-4 w-full text-left"
+                      >
+                        <div className={cn(
+                          "p-2 rounded-lg transition-colors shrink-0",
+                          isSelected ? "bg-sacred text-white" : "bg-muted text-muted-foreground"
+                        )}>
+                          <option.icon className="w-5 h-5" />
                         </div>
-                        <p className="text-sm text-muted-foreground mt-0.5">{option.description}</p>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium">{option.label}</span>
+                            {isSelected && (
+                              <Check className="w-4 h-4 text-sacred shrink-0" />
+                            )}
+                          </div>
+                          <p className="text-sm text-muted-foreground mt-0.5">{option.shortDesc}</p>
+                          <p className="text-xs text-muted-foreground/80 mt-2 leading-relaxed">
+                            {option.fullDescription}
+                          </p>
+                        </div>
+                      </button>
+                      <div className="px-4 pb-3 flex justify-end">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="gap-1.5 text-xs h-7"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleListen(`${option.label}. ${option.fullDescription}`, listenId);
+                          }}
+                        >
+                          {isCurrentlyLoading ? (
+                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                          ) : (
+                            <Volume2 className={cn("w-3.5 h-3.5", isCurrentlyPlaying && "text-sacred")} />
+                          )}
+                          {isCurrentlyPlaying ? "Stop" : "Listen"}
+                        </Button>
                       </div>
-                    </button>
+                    </div>
                   );
                 })}
               </div>
