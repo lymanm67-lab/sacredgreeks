@@ -1,19 +1,14 @@
-import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useDemoMode } from "@/contexts/DemoModeContext";
 import { useLandingSurvey, SurveyAnswers } from "@/hooks/use-landing-survey";
 import { useNavigate } from "react-router-dom";
-import { ChevronUp } from "lucide-react";
-import { Testimonials } from "@/components/Testimonials";
 import { MobileQRCode } from "@/components/MobileQRCode";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import logo from "@/assets/sacred-greeks-logo.png";
 import { DemoHeaderButton } from "@/components/landing/DemoHeaderButton";
 import { LandingHeroSection } from "@/components/landing/HeroSection";
 import { CoreFeaturesSection } from "@/components/landing/CoreFeaturesSection";
-import { HealingResourcesSection } from "@/components/landing/HealingResourcesSection";
 import { Footer } from "@/components/landing/Footer";
-import { FinalCTA } from "@/components/landing/FinalCTA";
 import { LandingPersonalizationSurvey } from "@/components/landing/LandingPersonalizationSurvey";
 import { cn } from "@/lib/utils";
 
@@ -22,49 +17,22 @@ const Index = () => {
   const { isDemoMode } = useDemoMode();
   const navigate = useNavigate();
   const { showSurvey, completeSurvey, skipSurvey } = useLandingSurvey();
-  const [showBackToTop, setShowBackToTop] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowBackToTop(window.scrollY > 400);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   const handleSurveyComplete = (answers: SurveyAnswers) => {
     completeSurvey(answers);
-    // Redirect to sign-up page after completing survey
     navigate('/auth?mode=signup');
   };
 
   const handleSurveySkip = () => {
     skipSurvey();
-    // Also redirect to sign-up if skipped
     navigate('/auth?mode=signup');
   };
 
   return (
     <div className={cn(
-      "min-h-screen bg-background",
+      "min-h-screen bg-background flex flex-col",
       isDemoMode && "pt-11"
     )}>
-      {/* Back to Top Button */}
-      <button
-        onClick={scrollToTop}
-        className={`fixed bottom-6 right-6 z-40 p-3 bg-sacred text-white rounded-full shadow-lg transition-all duration-300 hover:scale-110 ${
-          showBackToTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
-        }`}
-        aria-label="Back to top"
-      >
-        <ChevronUp className="h-5 w-5" />
-      </button>
-      
       {/* Header */}
       <header className={cn(
         "border-b border-border/50 bg-background/95 backdrop-blur-sm sticky z-50",
@@ -90,21 +58,11 @@ const Index = () => {
       {/* Hero Section */}
       <LandingHeroSection user={user} />
 
-      {/* Core Features - 4 Free Tools */}
+      {/* Core Features - Just 2 */}
       <CoreFeaturesSection />
 
-      {/* Healing Resources - Simplified */}
-      <div className="container mx-auto px-4 py-12">
-        <HealingResourcesSection />
-      </div>
-
-      {/* Testimonials */}
-      <div id="testimonials" className="py-12">
-        <Testimonials />
-      </div>
-
-      {/* Final CTA */}
-      {!user && <FinalCTA />}
+      {/* Spacer */}
+      <div className="flex-1" />
 
       {/* Footer */}
       <Footer />
