@@ -38,22 +38,22 @@ const essentialArticles = [
 
 const videoResources = [
   {
-    title: "Understanding BGLO History: A Pastor's Guide",
-    description: "Explore the rich history, founding principles, and cultural significance of Black Greek Letter Organizations.",
-    videoId: "dQw4w9WgXcQ", // Replace with actual video ID
-    youtubeUrl: "https://www.youtube.com/watch?v=LgjPW3vDfkU"
+    title: "Understanding BGLO History & Christian Faith",
+    description: "Explore the rich history, founding principles, and Christian foundations of Black Greek Letter Organizations.",
+    videoId: "17uWxzNGBe4",
+    youtubeUrl: "https://www.youtube.com/watch?v=17uWxzNGBe4"
   },
   {
-    title: "How to Pastor BGLO Members: Grace and Truth",
-    description: "Learn effective, biblically sound strategies for mentoring and counseling BGLO members in your congregation.",
-    videoId: "LgjPW3vDfkU",
-    youtubeUrl: "https://www.youtube.com/watch?v=LgjPW3vDfkU"
+    title: "Navigating Faith & Greek Life",
+    description: "Learn effective, biblically sound strategies for maintaining your faith while active in Greek organizations.",
+    videoId: "AVA2aCkkTeA",
+    youtubeUrl: "https://www.youtube.com/watch?v=AVA2aCkkTeA"
   },
   {
-    title: "From Welcome to Belonging: Creating Community",
+    title: "Building Inclusive Church Community",
     description: "Discover practical ways to foster a welcoming and supportive church atmosphere for all members, including those in BGLOs.",
-    videoId: "3tmd-ClpJxA",
-    youtubeUrl: "https://www.youtube.com/watch?v=3tmd-ClpJxA"
+    videoId: "X9GpholWQ6w",
+    youtubeUrl: "https://www.youtube.com/watch?v=X9GpholWQ6w"
   }
 ];
 
