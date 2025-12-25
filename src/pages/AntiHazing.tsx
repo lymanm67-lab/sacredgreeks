@@ -130,6 +130,63 @@ const AntiHazing = () => {
     }
   ];
 
+  const bgloDeathStatistics = [
+    {
+      organization: "Alpha Phi Alpha",
+      hazingDeaths: 2,
+      pledgingDeaths: 0,
+      notes: null
+    },
+    {
+      organization: "Kappa Alpha Psi",
+      hazingDeaths: 8,
+      pledgingDeaths: 0,
+      notes: null
+    },
+    {
+      organization: "Omega Psi Phi",
+      hazingDeaths: 5,
+      pledgingDeaths: 1,
+      notes: "One additional death occurred during pledging but was not officially determined to be caused by hazing"
+    },
+    {
+      organization: "Phi Beta Sigma",
+      hazingDeaths: 2,
+      pledgingDeaths: 0,
+      notes: null
+    },
+    {
+      organization: "Iota Phi Theta",
+      hazingDeaths: 0,
+      pledgingDeaths: 0,
+      notes: null
+    },
+    {
+      organization: "Alpha Kappa Alpha",
+      hazingDeaths: 1,
+      pledgingDeaths: 1,
+      notes: "One additional death occurred during pledging but was not officially determined to be caused by hazing"
+    },
+    {
+      organization: "Delta Sigma Theta",
+      hazingDeaths: 1,
+      pledgingDeaths: 0,
+      notes: null
+    },
+    {
+      organization: "Zeta Phi Beta",
+      hazingDeaths: 0,
+      pledgingDeaths: 1,
+      notes: "One death occurred during pledging but was not reported as hazing"
+    },
+    {
+      organization: "Sigma Gamma Rho",
+      hazingDeaths: 0,
+      pledgingDeaths: 0,
+      notes: null
+    }
+  ];
+
   const alternativeActivities = [
     {
       category: "Team Building",
@@ -334,37 +391,96 @@ const AntiHazing = () => {
           </TabsContent>
 
           <TabsContent value="statistics">
-            <Card>
-              <CardContent className="p-8">
-                <div className="text-center">
-                  <h3 className="text-xl font-semibold mb-4">Hazing by the Numbers</h3>
-                  <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-                    Research shows that hazing is far more prevalent than many realize. 
-                    Understanding the scope of the problem is the first step toward prevention.
-                  </p>
-                  <div className="grid md:grid-cols-3 gap-6">
-                    <div className="p-4 rounded-lg bg-muted">
-                      <div className="text-3xl font-bold text-primary mb-2">73%</div>
-                      <div className="text-sm text-muted-foreground">
-                        of students involved in social organizations experienced hazing
+            <div className="space-y-6">
+              <Card>
+                <CardContent className="p-8">
+                  <div className="text-center">
+                    <h3 className="text-xl font-semibold mb-4">Hazing by the Numbers</h3>
+                    <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+                      Research shows that hazing is far more prevalent than many realize. 
+                      Understanding the scope of the problem is the first step toward prevention.
+                    </p>
+                    <div className="grid md:grid-cols-3 gap-6">
+                      <div className="p-4 rounded-lg bg-muted">
+                        <div className="text-3xl font-bold text-primary mb-2">73%</div>
+                        <div className="text-sm text-muted-foreground">
+                          of students involved in social organizations experienced hazing
+                        </div>
                       </div>
-                    </div>
-                    <div className="p-4 rounded-lg bg-muted">
-                      <div className="text-3xl font-bold text-primary mb-2">9 in 10</div>
-                      <div className="text-sm text-muted-foreground">
-                        students who experienced hazing did not report it
+                      <div className="p-4 rounded-lg bg-muted">
+                        <div className="text-3xl font-bold text-primary mb-2">9 in 10</div>
+                        <div className="text-sm text-muted-foreground">
+                          students who experienced hazing did not report it
+                        </div>
                       </div>
-                    </div>
-                    <div className="p-4 rounded-lg bg-muted">
-                      <div className="text-3xl font-bold text-primary mb-2">47%</div>
-                      <div className="text-sm text-muted-foreground">
-                        of students came to college having already experienced hazing
+                      <div className="p-4 rounded-lg bg-muted">
+                        <div className="text-3xl font-bold text-primary mb-2">47%</div>
+                        <div className="text-sm text-muted-foreground">
+                          of students came to college having already experienced hazing
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+
+              {/* BGLO Death Statistics */}
+              <Card>
+                <CardHeader className="text-center">
+                  <CardTitle className="text-xl">BGLO Hazing & Pledging Deaths</CardTitle>
+                  <CardDescription className="max-w-2xl mx-auto">
+                    Documented deaths within the Divine Nine organizations. This data reflects the serious consequences 
+                    of hazing and the need for continued vigilance and prevention efforts.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b border-border">
+                          <th className="text-left py-3 px-4 font-semibold">Organization</th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            <span className="text-destructive">Hazing Deaths</span>
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            <span className="text-warning">Pledging Deaths*</span>
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">Notes</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {bgloDeathStatistics.map((org, index) => (
+                          <tr key={index} className="border-b border-border/50 hover:bg-muted/30">
+                            <td className="py-3 px-4 font-medium">{org.organization}</td>
+                            <td className="py-3 px-4 text-center">
+                              <Badge variant={org.hazingDeaths > 0 ? "destructive" : "secondary"}>
+                                {org.hazingDeaths}
+                              </Badge>
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              <Badge variant={org.pledgingDeaths > 0 ? "outline" : "secondary"} 
+                                     className={org.pledgingDeaths > 0 ? "border-warning text-warning" : ""}>
+                                {org.pledgingDeaths}
+                              </Badge>
+                            </td>
+                            <td className="py-3 px-4 text-sm text-muted-foreground">
+                              {org.notes || "—"}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="mt-6 p-4 rounded-lg bg-muted/50 border border-border">
+                    <p className="text-xs text-muted-foreground">
+                      <strong>*Pledging Deaths:</strong> Deaths that occurred during the pledging/intake process but were not 
+                      officially determined or reported as being caused by hazing. These cases highlight the importance of 
+                      thorough investigation and transparent reporting.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </TabsContent>
 
           <TabsContent value="laws">
