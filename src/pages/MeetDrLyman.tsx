@@ -2,7 +2,13 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Home, BookOpen, Youtube, ExternalLink, Sparkles, Heart, Users, Award } from "lucide-react";
+import { Home, BookOpen, Youtube, ExternalLink, Sparkles, Heart, Users, Award, ChevronDown, Newspaper, Mic, FileText } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import drLymanPortrait from "@/assets/dr-lyman-portrait.png";
 
 const MeetDrLyman = () => {
@@ -17,7 +23,42 @@ const MeetDrLyman = () => {
             <Home className="w-4 h-4" />
             <span className="text-sm font-medium">Home</span>
           </Link>
-          <h1 className="text-lg font-semibold text-foreground">Meet Dr. Lyman</h1>
+          <div className="flex items-center gap-4">
+            <h1 className="text-lg font-semibold text-foreground">Meet Dr. Lyman</h1>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="gap-1">
+                  More
+                  <ChevronDown className="w-4 h-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48 bg-background border border-border z-50">
+                <DropdownMenuItem asChild>
+                  <Link to="/contact" className="flex items-center gap-2 cursor-pointer">
+                    <Newspaper className="w-4 h-4" />
+                    Press & Media
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/coaching-application" className="flex items-center gap-2 cursor-pointer">
+                    <Mic className="w-4 h-4" />
+                    Book Speaking
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <a 
+                    href="/resources/lyman-media-kit-2025.pdf" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
+                    <FileText className="w-4 h-4" />
+                    Media Kit
+                  </a>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
           <div className="w-16" />
         </div>
       </header>
