@@ -123,6 +123,20 @@ const topicContent = {
     { ref: 'Proverbs 15:1', text: 'A soft answer turneth away wrath: but grievous words stir up anger.', theme: 'Responding to Greek Life Objections' },
     { ref: 'Titus 3:2', text: 'To speak evil of no man, to be no brawlers, but gentle, shewing all meekness unto all men.', theme: 'Responding to Greek Life Objections' },
     
+    // Being Salt and Light in Your Chapter
+    { ref: 'Matthew 5:13-14', text: 'Ye are the salt of the earth: but if the salt have lost his savour, wherewith shall it be salted? Ye are the light of the world. A city that is set on an hill cannot be hid.', theme: 'Being Salt and Light in Your Chapter' },
+    { ref: 'Matthew 5:16', text: 'Let your light so shine before men, that they may see your good works, and glorify your Father which is in heaven.', theme: 'Being Salt and Light in Your Chapter' },
+    { ref: 'Philippians 2:14-15', text: 'Do all things without murmurings and disputings: That ye may be blameless and harmless, the sons of God, without rebuke, in the midst of a crooked and perverse nation, among whom ye shine as lights in the world.', theme: 'Being Salt and Light in Your Chapter' },
+    { ref: 'Ephesians 5:8', text: 'For ye were sometimes darkness, but now are ye light in the Lord: walk as children of light.', theme: 'Being Salt and Light in Your Chapter' },
+    { ref: '1 Peter 2:12', text: 'Having your conversation honest among the Gentiles: that, whereas they speak against you as evildoers, they may by your good works, which they shall behold, glorify God in the day of visitation.', theme: 'Being Salt and Light in Your Chapter' },
+    
+    // Mentorship and Discipleship
+    { ref: '2 Timothy 2:2', text: 'And the things that thou hast heard of me among many witnesses, the same commit thou to faithful men, who shall be able to teach others also.', theme: 'Mentorship and Discipleship' },
+    { ref: 'Titus 2:3-5', text: 'The aged women likewise, that they be in behaviour as becometh holiness... That they may teach the young women to be sober, to love their husbands, to love their children.', theme: 'Mentorship and Discipleship' },
+    { ref: 'Proverbs 22:6', text: 'Train up a child in the way he should go: and when he is old, he will not depart from it.', theme: 'Mentorship and Discipleship' },
+    { ref: 'Matthew 28:19-20', text: 'Go ye therefore, and teach all nations, baptizing them in the name of the Father, and of the Son, and of the Holy Ghost: Teaching them to observe all things whatsoever I have commanded you.', theme: 'Mentorship and Discipleship' },
+    { ref: '1 Corinthians 11:1', text: 'Be ye followers of me, even as I also am of Christ.', theme: 'Mentorship and Discipleship' },
+    
     // General Greek Life
     { ref: 'Galatians 6:2', text: 'Bear ye one another\'s burdens, and so fulfil the law of Christ.', theme: 'Service to Others' },
     { ref: 'Hebrews 10:24-25', text: 'And let us consider one another to provoke unto love and to good works: Not forsaking the assembling of ourselves together.', theme: 'Fellowship' },
