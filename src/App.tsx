@@ -99,6 +99,7 @@ const GreekLife = lazy(() => import("./pages/GreekLife"));
 const Contact = lazy(() => import("./pages/Contact"));
 const ToolsResources = lazy(() => import("./pages/ToolsResources"));
 const HealingResources = lazy(() => import("./pages/HealingResources"));
+const OrganizationDetail = lazy(() => import("./pages/OrganizationDetail"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -195,6 +196,7 @@ const App = () => (
                     <Route path="/journey" element={<Journey />} />
                     <Route path="/myth-buster" element={<MythBuster />} />
                     <Route path="/symbol-guide" element={<SymbolGuide />} />
+                    <Route path="/organization/:orgId" element={<OrganizationDetail />} />
                     <Route path="/ask-dr-lyman" element={<AskDrLyman />} />
                     <Route path="/content-hub" element={<ContentHub />} />
                     <Route path="/subscription" element={<Subscription />} />

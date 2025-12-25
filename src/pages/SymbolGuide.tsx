@@ -387,11 +387,18 @@ const SymbolGuide = () => {
   const filteredOrganizations = useMemo(() => {
     return allGreekOrganizations.filter(org => {
       const matchesCategory = orgCategory === 'all' || org.category === orgCategory;
+      const searchLower = searchQuery.toLowerCase();
       const matchesSearch = searchQuery === '' ||
-        org.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        org.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        org.christianPerspective.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (org.motto?.toLowerCase().includes(searchQuery.toLowerCase()));
+        org.name.toLowerCase().includes(searchLower) ||
+        org.description.toLowerCase().includes(searchLower) ||
+        org.christianPerspective.toLowerCase().includes(searchLower) ||
+        org.motto?.toLowerCase().includes(searchLower) ||
+        org.symbol?.toLowerCase().includes(searchLower) ||
+        org.colors?.toLowerCase().includes(searchLower) ||
+        org.council.toLowerCase().includes(searchLower) ||
+        org.notableMembers?.some(member => member.toLowerCase().includes(searchLower)) ||
+        org.biblicalParallels.some(parallel => parallel.toLowerCase().includes(searchLower)) ||
+        org.scriptureReferences.some(ref => ref.ref.toLowerCase().includes(searchLower));
       return matchesCategory && matchesSearch;
     });
   }, [orgCategory, searchQuery]);
@@ -445,40 +452,46 @@ const SymbolGuide = () => {
 
   const renderOrganizationCard = (org: GreekOrganization) => {
     return (
-      <Card key={org.id} className="overflow-hidden">
-        <CardHeader className="pb-2 bg-gradient-to-r from-sacred/5 to-muted/30">
-          <div className="flex items-start justify-between gap-2">
-            <div>
-              <CardTitle className="text-lg">{org.name}</CardTitle>
-              {org.motto && <p className="text-xs text-muted-foreground italic mt-1">"{org.motto}"</p>}
+      <Link key={org.id} to={`/organization/${org.id}`} className="block">
+        <Card className="overflow-hidden h-full hover:border-sacred/30 transition-colors cursor-pointer">
+          <CardHeader className="pb-2 bg-gradient-to-r from-sacred/5 to-muted/30">
+            <div className="flex items-start justify-between gap-2">
+              <div>
+                <CardTitle className="text-lg hover:text-sacred transition-colors">{org.name}</CardTitle>
+                {org.motto && <p className="text-xs text-muted-foreground italic mt-1">"{org.motto}"</p>}
+              </div>
+              <div className="flex flex-col items-end gap-1">
+                <Badge variant="outline" className="capitalize">{org.type}</Badge>
+                <Badge className="bg-sacred/20 text-sacred border-sacred/30">{org.council}</Badge>
+              </div>
             </div>
-            <div className="flex flex-col items-end gap-1">
-              <Badge variant="outline" className="capitalize">{org.type}</Badge>
-              <Badge className="bg-sacred/20 text-sacred border-sacred/30">{org.council}</Badge>
+            {org.colors && <p className="text-xs text-muted-foreground">Colors: {org.colors}</p>}
+            {org.symbol && <p className="text-xs text-muted-foreground">Symbol: {org.symbol}</p>}
+          </CardHeader>
+          <CardContent className="space-y-3 pt-4">
+            <p className="text-sm text-muted-foreground line-clamp-2">{org.description}</p>
+            <div className="bg-sacred/5 p-3 rounded-lg border border-sacred/20">
+              <h4 className="font-semibold text-sm mb-1 flex items-center gap-2">
+                <Book className="w-4 h-4 text-sacred" /> Christian Perspective
+              </h4>
+              <p className="text-sm text-muted-foreground line-clamp-2">{org.christianPerspective}</p>
             </div>
-          </div>
-          {org.colors && <p className="text-xs text-muted-foreground">Colors: {org.colors}</p>}
-        </CardHeader>
-        <CardContent className="space-y-3 pt-4">
-          <p className="text-sm text-muted-foreground">{org.description}</p>
-          <div className="bg-sacred/5 p-3 rounded-lg border border-sacred/20">
-            <h4 className="font-semibold text-sm mb-1 flex items-center gap-2">
-              <Book className="w-4 h-4 text-sacred" /> Christian Perspective
-            </h4>
-            <p className="text-sm text-muted-foreground">{org.christianPerspective}</p>
-          </div>
-          <div className="space-y-1">
-            <h4 className="font-semibold text-xs text-muted-foreground">Scripture References:</h4>
-            <div className="flex flex-wrap gap-1">
-              {org.scriptureReferences.map((ref, i) => (
-                <Link key={i} to={`/bible-study?search=${encodeURIComponent(ref.ref)}`}>
-                  <Badge variant="secondary" className="text-xs cursor-pointer hover:bg-sacred/20">{ref.ref}</Badge>
-                </Link>
-              ))}
+            <div className="flex items-center justify-between">
+              <div className="flex flex-wrap gap-1">
+                {org.scriptureReferences.slice(0, 2).map((ref, i) => (
+                  <Badge key={i} variant="secondary" className="text-xs">{ref.ref}</Badge>
+                ))}
+                {org.scriptureReferences.length > 2 && (
+                  <Badge variant="secondary" className="text-xs">+{org.scriptureReferences.length - 2} more</Badge>
+                )}
+              </div>
+              <span className="text-xs text-sacred font-medium flex items-center gap-1">
+                View Details <ExternalLink className="w-3 h-3" />
+              </span>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </Link>
     );
   };
 
@@ -752,7 +765,7 @@ const SymbolGuide = () => {
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
-              placeholder="Search symbols and rituals..."
+              placeholder="Search organizations, symbols, notable members, scripture..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10"
