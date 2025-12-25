@@ -4,8 +4,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, Headphones, Play, Download, BookOpen, Rss, ExternalLink, Search, X } from "lucide-react";
-import { useEffect, useState, useMemo } from "react";
+import { Progress } from "@/components/ui/progress";
+import { ArrowLeft, Headphones, Play, Download, BookOpen, Rss, ExternalLink, Search, X, Clock, RotateCcw } from "lucide-react";
+import { useEffect, useState, useMemo, useRef, useCallback } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 
 interface PodcastEpisode {
   title: string;
@@ -16,15 +19,78 @@ interface PodcastEpisode {
   duration?: string;
 }
 
+interface ListeningProgress {
+  episode_title: string;
+  episode_url: string;
+  episode_pub_date: string | null;
+  playback_position: number;
+  duration: number | null;
+  last_played_at: string;
+}
+
+const formatTime = (seconds: number): string => {
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+};
+
 const Podcast = () => {
+  const { user } = useAuth();
   const [episodes, setEpisodes] = useState<PodcastEpisode[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentAudio, setCurrentAudio] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [dateFilter, setDateFilter] = useState("all");
+  const [listeningProgress, setListeningProgress] = useState<ListeningProgress | null>(null);
+  const [loadingProgress, setLoadingProgress] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const RSS_URL = "https://sacredgreeks.jellypod.ai/rss";
 
+  // Fetch listening progress for signed-in users
+  useEffect(() => {
+    const fetchListeningProgress = async () => {
+      if (!user) {
+        setListeningProgress(null);
+        return;
+      }
+
+      setLoadingProgress(true);
+      try {
+        const { data, error } = await supabase
+          .from('podcast_listening_progress')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('last_played_at', { ascending: false })
+          .limit(1)
+          .single();
+
+        if (error && error.code !== 'PGRST116') {
+          console.error('Error fetching listening progress:', error);
+        }
+
+        if (data) {
+          setListeningProgress({
+            episode_title: data.episode_title,
+            episode_url: data.episode_url,
+            episode_pub_date: data.episode_pub_date,
+            playback_position: Number(data.playback_position),
+            duration: data.duration ? Number(data.duration) : null,
+            last_played_at: data.last_played_at
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching listening progress:', error);
+      } finally {
+        setLoadingProgress(false);
+      }
+    };
+
+    fetchListeningProgress();
+  }, [user]);
+
+  // Fetch RSS feed
   useEffect(() => {
     const fetchRSS = async () => {
       try {
@@ -59,10 +125,67 @@ const Podcast = () => {
     fetchRSS();
   }, []);
 
+  // Save progress to database
+  const saveProgress = useCallback(async (
+    episodeTitle: string,
+    episodeUrl: string,
+    episodePubDate: string | null,
+    position: number,
+    audioDuration: number | null
+  ) => {
+    if (!user) return;
+
+    try {
+      const { error } = await supabase
+        .from('podcast_listening_progress')
+        .upsert({
+          user_id: user.id,
+          episode_title: episodeTitle,
+          episode_url: episodeUrl,
+          episode_pub_date: episodePubDate,
+          playback_position: position,
+          duration: audioDuration,
+          last_played_at: new Date().toISOString()
+        }, {
+          onConflict: 'user_id,episode_url'
+        });
+
+      if (error) {
+        console.error('Error saving progress:', error);
+      } else {
+        setListeningProgress({
+          episode_title: episodeTitle,
+          episode_url: episodeUrl,
+          episode_pub_date: episodePubDate,
+          playback_position: position,
+          duration: audioDuration,
+          last_played_at: new Date().toISOString()
+        });
+      }
+    } catch (error) {
+      console.error('Error saving progress:', error);
+    }
+  }, [user]);
+
+  // Debounced save progress
+  const debouncedSaveProgress = useCallback((
+    episodeTitle: string,
+    episodeUrl: string,
+    episodePubDate: string | null,
+    position: number,
+    audioDuration: number | null
+  ) => {
+    if (saveTimeoutRef.current) {
+      clearTimeout(saveTimeoutRef.current);
+    }
+    saveTimeoutRef.current = setTimeout(() => {
+      saveProgress(episodeTitle, episodeUrl, episodePubDate, position, audioDuration);
+    }, 2000);
+  }, [saveProgress]);
+
   const filteredEpisodes = useMemo(() => {
     let filtered = [...episodes];
 
-    // Apply search filter
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(
@@ -71,7 +194,6 @@ const Podcast = () => {
       );
     }
 
-    // Apply date filter
     if (dateFilter !== "all") {
       const now = new Date();
       let cutoffDate: Date;
@@ -99,14 +221,75 @@ const Podcast = () => {
     return filtered;
   }, [episodes, searchQuery, dateFilter]);
 
-  const handlePlay = (audioUrl: string) => {
-    setCurrentAudio(currentAudio === audioUrl ? null : audioUrl);
+  const handlePlay = (audioUrl: string, episode?: PodcastEpisode) => {
+    if (currentAudio === audioUrl) {
+      setCurrentAudio(null);
+    } else {
+      setCurrentAudio(audioUrl);
+    }
+  };
+
+  const handleContinueListening = () => {
+    if (listeningProgress) {
+      setCurrentAudio(listeningProgress.episode_url);
+    }
+  };
+
+  const handleAudioTimeUpdate = (episode: PodcastEpisode) => {
+    if (!audioRef.current || !user) return;
+    
+    const position = audioRef.current.currentTime;
+    const duration = audioRef.current.duration;
+    
+    debouncedSaveProgress(
+      episode.title,
+      episode.audioUrl,
+      episode.pubDate,
+      position,
+      isNaN(duration) ? null : duration
+    );
+  };
+
+  const handleAudioLoadedMetadata = (episode: PodcastEpisode) => {
+    if (!audioRef.current) return;
+    
+    // If this is the continue listening episode, seek to saved position
+    if (listeningProgress && 
+        listeningProgress.episode_url === episode.audioUrl && 
+        listeningProgress.playback_position > 0) {
+      audioRef.current.currentTime = listeningProgress.playback_position;
+    }
+  };
+
+  const handleAudioPause = (episode: PodcastEpisode) => {
+    if (!audioRef.current || !user) return;
+    
+    // Clear debounce and save immediately on pause
+    if (saveTimeoutRef.current) {
+      clearTimeout(saveTimeoutRef.current);
+    }
+    
+    const position = audioRef.current.currentTime;
+    const duration = audioRef.current.duration;
+    
+    saveProgress(
+      episode.title,
+      episode.audioUrl,
+      episode.pubDate,
+      position,
+      isNaN(duration) ? null : duration
+    );
   };
 
   const clearFilters = () => {
     setSearchQuery("");
     setDateFilter("all");
   };
+
+  const currentEpisode = episodes.find(ep => ep.audioUrl === currentAudio);
+  const progressPercentage = listeningProgress?.duration 
+    ? (listeningProgress.playback_position / listeningProgress.duration) * 100 
+    : 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-muted/30 to-background">
@@ -159,6 +342,63 @@ const Podcast = () => {
               </div>
             </div>
           </div>
+
+          {/* Continue Listening Section - Only for signed-in users with progress */}
+          {user && listeningProgress && listeningProgress.playback_position > 5 && (
+            <Card className="border-2 border-sacred/30 bg-gradient-to-r from-sacred/5 to-sacred/10">
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <RotateCcw className="w-5 h-5 text-sacred" />
+                  Continue Listening
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-foreground truncate">{listeningProgress.episode_title}</h3>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                      <Clock className="w-4 h-4" />
+                      <span>
+                        {formatTime(listeningProgress.playback_position)}
+                        {listeningProgress.duration && ` / ${formatTime(listeningProgress.duration)}`}
+                      </span>
+                    </div>
+                    {listeningProgress.duration && (
+                      <Progress value={progressPercentage} className="mt-2 h-1.5" />
+                    )}
+                  </div>
+                  <Button 
+                    onClick={handleContinueListening}
+                    className="bg-sacred hover:bg-sacred/90 text-sacred-foreground shrink-0"
+                  >
+                    <Play className="w-4 h-4 mr-2" />
+                    Resume
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Sign in prompt for non-authenticated users */}
+          {!user && (
+            <Card className="border border-muted bg-muted/30">
+              <CardContent className="py-4">
+                <div className="flex items-center justify-between gap-4 flex-wrap">
+                  <div className="flex items-center gap-3">
+                    <Clock className="w-5 h-5 text-muted-foreground" />
+                    <p className="text-sm text-muted-foreground">
+                      Sign in to save your listening progress and continue where you left off
+                    </p>
+                  </div>
+                  <Link to="/auth">
+                    <Button variant="outline" size="sm">
+                      Sign In
+                    </Button>
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Podcast Player */}
           <Card className="border-2 border-sacred/20">
@@ -244,7 +484,7 @@ const Podcast = () => {
                             <Button 
                               size="sm" 
                               variant={currentAudio === episode.audioUrl ? "default" : "outline"}
-                              onClick={() => handlePlay(episode.audioUrl)}
+                              onClick={() => handlePlay(episode.audioUrl, episode)}
                               title="Play episode"
                             >
                               <Play className="w-4 h-4" />
@@ -270,10 +510,15 @@ const Podcast = () => {
                       {currentAudio === episode.audioUrl && episode.audioUrl && (
                         <div className="mt-4">
                           <audio 
+                            ref={audioRef}
                             controls 
                             autoPlay
                             className="w-full"
                             src={episode.audioUrl}
+                            onTimeUpdate={() => handleAudioTimeUpdate(episode)}
+                            onLoadedMetadata={() => handleAudioLoadedMetadata(episode)}
+                            onPause={() => handleAudioPause(episode)}
+                            onEnded={() => handleAudioPause(episode)}
                           >
                             Your browser does not support the audio element.
                           </audio>
