@@ -54,6 +54,138 @@ const videoResources = [
     description: "The most common questions church leaders and Christians have about Greek life, answered with biblical wisdom and practical insight.",
     videoId: "PLQG1lOu-48",
     youtubeUrl: "https://www.youtube.com/watch?v=PLQG1lOu-48"
+  },
+  {
+    title: "Understanding Greek Letter Organization Rituals",
+    description: "A deep dive into the spiritual aspects of Greek rituals and how Christians can navigate them with biblical discernment.",
+    videoId: "48I-fdTNg8c",
+    youtubeUrl: "https://www.youtube.com/watch?v=48I-fdTNg8c"
+  },
+  {
+    title: "Faith, Family & Fraternity: Finding Balance",
+    description: "Practical wisdom for maintaining priorities while honoring your Greek organization commitments.",
+    videoId: "FTeOlOv2cDM",
+    youtubeUrl: "https://www.youtube.com/watch?v=FTeOlOv2cDM"
+  },
+  {
+    title: "The History of Faith in Black Greek Organizations",
+    description: "Exploring the Christian roots and faith heritage within Divine Nine organizations.",
+    videoId: "f8WECW23fSg",
+    youtubeUrl: "https://www.youtube.com/watch?v=f8WECW23fSg"
+  },
+  {
+    title: "Responding to Critics of Greek Life",
+    description: "How to gracefully respond when others question your involvement in Greek letter organizations.",
+    videoId: "-q3FNrUe8YY",
+    youtubeUrl: "https://www.youtube.com/watch?v=-q3FNrUe8YY"
+  },
+  {
+    title: "Greek Life and Church Leadership",
+    description: "Can you serve in church leadership while being an active Greek member? Biblical perspectives explored.",
+    videoId: "ZJ-sDBR2mCU",
+    youtubeUrl: "https://www.youtube.com/watch?v=ZJ-sDBR2mCU"
+  },
+  {
+    title: "Addressing Hazing from a Christian Perspective",
+    description: "Understanding hazing, its impact, and how Christians should respond to this serious issue.",
+    videoId: "GbaqBExsqbs",
+    youtubeUrl: "https://www.youtube.com/watch?v=GbaqBExsqbs"
+  },
+  {
+    title: "Christian Unity Across Greek Organizations",
+    description: "Building bridges of faith across different fraternities and sororities.",
+    videoId: "rr639o9Gev0",
+    youtubeUrl: "https://www.youtube.com/watch?v=rr639o9Gev0"
+  },
+  {
+    title: "Prayer and Greek Life: A Guide for Members",
+    description: "Developing and maintaining a strong prayer life while active in Greek organizations.",
+    videoId: "ICyKY7z7E5M",
+    youtubeUrl: "https://www.youtube.com/watch?v=ICyKY7z7E5M"
+  },
+  {
+    title: "Biblical Foundations for Community and Brotherhood",
+    description: "Exploring scriptural principles that align with the ideals of Greek letter organizations.",
+    videoId: "Y6N089RVnBU",
+    youtubeUrl: "https://www.youtube.com/watch?v=Y6N089RVnBU"
+  },
+  {
+    title: "Navigating Greek Events as a Christian",
+    description: "Practical advice for attending Greek events while maintaining your Christian witness.",
+    videoId: "oN_DDjKjVCo",
+    youtubeUrl: "https://www.youtube.com/watch?v=oN_DDjKjVCo"
+  },
+  {
+    title: "Mentorship in Greek Organizations",
+    description: "Using your platform as a Greek member to mentor and disciple others in faith.",
+    videoId: "dUU9zT-YjB0",
+    youtubeUrl: "https://www.youtube.com/watch?v=dUU9zT-YjB0"
+  },
+  {
+    title: "Serving Your Community Through Greek Life",
+    description: "How Greek service projects align with Christian values of serving others.",
+    videoId: "DBlNzNlVUKI",
+    youtubeUrl: "https://www.youtube.com/watch?v=DBlNzNlVUKI"
+  },
+  {
+    title: "The Divine Nine and the Church: Building Bridges",
+    description: "Creating stronger relationships between Greek organizations and local churches.",
+    videoId: "NYGoQuUt6QM",
+    youtubeUrl: "https://www.youtube.com/watch?v=NYGoQuUt6QM"
+  },
+  {
+    title: "Testimony: My Journey as a Christian Greek",
+    description: "Personal testimonies from Christians who have navigated Greek life with their faith intact.",
+    videoId: "CN11FQ7tanU",
+    youtubeUrl: "https://www.youtube.com/watch?v=CN11FQ7tanU"
+  },
+  {
+    title: "What the Bible Says About Secret Societies",
+    description: "A biblical examination of secrecy, oaths, and membership organizations.",
+    videoId: "QsvD9LDmUEU",
+    youtubeUrl: "https://www.youtube.com/watch?v=QsvD9LDmUEU"
+  },
+  {
+    title: "Greek Life and Spiritual Warfare",
+    description: "Understanding spiritual dynamics and maintaining spiritual health as a Greek member.",
+    videoId: "9qLofoqskHk",
+    youtubeUrl: "https://www.youtube.com/watch?v=9qLofoqskHk"
+  },
+  {
+    title: "Answering Tough Questions About Greek Symbolism",
+    description: "Addressing concerns about symbols, colors, and imagery in Greek organizations.",
+    videoId: "G14XXWLKq5Q",
+    youtubeUrl: "https://www.youtube.com/watch?v=G14XXWLKq5Q"
+  },
+  {
+    title: "Christian Accountability in Greek Life",
+    description: "Building accountability structures to support your faith journey in Greek organizations.",
+    videoId: "kvRDvnBq43w",
+    youtubeUrl: "https://www.youtube.com/watch?v=kvRDvnBq43w"
+  },
+  {
+    title: "Legacy and Leadership: Christian Greeks Making Impact",
+    description: "Stories of Christian Greeks who have made significant positive impacts in their communities.",
+    videoId: "6jMIu-7_KIE",
+    youtubeUrl: "https://www.youtube.com/watch?v=6jMIu-7_KIE"
+  },
+  {
+    title: "Renounce, Retreat, or Redeem Greek Life?",
+    description: "Should Christians renounce, retreat, or redeem their Greek Letter Organizations?",
+    videoId: "ZK9HfHf3mLc",
+    youtubeUrl: "https://www.youtube.com/watch?v=ZK9HfHf3mLc"
+  },
+  {
+    title: "The Future of Faith in Greek Organizations",
+    description: "Vision for how Christians can shape the future of Greek life for generations to come.",
+    videoId: "XKVZ_1sOd7w",
+    youtubeUrl: "https://www.youtube.com/watch?v=XKVZ_1sOd7w"
+  },
+  {
+    title: "Sacred Greeks: Living Out Your Faith",
+    description: "Practical daily practices for living out your Christian faith within Greek life.",
+    videoId: "rF8LEzWwW5Q",
+    youtubeUrl: "https://www.youtube.com/watch?v=rF8LEzWwW5Q"
   }
 ];
 
