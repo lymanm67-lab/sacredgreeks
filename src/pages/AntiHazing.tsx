@@ -108,6 +108,333 @@ const AntiHazing = () => {
     }
   };
 
+  const handleDownloadCurriculumPDF = async () => {
+    toast.info("Generating Intake Curriculum PDF...");
+    try {
+      const { jsPDF } = await import("jspdf");
+      const doc = new jsPDF();
+      let yPos = 20;
+
+      const addPage = () => {
+        doc.addPage();
+        yPos = 20;
+      };
+
+      const checkPageBreak = (needed: number) => {
+        if (yPos + needed > 270) {
+          addPage();
+        }
+      };
+
+      // Cover Page
+      doc.setFontSize(28);
+      doc.setTextColor(0, 0, 0);
+      doc.text("New Member Intake", 105, 80, { align: "center" });
+      doc.text("Curriculum Template", 105, 95, { align: "center" });
+      
+      doc.setFontSize(14);
+      doc.setTextColor(80, 80, 80);
+      doc.text("Building Brotherhood & Sisterhood Through", 105, 120, { align: "center" });
+      doc.text("Positive, Meaningful Experiences", 105, 130, { align: "center" });
+      
+      doc.setFontSize(12);
+      doc.text("A Hazing-Free Approach to New Member Education", 105, 160, { align: "center" });
+      
+      doc.setFontSize(10);
+      doc.setTextColor(100, 100, 100);
+      doc.text("Chapter: _______________________________", 105, 200, { align: "center" });
+      doc.text("Term/Year: _______________________________", 105, 215, { align: "center" });
+      doc.text("New Member Educator: _______________________________", 105, 230, { align: "center" });
+
+      // Page 2 - Introduction
+      addPage();
+      doc.setFontSize(18);
+      doc.setTextColor(0, 0, 0);
+      doc.text("Introduction & Philosophy", 20, yPos);
+      yPos += 15;
+      
+      doc.setFontSize(10);
+      doc.setTextColor(60, 60, 60);
+      const intro = [
+        "This curriculum provides a comprehensive framework for new member education that builds",
+        "genuine bonds through shared positive experiences rather than hazing. Every activity is",
+        "designed to develop leadership, foster brotherhood/sisterhood, and prepare members for",
+        "a lifetime of service to the organization and community.",
+        "",
+        "Core Principles:",
+        "1. Dignity and respect for all members at all times",
+        "2. Education through meaningful experiences, not humiliation",
+        "3. Leadership development through real responsibility",
+        "4. Service to community as a cornerstone of membership",
+        "5. Academic excellence as a non-negotiable standard"
+      ];
+      intro.forEach(line => {
+        doc.text(line, 20, yPos);
+        yPos += 6;
+      });
+
+      // Page 3 - Week-by-Week Schedule
+      addPage();
+      doc.setFontSize(18);
+      doc.setTextColor(0, 0, 0);
+      doc.text("8-Week Intake Schedule", 20, yPos);
+      yPos += 15;
+
+      const weeklySchedule = [
+        {
+          week: "Week 1: Welcome & Orientation",
+          activities: [
+            "Ice breaker activities and team introductions",
+            "Organization history and values presentation",
+            "Meet the chapter officers and advisors",
+            "Review of anti-hazing policies and member rights",
+            "Assign Big Brother/Sister mentors"
+          ]
+        },
+        {
+          week: "Week 2: Leadership Foundations",
+          activities: [
+            "Robert's Rules of Order workshop",
+            "Parliamentary procedure practice session",
+            "Chapter meeting observation and participation",
+            "Leadership styles assessment",
+            "Goal setting for the intake process"
+          ]
+        },
+        {
+          week: "Week 3: Academic Excellence",
+          activities: [
+            "Study partnerships established",
+            "Academic resource orientation",
+            "GPA goal setting and action plans",
+            "Library lock-in study session",
+            "Guest speaker: Successful alumni in academics"
+          ]
+        },
+        {
+          week: "Week 4: Community Service",
+          activities: [
+            "Plan and organize a service project",
+            "Voter registration drive participation",
+            "Food bank or homeless shelter service",
+            "Reflection on service and organizational values",
+            "Document service hours and impact"
+          ]
+        },
+        {
+          week: "Week 5: Professional Development",
+          activities: [
+            "Resume workshop with alumni",
+            "Mock interview practice",
+            "LinkedIn profile optimization",
+            "Networking mixer with professionals",
+            "Corporate site visit or virtual tour"
+          ]
+        },
+        {
+          week: "Week 6: Cultural Heritage",
+          activities: [
+            "Deep dive into founders and organizational history",
+            "Documentary screening and discussion",
+            "Elder member storytelling session",
+            "Museum visit or historical site pilgrimage",
+            "Prepare presentation on assigned founder"
+          ]
+        },
+        {
+          week: "Week 7: Team Building & Bonding",
+          activities: [
+            "Escape room challenge",
+            "Knowledge bowl competition",
+            "Card game tournament (Spades night)",
+            "Cooking competition for charity",
+            "Road trip or retreat planning"
+          ]
+        },
+        {
+          week: "Week 8: Celebration & Transition",
+          activities: [
+            "Final presentations on organizational knowledge",
+            "Service project completion celebration",
+            "Recognition ceremony preparation",
+            "Wellness and self-care day",
+            "Welcome ceremony and pinning"
+          ]
+        }
+      ];
+
+      weeklySchedule.forEach((week, index) => {
+        checkPageBreak(50);
+        
+        doc.setFontSize(12);
+        doc.setTextColor(0, 0, 0);
+        doc.text(week.week, 20, yPos);
+        yPos += 8;
+        
+        doc.setFontSize(9);
+        doc.setTextColor(80, 80, 80);
+        week.activities.forEach(activity => {
+          checkPageBreak(8);
+          doc.text(`  [ ] ${activity}`, 25, yPos);
+          yPos += 6;
+        });
+        yPos += 6;
+      });
+
+      // Leadership Challenges Page
+      addPage();
+      doc.setFontSize(18);
+      doc.setTextColor(0, 0, 0);
+      doc.text("Leadership Challenge Assignments", 20, yPos);
+      yPos += 15;
+
+      const challenges = [
+        { title: "Plan & Lead a Chapter Meeting", desc: "Create agenda, facilitate discussion, manage time" },
+        { title: "Organize a Community Service Project", desc: "Plan logistics, recruit volunteers, execute event" },
+        { title: "Event Planning Challenge", desc: "Budget, venue selection, marketing, execution" },
+        { title: "Committee Leadership", desc: "Chair a committee for 2+ weeks alongside active member" },
+        { title: "Professional Presentation", desc: "Research and present on founder or chapter history" },
+        { title: "Robert's Rules Certification", desc: "Pass quiz, demonstrate motions in mock meeting" },
+        { title: "Budget Proposal", desc: "Create and present a chapter budget or event plan" }
+      ];
+
+      challenges.forEach(challenge => {
+        checkPageBreak(18);
+        doc.setFontSize(11);
+        doc.setTextColor(0, 0, 0);
+        doc.text(`[ ] ${challenge.title}`, 20, yPos);
+        yPos += 6;
+        doc.setFontSize(9);
+        doc.setTextColor(100, 100, 100);
+        doc.text(`    ${challenge.desc}`, 20, yPos);
+        yPos += 10;
+      });
+
+      // Community Service Checklist
+      addPage();
+      doc.setFontSize(18);
+      doc.setTextColor(0, 0, 0);
+      doc.text("Community Service Requirements", 20, yPos);
+      yPos += 15;
+
+      doc.setFontSize(10);
+      doc.setTextColor(60, 60, 60);
+      doc.text("Minimum 20 service hours required. Check off completed activities:", 20, yPos);
+      yPos += 12;
+
+      const serviceActivities = [
+        "Habitat for Humanity Build Day",
+        "Food Bank/Soup Kitchen Service",
+        "Homeless Sleep-Out Event",
+        "Blood/Plasma Drive Organization",
+        "Voter Registration Drive",
+        "Get Out the Vote Campaign",
+        "Mentoring Program Participation",
+        "Back-to-School Supply Drive",
+        "Environmental Cleanup",
+        "Health Fair/Screening Support",
+        "Clothing/Coat Drive",
+        "Civic Engagement Workshop",
+        "Town Hall/Candidate Forum"
+      ];
+
+      serviceActivities.forEach(activity => {
+        checkPageBreak(8);
+        doc.setFontSize(10);
+        doc.setTextColor(0, 0, 0);
+        doc.text(`[ ] ${activity}  Hours: _____`, 25, yPos);
+        yPos += 8;
+      });
+
+      yPos += 10;
+      doc.setFontSize(11);
+      doc.text("Total Service Hours: _______", 20, yPos);
+
+      // Wellness & Support Page
+      addPage();
+      doc.setFontSize(18);
+      doc.setTextColor(0, 0, 0);
+      doc.text("Wellness & Member Support", 20, yPos);
+      yPos += 15;
+
+      doc.setFontSize(10);
+      doc.setTextColor(60, 60, 60);
+      const wellness = [
+        "Mental Health Resources:",
+        "  • Campus Counseling Center: _______________",
+        "  • Crisis Hotline: 988 (Suicide & Crisis Lifeline)",
+        "  • National Hazing Hotline: 1-888-NOT-HAZE",
+        "",
+        "Wellness Activities (check when completed):",
+        "  [ ] Mental health workshop attendance",
+        "  [ ] Fitness challenge participation",
+        "  [ ] Meditation/mindfulness session",
+        "  [ ] Financial literacy workshop",
+        "  [ ] Self-care day participation",
+        "",
+        "Member Rights:",
+        "  • You have the right to be treated with dignity and respect",
+        "  • You have the right to say NO to any activity",
+        "  • You have the right to report concerns without retaliation",
+        "  • You have the right to a safe and supportive environment"
+      ];
+
+      wellness.forEach(line => {
+        doc.text(line, 20, yPos);
+        yPos += 7;
+      });
+
+      // Sign-off Page
+      addPage();
+      doc.setFontSize(18);
+      doc.setTextColor(0, 0, 0);
+      doc.text("Completion Sign-Off", 20, yPos);
+      yPos += 20;
+
+      doc.setFontSize(11);
+      doc.setTextColor(60, 60, 60);
+      const signoffs = [
+        "New Member Name: _______________________________________",
+        "",
+        "I have completed all requirements of this intake curriculum and",
+        "confirm that I was treated with dignity and respect throughout",
+        "the process. I did not experience or witness any hazing activities.",
+        "",
+        "New Member Signature: _________________________ Date: _______",
+        "",
+        "",
+        "Big Brother/Sister: _________________________ Date: _______",
+        "",
+        "New Member Educator: _________________________ Date: _______",
+        "",
+        "Chapter President: _________________________ Date: _______",
+        "",
+        "Chapter Advisor: _________________________ Date: _______"
+      ];
+
+      signoffs.forEach(line => {
+        doc.text(line, 20, yPos);
+        yPos += 10;
+      });
+
+      // Footer on all pages
+      const pageCount = doc.getNumberOfPages();
+      for (let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        doc.setFontSize(8);
+        doc.setTextColor(150, 150, 150);
+        doc.text("Sacred Greeks - New Member Intake Curriculum Template", 105, 285, { align: "center" });
+        doc.text(`Page ${i} of ${pageCount}`, 190, 285, { align: "right" });
+      }
+
+      doc.save("New-Member-Intake-Curriculum.pdf");
+      toast.success("Curriculum PDF downloaded successfully!");
+    } catch (error) {
+      console.error("PDF generation error:", error);
+      toast.error("Failed to generate PDF. Please try again.");
+    }
+  };
+
   const stats = [
     {
       icon: AlertTriangle,
@@ -1594,13 +1921,22 @@ const AntiHazing = () => {
                 <CardContent className="p-6 text-center">
                   <h3 className="font-semibold text-lg mb-2">Start the Change in Your Chapter</h3>
                   <p className="text-muted-foreground mb-4 max-w-xl mx-auto">
-                    Download our comprehensive guide to implementing positive alternatives and 
+                    Download our comprehensive guides to implementing positive alternatives and 
                     transforming your new member education program.
                   </p>
-                  <Button className="gap-2" onClick={handleDownloadPDF}>
-                    <Download className="w-4 h-4" />
-                    Download Alternative Activities Guide
-                  </Button>
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                    <Button className="gap-2" onClick={handleDownloadPDF}>
+                      <Download className="w-4 h-4" />
+                      Alternative Activities Guide
+                    </Button>
+                    <Button variant="outline" className="gap-2" onClick={handleDownloadCurriculumPDF}>
+                      <FileText className="w-4 h-4" />
+                      Full Intake Curriculum Template
+                    </Button>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-4">
+                    The curriculum includes an 8-week schedule, leadership challenges, service requirements, and completion sign-off forms.
+                  </p>
                 </CardContent>
               </Card>
             </div>
