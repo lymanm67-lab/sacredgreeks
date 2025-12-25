@@ -495,6 +495,73 @@ const GreekLife = () => {
     },
   ];
 
+  const jewishGreeks: Organization[] = [
+    {
+      name: "Alpha Epsilon Pi",
+      greekLetters: "ΑΕΠ",
+      founded: "November 7, 1913",
+      foundedLocation: "New York University",
+      colors: "Blue and Gold",
+      motto: "Developing Leadership for the Jewish Community",
+      symbol: "Lion of Judah",
+      nickname: "AEPi"
+    },
+    {
+      name: "Zeta Beta Tau",
+      greekLetters: "ΖΒΤ",
+      founded: "December 29, 1898",
+      foundedLocation: "City College of New York",
+      colors: "Blue and White",
+      motto: "A Tradition of Brotherhood",
+      nickname: "ZBT"
+    },
+    {
+      name: "Sigma Alpha Mu",
+      greekLetters: "ΣΑΜ",
+      founded: "November 26, 1909",
+      foundedLocation: "City College of New York",
+      colors: "Purple and White",
+      motto: "Upon the Highest Principles of Judaism",
+      nickname: "Sammy"
+    },
+    {
+      name: "Tau Epsilon Phi",
+      greekLetters: "ΤΕΦ",
+      founded: "October 19, 1910",
+      foundedLocation: "Columbia University",
+      colors: "Lavender and White",
+      motto: "Friendship, Chivalry, Service",
+      nickname: "TEP"
+    },
+    {
+      name: "Alpha Epsilon Phi",
+      greekLetters: "ΑΕΦ",
+      founded: "October 24, 1909",
+      foundedLocation: "Barnard College",
+      colors: "Green and White",
+      motto: "Multa Corda, Una Causa (Many Hearts, One Purpose)",
+      nickname: "AEPhi - Jewish Sorority"
+    },
+    {
+      name: "Sigma Delta Tau",
+      greekLetters: "ΣΔΤ",
+      founded: "March 25, 1917",
+      foundedLocation: "Cornell University",
+      colors: "Café au Lait and Blue",
+      motto: "Friendship, Service, Sincerity",
+      nickname: "SDT - Jewish Sorority"
+    },
+    {
+      name: "Delta Phi Epsilon",
+      greekLetters: "ΔΦΕ",
+      founded: "March 17, 1917",
+      foundedLocation: "New York University",
+      colors: "Royal Purple and Pure Gold",
+      motto: "Esse Quam Videri (To Be Rather Than to Seem)",
+      nickname: "DPhiE - Jewish Sorority"
+    },
+  ];
+
   const socialFellowships: Organization[] = [
     {
       name: "Groove Phi Groove Social Fellowship, Inc.",
@@ -669,6 +736,14 @@ const GreekLife = () => {
       organizations: leadershipHonorSocieties
     },
     {
+      id: "jewish",
+      name: "Jewish",
+      fullName: "Jewish Greek Organizations",
+      description: "Alpha Epsilon Pi, Zeta Beta Tau, and Jewish fraternities and sororities",
+      founded: "Various",
+      organizations: jewishGreeks
+    },
+    {
       id: "social",
       name: "Social Fellowships",
       fullName: "Social Fellowships",
@@ -830,15 +905,16 @@ const GreekLife = () => {
 
           {/* Councils Tabs */}
           <Tabs defaultValue="nphc" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-4 sm:grid-cols-8 gap-1">
-              <TabsTrigger value="nphc" className="text-xs">Divine Nine</TabsTrigger>
-              <TabsTrigger value="npc" className="text-xs">NPC</TabsTrigger>
-              <TabsTrigger value="ifc" className="text-xs">IFC</TabsTrigger>
-              <TabsTrigger value="multicultural" className="text-xs">Multicultural</TabsTrigger>
-              <TabsTrigger value="professional" className="text-xs">Professional</TabsTrigger>
-              <TabsTrigger value="honor" className="text-xs">Leadership</TabsTrigger>
-              <TabsTrigger value="social" className="text-xs">Social</TabsTrigger>
-              <TabsTrigger value="masonic" className="text-xs">Masonic</TabsTrigger>
+            <TabsList className="flex flex-wrap justify-center gap-1">
+              <TabsTrigger value="nphc" className="text-xs px-2 py-1">Divine Nine</TabsTrigger>
+              <TabsTrigger value="npc" className="text-xs px-2 py-1">NPC</TabsTrigger>
+              <TabsTrigger value="ifc" className="text-xs px-2 py-1">IFC</TabsTrigger>
+              <TabsTrigger value="multicultural" className="text-xs px-2 py-1">Multicultural</TabsTrigger>
+              <TabsTrigger value="jewish" className="text-xs px-2 py-1">Jewish</TabsTrigger>
+              <TabsTrigger value="professional" className="text-xs px-2 py-1">Professional</TabsTrigger>
+              <TabsTrigger value="honor" className="text-xs px-2 py-1">Leadership</TabsTrigger>
+              <TabsTrigger value="social" className="text-xs px-2 py-1">Social</TabsTrigger>
+              <TabsTrigger value="masonic" className="text-xs px-2 py-1">Masonic</TabsTrigger>
             </TabsList>
 
             {councils.map((council) => (
