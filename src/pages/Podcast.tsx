@@ -142,13 +142,30 @@ const Podcast = () => {
                           </div>
                         </div>
                         {episode.audioUrl && (
-                          <Button 
-                            size="sm" 
-                            variant={currentAudio === episode.audioUrl ? "default" : "outline"}
-                            onClick={() => handlePlay(episode.audioUrl)}
-                          >
-                            <Play className="w-4 h-4" />
-                          </Button>
+                          <div className="flex items-center gap-2">
+                            <Button 
+                              size="sm" 
+                              variant={currentAudio === episode.audioUrl ? "default" : "outline"}
+                              onClick={() => handlePlay(episode.audioUrl)}
+                              title="Play episode"
+                            >
+                              <Play className="w-4 h-4" />
+                            </Button>
+                            <a 
+                              href={episode.audioUrl} 
+                              download
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <Button 
+                                size="sm" 
+                                variant="outline"
+                                title="Download for offline listening"
+                              >
+                                <Download className="w-4 h-4" />
+                              </Button>
+                            </a>
+                          </div>
                         )}
                       </div>
                       
