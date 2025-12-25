@@ -784,6 +784,45 @@ export type Database = {
         }
         Relationships: []
       }
+      podcast_listening_progress: {
+        Row: {
+          created_at: string
+          duration: number | null
+          episode_pub_date: string | null
+          episode_title: string
+          episode_url: string
+          id: string
+          last_played_at: string
+          playback_position: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          duration?: number | null
+          episode_pub_date?: string | null
+          episode_title: string
+          episode_url: string
+          id?: string
+          last_played_at?: string
+          playback_position?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          duration?: number | null
+          episode_pub_date?: string | null
+          episode_title?: string
+          episode_url?: string
+          id?: string
+          last_played_at?: string
+          playback_position?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       prayer_journal: {
         Row: {
           answered: boolean | null
