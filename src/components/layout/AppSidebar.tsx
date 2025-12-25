@@ -16,6 +16,7 @@ import {
   Settings, 
   LogOut,
   Church,
+  Video,
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -64,6 +65,7 @@ const toolsNavItems = [
   { title: "Anti-Hazing", url: "/anti-hazing", icon: ShieldAlert, featureId: null },
   { title: "Symbol Guide", url: "/symbol-guide", icon: Compass, featureId: null },
   { title: "Myth Busters", url: "/myth-buster", icon: Zap, featureId: null },
+  { title: "Video Library", url: "/video-library", icon: Video, featureId: null },
   { title: "Church Leaders", url: "/church-leaders", icon: Church, featureId: null },
   { title: "Achievements", url: "/achievements", icon: Trophy, featureId: 'achievements' },
   { title: "Notifications", url: "/notification-preferences", icon: Bell, featureId: null },
