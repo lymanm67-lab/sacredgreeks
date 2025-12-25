@@ -1707,20 +1707,19 @@ const GreekLife = () => {
               <TabsTrigger value="nphc" className="text-xs px-2 py-1">NPHC</TabsTrigger>
               <TabsTrigger value="npc" className="text-xs px-2 py-1">NPC</TabsTrigger>
               <TabsTrigger value="ifc" className="text-xs px-2 py-1">IFC</TabsTrigger>
-              <TabsTrigger value="cbo" className="text-xs px-2 py-1">CBOs</TabsTrigger>
-              <TabsTrigger value="native" className="text-xs px-2 py-1">Native American</TabsTrigger>
+              <TabsTrigger value="nalfo" className="text-xs px-2 py-1">NALFO</TabsTrigger>
+              <TabsTrigger value="napa" className="text-xs px-2 py-1">NAPA</TabsTrigger>
+              <TabsTrigger value="southasian" className="text-xs px-2 py-1">South Asian</TabsTrigger>
+              <TabsTrigger value="cbo" className="text-xs px-2 py-1">Other CBOs</TabsTrigger>
               <TabsTrigger value="hbcu" className="text-xs px-2 py-1">HBCU Greeks</TabsTrigger>
-              <TabsTrigger value="jewish" className="text-xs px-2 py-1">Jewish</TabsTrigger>
               <TabsTrigger value="professional" className="text-xs px-2 py-1">Professional</TabsTrigger>
               <TabsTrigger value="honor" className="text-xs px-2 py-1">Leadership</TabsTrigger>
+              <TabsTrigger value="jewish" className="text-xs px-2 py-1">Jewish</TabsTrigger>
               <TabsTrigger value="social" className="text-xs px-2 py-1">Social</TabsTrigger>
               <TabsTrigger value="masonic" className="text-xs px-2 py-1">Masonic</TabsTrigger>
               <TabsTrigger value="christian" className="text-xs px-2 py-1">Christian</TabsTrigger>
               <TabsTrigger value="lgbtq" className="text-xs px-2 py-1">LGBTQ+</TabsTrigger>
-              <TabsTrigger value="filipino" className="text-xs px-2 py-1">Filipino</TabsTrigger>
               <TabsTrigger value="military" className="text-xs px-2 py-1">Military</TabsTrigger>
-              <TabsTrigger value="middleeast" className="text-xs px-2 py-1">Middle Eastern</TabsTrigger>
-              <TabsTrigger value="african" className="text-xs px-2 py-1">African</TabsTrigger>
             </TabsList>
 
             {councils.map((council) => (
