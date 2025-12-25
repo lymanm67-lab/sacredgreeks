@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useDemoMode } from '@/contexts/DemoModeContext';
+import { DemoModeControl } from '@/components/GlobalDemoIndicator';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -285,10 +286,13 @@ const Auth = () => {
       <div className={cn("min-h-screen bg-gradient-to-b from-background to-muted flex flex-col", isDemoMode && "pt-11")}>
         <header className="border-b border-border bg-card">
           <div className="container mx-auto px-4 py-4">
-            <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors w-fit">
-              <Home className="w-4 h-4" />
-              <span className="text-sm font-medium">Home</span>
-            </Link>
+            <div className="flex items-center justify-between gap-3">
+              <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors w-fit">
+                <Home className="w-4 h-4" />
+                <span className="text-sm font-medium">Home</span>
+              </Link>
+              <DemoModeControl />
+            </div>
           </div>
         </header>
 

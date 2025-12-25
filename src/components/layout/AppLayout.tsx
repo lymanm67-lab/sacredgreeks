@@ -5,6 +5,7 @@ import { PageTitle } from "./PageTitle";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useSidebarPreferences } from "@/hooks/use-sidebar-preferences";
 import { useDemoMode } from "@/contexts/DemoModeContext";
+import { DemoModeControl } from "@/components/GlobalDemoIndicator";
 import { cn } from "@/lib/utils";
 
 interface AppLayoutProps {
@@ -33,6 +34,9 @@ export function AppLayout({ children }: AppLayoutProps) {
           )}>
             {!isMobile && <SidebarTrigger className="-ml-1" />}
             <PageTitle />
+            <div className="ml-auto flex items-center gap-2">
+              <DemoModeControl />
+            </div>
           </header>
           <main className="flex-1 overflow-auto">
             {children}

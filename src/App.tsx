@@ -164,8 +164,8 @@ const App = () => (
                       <DemoComparisonWrapper />
                       <DemoAnalyticsDashboardWrapper />
                       <BetaFeedbackWidget />
-                      <GlobalDemoIndicator />
                       <CookieConsent />
+                      <WhatsNewModal />
                       <WhatsNewModal />
                       <UpdateNotification />
                       <AnalyticsProvider>

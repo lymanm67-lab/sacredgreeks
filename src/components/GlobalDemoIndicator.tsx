@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FlaskConical, X, Settings, Eye, EyeOff } from 'lucide-react';
+import { FlaskConical, Settings, Eye, EyeOff } from 'lucide-react';
 import { useDemoMode } from '@/contexts/DemoModeContext';
 import { Button } from '@/components/ui/button';
 import {
@@ -11,48 +11,45 @@ import { Switch } from '@/components/ui/switch';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 
+/**
+ * Legacy wrapper (previously floating). Kept for compatibility but no longer renders anything.
+ * Demo Mode is now placed inside page/navigation headers via <DemoModeControl />.
+ */
 export function GlobalDemoIndicator() {
+  return null;
+}
+
+interface DemoModeControlProps {
+  className?: string;
+  align?: 'start' | 'center' | 'end';
+  isMobile?: boolean;
+}
+
+export function DemoModeControl({ className, align = 'end', isMobile = false }: DemoModeControlProps) {
   const { isDemoMode, setDemoMode, toggleDemoMode, setHasSeenTour } = useDemoMode();
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  
+
   // Hide on landing page since it's integrated into the header there
   if (location.pathname === '/') {
     return null;
   }
 
   return (
-    <>
-      {/* Desktop position - below header for app pages */}
-      <div className="fixed top-20 right-4 z-[100] hidden sm:block">
-        <DemoPopover 
-          isDemoMode={isDemoMode}
-          setDemoMode={setDemoMode}
-          toggleDemoMode={toggleDemoMode}
-          setHasSeenTour={setHasSeenTour}
-          user={user}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          align="end"
-        />
-      </div>
-
-      {/* Mobile position - bottom right, above other floating elements */}
-      <div className="fixed bottom-20 right-4 z-[100] sm:hidden">
-        <DemoPopover 
-          isDemoMode={isDemoMode}
-          setDemoMode={setDemoMode}
-          toggleDemoMode={toggleDemoMode}
-          setHasSeenTour={setHasSeenTour}
-          user={user}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          align="end"
-          isMobile
-        />
-      </div>
-    </>
+    <div className={className}>
+      <DemoPopover
+        isDemoMode={isDemoMode}
+        setDemoMode={setDemoMode}
+        toggleDemoMode={toggleDemoMode}
+        setHasSeenTour={setHasSeenTour}
+        user={user}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        align={align}
+        isMobile={isMobile}
+      />
+    </div>
   );
 }
 
