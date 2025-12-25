@@ -314,118 +314,11 @@ const OrgCommunity = () => {
 
           {/* Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="coaching">Group Coaching</TabsTrigger>
               <TabsTrigger value="members">Members</TabsTrigger>
               <TabsTrigger value="resources">Resources</TabsTrigger>
             </TabsList>
-
-            <TabsContent value="overview" className="space-y-6 mt-6">
-              {councilContent && (
-                <>
-                  {/* Welcome Message */}
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <Sparkles className="h-5 w-5 text-amber-500" />
-                        Welcome, {councilContent.name} Member
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-muted-foreground">{councilContent.welcomeMessage}</p>
-                    </CardContent>
-                  </Card>
-
-                  {/* Two Column: Tips & Challenges */}
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <Card>
-                      <CardHeader>
-                        <CardTitle className="text-lg">Faith Integration Tips</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <ul className="space-y-3">
-                          {tips.map((tip, i) => (
-                            <li key={i} className="flex gap-2 text-sm">
-                              <span className="text-sacred">•</span>
-                              {tip}
-                            </li>
-                          ))}
-                        </ul>
-                      </CardContent>
-                    </Card>
-
-                    <Card>
-                      <CardHeader>
-                        <CardTitle className="text-lg">Common Challenges</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <ul className="space-y-3">
-                          {challenges.map((challenge, i) => (
-                            <li key={i} className="flex gap-2 text-sm">
-                              <span className="text-amber-500">•</span>
-                              {challenge}
-                            </li>
-                          ))}
-                        </ul>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </>
-              )}
-
-              {/* Quick Links */}
-              <div className="grid md:grid-cols-4 gap-4">
-                <Link to="/forum">
-                  <Card className="hover:border-sacred/50 transition-colors cursor-pointer h-full">
-                    <CardContent className="pt-6 flex items-center gap-4">
-                      <MessageSquare className="h-8 w-8 text-indigo-500" />
-                      <div>
-                        <h3 className="font-semibold">Discussion Forum</h3>
-                        <p className="text-sm text-muted-foreground">Join conversations</p>
-                      </div>
-                      <ChevronRight className="h-5 w-5 text-muted-foreground ml-auto" />
-                    </CardContent>
-                  </Card>
-                </Link>
-                <Link to="/prayer-wall">
-                  <Card className="hover:border-sacred/50 transition-colors cursor-pointer h-full">
-                    <CardContent className="pt-6 flex items-center gap-4">
-                      <Heart className="h-8 w-8 text-red-500" />
-                      <div>
-                        <h3 className="font-semibold">Prayer Wall</h3>
-                        <p className="text-sm text-muted-foreground">Pray for your community</p>
-                      </div>
-                      <ChevronRight className="h-5 w-5 text-muted-foreground ml-auto" />
-                    </CardContent>
-                  </Card>
-                </Link>
-                <Link to="/guide">
-                  <Card className="hover:border-sacred/50 transition-colors cursor-pointer h-full">
-                    <CardContent className="pt-6 flex items-center gap-4">
-                      <BookOpen className="h-8 w-8 text-sacred" />
-                      <div>
-                        <h3 className="font-semibold">PROOF Guide</h3>
-                        <p className="text-sm text-muted-foreground">Navigate challenges</p>
-                      </div>
-                      <ChevronRight className="h-5 w-5 text-muted-foreground ml-auto" />
-                    </CardContent>
-                  </Card>
-                </Link>
-                <Link to="/achievements">
-                  <Card className="hover:border-sacred/50 transition-colors cursor-pointer h-full">
-                    <CardContent className="pt-6 flex items-center gap-4">
-                      <Sparkles className="h-8 w-8 text-amber-500" />
-                      <div>
-                        <h3 className="font-semibold">Org Achievements</h3>
-                        <p className="text-sm text-muted-foreground">Earn badges</p>
-                      </div>
-                      <ChevronRight className="h-5 w-5 text-muted-foreground ml-auto" />
-                    </CardContent>
-                  </Card>
-                </Link>
-              </div>
-            </TabsContent>
 
             {/* Group Coaching Tab */}
             <TabsContent value="coaching" className="space-y-8 mt-6">
