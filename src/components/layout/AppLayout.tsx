@@ -35,7 +35,7 @@ export function AppLayout({ children }: AppLayoutProps) {
             {!isMobile && <SidebarTrigger className="-ml-1" />}
             <PageTitle />
             <div className="ml-auto flex items-center gap-2">
-              <DemoModeControl />
+              {/* Demo and Upgrade buttons are now in sidebar header */}
             </div>
           </header>
           <main className="flex-1 overflow-auto">
