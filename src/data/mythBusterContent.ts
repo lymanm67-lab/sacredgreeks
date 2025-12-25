@@ -170,6 +170,137 @@ export const mythBusterContent: MythEntry[] = [
       { ref: "1 Corinthians 6:19-20", text: "You are not your own; you were bought at a price." }
     ],
     tags: ["identity", "christ", "idolatry", "priorities", "belonging"]
+  },
+  // Additional myths from comprehensive library
+  {
+    id: "greek-symbols-demonic",
+    myth: "Greek Symbols Are Demonic",
+    category: "theology",
+    shortAnswer: "Greek letters are simply alphabet characters. Hand signs typically represent organizational identity, not occult meanings.",
+    detailedResponse: "This claim ignores context and intent. Greek letters are simply alphabet characters. Hand signs typically represent organizational identity, not occult meanings. Similar logic would condemn the 'OK' sign or peace symbol. Judge symbols by their actual use and meaning within context, not conspiracy theories. The letters Alpha through Omega are used throughout Scripture—even God calls Himself 'the Alpha and the Omega.'",
+    scriptures: [
+      { ref: "Romans 14:14", text: "I am convinced, being fully persuaded in the Lord Jesus, that nothing is unclean in itself." },
+      { ref: "1 Corinthians 8:4-6", text: "We know that 'An idol is nothing at all in the world' and that 'There is no God but one.'" },
+      { ref: "Titus 1:15", text: "To the pure, all things are pure, but to those who are corrupted and do not believe, nothing is pure." }
+    ],
+    tags: ["symbols", "demonic", "signs", "conspiracy", "letters"]
+  },
+  {
+    id: "greek-rituals-satanic",
+    myth: "Greek Rituals Are Satanic",
+    category: "theology",
+    shortAnswer: "This accusation is typically based on rumor, not evidence. Closed ceremonies are not evidence of satanic activity.",
+    detailedResponse: "Many organizations—including churches, businesses, and civic groups—have private practices. 'Secret' doesn't automatically mean 'evil.' Many professional organizations have private meetings. Instead of believing sensational claims, evaluate based on the actual lives of members you know. Do they bear fruit of the Spirit? Most Greek rituals focus on values like scholarship, service, and brotherhood/sisterhood.",
+    scriptures: [
+      { ref: "Matthew 7:15-20", text: "By their fruit you will recognize them. Do people pick grapes from thornbushes, or figs from thistles?" },
+      { ref: "Galatians 5:22-23", text: "But the fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness and self-control." },
+      { ref: "Proverbs 14:15", text: "The simple believe anything, but the prudent give thought to their steps." }
+    ],
+    tags: ["satanic", "rituals", "rumors", "discernment", "closed"]
+  },
+  {
+    id: "stepping-demonic",
+    myth: "Stepping and Strolling Invite Demons",
+    category: "culture",
+    shortAnswer: "Movement and rhythm do not belong to the devil. David danced before the Lord. The content matters, not the form.",
+    detailedResponse: "Movement and rhythm do not belong to the devil. David danced before the Lord. Israel marched in processions. African and African American worship has always involved the body. The question is what is being celebrated, glorified, and spoken in those moments. If the content is degrading, sexually explicit, or violently prideful, then believers need to step back and change the script. If the content highlights unity, history, and positive values, believers can reclaim their bodies and movements as instruments of worship and witness.",
+    scriptures: [
+      { ref: "2 Samuel 6:14", text: "Wearing a linen ephod, David was dancing before the LORD with all his might." },
+      { ref: "Psalm 149:3", text: "Let them praise his name with dancing and make music to him with timbrel and harp." },
+      { ref: "Romans 12:1", text: "Therefore, I urge you, brothers and sisters, in view of God's mercy, to offer your bodies as a living sacrifice." }
+    ],
+    tags: ["stepping", "strolling", "dance", "movement", "demons"]
+  },
+  {
+    id: "masons-connection",
+    myth: "Because Founders Were Masons, All BGLOs Are Evil",
+    category: "history",
+    shortAnswer: "This is the genetic fallacy—judging something solely by where it came from. Evaluate by present beliefs and fruit.",
+    detailedResponse: "Many institutions were influenced by Freemasonry, from universities to civic clubs to parts of parliamentary procedure. That does not mean every group is secretly a lodge. The right question is 'What does this organization actually teach and practice right now.' Founders were complex people, just like the authors of our civic documents. You evaluate any group by its present beliefs, behaviors, and fruit, not only by rumored affiliations 100 years ago.",
+    scriptures: [
+      { ref: "Matthew 7:16-20", text: "By their fruit you will recognize them." },
+      { ref: "Ezekiel 18:20", text: "The one who sins is the one who will die. The child will not share the guilt of the parent." },
+      { ref: "1 Thessalonians 5:21", text: "But test them all; hold on to what is good." }
+    ],
+    tags: ["Masons", "founders", "history", "BGLO", "origins"]
+  },
+  {
+    id: "greeks-worldly-influence",
+    myth: "Greek Members Bring Worldly Influences Into Church",
+    category: "practical",
+    shortAnswer: "Every person brings their background into church. Greeks can bring valuable leadership skills and service orientation.",
+    detailedResponse: "Every person brings their background into church—that's the nature of a redeemed community. The church exists to transform people, not exclude those with different experiences. Greeks can bring valuable leadership skills, service orientation, and network connections to benefit the body of Christ. Jesus Himself was criticized for associating with tax collectors and sinners.",
+    scriptures: [
+      { ref: "1 Corinthians 12:12-27", text: "For we were all baptized by one Spirit so as to form one body—whether Jews or Gentiles, slave or free." },
+      { ref: "Mark 2:17", text: "It is not the healthy who need a doctor, but the sick. I have not come to call the righteous, but sinners." },
+      { ref: "Romans 12:2", text: "Do not conform to the pattern of this world, but be transformed by the renewing of your mind." }
+    ],
+    tags: ["worldliness", "church", "influence", "transformation"]
+  },
+  {
+    id: "greek-kingdom-impact",
+    myth: "Greeks Can't Really Make a Kingdom Impact",
+    category: "theology",
+    shortAnswer: "The Great Commission sends us into all the world—including Greek life. Your platform can be a unique mission field.",
+    detailedResponse: "The Great Commission sends us into all the world—including Greek life. Some of the most fruitful evangelism happens in contexts the institutional church rarely reaches. Your Greek platform can be a unique mission field. Don't underestimate what God can do through you where you are. Daniel honored God in Babylon's court. Joseph honored God in Pharaoh's house.",
+    scriptures: [
+      { ref: "Matthew 28:19-20", text: "Therefore go and make disciples of all nations..." },
+      { ref: "1 Corinthians 9:22", text: "I have become all things to all people so that by all possible means I might save some." },
+      { ref: "Acts 1:8", text: "You will be my witnesses in Jerusalem, and in all Judea and Samaria, and to the ends of the earth." }
+    ],
+    tags: ["impact", "ministry", "mission", "evangelism", "kingdom"]
+  },
+  {
+    id: "greek-past-disqualifies",
+    myth: "My Greek Past Disqualifies Me From Ministry",
+    category: "practical",
+    shortAnswer: "Paul persecuted the church yet became its greatest missionary. Your past does not disqualify you from God's grace or service.",
+    detailedResponse: "Paul persecuted the church yet became its greatest missionary. Peter denied Christ three times yet led the early church. Your past—Greek or otherwise—does not disqualify you from God's grace or service. Redemption is the whole point of the Gospel. What matters is not where you've been but where Christ is leading you now.",
+    scriptures: [
+      { ref: "1 Timothy 1:15-16", text: "Christ Jesus came into the world to save sinners—of whom I am the worst." },
+      { ref: "John 21:15-17", text: "Jesus said to Simon Peter, 'Simon son of John, do you love me?' ... 'Feed my sheep.'" },
+      { ref: "2 Corinthians 5:17", text: "Therefore, if anyone is in Christ, the new creation has come: The old has gone, the new is here!" }
+    ],
+    tags: ["past", "ministry", "redemption", "qualification", "grace"]
+  },
+  {
+    id: "greeks-only-care-themselves",
+    myth: "Greeks Only Care About Themselves",
+    category: "practical",
+    shortAnswer: "Greek organizations collectively donate hundreds of millions to charity and log millions of volunteer hours annually.",
+    detailedResponse: "Facts contradict this claim. Greek organizations collectively donate hundreds of millions to charity, provide scholarships, and log millions of volunteer hours annually. While any group has self-interested individuals, the organizational mandates and documented impact tell a different story. Judge by the actual fruit and impact, not assumptions.",
+    scriptures: [
+      { ref: "Philippians 2:3-4", text: "Do nothing out of selfish ambition or vain conceit. Rather, in humility value others above yourselves." },
+      { ref: "Galatians 5:13", text: "Serve one another humbly in love." },
+      { ref: "Acts 20:35", text: "It is more blessed to give than to receive." }
+    ],
+    tags: ["service", "selfish", "community", "impact", "charity"]
+  },
+  {
+    id: "greek-life-always-pulls-away",
+    myth: "Greek Life Will Always Pull You Away From God",
+    category: "theology",
+    shortAnswer: "Any activity can become a distraction. For a mature Christian, Greek Life can become a mission field and training ground.",
+    detailedResponse: "Greek Life can become a distraction or an idol, just like sports, relationships, business, or ministry. The issue is not the existence of the organization—it is your boundaries and priorities. Many believers drift from God with no letters on their chest at all. For a mature Christian, Greek Life can become a mission field, a training ground for leadership, and a crucible for character. For an immature believer, it might expose temptations they are not ready for. That calls for wisdom, not universal fear.",
+    scriptures: [
+      { ref: "Matthew 6:33", text: "But seek first his kingdom and his righteousness, and all these things will be given to you as well." },
+      { ref: "1 Corinthians 10:23-24", text: "'I have the right to do anything,' you say—but not everything is beneficial." },
+      { ref: "Proverbs 4:23", text: "Above all else, guard your heart, for everything you do flows from it." }
+    ],
+    tags: ["distraction", "priorities", "maturity", "wisdom", "boundaries"]
+  },
+  {
+    id: "exclude-greeks-leadership",
+    myth: "Should We Exclude Greeks From Church Leadership?",
+    category: "practical",
+    shortAnswer: "Church leadership qualifications focus on character and doctrine, not organizational affiliations.",
+    detailedResponse: "Church leadership qualifications in Scripture focus on character, doctrine, and conduct—not organizational affiliations. Many Greek members demonstrate the fruit of the Spirit and sound doctrine. Excluding them based on membership alone creates an unbiblical standard. Evaluate each person based on biblical criteria, not categorical assumptions.",
+    scriptures: [
+      { ref: "1 Timothy 3:1-7", text: "Now the overseer is to be above reproach, faithful to his wife, temperate, self-controlled, respectable..." },
+      { ref: "Titus 1:6-9", text: "An elder must be blameless, faithful to his wife, a man whose children believe..." },
+      { ref: "Galatians 3:28", text: "There is neither Jew nor Gentile, neither slave nor free, nor is there male and female, for you are all one in Christ Jesus." }
+    ],
+    tags: ["leadership", "church", "ministry", "qualifications", "exclusion"]
   }
 ];
 

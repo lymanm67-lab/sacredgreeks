@@ -8,6 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { ArrowLeft, Search, BookOpen, ExternalLink } from 'lucide-react';
 import { mythBusterContent, mythCategories } from '@/data/mythBusterContent';
 import { ListenButton } from '@/components/ListenButton';
+import { FISTFramework } from '@/components/myth-buster/FISTFramework';
 
 const MythBuster = () => {
   const [search, setSearch] = useState('');
@@ -34,6 +35,8 @@ const MythBuster = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8 max-w-4xl">
+        {/* F.I.S.T. Framework */}
+        <FISTFramework />
         {/* Search & Filter */}
         <div className="mb-8 space-y-4">
           <div className="relative">
