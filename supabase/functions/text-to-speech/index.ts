@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { encode as base64Encode } from "https://deno.land/std@0.168.0/encoding/base64.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -8,7 +9,17 @@ const corsHeaders = {
 };
 
 const MAX_TEXT_LENGTH = 5000;
-const VALID_VOICES = ["alloy", "echo", "fable", "onyx", "nova", "shimmer"];
+
+// ElevenLabs voice IDs - using high-quality voices
+const ELEVENLABS_VOICES: Record<string, string> = {
+  // Default mapping from old OpenAI voice names to ElevenLabs
+  alloy: "JBFqnCBsd6RMkjVDRZzb", // George - warm, engaging
+  echo: "TX3LPaxmHKxFdv7VOQHJ", // Liam - confident
+  fable: "XrExE9yKIg1WjnnlVkGX", // Matilda - warm, gentle
+  nova: "EXAVITQu4vr4xnSDxMaL", // Sarah - soft, welcoming
+  onyx: "onwK4e9ZLuTAKqWW03F9", // Daniel - deep, authoritative
+  shimmer: "pFZP5JQG7iQjIQuC4Bku", // Lily - soft, expressive
+};
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -32,7 +43,7 @@ serve(async (req) => {
       );
     }
 
-    const { text, voice = "alloy" } = await req.json();
+    const { text, voice = "onyx" } = await req.json();
 
     // Input validation
     if (!text || typeof text !== "string") {
@@ -49,53 +60,58 @@ serve(async (req) => {
       );
     }
 
-    if (!VALID_VOICES.includes(voice)) {
-      return new Response(
-        JSON.stringify({ error: `Invalid voice. Must be one of: ${VALID_VOICES.join(", ")}` }),
-        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
+    const ELEVENLABS_API_KEY = Deno.env.get("ELEVENLABS_API_KEY");
+    if (!ELEVENLABS_API_KEY) {
+      throw new Error("ElevenLabs API key not configured");
     }
 
-    const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");
-    if (!OPENAI_API_KEY) {
-      throw new Error("OpenAI API key not configured");
-    }
+    // Get the ElevenLabs voice ID (use mapping or default to Daniel)
+    const voiceId = ELEVENLABS_VOICES[voice] || ELEVENLABS_VOICES.onyx;
 
-    console.log(`User ${user.email} generating speech for text length: ${text.length}, voice: ${voice}`);
+    console.log(`User ${user.email} generating speech with ElevenLabs for text length: ${text.length}, voice: ${voice} (${voiceId})`);
 
-    // Generate speech from text using OpenAI
-    const response = await fetch("https://api.openai.com/v1/audio/speech", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${OPENAI_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "tts-1",
-        input: text,
-        voice: voice,
-        response_format: "mp3",
-      }),
-    });
+    // Generate speech using ElevenLabs
+    const response = await fetch(
+      `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
+      {
+        method: "POST",
+        headers: {
+          "xi-api-key": ELEVENLABS_API_KEY,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text,
+          model_id: "eleven_multilingual_v2",
+          output_format: "mp3_44100_128",
+          voice_settings: {
+            stability: 0.5,
+            similarity_boost: 0.75,
+            style: 0.5,
+            use_speaker_boost: true,
+          },
+        }),
+      }
+    );
 
     if (!response.ok) {
-      const error = await response.json();
-      console.error("OpenAI API error:", error);
-      throw new Error(error.error?.message || "Failed to generate speech");
+      const errorText = await response.text();
+      console.error("ElevenLabs API error:", response.status, errorText);
+      
+      if (response.status === 429) {
+        return new Response(
+          JSON.stringify({ error: "Rate limit exceeded. Please try again in a moment." }),
+          { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      
+      throw new Error(`Failed to generate speech: ${errorText}`);
     }
 
-    // Convert audio buffer to base64 in chunks to avoid stack overflow
+    // Convert audio buffer to base64 using Deno's encoding library
     const arrayBuffer = await response.arrayBuffer();
-    const uint8Array = new Uint8Array(arrayBuffer);
-    const chunkSize = 8192;
-    let binary = '';
-    
-    for (let i = 0; i < uint8Array.length; i += chunkSize) {
-      const chunk = uint8Array.subarray(i, Math.min(i + chunkSize, uint8Array.length));
-      binary += String.fromCharCode.apply(null, Array.from(chunk));
-    }
-    
-    const base64Audio = btoa(binary);
+    const base64Audio = base64Encode(arrayBuffer);
+
+    console.log(`Successfully generated ${Math.round(arrayBuffer.byteLength / 1024)}KB audio`);
 
     return new Response(JSON.stringify({ audioContent: base64Audio }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
