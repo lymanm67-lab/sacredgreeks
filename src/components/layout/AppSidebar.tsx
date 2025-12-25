@@ -14,7 +14,8 @@ import {
   FlaskConical,
   Bell,
   Trophy,
-  ShieldAlert
+  ShieldAlert,
+  Headphones
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -48,6 +49,7 @@ const mainNavItems = [
   { title: "The Challenge", url: "/challenge", icon: Swords, featureId: null },
   { title: "Biblical Guide", url: "/biblical-guides", icon: BookOpen, featureId: null },
   { title: "The Book", url: "/the-book", icon: BookMarked, featureId: null },
+  { title: "Podcast", url: "/podcast", icon: Headphones, featureId: null },
   { title: "Tools & Resources", url: "/tools-resources", icon: Wrench, featureId: null },
   { title: "Greek Life", url: "/greek-life", icon: GraduationCap, featureId: null },
   { title: "Anti-Hazing", url: "/anti-hazing", icon: ShieldAlert, featureId: null },
