@@ -15,7 +15,9 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { toast } from 'sonner';
 
 const categoryIcons: Record<string, string> = {
-  faith: '✝️',
+  identity: '✝️',
+  ministry: '🙏',
+  worship: '⛪',
   rituals: '🕯️',
   community: '🤝',
   lifestyle: '🌟',
@@ -23,7 +25,9 @@ const categoryIcons: Record<string, string> = {
 };
 
 const categoryDescriptions: Record<string, string> = {
-  faith: 'Questions about worship, loyalty, and spiritual identity',
+  identity: 'Questions about maintaining faith, loyalty, and Christian identity',
+  ministry: 'Topics on leadership, evangelism, and serving in the church',
+  worship: 'Concerns about idolatry, spiritual practices, and false gods',
   rituals: 'Concerns about ceremonies, symbols, and traditions',
   community: 'Topics on service, fellowship, and organizational impact',
   lifestyle: 'Matters of behavior, testimony, and daily living',
@@ -34,7 +38,7 @@ const MythBuster = () => {
   const [search, setSearch] = useState('');
   const [scenario, setScenario] = useState('all');
   const [organization, setOrganization] = useState('all');
-  const [expandedCategories, setExpandedCategories] = useState<string[]>(['faith']);
+  const [expandedCategories, setExpandedCategories] = useState<string[]>(['identity']);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const handleCopy = (text: string, id: string) => {
