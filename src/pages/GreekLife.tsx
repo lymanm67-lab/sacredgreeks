@@ -1459,17 +1459,9 @@ const GreekLife = () => {
       id: "cbo",
       name: "CBOs",
       fullName: "Culturally Based Organizations",
-      description: "Latino, Asian, South Asian, Filipino, Middle Eastern, African, Hindu/Buddhist heritage, and culturally-focused Greek organizations (NALFO, NAPA)",
+      description: "Latino, Asian, South Asian, Filipino, Middle Eastern, African, Native American, Hindu/Buddhist heritage, and culturally-focused Greek organizations (NALFO, NAPA)",
       founded: "Various",
-      organizations: [...multiculturalGreeks, ...filipinoGreeks, ...middleEasternGreeks, ...africanGreeks, ...hinduBuddhistGreeks]
-    },
-    {
-      id: "native",
-      name: "Native American",
-      fullName: "Native American Greek Organizations",
-      description: "Fraternities and sororities celebrating Indigenous heritage and culture",
-      founded: "Various",
-      organizations: nativeAmericanGreeks
+      organizations: [...multiculturalGreeks, ...filipinoGreeks, ...middleEasternGreeks, ...africanGreeks, ...hinduBuddhistGreeks, ...nativeAmericanGreeks]
     },
     {
       id: "hbcu",
