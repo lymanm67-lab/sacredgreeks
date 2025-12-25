@@ -2,13 +2,16 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Headphones, Play, Download, BookOpen, Rss, ExternalLink } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ArrowLeft, Headphones, Play, Download, BookOpen, Rss, ExternalLink, Search, X } from "lucide-react";
+import { useEffect, useState, useMemo } from "react";
 
 interface PodcastEpisode {
   title: string;
   description: string;
   pubDate: string;
+  rawDate: Date;
   audioUrl: string;
   duration?: string;
 }
@@ -17,28 +20,33 @@ const Podcast = () => {
   const [episodes, setEpisodes] = useState<PodcastEpisode[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentAudio, setCurrentAudio] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [dateFilter, setDateFilter] = useState("all");
 
   const RSS_URL = "https://sacredgreeks.jellypod.ai/rss";
 
   useEffect(() => {
     const fetchRSS = async () => {
       try {
-        // Use a CORS proxy or fetch directly if allowed
         const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}`);
         const data = await response.json();
         
         if (data.status === "ok" && data.items) {
-          const parsedEpisodes: PodcastEpisode[] = data.items.map((item: any) => ({
-            title: item.title,
-            description: item.description?.replace(/<[^>]*>/g, '').slice(0, 200) + '...' || '',
-            pubDate: new Date(item.pubDate).toLocaleDateString('en-US', { 
-              year: 'numeric', 
-              month: 'long', 
-              day: 'numeric' 
-            }),
-            audioUrl: item.enclosure?.link || '',
-            duration: item.itunes?.duration || ''
-          }));
+          const parsedEpisodes: PodcastEpisode[] = data.items.map((item: any) => {
+            const rawDate = new Date(item.pubDate);
+            return {
+              title: item.title,
+              description: item.description?.replace(/<[^>]*>/g, '').slice(0, 200) + '...' || '',
+              pubDate: rawDate.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              }),
+              rawDate,
+              audioUrl: item.enclosure?.link || '',
+              duration: item.itunes?.duration || ''
+            };
+          });
           setEpisodes(parsedEpisodes);
         }
       } catch (error) {
@@ -51,8 +59,53 @@ const Podcast = () => {
     fetchRSS();
   }, []);
 
+  const filteredEpisodes = useMemo(() => {
+    let filtered = [...episodes];
+
+    // Apply search filter
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(
+        ep => ep.title.toLowerCase().includes(query) || 
+              ep.description.toLowerCase().includes(query)
+      );
+    }
+
+    // Apply date filter
+    if (dateFilter !== "all") {
+      const now = new Date();
+      let cutoffDate: Date;
+
+      switch (dateFilter) {
+        case "week":
+          cutoffDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+          break;
+        case "month":
+          cutoffDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+          break;
+        case "3months":
+          cutoffDate = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+          break;
+        case "year":
+          cutoffDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
+          break;
+        default:
+          cutoffDate = new Date(0);
+      }
+
+      filtered = filtered.filter(ep => ep.rawDate >= cutoffDate);
+    }
+
+    return filtered;
+  }, [episodes, searchQuery, dateFilter]);
+
   const handlePlay = (audioUrl: string) => {
     setCurrentAudio(currentAudio === audioUrl ? null : audioUrl);
+  };
+
+  const clearFilters = () => {
+    setSearchQuery("");
+    setDateFilter("all");
   };
 
   return (
@@ -112,11 +165,56 @@ const Podcast = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Headphones className="w-5 h-5 text-sacred" />
-                Latest Episodes
+                Episodes
               </CardTitle>
               <CardDescription>
                 Listen to study guide sessions, teachings, and discussions
               </CardDescription>
+              
+              {/* Search and Filter Controls */}
+              <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search episodes..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-9 pr-9"
+                  />
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery("")}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  )}
+                </div>
+                <Select value={dateFilter} onValueChange={setDateFilter}>
+                  <SelectTrigger className="w-full sm:w-[180px]">
+                    <SelectValue placeholder="Filter by date" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All time</SelectItem>
+                    <SelectItem value="week">Last 7 days</SelectItem>
+                    <SelectItem value="month">Last 30 days</SelectItem>
+                    <SelectItem value="3months">Last 3 months</SelectItem>
+                    <SelectItem value="year">Last year</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              {/* Active filters indicator */}
+              {(searchQuery || dateFilter !== "all") && (
+                <div className="flex items-center gap-2 pt-2">
+                  <span className="text-sm text-muted-foreground">
+                    Showing {filteredEpisodes.length} of {episodes.length} episodes
+                  </span>
+                  <Button variant="ghost" size="sm" onClick={clearFilters} className="h-auto py-1 px-2 text-xs">
+                    Clear filters
+                  </Button>
+                </div>
+              )}
             </CardHeader>
             <CardContent>
               {loading ? (
@@ -125,9 +223,9 @@ const Podcast = () => {
                     Loading podcast episodes...
                   </div>
                 </div>
-              ) : episodes.length > 0 ? (
+              ) : filteredEpisodes.length > 0 ? (
                 <div className="space-y-4">
-                  {episodes.map((episode, index) => (
+                  {filteredEpisodes.map((episode, index) => (
                     <div 
                       key={index}
                       className="border border-border rounded-lg p-4 hover:bg-muted/50 transition-colors"
@@ -183,6 +281,14 @@ const Podcast = () => {
                       )}
                     </div>
                   ))}
+                </div>
+              ) : episodes.length > 0 ? (
+                <div className="text-center py-12">
+                  <Search className="w-12 h-12 text-muted-foreground/50 mx-auto mb-4" />
+                  <p className="text-muted-foreground mb-4">No episodes match your search criteria</p>
+                  <Button variant="outline" onClick={clearFilters}>
+                    Clear filters
+                  </Button>
                 </div>
               ) : (
                 <div className="text-center py-12">
