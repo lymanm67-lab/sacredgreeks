@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Home, BookOpen, Star, ShoppingCart, ExternalLink, Quote, CheckCircle } from "lucide-react";
+import bookCover from "@/assets/sacred-not-sinful-cover.jpg";
 
 const TheBook = () => {
   const features = [
@@ -64,14 +65,11 @@ const TheBook = () => {
           <div className="md:flex">
             <div className="md:w-2/5 bg-gradient-to-br from-sacred/20 to-sacred/5 p-8 flex items-center justify-center">
               <div className="relative">
-                <div className="w-48 h-64 bg-sacred rounded-lg shadow-xl flex items-center justify-center transform rotate-3 hover:rotate-0 transition-transform">
-                  <div className="text-center text-sacred-foreground p-4">
-                    <BookOpen className="w-12 h-12 mx-auto mb-2" />
-                    <h4 className="font-bold text-lg">Sacred,</h4>
-                    <h4 className="font-bold text-lg">Not Sinful</h4>
-                    <p className="text-xs mt-2 opacity-80">Dr. Lyman A. Montgomery</p>
-                  </div>
-                </div>
+                <img 
+                  src={bookCover} 
+                  alt="Sacred, Not Sinful book cover by Dr. Lyman A. Montgomery III"
+                  className="w-48 h-auto rounded-lg shadow-xl transform rotate-3 hover:rotate-0 transition-transform"
+                />
                 <div className="absolute -top-2 -right-2 bg-yellow-500 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1">
                   <Star className="w-3 h-3 fill-current" />
                   Bestseller
