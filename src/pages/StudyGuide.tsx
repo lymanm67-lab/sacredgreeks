@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { ArrowLeft, BookOpen, MessageCircle, CheckCircle, Check, Edit3, Share2, Award, ShoppingCart, Lock } from "lucide-react";
+import { ArrowLeft, BookOpen, MessageCircle, CheckCircle, Check, Edit3, Share2, Award, ShoppingCart, Lock, Download, Printer } from "lucide-react";
 import { studyGuideSessions } from "@/sacredGreeksContent";
 import { useStudyProgress } from "@/hooks/use-study-progress";
 import { Progress } from "@/components/ui/progress";
@@ -19,6 +19,8 @@ import { VoiceInputButton } from "@/components/VoiceInputButton";
 import { OrgStudyGuideContent } from "@/components/study-guide/OrgStudyGuideContent";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
+import { generateStudyGuidePDF } from "@/lib/study-guide-pdf";
+import { toast } from "sonner";
 
 const StudyGuide = () => {
   const { user } = useAuth();
@@ -246,6 +248,32 @@ const StudyGuide = () => {
               <span>Action steps</span>
             </div>
           </div>
+
+          {/* PDF Download Section */}
+          <Card className="max-w-md mx-auto bg-muted/30 border-dashed">
+            <CardContent className="pt-6">
+              <div className="text-center space-y-3">
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-sacred/10">
+                  <Printer className="w-6 h-6 text-sacred" />
+                </div>
+                <h3 className="font-semibold">Print for Group Study</h3>
+                <p className="text-sm text-muted-foreground">
+                  Download the complete study guide as a PDF for printing. Perfect for small groups, chapter meetings, or personal study.
+                </p>
+                <Button 
+                  onClick={() => {
+                    generateStudyGuidePDF();
+                    toast.success("PDF downloaded successfully!");
+                  }}
+                  variant="outline"
+                  className="w-full"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Download PDF Study Guide
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Study Sessions */}
