@@ -38,7 +38,7 @@ const OrgCommunity = () => {
   const [stats, setStats] = useState<CommunityStats>({ totalMembers: 0, councilCounts: {}, orgCounts: {} });
   const [loading, setLoading] = useState(true);
   const [filterCouncil, setFilterCouncil] = useState<string>('all');
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState('coaching');
   const [waitlistForm, setWaitlistForm] = useState({
     fullName: '',
     email: '',
