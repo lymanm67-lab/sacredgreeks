@@ -38,22 +38,22 @@ const essentialArticles = [
 
 const videoResources = [
   {
-    title: "Understanding BGLO History & Christian Faith",
-    description: "Explore the rich history, founding principles, and Christian foundations of Black Greek Letter Organizations.",
-    videoId: "17uWxzNGBe4",
-    youtubeUrl: "https://www.youtube.com/watch?v=17uWxzNGBe4"
+    title: "Renounce, Retreat, or Redeem Greek Life?",
+    description: "Should Christians renounce, retreat, or redeem their Greek Letter Organizations? A clear Christian perspective on this controversial question.",
+    videoId: "ZK9HfHf3mLc",
+    youtubeUrl: "https://www.youtube.com/watch?v=ZK9HfHf3mLc"
   },
   {
-    title: "Navigating Faith & Greek Life",
-    description: "Learn effective, biblically sound strategies for maintaining your faith while active in Greek organizations.",
-    videoId: "AVA2aCkkTeA",
-    youtubeUrl: "https://www.youtube.com/watch?v=AVA2aCkkTeA"
+    title: "Can Christians Be Involved In Greek Life?",
+    description: "Explore the intersection of faith and fraternity/sorority culture with different perspectives on navigating Greek Life as a Christian.",
+    videoId: "VN_MIKSBPZY",
+    youtubeUrl: "https://www.youtube.com/watch?v=VN_MIKSBPZY"
   },
   {
-    title: "Building Inclusive Church Community",
-    description: "Discover practical ways to foster a welcoming and supportive church atmosphere for all members, including those in BGLOs.",
-    videoId: "X9GpholWQ6w",
-    youtubeUrl: "https://www.youtube.com/watch?v=X9GpholWQ6w"
+    title: "Christians Pledging Fraternities & Sororities",
+    description: "A pastoral conversation about Christians pledging fraternities and sororities, exploring biblical principles and practical wisdom.",
+    videoId: "kNGt9D8icwM",
+    youtubeUrl: "https://www.youtube.com/watch?v=kNGt9D8icwM"
   }
 ];
 
