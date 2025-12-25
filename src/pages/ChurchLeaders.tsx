@@ -11,7 +11,8 @@ import {
   Heart,
   Users,
   FileText,
-  Briefcase
+  Briefcase,
+  Volume2
 } from "lucide-react";
 import { SEOHead } from "@/components/SEOHead";
 
@@ -282,15 +283,20 @@ const ChurchLeaders = () => {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between gap-2">
                       <Badge variant="outline" className="text-muted-foreground">
                         <Clock className="w-3 h-3 mr-1" />
-                        Read Time: {article.readTime}
+                        {article.readTime}
                       </Badge>
-                      <Button variant="ghost" size="sm" className="text-primary">
-                        Read Article
-                        <ExternalLink className="w-4 h-4 ml-1" />
-                      </Button>
+                      <div className="flex items-center gap-1">
+                        <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary" title="Listen to article">
+                          <Volume2 className="w-4 h-4" />
+                        </Button>
+                        <Button variant="ghost" size="sm" className="text-primary">
+                          Read
+                          <ExternalLink className="w-4 h-4 ml-1" />
+                        </Button>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
