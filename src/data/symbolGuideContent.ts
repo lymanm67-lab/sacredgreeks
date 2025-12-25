@@ -785,6 +785,174 @@ export const symbolGuideContent: SymbolEntry[] = [
     cautionLevel: "low",
     scripturalContext: "Romans 8:37 - 'We are more than conquerors through him who loved us.'"
   },
+  // Norse Deities
+  {
+    id: "odin-deity",
+    name: "Odin (Woden)",
+    category: "deity",
+    description: "Norse king of the gods, god of wisdom, poetry, death, and war. Wednesday is named for him (Woden's day).",
+    christianPerspective: "Our 'Wednesday' comes from Odin (Woden). Christians use this calendar without issue. Odin's pursuit of wisdom through sacrifice echoes, imperfectly, divine wisdom. The day name is cultural, not worship.",
+    cautionLevel: "low",
+    scripturalContext: "Proverbs 2:6 - 'For the LORD gives wisdom; from his mouth come knowledge and understanding.'"
+  },
+  {
+    id: "thor-deity",
+    name: "Thor",
+    category: "deity",
+    description: "Norse god of thunder, storms, and protection. Thursday is named for him (Thor's day). Wielded the hammer Mjolnir.",
+    christianPerspective: "Thursday comes from Thor. The hammer represents protection and power against chaos. God controls the storms and thunder (Psalm 29). Thor's protective role echoes God as our shield.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 29:3 - 'The voice of the LORD is over the waters; the God of glory thunders.'"
+  },
+  {
+    id: "freya-deity",
+    name: "Freya (Frigg)",
+    category: "deity",
+    description: "Norse goddess of love, beauty, fertility, and war. Friday is named for her (Freya's day).",
+    christianPerspective: "Friday comes from Freya. Love and beauty are God's gifts celebrated in Scripture. Christians use 'Friday' without spiritual concern. The day name is linguistic heritage, not worship.",
+    cautionLevel: "low",
+    scripturalContext: "1 John 4:8 - 'God is love.'"
+  },
+  {
+    id: "tyr-deity",
+    name: "Tyr",
+    category: "deity",
+    description: "Norse god of war, justice, and sacrifice. Tuesday is named for him (Tyr's day). Known for sacrificing his hand to bind the wolf Fenrir.",
+    christianPerspective: "Tuesday comes from Tyr. His sacrifice for justice echoes the greater sacrifice of Christ. Justice is a thoroughly biblical theme. Day names are cultural artifacts.",
+    cautionLevel: "low",
+    scripturalContext: "Micah 6:8 - 'Act justly and love mercy and walk humbly with your God.'"
+  },
+  {
+    id: "loki-deity",
+    name: "Loki",
+    category: "deity",
+    description: "Norse trickster god associated with mischief, deception, and eventual chaos. Complex figure in Norse mythology.",
+    christianPerspective: "Loki represents deception, which Scripture condemns. However, understanding trickster figures helps identify deception. Satan is the 'father of lies.' Awareness of evil patterns aids discernment.",
+    cautionLevel: "medium",
+    cautionNote: "Use as a teaching point about deception and the contrast with God's truth.",
+    scripturalContext: "John 8:44 - 'He [Satan] is a liar and the father of lies.'"
+  },
+  {
+    id: "baldur-deity",
+    name: "Baldur",
+    category: "deity",
+    description: "Norse god of light, purity, and beauty. His death and promised return was central to Norse mythology.",
+    christianPerspective: "Baldur's death and promised return echoes resurrection themes. Light overcoming darkness is deeply biblical. Christ is the true light of the world who conquered death.",
+    cautionLevel: "low",
+    scripturalContext: "John 1:5 - 'The light shines in the darkness, and the darkness has not overcome it.'"
+  },
+  {
+    id: "heimdall-deity",
+    name: "Heimdall",
+    category: "deity",
+    description: "Norse guardian of Bifrost (the rainbow bridge), possessing incredible sight and hearing. Watchman of the gods.",
+    christianPerspective: "Watchfulness is a biblical theme. God never slumbers or sleeps. Christians are called to be watchful. The rainbow itself is a biblical covenant sign.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 121:4 - 'He who watches over Israel will neither slumber nor sleep.'"
+  },
+  {
+    id: "valkyries-deity",
+    name: "Valkyries",
+    category: "deity",
+    description: "Norse female warrior spirits who chose the slain for Valhalla. Represent honor in battle and service to Odin.",
+    christianPerspective: "Angels in Scripture are warriors serving God. The concept of spiritual warriors is biblical. Michael leads heavenly armies. The imagery of honorable service resonates with Christian calling.",
+    cautionLevel: "low",
+    scripturalContext: "Revelation 12:7 - 'Michael and his angels fought against the dragon.'"
+  },
+  {
+    id: "norns-deity",
+    name: "The Norns",
+    category: "deity",
+    description: "Three Norse female beings who control destiny—Urd (past), Verdandi (present), and Skuld (future). Similar to the Fates.",
+    christianPerspective: "Christians believe in God's sovereignty, not fate. Yet the concept of life having meaning and direction is biblical. Our times are in God's hands. Redirect from fatalism to providence.",
+    cautionLevel: "medium",
+    cautionNote: "Use to discuss God's sovereign care versus impersonal fate.",
+    scripturalContext: "Psalm 139:16 - 'All the days ordained for me were written in your book.'"
+  },
+  // Celtic Deities
+  {
+    id: "brigid-deity",
+    name: "Brigid",
+    category: "deity",
+    description: "Celtic goddess of fire, poetry, healing, and smithcraft. Later syncretized with St. Brigid of Kildare in Irish Christianity.",
+    christianPerspective: "Brigid's association with healing, fire, and creativity was Christianized—St. Brigid became Ireland's patron saint. This shows how cultural imagery can be redeemed and redirected to Christ.",
+    cautionLevel: "low",
+    scripturalContext: "Acts 2:3 - Tongues of fire at Pentecost; creativity as God's gift."
+  },
+  {
+    id: "dagda-deity",
+    name: "The Dagda",
+    category: "deity",
+    description: "Celtic father god with a magic cauldron of plenty and a club. Represented abundance, fertility, and protection.",
+    christianPerspective: "God is our Father who provides abundantly. The cauldron of plenty echoes God's provision—loaves and fishes, manna from heaven. Protection and provision are thoroughly biblical themes.",
+    cautionLevel: "low",
+    scripturalContext: "Philippians 4:19 - 'My God will meet all your needs according to the riches of his glory.'"
+  },
+  {
+    id: "cernunnos-deity",
+    name: "Cernunnos",
+    category: "deity",
+    description: "Celtic horned god of nature, animals, and fertility. Often depicted with antlers and surrounded by animals.",
+    christianPerspective: "God gave humanity dominion over animals and nature. Stewardship of creation is biblical. Nature reveals God's glory. The imagery of harmony with creation reflects Eden.",
+    cautionLevel: "medium",
+    cautionNote: "Some occult groups have adopted this imagery. Focus on biblical creation stewardship.",
+    scripturalContext: "Genesis 1:28 - 'Rule over the fish in the sea and the birds in the sky.'"
+  },
+  {
+    id: "morrigan-deity",
+    name: "The Morrigan",
+    category: "deity",
+    description: "Celtic goddess of war, fate, and death. Often appeared as a crow. Triple goddess figure.",
+    christianPerspective: "War and death are realities Scripture addresses. God is Lord of both life and death. Victory over death through Christ is the ultimate triumph. Mortality points to resurrection hope.",
+    cautionLevel: "medium",
+    cautionNote: "Death imagery should point to Christ's victory, not glorify death.",
+    scripturalContext: "1 Corinthians 15:54 - 'Death has been swallowed up in victory.'"
+  },
+  {
+    id: "lugh-deity",
+    name: "Lugh",
+    category: "deity",
+    description: "Celtic god of many skills—war, craftsmanship, poetry, and kingship. Master of all arts.",
+    christianPerspective: "Skill in many areas is a gift. Bezalel was filled with the Spirit for craftsmanship. Excellence in multiple domains glorifies the Creator who gives all gifts.",
+    cautionLevel: "low",
+    scripturalContext: "Exodus 35:31 - 'Filled him with the Spirit of God, with wisdom, understanding, and knowledge in all kinds of crafts.'"
+  },
+  {
+    id: "danu-deity",
+    name: "Danu",
+    category: "deity",
+    description: "Celtic mother goddess and ancestor of the Tuatha Dé Danann. Associated with rivers and the earth.",
+    christianPerspective: "Rivers and earth are God's creation. Water as life-giving is thoroughly biblical. God's motherly care is expressed in Scripture. Creation care is a Christian calling.",
+    cautionLevel: "low",
+    scripturalContext: "Isaiah 66:13 - 'As a mother comforts her child, so will I comfort you.'"
+  },
+  {
+    id: "cuchulain-deity",
+    name: "Cú Chulainn",
+    category: "deity",
+    description: "Celtic hero-demigod of Ulster, known for incredible feats of strength and his battle frenzy. Ireland's greatest warrior.",
+    christianPerspective: "Heroes who fight for justice appear throughout Scripture—Samson, David, Joshua. Strength and courage in righteous causes are celebrated. The warrior motif points to spiritual warfare.",
+    cautionLevel: "low",
+    scripturalContext: "Ephesians 6:10 - 'Be strong in the Lord and in his mighty power.'"
+  },
+  {
+    id: "epona-deity",
+    name: "Epona",
+    category: "deity",
+    description: "Celtic goddess of horses, fertility, and protection. Adopted even by Roman cavalry.",
+    christianPerspective: "Horses in Scripture represent strength and provision for battle. God created animals for human partnership. Cavalry and equestrian imagery appears throughout biblical warfare narratives.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 20:7 - 'Some trust in chariots and some in horses, but we trust in the name of the LORD our God.'"
+  },
+  {
+    id: "ogma-deity",
+    name: "Ogma",
+    category: "deity",
+    description: "Celtic god of eloquence and language. Credited with inventing the Ogham script. Champion of the gods.",
+    christianPerspective: "Language is God's gift enabling relationship and revelation. Scripture is God's written Word. Eloquence in service of truth glorifies God. Words have power (Proverbs 18:21).",
+    cautionLevel: "low",
+    scripturalContext: "Proverbs 25:11 - 'A word fitly spoken is like apples of gold in a setting of silver.'"
+  },
   // Published Ritual Elements
   {
     id: "candle-lighting",

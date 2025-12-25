@@ -1151,6 +1151,90 @@ const GreekLife = () => {
     },
   ];
 
+  const hinduBuddhistGreeks: Organization[] = [
+    {
+      name: "Delta Epsilon Psi",
+      greekLetters: "ΔΕΨ",
+      founded: "1998",
+      foundedLocation: "University of Texas at Austin",
+      colors: "Orange and Black",
+      motto: "Brotherhood Through Diversity",
+      nickname: "South Asian Fraternity with Hindu/Buddhist heritage"
+    },
+    {
+      name: "Sigma Beta Rho",
+      greekLetters: "ΣΒΡ",
+      founded: "March 8, 1996",
+      foundedLocation: "University of Pennsylvania",
+      colors: "Royal Blue and White",
+      motto: "Fraternity for Life",
+      nickname: "South Asian Fraternity"
+    },
+    {
+      name: "Kappa Phi Gamma",
+      greekLetters: "ΚΦΓ",
+      founded: "March 9, 1998",
+      foundedLocation: "Virginia Tech",
+      colors: "Purple, Pink, and White",
+      motto: "Unity, Sisterhood, Service",
+      nickname: "South Asian Sorority"
+    },
+    {
+      name: "Sigma Sigma Rho",
+      greekLetters: "ΣΣΡ",
+      founded: "September 22, 1998",
+      foundedLocation: "University of Maryland",
+      colors: "Gold, Burgundy, and White",
+      motto: "South Asian Sisterhood",
+      nickname: "South Asian Sorority"
+    },
+    {
+      name: "Alpha Epsilon Omega",
+      greekLetters: "ΑΕΩ",
+      founded: "1994",
+      foundedLocation: "UCLA",
+      colors: "Blue and Gold",
+      motto: "South Asian Brotherhood",
+      nickname: "Hindu Heritage Fraternity"
+    },
+    {
+      name: "Delta Phi Omega",
+      greekLetters: "ΔΦΩ",
+      founded: "1998",
+      foundedLocation: "University of Texas at Austin",
+      colors: "Black, Red, and White",
+      motto: "South Asian Sisterhood Through Service",
+      nickname: "Hindu/Buddhist Heritage Sorority"
+    },
+    {
+      name: "Omega Sigma Tau",
+      greekLetters: "ΩΣΤ",
+      founded: "2001",
+      foundedLocation: "University of Houston",
+      colors: "Gold and Maroon",
+      motto: "Unity Through Diversity",
+      nickname: "Buddhist Cultural Fraternity"
+    },
+    {
+      name: "Sangam Association Greeks",
+      greekLetters: "SAG",
+      founded: "Various",
+      foundedLocation: "Various campuses",
+      colors: "Saffron and Green",
+      motto: "Celebrating Hindu Heritage",
+      nickname: "Hindu Cultural Organizations"
+    },
+    {
+      name: "Buddhist Students Association Greeks",
+      greekLetters: "BSA",
+      founded: "Various",
+      foundedLocation: "Various campuses",
+      colors: "Saffron and White",
+      motto: "Mindfulness and Brotherhood",
+      nickname: "Buddhist Cultural Organizations"
+    },
+  ];
+
   const africanGreeks: Organization[] = [
     {
       name: "Omega Psi Phi (African Diaspora)",
@@ -1482,6 +1566,14 @@ const GreekLife = () => {
       description: "Organizations celebrating African and Caribbean heritage and diaspora culture",
       founded: "Various",
       organizations: africanGreeks
+    },
+    {
+      id: "hindubuddhist",
+      name: "Hindu/Buddhist",
+      fullName: "Hindu & Buddhist Cultural Greek Organizations",
+      description: "Fraternities and sororities celebrating South Asian religious heritage and spiritual traditions",
+      founded: "Various",
+      organizations: hinduBuddhistGreeks
     }
   ];
 
