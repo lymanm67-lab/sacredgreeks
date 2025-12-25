@@ -7,7 +7,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Home, Users, Heart, BookOpen, MessageSquare, Filter, Sparkles, ChevronRight } from 'lucide-react';
+import { Home, Users, Heart, BookOpen, MessageSquare, Filter, Sparkles, ChevronRight, Video, Users2, HelpCircle, Award, Clock, GraduationCap, Quote } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { GREEK_COUNCILS, getOrganizationsByCouncil } from '@/data/greekOrganizations';
 import { getCouncilContent, getFaithIntegrationTips, getCommonChallenges } from '@/data/orgSpecificContent';
@@ -36,6 +39,47 @@ const OrgCommunity = () => {
   const [loading, setLoading] = useState(true);
   const [filterCouncil, setFilterCouncil] = useState<string>('all');
   const [activeTab, setActiveTab] = useState('overview');
+  const [waitlistForm, setWaitlistForm] = useState({
+    fullName: '',
+    email: '',
+    organization: '',
+    goals: ''
+  });
+  const [submittingWaitlist, setSubmittingWaitlist] = useState(false);
+
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!waitlistForm.fullName.trim() || !waitlistForm.email.trim()) {
+      toast.error('Please fill in required fields');
+      return;
+    }
+    setSubmittingWaitlist(true);
+    // Simulate submission
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    toast.success('You have been added to the waitlist! We will notify you when the next cohort opens.');
+    setWaitlistForm({ fullName: '', email: '', organization: '', goals: '' });
+    setSubmittingWaitlist(false);
+  };
+
+  const curriculumChapters = [
+    { num: 1, title: 'Reclaiming Biblical Clarity' },
+    { num: 2, title: 'Rethinking D9 Secrecy' },
+    { num: 3, title: 'Freemasonry & D9 Legacy' },
+    { num: 4, title: 'Institutions of Resistance' },
+    { num: 5, title: 'Renounce or Denounce' },
+    { num: 6, title: 'The P.R.O.O.F. Framework' },
+    { num: 7, title: "Christian's Response to Culture" },
+    { num: 8, title: 'Living as Light & Salt' }
+  ];
+
+  const coachingFeatures = [
+    { icon: Video, title: 'Live Sessions', desc: 'Weekly video calls with Dr. Lyman' },
+    { icon: Users2, title: 'Small Groups', desc: 'Intimate cohorts of 15-20 members' },
+    { icon: BookOpen, title: 'Book Study', desc: 'Deep dive into Sacred Not Sinful' },
+    { icon: HelpCircle, title: 'Q&A Access', desc: 'Direct questions answered' },
+    { icon: Award, title: 'Certificate', desc: 'Completion recognition' },
+    { icon: Clock, title: '8 Weeks', desc: 'Comprehensive curriculum' }
+  ];
 
   useEffect(() => {
     if (user) {
@@ -246,8 +290,9 @@ const OrgCommunity = () => {
 
           {/* Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="coaching">Group Coaching</TabsTrigger>
               <TabsTrigger value="members">Members</TabsTrigger>
               <TabsTrigger value="resources">Resources</TabsTrigger>
             </TabsList>
@@ -356,6 +401,167 @@ const OrgCommunity = () => {
                   </Card>
                 </Link>
               </div>
+            </TabsContent>
+
+            {/* Group Coaching Tab */}
+            <TabsContent value="coaching" className="space-y-8 mt-6">
+              {/* Hero Section */}
+              <Card className="border-sacred/30 bg-gradient-to-br from-sacred/5 via-background to-warm-blue/5 overflow-hidden">
+                <CardContent className="pt-8 pb-8">
+                  <div className="text-center mb-6">
+                    <Badge className="bg-sacred/20 text-sacred border-sacred/30 mb-4">
+                      <GraduationCap className="w-3 h-3 mr-1" />
+                      Group Coaching Experience
+                    </Badge>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-3">Sacred Not Sinful</h2>
+                    <p className="text-muted-foreground max-w-2xl mx-auto">
+                      Go deeper with Dr. Lyman Montgomery in an 8-week guided journey through the book and biblical framework for navigating faith and Greek life.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Book + Curriculum Grid */}
+              <div className="grid lg:grid-cols-2 gap-6">
+                {/* Book Info */}
+                <Card>
+                  <CardContent className="pt-6">
+                    <div className="flex flex-col sm:flex-row gap-6">
+                      <div className="w-32 h-44 bg-gradient-to-br from-sacred to-warm-blue rounded-lg shadow-lg flex-shrink-0 flex items-center justify-center mx-auto sm:mx-0">
+                        <div className="text-center text-white p-2">
+                          <BookOpen className="w-8 h-8 mx-auto mb-2" />
+                          <p className="text-xs font-semibold">Sacred, Not Sinful</p>
+                        </div>
+                      </div>
+                      <div className="flex-1 text-center sm:text-left">
+                        <h3 className="text-xl font-bold mb-1">Sacred, Not Sinful</h3>
+                        <p className="text-sm text-muted-foreground mb-3">
+                          A Biblical Response to the Black Greek Letter Organizations Debate
+                        </p>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          By <span className="font-medium text-foreground">Dr. Lyman A. Montgomery, III</span>
+                        </p>
+                        <Link to="/the-book">
+                          <Button variant="outline" size="sm">
+                            Preview Book
+                            <ChevronRight className="w-4 h-4 ml-1" />
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Curriculum Chapters */}
+                <Card>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-lg">Curriculum Chapters</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-2 gap-2">
+                      {curriculumChapters.map((chapter) => (
+                        <div 
+                          key={chapter.num} 
+                          className="flex items-center gap-3 p-2 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
+                        >
+                          <span className="w-6 h-6 rounded-full bg-sacred/20 text-sacred text-sm font-bold flex items-center justify-center flex-shrink-0">
+                            {chapter.num}
+                          </span>
+                          <span className="text-sm font-medium truncate">{chapter.title}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Features Grid */}
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                {coachingFeatures.map((feature, i) => (
+                  <Card key={i} className="text-center">
+                    <CardContent className="pt-6 pb-4">
+                      <feature.icon className="w-8 h-8 mx-auto mb-2 text-sacred" />
+                      <h4 className="font-semibold text-sm mb-1">{feature.title}</h4>
+                      <p className="text-xs text-muted-foreground">{feature.desc}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+
+              {/* Waitlist Form */}
+              <Card className="border-sacred/20">
+                <CardHeader className="text-center">
+                  <CardTitle>Join the Waitlist</CardTitle>
+                  <CardDescription>
+                    Be notified when the next cohort opens. Limited to 20 spots per session.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <form onSubmit={handleWaitlistSubmit} className="max-w-md mx-auto space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="waitlist-name">Full Name *</Label>
+                      <Input
+                        id="waitlist-name"
+                        placeholder="Your name"
+                        value={waitlistForm.fullName}
+                        onChange={(e) => setWaitlistForm(prev => ({ ...prev, fullName: e.target.value }))}
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="waitlist-email">Email Address *</Label>
+                      <Input
+                        id="waitlist-email"
+                        type="email"
+                        placeholder="you@example.com"
+                        value={waitlistForm.email}
+                        onChange={(e) => setWaitlistForm(prev => ({ ...prev, email: e.target.value }))}
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="waitlist-org">Greek Organization (Optional)</Label>
+                      <Input
+                        id="waitlist-org"
+                        placeholder="e.g., Alpha Phi Alpha"
+                        value={waitlistForm.organization}
+                        onChange={(e) => setWaitlistForm(prev => ({ ...prev, organization: e.target.value }))}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="waitlist-goals">What do you hope to gain? (Optional)</Label>
+                      <Textarea
+                        id="waitlist-goals"
+                        placeholder="Share your goals for this coaching experience..."
+                        value={waitlistForm.goals}
+                        onChange={(e) => setWaitlistForm(prev => ({ ...prev, goals: e.target.value }))}
+                        rows={3}
+                      />
+                    </div>
+                    <Button type="submit" className="w-full" disabled={submittingWaitlist}>
+                      {submittingWaitlist ? 'Submitting...' : 'Join the Waitlist'}
+                    </Button>
+                    <p className="text-xs text-center text-muted-foreground">
+                      By signing up, you agree to receive email updates about the group coaching program.
+                    </p>
+                  </form>
+                </CardContent>
+              </Card>
+
+              {/* Testimonial */}
+              <Card className="bg-gradient-to-br from-sacred/5 to-warm-blue/5 border-sacred/20">
+                <CardContent className="py-8">
+                  <div className="max-w-2xl mx-auto text-center">
+                    <Quote className="w-10 h-10 text-sacred/30 mx-auto mb-4" />
+                    <blockquote className="text-lg italic text-foreground mb-4">
+                      "Dr. Montgomery's teaching transformed how I view my membership. This isn't about choosing between faith and Greek life—it's about living authentically in both."
+                    </blockquote>
+                    <p className="text-sm text-muted-foreground">
+                      — Marcus J., BGLO Chapter President
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
             </TabsContent>
 
             <TabsContent value="members" className="space-y-4 mt-6">
