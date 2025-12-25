@@ -96,12 +96,37 @@ const readingPlans = [
 // Topic content organized by category
 const topicContent = {
   'greek-life': [
-    { ref: 'Proverbs 27:17', text: 'Iron sharpeneth iron; so a man sharpeneth the countenance of his friend.', theme: 'Brotherhood & Sisterhood' },
-    { ref: 'Ecclesiastes 4:9-10', text: 'Two are better than one; because they have a good reward for their labour. For if they fall, the one will lift up his fellow.', theme: 'Unity & Support' },
+    // Biblical Brotherhood & Sisterhood
+    { ref: 'Proverbs 27:17', text: 'Iron sharpeneth iron; so a man sharpeneth the countenance of his friend.', theme: 'Biblical Brotherhood & Sisterhood' },
+    { ref: 'Ecclesiastes 4:9-10', text: 'Two are better than one; because they have a good reward for their labour. For if they fall, the one will lift up his fellow.', theme: 'Biblical Brotherhood & Sisterhood' },
+    { ref: 'Romans 12:10', text: 'Be kindly affectioned one to another with brotherly love; in honour preferring one another.', theme: 'Biblical Brotherhood & Sisterhood' },
+    { ref: '1 Peter 3:8', text: 'Finally, be ye all of one mind, having compassion one of another, love as brethren, be pitiful, be courteous.', theme: 'Biblical Brotherhood & Sisterhood' },
+    { ref: 'John 15:12-13', text: 'This is my commandment, That ye love one another, as I have loved you. Greater love hath no man than this, that a man lay down his life for his friends.', theme: 'Biblical Brotherhood & Sisterhood' },
+    
+    // Classical Symbols in American Institutions
+    { ref: 'Acts 17:22-23', text: 'Then Paul stood in the midst of Mars\' hill, and said, Ye men of Athens, I perceive that in all things ye are too superstitious. For as I passed by, and beheld your devotions, I found an altar with this inscription, TO THE UNKNOWN GOD.', theme: 'Classical Symbols in American Institutions' },
+    { ref: 'Romans 1:20', text: 'For the invisible things of him from the creation of the world are clearly seen, being understood by the things that are made, even his eternal power and Godhead.', theme: 'Classical Symbols in American Institutions' },
+    { ref: '1 Corinthians 10:31', text: 'Whether therefore ye eat, or drink, or whatsoever ye do, do all to the glory of God.', theme: 'Classical Symbols in American Institutions' },
+    { ref: 'Colossians 1:16', text: 'For by him were all things created, that are in heaven, and that are in earth, visible and invisible, whether they be thrones, or dominions, or principalities, or powers: all things were created by him, and for him.', theme: 'Classical Symbols in American Institutions' },
+    
+    // Rituals & Symbols Controversy
+    { ref: '1 Corinthians 10:23', text: 'All things are lawful for me, but all things are not expedient: all things are lawful for me, but all things edify not.', theme: 'Rituals & Symbols Controversy' },
+    { ref: 'Romans 14:5-6', text: 'One man esteemeth one day above another: another esteemeth every day alike. Let every man be fully persuaded in his own mind.', theme: 'Rituals & Symbols Controversy' },
+    { ref: '1 Corinthians 8:4-6', text: 'We know that an idol is nothing in the world, and that there is none other God but one. For though there be that are called gods, whether in heaven or in earth... But to us there is but one God, the Father.', theme: 'Rituals & Symbols Controversy' },
+    { ref: 'Colossians 2:16-17', text: 'Let no man therefore judge you in meat, or in drink, or in respect of an holyday, or of the new moon, or of the sabbath days: Which are a shadow of things to come; but the body is of Christ.', theme: 'Rituals & Symbols Controversy' },
+    { ref: 'Romans 14:22-23', text: 'Hast thou faith? have it to thyself before God. Happy is he that condemneth not himself in that thing which he alloweth.', theme: 'Rituals & Symbols Controversy' },
+    
+    // Responding to Greek Life Objections
+    { ref: '1 Peter 3:15', text: 'But sanctify the Lord God in your hearts: and be ready always to give an answer to every man that asketh you a reason of the hope that is in you with meekness and fear.', theme: 'Responding to Greek Life Objections' },
+    { ref: 'Colossians 4:5-6', text: 'Walk in wisdom toward them that are without, redeeming the time. Let your speech be alway with grace, seasoned with salt, that ye may know how ye ought to answer every man.', theme: 'Responding to Greek Life Objections' },
+    { ref: '2 Timothy 2:24-25', text: 'And the servant of the Lord must not strive; but be gentle unto all men, apt to teach, patient, In meekness instructing those that oppose themselves.', theme: 'Responding to Greek Life Objections' },
+    { ref: 'Proverbs 15:1', text: 'A soft answer turneth away wrath: but grievous words stir up anger.', theme: 'Responding to Greek Life Objections' },
+    { ref: 'Titus 3:2', text: 'To speak evil of no man, to be no brawlers, but gentle, shewing all meekness unto all men.', theme: 'Responding to Greek Life Objections' },
+    
+    // General Greek Life
     { ref: 'Galatians 6:2', text: 'Bear ye one another\'s burdens, and so fulfil the law of Christ.', theme: 'Service to Others' },
     { ref: 'Hebrews 10:24-25', text: 'And let us consider one another to provoke unto love and to good works: Not forsaking the assembling of ourselves together.', theme: 'Fellowship' },
     { ref: '1 Thessalonians 5:11', text: 'Wherefore comfort yourselves together, and edify one another, even as also ye do.', theme: 'Encouragement' },
-    { ref: 'Romans 12:10', text: 'Be kindly affectioned one to another with brotherly love; in honour preferring one another.', theme: 'Brotherly Love' },
     { ref: 'Colossians 3:23', text: 'And whatsoever ye do, do it heartily, as to the Lord, and not unto men.', theme: 'Excellence' },
     { ref: 'Philippians 2:3-4', text: 'Let nothing be done through strife or vainglory; but in lowliness of mind let each esteem other better than themselves. Look not every man on his own things, but every man also on the things of others.', theme: 'Humility in Leadership' }
   ],
