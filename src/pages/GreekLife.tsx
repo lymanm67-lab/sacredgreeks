@@ -495,6 +495,130 @@ const GreekLife = () => {
     },
   ];
 
+  const socialFellowships: Organization[] = [
+    {
+      name: "Groove Phi Groove Social Fellowship, Inc.",
+      greekLetters: "GΦG",
+      founded: "January 12, 1962",
+      foundedLocation: "Morgan State University",
+      colors: "Black and White",
+      motto: "Ladies First, Scholarship Always",
+      symbol: "Omega Cane",
+      nickname: "The Fellowship, G-Phi-G"
+    },
+    {
+      name: "Swing Phi Swing Social Fellowship, Inc.",
+      greekLetters: "SΦS",
+      founded: "March 13, 1969",
+      foundedLocation: "Winston-Salem State University",
+      colors: "Red, White, and Black",
+      motto: "Sisterhood, Scholarship, and Service",
+      symbol: "Rose",
+      nickname: "Swings"
+    },
+    {
+      name: "Malik Fraternity, Inc.",
+      greekLetters: "MALIK",
+      founded: "1977",
+      foundedLocation: "City University of New York",
+      colors: "Black and Gold",
+      motto: "Men Acquiring Leadership, Intelligence, and Knowledge",
+      nickname: "First Hip-Hop Fraternity"
+    },
+    {
+      name: "Kappa Kappa Psi (Social)",
+      greekLetters: "ΚΚΨ",
+      founded: "May 9, 1994",
+      foundedLocation: "Texas Southern University",
+      colors: "Black, Old Gold, and Crimson",
+      motto: "Brothers in Unity",
+      nickname: "Not affiliated with band fraternity"
+    },
+  ];
+
+  const masonicFraternal: Organization[] = [
+    {
+      name: "Freemasonry (Blue Lodge)",
+      greekLetters: "F&AM",
+      founded: "1717",
+      foundedLocation: "London, England",
+      colors: "Blue and Gold",
+      motto: "Brotherly Love, Relief, and Truth",
+      symbol: "Square and Compass",
+      nickname: "The Craft"
+    },
+    {
+      name: "Prince Hall Freemasonry",
+      greekLetters: "PHAF&AM",
+      founded: "1784",
+      foundedLocation: "Boston, Massachusetts",
+      colors: "Blue and Gold",
+      motto: "Brotherly Love, Relief, and Truth",
+      symbol: "Square and Compass",
+      nickname: "Prince Hall Masons"
+    },
+    {
+      name: "Order of the Eastern Star",
+      greekLetters: "OES",
+      founded: "1850",
+      foundedLocation: "United States",
+      colors: "Blue, Yellow, White, Green, Red",
+      motto: "Fairest Among Thousands, Altogether Lovely",
+      symbol: "Five-Pointed Star",
+      nickname: "Eastern Star"
+    },
+    {
+      name: "Shriners International",
+      greekLetters: "AAONMS",
+      founded: "1870",
+      foundedLocation: "New York City",
+      colors: "Red and Gold",
+      motto: "Shriners Having Fun and Helping Kids",
+      symbol: "Crescent, Scimitar, Star",
+      nickname: "Shriners"
+    },
+    {
+      name: "AEAONMS (Prince Hall Shriners)",
+      greekLetters: "AEAONMS",
+      founded: "1893",
+      foundedLocation: "Chicago, Illinois",
+      colors: "Red and Gold",
+      motto: "We Never Sleep",
+      symbol: "Crescent and Star",
+      nickname: "Prince Hall Shriners"
+    },
+    {
+      name: "Knights of Pythias",
+      greekLetters: "K of P",
+      founded: "February 19, 1864",
+      foundedLocation: "Washington, D.C.",
+      colors: "Blue, Yellow, and Red",
+      motto: "Friendship, Charity, and Benevolence",
+      symbol: "Shield, Sword, Helmet",
+      nickname: "First fraternity chartered by Congress"
+    },
+    {
+      name: "Improved Benevolent Protective Order of Elks of the World",
+      greekLetters: "IBPOEW",
+      founded: "1898",
+      foundedLocation: "Cincinnati, Ohio",
+      colors: "Purple and White",
+      motto: "The Best People on Earth",
+      symbol: "Elk",
+      nickname: "Black Elks"
+    },
+    {
+      name: "Daughters of Isis",
+      greekLetters: "DOI",
+      founded: "1910",
+      foundedLocation: "United States",
+      colors: "Green and Gold",
+      motto: "Charity, Truth, and Love",
+      symbol: "Sphinx, Pyramid",
+      nickname: "Shriners Auxiliary"
+    },
+  ];
+
   const councils = [
     {
       id: "nphc",
@@ -543,6 +667,22 @@ const GreekLife = () => {
       description: "Sigma Alpha Pi (NSLS), Phi Beta Kappa, and academic honor societies recognizing achievement",
       founded: "Various",
       organizations: leadershipHonorSocieties
+    },
+    {
+      id: "social",
+      name: "Social Fellowships",
+      fullName: "Social Fellowships",
+      description: "Groove Phi Groove, Swing Phi Swing, and other social fellowship organizations",
+      founded: "Various",
+      organizations: socialFellowships
+    },
+    {
+      id: "masonic",
+      name: "Masonic & Fraternal",
+      fullName: "Masonic & Fraternal Orders",
+      description: "Freemasonry, Shriners, Eastern Star, and fraternal orders with Greek traditions",
+      founded: "Various",
+      organizations: masonicFraternal
     }
   ];
 
@@ -690,13 +830,15 @@ const GreekLife = () => {
 
           {/* Councils Tabs */}
           <Tabs defaultValue="nphc" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3 sm:grid-cols-6">
-              <TabsTrigger value="nphc" className="text-xs sm:text-sm">Divine Nine</TabsTrigger>
-              <TabsTrigger value="npc" className="text-xs sm:text-sm">NPC</TabsTrigger>
-              <TabsTrigger value="ifc" className="text-xs sm:text-sm">IFC</TabsTrigger>
-              <TabsTrigger value="multicultural" className="text-xs sm:text-sm">Multicultural</TabsTrigger>
-              <TabsTrigger value="professional" className="text-xs sm:text-sm">Professional</TabsTrigger>
-              <TabsTrigger value="honor" className="text-xs sm:text-sm">Leadership</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-4 sm:grid-cols-8 gap-1">
+              <TabsTrigger value="nphc" className="text-xs">Divine Nine</TabsTrigger>
+              <TabsTrigger value="npc" className="text-xs">NPC</TabsTrigger>
+              <TabsTrigger value="ifc" className="text-xs">IFC</TabsTrigger>
+              <TabsTrigger value="multicultural" className="text-xs">Multicultural</TabsTrigger>
+              <TabsTrigger value="professional" className="text-xs">Professional</TabsTrigger>
+              <TabsTrigger value="honor" className="text-xs">Leadership</TabsTrigger>
+              <TabsTrigger value="social" className="text-xs">Social</TabsTrigger>
+              <TabsTrigger value="masonic" className="text-xs">Masonic</TabsTrigger>
             </TabsList>
 
             {councils.map((council) => (
