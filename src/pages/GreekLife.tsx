@@ -1736,20 +1736,12 @@ const GreekLife = () => {
       organizations: napaGreeks
     },
     {
-      id: "southasian",
-      name: "South Asian",
-      fullName: "South Asian Greek Organizations",
-      description: "Fraternities and sororities celebrating South Asian heritage and culture",
-      founded: "Various",
-      organizations: southAsianGreeks
-    },
-    {
       id: "cbo",
       name: "Other CBOs",
       fullName: "Other Culturally Based Organizations",
-      description: "Filipino, Middle Eastern, African, Native American, Hindu/Buddhist heritage, and other culturally-focused Greek organizations",
+      description: "South Asian, Filipino, Middle Eastern, African, Native American, Hindu/Buddhist heritage, and other culturally-focused Greek organizations",
       founded: "Various",
-      organizations: [...filipinoGreeks, ...middleEasternGreeks, ...africanGreeks, ...hinduBuddhistGreeks, ...nativeAmericanGreeks]
+      organizations: [...southAsianGreeks, ...filipinoGreeks, ...middleEasternGreeks, ...africanGreeks, ...hinduBuddhistGreeks, ...nativeAmericanGreeks]
     },
     {
       id: "hbcu",
@@ -1975,7 +1967,6 @@ const GreekLife = () => {
               <TabsTrigger value="ifc" className="text-xs px-2 py-1">IFC</TabsTrigger>
               <TabsTrigger value="nalfo" className="text-xs px-2 py-1">NALFO</TabsTrigger>
               <TabsTrigger value="napa" className="text-xs px-2 py-1">NAPA</TabsTrigger>
-              <TabsTrigger value="southasian" className="text-xs px-2 py-1">South Asian</TabsTrigger>
               <TabsTrigger value="cbo" className="text-xs px-2 py-1">Other CBOs</TabsTrigger>
               <TabsTrigger value="hbcu" className="text-xs px-2 py-1">HBCU Greeks</TabsTrigger>
               <TabsTrigger value="professional" className="text-xs px-2 py-1">Professional</TabsTrigger>
