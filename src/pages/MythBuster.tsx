@@ -43,9 +43,6 @@ const MythBuster = () => {
       <main className="container mx-auto px-4 py-8 max-w-4xl">
         {/* F.I.S.T. Framework - How Myths Become Truth */}
         <FISTFramework />
-
-        {/* Downloadable Resources */}
-        <MythBusterDownloads />
         
         {/* Search & Filter */}
         <div className="mb-8 space-y-4">
@@ -159,6 +156,9 @@ const MythBuster = () => {
             ))
           )}
         </div>
+
+        {/* Downloadable Resources */}
+        <MythBusterDownloads />
       </main>
     </div>
   );
