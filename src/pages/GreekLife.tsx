@@ -163,6 +163,59 @@ const GreekLife = () => {
     { name: "Theta Chi", greekLetters: "ΘΧ", founded: "April 10, 1856", foundedLocation: "Norwich University", colors: "Military Red and White" },
   ];
 
+  const honorSocieties: Organization[] = [
+    {
+      name: "Sigma Alpha Pi (NSLS)",
+      greekLetters: "ΣΑΠ",
+      founded: "2001",
+      foundedLocation: "City University of New York",
+      colors: "Blue and Gold",
+      motto: "Building Leaders Who Make a Better World",
+      symbol: "Torch of Leadership",
+      nickname: "The National Society of Leadership and Success"
+    },
+    {
+      name: "Phi Beta Kappa",
+      greekLetters: "ΦΒΚ",
+      founded: "December 5, 1776",
+      foundedLocation: "College of William & Mary",
+      colors: "Pink and Blue",
+      motto: "Love of learning is the guide of life"
+    },
+    {
+      name: "Phi Kappa Phi",
+      greekLetters: "ΦΚΦ",
+      founded: "1897",
+      foundedLocation: "University of Maine",
+      colors: "Gold and White",
+      motto: "Let the love of learning rule humanity"
+    },
+    {
+      name: "Golden Key International",
+      greekLetters: "GK",
+      founded: "1977",
+      foundedLocation: "Georgia State University",
+      colors: "Gold and Black",
+      motto: "Excellence, Integrity, Leadership"
+    },
+    {
+      name: "Alpha Lambda Delta",
+      greekLetters: "ΑΛΔ",
+      founded: "1924",
+      foundedLocation: "University of Illinois",
+      colors: "Red, Gold, and White",
+      motto: "Scholarship, Leadership, Service"
+    },
+    {
+      name: "Omicron Delta Kappa",
+      greekLetters: "ΟΔΚ",
+      founded: "December 3, 1914",
+      foundedLocation: "Washington and Lee University",
+      colors: "Sky Blue, White, and Black",
+      motto: "Leadership in worthwhile activities"
+    },
+  ];
+
   const councils = [
     {
       id: "nphc",
@@ -187,6 +240,14 @@ const GreekLife = () => {
       description: "Men's fraternities across North America",
       founded: "November 27, 1909",
       organizations: ifcFraternities
+    },
+    {
+      id: "honor",
+      name: "Honor Societies",
+      fullName: "Leadership & Honor Societies",
+      description: "Academic and leadership honor societies recognizing achievement",
+      founded: "Various",
+      organizations: honorSocieties
     }
   ];
 
@@ -313,10 +374,11 @@ const GreekLife = () => {
 
           {/* Councils Tabs */}
           <Tabs defaultValue="nphc" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="nphc">Divine Nine (NPHC)</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="nphc">Divine Nine</TabsTrigger>
               <TabsTrigger value="npc">NPC Sororities</TabsTrigger>
               <TabsTrigger value="ifc">IFC Fraternities</TabsTrigger>
+              <TabsTrigger value="honor">Honor Societies</TabsTrigger>
             </TabsList>
 
             {councils.map((council) => (
