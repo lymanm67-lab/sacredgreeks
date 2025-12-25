@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -15,11 +15,14 @@ import {
   Save,
   CheckCircle2,
   Users,
-  Lightbulb
+  Lightbulb,
+  Cloud,
+  Loader2
 } from 'lucide-react';
 import { ListenButton } from '@/components/ListenButton';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { useStudyProgress } from '@/hooks/use-study-progress';
 import { Link } from 'react-router-dom';
 
 export interface StudyGuide {
@@ -41,6 +44,17 @@ interface StudyGuideDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
+// Convert string ID to numeric session ID for database storage
+const getNumericSessionId = (studyId: string): number => {
+  let hash = 0;
+  for (let i = 0; i < studyId.length; i++) {
+    const char = studyId.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return Math.abs(hash);
+};
+
 export const StudyGuideDialog: React.FC<StudyGuideDialogProps> = ({
   study,
   open,
@@ -48,9 +62,35 @@ export const StudyGuideDialog: React.FC<StudyGuideDialogProps> = ({
 }) => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { saveNotes, getSessionNotes, isSavingNotes, isLoading: isLoadingProgress } = useStudyProgress();
   const [personalNotes, setPersonalNotes] = useState('');
   const [notesSaved, setNotesSaved] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
+
+  const sessionId = study ? getNumericSessionId(study.id) : 0;
+
+  // Load notes when dialog opens
+  useEffect(() => {
+    if (open && study) {
+      if (user) {
+        // Load from database for logged-in users
+        const dbNotes = getSessionNotes(sessionId);
+        setPersonalNotes(dbNotes);
+      } else {
+        // Fallback to localStorage for guests
+        const saved = localStorage.getItem(`study-notes-${study.id}`);
+        if (saved) setPersonalNotes(saved);
+      }
+    }
+  }, [open, study, user, sessionId, getSessionNotes]);
+
+  // Reset notes when dialog closes
+  useEffect(() => {
+    if (!open) {
+      setPersonalNotes('');
+      setNotesSaved(false);
+    }
+  }, [open]);
 
   if (!study) return null;
 
@@ -71,18 +111,24 @@ ${study.applicationPoints.map((p, i) => `${i + 1}. ${p}`).join('\n')}
   `.trim();
 
   const handleSaveNotes = () => {
-    // In a real implementation, this would save to the database
-    localStorage.setItem(`study-notes-${study.id}`, personalNotes);
-    setNotesSaved(true);
-    toast({
-      title: 'Notes saved',
-      description: 'Your personal notes have been saved.',
-    });
-    setTimeout(() => setNotesSaved(false), 2000);
+    if (user) {
+      // Save to database for logged-in users
+      saveNotes({ sessionId, notes: personalNotes });
+      setNotesSaved(true);
+      setTimeout(() => setNotesSaved(false), 2000);
+    } else {
+      // Save to localStorage for guests
+      localStorage.setItem(`study-notes-${study.id}`, personalNotes);
+      setNotesSaved(true);
+      toast({
+        title: 'Notes saved locally',
+        description: 'Sign in to sync notes across devices.',
+      });
+      setTimeout(() => setNotesSaved(false), 2000);
+    }
   };
 
   const handleDownloadPDF = () => {
-    // Create a simple text download (in production, use jsPDF for actual PDF)
     const content = `${fullStudyText}\n\nPERSONAL NOTES\n${personalNotes || '(No notes added)'}`;
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
@@ -98,14 +144,6 @@ ${study.applicationPoints.map((p, i) => `${i + 1}. ${p}`).join('\n')}
       description: 'Your study guide has been downloaded.',
     });
   };
-
-  // Load saved notes on open
-  React.useEffect(() => {
-    if (open && study) {
-      const saved = localStorage.getItem(`study-notes-${study.id}`);
-      if (saved) setPersonalNotes(saved);
-    }
-  }, [open, study]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -273,13 +311,30 @@ ${study.applicationPoints.map((p, i) => `${i + 1}. ${p}`).join('\n')}
                     value={personalNotes}
                     onChange={(e) => setPersonalNotes(e.target.value)}
                     className="min-h-[200px]"
+                    disabled={isLoadingProgress && !!user}
                   />
                   <div className="flex items-center justify-between">
-                    <p className="text-xs text-muted-foreground">
-                      Your notes are saved locally on this device
+                    <p className="text-xs text-muted-foreground flex items-center gap-1">
+                      {user ? (
+                        <>
+                          <Cloud className="w-3 h-3" />
+                          Notes sync across all your devices
+                        </>
+                      ) : (
+                        'Sign in to sync notes across devices'
+                      )}
                     </p>
-                    <Button onClick={handleSaveNotes} className="gap-2 bg-sacred hover:bg-sacred/90">
-                      {notesSaved ? (
+                    <Button 
+                      onClick={handleSaveNotes} 
+                      className="gap-2 bg-sacred hover:bg-sacred/90"
+                      disabled={isSavingNotes}
+                    >
+                      {isSavingNotes ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          Saving...
+                        </>
+                      ) : notesSaved ? (
                         <>
                           <CheckCircle2 className="w-4 h-4" />
                           Saved!
