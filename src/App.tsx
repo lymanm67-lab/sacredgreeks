@@ -217,7 +217,8 @@ const App = () => (
                     <Route path="/challenge" element={<Navigate to="/the-challenge" replace />} />
                     <Route path="/the-challenge" element={<TheChallenge />} />
                     <Route path="/biblical-guides" element={<BiblicalGuides />} />
-                    <Route path="/book" element={<TheBook />} />
+                    <Route path="/the-book" element={<TheBook />} />
+                    <Route path="/book" element={<Navigate to="/the-book" replace />} />
                     <Route path="/greek-life" element={<GreekLife />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/tools-resources" element={<ToolsResources />} />
