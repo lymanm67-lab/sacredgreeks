@@ -15,6 +15,7 @@ import { toast } from 'sonner';
 import { GREEK_COUNCILS, getOrganizationsByCouncil } from '@/data/greekOrganizations';
 import { getCouncilContent, getFaithIntegrationTips, getCommonChallenges } from '@/data/orgSpecificContent';
 import { getAffiliationLabel } from '@/data/affiliationTypes';
+import bookCover from '@/assets/sacred-not-sinful-cover.jpg';
 
 interface CommunityMember {
   id: string;
@@ -344,12 +345,11 @@ const OrgCommunity = () => {
                 <Card>
                   <CardContent className="pt-6">
                     <div className="flex flex-col sm:flex-row gap-6">
-                      <div className="w-32 h-44 bg-gradient-to-br from-sacred to-warm-blue rounded-lg shadow-lg flex-shrink-0 flex items-center justify-center mx-auto sm:mx-0">
-                        <div className="text-center text-white p-2">
-                          <BookOpen className="w-8 h-8 mx-auto mb-2" />
-                          <p className="text-xs font-semibold">Sacred, Not Sinful</p>
-                        </div>
-                      </div>
+                      <img 
+                        src={bookCover} 
+                        alt="Sacred, Not Sinful Book Cover" 
+                        className="w-32 h-44 rounded-lg shadow-lg flex-shrink-0 object-cover mx-auto sm:mx-0"
+                      />
                       <div className="flex-1 text-center sm:text-left">
                         <h3 className="text-xl font-bold mb-1">Sacred, Not Sinful</h3>
                         <p className="text-sm text-muted-foreground mb-3">
