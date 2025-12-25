@@ -1121,6 +1121,16 @@ const AntiHazing = () => {
           name: "Professional Presentation Challenge",
           detail: "Research and present on organizational history, values, or a relevant topic",
           example: "Each new member presents on a founder, chapter milestone, or service initiative"
+        },
+        {
+          name: "Robert's Rules of Order Certification",
+          detail: "Learn and demonstrate mastery of parliamentary procedure for professional meetings",
+          example: "New members pass a Robert's Rules quiz and demonstrate motions in mock meetings"
+        },
+        {
+          name: "Budget & Financial Planning Challenge",
+          detail: "Create and present a chapter budget or event financial plan",
+          example: "Aspirants propose budgets for hypothetical programs, learning fiscal responsibility"
         }
       ]
     },
@@ -1210,6 +1220,31 @@ const AntiHazing = () => {
           name: "Back-to-School Supply Drives",
           detail: "Collect and distribute school supplies to underserved students",
           example: "Delta Sigma Theta's annual backpack giveaways equip thousands of students"
+        },
+        {
+          name: "Voter Registration Drives",
+          detail: "Register students and community members to vote, empowering civic participation",
+          example: "Alpha Phi Alpha's 'A Voteless People is a Hopeless People' initiative registers thousands"
+        },
+        {
+          name: "Civic Engagement Workshops",
+          detail: "Educate community on local government, voting rights, and civic responsibilities",
+          example: "Know Your Rights workshops teaching ID requirements, polling locations, and ballot issues"
+        },
+        {
+          name: "Get Out the Vote (GOTV) Campaigns",
+          detail: "Organize rides to polls, phone banks, and door-to-door canvassing",
+          example: "Divine Nine Voter Initiative mobilizes thousands of voters each election cycle"
+        },
+        {
+          name: "Town Hall & Candidate Forums",
+          detail: "Host local political forums bringing candidates to campus",
+          example: "NPHC chapters co-host nonpartisan candidate Q&A sessions before elections"
+        },
+        {
+          name: "Census Participation Drives",
+          detail: "Ensure community members are counted in census for proper representation",
+          example: "2020 Complete Count initiatives focused on historically undercounted communities"
         }
       ]
     },
