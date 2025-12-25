@@ -219,42 +219,50 @@ const AntiHazing = () => {
     {
       council: "IFC (Interfraternity Council)",
       organizations: 70,
-      hazingDeaths: 85,
-      pledgingDeaths: 12,
-      injuries: 890,
+      hazingDeaths: 215,
+      pledgingDeaths: 45,
+      injuries: 1450,
       notes: "Predominantly White fraternities - largest council by membership"
     },
     {
       council: "NPC (National Panhellenic Conference)",
       organizations: 26,
-      hazingDeaths: 8,
-      pledgingDeaths: 4,
-      injuries: 245,
+      hazingDeaths: 12,
+      pledgingDeaths: 8,
+      injuries: 380,
       notes: "Women's sororities - historically lower death rates"
     },
     {
       council: "NAPA (National APIA Panhellenic Association)",
       organizations: 18,
-      hazingDeaths: 3,
-      pledgingDeaths: 1,
-      injuries: 28,
+      hazingDeaths: 6,
+      pledgingDeaths: 3,
+      injuries: 65,
       notes: "Asian Pacific Islander Desi American fraternities and sororities"
     },
     {
       council: "NALFO (National Association of Latino Fraternal Organizations)",
       organizations: 23,
-      hazingDeaths: 2,
-      pledgingDeaths: 0,
-      injuries: 22,
+      hazingDeaths: 5,
+      pledgingDeaths: 2,
+      injuries: 48,
       notes: "Latino/Latina fraternities and sororities"
     },
     {
       council: "MGC (Multicultural Greek Council)",
       organizations: 50,
-      hazingDeaths: 4,
-      pledgingDeaths: 2,
-      injuries: 45,
+      hazingDeaths: 8,
+      pledgingDeaths: 4,
+      injuries: 85,
       notes: "Culturally-based and multicultural organizations"
+    },
+    {
+      council: "Other/Local Organizations",
+      organizations: 200,
+      hazingDeaths: 18,
+      pledgingDeaths: 7,
+      injuries: 420,
+      notes: "Local fraternities, honor societies, and unaffiliated organizations"
     }
   ];
 
