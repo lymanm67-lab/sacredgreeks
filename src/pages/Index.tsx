@@ -1,116 +1,291 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { useDemoMode } from "@/contexts/DemoModeContext";
-import { useLandingSurvey, SurveyAnswers } from "@/hooks/use-landing-survey";
-import { useNavigate } from "react-router-dom";
-import { MobileQRCode } from "@/components/MobileQRCode";
+import { useNavigate, Link } from "react-router-dom";
+import { Card, CardContent } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import logo from "@/assets/sacred-greeks-logo.png";
-import { DemoHeaderButton } from "@/components/landing/DemoHeaderButton";
-import { LandingHeroSection } from "@/components/landing/HeroSection";
-import { CoreFeaturesSection } from "@/components/landing/CoreFeaturesSection";
-import { Footer } from "@/components/landing/Footer";
-import { LandingPersonalizationSurvey } from "@/components/landing/LandingPersonalizationSurvey";
 import { cn } from "@/lib/utils";
+import { Play, Sparkles, User, ChevronDown, Settings } from "lucide-react";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const { user } = useAuth();
-  const { isDemoMode } = useDemoMode();
+  const { isDemoMode, setDemoMode } = useDemoMode();
   const navigate = useNavigate();
-  const { showSurvey, completeSurvey, skipSurvey } = useLandingSurvey();
 
-  const handleSurveyComplete = (answers: SurveyAnswers) => {
-    completeSurvey(answers);
+  const handleDemoClick = () => {
+    setDemoMode(true);
+    navigate('/dashboard');
+  };
+
+  const handleCreateAccount = () => {
     navigate('/auth?mode=signup');
   };
 
-  const handleSurveySkip = () => {
-    skipSurvey();
-    navigate('/auth?mode=signup');
+  const handleSignIn = () => {
+    navigate('/auth');
   };
+
+  // If user is logged in, redirect to dashboard
+  if (user) {
+    navigate('/dashboard');
+    return null;
+  }
 
   return (
     <div className={cn(
-      "min-h-screen bg-background flex flex-col",
+      "min-h-screen bg-muted/30 flex flex-col",
       isDemoMode && "pt-11"
     )}>
-      {/* Header */}
+      {/* Navigation Header */}
       <header className={cn(
-        "border-b border-border/50 bg-background/95 backdrop-blur-sm sticky z-50",
+        "border-b border-border bg-background sticky z-50",
         isDemoMode ? "top-11" : "top-0"
       )}>
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-14">
+            {/* Logo */}
+            <Link to="/" className="flex items-center">
+              <img src={logo} alt="Sacred Greeks" className="h-8 w-auto" loading="lazy" />
+            </Link>
+
+            {/* Main Navigation */}
+            <NavigationMenu className="hidden lg:flex">
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <Link to="/" className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
+                    Home
+                  </Link>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="text-sm font-medium">
+                    Meet Dr. Lyman
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="w-64 p-2">
+                      <Link to="/about" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
+                        About Dr. Montgomery
+                      </Link>
+                      <Link to="/podcast-appearances" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
+                        Podcast Appearances
+                      </Link>
+                      <Link to="/coaching-application" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
+                        Coaching Application
+                      </Link>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="text-sm font-medium">
+                    The Challenge
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="w-64 p-2">
+                      <Link to="/guide" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
+                        P.R.O.O.F. Assessment
+                      </Link>
+                      <Link to="/shattered-masks" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
+                        Shattered Masks
+                      </Link>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="text-sm font-medium">
+                    Biblical Guide
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="w-64 p-2">
+                      <Link to="/symbol-guide" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
+                        Symbol Guide
+                      </Link>
+                      <Link to="/myth-buster" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
+                        Myth Buster Library
+                      </Link>
+                      <Link to="/bible-study" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
+                        Bible Study
+                      </Link>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <a 
+                    href="https://www.amazon.com/dp/B0DYQ5K1YH" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
+                  >
+                    The Book
+                  </a>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="text-sm font-medium">
+                    Tools & Resources
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="w-64 p-2">
+                      <Link to="/resources" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
+                        Resources Library
+                      </Link>
+                      <Link to="/study" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
+                        Study Guide
+                      </Link>
+                      <Link to="/podcast" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
+                        Podcast
+                      </Link>
+                      <Link to="/video-library" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
+                        Video Library
+                      </Link>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="text-sm font-medium">
+                    Greek Life
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="w-64 p-2">
+                      <Link to="/symbol-guide" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
+                        Organizations Guide
+                      </Link>
+                      <Link to="/journey" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
+                        30-Day Journey
+                      </Link>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="text-sm font-medium">
+                    Community
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="w-64 p-2">
+                      <Link to="/forum" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
+                        Forum
+                      </Link>
+                      <Link to="/prayer-wall" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
+                        Prayer Wall
+                      </Link>
+                      <Link to="/ask-dr-lyman" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
+                        Ask Dr. Lyman
+                      </Link>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <Link to="/faq" className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
+                    Contact
+                  </Link>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+
+            {/* Right Side */}
             <div className="flex items-center gap-2">
-              <div className="bg-gradient-to-br from-sacred to-sacred/80 rounded-xl p-2 shadow-lg shadow-sacred/20">
-                <img src={logo} alt="Sacred Greeks" className="h-6 w-auto brightness-0 invert" loading="lazy" />
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
+              <Button 
+                onClick={handleSignIn}
+                className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                size="sm"
+              >
+                <User className="w-4 h-4 mr-2" />
+                Sign In
+              </Button>
               <ThemeToggle />
-              <DemoHeaderButton />
-              <MobileQRCode />
-              <HeaderAuthButtons user={user} />
             </div>
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <LandingHeroSection user={user} />
+      {/* Main Content */}
+      <main className="flex-1 flex items-center justify-center px-4 py-12">
+        <Card className="w-full max-w-lg shadow-lg border-border/50">
+          <CardContent className="p-8">
+            {/* Logo */}
+            <div className="flex justify-center mb-6">
+              <img src={logo} alt="Sacred Greeks" className="h-12 w-auto opacity-80" loading="lazy" />
+            </div>
 
-      {/* Core Features - Just 2 */}
-      <CoreFeaturesSection />
+            {/* Title */}
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-serif font-medium text-foreground mb-2">
+                Welcome to Sacred Greeks
+              </h1>
+              <p className="text-muted-foreground">
+                Navigate Greek life with faith and confidence
+              </p>
+            </div>
 
-      {/* Spacer */}
-      <div className="flex-1" />
+            {/* Entry Options */}
+            <div className="space-y-3">
+              {/* Demo Option */}
+              <button
+                onClick={handleDemoClick}
+                className="w-full p-4 rounded-xl border border-border bg-background hover:bg-muted/50 transition-colors text-left flex items-start gap-4 group"
+              >
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                  <Play className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground mb-1">Try Demo First</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Explore all features with sample data. No account needed.
+                  </p>
+                </div>
+              </button>
 
-      {/* Footer */}
-      <Footer />
+              {/* Create Account Option */}
+              <button
+                onClick={handleCreateAccount}
+                className="w-full p-4 rounded-xl border border-border bg-background hover:bg-muted/50 transition-colors text-left flex items-start gap-4 group"
+              >
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                  <Sparkles className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground mb-1">Create Your Account</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Join the Sacred Greeks community and start your personalized faith journey today.
+                  </p>
+                </div>
+              </button>
 
-      {/* Personalization Survey for new visitors */}
-      {!user && (
-        <LandingPersonalizationSurvey
-          open={showSurvey}
-          onComplete={handleSurveyComplete}
-          onSkip={handleSurveySkip}
-        />
-      )}
+              {/* Sign In Option */}
+              <button
+                onClick={handleSignIn}
+                className="w-full p-4 rounded-xl border border-border bg-background hover:bg-muted/50 transition-colors text-left flex items-start gap-4 group"
+              >
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                  <User className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground mb-1">Sign In</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Already have an account? Continue your faith journey.
+                  </p>
+                </div>
+              </button>
+            </div>
+          </CardContent>
+        </Card>
+      </main>
     </div>
   );
 };
-
-// Header auth buttons component
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { LayoutDashboard } from "lucide-react";
-import { BetaBenefitsDialog } from "@/components/BetaBenefitsDialog";
-
-function HeaderAuthButtons({ user }: { user: any }) {
-  if (user) {
-    return (
-      <Link to="/dashboard">
-        <Button className="bg-sacred hover:bg-sacred/90 text-sacred-foreground shadow-lg shadow-sacred/20" size="sm">
-          <LayoutDashboard className="w-4 h-4 mr-2" />
-          Dashboard
-        </Button>
-      </Link>
-    );
-  }
-
-  return (
-    <>
-      <Link to="/auth" className="hidden sm:block">
-        <Button variant="ghost" size="sm">
-          Sign In
-        </Button>
-      </Link>
-      <BetaBenefitsDialog>
-        <Button className="bg-sacred hover:bg-sacred/90 text-sacred-foreground" size="sm">
-          Get Started
-        </Button>
-      </BetaBenefitsDialog>
-    </>
-  );
-}
 
 export default Index;
