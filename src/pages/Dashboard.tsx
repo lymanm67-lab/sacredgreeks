@@ -209,10 +209,13 @@ const Dashboard = () => {
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-2">
+            <div className="hidden md:flex items-center gap-1.5 flex-shrink-0">
               {isDemoMode && (
-                <Link to="/profile">
-                  <Badge variant="secondary" className="text-xs bg-amber-500/10 text-amber-600 border-amber-500/20 hover:bg-amber-500/20 cursor-pointer transition-colors">
+                <Link to="/profile" className="hidden lg:block">
+                  <Badge
+                    variant="secondary"
+                    className="text-xs bg-amber-500/10 text-amber-600 border-amber-500/20 hover:bg-amber-500/20 cursor-pointer transition-colors"
+                  >
                     <FlaskConical className="w-3 h-3 mr-1" />
                     Demo Mode
                   </Badge>
@@ -220,14 +223,14 @@ const Dashboard = () => {
               )}
               <SubscriptionBadge />
               <Link to="/profile">
-                <Button variant="ghost" size="sm">
-                  <User className="w-4 h-4 mr-2" />
-                  Profile
+                <Button variant="ghost" size="sm" className="gap-2">
+                  <User className="w-4 h-4" />
+                  <span className="hidden lg:inline">Profile</span>
                 </Button>
               </Link>
-              <Button variant="outline" size="sm" onClick={handleSignOut}>
-                <LogOut className="w-4 h-4 mr-2" />
-                Sign Out
+              <Button variant="outline" size="sm" className="gap-2" onClick={handleSignOut}>
+                <LogOut className="w-4 h-4" />
+                <span className="hidden lg:inline">Sign Out</span>
               </Button>
             </div>
 
