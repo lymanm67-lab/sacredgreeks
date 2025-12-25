@@ -436,7 +436,7 @@ const OrgCommunity = () => {
                       </div>
                     </div>
                     <a 
-                      href="https://zoom.us/j/sacredgreeks" 
+                      href="https://us06web.zoom.us/j/5590911918?pwd=0rafTI5b2OvJGRjHi1z3lzZePsGGnh.1" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="inline-flex"
