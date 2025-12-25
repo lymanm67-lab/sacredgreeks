@@ -209,7 +209,7 @@ const Dashboard = () => {
                 <img src={logo} alt="Sacred Greeks" className="h-8 w-auto" />
               </Link>
               {isDemoMode && (
-                <Link to="/profile" className="hidden sm:block">
+                <Link to="/profile" className="hidden md:block">
                   <Badge variant="secondary" className="text-xs bg-amber-500/10 text-amber-600 border-amber-500/20 hover:bg-amber-500/20 cursor-pointer transition-colors">
                     <FlaskConical className="w-3 h-3 mr-1" />
                     Demo Mode
