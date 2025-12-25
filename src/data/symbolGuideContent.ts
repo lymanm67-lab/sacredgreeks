@@ -143,6 +143,240 @@ export const symbolGuideContent: SymbolEntry[] = [
     description: "Events bringing multiple Greek organizations together",
     christianPerspective: "Unity events celebrate shared values and community. Christians can participate while maintaining their distinct witness and using these as opportunities for relationship-building and testimony.",
     cautionLevel: "low"
+  },
+  // Fraternity-Specific Symbols
+  {
+    id: "sphinx-symbol",
+    name: "Sphinx",
+    category: "organizational",
+    description: "A mythological creature with a lion's body and human head, used by Alpha Phi Alpha and Sigma Pi Phi (The Boulé)",
+    christianPerspective: "The sphinx represents wisdom and strength in organizational context—qualities celebrated in Proverbs. Churches in Egypt used sphinx imagery for centuries. The symbol represents virtue, not worship.",
+    cautionLevel: "low",
+    scripturalContext: "Proverbs 24:5 - 'The wise prevail through great power, and those who have knowledge muster their strength.'"
+  },
+  {
+    id: "pyramid-symbol",
+    name: "Pyramid",
+    category: "organizational",
+    description: "Ancient architectural form used by Delta Sigma Theta and other organizations to represent strength and endurance",
+    christianPerspective: "Pyramids represent lasting foundations and progressive building. Scripture celebrates building on solid foundations. The Israelites themselves worked on Egyptian structures before the Exodus.",
+    cautionLevel: "low",
+    scripturalContext: "Matthew 7:24-25 - Building on rock so the structure withstands storms."
+  },
+  {
+    id: "dove-symbol",
+    name: "Dove",
+    category: "organizational",
+    description: "Symbol of peace and purity used by Phi Beta Sigma, Zeta Phi Beta, and other organizations",
+    christianPerspective: "The dove is deeply biblical—representing the Holy Spirit at Jesus' baptism and Noah's hope after the flood. This is perhaps the most biblically affirmed symbol in Greek life.",
+    cautionLevel: "low",
+    scripturalContext: "Matthew 3:16 - 'The Spirit of God descending like a dove and alighting on him.'"
+  },
+  {
+    id: "lamp-symbol",
+    name: "Lamp/Torch",
+    category: "organizational",
+    description: "Symbol of enlightenment and guidance used by Omega Psi Phi and many academic organizations",
+    christianPerspective: "The lamp is a biblical symbol of God's Word and guidance. 'Your word is a lamp for my feet.' Using this symbol connects to Scriptural imagery of light overcoming darkness.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 119:105 - 'Your word is a lamp for my feet, a light on my path.'"
+  },
+  {
+    id: "diamond-symbol",
+    name: "Diamond",
+    category: "organizational",
+    description: "Symbol of strength and value used by Kappa Alpha Psi to represent achievement and unbreakable bonds",
+    christianPerspective: "Diamonds represent refinement through pressure—a process Scripture uses to describe how God develops character. 'Consider it pure joy... trials develop perseverance.'",
+    cautionLevel: "low",
+    scripturalContext: "James 1:2-4 - Trials produce perseverance, character, and completeness."
+  },
+  {
+    id: "ivy-leaf-symbol",
+    name: "Ivy Leaf",
+    category: "organizational",
+    description: "Symbol of Alpha Kappa Alpha representing endurance, growth, and scholastic achievement",
+    christianPerspective: "Ivy represents growth and flourishing. Scripture celebrates those who are 'planted by streams of water' and produce fruit in season—symbols of spiritual vitality.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 1:3 - 'Like a tree planted by streams of water, which yields its fruit in season.'"
+  },
+  {
+    id: "pearl-symbol",
+    name: "Pearl",
+    category: "organizational",
+    description: "Symbol of value and beauty used by several NPC sororities including Alpha Delta Pi and others",
+    christianPerspective: "Jesus compared the kingdom of heaven to a pearl of great price. Pearls represent something precious worth sacrificing for—a deeply biblical concept.",
+    cautionLevel: "low",
+    scripturalContext: "Matthew 13:45-46 - 'The kingdom of heaven is like a merchant looking for fine pearls.'"
+  },
+  {
+    id: "anchor-symbol",
+    name: "Anchor",
+    category: "organizational",
+    description: "Symbol of hope and stability used by Delta Gamma and other organizations",
+    christianPerspective: "The anchor is explicitly used in Hebrews as a symbol of Christian hope. 'We have this hope as an anchor for the soul, firm and secure.'",
+    cautionLevel: "low",
+    scripturalContext: "Hebrews 6:19 - 'We have this hope as an anchor for the soul, firm and secure.'"
+  },
+  {
+    id: "arrow-symbol",
+    name: "Arrow",
+    category: "organizational",
+    description: "Symbol of direction and purpose used by Pi Beta Phi and other organizations",
+    christianPerspective: "Arrows in Scripture represent purpose, direction, and children as blessings. 'Like arrows in the hands of a warrior are children born in one's youth.'",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 127:4 - 'Like arrows in the hands of a warrior are children born in one's youth.'"
+  },
+  {
+    id: "owl-symbol",
+    name: "Owl",
+    category: "organizational",
+    description: "Symbol of wisdom used by Chi Omega and Phi Gamma Delta, representing knowledge and scholarship",
+    christianPerspective: "While associated with Athena in Greek mythology, owls in organizational context simply represent wisdom—a virtue highly praised in Proverbs and throughout Scripture.",
+    cautionLevel: "low",
+    scripturalContext: "Proverbs 4:7 - 'The beginning of wisdom is this: Get wisdom. Though it cost all you have, get understanding.'"
+  },
+  {
+    id: "crescent-symbol",
+    name: "Crescent Moon",
+    category: "organizational",
+    description: "Symbol used by Phi Beta Sigma, Kappa Alpha Order, and others representing cycles and renewal",
+    christianPerspective: "God created the moon and appointed it for seasons (Psalm 104:19). The crescent represents cycles of growth and renewal, not lunar worship.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 104:19 - 'He made the moon to mark the seasons.'"
+  },
+  {
+    id: "rose-symbol",
+    name: "Rose",
+    category: "organizational",
+    description: "Symbol of beauty and love used by Zeta Phi Beta (white rose), Sigma Alpha Iota (red rose), and many NPC sororities",
+    christianPerspective: "The rose appears in Song of Solomon as the 'rose of Sharon'—a symbol of beauty and love. Flowers represent the beauty of God's creation.",
+    cautionLevel: "low",
+    scripturalContext: "Song of Solomon 2:1 - 'I am a rose of Sharon, a lily of the valleys.'"
+  },
+  {
+    id: "lion-symbol",
+    name: "Lion",
+    category: "organizational",
+    description: "Symbol of strength and courage used by Tau Kappa Epsilon, Lambda Chi Alpha, and other organizations",
+    christianPerspective: "The lion is one of the most prominent biblical symbols—Jesus is called the 'Lion of Judah.' This symbol connects directly to Scriptural imagery.",
+    cautionLevel: "low",
+    scripturalContext: "Revelation 5:5 - 'The Lion of the tribe of Judah, the Root of David, has triumphed.'"
+  },
+  {
+    id: "skull-symbol",
+    name: "Skull and Crossbones",
+    category: "organizational",
+    description: "Symbol used by Skull and Bones society and some fraternity chapters representing mortality and the equalizing nature of death",
+    christianPerspective: "Memento mori ('remember death') is an ancient Christian practice. Monasteries often displayed skulls to remind believers of life's brevity and eternal perspective.",
+    cautionLevel: "medium",
+    cautionNote: "While historically Christian in meaning, some find this imagery unsettling. Context and personal conscience matter."
+  },
+  {
+    id: "crossed-keys",
+    name: "Crossed Keys",
+    category: "organizational",
+    description: "Symbol of access, responsibility, and stewardship used by Kappa Kappa Gamma and other organizations",
+    christianPerspective: "Keys represent authority and access—Jesus gave Peter 'keys to the kingdom.' This symbol connects to themes of stewardship and responsibility.",
+    cautionLevel: "low",
+    scripturalContext: "Matthew 16:19 - 'I will give you the keys of the kingdom of heaven.'"
+  },
+  {
+    id: "star-symbol",
+    name: "Star",
+    category: "organizational",
+    description: "Symbol of guidance and aspiration used by Sigma Kappa (five-pointed), Order of the Eastern Star, and many organizations",
+    christianPerspective: "The Star of Bethlehem guided the Magi to Christ. Stars represent God's faithful promises and guidance throughout Scripture.",
+    cautionLevel: "low",
+    scripturalContext: "Matthew 2:2 - 'We saw his star when it rose and have come to worship him.'"
+  },
+  {
+    id: "centaur-symbol",
+    name: "Centaur",
+    category: "organizational",
+    description: "Symbol of Iota Phi Theta representing the duality of mind and body, intellectual and physical strength",
+    christianPerspective: "While mythological in origin, the centaur in Greek life represents the integration of mind and body—a concept Paul explores when he calls us to present our bodies as living sacrifices.",
+    cautionLevel: "low",
+    scripturalContext: "Romans 12:1-2 - 'Offer your bodies as a living sacrifice... be transformed by the renewing of your mind.'"
+  },
+  {
+    id: "poodle-symbol",
+    name: "Poodle",
+    category: "organizational",
+    description: "Mascot of Sigma Gamma Rho Sorority representing elegance, intelligence, and distinction",
+    christianPerspective: "Animals as mascots represent valued qualities. Dogs in Scripture are sometimes loyal companions. The poodle represents intelligence and elegance—qualities valued in Proverbs.",
+    cautionLevel: "low"
+  },
+  {
+    id: "elephant-symbol",
+    name: "Elephant",
+    category: "organizational",
+    description: "Symbol of strength, memory, and loyalty used by Delta Sigma Theta and Alpha Kappa Alpha",
+    christianPerspective: "Elephants represent strength, wisdom, and community loyalty. While not mentioned in Scripture, these qualities are celebrated throughout the Bible.",
+    cautionLevel: "low"
+  },
+  // Published Ritual Elements
+  {
+    id: "candle-lighting",
+    name: "Candle Lighting Ceremonies",
+    category: "ritual",
+    description: "Use of candles in formal ceremonies to represent light, knowledge, or transitions",
+    christianPerspective: "Churches use candles extensively—in Advent, vigils, and worship. Candles represent Christ as the light of the world. This practice has deep Christian roots.",
+    cautionLevel: "low",
+    scripturalContext: "John 8:12 - 'I am the light of the world. Whoever follows me will never walk in darkness.'"
+  },
+  {
+    id: "formal-processions",
+    name: "Formal Processions",
+    category: "ritual",
+    description: "Organized walking in ceremonies, often with specific order and regalia",
+    christianPerspective: "Processions are deeply biblical—from priestly processions in the Temple to Jesus' entry into Jerusalem. Churches use processionals in worship regularly.",
+    cautionLevel: "low",
+    scripturalContext: "2 Samuel 6:12-15 - David leading the procession with the Ark of the Covenant."
+  },
+  {
+    id: "recitation-creed",
+    name: "Creed and Oath Recitation",
+    category: "ritual",
+    description: "Group recitation of organizational creeds, principles, or commitments",
+    christianPerspective: "Churches recite creeds (Apostles' Creed, Nicene Creed) as statements of belief and unity. Reciting organizational values follows this same pattern.",
+    cautionLevel: "low",
+    scripturalContext: "Deuteronomy 6:4-9 - The Shema, recited as a creed by Israel."
+  },
+  {
+    id: "ritual-clothing",
+    name: "Special Garments and Regalia",
+    category: "ritual",
+    description: "Distinctive clothing worn during ceremonies (robes, sashes, pins, stoles)",
+    christianPerspective: "God prescribed detailed priestly garments in Exodus. Churches use robes, stoles, and vestments. Special clothing for special occasions is biblical.",
+    cautionLevel: "low",
+    scripturalContext: "Exodus 28:2 - 'Make sacred garments for your brother Aaron, to give him dignity and honor.'"
+  },
+  {
+    id: "password-handshake",
+    name: "Grips, Passwords, and Secret Signs",
+    category: "ritual",
+    description: "Private recognition signals shared among members",
+    christianPerspective: "Early Christians used the ichthus (fish) as a secret recognition sign during persecution. Privacy for member recognition differs from harmful secrecy.",
+    cautionLevel: "low",
+    cautionNote: "Secret signs for recognition are different from secrecy that covers wrongdoing. The former is acceptable; the latter is not."
+  },
+  {
+    id: "altar-ceremonies",
+    name: "Altar and Sacred Space",
+    category: "ritual",
+    description: "Designated areas or objects treated with special reverence during ceremonies",
+    christianPerspective: "Churches have altars, communion tables, and sacred spaces. The question is what happens at these spaces. Reverence for a space where important commitments occur differs from worship.",
+    cautionLevel: "medium",
+    cautionNote: "Evaluate what occurs at these spaces. Reverence is not worship; meaningful ceremony is not idolatry."
+  },
+  {
+    id: "formal-dining",
+    name: "Formal Dinners and Banquets",
+    category: "organizational",
+    description: "Ceremonial meals with specific protocols, toasts, and traditions",
+    christianPerspective: "Jesus instituted the Lord's Supper as a ceremonial meal. Jewish Passover is a ritual meal. Formal meals with tradition are deeply biblical.",
+    cautionLevel: "low",
+    scripturalContext: "Luke 22:19-20 - 'Do this in remembrance of me.'"
   }
 ];
 
@@ -204,6 +438,106 @@ export const ritualGuideContent: RitualEntry[] = [
     christianApproach: "Budget for organizational costs as you would any meaningful commitment. Ensure dues don't compromise tithing or essential obligations. View financial contributions as supporting service, scholarship, and community.",
     cautionLevel: "low",
     scripturalContext: "Proverbs 21:5 - 'The plans of the diligent lead to profit as surely as haste leads to poverty.'"
+  },
+  // Published Ritual Elements from Various Organizations
+  {
+    id: "opening-prayer",
+    name: "Opening and Closing Prayers",
+    category: "ritual",
+    description: "Many organizations include prayer in their published rituals and meeting openings",
+    christianApproach: "Many Greek organizations, especially those founded at Christian institutions, include prayer in their rituals. Christians can lead these prayers authentically, directing them to the God of the Bible.",
+    cautionLevel: "low",
+    scripturalContext: "1 Timothy 2:1-2 - 'I urge that petitions, prayers, intercession and thanksgiving be made for all people.'"
+  },
+  {
+    id: "scripture-readings",
+    name: "Scripture Readings in Ritual",
+    category: "ritual",
+    description: "Several organizations include specific Bible passages in their formal ceremonies",
+    christianApproach: "Organizations like Alpha Kappa Alpha, Delta Sigma Theta, and many NPC sororities include Scripture readings. This is an opportunity for authentic faith expression.",
+    cautionLevel: "low",
+    scripturalContext: "2 Timothy 3:16 - 'All Scripture is God-breathed and is useful for teaching, rebuking, correcting and training in righteousness.'"
+  },
+  {
+    id: "virtue-recitation",
+    name: "Virtue and Principle Recitation",
+    category: "ritual",
+    description: "Formal statement of organizational virtues like scholarship, service, sisterhood/brotherhood",
+    christianApproach: "Virtues like wisdom, integrity, service, and community are deeply biblical. Reciting commitments to these values aligns with Christian character development.",
+    cautionLevel: "low",
+    scripturalContext: "Philippians 4:8 - 'Whatever is true, noble, right, pure, lovely, admirable—think about such things.'"
+  },
+  {
+    id: "silence-reflection",
+    name: "Moments of Silence and Reflection",
+    category: "ritual",
+    description: "Periods of quiet contemplation during ceremonies",
+    christianApproach: "Silent reflection is a Christian spiritual discipline. Use these moments for genuine prayer and meditation on God's Word.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 46:10 - 'Be still, and know that I am God.'"
+  },
+  {
+    id: "symbolic-covenant",
+    name: "Symbolic Covenant Acts",
+    category: "ritual",
+    description: "Actions representing commitment to the organization and its members (signing, processing, etc.)",
+    christianApproach: "Covenants are biblical. God made covenants with signs (rainbow, circumcision). The question is whether the covenant content is compatible with faith, not whether making covenants is acceptable.",
+    cautionLevel: "medium",
+    cautionNote: "Review the content of what you're committing to. Covenants to uphold good values are positive; covenants requiring absolute obedience to humans are not.",
+    scripturalContext: "Genesis 9:12-13 - God establishes covenant with signs and symbols."
+  },
+  {
+    id: "formal-address",
+    name: "Formal Titles and Address",
+    category: "organizational",
+    description: "Using official titles (Worthy, Basileus, Polemarch, etc.) in formal settings",
+    christianApproach: "Formal titles exist in churches (Reverend, Deacon, Elder), government, and military. Using organizational titles for structure and respect is appropriate.",
+    cautionLevel: "low",
+    scripturalContext: "Romans 13:7 - 'Give to everyone what you owe them... if respect, then respect; if honor, then honor.'"
+  },
+  {
+    id: "gavel-ceremony",
+    name: "Gavel and Parliamentary Procedure",
+    category: "organizational",
+    description: "Use of gavel and formal meeting procedures from Robert's Rules of Order",
+    christianApproach: "Parliamentary procedure creates orderly meetings. 'God is not a God of disorder but of peace.' Structured meetings are biblical principles in action.",
+    cautionLevel: "low",
+    scripturalContext: "1 Corinthians 14:40 - 'Everything should be done in a fitting and orderly way.'"
+  },
+  {
+    id: "installation-ceremony",
+    name: "Officer Installation Ceremonies",
+    category: "ritual",
+    description: "Formal ceremonies installing new chapter officers",
+    christianApproach: "Churches install deacons, elders, and ministers through ceremony. Installing leaders with dignity and public commitment is biblical practice.",
+    cautionLevel: "low",
+    scripturalContext: "Acts 6:6 - 'They presented them to the apostles, who prayed and laid their hands on them.'"
+  },
+  {
+    id: "pinning-ceremony",
+    name: "Pinning and Badge Ceremonies",
+    category: "ritual",
+    description: "Formal presentation of organizational pins, badges, or other symbols of membership",
+    christianApproach: "Badges and pins mark achievement and belonging. Military medals, graduation regalia, and even wedding rings serve similar purposes. The pin represents commitment to values, not worship.",
+    cautionLevel: "low"
+  },
+  {
+    id: "founder-tribute",
+    name: "Founder Tribute and History",
+    category: "organizational",
+    description: "Honoring founders through recitation of history and acknowledgment of their vision",
+    christianApproach: "Hebrews 13:7 instructs us to remember leaders. Honoring founders' sacrifice and vision is appropriate; it becomes problematic only if it crosses into veneration that belongs to God.",
+    cautionLevel: "low",
+    scripturalContext: "Hebrews 13:7 - 'Remember your leaders, who spoke the word of God to you. Consider the outcome of their way of life and imitate their faith.'"
+  },
+  {
+    id: "public-vs-private",
+    name: "Public vs. Private Ceremonies",
+    category: "organizational",
+    description: "Distinction between ceremonies open to all and those restricted to members",
+    christianApproach: "Jesus had public ministry and private moments with disciples. Churches have public services and members-only meetings. Privacy for meaningful moments is appropriate.",
+    cautionLevel: "low",
+    scripturalContext: "Mark 4:34 - 'When he was alone with his own disciples, he explained everything.'"
   }
 ];
 
