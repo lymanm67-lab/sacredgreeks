@@ -14,7 +14,8 @@ import {
   Bell,
   Trophy,
   ShieldAlert,
-  Headphones
+  Headphones,
+  Target
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -44,6 +45,7 @@ const mainNavItems = [
   { title: "Home", url: "/dashboard", icon: Home, featureId: null },
   { title: "Meet Dr. Lyman", url: "/meet-dr-lyman", icon: User, featureId: null },
   { title: "The Challenge", url: "/the-challenge", icon: Swords, featureId: null },
+  { title: "PROOF Course", url: "/proof-course", icon: Target, featureId: null },
   { title: "Biblical Guide", url: "/biblical-guides", icon: BookOpen, featureId: null },
   { title: "The Book", url: "/the-book", icon: BookMarked, featureId: null },
   { title: "Podcast", url: "/podcast", icon: Headphones, featureId: null },
