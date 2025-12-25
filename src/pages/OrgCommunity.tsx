@@ -54,11 +54,27 @@ const OrgCommunity = () => {
       return;
     }
     setSubmittingWaitlist(true);
-    // Simulate submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    toast.success('You have been added to the waitlist! We will notify you when the next cohort opens.');
-    setWaitlistForm({ fullName: '', email: '', organization: '', goals: '' });
-    setSubmittingWaitlist(false);
+    try {
+      const { error } = await supabase
+        .from('coaching_waitlist')
+        .insert({
+          user_id: user?.id || null,
+          full_name: waitlistForm.fullName.trim(),
+          email: waitlistForm.email.trim(),
+          organization: waitlistForm.organization.trim() || null,
+          goals: waitlistForm.goals.trim() || null
+        });
+
+      if (error) throw error;
+      
+      toast.success('You have been added to the waitlist! We will notify you when the next cohort opens.');
+      setWaitlistForm({ fullName: '', email: '', organization: '', goals: '' });
+    } catch (error) {
+      console.error('Error submitting waitlist:', error);
+      toast.error('Failed to join waitlist. Please try again.');
+    } finally {
+      setSubmittingWaitlist(false);
+    }
   };
 
   const curriculumChapters = [
