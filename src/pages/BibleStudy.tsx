@@ -338,7 +338,6 @@ const BibleStudy = () => {
   };
 
   return (
-    <PremiumGate featureName="AI Bible Study Tools">
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
       <PullToRefreshIndicator 
         isPulling={isPulling}
@@ -833,7 +832,6 @@ const BibleStudy = () => {
         </div>
       </main>
     </div>
-    </PremiumGate>
   );
 };
 
