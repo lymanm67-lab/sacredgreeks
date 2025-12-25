@@ -15,6 +15,7 @@ import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
 import { SEOHead, pageSEO } from '@/components/SEOHead';
 import { FeaturedActions } from '@/components/dashboard/FeaturedActions';
 import { HeroSection } from '@/components/dashboard/HeroSection';
+import { OrgWelcomeCard } from '@/components/dashboard/OrgWelcomeCard';
 import { SubscriptionBadge } from '@/components/dashboard/SubscriptionBadge';
 import { useDemoMode } from '@/contexts/DemoModeContext';
 import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
@@ -214,7 +215,12 @@ const Dashboard = () => {
                   </Badge>
                 </Link>
               )}
-            </div>
+          </div>
+
+          {/* Organization Welcome Card */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
+            <OrgWelcomeCard />
+          </div>
             <div className="flex items-center gap-2">
               <SubscriptionBadge />
               <Link to="/profile">
