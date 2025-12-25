@@ -99,7 +99,7 @@ const TheBook = () => {
                   </Button>
                 </a>
                 <Button asChild variant="outline">
-                  <Link to="/study">
+                  <Link to="/study-guide">
                     <BookOpen className="w-4 h-4 mr-2" />
                     Free Study Guide
                   </Link>
@@ -149,32 +149,76 @@ const TheBook = () => {
           </div>
         </div>
 
-        {/* Companion Resources */}
-        <Card className="bg-gradient-to-br from-sacred/5 to-sacred/10 border-sacred/20">
+        {/* Featured Study Guide */}
+        <Card className="bg-gradient-to-br from-sacred/10 via-sacred/5 to-warm-blue/10 border-2 border-sacred/30 overflow-hidden">
+          <CardContent className="p-0">
+            <div className="md:flex items-center">
+              <div className="md:w-2/3 p-6 space-y-4">
+                <Badge className="bg-sacred text-sacred-foreground">
+                  Free Companion Resource
+                </Badge>
+                <h3 className="text-2xl font-bold">Sacred, Not Sinful Study Guide</h3>
+                <p className="text-muted-foreground">
+                  Go deeper with our complete 5-session study guide. Perfect for personal study, 
+                  small groups, or chapter discussions. Includes teaching content, discussion questions, 
+                  action steps, and progress tracking.
+                </p>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-sacred" />
+                    5 in-depth sessions covering each book chapter
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-sacred" />
+                    Discussion questions with answer journaling
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-sacred" />
+                    Track your progress & earn completion certificate
+                  </li>
+                </ul>
+                <Button asChild size="lg" className="bg-sacred hover:bg-sacred/90 mt-2">
+                  <Link to="/study-guide">
+                    <BookOpen className="w-5 h-5 mr-2" />
+                    Start the Free Study Guide
+                  </Link>
+                </Button>
+              </div>
+              <div className="md:w-1/3 bg-sacred/10 p-6 flex flex-col items-center justify-center text-center space-y-2">
+                <div className="w-20 h-20 rounded-full bg-sacred/20 flex items-center justify-center">
+                  <BookOpen className="w-10 h-10 text-sacred" />
+                </div>
+                <p className="text-3xl font-bold text-sacred">5</p>
+                <p className="text-sm text-muted-foreground">Complete Sessions</p>
+                <p className="text-xs text-muted-foreground">Audio available • Notes saved</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* More Resources */}
+        <Card className="border-border">
           <CardHeader>
-            <CardTitle>Companion Resources</CardTitle>
+            <CardTitle>More Companion Resources</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p className="text-muted-foreground">
-              Enhance your Sacred, Not Sinful experience with these free companion resources:
-            </p>
-            <div className="grid sm:grid-cols-3 gap-3">
-              <Button asChild variant="outline" className="h-auto py-3">
-                <Link to="/study" className="flex-col">
-                  <BookOpen className="w-5 h-5 text-sacred mb-1" />
-                  <span className="text-sm">Study Guide</span>
+            <div className="grid sm:grid-cols-2 gap-3">
+              <Button asChild variant="outline" className="h-auto py-4 justify-start">
+                <Link to="/podcast" className="flex items-center gap-3">
+                  <ExternalLink className="w-5 h-5 text-sacred" />
+                  <div className="text-left">
+                    <span className="text-sm font-medium block">Sacred Greeks Podcast</span>
+                    <span className="text-xs text-muted-foreground">Listen to Dr. Lyman's teachings</span>
+                  </div>
                 </Link>
               </Button>
-              <Button asChild variant="outline" className="h-auto py-3">
-                <Link to="/podcast" className="flex-col">
-                  <ExternalLink className="w-5 h-5 text-sacred mb-1" />
-                  <span className="text-sm">Podcast</span>
-                </Link>
-              </Button>
-              <Button asChild variant="outline" className="h-auto py-3">
-                <Link to="/video-library" className="flex-col">
-                  <ExternalLink className="w-5 h-5 text-sacred mb-1" />
-                  <span className="text-sm">Video Library</span>
+              <Button asChild variant="outline" className="h-auto py-4 justify-start">
+                <Link to="/video-library" className="flex items-center gap-3">
+                  <ExternalLink className="w-5 h-5 text-sacred" />
+                  <div className="text-left">
+                    <span className="text-sm font-medium block">Video Library</span>
+                    <span className="text-xs text-muted-foreground">Watch teaching videos</span>
+                  </div>
                 </Link>
               </Button>
             </div>
