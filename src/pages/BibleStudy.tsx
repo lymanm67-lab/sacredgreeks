@@ -93,6 +93,52 @@ const readingPlans = [
   }
 ];
 
+// Topic content organized by category
+const topicContent = {
+  'greek-life': [
+    { ref: 'Proverbs 27:17', text: 'Iron sharpeneth iron; so a man sharpeneth the countenance of his friend.', theme: 'Brotherhood & Sisterhood' },
+    { ref: 'Ecclesiastes 4:9-10', text: 'Two are better than one; because they have a good reward for their labour. For if they fall, the one will lift up his fellow.', theme: 'Unity & Support' },
+    { ref: 'Galatians 6:2', text: 'Bear ye one another\'s burdens, and so fulfil the law of Christ.', theme: 'Service to Others' },
+    { ref: 'Hebrews 10:24-25', text: 'And let us consider one another to provoke unto love and to good works: Not forsaking the assembling of ourselves together.', theme: 'Fellowship' },
+    { ref: '1 Thessalonians 5:11', text: 'Wherefore comfort yourselves together, and edify one another, even as also ye do.', theme: 'Encouragement' },
+    { ref: 'Romans 12:10', text: 'Be kindly affectioned one to another with brotherly love; in honour preferring one another.', theme: 'Brotherly Love' },
+    { ref: 'Colossians 3:23', text: 'And whatsoever ye do, do it heartily, as to the Lord, and not unto men.', theme: 'Excellence' },
+    { ref: 'Philippians 2:3-4', text: 'Let nothing be done through strife or vainglory; but in lowliness of mind let each esteem other better than themselves. Look not every man on his own things, but every man also on the things of others.', theme: 'Humility in Leadership' }
+  ],
+  'discernment': [
+    { ref: 'James 1:5', text: 'If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not; and it shall be given him.', theme: 'Seeking Wisdom' },
+    { ref: 'Proverbs 3:5-6', text: 'Trust in the Lord with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths.', theme: 'Trusting God\'s Direction' },
+    { ref: '1 John 4:1', text: 'Beloved, believe not every spirit, but try the spirits whether they are of God.', theme: 'Testing Truth' },
+    { ref: 'Philippians 1:9-10', text: 'And this I pray, that your love may abound yet more and more in knowledge and in all judgment; That ye may approve things that are excellent.', theme: 'Growing in Discernment' },
+    { ref: 'Hebrews 5:14', text: 'But strong meat belongeth to them that are of full age, even those who by reason of use have their senses exercised to discern both good and evil.', theme: 'Spiritual Maturity' },
+    { ref: 'Proverbs 14:12', text: 'There is a way which seemeth right unto a man, but the end thereof are the ways of death.', theme: 'Avoiding Deception' },
+    { ref: 'Romans 12:2', text: 'And be not conformed to this world: but be ye transformed by the renewing of your mind, that ye may prove what is that good, and acceptable, and perfect, will of God.', theme: 'Renewed Mind' },
+    { ref: 'Colossians 2:8', text: 'Beware lest any man spoil you through philosophy and vain deceit, after the tradition of men, after the rudiments of the world, and not after Christ.', theme: 'Guarding Against False Teaching' }
+  ],
+  'foundation': [
+    { ref: 'Matthew 7:24-25', text: 'Therefore whosoever heareth these sayings of mine, and doeth them, I will liken him unto a wise man, which built his house upon a rock: And the rain descended, and the floods came, and the winds blew, and beat upon that house; and it fell not: for it was founded upon a rock.', theme: 'Building on Christ' },
+    { ref: '1 Corinthians 3:11', text: 'For other foundation can no man lay than that is laid, which is Jesus Christ.', theme: 'Christ as Foundation' },
+    { ref: 'Psalm 11:3', text: 'If the foundations be destroyed, what can the righteous do?', theme: 'Importance of Foundation' },
+    { ref: 'Isaiah 28:16', text: 'Therefore thus saith the Lord God, Behold, I lay in Zion for a foundation a stone, a tried stone, a precious corner stone, a sure foundation: he that believeth shall not make haste.', theme: 'The Cornerstone' },
+    { ref: 'Ephesians 2:19-20', text: 'Now therefore ye are no more strangers and foreigners, but fellowcitizens with the saints, and of the household of God; And are built upon the foundation of the apostles and prophets, Jesus Christ himself being the chief corner stone.', theme: 'Built on Truth' },
+    { ref: '2 Timothy 2:19', text: 'Nevertheless the foundation of God standeth sure, having this seal, The Lord knoweth them that are his.', theme: 'God\'s Firm Foundation' },
+    { ref: 'Hebrews 6:1', text: 'Therefore leaving the principles of the doctrine of Christ, let us go on unto perfection.', theme: 'Growing from the Foundation' },
+    { ref: 'Colossians 2:6-7', text: 'As ye have therefore received Christ Jesus the Lord, so walk ye in him: Rooted and built up in him, and stablished in the faith.', theme: 'Rooted in Christ' }
+  ],
+  'purpose': [
+    { ref: 'Jeremiah 29:11', text: 'For I know the thoughts that I think toward you, saith the Lord, thoughts of peace, and not of evil, to give you an expected end.', theme: 'God\'s Plan for You' },
+    { ref: 'Ephesians 2:10', text: 'For we are his workmanship, created in Christ Jesus unto good works, which God hath before ordained that we should walk in them.', theme: 'Created for Good Works' },
+    { ref: 'Romans 8:28', text: 'And we know that all things work together for good to them that love God, to them who are the called according to his purpose.', theme: 'Called According to Purpose' },
+    { ref: 'Proverbs 19:21', text: 'There are many devices in a man\'s heart; nevertheless the counsel of the Lord, that shall stand.', theme: 'God\'s Purpose Prevails' },
+    { ref: 'Psalm 138:8', text: 'The Lord will perfect that which concerneth me: thy mercy, O Lord, endureth for ever.', theme: 'God Completes His Work' },
+    { ref: 'Philippians 2:13', text: 'For it is God which worketh in you both to will and to do of his good pleasure.', theme: 'God Works in You' },
+    { ref: 'Isaiah 46:10', text: 'Declaring the end from the beginning, and from ancient times the things that are not yet done, saying, My counsel shall stand, and I will do all my pleasure.', theme: 'God\'s Sovereign Plan' },
+    { ref: '1 Peter 2:9', text: 'But ye are a chosen generation, a royal priesthood, an holy nation, a peculiar people; that ye should shew forth the praises of him who hath called you out of darkness into his marvellous light.', theme: 'Chosen for a Purpose' }
+  ]
+};
+
+type TopicKey = 'all' | 'greek-life' | 'discernment' | 'foundation' | 'purpose';
+
 const BibleStudy = () => {
   const { user } = useAuth();
   const { toast } = useToast();
@@ -107,7 +153,21 @@ const BibleStudy = () => {
   const [searchMode, setSearchMode] = useState<'reference' | 'phrase' | 'ai'>('reference');
   const [phraseResults, setPhraseResults] = useState<any[]>([]);
   const [aiResults, setAiResults] = useState<any[]>([]);
+  const [selectedTopic, setSelectedTopic] = useState<TopicKey>('all');
   const { savedSearches, loading: savedLoading, saveSearch, deleteSearch, isSearchSaved } = useSavedBibleSearches();
+
+  // Get topic content based on selection
+  const getTopicVerses = () => {
+    if (selectedTopic === 'all') {
+      return [
+        ...topicContent['greek-life'],
+        ...topicContent['discernment'],
+        ...topicContent['foundation'],
+        ...topicContent['purpose']
+      ];
+    }
+    return topicContent[selectedTopic] || [];
+  };
 
   // Use demo data when demo mode is enabled
   const displayVerse = isDemoMode ? DEMO_DAILY_VERSE : dailyVerse;
@@ -437,21 +497,82 @@ const BibleStudy = () => {
           </Card>
 
           {/* Main Content Tabs */}
-          <Tabs defaultValue="search" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3 lg:w-[500px] mx-auto">
+          <Tabs defaultValue="topics" className="space-y-6">
+            <TabsList className="grid w-full grid-cols-4 lg:w-[600px] mx-auto">
+              <TabsTrigger value="topics" className="gap-2">
+                <BookOpen className="w-4 h-4" />
+                Topics
+              </TabsTrigger>
               <TabsTrigger value="search" className="gap-2">
                 <Search className="w-4 h-4" />
-                Scripture Search
+                Search
               </TabsTrigger>
               <TabsTrigger value="saved" className="gap-2">
                 <Bookmark className="w-4 h-4" />
-                Saved Searches
+                Saved
               </TabsTrigger>
               <TabsTrigger value="plans" className="gap-2">
                 <Calendar className="w-4 h-4" />
-                Reading Plans
+                Plans
               </TabsTrigger>
             </TabsList>
+
+            {/* Topics Tab */}
+            <TabsContent value="topics" className="space-y-6">
+              {/* Topic Filter */}
+              <div className="flex flex-wrap justify-center gap-2">
+                {[
+                  { key: 'all' as TopicKey, label: 'All' },
+                  { key: 'greek-life' as TopicKey, label: 'Greek Life' },
+                  { key: 'discernment' as TopicKey, label: 'Discernment' },
+                  { key: 'foundation' as TopicKey, label: 'Foundation' },
+                  { key: 'purpose' as TopicKey, label: 'Purpose' }
+                ].map((topic) => (
+                  <Button
+                    key={topic.key}
+                    variant={selectedTopic === topic.key ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setSelectedTopic(topic.key)}
+                    className={selectedTopic === topic.key ? 'bg-sacred hover:bg-sacred/90' : ''}
+                  >
+                    {topic.label}
+                  </Button>
+                ))}
+              </div>
+
+              {/* Topic Content */}
+              <div className="grid gap-4 md:grid-cols-2">
+                {getTopicVerses().map((verse, idx) => (
+                  <Card key={`${verse.ref}-${idx}`} className="hover:shadow-md transition-shadow border-sacred/20">
+                    <CardHeader className="pb-2">
+                      <div className="flex items-center justify-between flex-wrap gap-2">
+                        <Badge className="bg-sacred/10 text-sacred border-sacred/20">
+                          {verse.ref}
+                        </Badge>
+                        <Badge variant="outline" className="text-xs">
+                          {verse.theme}
+                        </Badge>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground leading-relaxed italic">
+                        "{verse.text}"
+                      </p>
+                      <div className="mt-3 flex justify-end">
+                        <ListenButton
+                          text={`${verse.ref}. ${verse.text}`}
+                          itemId={`topic-${verse.ref}`}
+                          title={verse.ref}
+                          showLabel={false}
+                          size="sm"
+                          variant="ghost"
+                        />
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
 
             {/* Scripture Search Tab */}
             <TabsContent value="search" className="space-y-6">
