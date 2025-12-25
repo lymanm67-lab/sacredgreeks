@@ -5,7 +5,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { TrendingUp, LogOut, FileText, User, BookOpen, FlaskConical, Calendar } from 'lucide-react';
+import { TrendingUp, LogOut, FileText, User, BookOpen, FlaskConical, Calendar, Menu, X, Home, Heart, MessageSquare, Settings } from 'lucide-react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useToast } from '@/hooks/use-toast';
 import logo from '@/assets/sacred-greeks-logo.png';
 import { Onboarding } from '@/components/Onboarding';
@@ -208,20 +209,17 @@ const Dashboard = () => {
                 <img src={logo} alt="Sacred Greeks" className="h-8 w-auto" />
               </Link>
               {isDemoMode && (
-                <Link to="/profile">
+                <Link to="/profile" className="hidden sm:block">
                   <Badge variant="secondary" className="text-xs bg-amber-500/10 text-amber-600 border-amber-500/20 hover:bg-amber-500/20 cursor-pointer transition-colors">
                     <FlaskConical className="w-3 h-3 mr-1" />
                     Demo Mode
                   </Badge>
                 </Link>
               )}
-          </div>
+            </div>
 
-          {/* Organization Welcome Card */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
-            <OrgWelcomeCard />
-          </div>
-            <div className="flex items-center gap-2">
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-2">
               <SubscriptionBadge />
               <Link to="/profile">
                 <Button variant="ghost" size="sm">
@@ -234,6 +232,79 @@ const Dashboard = () => {
                 Sign Out
               </Button>
             </div>
+
+            {/* Mobile Hamburger Menu */}
+            <div className="md:hidden">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <Menu className="w-5 h-5" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-72 bg-background">
+                  <SheetHeader>
+                    <SheetTitle className="flex items-center gap-2">
+                      <img src={logo} alt="Sacred Greeks" className="h-6 w-auto" />
+                      Menu
+                    </SheetTitle>
+                  </SheetHeader>
+                  <nav className="flex flex-col gap-2 mt-6">
+                    <Link to="/dashboard">
+                      <Button variant="ghost" className="w-full justify-start gap-3">
+                        <Home className="w-4 h-4" />
+                        Dashboard
+                      </Button>
+                    </Link>
+                    <Link to="/devotional">
+                      <Button variant="ghost" className="w-full justify-start gap-3">
+                        <BookOpen className="w-4 h-4" />
+                        Daily Devotional
+                      </Button>
+                    </Link>
+                    <Link to="/myth-buster">
+                      <Button variant="ghost" className="w-full justify-start gap-3">
+                        <MessageSquare className="w-4 h-4" />
+                        Myth Buster
+                      </Button>
+                    </Link>
+                    <Link to="/journey">
+                      <Button variant="ghost" className="w-full justify-start gap-3">
+                        <Calendar className="w-4 h-4" />
+                        30-Day Journey
+                      </Button>
+                    </Link>
+                    <Link to="/prayer-wall">
+                      <Button variant="ghost" className="w-full justify-start gap-3">
+                        <Heart className="w-4 h-4" />
+                        Prayer Wall
+                      </Button>
+                    </Link>
+                    
+                    <div className="border-t border-border my-4" />
+                    
+                    <Link to="/profile">
+                      <Button variant="ghost" className="w-full justify-start gap-3">
+                        <User className="w-4 h-4" />
+                        Profile
+                      </Button>
+                    </Link>
+                    <Link to="/progress">
+                      <Button variant="ghost" className="w-full justify-start gap-3">
+                        <TrendingUp className="w-4 h-4" />
+                        Progress
+                      </Button>
+                    </Link>
+                    
+                    <div className="border-t border-border my-4" />
+                    
+                    <Button variant="outline" className="w-full justify-start gap-3" onClick={handleSignOut}>
+                      <LogOut className="w-4 h-4" />
+                      Sign Out
+                    </Button>
+                  </nav>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
         </div>
       </header>
@@ -243,6 +314,11 @@ const Dashboard = () => {
           {/* Hero Section with Welcome & Video */}
           <div className="animate-fade-in">
             <HeroSection />
+          </div>
+
+          {/* Organization Welcome Card */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
+            <OrgWelcomeCard />
           </div>
 
           {/* Featured Actions - The 3 Core Tools */}
