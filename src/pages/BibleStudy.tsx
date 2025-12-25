@@ -174,9 +174,23 @@ const topicContent = {
     { ref: 'Psalm 11:3', text: 'If the foundations be destroyed, what can the righteous do?', theme: 'Importance of Foundation' },
     { ref: 'Isaiah 28:16', text: 'Therefore thus saith the Lord God, Behold, I lay in Zion for a foundation a stone, a tried stone, a precious corner stone, a sure foundation: he that believeth shall not make haste.', theme: 'The Cornerstone' },
     { ref: 'Ephesians 2:19-20', text: 'Now therefore ye are no more strangers and foreigners, but fellowcitizens with the saints, and of the household of God; And are built upon the foundation of the apostles and prophets, Jesus Christ himself being the chief corner stone.', theme: 'Built on Truth' },
-    { ref: '2 Timothy 2:19', text: 'Nevertheless the foundation of God standeth sure, having this seal, The Lord knoweth them that are his.', theme: 'God\'s Firm Foundation' },
+    { ref: '2 Timothy 2:19', text: 'Nevertheless the foundation of God standeth sure, having this seal, The Lord knoweth them that are his.', theme: "God's Firm Foundation" },
     { ref: 'Hebrews 6:1', text: 'Therefore leaving the principles of the doctrine of Christ, let us go on unto perfection.', theme: 'Growing from the Foundation' },
-    { ref: 'Colossians 2:6-7', text: 'As ye have therefore received Christ Jesus the Lord, so walk ye in him: Rooted and built up in him, and stablished in the faith.', theme: 'Rooted in Christ' }
+    { ref: 'Colossians 2:6-7', text: 'As ye have therefore received Christ Jesus the Lord, so walk ye in him: Rooted and built up in him, and stablished in the faith.', theme: 'Rooted in Christ' },
+    
+    // Identity in Christ vs. Greek Identity
+    { ref: '2 Corinthians 5:17', text: 'Therefore if any man be in Christ, he is a new creature: old things are passed away; behold, all things are become new.', theme: 'Identity in Christ vs. Greek Identity' },
+    { ref: 'Galatians 2:20', text: 'I am crucified with Christ: nevertheless I live; yet not I, but Christ liveth in me: and the life which I now live in the flesh I live by the faith of the Son of God, who loved me, and gave himself for me.', theme: 'Identity in Christ vs. Greek Identity' },
+    { ref: 'Colossians 3:3', text: 'For ye are dead, and your life is hid with Christ in God.', theme: 'Identity in Christ vs. Greek Identity' },
+    { ref: '1 Peter 2:9', text: 'But ye are a chosen generation, a royal priesthood, an holy nation, a peculiar people; that ye should shew forth the praises of him who hath called you out of darkness into his marvellous light.', theme: 'Identity in Christ vs. Greek Identity' },
+    { ref: 'Ephesians 1:4-5', text: 'According as he hath chosen us in him before the foundation of the world, that we should be holy and without blame before him in love: Having predestinated us unto the adoption of children by Jesus Christ to himself.', theme: 'Identity in Christ vs. Greek Identity' },
+    
+    // Spiritual Warfare in Greek Life
+    { ref: 'Ephesians 6:11-12', text: 'Put on the whole armour of God, that ye may be able to stand against the wiles of the devil. For we wrestle not against flesh and blood, but against principalities, against powers, against the rulers of the darkness of this world.', theme: 'Spiritual Warfare in Greek Life' },
+    { ref: '2 Corinthians 10:4-5', text: 'For the weapons of our warfare are not carnal, but mighty through God to the pulling down of strong holds; Casting down imaginations, and every high thing that exalteth itself against the knowledge of God.', theme: 'Spiritual Warfare in Greek Life' },
+    { ref: 'James 4:7', text: 'Submit yourselves therefore to God. Resist the devil, and he will flee from you.', theme: 'Spiritual Warfare in Greek Life' },
+    { ref: '1 Peter 5:8-9', text: 'Be sober, be vigilant; because your adversary the devil, as a roaring lion, walketh about, seeking whom he may devour: Whom resist stedfast in the faith.', theme: 'Spiritual Warfare in Greek Life' },
+    { ref: 'Romans 12:21', text: 'Be not overcome of evil, but overcome evil with good.', theme: 'Spiritual Warfare in Greek Life' }
   ],
   'purpose': [
     { ref: 'Jeremiah 29:11', text: 'For I know the thoughts that I think toward you, saith the Lord, thoughts of peace, and not of evil, to give you an expected end.', theme: 'God\'s Plan for You' },
