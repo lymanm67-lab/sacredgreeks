@@ -91,6 +91,13 @@ const AnalyticsDashboard = lazy(() => import("./pages/AnalyticsDashboard"));
 const NotificationPreferences = lazy(() => import("./pages/NotificationPreferences"));
 const CoachingApplication = lazy(() => import("./pages/CoachingApplication"));
 const AntiHazing = lazy(() => import("./pages/AntiHazing"));
+const MeetDrLyman = lazy(() => import("./pages/MeetDrLyman"));
+const TheChallenge = lazy(() => import("./pages/TheChallenge"));
+const BiblicalGuides = lazy(() => import("./pages/BiblicalGuides"));
+const TheBook = lazy(() => import("./pages/TheBook"));
+const GreekLife = lazy(() => import("./pages/GreekLife"));
+const Contact = lazy(() => import("./pages/Contact"));
+const ToolsResources = lazy(() => import("./pages/ToolsResources"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -205,6 +212,13 @@ const App = () => (
                     <Route path="/share-toolkit" element={<ShareToolkit />} />
                     <Route path="/coaching-application" element={<CoachingApplication />} />
                     <Route path="/anti-hazing" element={<AntiHazing />} />
+                    <Route path="/meet-dr-lyman" element={<MeetDrLyman />} />
+                    <Route path="/the-challenge" element={<TheChallenge />} />
+                    <Route path="/biblical-guides" element={<BiblicalGuides />} />
+                    <Route path="/book" element={<TheBook />} />
+                    <Route path="/greek-life" element={<GreekLife />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/tools" element={<ToolsResources />} />
                     
                     {/* Protected routes - with sidebar */}
                     <Route
