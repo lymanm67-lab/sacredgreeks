@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useDemoMode } from "@/contexts/DemoModeContext";
 import { useNavigate, Link } from "react-router-dom";
@@ -5,21 +6,34 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import logo from "@/assets/sacred-greeks-logo.png";
 import { cn } from "@/lib/utils";
-import { Play, Sparkles, User, ChevronDown, Settings } from "lucide-react";
+import { Play, Sparkles, User, ChevronDown, Menu, X } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Index = () => {
   const { user } = useAuth();
   const { isDemoMode, setDemoMode } = useDemoMode();
   const navigate = useNavigate();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleDemoClick = () => {
     setDemoMode(true);
@@ -34,11 +48,37 @@ const Index = () => {
     navigate('/auth');
   };
 
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  };
+
   // If user is logged in, redirect to dashboard
   if (user) {
     navigate('/dashboard');
     return null;
   }
+
+  const MobileNavLink = ({ to, children }: { to: string; children: React.ReactNode }) => (
+    <Link
+      to={to}
+      onClick={closeMobileMenu}
+      className="block px-4 py-2 text-sm text-foreground hover:bg-muted rounded-md transition-colors"
+    >
+      {children}
+    </Link>
+  );
+
+  const MobileNavSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
+    <Collapsible>
+      <CollapsibleTrigger className="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-md transition-colors">
+        {title}
+        <ChevronDown className="h-4 w-4" />
+      </CollapsibleTrigger>
+      <CollapsibleContent className="pl-4 space-y-1">
+        {children}
+      </CollapsibleContent>
+    </Collapsible>
+  );
 
   return (
     <div className={cn(
@@ -57,7 +97,7 @@ const Index = () => {
               <img src={logo} alt="Sacred Greeks" className="h-8 w-auto" loading="lazy" />
             </Link>
 
-            {/* Main Navigation */}
+            {/* Main Navigation - Desktop */}
             <NavigationMenu className="hidden lg:flex">
               <NavigationMenuList>
                 <NavigationMenuItem>
@@ -214,9 +254,89 @@ const Index = () => {
 
             {/* Right Side */}
             <div className="flex items-center gap-2">
+              {/* Mobile Menu Button */}
+              <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                <SheetTrigger asChild className="lg:hidden">
+                  <Button variant="ghost" size="icon">
+                    <Menu className="h-5 w-5" />
+                    <span className="sr-only">Toggle menu</span>
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-80 p-0">
+                  <SheetHeader className="p-4 border-b border-border">
+                    <SheetTitle className="flex items-center gap-2">
+                      <img src={logo} alt="Sacred Greeks" className="h-6 w-auto" />
+                    </SheetTitle>
+                  </SheetHeader>
+                  <ScrollArea className="h-[calc(100vh-80px)]">
+                    <div className="p-4 space-y-2">
+                      <MobileNavLink to="/">Home</MobileNavLink>
+                      
+                      <MobileNavSection title="Meet Dr. Lyman">
+                        <MobileNavLink to="/meet-dr-lyman">Overview</MobileNavLink>
+                        <MobileNavLink to="/about">About Dr. Montgomery</MobileNavLink>
+                        <MobileNavLink to="/podcast-appearances">Podcast Appearances</MobileNavLink>
+                        <MobileNavLink to="/coaching-application">Coaching Application</MobileNavLink>
+                      </MobileNavSection>
+
+                      <MobileNavSection title="The Challenge">
+                        <MobileNavLink to="/the-challenge">Overview</MobileNavLink>
+                        <MobileNavLink to="/guide">P.R.O.O.F. Assessment</MobileNavLink>
+                        <MobileNavLink to="/shattered-masks">Shattered Masks</MobileNavLink>
+                      </MobileNavSection>
+
+                      <MobileNavSection title="Biblical Guide">
+                        <MobileNavLink to="/biblical-guides">Overview</MobileNavLink>
+                        <MobileNavLink to="/symbol-guide">Symbol Guide</MobileNavLink>
+                        <MobileNavLink to="/myth-buster">Myth Buster Library</MobileNavLink>
+                        <MobileNavLink to="/bible-study">Bible Study</MobileNavLink>
+                      </MobileNavSection>
+
+                      <MobileNavLink to="/the-book">The Book</MobileNavLink>
+                      <MobileNavLink to="/podcast">Podcast</MobileNavLink>
+
+                      <MobileNavSection title="Tools & Resources">
+                        <MobileNavLink to="/tools-resources">Overview</MobileNavLink>
+                        <MobileNavLink to="/resources">Resources Library</MobileNavLink>
+                        <MobileNavLink to="/study">Study Guide</MobileNavLink>
+                        <MobileNavLink to="/video-library">Video Library</MobileNavLink>
+                      </MobileNavSection>
+
+                      <MobileNavSection title="Greek Life">
+                        <MobileNavLink to="/greek-life">Overview</MobileNavLink>
+                        <MobileNavLink to="/symbol-guide">Organizations Guide</MobileNavLink>
+                        <MobileNavLink to="/journey">30-Day Journey</MobileNavLink>
+                        <MobileNavLink to="/anti-hazing">Anti-Hazing Resources</MobileNavLink>
+                      </MobileNavSection>
+
+                      <MobileNavSection title="Community">
+                        <MobileNavLink to="/forum">Forum</MobileNavLink>
+                        <MobileNavLink to="/prayer-wall">Prayer Wall</MobileNavLink>
+                        <MobileNavLink to="/ask-dr-lyman">Ask Dr. Lyman</MobileNavLink>
+                      </MobileNavSection>
+
+                      <MobileNavLink to="/contact">Contact</MobileNavLink>
+
+                      <div className="pt-4 border-t border-border mt-4">
+                        <Button 
+                          onClick={() => {
+                            closeMobileMenu();
+                            handleSignIn();
+                          }}
+                          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                        >
+                          <User className="w-4 h-4 mr-2" />
+                          Sign In
+                        </Button>
+                      </div>
+                    </div>
+                  </ScrollArea>
+                </SheetContent>
+              </Sheet>
+
               <Button 
                 onClick={handleSignIn}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                className="hidden sm:flex bg-primary hover:bg-primary/90 text-primary-foreground"
                 size="sm"
               >
                 <User className="w-4 h-4 mr-2" />
