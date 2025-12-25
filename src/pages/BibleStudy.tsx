@@ -193,14 +193,28 @@ const topicContent = {
     { ref: 'Romans 12:21', text: 'Be not overcome of evil, but overcome evil with good.', theme: 'Spiritual Warfare in Greek Life' }
   ],
   'purpose': [
-    { ref: 'Jeremiah 29:11', text: 'For I know the thoughts that I think toward you, saith the Lord, thoughts of peace, and not of evil, to give you an expected end.', theme: 'God\'s Plan for You' },
+    { ref: 'Jeremiah 29:11', text: 'For I know the thoughts that I think toward you, saith the Lord, thoughts of peace, and not of evil, to give you an expected end.', theme: "God's Plan for You" },
     { ref: 'Ephesians 2:10', text: 'For we are his workmanship, created in Christ Jesus unto good works, which God hath before ordained that we should walk in them.', theme: 'Created for Good Works' },
     { ref: 'Romans 8:28', text: 'And we know that all things work together for good to them that love God, to them who are the called according to his purpose.', theme: 'Called According to Purpose' },
-    { ref: 'Proverbs 19:21', text: 'There are many devices in a man\'s heart; nevertheless the counsel of the Lord, that shall stand.', theme: 'God\'s Purpose Prevails' },
+    { ref: 'Proverbs 19:21', text: "There are many devices in a man's heart; nevertheless the counsel of the Lord, that shall stand.", theme: "God's Purpose Prevails" },
     { ref: 'Psalm 138:8', text: 'The Lord will perfect that which concerneth me: thy mercy, O Lord, endureth for ever.', theme: 'God Completes His Work' },
     { ref: 'Philippians 2:13', text: 'For it is God which worketh in you both to will and to do of his good pleasure.', theme: 'God Works in You' },
-    { ref: 'Isaiah 46:10', text: 'Declaring the end from the beginning, and from ancient times the things that are not yet done, saying, My counsel shall stand, and I will do all my pleasure.', theme: 'God\'s Sovereign Plan' },
-    { ref: '1 Peter 2:9', text: 'But ye are a chosen generation, a royal priesthood, an holy nation, a peculiar people; that ye should shew forth the praises of him who hath called you out of darkness into his marvellous light.', theme: 'Chosen for a Purpose' }
+    { ref: 'Isaiah 46:10', text: 'Declaring the end from the beginning, and from ancient times the things that are not yet done, saying, My counsel shall stand, and I will do all my pleasure.', theme: "God's Sovereign Plan" },
+    { ref: '1 Peter 2:9', text: 'But ye are a chosen generation, a royal priesthood, an holy nation, a peculiar people; that ye should shew forth the praises of him who hath called you out of darkness into his marvellous light.', theme: 'Chosen for a Purpose' },
+    
+    // Service as Worship
+    { ref: 'Romans 12:1', text: 'I beseech you therefore, brethren, by the mercies of God, that ye present your bodies a living sacrifice, holy, acceptable unto God, which is your reasonable service.', theme: 'Service as Worship' },
+    { ref: 'Colossians 3:23-24', text: 'And whatsoever ye do, do it heartily, as to the Lord, and not unto men; Knowing that of the Lord ye shall receive the reward of the inheritance: for ye serve the Lord Christ.', theme: 'Service as Worship' },
+    { ref: 'Hebrews 13:16', text: 'But to do good and to communicate forget not: for with such sacrifices God is well pleased.', theme: 'Service as Worship' },
+    { ref: 'Matthew 25:40', text: 'And the King shall answer and say unto them, Verily I say unto you, Inasmuch as ye have done it unto one of the least of these my brethren, ye have done it unto me.', theme: 'Service as Worship' },
+    { ref: '1 Corinthians 10:31', text: 'Whether therefore ye eat, or drink, or whatsoever ye do, do all to the glory of God.', theme: 'Service as Worship' },
+    
+    // Leadership Through Servanthood
+    { ref: 'Mark 10:43-45', text: 'But so shall it not be among you: but whosoever will be great among you, shall be your minister: And whosoever of you will be the chiefest, shall be servant of all. For even the Son of man came not to be ministered unto, but to minister.', theme: 'Leadership Through Servanthood' },
+    { ref: 'John 13:14-15', text: 'If I then, your Lord and Master, have washed your feet; ye also ought to wash one another\'s feet. For I have given you an example, that ye should do as I have done to you.', theme: 'Leadership Through Servanthood' },
+    { ref: 'Philippians 2:5-7', text: 'Let this mind be in you, which was also in Christ Jesus: Who, being in the form of God, thought it not robbery to be equal with God: But made himself of no reputation, and took upon him the form of a servant.', theme: 'Leadership Through Servanthood' },
+    { ref: '1 Peter 5:2-3', text: 'Feed the flock of God which is among you, taking the oversight thereof, not by constraint, but willingly; not for filthy lucre, but of a ready mind; Neither as being lords over God\'s heritage, but being ensamples to the flock.', theme: 'Leadership Through Servanthood' },
+    { ref: 'Matthew 20:26-28', text: 'But it shall not be so among you: but whosoever will be great among you, let him be your minister; And whosoever will be chief among you, let him be your servant.', theme: 'Leadership Through Servanthood' }
   ]
 };
 
