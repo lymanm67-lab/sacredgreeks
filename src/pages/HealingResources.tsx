@@ -1,13 +1,18 @@
+import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { 
   Home, Heart, Brain, User, Users, BookOpen, Phone, MessageSquare,
-  ArrowRight, Shield, Sparkles, FileText, Cross
+  ArrowRight, Shield, Sparkles, FileText, Cross, Search, X
 } from "lucide-react";
 
 const HealingResources = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState<string | null>(null);
   const healingArticles = [
     {
       icon: Heart,
@@ -111,6 +116,36 @@ const HealingResources = () => {
     },
   ];
 
+  // Get unique categories
+  const categories = useMemo(() => {
+    const cats = [...new Set(healingArticles.map(a => a.category))];
+    return cats.sort();
+  }, []);
+
+  // Filter articles
+  const filteredArticles = useMemo(() => {
+    return healingArticles.filter(article => {
+      const matchesSearch = searchQuery === "" || 
+        article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        article.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        article.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        article.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+      
+      const matchesCategory = !selectedCategory || article.category === selectedCategory;
+      const matchesType = !selectedType || article.type === selectedType;
+      
+      return matchesSearch && matchesCategory && matchesType;
+    });
+  }, [searchQuery, selectedCategory, selectedType]);
+
+  const clearFilters = () => {
+    setSearchQuery("");
+    setSelectedCategory(null);
+    setSelectedType(null);
+  };
+
+  const hasActiveFilters = searchQuery || selectedCategory || selectedType;
+
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-border bg-card sticky top-0 z-40">
@@ -142,76 +177,188 @@ const HealingResources = () => {
           </p>
         </div>
 
-        {/* Featured Resource */}
-        <Card className="border-sacred/30 bg-gradient-to-br from-sacred/5 to-background overflow-hidden">
-          <CardContent className="p-8">
-            <div className="md:flex items-start gap-8">
-              <div className="md:w-2/3 space-y-4">
-                <div className="flex items-center gap-2">
-                  <Badge className="bg-rose-500/10 text-rose-600 border-rose-500/20">Featured</Badge>
-                  <Badge variant="outline">Faith Development</Badge>
-                </div>
-                <h3 className="text-2xl font-bold">Breaking Free from Guilt</h3>
-                <p className="text-muted-foreground">
-                  Guidance for members struggling with guilt about their Greek membership and how to find peace in Christ.
-                </p>
-                <p className="text-foreground leading-relaxed">
-                  Many Christians in BGLOs struggle with overwhelming guilt about their membership. This guilt can paralyze spiritual growth and damage mental health. Scripture reminds us that <span className="italic">"there is now no condemnation for those who are in Christ Jesus"</span> (Romans 8:1). If you have genuinely repented and sought God's guidance, release the burden of guilt. Walk in freedom, knowing that God's grace is sufficient. Focus on using your position to glorify Him and serve others.
-                </p>
-                <div className="flex flex-wrap gap-2 pt-2">
-                  <Badge variant="secondary">Struggling with guilt</Badge>
-                  <Badge variant="secondary">Recently joined</Badge>
-                  <Badge variant="secondary">Considering denouncement</Badge>
+        {/* Search & Filter Section */}
+        <Card className="bg-card/50">
+          <CardContent className="p-4 space-y-4">
+            {/* Search Input */}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input
+                placeholder="Search by topic, keyword, or tag..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 pr-10"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+
+            {/* Filter Buttons */}
+            <div className="flex flex-wrap gap-4">
+              {/* Category Filter */}
+              <div className="space-y-2">
+                <span className="text-xs text-muted-foreground font-medium">Category:</span>
+                <div className="flex flex-wrap gap-1.5">
+                  <Badge
+                    variant={selectedCategory === null ? "default" : "outline"}
+                    className="cursor-pointer hover:bg-sacred/10"
+                    onClick={() => setSelectedCategory(null)}
+                  >
+                    All
+                  </Badge>
+                  {categories.map((cat) => (
+                    <Badge
+                      key={cat}
+                      variant={selectedCategory === cat ? "default" : "outline"}
+                      className="cursor-pointer hover:bg-sacred/10"
+                      onClick={() => setSelectedCategory(cat)}
+                    >
+                      {cat}
+                    </Badge>
+                  ))}
                 </div>
               </div>
-              <div className="md:w-1/3 mt-6 md:mt-0 flex justify-center">
-                <div className="p-8 rounded-full bg-gradient-to-br from-rose-500/20 to-sacred/10">
-                  <Heart className="w-16 h-16 text-sacred" />
+
+              {/* Type Filter */}
+              <div className="space-y-2">
+                <span className="text-xs text-muted-foreground font-medium">Type:</span>
+                <div className="flex gap-1.5">
+                  <Badge
+                    variant={selectedType === null ? "default" : "outline"}
+                    className="cursor-pointer hover:bg-sacred/10"
+                    onClick={() => setSelectedType(null)}
+                  >
+                    All
+                  </Badge>
+                  <Badge
+                    variant={selectedType === "article" ? "default" : "outline"}
+                    className="cursor-pointer hover:bg-sacred/10"
+                    onClick={() => setSelectedType("article")}
+                  >
+                    Articles
+                  </Badge>
+                  <Badge
+                    variant={selectedType === "resource" ? "default" : "outline"}
+                    className="cursor-pointer hover:bg-sacred/10"
+                    onClick={() => setSelectedType("resource")}
+                  >
+                    Resources
+                  </Badge>
                 </div>
               </div>
+            </div>
+
+            {/* Active Filters & Results Count */}
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">
+                Showing {filteredArticles.length} of {healingArticles.length} resources
+              </span>
+              {hasActiveFilters && (
+                <Button variant="ghost" size="sm" onClick={clearFilters} className="text-sacred">
+                  <X className="w-3 h-3 mr-1" />
+                  Clear filters
+                </Button>
+              )}
             </div>
           </CardContent>
         </Card>
 
+        {/* Featured Resource - only show when no filters active */}
+        {!hasActiveFilters && (
+          <Card className="border-sacred/30 bg-gradient-to-br from-sacred/5 to-background overflow-hidden">
+            <CardContent className="p-8">
+              <div className="md:flex items-start gap-8">
+                <div className="md:w-2/3 space-y-4">
+                  <div className="flex items-center gap-2">
+                    <Badge className="bg-rose-500/10 text-rose-600 border-rose-500/20">Featured</Badge>
+                    <Badge variant="outline">Faith Development</Badge>
+                  </div>
+                  <h3 className="text-2xl font-bold">Breaking Free from Guilt</h3>
+                  <p className="text-muted-foreground">
+                    Guidance for members struggling with guilt about their Greek membership and how to find peace in Christ.
+                  </p>
+                  <p className="text-foreground leading-relaxed">
+                    Many Christians in BGLOs struggle with overwhelming guilt about their membership. This guilt can paralyze spiritual growth and damage mental health. Scripture reminds us that <span className="italic">"there is now no condemnation for those who are in Christ Jesus"</span> (Romans 8:1). If you have genuinely repented and sought God's guidance, release the burden of guilt. Walk in freedom, knowing that God's grace is sufficient. Focus on using your position to glorify Him and serve others.
+                  </p>
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    <Badge variant="secondary">Struggling with guilt</Badge>
+                    <Badge variant="secondary">Recently joined</Badge>
+                    <Badge variant="secondary">Considering denouncement</Badge>
+                  </div>
+                </div>
+                <div className="md:w-1/3 mt-6 md:mt-0 flex justify-center">
+                  <div className="p-8 rounded-full bg-gradient-to-br from-rose-500/20 to-sacred/10">
+                    <Heart className="w-16 h-16 text-sacred" />
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Healing Articles Grid */}
         <div className="space-y-6">
-          <h3 className="text-xl font-semibold">All Healing Resources</h3>
-          <div className="grid md:grid-cols-2 gap-6">
-            {healingArticles.slice(1).map((article, index) => (
-              <Card key={index} className="overflow-hidden hover:shadow-lg transition-all duration-300 group">
-                <div className={`h-2 bg-gradient-to-r ${article.color} to-sacred/10`} />
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Badge variant="outline">{article.category}</Badge>
-                      <Badge className="text-xs bg-muted">{article.type}</Badge>
+          <h3 className="text-xl font-semibold">
+            {hasActiveFilters ? "Filtered Results" : "All Healing Resources"}
+          </h3>
+          
+          {filteredArticles.length === 0 ? (
+            <Card className="p-8 text-center">
+              <div className="space-y-4">
+                <Search className="w-12 h-12 mx-auto text-muted-foreground" />
+                <h4 className="text-lg font-semibold">No resources found</h4>
+                <p className="text-muted-foreground">
+                  Try adjusting your search terms or clearing some filters.
+                </p>
+                <Button variant="outline" onClick={clearFilters}>
+                  Clear all filters
+                </Button>
+              </div>
+            </Card>
+          ) : (
+            <div className="grid md:grid-cols-2 gap-6">
+              {(hasActiveFilters ? filteredArticles : filteredArticles.slice(1)).map((article, index) => (
+                <Card key={index} className="overflow-hidden hover:shadow-lg transition-all duration-300 group">
+                  <div className={`h-2 bg-gradient-to-r ${article.color} to-sacred/10`} />
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Badge variant="outline">{article.category}</Badge>
+                        <Badge className="text-xs bg-muted">{article.type}</Badge>
+                      </div>
+                      <div className={`p-2 rounded-lg bg-gradient-to-br ${article.color} to-sacred/5`}>
+                        <article.icon className="w-5 h-5 text-sacred" />
+                      </div>
                     </div>
-                    <div className={`p-2 rounded-lg bg-gradient-to-br ${article.color} to-sacred/5`}>
-                      <article.icon className="w-5 h-5 text-sacred" />
+                    <CardTitle className="text-lg mt-2">{article.title}</CardTitle>
+                    <CardDescription>{article.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <p className="text-sm text-muted-foreground line-clamp-4">
+                      {article.content}
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      <span className="text-xs text-muted-foreground">Recommended for:</span>
+                      {article.tags.map((tag, tagIndex) => (
+                        <Badge key={tagIndex} variant="secondary" className="text-xs">
+                          {tag}
+                        </Badge>
+                      ))}
                     </div>
-                  </div>
-                  <CardTitle className="text-lg mt-2">{article.title}</CardTitle>
-                  <CardDescription>{article.description}</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-sm text-muted-foreground line-clamp-4">
-                    {article.content}
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    <span className="text-xs text-muted-foreground">Recommended for:</span>
-                    {article.tags.map((tag, tagIndex) => (
-                      <Badge key={tagIndex} variant="secondary" className="text-xs">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                  <Button variant="ghost" size="sm" className="text-sacred p-0 h-auto group-hover:underline">
-                    Read More <ArrowRight className="w-3 h-3 ml-1" />
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                    <Button variant="ghost" size="sm" className="text-sacred p-0 h-auto group-hover:underline">
+                      Read More <ArrowRight className="w-3 h-3 ml-1" />
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Crisis Support */}
