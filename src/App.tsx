@@ -219,7 +219,7 @@ const App = () => (
                     <Route path="/book" element={<TheBook />} />
                     <Route path="/greek-life" element={<GreekLife />} />
                     <Route path="/contact" element={<Contact />} />
-                    <Route path="/tools" element={<ToolsResources />} />
+                    <Route path="/tools-resources" element={<ToolsResources />} />
                     <Route path="/healing-resources" element={<HealingResources />} />
                     
                     {/* Protected routes - with sidebar */}
