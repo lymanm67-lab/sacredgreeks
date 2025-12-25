@@ -805,44 +805,227 @@ const AntiHazing = () => {
 
   const alternativeActivities = [
     {
-      category: "Team Building",
+      category: "Team Building & Bonding",
+      icon: Users,
+      description: "Build genuine brotherhood/sisterhood through shared positive experiences",
       activities: [
-        "Escape room challenges",
-        "Ropes courses and outdoor adventures",
-        "Cooking competitions",
-        "Volunteer projects together",
-        "Sports tournaments"
+        {
+          name: "Escape Room Challenges",
+          detail: "Teams work together to solve puzzles under time pressure, building communication and trust",
+          example: "Alpha Phi Alpha at Howard University hosts monthly escape room nights during intake season"
+        },
+        {
+          name: "Ropes Course & Adventure Programs",
+          detail: "High and low rope challenges that require trust and teamwork",
+          example: "Many chapters partner with campus recreation for NOLS-style wilderness programs"
+        },
+        {
+          name: "Cooking Competitions",
+          detail: "Iron Chef-style cook-offs where teams collaborate to create meals",
+          example: "Delta Sigma Theta chapters host 'Cook for a Cause' events, donating meals to shelters"
+        },
+        {
+          name: "Intramural Sports Leagues",
+          detail: "Organized team sports build camaraderie through healthy competition",
+          example: "Greek intramural leagues at most universities offer basketball, flag football, and soccer"
+        },
+        {
+          name: "Road Trip Retreats",
+          detail: "Bonding trips to conferences, historical sites, or service destinations",
+          example: "Omega Psi Phi chapters organize visits to civil rights landmarks"
+        }
       ]
     },
     {
       category: "Academic Excellence",
+      icon: GraduationCap,
+      description: "Foster intellectual growth and scholarly achievement together",
       activities: [
-        "Study groups and tutoring",
-        "Research presentations",
-        "Guest speaker events",
-        "Academic competitions",
-        "Library nights"
+        {
+          name: "Study Partnerships",
+          detail: "Pair new members with accomplished actives for academic mentorship",
+          example: "Kappa Alpha Psi's 'Study Buddy' program matches by major for GPA improvement"
+        },
+        {
+          name: "Guest Speaker Series",
+          detail: "Invite successful alumni and professionals to share wisdom",
+          example: "Alpha Kappa Alpha hosts monthly 'Wisdom Wednesday' featuring accomplished Sorors"
+        },
+        {
+          name: "Academic Competitions",
+          detail: "Quiz bowls, case competitions, and debate tournaments",
+          example: "NPHC Greek Week academic quiz bowl with prizes for winning chapters"
+        },
+        {
+          name: "Library Lock-ins",
+          detail: "Overnight study sessions with snacks and collaborative learning",
+          example: "Finals week study marathons with tutoring support from grad student members"
+        },
+        {
+          name: "Research Symposiums",
+          detail: "Showcase member research and academic projects",
+          example: "Sigma Gamma Rho's undergraduate research presentation competitions"
+        }
       ]
     },
     {
       category: "Community Service",
+      icon: Heart,
+      description: "Bond through meaningful service that reflects organizational values",
       activities: [
-        "Habitat for Humanity builds",
-        "Food bank volunteering",
-        "Mentoring programs",
-        "Environmental cleanups",
-        "Hospital visits"
+        {
+          name: "Habitat for Humanity Builds",
+          detail: "Build homes together while building bonds—physical labor creates shared accomplishment",
+          example: "Phi Beta Sigma chapters have built over 500 homes through their partnership with Habitat"
+        },
+        {
+          name: "Mentoring Programs",
+          detail: "Mentor youth in local schools, creating intergenerational impact",
+          example: "Alpha Phi Alpha's Go-to-High-School, Go-to-College program reaches thousands of students"
+        },
+        {
+          name: "Food Bank Service Days",
+          detail: "Regular volunteering at local food banks and soup kitchens",
+          example: "Zeta Phi Beta's partnership with Feeding America for monthly service"
+        },
+        {
+          name: "Health Screenings & Fairs",
+          detail: "Organize community health events aligned with organizational health initiatives",
+          example: "Delta Sigma Theta's Delta Days service projects provide free health screenings"
+        },
+        {
+          name: "Environmental Cleanups",
+          detail: "Campus and community beautification projects",
+          example: "Adopt-a-Highway programs and campus sustainability initiatives"
+        }
       ]
     },
     {
       category: "Professional Development",
+      icon: Building,
+      description: "Prepare members for career success through structured programs",
       activities: [
-        "Resume workshops",
-        "Mock interviews",
-        "Networking events",
-        "Industry panels",
-        "Alumni mentorship"
+        {
+          name: "Resume & Interview Workshops",
+          detail: "Alumni professionals help polish resumes and practice interview skills",
+          example: "Kappa Alpha Psi's Kappa League program includes professional development for aspirants"
+        },
+        {
+          name: "Networking Mixers",
+          detail: "Connect new members with successful alumni in their fields",
+          example: "Industry-specific networking nights: Finance Friday, Tech Tuesday, Law Thursday"
+        },
+        {
+          name: "Corporate Site Visits",
+          detail: "Tours of major companies and organizations",
+          example: "Visits to Google, Goldman Sachs, or local businesses with alumni connections"
+        },
+        {
+          name: "Personal Branding Sessions",
+          detail: "LinkedIn optimization, professional photos, and elevator pitch practice",
+          example: "Many chapters offer 'Brand Yourself' workshops during new member education"
+        },
+        {
+          name: "Graduate School Preparation",
+          detail: "GRE/LSAT/MCAT study groups and application workshops",
+          example: "Alpha Kappa Alpha's partnership with Kaplan for test prep discounts"
+        }
       ]
+    },
+    {
+      category: "Cultural & Heritage Education",
+      icon: BookOpen,
+      description: "Deep dive into organizational and cultural history through meaningful learning",
+      activities: [
+        {
+          name: "Founders Day Celebrations",
+          detail: "Honor organizational history with educational programs and reflection",
+          example: "Interactive presentations about founders' lives, struggles, and achievements"
+        },
+        {
+          name: "Historical Site Pilgrimages",
+          detail: "Visit founding campuses, civil rights landmarks, and significant locations",
+          example: "Omega Psi Phi's pilgrimage to Howard University's founding chapter room"
+        },
+        {
+          name: "Documentary Screenings",
+          detail: "Watch and discuss films about Greek life, civil rights, and organizational history",
+          example: "'A Different World' viewing parties with discussions about Greek portrayals"
+        },
+        {
+          name: "Museum Visits",
+          detail: "Educational trips to African American history museums and cultural centers",
+          example: "National Museum of African American History and Culture visits"
+        },
+        {
+          name: "Elder Member Storytelling",
+          detail: "Invite long-standing members to share oral histories and traditions",
+          example: "Silver Star and Golden Soror/Brother evening programs"
+        }
+      ]
+    },
+    {
+      category: "Wellness & Self-Care",
+      icon: LifeBuoy,
+      description: "Build holistic health and support member wellbeing",
+      activities: [
+        {
+          name: "Mental Health Workshops",
+          detail: "Destigmatize mental health through education and resources",
+          example: "Partnerships with campus counseling for stress management sessions"
+        },
+        {
+          name: "Fitness Challenges",
+          detail: "Collective wellness goals like step challenges or 5K training",
+          example: "Sigma Gamma Rho's Sigma Fit program promotes healthy lifestyles"
+        },
+        {
+          name: "Meditation & Mindfulness",
+          detail: "Group meditation sessions and mindfulness practices",
+          example: "Morning prayer circles and reflection sessions before chapter meetings"
+        },
+        {
+          name: "Financial Literacy",
+          detail: "Budgeting, investing, and financial planning workshops",
+          example: "Alumni-led sessions on student loans, credit building, and saving"
+        },
+        {
+          name: "Spa & Self-Care Nights",
+          detail: "Relaxation and bonding through self-care activities",
+          example: "Face mask nights, manicure sessions, and wellness retreats"
+        }
+      ]
+    }
+  ];
+
+  const successStories = [
+    {
+      organization: "Kappa Alpha Psi - Beta Chapter",
+      school: "University of Illinois",
+      initiative: "Achievement Week Program",
+      description: "Replaced traditional 'Hell Week' with 'Achievement Week' focused on academic excellence, community service, and professional development. New member GPA increased 0.5 points on average.",
+      year: "Since 2015"
+    },
+    {
+      organization: "Alpha Kappa Alpha - Gamma Chapter",
+      school: "University of Pennsylvania",
+      initiative: "Sisterhood Development Institute",
+      description: "Six-week program combining leadership workshops, service projects, and mentorship. No hazing incidents in 10+ years while maintaining strong chapter bonds.",
+      year: "Since 2012"
+    },
+    {
+      organization: "Omega Psi Phi - Various Chapters",
+      school: "Multiple Universities",
+      initiative: "Cardinal Principles Program",
+      description: "Structured new member education focused on Manhood, Scholarship, Perseverance, and Uplift through meaningful activities rather than physical tests.",
+      year: "Ongoing"
+    },
+    {
+      organization: "Delta Sigma Theta - Alpha Chapter",
+      school: "Howard University",
+      initiative: "GEMS (Gaining Educational, Moral, and Social Skills)",
+      description: "Comprehensive intake program that builds sisterhood through service projects, academic support, and leadership development.",
+      year: "Since 2010"
     }
   ];
 
@@ -986,24 +1169,92 @@ const AntiHazing = () => {
           </TabsContent>
 
           <TabsContent value="alternatives">
-            <div className="grid md:grid-cols-2 gap-6">
-              {alternativeActivities.map((category, index) => (
-                <Card key={index}>
-                  <CardHeader>
-                    <CardTitle className="text-lg">{category.category}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      {category.activities.map((activity, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm">
-                          <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                          {activity}
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              ))}
+            <div className="space-y-8">
+              {/* Intro */}
+              <Card className="border-primary/20 bg-primary/5">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <Heart className="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-lg mb-2">Building Brotherhood & Sisterhood Without Hazing</h3>
+                      <p className="text-muted-foreground">
+                        True bonds are formed through shared positive experiences, not shared trauma. 
+                        These alternatives create stronger, healthier organizations while honoring the 
+                        values of excellence, service, and community that Greek life was founded upon.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Alternative Activities Grid */}
+              <div className="space-y-6">
+                {alternativeActivities.map((category, index) => (
+                  <Card key={index}>
+                    <CardHeader>
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                          <category.icon className="w-5 h-5 text-primary" />
+                        </div>
+                        <div>
+                          <CardTitle className="text-lg">{category.category}</CardTitle>
+                          <CardDescription>{category.description}</CardDescription>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        {category.activities.map((activity, i) => (
+                          <div key={i} className="border-l-2 border-primary/30 pl-4 py-2">
+                            <h4 className="font-medium text-foreground">{activity.name}</h4>
+                            <p className="text-sm text-muted-foreground mt-1">{activity.detail}</p>
+                            <p className="text-xs text-primary mt-2 italic">Example: {activity.example}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+
+              {/* Success Stories */}
+              <Card>
+                <CardHeader className="text-center">
+                  <CardTitle className="text-xl">Success Stories</CardTitle>
+                  <CardDescription>Real chapters making positive change</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {successStories.map((story, index) => (
+                      <div key={index} className="p-4 rounded-lg bg-muted/50 border border-border">
+                        <div className="flex items-start justify-between mb-2">
+                          <h4 className="font-semibold text-foreground">{story.initiative}</h4>
+                          <Badge variant="outline" className="text-xs">{story.year}</Badge>
+                        </div>
+                        <p className="text-xs text-primary mb-2">{story.organization} • {story.school}</p>
+                        <p className="text-sm text-muted-foreground">{story.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Call to Action */}
+              <Card className="bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
+                <CardContent className="p-6 text-center">
+                  <h3 className="font-semibold text-lg mb-2">Start the Change in Your Chapter</h3>
+                  <p className="text-muted-foreground mb-4 max-w-xl mx-auto">
+                    Download our comprehensive guide to implementing positive alternatives and 
+                    transforming your new member education program.
+                  </p>
+                  <Button className="gap-2">
+                    <FileText className="w-4 h-4" />
+                    Download Alternative Activities Guide
+                  </Button>
+                </CardContent>
+              </Card>
             </div>
           </TabsContent>
 
