@@ -559,6 +559,7 @@ export interface CulturalComparisonEntry {
 
 export const culturalComparisonCategories = [
   { id: "all", label: "All Categories" },
+  { id: "seals", label: "Seals & Imagery" },
   { id: "weddings", label: "Weddings & Family" },
   { id: "beauty", label: "Body & Beauty" },
   { id: "brands", label: "Brands & Logos" },
@@ -569,6 +570,177 @@ export const culturalComparisonCategories = [
 ];
 
 export const culturalComparisons: CulturalComparisonEntry[] = [
+  // Federal Seals with Greek/Roman Imagery
+  {
+    id: "great-seal-us",
+    category: "seals",
+    symbol: "Great Seal of the United States",
+    ancientConnection: "Features an eagle (Jupiter's bird in Roman mythology), an unfinished pyramid with the Eye of Providence, and Latin mottos. The design incorporates classical imagery from Rome and Egypt.",
+    modernUsage: "The Great Seal appears on every U.S. dollar bill, passport, and official government document. Christians use money and carry passports without concern.",
+    appUsage: "Demonstrates that Americans, including devout Christians, daily use symbols with ancient pagan connections without worshiping those deities."
+  },
+  {
+    id: "statue-of-freedom",
+    category: "seals",
+    symbol: "Statue of Freedom (U.S. Capitol Dome)",
+    ancientConnection: "The bronze statue atop the Capitol dome resembles classical depictions of Roman goddesses like Libertas (Liberty) and Minerva (wisdom/war).",
+    modernUsage: "The statue crowns the center of American democracy. Tourists, including Christians, visit and photograph it regularly.",
+    appUsage: "Shows that classical Roman imagery in government buildings doesn't constitute worship or spiritual danger."
+  },
+  {
+    id: "supreme-court-frieze",
+    category: "seals",
+    symbol: "Supreme Court Building Frieze",
+    ancientConnection: "The eastern pediment features classical figures including 'Liberty Enthroned' flanked by 'Order' and 'Authority.' Interior friezes depict Moses alongside Hammurabi, Confucius, and other lawgivers.",
+    modernUsage: "The highest court in the land operates under these images. Christian justices have served without objection to the imagery.",
+    appUsage: "Illustrates how symbols can represent virtues and history without requiring worship."
+  },
+  {
+    id: "library-of-congress",
+    category: "seals",
+    symbol: "Library of Congress - Minerva Mosaic",
+    ancientConnection: "A large mosaic of Minerva (Roman goddess of wisdom) dominates the Great Hall entrance, representing wisdom and learning.",
+    modernUsage: "The nation's library and research center, used by scholars, legislators, and visitors of all faiths.",
+    appUsage: "Demonstrates that a Roman goddess image in a learning institution doesn't compromise one's faith when using the library."
+  },
+  // State Seals with Greek/Roman Deities
+  {
+    id: "virginia-seal",
+    category: "seals",
+    symbol: "Great Seal of Virginia",
+    ancientConnection: "Features Virtus (Roman goddess of virtue/bravery) standing over a defeated tyrant. Virtus wears the dress of an Amazon warrior and holds a spear.",
+    modernUsage: "Virginia's official state seal, used on all state documents, driver's licenses, and government correspondence. The state motto 'Sic Semper Tyrannis' accompanies the goddess.",
+    appUsage: "Shows that a state founded by Christians chose a Roman goddess to represent their values—symbolism, not worship."
+  },
+  {
+    id: "california-seal",
+    category: "seals",
+    symbol: "Great Seal of California",
+    ancientConnection: "Features Minerva (Roman goddess of wisdom and war), the Greek goddess Athena's Roman equivalent, fully armed with spear and shield.",
+    modernUsage: "California's official seal since 1849. Used on all state documents and buildings.",
+    appUsage: "Demonstrates that even 'Christian nation' advocates use and accept Roman deity imagery in official government contexts."
+  },
+  {
+    id: "new-york-seal",
+    category: "seals",
+    symbol: "Great Seal of New York",
+    ancientConnection: "Features Liberty and Justice as classical female figures, with Liberty holding a liberty cap on a pole (Roman symbol of freed slaves).",
+    modernUsage: "New York's official state symbol, used in courts, government offices, and official documents.",
+    appUsage: "Classical personifications of virtues accepted in government without spiritual concern."
+  },
+  {
+    id: "arkansas-seal",
+    category: "seals",
+    symbol: "Great Seal of Arkansas",
+    ancientConnection: "Features a goddess of Liberty (similar to Roman Libertas) at the center with classical robes and imagery.",
+    modernUsage: "Arkansas's official state seal since 1864, used on all official state documents.",
+    appUsage: "Another example of Roman-inspired imagery in American government symbols."
+  },
+  {
+    id: "north-carolina-seal",
+    category: "seals",
+    symbol: "Great Seal of North Carolina",
+    ancientConnection: "Features Liberty standing with her pole and cap, alongside Plenty (Ceres/Demeter imagery) with horn of plenty.",
+    modernUsage: "North Carolina's official seal, representing constitutional liberty since 1871.",
+    appUsage: "Shows goddess imagery representing abstract virtues rather than objects of worship."
+  },
+  // Colleges and Universities with Greek/Roman Deities
+  {
+    id: "columbia-university",
+    category: "seals",
+    symbol: "Columbia University - Alma Mater Statue",
+    ancientConnection: "The iconic bronze statue depicts Alma Mater as a classical goddess figure seated on a throne, wearing Greek robes, with her arms outstretched in welcome. She resembles Athena/Minerva.",
+    modernUsage: "Columbia's most recognizable symbol. Students, including Christians, rub her toe for good luck before exams. Graduation photos feature the statue prominently.",
+    appUsage: "Shows how Christians attend and graduate from universities featuring goddess imagery without spiritual compromise."
+  },
+  {
+    id: "yale-minerva",
+    category: "seals",
+    symbol: "Yale University - Minerva in Branford College",
+    ancientConnection: "A relief of Minerva, Roman goddess of wisdom, adorns Branford College. Yale's architecture includes numerous classical deity references.",
+    modernUsage: "Yale, founded by Congregationalist ministers, continues to display this imagery. Christian scholars have studied there for centuries.",
+    appUsage: "Demonstrates that even institutions founded for Christian education incorporated classical imagery."
+  },
+  {
+    id: "unc-old-well",
+    category: "seals",
+    symbol: "UNC Chapel Hill - Old Well (Classical Temple)",
+    ancientConnection: "Designed as a small neoclassical rotunda based on the Temple of Love at Versailles, which itself references Roman temple architecture.",
+    modernUsage: "UNC's most iconic symbol. Students drink from the well on the first day of class for good luck.",
+    appUsage: "Temple-style architecture used as a beloved university symbol by students of all faiths."
+  },
+  {
+    id: "penn-seal",
+    category: "seals",
+    symbol: "University of Pennsylvania Seal",
+    ancientConnection: "Features classical book imagery and traditional academic symbols derived from medieval European universities which incorporated classical motifs.",
+    modernUsage: "An Ivy League institution using traditional academic imagery rooted in classical traditions.",
+    appUsage: "Academic symbolism with classical roots accepted in higher education."
+  },
+  {
+    id: "duke-chapel",
+    category: "seals",
+    symbol: "Duke University - Classical Elements",
+    ancientConnection: "While Duke Chapel is Gothic, campus features classical columns, Roman-style architecture, and the famous Duke Gardens with classical statuary.",
+    modernUsage: "Duke, originally Trinity College (Methodist), incorporates classical elements throughout campus design.",
+    appUsage: "Shows how Christian institutions freely use classical architectural vocabulary."
+  },
+  {
+    id: "emory-seal",
+    category: "seals",
+    symbol: "Emory University",
+    ancientConnection: "Campus features classical columns, Roman-style architecture, and traditional academic imagery common to American universities.",
+    modernUsage: "A Methodist-founded university with classical architectural elements throughout.",
+    appUsage: "Christian universities regularly incorporate classical symbols without spiritual concern."
+  },
+  {
+    id: "uga-arch",
+    category: "seals",
+    symbol: "University of Georgia - The Arch",
+    ancientConnection: "The famous iron arch entrance is based on the Great Seal of Georgia and classical Roman triumphal arch design.",
+    modernUsage: "UGA's most iconic symbol. Tradition says students shouldn't walk through until graduation.",
+    appUsage: "Roman-style architecture serving as beloved university tradition."
+  },
+  {
+    id: "stanford-gates",
+    category: "seals",
+    symbol: "Stanford University - Memorial Court & Classical Gates",
+    ancientConnection: "Features classical columns, Roman arches, and Mediterranean architecture reminiscent of ancient academic settings.",
+    modernUsage: "Stanford's iconic imagery includes extensive classical architectural elements.",
+    appUsage: "Elite universities embrace classical design as representing academic tradition and excellence."
+  },
+  {
+    id: "mit-great-dome",
+    category: "seals",
+    symbol: "MIT - Great Dome (Building 10)",
+    ancientConnection: "Designed after the Roman Pantheon, the Great Dome is MIT's most recognizable structure.",
+    modernUsage: "MIT's symbol of academic excellence, based directly on an ancient Roman temple.",
+    appUsage: "Shows that even a temple design can be repurposed for education without spiritual implications."
+  },
+  {
+    id: "howard-university",
+    category: "seals",
+    symbol: "Howard University - Classical Campus Design",
+    ancientConnection: "Campus features neoclassical architecture, columns, and design elements from Greek and Roman traditions.",
+    modernUsage: "An HBCU founded to educate African Americans incorporates classical architectural traditions.",
+    appUsage: "Demonstrates that historically Black institutions, many with religious foundations, embraced classical symbolism."
+  },
+  {
+    id: "morehouse-seal",
+    category: "seals",
+    symbol: "Morehouse College",
+    ancientConnection: "Founded by Baptists, Morehouse features classical columns and architectural elements common to American higher education.",
+    modernUsage: "An HBCU producing influential leaders uses classical academic imagery.",
+    appUsage: "Christian-founded HBCUs embrace classical architectural traditions without conflict."
+  },
+  {
+    id: "spelman-seal",
+    category: "seals",
+    symbol: "Spelman College",
+    ancientConnection: "Baptist-founded women's college with traditional academic architecture including classical elements.",
+    modernUsage: "Premier HBCU for women embracing academic architectural traditions.",
+    appUsage: "Shows women's Christian education institutions also incorporate classical symbolism."
+  },
   // Weddings and Family Rituals
   {
     id: "wedding-rings",

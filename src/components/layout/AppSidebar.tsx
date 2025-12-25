@@ -17,6 +17,7 @@ import {
   LogOut,
   Church,
   Video,
+  Building2,
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -62,6 +63,7 @@ const communityNavItems = [
 
 // Tools & Resources section
 const toolsNavItems = [
+  { title: "Greek Life", url: "/greek-life", icon: Building2, featureId: null },
   { title: "Anti-Hazing", url: "/anti-hazing", icon: ShieldAlert, featureId: null },
   { title: "Symbol Guide", url: "/symbol-guide", icon: Compass, featureId: null },
   { title: "Myth Busters", url: "/myth-buster", icon: Zap, featureId: null },
