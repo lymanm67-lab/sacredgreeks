@@ -6,10 +6,9 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Filter, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, Book, ExternalLink, Share2, FileDown, Scale, History, Sparkles, Printer, Users } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, ExternalLink, Share2, FileDown, Scale, History, Sparkles, Printer, Crown, Building, GraduationCap, Landmark } from 'lucide-react';
 import { symbolGuideContent, ritualGuideContent, symbolCategories, culturalComparisons, culturalComparisonCategories, SymbolEntry, RitualEntry, CulturalComparisonEntry } from '@/data/symbolGuideContent';
 import { ListenButton } from '@/components/ListenButton';
-import { allGreekOrganizations, councilLabels, organizationCategories, GreekOrganization } from '@/data/greekOrganizationsGuide';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -44,12 +43,20 @@ interface SymbolBookmark {
   notes: string | null;
 }
 
+// Category icons for better visual navigation
+const categoryIcons: Record<string, React.ReactNode> = {
+  organizational: <Badge variant="outline" className="gap-1"><Building className="w-3 h-3" /> Organizational</Badge>,
+  cultural: <Badge variant="outline" className="gap-1"><Sparkles className="w-3 h-3" /> Cultural</Badge>,
+  ritual: <Badge variant="outline" className="gap-1"><History className="w-3 h-3" /> Ritual</Badge>,
+  deity: <Badge variant="outline" className="gap-1"><Crown className="w-3 h-3" /> Deity</Badge>,
+  seals: <Badge variant="outline" className="gap-1"><Landmark className="w-3 h-3" /> Seals</Badge>,
+};
+
 const SymbolGuide = () => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [symbolCategory, setSymbolCategory] = useState('all');
   const [comparisonCategory, setComparisonCategory] = useState('all');
-  const [orgCategory, setOrgCategory] = useState('all');
   const [cautionLevel, setCautionLevel] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [bookmarksOpen, setBookmarksOpen] = useState(false);
@@ -61,7 +68,6 @@ const SymbolGuide = () => {
     notes: string;
     bookmarkId?: string;
   }>({ open: false, itemId: '', itemType: 'symbol', itemName: '', notes: '' });
-
 
   // Fetch bookmarks
   const { data: bookmarks = [] } = useQuery({
@@ -98,104 +104,97 @@ const SymbolGuide = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['symbol-guide-bookmarks'] });
-      toast.success('Bookmarked with notes');
+      toast.success('Added to bookmarks');
     },
-    onError: () => toast.error('Failed to bookmark'),
   });
 
-  // Update bookmark notes mutation
-  const updateBookmarkNotes = useMutation({
-    mutationFn: async ({ bookmarkId, notes }: { bookmarkId: string; notes: string }) => {
-      const { error } = await supabase.from('bookmarks').update({ notes }).eq('id', bookmarkId);
+  // Update bookmark mutation
+  const updateBookmark = useMutation({
+    mutationFn: async ({ id, notes }: { id: string; notes: string }) => {
+      const { error } = await supabase
+        .from('bookmarks')
+        .update({ notes })
+        .eq('id', id);
       if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['symbol-guide-bookmarks'] });
       toast.success('Notes updated');
     },
-    onError: () => toast.error('Failed to update notes'),
   });
 
   // Remove bookmark mutation
   const removeBookmark = useMutation({
-    mutationFn: async (bookmarkId: string) => {
-      const { error } = await supabase.from('bookmarks').delete().eq('id', bookmarkId);
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from('bookmarks').delete().eq('id', id);
       if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['symbol-guide-bookmarks'] });
-      toast.success('Bookmark removed');
+      toast.success('Removed from bookmarks');
     },
-    onError: () => toast.error('Failed to remove bookmark'),
   });
 
   const getBookmark = (itemId: string, itemType: 'symbol' | 'ritual') => {
-    return bookmarks.find(b => 
-      b.content_json.itemId === itemId && 
-      b.content_json.itemType === itemType
-    );
+    return bookmarks.find(b => b.content_json.itemId === itemId && b.content_json.itemType === itemType);
   };
 
   const handleBookmarkClick = (itemId: string, itemType: 'symbol' | 'ritual', itemName: string) => {
-    if (!user) {
-      toast.error('Please sign in to bookmark items');
-      return;
-    }
     const existing = getBookmark(itemId, itemType);
     if (existing) {
-      // Open dialog to edit notes
       setNotesDialog({
         open: true,
         itemId,
         itemType,
         itemName,
         notes: existing.notes || '',
-        bookmarkId: existing.id
+        bookmarkId: existing.id,
       });
     } else {
-      // Open dialog to add with notes
       setNotesDialog({
         open: true,
         itemId,
         itemType,
         itemName,
-        notes: ''
+        notes: '',
+        bookmarkId: undefined,
       });
     }
   };
 
   const handleSaveNotes = (notes: string) => {
     if (notesDialog.bookmarkId) {
-      updateBookmarkNotes.mutate({ bookmarkId: notesDialog.bookmarkId, notes });
+      updateBookmark.mutate({ id: notesDialog.bookmarkId, notes });
     } else {
       addBookmark.mutate({ itemId: notesDialog.itemId, itemType: notesDialog.itemType, notes });
     }
+    setNotesDialog(prev => ({ ...prev, open: false }));
   };
 
   const getItemDetails = (bookmark: SymbolBookmark) => {
     if (bookmark.content_json.itemType === 'symbol') {
       return symbolGuideContent.find(s => s.id === bookmark.content_json.itemId);
+    } else {
+      return ritualGuideContent.find(r => r.id === bookmark.content_json.itemId);
     }
-    return ritualGuideContent.find(r => r.id === bookmark.content_json.itemId);
   };
 
-  const getScriptureLink = (reference: string) => {
-    // Extract just the book and verse reference (e.g., "Revelation 1:8" from "Revelation 1:8 - ...")
-    const match = reference.match(/^([^-]+)/);
-    const cleanRef = match ? match[1].trim() : reference;
-    return `/bible-study?search=${encodeURIComponent(cleanRef)}`;
+  const getScriptureLink = (reference: string | undefined) => {
+    if (!reference) return '#';
+    const match = reference.match(/^([A-Za-z0-9\s]+)/);
+    if (!match) return '#';
+    const bookAndVerse = match[1].trim().replace(/\s+/g, '+');
+    return `https://www.biblegateway.com/passage/?search=${encodeURIComponent(bookAndVerse)}&version=NIV`;
   };
 
   const exportBookmarksPDF = () => {
-    if (bookmarks.length === 0) {
-      toast.error('No bookmarks to export');
-      return;
-    }
-
     const content: string[] = [
-      'SACRED GREEKS SYMBOL GUIDE',
-      'My Bookmarked Items & Personal Notes',
-      '=' .repeat(50),
+      '═'.repeat(50),
+      '',
+      '   MY SACRED GREEKS SYMBOL GUIDE BOOKMARKS',
+      '',
+      '═'.repeat(50),
+      '',
       `Generated: ${new Date().toLocaleDateString()}`,
       '',
     ];
@@ -235,7 +234,6 @@ const SymbolGuide = () => {
 
     content.push('');
     content.push('Sacred Greeks - Faith & Greek Life Together');
-    content.push('www.sacredgreeks.org');
 
     const blob = new Blob([content.join('\n')], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
@@ -248,106 +246,6 @@ const SymbolGuide = () => {
     URL.revokeObjectURL(url);
     
     toast.success('Bookmarks exported successfully!');
-  };
-
-  const exportComparisonsPDF = () => {
-    const comparisonsToExport = comparisonCategory === 'all' 
-      ? culturalComparisons 
-      : culturalComparisons.filter(c => c.category === comparisonCategory);
-
-    const categoryGroups = comparisonsToExport.reduce((acc, comparison) => {
-      const cat = culturalComparisonCategories.find(c => c.id === comparison.category)?.label || comparison.category;
-      if (!acc[cat]) acc[cat] = [];
-      acc[cat].push(comparison);
-      return acc;
-    }, {} as Record<string, CulturalComparisonEntry[]>);
-
-    const content: string[] = [
-      '═'.repeat(60),
-      '',
-      '        CULTURAL COMPARISONS DISCUSSION GUIDE',
-      '        Sacred Greeks - Faith & Greek Life Together',
-      '',
-      '═'.repeat(60),
-      '',
-      `Generated: ${new Date().toLocaleDateString()}`,
-      '',
-      '─'.repeat(60),
-      '',
-      'PURPOSE OF THIS GUIDE',
-      '',
-      'Christians already use many symbols and practices with pre-Christian',
-      'or pagan origins—from wedding rings to church architecture to brand',
-      'logos. These comparisons help expose inconsistent logic when Greek',
-      'letters are singled out as "demonic" while other ancient symbols',
-      'are freely embraced.',
-      '',
-      'Use this guide in your Bible study, small group, or personal',
-      'reflection to think critically about how we engage with culture.',
-      '',
-      '═'.repeat(60),
-      '',
-    ];
-
-    Object.entries(categoryGroups).forEach(([category, items]) => {
-      content.push(`▸ ${category.toUpperCase()}`);
-      content.push('─'.repeat(60));
-      content.push('');
-
-      items.forEach((comparison, index) => {
-        content.push(`${index + 1}. ${comparison.symbol}`);
-        content.push('');
-        content.push('   ANCIENT CONNECTION:');
-        content.push(`   ${comparison.ancientConnection}`);
-        content.push('');
-        content.push('   HOW IT SHOWS UP TODAY:');
-        content.push(`   ${comparison.modernUsage}`);
-        content.push('');
-        content.push('   HOW THIS HELPS YOU:');
-        content.push(`   ${comparison.appUsage}`);
-        content.push('');
-        content.push('   ┄'.repeat(30));
-        content.push('');
-      });
-
-      content.push('');
-    });
-
-    content.push('═'.repeat(60));
-    content.push('');
-    content.push('DISCUSSION QUESTIONS FOR YOUR GROUP');
-    content.push('');
-    content.push('1. Which comparison surprised you the most? Why?');
-    content.push('');
-    content.push('2. Have you ever been challenged about Greek letters but not');
-    content.push('   about wedding rings or Nike shoes? How did you respond?');
-    content.push('');
-    content.push('3. Read Romans 14:5-6. How does this passage apply to symbols');
-    content.push('   and practices that have changed meaning over time?');
-    content.push('');
-    content.push('4. What is the difference between using a symbol and');
-    content.push('   worshipping what it originally represented?');
-    content.push('');
-    content.push('5. How can you graciously share these insights with someone');
-    content.push('   who believes all Greek letters are inherently sinful?');
-    content.push('');
-    content.push('═'.repeat(60));
-    content.push('');
-    content.push('Learn more at: www.sacredgreeks.org');
-    content.push('Book: "Sacred, Not Sinful" by Dr. Lyman Montgomery');
-    content.push('');
-
-    const blob = new Blob([content.join('\n')], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `sacred-greeks-cultural-comparisons-${new Date().toISOString().split('T')[0]}.txt`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-    
-    toast.success('Discussion guide exported! Print or share with your group.');
   };
 
   const filteredSymbols = useMemo(() => {
@@ -384,25 +282,6 @@ const SymbolGuide = () => {
       return matchesCategory && matchesSearch;
     });
   }, [comparisonCategory, searchQuery]);
-
-  const filteredOrganizations = useMemo(() => {
-    return allGreekOrganizations.filter(org => {
-      const matchesCategory = orgCategory === 'all' || org.category === orgCategory;
-      const searchLower = searchQuery.toLowerCase();
-      const matchesSearch = searchQuery === '' ||
-        org.name.toLowerCase().includes(searchLower) ||
-        org.description.toLowerCase().includes(searchLower) ||
-        org.christianPerspective.toLowerCase().includes(searchLower) ||
-        org.motto?.toLowerCase().includes(searchLower) ||
-        org.symbol?.toLowerCase().includes(searchLower) ||
-        org.colors?.toLowerCase().includes(searchLower) ||
-        org.council.toLowerCase().includes(searchLower) ||
-        org.notableMembers?.some(member => member.toLowerCase().includes(searchLower)) ||
-        org.biblicalParallels.some(parallel => parallel.toLowerCase().includes(searchLower)) ||
-        org.scriptureReferences.some(ref => ref.ref.toLowerCase().includes(searchLower));
-      return matchesCategory && matchesSearch;
-    });
-  }, [orgCategory, searchQuery]);
 
   const renderComparisonCard = (comparison: CulturalComparisonEntry) => {
     const categoryLabel = culturalComparisonCategories.find(c => c.id === comparison.category)?.label || comparison.category;
@@ -451,53 +330,10 @@ const SymbolGuide = () => {
     );
   };
 
-  const renderOrganizationCard = (org: GreekOrganization) => {
-    return (
-      <Link key={org.id} to={`/organization/${org.id}`} className="block">
-        <Card className="overflow-hidden h-full hover:border-sacred/30 transition-colors cursor-pointer">
-          <CardHeader className="pb-2 bg-gradient-to-r from-sacred/5 to-muted/30">
-            <div className="flex items-start justify-between gap-2">
-              <div>
-                <CardTitle className="text-lg hover:text-sacred transition-colors">{org.name}</CardTitle>
-                {org.motto && <p className="text-xs text-muted-foreground italic mt-1">"{org.motto}"</p>}
-              </div>
-              <div className="flex flex-col items-end gap-1">
-                <Badge variant="outline" className="capitalize">{org.type}</Badge>
-                <Badge className="bg-sacred/20 text-sacred border-sacred/30">{org.council}</Badge>
-              </div>
-            </div>
-            {org.colors && <p className="text-xs text-muted-foreground">Colors: {org.colors}</p>}
-            {org.symbol && <p className="text-xs text-muted-foreground">Symbol: {org.symbol}</p>}
-          </CardHeader>
-          <CardContent className="space-y-3 pt-4">
-            <p className="text-sm text-muted-foreground line-clamp-2">{org.description}</p>
-            <div className="bg-sacred/5 p-3 rounded-lg border border-sacred/20">
-              <h4 className="font-semibold text-sm mb-1 flex items-center gap-2">
-                <Book className="w-4 h-4 text-sacred" /> Christian Perspective
-              </h4>
-              <p className="text-sm text-muted-foreground line-clamp-2">{org.christianPerspective}</p>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex flex-wrap gap-1">
-                {org.scriptureReferences.slice(0, 2).map((ref, i) => (
-                  <Badge key={i} variant="secondary" className="text-xs">{ref.ref}</Badge>
-                ))}
-                {org.scriptureReferences.length > 2 && (
-                  <Badge variant="secondary" className="text-xs">+{org.scriptureReferences.length - 2} more</Badge>
-                )}
-              </div>
-              <span className="text-xs text-sacred font-medium flex items-center gap-1">
-                View Details <ExternalLink className="w-3 h-3" />
-              </span>
-            </div>
-          </CardContent>
-        </Card>
-      </Link>
-    );
-  };
-
   const renderSymbolCard = (symbol: SymbolEntry) => {
     const bookmark = getBookmark(symbol.id, 'symbol');
+    const CategoryBadge = categoryIcons[symbol.category] || <Badge variant="outline" className="capitalize">{symbol.category}</Badge>;
+    
     return (
       <Card key={symbol.id}>
         <CardHeader className="pb-2">
@@ -521,7 +357,7 @@ const SymbolGuide = () => {
               <CautionBadge level={symbol.cautionLevel} />
             </div>
           </div>
-          <Badge variant="outline" className="w-fit capitalize">{symbol.category}</Badge>
+          {CategoryBadge}
         </CardHeader>
         <CardContent className="space-y-3">
           <p className="text-sm text-muted-foreground">{symbol.description}</p>
@@ -548,10 +384,7 @@ const SymbolGuide = () => {
           {symbol.scripturalContext && (
             <div className="bg-sacred/5 p-3 rounded-lg border border-sacred/20">
               <div className="flex items-start justify-between gap-2">
-                <p className="text-xs text-foreground italic flex-1">
-                  <Book className="w-3 h-3 inline mr-1 text-sacred" />
-                  {symbol.scripturalContext}
-                </p>
+                <p className="text-sm text-sacred">{symbol.scripturalContext}</p>
                 <Link to={getScriptureLink(symbol.scripturalContext)}>
                   <Button variant="ghost" size="sm" className="gap-1 text-xs h-7 px-2">
                     <ExternalLink className="w-3 h-3" />
@@ -604,6 +437,12 @@ const SymbolGuide = () => {
               <p className="text-sm text-badge-warning-foreground"><AlertCircle className="w-4 h-4 inline mr-1" /> {ritual.cautionNote}</p>
             </div>
           )}
+          {ritual.alternatives && (
+            <div className="bg-badge-success/10 p-3 rounded-lg border border-badge-success/20">
+              <h4 className="font-semibold text-sm mb-1 text-badge-success">Suggested Alternatives</h4>
+              <p className="text-sm text-muted-foreground">{ritual.alternatives}</p>
+            </div>
+          )}
           {ritual.cautionLevel === 'medium' && (
             <DiscernmentGuidanceDialog
               itemName={ritual.name}
@@ -615,18 +454,10 @@ const SymbolGuide = () => {
               }
             />
           )}
-          {ritual.alternatives && (
-            <div className="bg-badge-success/10 p-3 rounded-lg border border-badge-success/20">
-              <p className="text-sm text-badge-success-foreground"><CheckCircle className="w-4 h-4 inline mr-1" /> {ritual.alternatives}</p>
-            </div>
-          )}
           {ritual.scripturalContext && (
             <div className="bg-sacred/5 p-3 rounded-lg border border-sacred/20">
               <div className="flex items-start justify-between gap-2">
-                <p className="text-xs text-foreground italic flex-1">
-                  <Book className="w-3 h-3 inline mr-1 text-sacred" />
-                  {ritual.scripturalContext}
-                </p>
+                <p className="text-sm text-sacred">{ritual.scripturalContext}</p>
                 <Link to={getScriptureLink(ritual.scripturalContext)}>
                   <Button variant="ghost" size="sm" className="gap-1 text-xs h-7 px-2">
                     <ExternalLink className="w-3 h-3" />
@@ -648,16 +479,59 @@ const SymbolGuide = () => {
           <Link to="/"><Button variant="ghost" size="icon"><ArrowLeft className="w-5 h-5" /></Button></Link>
           <div>
             <h1 className="text-xl font-bold">Symbol & Ritual Guide</h1>
-            <p className="text-sm text-muted-foreground">Christian perspectives on Greek symbolism</p>
+            <p className="text-sm text-muted-foreground">Christian perspectives on symbols, rituals & cultural imagery</p>
           </div>
         </div>
       </header>
 
       <main className="container mx-auto px-4 py-8 max-w-4xl">
+        {/* Quick Navigation Cards */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+          <Link to="/greek-life">
+            <Card className="hover:border-sacred/50 transition-colors cursor-pointer h-full">
+              <CardContent className="p-4 flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-sacred/10">
+                  <GraduationCap className="w-5 h-5 text-sacred" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-sm">Greek Organizations</h3>
+                  <p className="text-xs text-muted-foreground">Explore all Greek orgs</p>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link to="/myth-buster">
+            <Card className="hover:border-sacred/50 transition-colors cursor-pointer h-full">
+              <CardContent className="p-4 flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-amber-500/10">
+                  <AlertTriangle className="w-5 h-5 text-amber-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-sm">Myth Buster</h3>
+                  <p className="text-xs text-muted-foreground">Address misconceptions</p>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link to="/anti-hazing">
+            <Card className="hover:border-sacred/50 transition-colors cursor-pointer h-full">
+              <CardContent className="p-4 flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-red-500/10">
+                  <AlertCircle className="w-5 h-5 text-red-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-sm">Anti-Hazing</h3>
+                  <p className="text-xs text-muted-foreground">Biblical guidance</p>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        </div>
+
         <Card className="mb-6 bg-gradient-to-r from-sacred/10 to-warm-blue/10 border-sacred/20">
           <CardContent className="pt-6">
             <h2 className="font-semibold mb-2">How to Use This Guide</h2>
-            <p className="text-sm text-muted-foreground">This guide provides Christian perspectives on common symbols and rituals in Greek life. Each entry includes a caution level to help you think through participation. Remember: the goal is informed, prayerful decision-making—not fear or blanket condemnation.</p>
+            <p className="text-sm text-muted-foreground">This guide provides Christian perspectives on common symbols, rituals, and cultural imagery. Each entry includes a caution level to help you think through participation. Remember: the goal is informed, prayerful decision-making—not fear or blanket condemnation.</p>
             <div className="mt-4">
               <DiscernmentGuidanceDialog
                 trigger={
@@ -671,7 +545,7 @@ const SymbolGuide = () => {
           </CardContent>
         </Card>
 
-        {/* Bookmarks Section - Only show if user is logged in and has bookmarks */}
+        {/* Bookmarks Section */}
         {user && bookmarks.length > 0 && (
           <Collapsible open={bookmarksOpen} onOpenChange={setBookmarksOpen} className="mb-6">
             <Card>
@@ -749,9 +623,9 @@ const SymbolGuide = () => {
                           </div>
                         </div>
                         {bookmark.notes && (
-                          <div className="text-xs text-muted-foreground bg-background/50 p-2 rounded border border-border/50">
-                            <span className="font-medium text-foreground">My notes:</span> {bookmark.notes}
-                          </div>
+                          <p className="text-xs text-muted-foreground bg-background/50 p-2 rounded italic">
+                            {bookmark.notes}
+                          </p>
                         )}
                       </div>
                     );
@@ -762,85 +636,28 @@ const SymbolGuide = () => {
           </Collapsible>
         )}
 
+        {/* Search */}
         <div className="space-y-4 mb-6">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
-              placeholder="Search organizations, symbols, notable members, scripture..."
+              placeholder="Search symbols, rituals, comparisons..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10"
             />
           </div>
-
-          {/* Caution Level Filter */}
-          <div className="space-y-2">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Filter className="w-4 h-4" />
-              <span>Filter by Caution Level</span>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {cautionLevels.map(level => (
-                <Button
-                  key={level.id}
-                  variant={cautionLevel === level.id ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setCautionLevel(level.id)}
-                  className={cautionLevel === level.id ? 'bg-sacred hover:bg-sacred/90' : ''}
-                >
-                  {level.icon && <level.icon className={`w-3 h-3 mr-1 ${level.color}`} />}
-                  {level.label}
-                </Button>
-              ))}
-            </div>
-          </div>
         </div>
 
-        <Tabs defaultValue="organizations" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="organizations">Organizations ({filteredOrganizations.length})</TabsTrigger>
+        <Tabs defaultValue="symbols" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="symbols">Symbols ({filteredSymbols.length})</TabsTrigger>
             <TabsTrigger value="rituals">Rituals ({filteredRituals.length})</TabsTrigger>
             <TabsTrigger value="comparisons">Comparisons ({filteredComparisons.length})</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="organizations" className="space-y-4">
-            <Card className="mb-4 bg-gradient-to-r from-sacred/10 to-warm-blue/10 border-sacred/20">
-              <CardContent className="pt-6">
-                <div className="flex items-center gap-2 mb-2">
-                  <Users className="w-5 h-5 text-sacred" />
-                  <h3 className="font-semibold">Greek Organizations & Christian Perspectives</h3>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  Explore how the values, mottos, and principles of Greek organizations align with biblical teachings. 
-                  Each entry provides Scripture references and Christian perspectives.
-                </p>
-              </CardContent>
-            </Card>
-            <div className="flex flex-wrap gap-2 mb-4">
-              {organizationCategories.map(filter => (
-                <Button
-                  key={filter.id}
-                  variant={orgCategory === filter.id ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setOrgCategory(filter.id)}
-                  className={orgCategory === filter.id ? 'bg-sacred hover:bg-sacred/90' : ''}
-                >
-                  {filter.label}
-                </Button>
-              ))}
-            </div>
-            {filteredOrganizations.length === 0 && (
-              <Card className="p-8 text-center">
-                <p className="text-muted-foreground">No organizations found matching your filters</p>
-              </Card>
-            )}
-            <div className="grid gap-4 md:grid-cols-2">
-              {filteredOrganizations.map(renderOrganizationCard)}
-            </div>
-          </TabsContent>
-
           <TabsContent value="symbols" className="space-y-4">
+            {/* Category Filter */}
             <div className="flex flex-wrap gap-2 mb-4">
               {symbolCategories.map(cat => (
                 <Button
@@ -854,21 +671,58 @@ const SymbolGuide = () => {
                 </Button>
               ))}
             </div>
+            
+            {/* Caution Level Filter */}
+            <div className="flex flex-wrap gap-2 mb-4">
+              {cautionLevels.map(level => (
+                <Button
+                  key={level.id}
+                  variant={cautionLevel === level.id ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setCautionLevel(level.id)}
+                  className={`${cautionLevel === level.id ? 'bg-muted-foreground/80' : ''}`}
+                >
+                  {level.icon && <level.icon className={`w-3 h-3 mr-1 ${level.color}`} />}
+                  {level.label}
+                </Button>
+              ))}
+            </div>
+
             {filteredSymbols.length === 0 && (
               <Card className="p-8 text-center">
                 <p className="text-muted-foreground">No symbols found matching your filters</p>
               </Card>
             )}
-            {filteredSymbols.map(renderSymbolCard)}
+            <div className="space-y-4">
+              {filteredSymbols.map(renderSymbolCard)}
+            </div>
           </TabsContent>
 
           <TabsContent value="rituals" className="space-y-4">
+            {/* Caution Level Filter */}
+            <div className="flex flex-wrap gap-2 mb-4">
+              {cautionLevels.map(level => (
+                <Button
+                  key={level.id}
+                  variant={cautionLevel === level.id ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setCautionLevel(level.id)}
+                  className={`${cautionLevel === level.id ? 'bg-muted-foreground/80' : ''}`}
+                >
+                  {level.icon && <level.icon className={`w-3 h-3 mr-1 ${level.color}`} />}
+                  {level.label}
+                </Button>
+              ))}
+            </div>
+
             {filteredRituals.length === 0 && (
               <Card className="p-8 text-center">
                 <p className="text-muted-foreground">No rituals found matching your filters</p>
               </Card>
             )}
-            {filteredRituals.map(renderRitualCard)}
+            <div className="space-y-4">
+              {filteredRituals.map(renderRitualCard)}
+            </div>
           </TabsContent>
 
           <TabsContent value="comparisons" className="space-y-4">

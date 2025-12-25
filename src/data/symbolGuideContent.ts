@@ -1432,7 +1432,8 @@ export const symbolCategories = [
   { id: "organizational", label: "Organizational" },
   { id: "cultural", label: "Cultural" },
   { id: "ritual", label: "Ritual" },
-  { id: "deities", label: "Deities" },
+  { id: "deity", label: "Deities" },
+  { id: "deities", label: "Deities (New)" },
   { id: "seals", label: "Seals" }
 ];
 
