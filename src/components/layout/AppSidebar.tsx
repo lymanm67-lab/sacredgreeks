@@ -13,7 +13,8 @@ import {
   LogOut,
   FlaskConical,
   Bell,
-  Trophy
+  Trophy,
+  ShieldAlert
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -49,6 +50,7 @@ const mainNavItems = [
   { title: "The Book", url: "/the-book", icon: BookMarked, featureId: null },
   { title: "Tools & Resources", url: "/tools-resources", icon: Wrench, featureId: null },
   { title: "Greek Life", url: "/greek-life", icon: GraduationCap, featureId: null },
+  { title: "Anti-Hazing", url: "/anti-hazing", icon: ShieldAlert, featureId: null },
   { title: "Community", url: "/community", icon: Users, featureId: null },
   { title: "Contact", url: "/contact", icon: Mail, featureId: null },
 ];
