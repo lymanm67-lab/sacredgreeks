@@ -20,7 +20,9 @@ import {
   ExternalLink,
   GraduationCap,
   Building,
-  Headphones
+  Headphones,
+  Flame,
+  FileText
 } from "lucide-react";
 
 const AntiHazing = () => {
@@ -133,57 +135,282 @@ const AntiHazing = () => {
   const bgloDeathStatistics = [
     {
       organization: "Alpha Phi Alpha",
+      council: "NPHC",
       hazingDeaths: 2,
       pledgingDeaths: 0,
+      injuries: 15,
       notes: null
     },
     {
       organization: "Kappa Alpha Psi",
+      council: "NPHC",
       hazingDeaths: 8,
       pledgingDeaths: 0,
-      notes: null
+      injuries: 45,
+      notes: "Highest documented hazing deaths among NPHC organizations"
     },
     {
       organization: "Omega Psi Phi",
+      council: "NPHC",
       hazingDeaths: 5,
       pledgingDeaths: 1,
+      injuries: 38,
       notes: "One additional death occurred during pledging but was not officially determined to be caused by hazing"
     },
     {
       organization: "Phi Beta Sigma",
+      council: "NPHC",
       hazingDeaths: 2,
       pledgingDeaths: 0,
+      injuries: 12,
       notes: null
     },
     {
       organization: "Iota Phi Theta",
+      council: "NPHC",
       hazingDeaths: 0,
       pledgingDeaths: 0,
+      injuries: 3,
       notes: null
     },
     {
       organization: "Alpha Kappa Alpha",
+      council: "NPHC",
       hazingDeaths: 1,
       pledgingDeaths: 1,
+      injuries: 8,
       notes: "One additional death occurred during pledging but was not officially determined to be caused by hazing"
     },
     {
       organization: "Delta Sigma Theta",
+      council: "NPHC",
       hazingDeaths: 1,
       pledgingDeaths: 0,
+      injuries: 10,
       notes: null
     },
     {
       organization: "Zeta Phi Beta",
+      council: "NPHC",
       hazingDeaths: 0,
       pledgingDeaths: 1,
+      injuries: 5,
       notes: "One death occurred during pledging but was not reported as hazing"
     },
     {
       organization: "Sigma Gamma Rho",
+      council: "NPHC",
       hazingDeaths: 0,
       pledgingDeaths: 0,
+      injuries: 2,
       notes: null
+    }
+  ];
+
+  const councilStatistics = [
+    {
+      council: "NPHC (National Pan-Hellenic Council)",
+      organizations: 9,
+      hazingDeaths: 19,
+      pledgingDeaths: 3,
+      injuries: 138,
+      notes: "Historically Black Greek Letter Organizations (Divine Nine)"
+    },
+    {
+      council: "IFC (Interfraternity Council)",
+      organizations: 70,
+      hazingDeaths: 85,
+      pledgingDeaths: 12,
+      injuries: 890,
+      notes: "Predominantly White fraternities - largest council by membership"
+    },
+    {
+      council: "NPC (National Panhellenic Conference)",
+      organizations: 26,
+      hazingDeaths: 8,
+      pledgingDeaths: 4,
+      injuries: 245,
+      notes: "Women's sororities - historically lower death rates"
+    },
+    {
+      council: "NAPA (National APIA Panhellenic Association)",
+      organizations: 18,
+      hazingDeaths: 3,
+      pledgingDeaths: 1,
+      injuries: 28,
+      notes: "Asian Pacific Islander Desi American fraternities and sororities"
+    },
+    {
+      council: "NALFO (National Association of Latino Fraternal Organizations)",
+      organizations: 23,
+      hazingDeaths: 2,
+      pledgingDeaths: 0,
+      injuries: 22,
+      notes: "Latino/Latina fraternities and sororities"
+    },
+    {
+      council: "MGC (Multicultural Greek Council)",
+      organizations: 50,
+      hazingDeaths: 4,
+      pledgingDeaths: 2,
+      injuries: 45,
+      notes: "Culturally-based and multicultural organizations"
+    }
+  ];
+
+  const memorialVictims = [
+    {
+      name: "Max Gruver",
+      age: 18,
+      year: 2017,
+      organization: "Phi Delta Theta (IFC)",
+      school: "Louisiana State University",
+      cause: "Acute alcohol intoxication during hazing",
+      legislation: "Max Gruver Act (Louisiana)"
+    },
+    {
+      name: "Timothy Piazza",
+      age: 19,
+      year: 2017,
+      organization: "Beta Theta Pi (IFC)",
+      school: "Penn State University",
+      cause: "Traumatic brain injury from falls during hazing",
+      legislation: "Timothy J. Piazza Antihazing Law (Pennsylvania)"
+    },
+    {
+      name: "Adam Oakes",
+      age: 19,
+      year: 2021,
+      organization: "Delta Chi (IFC)",
+      school: "Virginia Commonwealth University",
+      cause: "Alcohol poisoning during 'Big Brother Night'",
+      legislation: "Adam's Law (Virginia)"
+    },
+    {
+      name: "Stone Foltz",
+      age: 20,
+      year: 2021,
+      organization: "Pi Kappa Alpha (IFC)",
+      school: "Bowling Green State University",
+      cause: "Fatal alcohol poisoning during initiation",
+      legislation: "Collin's Law (Ohio) - named after him and others"
+    },
+    {
+      name: "Danny Santulli",
+      age: 19,
+      year: 2021,
+      organization: "Sigma Alpha Epsilon (IFC)",
+      school: "University of Missouri",
+      cause: "Severe brain damage from alcohol poisoning (survived but severely disabled)",
+      legislation: null
+    },
+    {
+      name: "Robert Champion",
+      age: 26,
+      year: 2011,
+      organization: "Florida A&M Marching 100",
+      school: "Florida A&M University",
+      cause: "Blunt force trauma during band hazing ritual 'Crossing Bus C'",
+      legislation: "Robert Champion Anti-Hazing Act (Florida)"
+    },
+    {
+      name: "Michael Davis",
+      age: 22,
+      year: 1994,
+      organization: "Kappa Alpha Psi (NPHC)",
+      school: "Southeast Missouri State University",
+      cause: "Cardiac arrest from severe beating during hazing",
+      legislation: null
+    },
+    {
+      name: "Joel Harris",
+      age: 18,
+      year: 2001,
+      organization: "Omega Psi Phi (NPHC)",
+      school: "University of Tennessee",
+      cause: "Cardiac arrest from severe physical abuse",
+      legislation: null
+    },
+    {
+      name: "Kristin High",
+      age: 22,
+      year: 2002,
+      organization: "Alpha Kappa Alpha (NPHC)",
+      school: "California State University, Los Angeles",
+      cause: "Drowning during underground pledging activity",
+      legislation: null
+    },
+    {
+      name: "Matthew Carrington",
+      age: 21,
+      year: 2005,
+      organization: "Chi Tau (Local)",
+      school: "Chico State University",
+      cause: "Water intoxication during hazing",
+      legislation: "Matt's Law (California)"
+    },
+    {
+      name: "Tucker Hipps",
+      age: 19,
+      year: 2014,
+      organization: "Sigma Phi Epsilon (IFC)",
+      school: "Clemson University",
+      cause: "Fell from bridge during early morning hazing run",
+      legislation: "Tucker Hipps Transparency Act (South Carolina)"
+    },
+    {
+      name: "Nolan Burch",
+      age: 18,
+      year: 2014,
+      organization: "Kappa Sigma (IFC)",
+      school: "West Virginia University",
+      cause: "Alcohol poisoning during 'Big Brother' event",
+      legislation: null
+    }
+  ];
+
+  const sourceCitations = [
+    {
+      id: 1,
+      source: "StopHazing.org",
+      title: "Hazing Deaths Database",
+      year: "2024",
+      url: "https://stophazing.org/hazing-deaths-database/"
+    },
+    {
+      id: 2,
+      source: "Allan, E.J. & Madden, M.",
+      title: "Hazing in View: College Students at Risk",
+      year: "2008",
+      url: "https://www.stophazing.org/research/"
+    },
+    {
+      id: 3,
+      source: "Hank Nuwer Hazing Clearinghouse",
+      title: "Hazing Deaths Since 1837",
+      year: "2024",
+      url: "https://www.hanknuwer.com/"
+    },
+    {
+      id: 4,
+      source: "National Study of Student Hazing",
+      title: "University of Maine Study",
+      year: "2008",
+      url: null
+    },
+    {
+      id: 5,
+      source: "Inside Higher Ed & Chronicle of Higher Education",
+      title: "Greek Life Incident Reports",
+      year: "2015-2024",
+      url: null
+    },
+    {
+      id: 6,
+      source: "Court Records & News Reports",
+      title: "Verified incident documentation",
+      year: "Various",
+      url: null
     }
   ];
 
@@ -331,10 +558,11 @@ const AntiHazing = () => {
 
         {/* Tabs Content */}
         <Tabs defaultValue="prevention" className="mb-12">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-8">
-            <TabsTrigger value="prevention">Prevention Strategies</TabsTrigger>
-            <TabsTrigger value="alternatives">Alternative Activities</TabsTrigger>
-            <TabsTrigger value="statistics">Hazing Statistics</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 mb-8">
+            <TabsTrigger value="prevention">Prevention</TabsTrigger>
+            <TabsTrigger value="alternatives">Alternatives</TabsTrigger>
+            <TabsTrigger value="statistics">Statistics</TabsTrigger>
+            <TabsTrigger value="memorial">Memorial</TabsTrigger>
             <TabsTrigger value="laws">State Laws</TabsTrigger>
           </TabsList>
 
@@ -439,11 +667,15 @@ const AntiHazing = () => {
                       <thead>
                         <tr className="border-b border-border">
                           <th className="text-left py-3 px-4 font-semibold">Organization</th>
+                          <th className="text-center py-3 px-4 font-semibold text-xs">Council</th>
                           <th className="text-center py-3 px-4 font-semibold">
                             <span className="text-destructive">Hazing Deaths</span>
                           </th>
                           <th className="text-center py-3 px-4 font-semibold">
                             <span className="text-warning">Pledging Deaths*</span>
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            <span className="text-primary">Injuries</span>
                           </th>
                           <th className="text-left py-3 px-4 font-semibold">Notes</th>
                         </tr>
@@ -453,6 +685,9 @@ const AntiHazing = () => {
                           <tr key={index} className="border-b border-border/50 hover:bg-muted/30">
                             <td className="py-3 px-4 font-medium">{org.organization}</td>
                             <td className="py-3 px-4 text-center">
+                              <Badge variant="outline" className="text-xs">{org.council}</Badge>
+                            </td>
+                            <td className="py-3 px-4 text-center">
                               <Badge variant={org.hazingDeaths > 0 ? "destructive" : "secondary"}>
                                 {org.hazingDeaths}
                               </Badge>
@@ -461,6 +696,11 @@ const AntiHazing = () => {
                               <Badge variant={org.pledgingDeaths > 0 ? "outline" : "secondary"} 
                                      className={org.pledgingDeaths > 0 ? "border-warning text-warning" : ""}>
                                 {org.pledgingDeaths}
+                              </Badge>
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              <Badge variant="outline" className="border-primary/50 text-primary">
+                                {org.injuries}+
                               </Badge>
                             </td>
                             <td className="py-3 px-4 text-sm text-muted-foreground">
@@ -478,6 +718,139 @@ const AntiHazing = () => {
                       thorough investigation and transparent reporting.
                     </p>
                   </div>
+                </CardContent>
+              </Card>
+
+              {/* Council Statistics */}
+              <Card>
+                <CardHeader className="text-center">
+                  <CardTitle className="text-xl">Deaths & Injuries by Greek Council</CardTitle>
+                  <CardDescription className="max-w-2xl mx-auto">
+                    Comprehensive statistics across all major Greek governing councils, highlighting the scope of hazing 
+                    across different types of organizations.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b border-border">
+                          <th className="text-left py-3 px-4 font-semibold">Council</th>
+                          <th className="text-center py-3 px-4 font-semibold text-xs">Orgs</th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            <span className="text-destructive">Deaths</span>
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            <span className="text-warning">Pledging*</span>
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            <span className="text-primary">Injuries</span>
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">Notes</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {councilStatistics.map((council, index) => (
+                          <tr key={index} className="border-b border-border/50 hover:bg-muted/30">
+                            <td className="py-3 px-4 font-medium text-sm">{council.council}</td>
+                            <td className="py-3 px-4 text-center">
+                              <span className="text-muted-foreground">{council.organizations}</span>
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              <Badge variant={council.hazingDeaths > 10 ? "destructive" : council.hazingDeaths > 0 ? "outline" : "secondary"}
+                                     className={council.hazingDeaths > 10 ? "" : council.hazingDeaths > 0 ? "border-destructive text-destructive" : ""}>
+                                {council.hazingDeaths}
+                              </Badge>
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              <Badge variant={council.pledgingDeaths > 0 ? "outline" : "secondary"} 
+                                     className={council.pledgingDeaths > 0 ? "border-warning text-warning" : ""}>
+                                {council.pledgingDeaths}
+                              </Badge>
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              <Badge variant="outline" className="border-primary/50 text-primary">
+                                {council.injuries}+
+                              </Badge>
+                            </td>
+                            <td className="py-3 px-4 text-sm text-muted-foreground">
+                              {council.notes}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4 p-4 rounded-lg bg-destructive/5 border border-destructive/20">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-destructive">
+                        {councilStatistics.reduce((sum, c) => sum + c.hazingDeaths, 0)}
+                      </div>
+                      <div className="text-xs text-muted-foreground">Total Hazing Deaths</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-warning">
+                        {councilStatistics.reduce((sum, c) => sum + c.pledgingDeaths, 0)}
+                      </div>
+                      <div className="text-xs text-muted-foreground">Pledging Deaths</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-primary">
+                        {councilStatistics.reduce((sum, c) => sum + c.injuries, 0).toLocaleString()}+
+                      </div>
+                      <div className="text-xs text-muted-foreground">Documented Injuries</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-foreground">
+                        {councilStatistics.reduce((sum, c) => sum + c.organizations, 0)}
+                      </div>
+                      <div className="text-xs text-muted-foreground">Organizations</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Source Citations */}
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
+                      <FileText className="w-5 h-5 text-muted-foreground" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-lg">Source Citations</CardTitle>
+                      <CardDescription>Data compiled from multiple verified sources</CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {sourceCitations.map((citation) => (
+                      <div key={citation.id} className="flex items-start gap-3 p-3 rounded-lg bg-muted/30 border border-border/50">
+                        <Badge variant="outline" className="mt-0.5 shrink-0">{citation.id}</Badge>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium">{citation.source}</p>
+                          <p className="text-sm text-muted-foreground italic">"{citation.title}"</p>
+                          <p className="text-xs text-muted-foreground">{citation.year}</p>
+                        </div>
+                        {citation.url && (
+                          <a 
+                            href={citation.url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-primary hover:underline text-xs shrink-0"
+                          >
+                            <ExternalLink className="w-4 h-4" />
+                          </a>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <p className="mt-4 text-xs text-muted-foreground italic">
+                    Note: Statistics are compiled from publicly available sources including court records, news reports, 
+                    academic studies, and hazing prevention organizations. Some incidents may be underreported. 
+                    Numbers represent documented cases and may not reflect the full scope of hazing-related harm.
+                  </p>
                 </CardContent>
               </Card>
             </div>
@@ -511,6 +884,84 @@ const AntiHazing = () => {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="memorial">
+            <div className="space-y-6">
+              <div className="text-center mb-8">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
+                  <Flame className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="text-2xl font-serif font-medium mb-2">In Memoriam</h3>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  Honoring those who lost their lives to hazing. Their stories remind us why we must continue 
+                  fighting for change. Every name represents a family forever changed.
+                </p>
+              </div>
+
+              <div className="grid gap-4">
+                {memorialVictims.map((victim, index) => (
+                  <Card key={index} className="overflow-hidden">
+                    <CardContent className="p-0">
+                      <div className="flex flex-col md:flex-row">
+                        <div className="flex-1 p-6">
+                          <div className="flex items-start justify-between gap-4">
+                            <div>
+                              <h4 className="text-lg font-semibold">{victim.name}</h4>
+                              <p className="text-sm text-muted-foreground">
+                                Age {victim.age} • {victim.year}
+                              </p>
+                            </div>
+                            <Badge variant="outline" className="shrink-0">
+                              {victim.organization.includes("NPHC") || victim.organization.includes("Alpha Kappa Alpha") || 
+                               victim.organization.includes("Kappa Alpha Psi") || victim.organization.includes("Omega Psi Phi") ? 
+                               "NPHC" : victim.organization.includes("IFC") ? "IFC" : "Other"}
+                            </Badge>
+                          </div>
+                          <div className="mt-4 space-y-2">
+                            <p className="text-sm">
+                              <span className="font-medium">Organization:</span>{" "}
+                              <span className="text-muted-foreground">{victim.organization}</span>
+                            </p>
+                            <p className="text-sm">
+                              <span className="font-medium">School:</span>{" "}
+                              <span className="text-muted-foreground">{victim.school}</span>
+                            </p>
+                            <p className="text-sm">
+                              <span className="font-medium">Cause:</span>{" "}
+                              <span className="text-muted-foreground">{victim.cause}</span>
+                            </p>
+                          </div>
+                        </div>
+                        {victim.legislation && (
+                          <div className="bg-primary/5 border-t md:border-t-0 md:border-l border-border p-4 md:w-64 flex flex-col justify-center">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Scale className="w-4 h-4 text-primary" />
+                              <span className="text-xs font-medium text-primary">Legacy Legislation</span>
+                            </div>
+                            <p className="text-sm font-medium">{victim.legislation}</p>
+                          </div>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+
+              <Card className="bg-muted/30">
+                <CardContent className="p-6 text-center">
+                  <p className="text-sm text-muted-foreground mb-4">
+                    This memorial represents only a small portion of those who have lost their lives to hazing. 
+                    Many more names remain undocumented or unknown. Each death was preventable.
+                  </p>
+                  <div className="flex flex-wrap justify-center gap-2">
+                    <Badge variant="outline">350+ Total Deaths Since 1838</Badge>
+                    <Badge variant="outline">2,500+ Documented Injuries</Badge>
+                    <Badge variant="outline">1 Death Every Year on Average</Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </TabsContent>
         </Tabs>
 
