@@ -91,7 +91,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "honor-god-greek",
     myth: "Can I Honor God in a Greek Organization?",
-    category: "faith",
+    category: "identity",
     scenario: "Prospective Member Question",
     shortAnswer: "I want to join but I'm not sure if I can maintain my faith and honor God as a Greek.",
     detailedResponse: "Absolutely. Countless believers have glorified God through Greek membership—serving, leading, and witnessing. Daniel honored God in Babylon's court. Joseph honored God in Pharaoh's house. Your Greek organization can be your mission field if you maintain spiritual disciplines and community.",
@@ -380,7 +380,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "faith-survive-greek",
     myth: "Can My Faith Survive Greek Life?",
-    category: "faith",
+    category: "identity",
     scenario: "Family Discussion",
     organization: "BGLO",
     shortAnswer: "If you join a sorority or fraternity, you'll lose your faith and become worldly.",
@@ -395,7 +395,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "letters-divided-loyalty",
     myth: "Are Greek Letters a Sign of Divided Loyalty?",
-    category: "faith",
+    category: "identity",
     scenario: "Family Discussion",
     shortAnswer: "Wearing Greek letters means you've pledged allegiance to something other than Christ.",
     detailedResponse: "Wearing organizational symbols does not constitute worship or divided loyalty any more than wearing a sports team jersey does. Paul instructs us to give honor where honor is due. Greek letters represent membership in a community of service and scholarship, not worship. Our ultimate allegiance remains with Christ, who can be glorified through our organizational involvement.",
@@ -409,7 +409,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "compromising-staying",
     myth: "Am I Compromising by Staying Greek?",
-    category: "faith",
+    category: "identity",
     scenario: "Personal Doubt",
     organization: "BGLO",
     shortAnswer: "If you truly loved God, you would denounce your Greek letters and leave your organization.",
@@ -424,7 +424,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "greek-and-holy",
     myth: "Can I Be Both Greek and Holy?",
-    category: "faith",
+    category: "identity",
     scenario: "Personal Doubt",
     shortAnswer: "You can't pursue holiness and be involved in Greek life—they're incompatible.",
     detailedResponse: "Holiness is about heart posture and obedience to God, not isolation from culture. Jesus was called a friend of sinners yet remained perfectly holy. Being set apart doesn't mean being separate from every organization. It means representing Christ wherever you are. Your Greek membership can be a platform for holy living and kingdom influence.",
@@ -438,7 +438,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "exclude-from-leadership",
     myth: "Should We Exclude Greeks From Leadership?",
-    category: "faith",
+    category: "ministry",
     scenario: "Ministry Leader Concern",
     organization: "BGLO",
     shortAnswer: "People in Greek organizations shouldn't serve in church leadership because of potential spiritual compromise.",
@@ -467,7 +467,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "counsel-greek-members",
     myth: "How Do We Counsel Members Questioning Their Greek Involvement?",
-    category: "faith",
+    category: "ministry",
     scenario: "Ministry Leader Concern",
     shortAnswer: "We should always counsel Greek members to leave their organizations if they want to grow spiritually.",
     detailedResponse: "Blanket counsel to leave ignores individual context and conscience. Romans 14 teaches us that matters of conscience require wisdom, not uniform rules. Some may feel convicted to step away; others may sense a call to remain as witnesses. Walk with each person prayerfully, helping them discern God's unique direction for their situation.",
@@ -510,7 +510,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "cant-be-real-christians",
     myth: "Greeks Can't Be Real Christians",
-    category: "faith",
+    category: "identity",
     scenario: "Social Media Defense",
     shortAnswer: "If you're in a fraternity or sorority, you're obviously not living for Christ.",
     detailedResponse: "This is a classic guilt-by-association fallacy. Scripture judges individuals by their fruit, not their affiliations. Many devoted followers of Christ have served in Greek organizations while maintaining vibrant testimonies. Judge the tree by its fruit, not by the label on its branch.",
@@ -539,7 +539,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "more-loyal-to-org",
     myth: "Aren't Greeks More Loyal to Their Org Than to Christ?",
-    category: "faith",
+    category: "worship",
     scenario: "Church Challenge",
     organization: "BGLO",
     shortAnswer: "Greek members put their organization above their faith—they worship their letters.",
@@ -554,7 +554,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "god-cannot-use",
     myth: "God Cannot Use Greek Life For His Purposes",
-    category: "faith",
+    category: "ministry",
     scenario: "Church Challenge",
     shortAnswer: "God cannot possibly use Greek Life for his purposes.",
     detailedResponse: "God has used pagan kings, corrupt governments, and secular systems to position his people and advance his plans. He used Pharaoh to display his power. He used Cyrus to send Israel home. He used Roman roads and Greek language to spread the gospel in the first century. If God can do that with empires, he can certainly use a small Greek chapter full of flawed but willing young adults. The question is not 'Can God.' The question is 'Will we be available.'",
@@ -568,7 +568,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "unequally-yoked-bglo",
     myth: "BGLOs Violate Unequally Yoked",
-    category: "faith",
+    category: "identity",
     scenario: "Church Challenge",
     shortAnswer: "Being in a BGLO automatically violates 'do not be unequally yoked.'",
     detailedResponse: "Second Corinthians 6 warns against partnerships that pull believers into idolatry and lawlessness. It is about spiritual yoking, not every shared membership. If that passage applied to any mixed environment, no Christian could attend a public school, work in a company, or serve in the military. The question is 'Does this membership require me to participate in sin or deny Christ.' If yes, you must say no. If no, you must still be wise about close partnerships and inner circles.",
@@ -582,7 +582,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "cannot-evangelize",
     myth: "You Cannot Evangelize Within Greek Life",
-    category: "faith",
+    category: "ministry",
     scenario: "Church Challenge",
     shortAnswer: "You cannot evangelize or disciple within Greek Life.",
     detailedResponse: "The Great Commission never excluded Greek Row. Jesus sent his followers into all the world. Paul preached in synagogues, marketplaces, lecture halls, and private homes. Anywhere people gather, there is room for witness. Greek chapters include students who are hurting, questioning, and searching. A humble, consistent Christian presence can be a powerful bridge that no outside critic will ever have.",
@@ -596,7 +596,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "colors-shields-idols",
     myth: "Colors, Shields, and Symbols Are Idols",
-    category: "faith",
+    category: "worship",
     scenario: "Personal Doubt",
     shortAnswer: "Colors, shields, and symbols are idols.",
     detailedResponse: "Color and design communicate meaning, but they are not gods. God himself instructed Israel to use colors, stones, and designs in the tabernacle and priestly garments. The danger comes when the symbol is exalted above the Savior, or when people hold a shield more tightly than the cross. Believers can appreciate symbols while being willing to lay them down if they ever compete with obedience.",
@@ -638,7 +638,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "brotherhood-idolatrous",
     myth: "Brotherhood and Sisterhood Are Always Idolatrous",
-    category: "faith",
+    category: "worship",
     scenario: "Personal Doubt",
     shortAnswer: "Brotherhood and sisterhood in Greek Life are always idolatrous.",
     detailedResponse: "Brotherhood and sisterhood are biblical words. The early church was built on covenant community, shared burdens, and sacrificial love. The problem is not deep bonds. The problem is when those bonds demand disobedience to God, silence about sin, or loyalty to wrong. Healthy Greek relationships can mirror biblical fellowship when they are honest, accountable, and Christ centered. Unhealthy ones can become idols. The same is true of any community.",
@@ -681,7 +681,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "greek-letters-idols",
     myth: "Greek Letters Are Idols",
-    category: "faith",
+    category: "worship",
     scenario: "Family Objection",
     shortAnswer: "Greek letters are idols.",
     detailedResponse: "An idol is not a letter from the alphabet. An idol is anything we love, serve, fear, or obey more than God. Greek letters are symbols, just like a cross, a flag, or a wedding ring. They can be used well or badly. The danger is never the ink or fabric. The danger is a heart that confuses the symbol with the Savior. If letters become a source of ultimate identity, pride, or superiority, then they are functioning as idols. If they become a reminder of responsibility, service, and character, surrendered under Christ, they are tools.",
@@ -723,7 +723,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "serve-jesus-and-greek",
     myth: "You Cannot Serve Jesus and Be Greek",
-    category: "faith",
+    category: "identity",
     scenario: "Church Challenge",
     shortAnswer: "You cannot serve Jesus and be in a fraternity or sorority.",
     detailedResponse: "Scripture is full of believers who served God while moving inside very imperfect systems. Think of Joseph in Egypt, Daniel in Babylon, Esther in Persia. They did not withdraw from those environments, they walked wisely inside them, drew a line when they had to, and represented God in the middle of the culture. You can follow Jesus in a dorm, in a locker room, on a job, or in a chapter house. Your calling is to stay loyal to Christ, not to run from every complex space where he might want a witness.",
@@ -737,7 +737,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "all-pagan-demonic",
     myth: "All Greek Organizations Are Pagan or Demonic",
-    category: "faith",
+    category: "identity",
     scenario: "Family Objection",
     organization: "BGLO",
     shortAnswer: "All Greek organizations are automatically pagan or demonic.",
@@ -752,7 +752,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "leaving-proof-repentance",
     myth: "Leaving Is The Only Proof Of Repentance",
-    category: "faith",
+    category: "identity",
     scenario: "Church Challenge",
     shortAnswer: "Leaving your organization is the only proof you truly repented.",
     detailedResponse: "Salvation is based on faith in Christ, not on resigning from a human institution. There may be believers who, after prayer, feel convicted to withdraw from Greek Life. There are others who feel called to stay and be a faithful presence. Both can be obedient if they are following God with a clear conscience. Demanding that one outward action be the universal proof of repentance adds to the gospel and judges people by your conviction instead of God's word.",
@@ -780,7 +780,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "always-pulls-away",
     myth: "Greek Life Will Always Pull You Away From God",
-    category: "faith",
+    category: "identity",
     scenario: "Personal Doubt",
     shortAnswer: "Being in Greek Life will always pull you away from God.",
     detailedResponse: "Greek Life can become a distraction or an idol, just like sports, relationships, business, or ministry. The issue is not the existence of the organization, it is your boundaries and priorities. Many believers drift from God with no letters on their chest at all. For a mature Christian, Greek Life can become a mission field, a training ground for leadership, and a crucible for character. For an immature believer, it might expose temptations they are not ready for. That calls for wisdom, not universal fear.",
@@ -837,7 +837,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "two-masters",
     myth: "You Can't Serve Two Masters",
-    category: "faith",
+    category: "identity",
     scenario: "Family Discussion",
     shortAnswer: "Pledging an organization means divided loyalty from God.",
     detailedResponse: "This misapplies Jesus' teaching about money/materialism. Commitment to excellence in various roles (family, work, community) doesn't divide loyalty to God when He remains first. Even Jesus had a trade (carpenter) and disciples had occupations.",
@@ -865,7 +865,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "idolatry-letters",
     myth: "Greek Life is Idolatry",
-    category: "faith",
+    category: "worship",
     scenario: "Family Discussion",
     shortAnswer: "Joining a fraternity or sorority means you're putting Greek letters before God.",
     detailedResponse: "Fellowship and community are biblical principles. Just as Paul met in synagogues and homes, believers can participate in organizations while maintaining Christ as Lord. The key is priority and worship direction.",
@@ -908,7 +908,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "unnecessary-for-christians",
     myth: "It's Unnecessary for Christians",
-    category: "faith",
+    category: "ministry",
     scenario: "Ministry Leader Concern",
     shortAnswer: "Christians don't need Greek organizations for community.",
     detailedResponse: "While the church is primary, Christians throughout history have formed additional communities for specific purposes (mission organizations, professional fellowships, study groups). These can complement, not replace, church community.",
@@ -938,7 +938,9 @@ export const mythBusterContent: MythEntry[] = [
 
 export const mythCategories = [
   { id: "all", label: "All Topics" },
-  { id: "faith", label: "Faith & Worship" },
+  { id: "identity", label: "Faith & Identity" },
+  { id: "ministry", label: "Ministry & Leadership" },
+  { id: "worship", label: "Worship & Idolatry" },
   { id: "rituals", label: "Rituals & Traditions" },
   { id: "community", label: "Community & Service" },
   { id: "lifestyle", label: "Lifestyle & Behavior" },

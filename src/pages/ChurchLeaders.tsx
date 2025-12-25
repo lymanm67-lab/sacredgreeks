@@ -40,17 +40,20 @@ const videoResources = [
   {
     title: "Understanding BGLO History: A Pastor's Guide",
     description: "Explore the rich history, founding principles, and cultural significance of Black Greek Letter Organizations.",
-    thumbnail: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=225&fit=crop"
+    videoId: "dQw4w9WgXcQ", // Replace with actual video ID
+    youtubeUrl: "https://www.youtube.com/watch?v=LgjPW3vDfkU"
   },
   {
     title: "How to Pastor BGLO Members: Grace and Truth",
     description: "Learn effective, biblically sound strategies for mentoring and counseling BGLO members in your congregation.",
-    thumbnail: "https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=400&h=225&fit=crop"
+    videoId: "LgjPW3vDfkU",
+    youtubeUrl: "https://www.youtube.com/watch?v=LgjPW3vDfkU"
   },
   {
     title: "From Welcome to Belonging: Creating Community",
     description: "Discover practical ways to foster a welcoming and supportive church atmosphere for all members, including those in BGLOs.",
-    thumbnail: "https://images.unsplash.com/photo-1529070538774-1843cb3265df?w=400&h=225&fit=crop"
+    videoId: "3tmd-ClpJxA",
+    youtubeUrl: "https://www.youtube.com/watch?v=3tmd-ClpJxA"
   }
 ];
 
@@ -180,18 +183,15 @@ const ChurchLeaders = () => {
 
             <div className="grid md:grid-cols-3 gap-6">
               {videoResources.map((video, index) => (
-                <Card key={index} className="group overflow-hidden hover:shadow-xl transition-all duration-300 hover:border-primary/50 cursor-pointer">
-                  <div className="relative aspect-video overflow-hidden">
-                    <img 
-                      src={video.thumbnail} 
-                      alt={video.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                <Card key={index} className="group overflow-hidden hover:shadow-xl transition-all duration-300 hover:border-primary/50">
+                  <div className="relative aspect-video overflow-hidden bg-black">
+                    <iframe
+                      src={`https://www.youtube.com/embed/${video.videoId}`}
+                      title={video.title}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="w-full h-full"
                     />
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                      <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center">
-                        <Video className="w-8 h-8 text-primary-foreground ml-1" />
-                      </div>
-                    </div>
                   </div>
                   <CardHeader>
                     <CardTitle className="text-lg group-hover:text-primary transition-colors">
@@ -201,6 +201,14 @@ const ChurchLeaders = () => {
                       {video.description}
                     </CardDescription>
                   </CardHeader>
+                  <CardContent className="pt-0">
+                    <Button asChild variant="outline" className="w-full">
+                      <a href={video.youtubeUrl} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Watch on YouTube
+                      </a>
+                    </Button>
+                  </CardContent>
                 </Card>
               ))}
             </div>
