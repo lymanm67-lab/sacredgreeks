@@ -29,7 +29,7 @@ const ToolsResources = () => {
       icon: Compass,
       title: "Healing Resources",
       description: "Resources for those seeking healing from hazing trauma, spiritual confusion, or difficult Greek life experiences. You're not alone.",
-      link: "/resources",
+      link: "/healing-resources",
       badge: "Support",
       color: "from-blue-500/20 to-sacred/10"
     },
