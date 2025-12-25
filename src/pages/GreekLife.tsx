@@ -163,7 +163,124 @@ const GreekLife = () => {
     { name: "Theta Chi", greekLetters: "ΘΧ", founded: "April 10, 1856", foundedLocation: "Norwich University", colors: "Military Red and White" },
   ];
 
-  const honorSocieties: Organization[] = [
+  const professionalServiceOrgs: Organization[] = [
+    {
+      name: "Alpha Phi Omega",
+      greekLetters: "ΑΦΩ",
+      founded: "December 16, 1925",
+      foundedLocation: "Lafayette College",
+      colors: "Blue and Gold",
+      motto: "Be a Leader, Be a Friend, Be of Service",
+      symbol: "Torch",
+      nickname: "Largest Co-Ed Service Fraternity"
+    },
+    {
+      name: "Phi Mu Alpha Sinfonia",
+      greekLetters: "ΦΜΑ",
+      founded: "October 6, 1898",
+      foundedLocation: "New England Conservatory",
+      colors: "Red and Black",
+      motto: "For the development of the best and truest fraternal spirit",
+      symbol: "Sinfonian Seal",
+      nickname: "Music Fraternity"
+    },
+    {
+      name: "Kappa Kappa Psi",
+      greekLetters: "ΚΚΨ",
+      founded: "November 27, 1919",
+      foundedLocation: "Oklahoma A&M",
+      colors: "Blue and White",
+      motto: "Strive for the Highest",
+      symbol: "Lyre",
+      nickname: "Band Fraternity"
+    },
+    {
+      name: "Tau Beta Sigma",
+      greekLetters: "ΤΒΣ",
+      founded: "March 26, 1946",
+      foundedLocation: "Texas Tech University",
+      colors: "Blue and White",
+      motto: "For Greater Bands",
+      symbol: "Lyre",
+      nickname: "Band Sorority"
+    },
+    {
+      name: "Sigma Alpha Iota",
+      greekLetters: "ΣΑΙ",
+      founded: "June 12, 1903",
+      foundedLocation: "University School of Music",
+      colors: "Crimson and White",
+      motto: "Vita brevis, ars longa (Life is short, art is long)",
+      symbol: "Pansy, Red Rose",
+      nickname: "Women's Music Fraternity"
+    },
+    {
+      name: "Gamma Sigma Sigma",
+      greekLetters: "ΓΣΣ",
+      founded: "October 12, 1952",
+      foundedLocation: "SUNY Albany",
+      colors: "Maroon and White",
+      motto: "Unity in Service",
+      symbol: "Sailboat",
+      nickname: "Service Sorority"
+    },
+    {
+      name: "Delta Sigma Pi",
+      greekLetters: "ΔΣΠ",
+      founded: "November 7, 1907",
+      foundedLocation: "New York University",
+      colors: "Purple and Gold",
+      motto: "Through Commerce, Civilization",
+      nickname: "Professional Business Fraternity"
+    },
+    {
+      name: "Phi Delta Epsilon",
+      greekLetters: "ΦΔΕ",
+      founded: "October 13, 1904",
+      foundedLocation: "Cornell University",
+      colors: "Green and White",
+      motto: "Facta Non Verba (Deeds Not Words)",
+      nickname: "Medical Fraternity"
+    },
+    {
+      name: "Alpha Omega Alpha",
+      greekLetters: "ΑΩΑ",
+      founded: "August 25, 1902",
+      foundedLocation: "University of Illinois",
+      colors: "Green and White",
+      motto: "Be Worthy to Serve the Suffering",
+      nickname: "Medical Honor Society"
+    },
+    {
+      name: "Phi Alpha Delta",
+      greekLetters: "ΦΑΔ",
+      founded: "November 5, 1902",
+      foundedLocation: "University of Southern California",
+      colors: "Gold and Purple",
+      motto: "Service to the Student, the School, the Profession, and the Community",
+      nickname: "Law Fraternity"
+    },
+    {
+      name: "Delta Theta Phi",
+      greekLetters: "ΔΘΦ",
+      founded: "November 27, 1900",
+      foundedLocation: "Baldwin-Wallace University",
+      colors: "Green and White",
+      motto: "Lawyers for a Better World",
+      nickname: "Law Fraternity"
+    },
+    {
+      name: "Alpha Kappa Psi",
+      greekLetters: "ΑΚΨ",
+      founded: "October 5, 1904",
+      foundedLocation: "New York University",
+      colors: "Navy Blue and Gold",
+      motto: "Shaping People, Shaping Business",
+      nickname: "Professional Business Fraternity"
+    },
+  ];
+
+  const leadershipHonorSocieties: Organization[] = [
     {
       name: "Sigma Alpha Pi (NSLS)",
       greekLetters: "ΣΑΠ",
@@ -252,12 +369,22 @@ const GreekLife = () => {
       nickname: "International English Honor Society"
     },
     {
-      name: "Delta Sigma Pi",
-      greekLetters: "ΔΣΠ",
-      founded: "1907",
-      foundedLocation: "New York University",
-      colors: "Purple and Gold",
-      motto: "Professional Business Fraternity"
+      name: "Golden Key International Honour Society",
+      greekLetters: "GK",
+      founded: "1977",
+      foundedLocation: "Georgia State University",
+      colors: "Black and Gold",
+      motto: "Academics, Leadership, Service",
+      nickname: "Top 15% Academic Honor Society"
+    },
+    {
+      name: "Mortar Board",
+      greekLetters: "MB",
+      founded: "1918",
+      foundedLocation: "Ohio State University",
+      colors: "Silver and Black",
+      motto: "Premier Senior Honor Society",
+      nickname: "Senior Honor Society"
     },
   ];
 
@@ -402,12 +529,20 @@ const GreekLife = () => {
       organizations: multiculturalGreeks
     },
     {
-      id: "honor",
-      name: "Honor Societies",
-      fullName: "Leadership & Honor Societies",
-      description: "Academic and leadership honor societies recognizing achievement",
+      id: "professional",
+      name: "Professional & Service",
+      fullName: "Professional & Service Organizations",
+      description: "Service, music, band, business, law, and medical Greek organizations",
       founded: "Various",
-      organizations: honorSocieties
+      organizations: professionalServiceOrgs
+    },
+    {
+      id: "honor",
+      name: "Leadership & Honor",
+      fullName: "Leadership & Honor Societies",
+      description: "Sigma Alpha Pi (NSLS), Phi Beta Kappa, and academic honor societies recognizing achievement",
+      founded: "Various",
+      organizations: leadershipHonorSocieties
     }
   ];
 
@@ -438,44 +573,65 @@ const GreekLife = () => {
     }
   ];
 
-  const OrganizationCard = ({ org }: { org: Organization }) => (
-    <div className="p-4 rounded-lg border border-border bg-card hover:shadow-md transition-all">
-      <div className="flex items-start justify-between mb-2">
-        <div>
-          <h4 className="font-semibold text-sm">{org.name}</h4>
-          <span className="text-xl font-bold text-sacred">{org.greekLetters}</span>
-        </div>
-        {org.nickname && (
-          <Badge variant="secondary" className="text-xs">{org.nickname}</Badge>
-        )}
-      </div>
-      <div className="space-y-1 text-xs text-muted-foreground">
-        <div className="flex items-center gap-2">
-          <Calendar className="w-3 h-3" />
-          <span>{org.founded}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <Building2 className="w-3 h-3" />
-          <span>{org.foundedLocation}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <Star className="w-3 h-3" />
-          <span>{org.colors}</span>
-        </div>
-        {org.symbol && (
-          <div className="flex items-center gap-2">
-            <Compass className="w-3 h-3" />
-            <span>Symbol: {org.symbol}</span>
+  // Generate org ID from name for detail page linking
+  const getOrgId = (name: string) => {
+    return name
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '');
+  };
+
+  const OrganizationCard = ({ org }: { org: Organization }) => {
+    const orgId = getOrgId(org.name);
+    
+    return (
+      <Link 
+        to={`/organization/${orgId}`}
+        className="block p-4 rounded-lg border border-border bg-card hover:shadow-md hover:border-sacred/30 transition-all group"
+      >
+        <div className="flex items-start justify-between mb-2">
+          <div>
+            <h4 className="font-semibold text-sm group-hover:text-sacred transition-colors">{org.name}</h4>
+            <span className="text-xl font-bold text-sacred">{org.greekLetters}</span>
           </div>
+          {org.nickname && (
+            <Badge variant="secondary" className="text-xs">{org.nickname}</Badge>
+          )}
+        </div>
+        <div className="space-y-1 text-xs text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <Calendar className="w-3 h-3" />
+            <span>{org.founded}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Building2 className="w-3 h-3" />
+            <span>{org.foundedLocation}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Star className="w-3 h-3" />
+            <span>{org.colors}</span>
+          </div>
+          {org.symbol && (
+            <div className="flex items-center gap-2">
+              <Compass className="w-3 h-3" />
+              <span>Symbol: {org.symbol}</span>
+            </div>
+          )}
+        </div>
+        {org.motto && (
+          <p className="mt-2 text-xs italic text-muted-foreground border-t pt-2">
+            "{org.motto}"
+          </p>
         )}
-      </div>
-      {org.motto && (
-        <p className="mt-2 text-xs italic text-muted-foreground border-t pt-2">
-          "{org.motto}"
-        </p>
-      )}
-    </div>
-  );
+        <div className="mt-2 flex items-center gap-1 text-xs text-sacred opacity-0 group-hover:opacity-100 transition-opacity">
+          <span>View Details</span>
+          <ArrowRight className="w-3 h-3" />
+        </div>
+      </Link>
+    );
+  };
 
   return (
     <>
@@ -534,12 +690,13 @@ const GreekLife = () => {
 
           {/* Councils Tabs */}
           <Tabs defaultValue="nphc" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-5">
+            <TabsList className="grid w-full grid-cols-3 sm:grid-cols-6">
               <TabsTrigger value="nphc" className="text-xs sm:text-sm">Divine Nine</TabsTrigger>
               <TabsTrigger value="npc" className="text-xs sm:text-sm">NPC</TabsTrigger>
               <TabsTrigger value="ifc" className="text-xs sm:text-sm">IFC</TabsTrigger>
               <TabsTrigger value="multicultural" className="text-xs sm:text-sm">Multicultural</TabsTrigger>
-              <TabsTrigger value="honor" className="text-xs sm:text-sm">Honor</TabsTrigger>
+              <TabsTrigger value="professional" className="text-xs sm:text-sm">Professional</TabsTrigger>
+              <TabsTrigger value="honor" className="text-xs sm:text-sm">Leadership</TabsTrigger>
             </TabsList>
 
             {councils.map((council) => (
