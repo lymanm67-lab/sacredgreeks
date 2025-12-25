@@ -38,16 +38,213 @@ interface VideoItem {
 }
 
 const videoLibrary: VideoItem[] = [
+  // Featured Sacred Greeks Videos
   {
-    id: "vid-proof",
-    title: "The P.R.O.O.F. Framework Explained",
-    description: "A comprehensive video walkthrough of the P.R.O.O.F. framework for Christian Greeks.",
-    url: "https://youtube.com/watch?v=proof-framework",
-    duration: "18 min",
+    id: "vid-truth-christian",
+    title: "The Truth About Being Christian in a Greek Organization",
+    description: "Sacred Greeks TV explores the reality of maintaining your Christian faith while being an active member of a Greek letter organization.",
+    url: "https://www.youtube.com/watch?v=GmMQisNNZjI",
     featured: true,
-    tags: ["Framework", "Tutorial", "Foundations"],
-    category: "Educational",
+    tags: ["Faith", "Greek Life", "Christianity"],
+    category: "Faith & Identity",
   },
+  {
+    id: "vid-should-join",
+    title: "Should Christians Join BGLOs? How to Balance Faith and Greek Life",
+    description: "A comprehensive discussion on whether Christians should join Black Greek Letter Organizations and practical guidance for balancing faith.",
+    url: "https://www.youtube.com/watch?v=25gQ4qXxXi0",
+    featured: true,
+    tags: ["BGLO", "Faith", "Guidance"],
+    category: "Faith & Identity",
+  },
+  {
+    id: "vid-top10",
+    title: "Top 10 Faith Questions About Greek Life Answered!",
+    description: "The most common questions church leaders and Christians have about Greek life, answered with biblical wisdom and practical insight.",
+    url: "https://www.youtube.com/watch?v=PLQG1lOu-48",
+    featured: true,
+    tags: ["FAQ", "Questions", "Biblical"],
+    category: "FAQ",
+  },
+  {
+    id: "vid-pagan-symbols",
+    title: "Understanding Greek Letter Organization Rituals",
+    description: "A deep dive into the spiritual aspects of Greek rituals and how Christians can navigate them with biblical discernment.",
+    url: "https://www.youtube.com/watch?v=48I-fdTNg8c",
+    featured: true,
+    tags: ["Rituals", "Symbols", "Discernment"],
+    category: "Symbols & History",
+  },
+  {
+    id: "vid-balance",
+    title: "Faith, Family & Fraternity: Finding Balance",
+    description: "Practical wisdom for maintaining priorities while honoring your Greek organization commitments.",
+    url: "https://www.youtube.com/watch?v=FTeOlOv2cDM",
+    tags: ["Balance", "Family", "Priorities"],
+    category: "Guidance",
+  },
+  {
+    id: "vid-history",
+    title: "The History of Faith in Black Greek Organizations",
+    description: "Exploring the Christian roots and faith heritage within Divine Nine organizations.",
+    url: "https://www.youtube.com/watch?v=f8WECW23fSg",
+    tags: ["History", "BGLO", "Heritage"],
+    category: "Symbols & History",
+  },
+  {
+    id: "vid-critics",
+    title: "Responding to Critics of Greek Life",
+    description: "How to gracefully respond when others question your involvement in Greek letter organizations.",
+    url: "https://www.youtube.com/watch?v=-q3FNrUe8YY",
+    tags: ["Apologetics", "Response", "Critics"],
+    category: "Apologetics",
+  },
+  {
+    id: "vid-leadership",
+    title: "Greek Life and Church Leadership",
+    description: "Can you serve in church leadership while being an active Greek member? Biblical perspectives explored.",
+    url: "https://www.youtube.com/watch?v=ZJ-sDBR2mCU",
+    tags: ["Leadership", "Church", "Service"],
+    category: "Leadership",
+  },
+  {
+    id: "vid-hazing",
+    title: "Addressing Hazing from a Christian Perspective",
+    description: "Understanding hazing, its impact, and how Christians should respond to this serious issue.",
+    url: "https://www.youtube.com/watch?v=GbaqBExsqbs",
+    tags: ["Hazing", "Safety", "Ethics"],
+    category: "Guidance",
+  },
+  {
+    id: "vid-unity",
+    title: "Christian Unity Across Greek Organizations",
+    description: "Building bridges of faith across different fraternities and sororities.",
+    url: "https://www.youtube.com/watch?v=rr639o9Gev0",
+    tags: ["Unity", "Community", "Brotherhood"],
+    category: "Community",
+  },
+  {
+    id: "vid-prayer",
+    title: "Prayer and Greek Life: A Guide for Members",
+    description: "Developing and maintaining a strong prayer life while active in Greek organizations.",
+    url: "https://www.youtube.com/watch?v=ICyKY7z7E5M",
+    tags: ["Prayer", "Spiritual Growth", "Devotion"],
+    category: "Spiritual Growth",
+  },
+  {
+    id: "vid-biblical",
+    title: "Biblical Foundations for Community and Brotherhood",
+    description: "Exploring scriptural principles that align with the ideals of Greek letter organizations.",
+    url: "https://www.youtube.com/watch?v=Y6N089RVnBU",
+    tags: ["Biblical", "Brotherhood", "Scripture"],
+    category: "Faith & Identity",
+  },
+  {
+    id: "vid-events",
+    title: "Navigating Greek Events as a Christian",
+    description: "Practical advice for attending Greek events while maintaining your Christian witness.",
+    url: "https://www.youtube.com/watch?v=oN_DDjKjVCo",
+    tags: ["Events", "Witness", "Practical"],
+    category: "Guidance",
+  },
+  {
+    id: "vid-mentorship",
+    title: "Mentorship in Greek Organizations",
+    description: "Using your platform as a Greek member to mentor and disciple others in faith.",
+    url: "https://www.youtube.com/watch?v=dUU9zT-YjB0",
+    tags: ["Mentorship", "Discipleship", "Leadership"],
+    category: "Leadership",
+  },
+  {
+    id: "vid-service",
+    title: "Serving Your Community Through Greek Life",
+    description: "How Greek service projects align with Christian values of serving others.",
+    url: "https://www.youtube.com/watch?v=DBlNzNlVUKI",
+    tags: ["Service", "Community", "Outreach"],
+    category: "Service",
+  },
+  {
+    id: "vid-bridges",
+    title: "The Divine Nine and the Church: Building Bridges",
+    description: "Creating stronger relationships between Greek organizations and local churches.",
+    url: "https://www.youtube.com/watch?v=NYGoQuUt6QM",
+    tags: ["Church", "Divine Nine", "Partnership"],
+    category: "Community",
+  },
+  {
+    id: "vid-testimony",
+    title: "Testimony: My Journey as a Christian Greek",
+    description: "Personal testimonies from Christians who have navigated Greek life with their faith intact.",
+    url: "https://www.youtube.com/watch?v=CN11FQ7tanU",
+    tags: ["Testimony", "Personal Story", "Encouragement"],
+    category: "Testimonies",
+  },
+  {
+    id: "vid-secret",
+    title: "What the Bible Says About Secret Societies",
+    description: "A biblical examination of secrecy, oaths, and membership organizations.",
+    url: "https://www.youtube.com/watch?v=QsvD9LDmUEU",
+    tags: ["Bible", "Secrets", "Oaths"],
+    category: "Apologetics",
+  },
+  {
+    id: "vid-warfare",
+    title: "Greek Life and Spiritual Warfare",
+    description: "Understanding spiritual dynamics and maintaining spiritual health as a Greek member.",
+    url: "https://www.youtube.com/watch?v=9qLofoqskHk",
+    tags: ["Spiritual Warfare", "Protection", "Discernment"],
+    category: "Spiritual Growth",
+  },
+  {
+    id: "vid-symbolism",
+    title: "Answering Tough Questions About Greek Symbolism",
+    description: "Addressing concerns about symbols, colors, and imagery in Greek organizations.",
+    url: "https://www.youtube.com/watch?v=G14XXWLKq5Q",
+    tags: ["Symbols", "Questions", "Imagery"],
+    category: "Symbols & History",
+  },
+  {
+    id: "vid-accountability",
+    title: "Christian Accountability in Greek Life",
+    description: "Building accountability structures to support your faith journey in Greek organizations.",
+    url: "https://www.youtube.com/watch?v=kvRDvnBq43w",
+    tags: ["Accountability", "Support", "Growth"],
+    category: "Spiritual Growth",
+  },
+  {
+    id: "vid-legacy",
+    title: "Legacy and Leadership: Christian Greeks Making Impact",
+    description: "Stories of Christian Greeks who have made significant positive impacts in their communities.",
+    url: "https://www.youtube.com/watch?v=6jMIu-7_KIE",
+    tags: ["Legacy", "Impact", "Leadership"],
+    category: "Leadership",
+  },
+  {
+    id: "vid-renounce",
+    title: "Renounce, Retreat, or Redeem Greek Life?",
+    description: "Should Christians renounce, retreat, or redeem their Greek Letter Organizations?",
+    url: "https://www.youtube.com/watch?v=ZK9HfHf3mLc",
+    featured: true,
+    tags: ["Redemption", "Decision", "Theology"],
+    category: "Apologetics",
+  },
+  {
+    id: "vid-future",
+    title: "The Future of Faith in Greek Organizations",
+    description: "Vision for how Christians can shape the future of Greek life for generations to come.",
+    url: "https://www.youtube.com/watch?v=XKVZ_1sOd7w",
+    tags: ["Future", "Vision", "Hope"],
+    category: "Leadership",
+  },
+  {
+    id: "vid-living",
+    title: "Sacred Greeks: Living Out Your Faith",
+    description: "Practical daily practices for living out your Christian faith within Greek life.",
+    url: "https://www.youtube.com/watch?v=rF8LEzWwW5Q",
+    tags: ["Daily Practice", "Faith", "Lifestyle"],
+    category: "Spiritual Growth",
+  },
+  // Documentary
   {
     id: "vid-documentary",
     title: "Unmasking Hope Documentary Trailer",
@@ -57,78 +254,6 @@ const videoLibrary: VideoItem[] = [
     featured: true,
     tags: ["Documentary", "Testimony", "Hope"],
     category: "Documentary",
-  },
-  {
-    id: "vid-denouncement",
-    title: "Responding to Denouncement Videos",
-    description: "How to process and respond to anti-Greek content from a biblical perspective.",
-    url: "https://youtube.com/watch?v=denouncement-response",
-    duration: "22 min",
-    tags: ["Apologetics", "Response", "Social Media"],
-    category: "Apologetics",
-  },
-  {
-    id: "vid-pagan-symbols",
-    title: "Pagan Symbols Explained",
-    description: "Educational playlist exploring the origins and meanings of symbols often discussed in the context of Greek organizations from a biblical perspective.",
-    url: "https://www.youtube.com/watch?v=48I-fdTNg8c&list=PLLJ-NqFs_FU7gvbbmAGLTXLUa00AUX8oE",
-    featured: true,
-    tags: ["Symbols", "Education", "Playlist", "History"],
-    category: "Symbols & History",
-  },
-  {
-    id: "vid-bglo-library",
-    title: "Black Greek Letter Organizations Library",
-    description: "Comprehensive video playlist covering the history, traditions, and Christian perspectives on Black Greek Letter Organizations.",
-    url: "https://www.youtube.com/watch?v=GmMQisNNZjI&list=PLLJ-NqFs_FU5WGELPVR12Q0PESqnKHo0X",
-    featured: true,
-    tags: ["BGLO", "History", "Playlist", "Traditions"],
-    category: "BGLO",
-  },
-  {
-    id: "vid-initiation",
-    title: "Navigating Initiation as a Christian",
-    description: "Guidance for approaching initiation ceremonies while maintaining your faith and integrity.",
-    url: "https://youtube.com/watch?v=christian-initiation",
-    duration: "25 min",
-    tags: ["Initiation", "Faith", "Guidance", "New Members"],
-    category: "Guidance",
-  },
-  {
-    id: "vid-pastor",
-    title: "When Your Pastor Questions Your Letters",
-    description: "How to have constructive conversations with church leaders about Greek life.",
-    url: "https://youtube.com/watch?v=pastor-conversation",
-    duration: "20 min",
-    tags: ["Church", "Conversations", "Leadership", "Family"],
-    category: "Relationships",
-  },
-  {
-    id: "vid-rituals",
-    title: "Understanding Rituals: A Christian Perspective",
-    description: "Breaking down common ritual concerns and how to approach them biblically.",
-    url: "https://youtube.com/watch?v=rituals-christian",
-    duration: "30 min",
-    tags: ["Rituals", "Bible", "Discernment", "Traditions"],
-    category: "Educational",
-  },
-  {
-    id: "vid-testimony",
-    title: "Faith & Fraternity: Personal Testimonies",
-    description: "Real stories from Christians who have navigated Greek life while growing in faith.",
-    url: "https://youtube.com/watch?v=faith-testimonies",
-    duration: "45 min",
-    tags: ["Testimony", "Personal Stories", "Encouragement"],
-    category: "Testimonies",
-  },
-  {
-    id: "vid-service",
-    title: "Service & Scholarship: Living Your Values",
-    description: "How to make the most of Greek life service opportunities as a Christian witness.",
-    url: "https://youtube.com/watch?v=greek-service",
-    duration: "15 min",
-    tags: ["Service", "Scholarship", "Witness", "Community"],
-    category: "Service",
   },
 ];
 
@@ -243,14 +368,26 @@ const VideoLibrary = () => {
         {/* Hero Section */}
         <div className="text-center space-y-4 py-6">
           <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-sacred to-sacred-dark bg-clip-text text-transparent">
-            Video Library
+            Sacred Greeks Video Library
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Explore our curated collection of videos on faith, Greek life, symbols, and more.
+            Explore our curated collection of videos on faith, Greek life, symbols, and more from Sacred Greeks TV.
           </p>
           
-          {/* Action Buttons */}
+          {/* Subscribe Button */}
           <div className="flex items-center justify-center gap-3 flex-wrap">
+            <Button asChild size="lg" className="bg-red-600 hover:bg-red-700 text-white">
+              <a href="https://www.youtube.com/@Sacredgreeks?sub_confirmation=1" target="_blank" rel="noopener noreferrer">
+                <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                Subscribe to Sacred Greeks TV
+              </a>
+            </Button>
+          </div>
+          
+          {/* Action Buttons */}
+          <div className="flex items-center justify-center gap-3 flex-wrap pt-2">
             <Dialog open={aiDialogOpen} onOpenChange={setAiDialogOpen}>
               <DialogTrigger asChild>
                 <Button className="gap-2 bg-gradient-to-r from-sacred to-warm-blue hover:opacity-90">
