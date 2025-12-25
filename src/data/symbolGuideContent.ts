@@ -523,6 +523,230 @@ export const symbolGuideContent: SymbolEntry[] = [
     cautionLevel: "low",
     scripturalContext: "Psalm 127:1 - 'Unless the LORD watches over the city, the guards stand watch in vain.'"
   },
+  // Additional Greek Deities
+  {
+    id: "persephone-deity",
+    name: "Persephone (Proserpina)",
+    category: "deity",
+    description: "Greek goddess of spring and queen of the underworld. Her myth explains the seasons. Roman equivalent: Proserpina.",
+    christianPerspective: "The Persephone myth of descent and return echoes themes of death and resurrection. Spring as renewal is a Christian theme—Easter celebrates resurrection in spring. The imagery of life conquering death is biblical.",
+    cautionLevel: "low",
+    scripturalContext: "Romans 6:9 - 'Christ, being raised from the dead, will never die again; death no longer has dominion over him.'"
+  },
+  {
+    id: "pan-deity",
+    name: "Pan (Faunus)",
+    category: "deity",
+    description: "Greek god of nature, shepherds, and rustic music. Depicted with goat legs and horns. Roman equivalent: Faunus.",
+    christianPerspective: "While Pan's imagery has been misused, the pastoral shepherd theme is deeply biblical. Jesus is the Good Shepherd. Pan represents nature and wilderness—God's creation that declares His glory.",
+    cautionLevel: "medium",
+    cautionNote: "Distinguish pastoral imagery from darker misappropriations. Shepherding is deeply biblical.",
+    scripturalContext: "John 10:11 - 'I am the good shepherd. The good shepherd lays down his life for the sheep.'"
+  },
+  {
+    id: "hecate-deity",
+    name: "Hecate (Trivia)",
+    category: "deity",
+    description: "Greek goddess of crossroads, magic, and the moon. Often depicted with three faces. Roman equivalent: Trivia.",
+    christianPerspective: "Hecate represents choices and transitions. Christians face crossroads decisions guided by Scripture and the Holy Spirit. The imagery of choosing the right path is biblical.",
+    cautionLevel: "medium",
+    cautionNote: "Focus on the decision-making symbolism rather than magical associations.",
+    scripturalContext: "Proverbs 3:5-6 - 'Trust in the LORD with all your heart... and he will make your paths straight.'"
+  },
+  {
+    id: "helios-deity",
+    name: "Helios (Sol)",
+    category: "deity",
+    description: "Greek titan god of the sun who drove his chariot across the sky. Roman equivalent: Sol.",
+    christianPerspective: "Sun imagery is extensively biblical. Jesus is called the 'Sun of Righteousness.' The concept of light overcoming darkness is central to Christian faith.",
+    cautionLevel: "low",
+    scripturalContext: "Malachi 4:2 - 'The sun of righteousness will rise with healing in its rays.'"
+  },
+  {
+    id: "eros-deity",
+    name: "Eros (Cupid)",
+    category: "deity",
+    description: "Greek god of love and desire. Son of Aphrodite. Roman equivalent: Cupid, familiar in Valentine's imagery.",
+    christianPerspective: "Love is central to Christian faith—God is love. Eros represents romantic love, which is celebrated in Song of Solomon. Cupid imagery appears in countless churches and Christian weddings.",
+    cautionLevel: "low",
+    scripturalContext: "1 John 4:8 - 'Whoever does not love does not know God, because God is love.'"
+  },
+  {
+    id: "nike-deity",
+    name: "Nike",
+    category: "deity",
+    description: "Greek goddess of victory, often depicted with wings. The famous Nike swoosh represents her wing.",
+    christianPerspective: "Victory through Christ is a major New Testament theme. 'Thanks be to God who gives us the victory through our Lord Jesus Christ.' Christians wear Nike products without spiritual concern.",
+    cautionLevel: "low",
+    scripturalContext: "1 Corinthians 15:57 - 'Thanks be to God! He gives us the victory through our Lord Jesus Christ.'"
+  },
+  {
+    id: "tyche-deity",
+    name: "Tyche",
+    category: "deity",
+    description: "Greek goddess of fortune, chance, and prosperity of a city. Often depicted with a crown of city walls.",
+    christianPerspective: "While we trust in God's providence rather than chance, the concept of city blessing and prosperity is biblical. Jeremiah urged prayers for the prosperity of the city.",
+    cautionLevel: "low",
+    scripturalContext: "Jeremiah 29:7 - 'Seek the peace and prosperity of the city to which I have carried you.'"
+  },
+  {
+    id: "nemesis-deity",
+    name: "Nemesis",
+    category: "deity",
+    description: "Greek goddess of divine retribution against those who succumb to hubris. Represents balance and justice.",
+    christianPerspective: "Divine justice is thoroughly biblical. God opposes the proud and gives grace to the humble. The concept of consequences for arrogance appears throughout Scripture.",
+    cautionLevel: "low",
+    scripturalContext: "Proverbs 16:18 - 'Pride goes before destruction, a haughty spirit before a fall.'"
+  },
+  {
+    id: "asclepius-deity",
+    name: "Asclepius",
+    category: "deity",
+    description: "Greek god of medicine and healing. His rod with a serpent is the symbol of medicine worldwide.",
+    christianPerspective: "The Rod of Asclepius appears on ambulances, hospitals, and medical schools globally. Moses lifted a bronze serpent for healing (Numbers 21). Healing is a biblical ministry.",
+    cautionLevel: "low",
+    scripturalContext: "Numbers 21:8-9 - The bronze serpent lifted up for healing, prefiguring Christ (John 3:14)."
+  },
+  {
+    id: "hypnos-deity",
+    name: "Hypnos (Somnus)",
+    category: "deity",
+    description: "Greek god of sleep. Twin brother of Thanatos (death). Roman equivalent: Somnus.",
+    christianPerspective: "Sleep is God's gift to His beloved (Psalm 127:2). Rest is a biblical principle established at creation. The concept of peaceful rest under God's protection is thoroughly scriptural.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 4:8 - 'In peace I will lie down and sleep, for you alone, LORD, make me dwell in safety.'"
+  },
+  {
+    id: "thanatos-deity",
+    name: "Thanatos (Mors)",
+    category: "deity",
+    description: "Greek personification of death. Roman equivalent: Mors.",
+    christianPerspective: "Death is an enemy that Christ has conquered. Paul asks, 'O death, where is your sting?' Understanding mortality leads to wisdom and points to the need for resurrection hope.",
+    cautionLevel: "medium",
+    cautionNote: "Death imagery should point to Christ's victory, not glorify death itself.",
+    scripturalContext: "1 Corinthians 15:55 - 'Where, O death, is your victory? Where, O death, is your sting?'"
+  },
+  {
+    id: "prometheus-deity",
+    name: "Prometheus",
+    category: "deity",
+    description: "Greek titan who brought fire to humanity and was punished by Zeus. Symbol of human progress and sacrifice.",
+    christianPerspective: "Prometheus's sacrifice for humanity echoes, however imperfectly, Christ's sacrifice. The theme of suffering for others' benefit is deeply Christian. Fire represents enlightenment and the Spirit.",
+    cautionLevel: "low",
+    scripturalContext: "Acts 2:3 - Tongues of fire at Pentecost; Matthew 5:14 - 'You are the light of the world.'"
+  },
+  {
+    id: "the-muses",
+    name: "The Nine Muses",
+    category: "deity",
+    description: "Greek goddesses of arts and sciences—Calliope, Clio, Euterpe, Thalia, Melpomene, Terpsichore, Erato, Polyhymnia, Urania.",
+    christianPerspective: "Creativity and the arts are gifts from God. 'Music' comes from the Muses. Christians throughout history have excelled in arts for God's glory. The creative impulse reflects the Creator.",
+    cautionLevel: "low",
+    scripturalContext: "Exodus 35:31-35 - God filling craftsmen with skill, ability, and knowledge in all kinds of crafts."
+  },
+  {
+    id: "the-fates",
+    name: "The Fates (Moirai/Parcae)",
+    category: "deity",
+    description: "Three goddesses who controlled human destiny—Clotho, Lachesis, Atropos. Roman equivalent: Parcae.",
+    christianPerspective: "Christians believe in God's sovereignty, not fate. However, the concept of life having purpose and meaning is biblical. Our times are in God's hands, not random chance.",
+    cautionLevel: "medium",
+    cautionNote: "Redirect from fatalism to God's sovereign care and plan.",
+    scripturalContext: "Psalm 31:15 - 'My times are in your hands.'"
+  },
+  // Additional Egyptian Deities
+  {
+    id: "nephthys-deity",
+    name: "Nephthys",
+    category: "deity",
+    description: "Egyptian goddess of mourning, night, and service. Sister of Isis and Osiris. Protector of the dead.",
+    christianPerspective: "Mourning is biblical—Jesus wept. Nephthys as a comforter of the bereaved echoes the Holy Spirit as Comforter. Caring for the grieving is a Christian calling.",
+    cautionLevel: "low",
+    scripturalContext: "Matthew 5:4 - 'Blessed are those who mourn, for they will be comforted.'"
+  },
+  {
+    id: "sobek-deity",
+    name: "Sobek",
+    category: "deity",
+    description: "Egyptian crocodile god associated with the Nile, fertility, and military prowess. Symbol of pharaonic power.",
+    christianPerspective: "Sobek represented the life-giving Nile. Water as life is deeply biblical—Jesus is living water. Strength and protection themes echo God as our fortress.",
+    cautionLevel: "low",
+    scripturalContext: "John 4:14 - 'The water I give them will become in them a spring of water welling up to eternal life.'"
+  },
+  {
+    id: "hathor-deity",
+    name: "Hathor",
+    category: "deity",
+    description: "Egyptian goddess of love, beauty, music, and motherhood. Often depicted with cow horns holding a sun disk.",
+    christianPerspective: "Hathor represented joy, music, and maternal care—all biblical themes. Music in worship is extensively biblical. God's motherly care is expressed in Scripture.",
+    cautionLevel: "low",
+    scripturalContext: "Isaiah 66:13 - 'As a mother comforts her child, so will I comfort you.'"
+  },
+  {
+    id: "khnum-deity",
+    name: "Khnum",
+    category: "deity",
+    description: "Egyptian creator god depicted as a ram, believed to create humans on a potter's wheel.",
+    christianPerspective: "The potter and clay imagery is thoroughly biblical. God as potter forming humanity appears in Genesis and throughout Scripture. This imagery points to the true Creator.",
+    cautionLevel: "low",
+    scripturalContext: "Isaiah 64:8 - 'We are the clay, you are the potter; we are all the work of your hand.'"
+  },
+  {
+    id: "ptah-deity",
+    name: "Ptah",
+    category: "deity",
+    description: "Egyptian god of craftsmen, architects, and creation. Patron of builders and artisans.",
+    christianPerspective: "Craftsmanship as divine calling is biblical. Bezalel was Spirit-filled for building the tabernacle. Work and creativity honor God when done with excellence.",
+    cautionLevel: "low",
+    scripturalContext: "Colossians 3:23 - 'Whatever you do, work at it with all your heart, as working for the Lord.'"
+  },
+  {
+    id: "nut-deity",
+    name: "Nut",
+    category: "deity",
+    description: "Egyptian sky goddess often depicted arching over the earth. Mother of Osiris, Isis, Set, and Nephthys.",
+    christianPerspective: "The heavens declare God's glory. Sky imagery representing divine covering and protection is biblical. God stretches out the heavens like a tent.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 19:1 - 'The heavens declare the glory of God; the skies proclaim the work of his hands.'"
+  },
+  {
+    id: "geb-deity",
+    name: "Geb",
+    category: "deity",
+    description: "Egyptian god of the earth, vegetation, and fertility. Depicted with green skin.",
+    christianPerspective: "Earth and its fertility are God's creation and gift. The concept of the earth producing abundantly for humanity is thoroughly biblical.",
+    cautionLevel: "low",
+    scripturalContext: "Genesis 1:11 - 'Let the land produce vegetation: seed-bearing plants and trees.'"
+  },
+  {
+    id: "set-deity",
+    name: "Set (Seth)",
+    category: "deity",
+    description: "Egyptian god of chaos, storms, and the desert. Complex figure representing both destruction and protection.",
+    christianPerspective: "Storms and chaos are under God's control. Jesus calmed the storm. God uses even chaos for His purposes. Order from chaos is the creation narrative.",
+    cautionLevel: "medium",
+    cautionNote: "Emphasize God's sovereignty over chaos rather than celebrating disorder.",
+    scripturalContext: "Mark 4:39 - 'He got up, rebuked the wind and said to the waves, \"Quiet! Be still!\"'"
+  },
+  {
+    id: "bes-deity",
+    name: "Bes",
+    category: "deity",
+    description: "Egyptian dwarf god protector of households, children, and mothers. Associated with joy and music.",
+    christianPerspective: "Protection of the vulnerable—especially children and mothers—is deeply biblical. Joy and celebration in the home honor God. Domestic protection is a godly concern.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 127:3 - 'Children are a heritage from the LORD, offspring a reward from him.'"
+  },
+  {
+    id: "atum-deity",
+    name: "Atum",
+    category: "deity",
+    description: "Egyptian creator god of Heliopolis. Self-created and father of the gods. Associated with the setting sun.",
+    christianPerspective: "Atum as self-existent creator echoes, imperfectly, the true Creator who is self-existent and eternal. 'I AM WHO I AM' declares God's self-existence.",
+    cautionLevel: "medium",
+    cautionNote: "Use as a conversation starter about the true eternal Creator.",
+    scripturalContext: "Exodus 3:14 - 'God said to Moses, \"I AM WHO I AM.\"'"
+  },
   // Roman Additions (distinct from Greek equivalents)
   {
     id: "janus-deity",
