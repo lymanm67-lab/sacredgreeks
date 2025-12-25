@@ -38,22 +38,22 @@ const essentialArticles = [
 
 const videoResources = [
   {
-    title: "Renounce, Retreat, or Redeem Greek Life?",
-    description: "Should Christians renounce, retreat, or redeem their Greek Letter Organizations? A clear Christian perspective on this controversial question.",
-    videoId: "ZK9HfHf3mLc",
-    youtubeUrl: "https://www.youtube.com/watch?v=ZK9HfHf3mLc"
+    title: "The Truth About Being Christian in a Greek Organization",
+    description: "Sacred Greeks TV explores the reality of maintaining your Christian faith while being an active member of a Greek letter organization.",
+    videoId: "GmMQisNNZjI",
+    youtubeUrl: "https://www.youtube.com/watch?v=GmMQisNNZjI"
   },
   {
-    title: "Can Christians Be Involved In Greek Life?",
-    description: "Explore the intersection of faith and fraternity/sorority culture with different perspectives on navigating Greek Life as a Christian.",
-    videoId: "VN_MIKSBPZY",
-    youtubeUrl: "https://www.youtube.com/watch?v=VN_MIKSBPZY"
+    title: "Should Christians Join BGLOs? How to Balance Faith and Greek Life",
+    description: "A comprehensive discussion on whether Christians should join Black Greek Letter Organizations and practical guidance for balancing faith.",
+    videoId: "25gQ4qXxXi0",
+    youtubeUrl: "https://www.youtube.com/watch?v=25gQ4qXxXi0"
   },
   {
-    title: "Christians Pledging Fraternities & Sororities",
-    description: "A pastoral conversation about Christians pledging fraternities and sororities, exploring biblical principles and practical wisdom.",
-    videoId: "kNGt9D8icwM",
-    youtubeUrl: "https://www.youtube.com/watch?v=kNGt9D8icwM"
+    title: "Top 10 Faith Questions About Greek Life Answered!",
+    description: "The most common questions church leaders and Christians have about Greek life, answered with biblical wisdom and practical insight.",
+    videoId: "PLQG1lOu-48",
+    youtubeUrl: "https://www.youtube.com/watch?v=PLQG1lOu-48"
   }
 ];
 
