@@ -272,6 +272,42 @@ export type Database = {
         }
         Relationships: []
       }
+      coaching_waitlist: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          goals: string | null
+          id: string
+          organization: string | null
+          status: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name: string
+          goals?: string | null
+          id?: string
+          organization?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          goals?: string | null
+          id?: string
+          organization?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       community_service_items: {
         Row: {
           completed: boolean
