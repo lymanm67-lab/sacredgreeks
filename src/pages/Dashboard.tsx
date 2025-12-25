@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Heart, BookOpen, MessageSquare, TrendingUp, LogOut, FileText, Calendar, User, Bookmark, Book, Clock, Lightbulb, Library, MessageCircle, Users, Play, Drama, FlaskConical } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import logo from '@/assets/sacred-greeks-logo.png';
 import { HeroSection } from '@/components/dashboard/HeroSection';
 import { StatsCard } from '@/components/dashboard/StatsCard';
 import { CompactQuickAction } from '@/components/dashboard/CompactQuickAction';
@@ -482,7 +483,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
+    <div className="min-h-screen bg-muted/30">
       <SEOHead {...pageSEO.dashboard} />
       <PullToRefreshIndicator 
         isPulling={isPulling}
@@ -490,15 +491,14 @@ const Dashboard = () => {
         pullDistance={pullDistance}
         canRefresh={canRefresh}
       />
-      <header className="border-b border-border/50 bg-card/50 backdrop-blur-lg sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+      
+      {/* Clean Header matching sacredgreeks.com */}
+      <header className="border-b border-border bg-background sticky top-0 z-50">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-14">
             <div className="flex items-center gap-3">
-              <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group">
-                <Heart className="w-5 h-5 text-sacred group-hover:scale-110 transition-transform" />
-                <span className="font-semibold bg-gradient-to-r from-sacred to-warm-blue bg-clip-text text-transparent">
-                  Sacred Greeks
-                </span>
+              <Link to="/" className="flex items-center">
+                <img src={logo} alt="Sacred Greeks" className="h-8 w-auto" />
               </Link>
               {isDemoMode && (
                 <Link to="/profile">
@@ -513,12 +513,12 @@ const Dashboard = () => {
               <SubscriptionBadge />
               <MobileQRCode />
               <Link to="/profile">
-                <Button variant="ghost" size="sm" className="hover:bg-sacred/10">
+                <Button variant="ghost" size="sm">
                   <User className="w-4 h-4 mr-2" />
                   Profile
                 </Button>
               </Link>
-              <Button variant="outline" size="sm" onClick={handleSignOut} className="hover:bg-destructive/10 hover:text-destructive hover:border-destructive">
+              <Button variant="outline" size="sm" onClick={handleSignOut}>
                 <LogOut className="w-4 h-4 mr-2" />
                 Sign Out
               </Button>
@@ -605,7 +605,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Key Stats - Reduced to 3 most motivating */}
+          {/* Key Stats - Clean card design */}
           <div ref={statsScroll.ref} className={`scroll-animate ${statsScroll.isVisible ? 'visible' : ''} space-y-3 animate-fade-in`} style={{ animationDelay: '0.4s' }}>
             {isDemoStats && (
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -613,31 +613,46 @@ const Dashboard = () => {
                 <span>Complete activities to see your real stats</span>
               </div>
             )}
-            <div className="grid gap-6 grid-cols-1 md:grid-cols-3 auto-rows-fr">
-              <StatsCard
-                title="Current Streak"
-                value={stats.currentStreak}
-                subtitle={isDemoStats ? "Sample streak" : "Days in a row"}
-                icon={TrendingUp}
-                gradient="from-status-low to-warm-blue"
-                delay="0s"
-              />
-              <StatsCard
-                title="Assessments"
-                value={stats.assessmentCount}
-                subtitle={isDemoStats ? "Sample count" : "Total completed"}
-                icon={FileText}
-                gradient="from-sacred to-warm-blue"
-                delay="0.1s"
-              />
-              <StatsCard
-                title="Today's Devotional"
-                value={stats.devotionalCompleted ? '✓' : '○'}
-                subtitle={isDemoStats ? "Sample status" : stats.devotionalCompleted ? 'Completed today' : 'Not yet completed'}
-                icon={BookOpen}
-                gradient="from-sacred to-secondary"
-                delay="0.2s"
-              />
+            <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
+              <Card className="border border-border bg-background">
+                <CardContent className="pt-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                      <TrendingUp className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-2xl font-bold text-foreground">{stats.currentStreak}</p>
+                      <p className="text-sm text-muted-foreground">{isDemoStats ? "Sample streak" : "Day Streak"}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className="border border-border bg-background">
+                <CardContent className="pt-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                      <FileText className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-2xl font-bold text-foreground">{stats.assessmentCount}</p>
+                      <p className="text-sm text-muted-foreground">{isDemoStats ? "Sample count" : "Assessments"}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className="border border-border bg-background">
+                <CardContent className="pt-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                      <BookOpen className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-2xl font-bold text-foreground">{stats.devotionalCompleted ? '✓' : '○'}</p>
+                      <p className="text-sm text-muted-foreground">{isDemoStats ? "Sample status" : stats.devotionalCompleted ? 'Devotional Done' : 'Not Yet'}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
 
@@ -834,17 +849,17 @@ const Dashboard = () => {
           </Collapsible>
 
           {/* Progress Link */}
-          <Card className="bg-gradient-to-r from-sacred/10 to-warm-blue/10 border-sacred/20 animate-fade-in" style={{ animationDelay: '0.7s' }}>
+          <Card className="border border-border bg-background animate-fade-in" style={{ animationDelay: '0.7s' }}>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between flex-wrap gap-4">
                 <div>
-                  <h3 className="text-xl font-bold mb-1">Track Your Growth</h3>
+                  <h3 className="text-xl font-semibold text-foreground mb-1">Track Your Growth</h3>
                   <p className="text-muted-foreground">
                     View charts and insights about your spiritual journey
                   </p>
                 </div>
                 <Link to="/progress">
-                  <Button variant="outline" className="hover:bg-sacred/10 hover:text-sacred hover:border-sacred">
+                  <Button variant="outline">
                     <TrendingUp className="w-4 h-4 mr-2" />
                     View Progress
                   </Button>
@@ -880,29 +895,29 @@ const Dashboard = () => {
 
           {/* Recent Assessments */}
           {recentAssessments.length > 0 && (
-            <Card className="animate-fade-in border-2 hover:shadow-xl transition-all" style={{ animationDelay: '0.8s' }}>
+            <Card className="border border-border bg-background animate-fade-in" style={{ animationDelay: '0.8s' }}>
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-2xl bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+                  <CardTitle className="text-xl font-semibold text-foreground">
                     Recent Assessments
                   </CardTitle>
                   <Link to="/assessment-history">
-                    <Button variant="outline" size="sm" className="hover:bg-sacred/10 hover:text-sacred hover:border-sacred">
+                    <Button variant="outline" size="sm">
                       View All
                     </Button>
                   </Link>
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {recentAssessments.map((assessment) => (
-                    <div key={assessment.id} className="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-muted/50 transition-colors border border-border/50">
+                    <div key={assessment.id} className="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-muted/50 transition-colors border border-border">
                       <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-lg bg-gradient-to-br from-sacred to-warm-blue">
-                        <Calendar className="w-4 h-4 text-white" />
-                      </div>
+                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                          <Calendar className="w-4 h-4 text-primary" />
+                        </div>
                         <div>
-                          <p className="text-sm font-medium capitalize">
+                          <p className="text-sm font-medium capitalize text-foreground">
                             {assessment.scenario.replace('_', ' ')}
                           </p>
                           <p className="text-xs text-muted-foreground">
@@ -911,9 +926,9 @@ const Dashboard = () => {
                         </div>
                       </div>
                       <span className={`text-xs px-3 py-1 rounded-full font-medium ${
-                        assessment.result_type === 'high_risk' ? 'bg-status-high/10 text-status-high' :
-                        assessment.result_type === 'medium_risk' ? 'bg-status-medium/10 text-status-medium' :
-                        'bg-status-low/10 text-status-low'
+                        assessment.result_type === 'high_risk' ? 'bg-destructive/10 text-destructive' :
+                        assessment.result_type === 'medium_risk' ? 'bg-amber-500/10 text-amber-600' :
+                        'bg-emerald-500/10 text-emerald-600'
                       }`}>
                         {assessment.result_type.replace('_', ' ')}
                       </span>
