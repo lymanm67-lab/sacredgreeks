@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Heart, Search, Book, BookOpen, Calendar, ArrowLeft, ExternalLink, Loader2, Sparkles, Bookmark, BookmarkCheck, FlaskConical } from 'lucide-react';
+import { Heart, Search, Book, BookOpen, Calendar, ArrowLeft, ExternalLink, Loader2, Sparkles, Bookmark, BookmarkCheck, FlaskConical, Eye, FileText, MessageSquare } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { ExternalContentModal } from '@/components/ui/ExternalContentModal';
 import { useExternalLinks } from '@/hooks/use-external-links';
@@ -23,6 +23,8 @@ import { VoiceInputButton } from '@/components/VoiceInputButton';
 import { ListenButton } from '@/components/ListenButton';
 import { PremiumGate } from '@/components/PremiumGate';
 import { useDemoMode } from '@/contexts/DemoModeContext';
+import { StudyGuideDialog, StudyGuide } from '@/components/bible-study/StudyGuideDialog';
+import { studyGuides, getStudiesByCategory, categories } from '@/data/bibleStudyGuides';
 
 // Demo data for Bible Study
 const DEMO_DAILY_VERSE = {
@@ -93,131 +95,6 @@ const readingPlans = [
   }
 ];
 
-// Topic content organized by category
-const topicContent = {
-  'greek-life': [
-    // Biblical Brotherhood & Sisterhood
-    { ref: 'Proverbs 27:17', text: 'Iron sharpeneth iron; so a man sharpeneth the countenance of his friend.', theme: 'Biblical Brotherhood & Sisterhood' },
-    { ref: 'Ecclesiastes 4:9-10', text: 'Two are better than one; because they have a good reward for their labour. For if they fall, the one will lift up his fellow.', theme: 'Biblical Brotherhood & Sisterhood' },
-    { ref: 'Romans 12:10', text: 'Be kindly affectioned one to another with brotherly love; in honour preferring one another.', theme: 'Biblical Brotherhood & Sisterhood' },
-    { ref: '1 Peter 3:8', text: 'Finally, be ye all of one mind, having compassion one of another, love as brethren, be pitiful, be courteous.', theme: 'Biblical Brotherhood & Sisterhood' },
-    { ref: 'John 15:12-13', text: 'This is my commandment, That ye love one another, as I have loved you. Greater love hath no man than this, that a man lay down his life for his friends.', theme: 'Biblical Brotherhood & Sisterhood' },
-    
-    // Classical Symbols in American Institutions
-    { ref: 'Acts 17:22-23', text: 'Then Paul stood in the midst of Mars\' hill, and said, Ye men of Athens, I perceive that in all things ye are too superstitious. For as I passed by, and beheld your devotions, I found an altar with this inscription, TO THE UNKNOWN GOD.', theme: 'Classical Symbols in American Institutions' },
-    { ref: 'Romans 1:20', text: 'For the invisible things of him from the creation of the world are clearly seen, being understood by the things that are made, even his eternal power and Godhead.', theme: 'Classical Symbols in American Institutions' },
-    { ref: '1 Corinthians 10:31', text: 'Whether therefore ye eat, or drink, or whatsoever ye do, do all to the glory of God.', theme: 'Classical Symbols in American Institutions' },
-    { ref: 'Colossians 1:16', text: 'For by him were all things created, that are in heaven, and that are in earth, visible and invisible, whether they be thrones, or dominions, or principalities, or powers: all things were created by him, and for him.', theme: 'Classical Symbols in American Institutions' },
-    
-    // Rituals & Symbols Controversy
-    { ref: '1 Corinthians 10:23', text: 'All things are lawful for me, but all things are not expedient: all things are lawful for me, but all things edify not.', theme: 'Rituals & Symbols Controversy' },
-    { ref: 'Romans 14:5-6', text: 'One man esteemeth one day above another: another esteemeth every day alike. Let every man be fully persuaded in his own mind.', theme: 'Rituals & Symbols Controversy' },
-    { ref: '1 Corinthians 8:4-6', text: 'We know that an idol is nothing in the world, and that there is none other God but one. For though there be that are called gods, whether in heaven or in earth... But to us there is but one God, the Father.', theme: 'Rituals & Symbols Controversy' },
-    { ref: 'Colossians 2:16-17', text: 'Let no man therefore judge you in meat, or in drink, or in respect of an holyday, or of the new moon, or of the sabbath days: Which are a shadow of things to come; but the body is of Christ.', theme: 'Rituals & Symbols Controversy' },
-    { ref: 'Romans 14:22-23', text: 'Hast thou faith? have it to thyself before God. Happy is he that condemneth not himself in that thing which he alloweth.', theme: 'Rituals & Symbols Controversy' },
-    
-    // Responding to Greek Life Objections
-    { ref: '1 Peter 3:15', text: 'But sanctify the Lord God in your hearts: and be ready always to give an answer to every man that asketh you a reason of the hope that is in you with meekness and fear.', theme: 'Responding to Greek Life Objections' },
-    { ref: 'Colossians 4:5-6', text: 'Walk in wisdom toward them that are without, redeeming the time. Let your speech be alway with grace, seasoned with salt, that ye may know how ye ought to answer every man.', theme: 'Responding to Greek Life Objections' },
-    { ref: '2 Timothy 2:24-25', text: 'And the servant of the Lord must not strive; but be gentle unto all men, apt to teach, patient, In meekness instructing those that oppose themselves.', theme: 'Responding to Greek Life Objections' },
-    { ref: 'Proverbs 15:1', text: 'A soft answer turneth away wrath: but grievous words stir up anger.', theme: 'Responding to Greek Life Objections' },
-    { ref: 'Titus 3:2', text: 'To speak evil of no man, to be no brawlers, but gentle, shewing all meekness unto all men.', theme: 'Responding to Greek Life Objections' },
-    
-    // Being Salt and Light in Your Chapter
-    { ref: 'Matthew 5:13-14', text: 'Ye are the salt of the earth: but if the salt have lost his savour, wherewith shall it be salted? Ye are the light of the world. A city that is set on an hill cannot be hid.', theme: 'Being Salt and Light in Your Chapter' },
-    { ref: 'Matthew 5:16', text: 'Let your light so shine before men, that they may see your good works, and glorify your Father which is in heaven.', theme: 'Being Salt and Light in Your Chapter' },
-    { ref: 'Philippians 2:14-15', text: 'Do all things without murmurings and disputings: That ye may be blameless and harmless, the sons of God, without rebuke, in the midst of a crooked and perverse nation, among whom ye shine as lights in the world.', theme: 'Being Salt and Light in Your Chapter' },
-    { ref: 'Ephesians 5:8', text: 'For ye were sometimes darkness, but now are ye light in the Lord: walk as children of light.', theme: 'Being Salt and Light in Your Chapter' },
-    { ref: '1 Peter 2:12', text: 'Having your conversation honest among the Gentiles: that, whereas they speak against you as evildoers, they may by your good works, which they shall behold, glorify God in the day of visitation.', theme: 'Being Salt and Light in Your Chapter' },
-    
-    // Mentorship and Discipleship
-    { ref: '2 Timothy 2:2', text: 'And the things that thou hast heard of me among many witnesses, the same commit thou to faithful men, who shall be able to teach others also.', theme: 'Mentorship and Discipleship' },
-    { ref: 'Titus 2:3-5', text: 'The aged women likewise, that they be in behaviour as becometh holiness... That they may teach the young women to be sober, to love their husbands, to love their children.', theme: 'Mentorship and Discipleship' },
-    { ref: 'Proverbs 22:6', text: 'Train up a child in the way he should go: and when he is old, he will not depart from it.', theme: 'Mentorship and Discipleship' },
-    { ref: 'Matthew 28:19-20', text: 'Go ye therefore, and teach all nations, baptizing them in the name of the Father, and of the Son, and of the Holy Ghost: Teaching them to observe all things whatsoever I have commanded you.', theme: 'Mentorship and Discipleship' },
-    { ref: '1 Corinthians 11:1', text: 'Be ye followers of me, even as I also am of Christ.', theme: 'Mentorship and Discipleship' },
-    
-    // General Greek Life
-    { ref: 'Galatians 6:2', text: 'Bear ye one another\'s burdens, and so fulfil the law of Christ.', theme: 'Service to Others' },
-    { ref: 'Hebrews 10:24-25', text: 'And let us consider one another to provoke unto love and to good works: Not forsaking the assembling of ourselves together.', theme: 'Fellowship' },
-    { ref: '1 Thessalonians 5:11', text: 'Wherefore comfort yourselves together, and edify one another, even as also ye do.', theme: 'Encouragement' },
-    { ref: 'Colossians 3:23', text: 'And whatsoever ye do, do it heartily, as to the Lord, and not unto men.', theme: 'Excellence' },
-    { ref: 'Philippians 2:3-4', text: 'Let nothing be done through strife or vainglory; but in lowliness of mind let each esteem other better than themselves. Look not every man on his own things, but every man also on the things of others.', theme: 'Humility in Leadership' }
-  ],
-  'discernment': [
-    { ref: 'James 1:5', text: 'If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not; and it shall be given him.', theme: 'Seeking Wisdom' },
-    { ref: 'Proverbs 3:5-6', text: 'Trust in the Lord with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths.', theme: 'Trusting God\'s Direction' },
-    { ref: '1 John 4:1', text: 'Beloved, believe not every spirit, but try the spirits whether they are of God.', theme: 'Testing Truth' },
-    { ref: 'Philippians 1:9-10', text: 'And this I pray, that your love may abound yet more and more in knowledge and in all judgment; That ye may approve things that are excellent.', theme: 'Growing in Discernment' },
-    { ref: 'Hebrews 5:14', text: 'But strong meat belongeth to them that are of full age, even those who by reason of use have their senses exercised to discern both good and evil.', theme: 'Spiritual Maturity' },
-    { ref: 'Proverbs 14:12', text: 'There is a way which seemeth right unto a man, but the end thereof are the ways of death.', theme: 'Avoiding Deception' },
-    { ref: 'Romans 12:2', text: 'And be not conformed to this world: but be ye transformed by the renewing of your mind, that ye may prove what is that good, and acceptable, and perfect, will of God.', theme: 'Renewed Mind' },
-    { ref: 'Colossians 2:8', text: 'Beware lest any man spoil you through philosophy and vain deceit, after the tradition of men, after the rudiments of the world, and not after Christ.', theme: 'Guarding Against False Teaching' },
-    
-    // Wisdom in Greek Life Decisions
-    { ref: 'Proverbs 2:6', text: 'For the Lord giveth wisdom: out of his mouth cometh knowledge and understanding.', theme: 'Wisdom in Greek Life Decisions' },
-    { ref: 'Proverbs 11:14', text: 'Where no counsel is, the people fall: but in the multitude of counsellors there is safety.', theme: 'Wisdom in Greek Life Decisions' },
-    { ref: 'James 3:17', text: 'But the wisdom that is from above is first pure, then peaceable, gentle, and easy to be intreated, full of mercy and good fruits, without partiality, and without hypocrisy.', theme: 'Wisdom in Greek Life Decisions' },
-    { ref: 'Proverbs 4:7', text: 'Wisdom is the principal thing; therefore get wisdom: and with all thy getting get understanding.', theme: 'Wisdom in Greek Life Decisions' },
-    { ref: 'Ecclesiastes 7:12', text: 'For wisdom is a defence, and money is a defence: but the excellency of knowledge is, that wisdom giveth life to them that have it.', theme: 'Wisdom in Greek Life Decisions' },
-    
-    // Maintaining Integrity Under Pressure
-    { ref: 'Daniel 3:17-18', text: 'If it be so, our God whom we serve is able to deliver us from the burning fiery furnace, and he will deliver us out of thine hand, O king. But if not, be it known unto thee, O king, that we will not serve thy gods.', theme: 'Maintaining Integrity Under Pressure' },
-    { ref: 'Proverbs 10:9', text: 'He that walketh uprightly walketh surely: but he that perverteth his ways shall be known.', theme: 'Maintaining Integrity Under Pressure' },
-    { ref: 'Proverbs 11:3', text: 'The integrity of the upright shall guide them: but the perverseness of transgressors shall destroy them.', theme: 'Maintaining Integrity Under Pressure' },
-    { ref: '1 Corinthians 10:13', text: 'There hath no temptation taken you but such as is common to man: but God is faithful, who will not suffer you to be tempted above that ye are able.', theme: 'Maintaining Integrity Under Pressure' },
-    { ref: 'Psalm 26:1', text: 'Judge me, O Lord; for I have walked in mine integrity: I have trusted also in the Lord; therefore I shall not slide.', theme: 'Maintaining Integrity Under Pressure' }
-  ],
-  'foundation': [
-    { ref: 'Matthew 7:24-25', text: 'Therefore whosoever heareth these sayings of mine, and doeth them, I will liken him unto a wise man, which built his house upon a rock: And the rain descended, and the floods came, and the winds blew, and beat upon that house; and it fell not: for it was founded upon a rock.', theme: 'Building on Christ' },
-    { ref: '1 Corinthians 3:11', text: 'For other foundation can no man lay than that is laid, which is Jesus Christ.', theme: 'Christ as Foundation' },
-    { ref: 'Psalm 11:3', text: 'If the foundations be destroyed, what can the righteous do?', theme: 'Importance of Foundation' },
-    { ref: 'Isaiah 28:16', text: 'Therefore thus saith the Lord God, Behold, I lay in Zion for a foundation a stone, a tried stone, a precious corner stone, a sure foundation: he that believeth shall not make haste.', theme: 'The Cornerstone' },
-    { ref: 'Ephesians 2:19-20', text: 'Now therefore ye are no more strangers and foreigners, but fellowcitizens with the saints, and of the household of God; And are built upon the foundation of the apostles and prophets, Jesus Christ himself being the chief corner stone.', theme: 'Built on Truth' },
-    { ref: '2 Timothy 2:19', text: 'Nevertheless the foundation of God standeth sure, having this seal, The Lord knoweth them that are his.', theme: "God's Firm Foundation" },
-    { ref: 'Hebrews 6:1', text: 'Therefore leaving the principles of the doctrine of Christ, let us go on unto perfection.', theme: 'Growing from the Foundation' },
-    { ref: 'Colossians 2:6-7', text: 'As ye have therefore received Christ Jesus the Lord, so walk ye in him: Rooted and built up in him, and stablished in the faith.', theme: 'Rooted in Christ' },
-    
-    // Identity in Christ vs. Greek Identity
-    { ref: '2 Corinthians 5:17', text: 'Therefore if any man be in Christ, he is a new creature: old things are passed away; behold, all things are become new.', theme: 'Identity in Christ vs. Greek Identity' },
-    { ref: 'Galatians 2:20', text: 'I am crucified with Christ: nevertheless I live; yet not I, but Christ liveth in me: and the life which I now live in the flesh I live by the faith of the Son of God, who loved me, and gave himself for me.', theme: 'Identity in Christ vs. Greek Identity' },
-    { ref: 'Colossians 3:3', text: 'For ye are dead, and your life is hid with Christ in God.', theme: 'Identity in Christ vs. Greek Identity' },
-    { ref: '1 Peter 2:9', text: 'But ye are a chosen generation, a royal priesthood, an holy nation, a peculiar people; that ye should shew forth the praises of him who hath called you out of darkness into his marvellous light.', theme: 'Identity in Christ vs. Greek Identity' },
-    { ref: 'Ephesians 1:4-5', text: 'According as he hath chosen us in him before the foundation of the world, that we should be holy and without blame before him in love: Having predestinated us unto the adoption of children by Jesus Christ to himself.', theme: 'Identity in Christ vs. Greek Identity' },
-    
-    // Spiritual Warfare in Greek Life
-    { ref: 'Ephesians 6:11-12', text: 'Put on the whole armour of God, that ye may be able to stand against the wiles of the devil. For we wrestle not against flesh and blood, but against principalities, against powers, against the rulers of the darkness of this world.', theme: 'Spiritual Warfare in Greek Life' },
-    { ref: '2 Corinthians 10:4-5', text: 'For the weapons of our warfare are not carnal, but mighty through God to the pulling down of strong holds; Casting down imaginations, and every high thing that exalteth itself against the knowledge of God.', theme: 'Spiritual Warfare in Greek Life' },
-    { ref: 'James 4:7', text: 'Submit yourselves therefore to God. Resist the devil, and he will flee from you.', theme: 'Spiritual Warfare in Greek Life' },
-    { ref: '1 Peter 5:8-9', text: 'Be sober, be vigilant; because your adversary the devil, as a roaring lion, walketh about, seeking whom he may devour: Whom resist stedfast in the faith.', theme: 'Spiritual Warfare in Greek Life' },
-    { ref: 'Romans 12:21', text: 'Be not overcome of evil, but overcome evil with good.', theme: 'Spiritual Warfare in Greek Life' }
-  ],
-  'purpose': [
-    { ref: 'Jeremiah 29:11', text: 'For I know the thoughts that I think toward you, saith the Lord, thoughts of peace, and not of evil, to give you an expected end.', theme: "God's Plan for You" },
-    { ref: 'Ephesians 2:10', text: 'For we are his workmanship, created in Christ Jesus unto good works, which God hath before ordained that we should walk in them.', theme: 'Created for Good Works' },
-    { ref: 'Romans 8:28', text: 'And we know that all things work together for good to them that love God, to them who are the called according to his purpose.', theme: 'Called According to Purpose' },
-    { ref: 'Proverbs 19:21', text: "There are many devices in a man's heart; nevertheless the counsel of the Lord, that shall stand.", theme: "God's Purpose Prevails" },
-    { ref: 'Psalm 138:8', text: 'The Lord will perfect that which concerneth me: thy mercy, O Lord, endureth for ever.', theme: 'God Completes His Work' },
-    { ref: 'Philippians 2:13', text: 'For it is God which worketh in you both to will and to do of his good pleasure.', theme: 'God Works in You' },
-    { ref: 'Isaiah 46:10', text: 'Declaring the end from the beginning, and from ancient times the things that are not yet done, saying, My counsel shall stand, and I will do all my pleasure.', theme: "God's Sovereign Plan" },
-    { ref: '1 Peter 2:9', text: 'But ye are a chosen generation, a royal priesthood, an holy nation, a peculiar people; that ye should shew forth the praises of him who hath called you out of darkness into his marvellous light.', theme: 'Chosen for a Purpose' },
-    
-    // Service as Worship
-    { ref: 'Romans 12:1', text: 'I beseech you therefore, brethren, by the mercies of God, that ye present your bodies a living sacrifice, holy, acceptable unto God, which is your reasonable service.', theme: 'Service as Worship' },
-    { ref: 'Colossians 3:23-24', text: 'And whatsoever ye do, do it heartily, as to the Lord, and not unto men; Knowing that of the Lord ye shall receive the reward of the inheritance: for ye serve the Lord Christ.', theme: 'Service as Worship' },
-    { ref: 'Hebrews 13:16', text: 'But to do good and to communicate forget not: for with such sacrifices God is well pleased.', theme: 'Service as Worship' },
-    { ref: 'Matthew 25:40', text: 'And the King shall answer and say unto them, Verily I say unto you, Inasmuch as ye have done it unto one of the least of these my brethren, ye have done it unto me.', theme: 'Service as Worship' },
-    { ref: '1 Corinthians 10:31', text: 'Whether therefore ye eat, or drink, or whatsoever ye do, do all to the glory of God.', theme: 'Service as Worship' },
-    
-    // Leadership Through Servanthood
-    { ref: 'Mark 10:43-45', text: 'But so shall it not be among you: but whosoever will be great among you, shall be your minister: And whosoever of you will be the chiefest, shall be servant of all. For even the Son of man came not to be ministered unto, but to minister.', theme: 'Leadership Through Servanthood' },
-    { ref: 'John 13:14-15', text: 'If I then, your Lord and Master, have washed your feet; ye also ought to wash one another\'s feet. For I have given you an example, that ye should do as I have done to you.', theme: 'Leadership Through Servanthood' },
-    { ref: 'Philippians 2:5-7', text: 'Let this mind be in you, which was also in Christ Jesus: Who, being in the form of God, thought it not robbery to be equal with God: But made himself of no reputation, and took upon him the form of a servant.', theme: 'Leadership Through Servanthood' },
-    { ref: '1 Peter 5:2-3', text: 'Feed the flock of God which is among you, taking the oversight thereof, not by constraint, but willingly; not for filthy lucre, but of a ready mind; Neither as being lords over God\'s heritage, but being ensamples to the flock.', theme: 'Leadership Through Servanthood' },
-    { ref: 'Matthew 20:26-28', text: 'But it shall not be so among you: but whosoever will be great among you, let him be your minister; And whosoever will be chief among you, let him be your servant.', theme: 'Leadership Through Servanthood' }
-  ]
-};
-
 type TopicKey = 'all' | 'greek-life' | 'discernment' | 'foundation' | 'purpose';
 
 const BibleStudy = () => {
@@ -235,25 +112,22 @@ const BibleStudy = () => {
   const [phraseResults, setPhraseResults] = useState<any[]>([]);
   const [aiResults, setAiResults] = useState<any[]>([]);
   const [selectedTopic, setSelectedTopic] = useState<TopicKey>('all');
+  const [selectedStudy, setSelectedStudy] = useState<StudyGuide | null>(null);
+  const [studyDialogOpen, setStudyDialogOpen] = useState(false);
   const { savedSearches, loading: savedLoading, saveSearch, deleteSearch, isSearchSaved } = useSavedBibleSearches();
 
-  // Get topic content based on selection
-  const getTopicVerses = () => {
-    if (selectedTopic === 'all') {
-      return [
-        ...topicContent['greek-life'],
-        ...topicContent['discernment'],
-        ...topicContent['foundation'],
-        ...topicContent['purpose']
-      ];
-    }
-    return topicContent[selectedTopic] || [];
-  };
+  // Get studies based on selected category
+  const filteredStudies = getStudiesByCategory(selectedTopic);
 
   // Use demo data when demo mode is enabled
   const displayVerse = isDemoMode ? DEMO_DAILY_VERSE : dailyVerse;
   const displaySavedSearches = isDemoMode ? DEMO_SAVED_SEARCHES : (savedSearches.length > 0 ? savedSearches : DEMO_SAVED_SEARCHES);
   const isShowingDemoSearches = isDemoMode || savedSearches.length === 0;
+
+  const handleOpenStudy = (study: StudyGuide) => {
+    setSelectedStudy(study);
+    setStudyDialogOpen(true);
+  };
 
   // Pull to refresh
   const handleRefresh = async () => {
@@ -602,18 +476,12 @@ const BibleStudy = () => {
             <TabsContent value="topics" className="space-y-6">
               {/* Topic Filter */}
               <div className="flex flex-wrap justify-center gap-2">
-                {[
-                  { key: 'all' as TopicKey, label: 'All' },
-                  { key: 'greek-life' as TopicKey, label: 'Greek Life' },
-                  { key: 'discernment' as TopicKey, label: 'Discernment' },
-                  { key: 'foundation' as TopicKey, label: 'Foundation' },
-                  { key: 'purpose' as TopicKey, label: 'Purpose' }
-                ].map((topic) => (
+                {categories.map((topic) => (
                   <Button
                     key={topic.key}
                     variant={selectedTopic === topic.key ? 'default' : 'outline'}
                     size="sm"
-                    onClick={() => setSelectedTopic(topic.key)}
+                    onClick={() => setSelectedTopic(topic.key as TopicKey)}
                     className={selectedTopic === topic.key ? 'bg-sacred hover:bg-sacred/90' : ''}
                   >
                     {topic.label}
@@ -621,33 +489,60 @@ const BibleStudy = () => {
                 ))}
               </div>
 
-              {/* Topic Content */}
+              {/* Study Guides Grid */}
               <div className="grid gap-4 md:grid-cols-2">
-                {getTopicVerses().map((verse, idx) => (
-                  <Card key={`${verse.ref}-${idx}`} className="hover:shadow-md transition-shadow border-sacred/20">
-                    <CardHeader className="pb-2">
+                {filteredStudies.map((study) => (
+                  <Card key={study.id} className="hover:shadow-md transition-shadow border-sacred/20">
+                    <CardHeader className="pb-3">
                       <div className="flex items-center justify-between flex-wrap gap-2">
                         <Badge className="bg-sacred/10 text-sacred border-sacred/20">
-                          {verse.ref}
+                          {study.category}
                         </Badge>
-                        <Badge variant="outline" className="text-xs">
-                          {verse.theme}
-                        </Badge>
+                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                          <FileText className="w-3 h-3" />
+                          <span>{study.keyScriptures.length} scriptures</span>
+                          <MessageSquare className="w-3 h-3 ml-2" />
+                          <span>{study.discussionQuestions.length} questions</span>
+                        </div>
                       </div>
+                      <CardTitle className="text-lg mt-2">{study.title}</CardTitle>
                     </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground leading-relaxed italic">
-                        "{verse.text}"
+                    <CardContent className="space-y-4">
+                      <p className="text-sm text-muted-foreground line-clamp-3">
+                        {study.introduction}
                       </p>
-                      <div className="mt-3 flex justify-end">
+                      
+                      {/* Preview of key scriptures */}
+                      <div className="flex flex-wrap gap-1">
+                        {study.keyScriptures.slice(0, 3).map((scripture, idx) => (
+                          <Badge key={idx} variant="outline" className="text-xs">
+                            {scripture.ref}
+                          </Badge>
+                        ))}
+                        {study.keyScriptures.length > 3 && (
+                          <Badge variant="outline" className="text-xs">
+                            +{study.keyScriptures.length - 3} more
+                          </Badge>
+                        )}
+                      </div>
+                      
+                      <div className="flex items-center justify-between pt-2">
                         <ListenButton
-                          text={`${verse.ref}. ${verse.text}`}
-                          itemId={`topic-${verse.ref}`}
-                          title={verse.ref}
+                          text={`${study.title}. ${study.introduction}`}
+                          itemId={`study-preview-${study.id}`}
+                          title={study.title}
                           showLabel={false}
                           size="sm"
                           variant="ghost"
                         />
+                        <Button 
+                          size="sm" 
+                          className="gap-2 bg-sacred hover:bg-sacred/90"
+                          onClick={() => handleOpenStudy(study)}
+                        >
+                          <Eye className="w-4 h-4" />
+                          View Study
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -1033,6 +928,13 @@ const BibleStudy = () => {
         </Tabs>
         </div>
       </main>
+
+      {/* Study Guide Dialog */}
+      <StudyGuideDialog
+        study={selectedStudy}
+        open={studyDialogOpen}
+        onOpenChange={setStudyDialogOpen}
+      />
     </div>
   );
 };
