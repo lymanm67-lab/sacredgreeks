@@ -98,6 +98,7 @@ const TheBook = lazy(() => import("./pages/TheBook"));
 const GreekLife = lazy(() => import("./pages/GreekLife"));
 const Contact = lazy(() => import("./pages/Contact"));
 const ToolsResources = lazy(() => import("./pages/ToolsResources"));
+const HealingResources = lazy(() => import("./pages/HealingResources"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -219,6 +220,7 @@ const App = () => (
                     <Route path="/greek-life" element={<GreekLife />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/tools" element={<ToolsResources />} />
+                    <Route path="/healing-resources" element={<HealingResources />} />
                     
                     {/* Protected routes - with sidebar */}
                     <Route
