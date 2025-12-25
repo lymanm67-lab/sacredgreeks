@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Home, BookOpen, Youtube, ExternalLink, Sparkles, Heart, Users, Award } from "lucide-react";
+import drLymanPortrait from "@/assets/dr-lyman-portrait.png";
 
 const MeetDrLyman = () => {
   return (
@@ -36,9 +37,11 @@ const MeetDrLyman = () => {
         <Card className="overflow-hidden">
           <div className="md:flex">
             <div className="md:w-1/3 bg-gradient-to-br from-sacred/20 to-sacred/5 p-6 flex items-center justify-center">
-              <div className="w-48 h-48 rounded-full bg-sacred/20 flex items-center justify-center">
-                <Award className="w-24 h-24 text-sacred" />
-              </div>
+              <img 
+                src={drLymanPortrait} 
+                alt="Dr. Lyman A. Montgomery" 
+                className="w-64 h-auto rounded-lg shadow-lg object-cover"
+              />
             </div>
             <CardContent className="md:w-2/3 p-6 space-y-4">
               <p className="text-muted-foreground leading-relaxed">
