@@ -268,6 +268,137 @@ const AntiHazing = () => {
   ];
 
   const memorialVictims = [
+    // 2024-2025
+    {
+      name: "Sawyer Updike",
+      age: 18,
+      year: 2024,
+      organization: "Sigma Chi (IFC)",
+      school: "University of Texas at Austin",
+      cause: "Suicide allegedly caused by hazing",
+      legislation: null
+    },
+    {
+      name: "Won Jang",
+      age: 20,
+      year: 2024,
+      organization: "Beta Alpha Omega (IFC)",
+      school: "Dartmouth College",
+      cause: "Drowning after attending fraternity party",
+      legislation: null
+    },
+    // 2021-2023
+    {
+      name: "Adam Oakes",
+      age: 19,
+      year: 2021,
+      organization: "Delta Chi (IFC)",
+      school: "Virginia Commonwealth University",
+      cause: "Alcohol poisoning during 'Big Brother Night'",
+      legislation: "Adam's Law (Virginia)"
+    },
+    {
+      name: "Stone Foltz",
+      age: 20,
+      year: 2021,
+      organization: "Pi Kappa Alpha (IFC)",
+      school: "Bowling Green State University",
+      cause: "Fatal alcohol poisoning during initiation",
+      legislation: "Collin's Law (Ohio)"
+    },
+    {
+      name: "Danny Santulli",
+      age: 19,
+      year: 2021,
+      organization: "Sigma Alpha Epsilon (IFC)",
+      school: "University of Missouri",
+      cause: "Severe brain damage from alcohol poisoning (survived but severely disabled)",
+      legislation: null
+    },
+    // 2019-2020
+    {
+      name: "Sam Martinez",
+      age: 19,
+      year: 2019,
+      organization: "Phi Gamma Delta (IFC)",
+      school: "Washington State University",
+      cause: "Alcohol poisoning during pledge event",
+      legislation: "Sam's Law (Washington)"
+    },
+    {
+      name: "Noah Domingo",
+      age: 19,
+      year: 2019,
+      organization: "Sigma Alpha Epsilon (IFC)",
+      school: "University of California, Irvine",
+      cause: "Alcohol-related Big Brother Night death",
+      legislation: null
+    },
+    {
+      name: "Marlon Jackson",
+      age: 23,
+      year: 2019,
+      organization: "Kappa Alpha Psi (NPHC)",
+      school: "Delaware State University",
+      cause: "Sleep deprivation led to fatal auto accident",
+      legislation: null
+    },
+    // 2018
+    {
+      name: "Collin Wiant",
+      age: 18,
+      year: 2018,
+      organization: "Sigma Pi (IFC)",
+      school: "Ohio University",
+      cause: "Asphyxiation from nitrous oxide during hazing",
+      legislation: "Collin's Law (Ohio)"
+    },
+    {
+      name: "Joseph Little",
+      age: 20,
+      year: 2018,
+      organization: "Phi Gamma Delta (IFC)",
+      school: "Texas A&M University",
+      cause: "Collapsed during pledging activities",
+      legislation: null
+    },
+    {
+      name: "Tyler Hilliard",
+      age: 20,
+      year: 2018,
+      organization: "Alpha Phi Alpha (NPHC)",
+      school: "University of California, Riverside",
+      cause: "Collapsed after alleged hazing",
+      legislation: null
+    },
+    {
+      name: "Alexander Beletsis",
+      age: 20,
+      year: 2018,
+      organization: "Theta Chi (IFC)",
+      school: "University of California, Santa Cruz",
+      cause: "Alcohol-related fatal fall",
+      legislation: null
+    },
+    {
+      name: "Nicky Cumberland",
+      age: 20,
+      year: 2018,
+      organization: "Texas Cowboys Spirit Group",
+      school: "University of Texas",
+      cause: "Sleep deprivation contributed to fatal accident",
+      legislation: null
+    },
+    {
+      name: "Marco Lee Shemwell",
+      age: 4,
+      year: 2018,
+      organization: "Alpha Tau Omega (IFC) - Bystander",
+      school: "University of Kentucky",
+      cause: "Hit by car driven by intoxicated pledge",
+      legislation: null
+    },
+    // 2017
     {
       name: "Max Gruver",
       age: 18,
@@ -287,77 +418,61 @@ const AntiHazing = () => {
       legislation: "Timothy J. Piazza Antihazing Law (Pennsylvania)"
     },
     {
-      name: "Adam Oakes",
-      age: 19,
-      year: 2021,
-      organization: "Delta Chi (IFC)",
-      school: "Virginia Commonwealth University",
-      cause: "Alcohol poisoning during 'Big Brother Night'",
-      legislation: "Adam's Law (Virginia)"
-    },
-    {
-      name: "Stone Foltz",
+      name: "Andrew Coffey",
       age: 20,
-      year: 2021,
-      organization: "Pi Kappa Alpha (IFC)",
-      school: "Bowling Green State University",
-      cause: "Fatal alcohol poisoning during initiation",
-      legislation: "Collin's Law (Ohio) - named after him and others"
-    },
-    {
-      name: "Danny Santulli",
-      age: 19,
-      year: 2021,
-      organization: "Sigma Alpha Epsilon (IFC)",
-      school: "University of Missouri",
-      cause: "Severe brain damage from alcohol poisoning (survived but severely disabled)",
+      year: 2017,
+      organization: "Pi Kappa Phi (IFC)",
+      school: "Florida State University",
+      cause: "Acute alcohol poisoning during pledge night",
       legislation: null
     },
     {
-      name: "Robert Champion",
-      age: 26,
-      year: 2011,
-      organization: "Florida A&M Marching 100",
-      school: "Florida A&M University",
-      cause: "Blunt force trauma during band hazing ritual 'Crossing Bus C'",
-      legislation: "Robert Champion Anti-Hazing Act (Florida)"
-    },
-    {
-      name: "Michael Davis",
-      age: 22,
-      year: 1994,
-      organization: "Kappa Alpha Psi (NPHC)",
-      school: "Southeast Missouri State University",
-      cause: "Cardiac arrest from severe beating during hazing",
+      name: "Matthew Ellis",
+      age: 20,
+      year: 2017,
+      organization: "Phi Kappa Psi (IFC)",
+      school: "Texas State University",
+      cause: "Alcohol bottle exchange ritual",
       legislation: null
     },
     {
-      name: "Joel Harris",
+      name: "Harrison Carter Cole",
       age: 18,
-      year: 2001,
-      organization: "Omega Psi Phi (NPHC)",
-      school: "University of Tennessee",
-      cause: "Cardiac arrest from severe physical abuse",
+      year: 2017,
+      organization: "Alpha Chi Sigma",
+      school: "Hampden-Sydney College",
+      cause: "Alcohol-related death at fraternity event",
       legislation: null
     },
     {
-      name: "Kristin High",
-      age: 22,
-      year: 2002,
+      name: "Jordan Hankins",
+      age: 19,
+      year: 2017,
       organization: "Alpha Kappa Alpha (NPHC)",
-      school: "California State University, Los Angeles",
-      cause: "Drowning during underground pledging activity",
+      school: "Northwestern University",
+      cause: "Suicide allegedly caused by hazing",
       legislation: null
     },
     {
-      name: "Matthew Carrington",
+      name: "Alasdair Russell",
       age: 21,
-      year: 2005,
-      organization: "Chi Tau (Local)",
-      school: "Chico State University",
-      cause: "Water intoxication during hazing",
-      legislation: "Matt's Law (California)"
+      year: 2017,
+      organization: "Phi Kappa Psi (IFC)",
+      school: "University of Southern California",
+      cause: "Suicide after head injury from hazing",
+      legislation: null
     },
+    // 2016
+    {
+      name: "Rustam Nizamutdinov",
+      age: 25,
+      year: 2016,
+      organization: "Kappa Sigma (IFC) - Bystander",
+      school: "University of Louisiana, Lafayette",
+      cause: "Hit by sleep-deprived pledge driver",
+      legislation: null
+    },
+    // 2014-2015
     {
       name: "Tucker Hipps",
       age: 19,
@@ -377,32 +492,15 @@ const AntiHazing = () => {
       legislation: null
     },
     {
-      name: "Sam Martinez",
-      age: 19,
-      year: 2019,
-      organization: "Phi Gamma Delta (IFC)",
-      school: "Washington State University",
-      cause: "Alcohol poisoning during pledge event",
-      legislation: "Sam's Law (Washington)"
-    },
-    {
-      name: "Collin Wiant",
-      age: 18,
-      year: 2018,
-      organization: "Sigma Pi (IFC)",
-      school: "Ohio University",
-      cause: "Asphyxiation from nitrous oxide during hazing",
-      legislation: "Collin's Law (Ohio)"
-    },
-    {
-      name: "Andrew Coffey",
-      age: 20,
-      year: 2017,
-      organization: "Pi Kappa Phi (IFC)",
-      school: "Florida State University",
-      cause: "Acute alcohol poisoning during pledge night",
+      name: "Jack Culolias",
+      age: 21,
+      year: 2014,
+      organization: "Sigma Alpha Epsilon (IFC)",
+      school: "Arizona State University",
+      cause: "Drowning after alcohol-fueled hazing",
       legislation: null
     },
+    // 2013
     {
       name: "Tim Deng",
       age: 19,
@@ -413,6 +511,89 @@ const AntiHazing = () => {
       legislation: null
     },
     {
+      name: "Marvell Edmondson",
+      age: 19,
+      year: 2013,
+      organization: "Men of Honor",
+      school: "Virginia State University",
+      cause: "Drowning during initiation",
+      legislation: null
+    },
+    {
+      name: "Jauwan M. Holmes",
+      age: 19,
+      year: 2013,
+      organization: "Men of Honor",
+      school: "Virginia State University",
+      cause: "Drowning during initiation",
+      legislation: null
+    },
+    {
+      name: "Peter Tran",
+      age: 20,
+      year: 2013,
+      organization: "Lambda Phi Epsilon (NAPA)",
+      school: "San Francisco State University",
+      cause: "Alcohol overdose during hazing",
+      legislation: null
+    },
+    // 2012
+    {
+      name: "Robert Champion",
+      age: 26,
+      year: 2011,
+      organization: "Florida A&M Marching 100",
+      school: "Florida A&M University",
+      cause: "Blunt force trauma during band hazing ritual 'Crossing Bus C'",
+      legislation: "Robert Champion Anti-Hazing Act (Florida)"
+    },
+    {
+      name: "David Bogenberger",
+      age: 19,
+      year: 2012,
+      organization: "Pi Kappa Alpha (IFC)",
+      school: "Northern Illinois University",
+      cause: "Alcohol overdose during 'Mom and Dad's Night' hazing",
+      legislation: null
+    },
+    {
+      name: "Philip Dhanens",
+      age: 22,
+      year: 2012,
+      organization: "Theta Chi (IFC)",
+      school: "Fresno State University",
+      cause: "Alcohol-related hazing death",
+      legislation: null
+    },
+    {
+      name: "William Torrance",
+      age: 19,
+      year: 2012,
+      organization: "Delta Gamma Iota",
+      school: "Vincennes University",
+      cause: "Heart attack from alcohol intoxication on Bid Night",
+      legislation: null
+    },
+    {
+      name: "Everett Glenn",
+      age: 19,
+      year: 2012,
+      organization: "Kappa Delta Rho (IFC)",
+      school: "Lafayette College",
+      cause: "Alcohol-related death at banned fraternity",
+      legislation: null
+    },
+    {
+      name: "Robert Eugene Tipton Jr.",
+      age: 20,
+      year: 2012,
+      organization: "Delta Sigma Phi (IFC)",
+      school: "High Point University",
+      cause: "Concussion leading to aspiration during hazing",
+      legislation: null
+    },
+    // 2010-2011
+    {
       name: "George Desdunes",
       age: 19,
       year: 2010,
@@ -421,6 +602,7 @@ const AntiHazing = () => {
       cause: "Alcohol poisoning and hypothermia during kidnapping ritual",
       legislation: null
     },
+    // 2008-2009
     {
       name: "Carson Starkey",
       age: 18,
@@ -439,22 +621,33 @@ const AntiHazing = () => {
       cause: "Traumatic brain injury from hazing assault",
       legislation: null
     },
+    // 2005-2007
     {
-      name: "Chad Meredith",
-      age: 20,
-      year: 2001,
-      organization: "Chi Omega (NPC)",
-      school: "University of Kentucky",
-      cause: "Fell from balcony during sorority initiation",
-      legislation: null
+      name: "Matthew Carrington",
+      age: 21,
+      year: 2005,
+      organization: "Chi Tau (Local)",
+      school: "Chico State University",
+      cause: "Water intoxication during hazing",
+      legislation: "Matt's Law (California)"
     },
     {
       name: "Benjamin Klein",
       age: 19,
-      year: 2007,
+      year: 2002,
       organization: "Zeta Beta Tau (IFC)",
-      school: "SUNY Plattsburgh",
-      cause: "Head trauma during 'Hell Night' hazing",
+      school: "Alfred University",
+      cause: "Suicide after being beaten for reporting hazing",
+      legislation: null
+    },
+    // 2002-2004
+    {
+      name: "Kristin High",
+      age: 22,
+      year: 2002,
+      organization: "Alpha Kappa Alpha (NPHC)",
+      school: "California State University, Los Angeles",
+      cause: "Drowning during underground pledging activity",
       legislation: null
     },
     {
@@ -467,48 +660,88 @@ const AntiHazing = () => {
       legislation: null
     },
     {
-      name: "Andre Wafer",
+      name: "Daniel Reardon",
       age: 19,
-      year: 2006,
-      organization: "Alpha Phi Alpha (NPHC)",
-      school: "University of North Carolina",
-      cause: "Collapsed during physical hazing",
-      legislation: null
-    },
-    {
-      name: "Donnie Wade II",
-      age: 21,
-      year: 2012,
-      organization: "Phi Beta Sigma (NPHC)",
-      school: "Savannah State University",
-      cause: "Physical beating during hazing",
-      legislation: null
-    },
-    {
-      name: "Robert Szabo",
-      age: 18,
       year: 2002,
-      organization: "Delta Chi (IFC)",
-      school: "Monmouth University",
-      cause: "Alcohol poisoning during hazing ritual",
+      organization: "Phi Sigma Kappa (IFC)",
+      school: "University of Maryland",
+      cause: "Alcohol drinking ritual on Bid Night",
+      legislation: null
+    },
+    // 2001
+    {
+      name: "Chad Meredith",
+      age: 18,
+      year: 2001,
+      organization: "Kappa Sigma (IFC)",
+      school: "University of Miami",
+      cause: "Drowning during pledge activity",
+      legislation: "Chad Meredith Act (Florida)"
+    },
+    {
+      name: "Joseph T. Green",
+      age: 20,
+      year: 2001,
+      organization: "Omega Psi Phi (NPHC)",
+      school: "Tennessee State University",
+      cause: "Died during exercise session hazing",
       legislation: null
     },
     {
-      name: "Jack Culolias",
-      age: 21,
-      year: 2023,
-      organization: "Pi Kappa Alpha (IFC)",
-      school: "Bowling Green State University",
-      cause: "Fell from height during hazing event",
+      name: "Seth Korona",
+      age: 18,
+      year: 2001,
+      organization: "Theta Chi (IFC)",
+      school: "Indiana University",
+      cause: "Head injury after consuming alcohol during keg stand",
       legislation: null
     },
+    // 2000
     {
-      name: "Nick Dunn",
+      name: "Adrian Heideman",
       age: 19,
-      year: 2022,
-      organization: "Sigma Chi (IFC)",
-      school: "University of Missouri",
-      cause: "Alcohol poisoning during bid night",
+      year: 2000,
+      organization: "Pi Kappa Phi (IFC)",
+      school: "Chico State University",
+      cause: "Encouraged to drink during hazing",
+      legislation: null
+    },
+    {
+      name: "Terry Ryan Stirling",
+      age: 19,
+      year: 2000,
+      organization: "Alpha Tau Omega (IFC)",
+      school: "Old Dominion University",
+      cause: "Alcohol poisoning during Big Brother/Little Brother bottle exchange",
+      legislation: null
+    },
+    {
+      name: "Ben Folsom Grantham III",
+      age: 19,
+      year: 2000,
+      organization: "Alpha Tau Omega (IFC)",
+      school: "University of Georgia",
+      cause: "Died during pledge sneak/kidnapping ritual",
+      legislation: null
+    },
+    // 1990s
+    {
+      name: "Michael Davis",
+      age: 22,
+      year: 1994,
+      organization: "Kappa Alpha Psi (NPHC)",
+      school: "Southeast Missouri State University",
+      cause: "Cardiac arrest from severe beating during hazing",
+      legislation: null
+    },
+    // Historical
+    {
+      name: "John Butler Groves",
+      age: 19,
+      year: 1838,
+      organization: "Class Hazing",
+      school: "Franklin Seminary (Kentucky)",
+      cause: "First documented hazing death in US history",
       legislation: null
     }
   ];
