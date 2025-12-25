@@ -1177,6 +1177,253 @@ export const ritualGuideContent: RitualEntry[] = [
     christianApproach: "Jesus had public ministry and private moments with disciples. Churches have public services and members-only meetings. Privacy for meaningful moments is appropriate.",
     cautionLevel: "low",
     scripturalContext: "Mark 4:34 - 'When he was alone with his own disciples, he explained everything.'"
+  },
+  // Deities Section
+  {
+    id: "athena-deity",
+    name: "Athena (Minerva)",
+    category: "deities",
+    description: "Greek goddess of wisdom, warfare, and crafts. Roman equivalent: Minerva. Appears on university seals, state seals, and library architecture worldwide.",
+    christianApproach: "Athena imagery on university seals represents the pursuit of wisdom and knowledge—values Christians share (Proverbs 4:7). The symbol honors learning, not the deity. Christians attend Harvard, Yale, and Columbia without worshipping Athena.",
+    cautionLevel: "low",
+    scripturalContext: "Proverbs 4:7 - 'The beginning of wisdom is this: Get wisdom. Though it cost all you have, get understanding.'"
+  },
+  {
+    id: "apollo-deity",
+    name: "Apollo",
+    category: "deities",
+    description: "Greek god of music, arts, light, and prophecy. His imagery appears on government buildings, arts institutions, and medical facilities (Apollo was also associated with healing).",
+    christianApproach: "Apollo represents light, arts, and healing in cultural symbolism. Christians participate in arts programs, visit museums, and receive medical care at institutions bearing his imagery without spiritual compromise.",
+    cautionLevel: "low",
+    scripturalContext: "Philippians 4:8 - 'Whatever is true, whatever is noble, whatever is right, whatever is pure, whatever is lovely... think about such things.'"
+  },
+  {
+    id: "hermes-deity",
+    name: "Hermes (Mercury)",
+    category: "deities",
+    description: "Greek messenger god of commerce, travelers, and thieves. Roman equivalent: Mercury. His caduceus-like imagery appears in commerce and communication symbols.",
+    christianApproach: "The FTD flower delivery logo, postal services, and many business symbols use Mercury/Hermes imagery to represent swift commerce and communication. Christians use these services daily.",
+    cautionLevel: "low"
+  },
+  {
+    id: "nike-deity",
+    name: "Nike (Victoria)",
+    category: "deities",
+    description: "Greek goddess of victory. Roman equivalent: Victoria. Her winged image appears on trophies, medals, and the famous Nike brand logo (the 'swoosh' represents her wing).",
+    christianApproach: "Christian athletes wear Nike shoes, receive victory trophies, and celebrate wins without worshipping Nike. The imagery represents achievement and excellence, values Scripture celebrates.",
+    cautionLevel: "low",
+    scripturalContext: "1 Corinthians 9:24 - 'Run in such a way as to get the prize.'"
+  },
+  {
+    id: "themis-deity",
+    name: "Themis (Lady Justice)",
+    category: "deities",
+    description: "Greek titaness of divine law and order. Her blindfolded image holding scales appears in courthouses, law schools, and legal institutions worldwide.",
+    christianApproach: "Christians serve as lawyers, judges, and jurors in courts adorned with Themis imagery. The symbol represents justice—a deeply biblical concept. God Himself is called the 'righteous judge.'",
+    cautionLevel: "low",
+    scripturalContext: "Micah 6:8 - 'Act justly and to love mercy and to walk humbly with your God.'"
+  },
+  {
+    id: "poseidon-deity",
+    name: "Poseidon (Neptune)",
+    category: "deities",
+    description: "Greek god of the sea. Roman equivalent: Neptune. His trident imagery appears on naval vessels, coastal cities' seals, and maritime institutions.",
+    christianApproach: "Naval personnel, including Christian chaplains, serve on ships with Neptune imagery. Coastal cities with Christian populations use his imagery in their seals. The symbol represents maritime power and heritage.",
+    cautionLevel: "low"
+  },
+  {
+    id: "zeus-deity",
+    name: "Zeus (Jupiter)",
+    category: "deities",
+    description: "Chief Greek god. Roman equivalent: Jupiter. His eagle was adopted as a Roman imperial symbol and later by the United States government.",
+    christianApproach: "The American eagle (derived from Jupiter's eagle) appears on U.S. currency, passports, and military insignia. Christians serve in the military, use money, and pledge allegiance without worshipping Zeus.",
+    cautionLevel: "low",
+    scripturalContext: "Romans 13:1 - 'Let everyone be subject to the governing authorities, for there is no authority except that which God has established.'"
+  },
+  {
+    id: "demeter-deity",
+    name: "Demeter (Ceres)",
+    category: "deities",
+    description: "Greek goddess of harvest and agriculture. Roman equivalent: Ceres (origin of 'cereal'). Her imagery appears on state seals, agricultural departments, and food industry symbols.",
+    christianApproach: "Many state seals feature Ceres representing agriculture. Farmers, including Christian farmers, work under agricultural departments using this imagery. The symbol represents harvest and provision.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 67:6 - 'The land yields its harvest; God, our God, blesses us.'"
+  },
+  {
+    id: "ares-deity",
+    name: "Ares (Mars)",
+    category: "deities",
+    description: "Greek god of war. Roman equivalent: Mars. Military imagery, the planet Mars, and the month of March all derive from his name.",
+    christianApproach: "Christians in the military use martial terminology and serve in March without spiritual compromise. The Pentagon and military installations use classical war imagery as cultural heritage, not worship.",
+    cautionLevel: "low"
+  },
+  {
+    id: "hephaestus-deity",
+    name: "Hephaestus (Vulcan)",
+    category: "deities",
+    description: "Greek god of fire, forge, and craftsmanship. Roman equivalent: Vulcan. His imagery appears in engineering, metallurgy, and manufacturing symbols.",
+    christianApproach: "Engineering schools, manufacturing facilities, and craft guilds use forge and anvil imagery derived from Vulcan. Christians work in these fields without worshipping the deity—they honor the value of skilled craftsmanship.",
+    cautionLevel: "low",
+    scripturalContext: "Exodus 31:3-5 - God filled Bezalel with 'skill, ability and knowledge in all kinds of crafts.'"
+  },
+  // Federal Seals Section
+  {
+    id: "us-great-seal",
+    name: "Great Seal of the United States",
+    category: "seals",
+    description: "Features Jupiter's eagle, the Eye of Providence in an Egyptian pyramid, and Latin mottos. Used on currency, passports, and all official federal documents.",
+    christianApproach: "Christians daily use money bearing this seal, carry passports, and respect government documents. The founding fathers, many devout Christians, designed and approved this seal combining classical and Masonic imagery.",
+    cautionLevel: "low",
+    scripturalContext: "Matthew 22:21 - 'Give back to Caesar what is Caesar's, and to God what is God's.'"
+  },
+  {
+    id: "doj-seal",
+    name: "Department of Justice Seal",
+    category: "seals",
+    description: "Features Lady Justice (Themis) with scales and sword, surrounded by Latin inscriptions emphasizing law and justice.",
+    christianApproach: "Christian lawyers, judges, and law enforcement officers serve under this seal daily. The imagery represents the pursuit of justice—a profoundly biblical calling.",
+    cautionLevel: "low",
+    scripturalContext: "Amos 5:24 - 'Let justice roll on like a river, righteousness like a never-failing stream!'"
+  },
+  {
+    id: "us-senate-seal",
+    name: "United States Senate Seal",
+    category: "seals",
+    description: "Features the Roman fasces (bundle of rods with an axe), symbolizing strength through unity and judicial authority from ancient Rome.",
+    christianApproach: "Christian senators, staff, and visitors to the Capitol work under this seal. The fasces represents democratic governance, derived from Roman republican traditions.",
+    cautionLevel: "low"
+  },
+  {
+    id: "supreme-court-imagery",
+    name: "Supreme Court Building Imagery",
+    category: "seals",
+    description: "The building features Moses holding the Ten Commandments alongside Solon (Greek), Confucius, and other lawgivers. Greek architectural style with Corinthian columns.",
+    christianApproach: "The Supreme Court building includes Moses prominently, showing how classical architecture and biblical imagery coexist. Christians argue cases, serve as justices, and visit this building regularly.",
+    cautionLevel: "low",
+    scripturalContext: "The building literally depicts Moses and the Ten Commandments, demonstrating biblical influence alongside classical elements."
+  },
+  {
+    id: "treasury-seal",
+    name: "Department of Treasury Seal",
+    category: "seals",
+    description: "Features scales of justice, a key, and classical imagery representing financial stewardship and security.",
+    christianApproach: "Christians use currency, pay taxes, and work in financial institutions under Treasury oversight. The classical imagery represents careful stewardship—a biblical value.",
+    cautionLevel: "low",
+    scripturalContext: "Matthew 25:21 - 'Well done, good and faithful servant! You have been faithful with a few things; I will put you in charge of many things.'"
+  },
+  // State Seals Section
+  {
+    id: "virginia-seal",
+    name: "Virginia State Seal",
+    category: "seals",
+    description: "Features Virtus (Roman goddess of virtue) standing over a defeated tyrant with 'Sic Semper Tyrannis' (Thus Always to Tyrants).",
+    christianApproach: "Christians in Virginia use state documents, vote, and serve in government under this seal. The imagery represents liberty and virtue—values Christians embrace.",
+    cautionLevel: "low"
+  },
+  {
+    id: "california-seal",
+    name: "California State Seal",
+    category: "seals",
+    description: "Features Minerva (Athena), goddess of wisdom, who sprang fully grown from Jupiter's head. Includes a grizzly bear and the state motto 'Eureka.'",
+    christianApproach: "Millions of Christians live, work, and worship freely in California under this seal. Minerva represents the Gold Rush-era value placed on wisdom and quick thinking.",
+    cautionLevel: "low"
+  },
+  {
+    id: "new-york-seal",
+    name: "New York State Seal",
+    category: "seals",
+    description: "Features Liberty and Justice flanking a shield, with a sun, mountains, and ships. 'Excelsior' (Ever Upward) as the motto.",
+    christianApproach: "Christians in New York participate fully in civic life under this seal. Liberty and Justice are personified in classical style but represent American values rooted in Judeo-Christian tradition.",
+    cautionLevel: "low"
+  },
+  {
+    id: "oklahoma-seal",
+    name: "Oklahoma State Seal",
+    category: "seals",
+    description: "Features a five-pointed star containing symbols of the Five Civilized Tribes, surrounded by 45 smaller stars representing the states.",
+    christianApproach: "This seal uniquely honors Native American heritage. Christians in Oklahoma, including many Native American Christians, embrace this multicultural symbol of their state's history.",
+    cautionLevel: "low"
+  },
+  // College Seals Section
+  {
+    id: "harvard-seal",
+    name: "Harvard University Seal",
+    category: "seals",
+    description: "Features 'VERITAS' (Truth) on three books. Founded as a Christian institution to train ministers, the motto 'Truth for Christ and the Church' was later shortened.",
+    christianApproach: "Harvard was founded by Puritans for Christian education. The pursuit of truth—VERITAS—remains a Christian calling. Many faithful Christians have graduated from and taught at Harvard.",
+    cautionLevel: "low",
+    scripturalContext: "John 8:32 - 'Then you will know the truth, and the truth will set you free.'"
+  },
+  {
+    id: "yale-seal",
+    name: "Yale University Seal",
+    category: "seals",
+    description: "Features 'LUX ET VERITAS' (Light and Truth) with Hebrew text 'Urim and Thummim' referencing the Old Testament priestly breastplate.",
+    christianApproach: "Yale's seal explicitly includes Hebrew Scripture references. Founded to train Congregational ministers, the university's Christian heritage is embedded in its imagery.",
+    cautionLevel: "low",
+    scripturalContext: "Exodus 28:30 - The Urim and Thummim on the priestly breastplate for divine guidance."
+  },
+  {
+    id: "columbia-seal",
+    name: "Columbia University Seal",
+    category: "seals",
+    description: "Features Alma Mater (nurturing mother) enthroned with a scepter, open book, and 'IN LUMINE TUO VIDEBIMUS LUMEN' (In Thy Light We Shall See Light).",
+    christianApproach: "Columbia's motto is from Psalm 36:9—explicitly biblical. The personified Alma Mater represents the university as a nurturing institution, not a goddess to worship.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 36:9 - 'For with you is the fountain of life; in your light we see light.'"
+  },
+  {
+    id: "princeton-seal",
+    name: "Princeton University Seal",
+    category: "seals",
+    description: "Features 'DEI SUB NUMINE VIGET' (Under God's Power She Flourishes) with an open Bible. Founded as a Presbyterian seminary.",
+    christianApproach: "Princeton's seal explicitly acknowledges God's sovereignty. The open Bible on the seal reflects the university's Christian founding. Christians can embrace this heritage with confidence.",
+    cautionLevel: "low",
+    scripturalContext: "Proverbs 3:5-6 - 'Trust in the LORD with all your heart... and he will make your paths straight.'"
+  },
+  {
+    id: "dartmouth-seal",
+    name: "Dartmouth College Seal",
+    category: "seals",
+    description: "Features 'VOX CLAMANTIS IN DESERTO' (A Voice Crying in the Wilderness) referencing John the Baptist. Founded to educate Native Americans and colonists in Christianity.",
+    christianApproach: "Dartmouth's motto is directly from Scripture—John the Baptist's declaration. The seal reflects the college's Christian missionary origins.",
+    cautionLevel: "low",
+    scripturalContext: "Matthew 3:3 - 'A voice of one calling in the wilderness, Prepare the way for the Lord.'"
+  },
+  {
+    id: "unc-seal",
+    name: "University of North Carolina Seal",
+    category: "seals",
+    description: "Features 'LUX LIBERTAS' (Light and Liberty) with classical imagery including a book and rays of light.",
+    christianApproach: "Light and liberty are deeply biblical concepts. The first public university in America uses imagery that resonates with Christian values of truth and freedom.",
+    cautionLevel: "low",
+    scripturalContext: "2 Corinthians 3:17 - 'Where the Spirit of the Lord is, there is freedom.'"
+  },
+  {
+    id: "mit-seal",
+    name: "MIT Seal",
+    category: "seals",
+    description: "Features 'MENS ET MANUS' (Mind and Hand) with a classical figure, books, and industrial imagery representing the union of science and practical arts.",
+    christianApproach: "The combination of intellectual pursuit and practical application reflects biblical wisdom. Christians in STEM fields honor God through scientific discovery and technological innovation.",
+    cautionLevel: "low",
+    scripturalContext: "Colossians 3:23 - 'Whatever you do, work at it with all your heart, as working for the Lord.'"
+  },
+  {
+    id: "usc-seal",
+    name: "University of Southern California Seal",
+    category: "seals",
+    description: "Features Tommy Trojan, a classical warrior figure, with a torch and USC's motto. Founded by Methodists in 1880.",
+    christianApproach: "USC was founded by Methodist Christians. The Trojan warrior represents courage and strength—qualities Scripture celebrates. Many Christian athletes, scholars, and ministers have studied there.",
+    cautionLevel: "low"
+  },
+  {
+    id: "stanford-seal",
+    name: "Stanford University Seal",
+    category: "seals",
+    description: "Features 'DIE LUFT DER FREIHEIT WEHT' (The Wind of Freedom Blows) with a tree, representing growth and intellectual freedom.",
+    christianApproach: "Founded by Christians Leland and Jane Stanford in memory of their son. The tree imagery connects to biblical metaphors of growth, fruit-bearing, and flourishing.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 1:3 - 'That person is like a tree planted by streams of water, which yields its fruit in season.'"
   }
 ];
 
@@ -1184,7 +1431,9 @@ export const symbolCategories = [
   { id: "all", label: "All" },
   { id: "organizational", label: "Organizational" },
   { id: "cultural", label: "Cultural" },
-  { id: "ritual", label: "Ritual" }
+  { id: "ritual", label: "Ritual" },
+  { id: "deities", label: "Deities" },
+  { id: "seals", label: "Seals" }
 ];
 
 export interface CulturalComparisonEntry {
