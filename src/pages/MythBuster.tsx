@@ -41,11 +41,11 @@ const MythBuster = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8 max-w-4xl">
+        {/* F.I.S.T. Framework - How Myths Become Truth */}
+        <FISTFramework />
+
         {/* Downloadable Resources */}
         <MythBusterDownloads />
-
-        {/* F.I.S.T. Framework */}
-        <FISTFramework />
         
         {/* Search & Filter */}
         <div className="mb-8 space-y-4">
