@@ -10,6 +10,7 @@ import { mythBusterContent, mythCategories, mythScenarios, mythOrganizations } f
 import { ListenButton } from '@/components/ListenButton';
 import { FISTFramework } from '@/components/myth-buster/FISTFramework';
 import { MythBusterDownloads } from '@/components/myth-buster/MythBusterDownloads';
+import ConversationScripts from '@/components/myth-buster/ConversationScripts';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const MythBuster = () => {
@@ -43,6 +44,9 @@ const MythBuster = () => {
       <main className="container mx-auto px-4 py-8 max-w-4xl">
         {/* F.I.S.T. Framework - How Myths Become Truth */}
         <FISTFramework />
+
+        {/* Conversation Scripts */}
+        <ConversationScripts />
         
         {/* Search & Filter */}
         <div className="mb-8 space-y-4">
