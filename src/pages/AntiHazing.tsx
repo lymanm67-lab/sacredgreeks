@@ -24,6 +24,7 @@ import {
   Flame,
   FileText
 } from "lucide-react";
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 const AntiHazing = () => {
   const stats = [
@@ -374,8 +375,155 @@ const AntiHazing = () => {
       school: "West Virginia University",
       cause: "Alcohol poisoning during 'Big Brother' event",
       legislation: null
+    },
+    {
+      name: "Sam Martinez",
+      age: 19,
+      year: 2019,
+      organization: "Phi Gamma Delta (IFC)",
+      school: "Washington State University",
+      cause: "Alcohol poisoning during pledge event",
+      legislation: "Sam's Law (Washington)"
+    },
+    {
+      name: "Collin Wiant",
+      age: 18,
+      year: 2018,
+      organization: "Sigma Pi (IFC)",
+      school: "Ohio University",
+      cause: "Asphyxiation from nitrous oxide during hazing",
+      legislation: "Collin's Law (Ohio)"
+    },
+    {
+      name: "Andrew Coffey",
+      age: 20,
+      year: 2017,
+      organization: "Pi Kappa Phi (IFC)",
+      school: "Florida State University",
+      cause: "Acute alcohol poisoning during pledge night",
+      legislation: null
+    },
+    {
+      name: "Tim Deng",
+      age: 19,
+      year: 2013,
+      organization: "Pi Delta Psi (NAPA)",
+      school: "Baruch College, CUNY",
+      cause: "Blunt force trauma during 'Glass Ceiling' hazing ritual",
+      legislation: null
+    },
+    {
+      name: "George Desdunes",
+      age: 19,
+      year: 2010,
+      organization: "Sigma Alpha Epsilon (IFC)",
+      school: "Cornell University",
+      cause: "Alcohol poisoning and hypothermia during kidnapping ritual",
+      legislation: null
+    },
+    {
+      name: "Carson Starkey",
+      age: 18,
+      year: 2008,
+      organization: "Sigma Alpha Epsilon (IFC)",
+      school: "Texas Tech University",
+      cause: "Alcohol poisoning during Big Brother Night",
+      legislation: null
+    },
+    {
+      name: "Harrison Kowiak",
+      age: 19,
+      year: 2008,
+      organization: "Theta Chi (IFC)",
+      school: "Lenoir-Rhyne University",
+      cause: "Traumatic brain injury from hazing assault",
+      legislation: null
+    },
+    {
+      name: "Chad Meredith",
+      age: 20,
+      year: 2001,
+      organization: "Chi Omega (NPC)",
+      school: "University of Kentucky",
+      cause: "Fell from balcony during sorority initiation",
+      legislation: null
+    },
+    {
+      name: "Benjamin Klein",
+      age: 19,
+      year: 2007,
+      organization: "Zeta Beta Tau (IFC)",
+      school: "SUNY Plattsburgh",
+      cause: "Head trauma during 'Hell Night' hazing",
+      legislation: null
+    },
+    {
+      name: "Kenitha Saafir",
+      age: 24,
+      year: 2002,
+      organization: "Alpha Kappa Alpha (NPHC)",
+      school: "California State University, Los Angeles",
+      cause: "Drowning during underground pledging",
+      legislation: null
+    },
+    {
+      name: "Andre Wafer",
+      age: 19,
+      year: 2006,
+      organization: "Alpha Phi Alpha (NPHC)",
+      school: "University of North Carolina",
+      cause: "Collapsed during physical hazing",
+      legislation: null
+    },
+    {
+      name: "Donnie Wade II",
+      age: 21,
+      year: 2012,
+      organization: "Phi Beta Sigma (NPHC)",
+      school: "Savannah State University",
+      cause: "Physical beating during hazing",
+      legislation: null
+    },
+    {
+      name: "Robert Szabo",
+      age: 18,
+      year: 2002,
+      organization: "Delta Chi (IFC)",
+      school: "Monmouth University",
+      cause: "Alcohol poisoning during hazing ritual",
+      legislation: null
+    },
+    {
+      name: "Jack Culolias",
+      age: 21,
+      year: 2023,
+      organization: "Pi Kappa Alpha (IFC)",
+      school: "Bowling Green State University",
+      cause: "Fell from height during hazing event",
+      legislation: null
+    },
+    {
+      name: "Nick Dunn",
+      age: 19,
+      year: 2022,
+      organization: "Sigma Chi (IFC)",
+      school: "University of Missouri",
+      cause: "Alcohol poisoning during bid night",
+      legislation: null
     }
   ];
+
+  // Chart data for visualizations
+  const chartData = councilStatistics.map(council => ({
+    name: council.council.split(" ")[0],
+    fullName: council.council,
+    deaths: council.hazingDeaths + council.pledgingDeaths,
+    hazingDeaths: council.hazingDeaths,
+    pledgingDeaths: council.pledgingDeaths,
+    injuries: council.injuries
+  }));
+
+  const COLORS = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#06b6d4', '#8b5cf6', '#ec4899'];
 
   const sourceCitations = [
     {
@@ -656,6 +804,94 @@ const AntiHazing = () => {
                         </div>
                       </div>
                     </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Deaths by Council Visualization */}
+              <Card>
+                <CardHeader className="text-center">
+                  <CardTitle className="text-xl">Hazing Deaths by Greek Council</CardTitle>
+                  <CardDescription className="max-w-2xl mx-auto">
+                    Visual breakdown of documented hazing and pledging deaths across major Greek governing councils
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid lg:grid-cols-2 gap-8">
+                    {/* Pie Chart */}
+                    <div>
+                      <h4 className="text-sm font-medium text-center mb-4">Deaths Distribution</h4>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <PieChart>
+                          <Pie
+                            data={chartData}
+                            cx="50%"
+                            cy="50%"
+                            innerRadius={60}
+                            outerRadius={100}
+                            paddingAngle={2}
+                            dataKey="deaths"
+                            label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                            labelLine={false}
+                          >
+                            {chartData.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                            ))}
+                          </Pie>
+                          <Tooltip 
+                            formatter={(value, name, props) => [
+                              `${value} deaths`, 
+                              props.payload.fullName
+                            ]}
+                            contentStyle={{ 
+                              backgroundColor: 'hsl(var(--card))', 
+                              border: '1px solid hsl(var(--border))',
+                              borderRadius: '8px'
+                            }}
+                          />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    </div>
+
+                    {/* Bar Chart */}
+                    <div>
+                      <h4 className="text-sm font-medium text-center mb-4">Deaths Comparison</h4>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <BarChart data={chartData} layout="vertical">
+                          <XAxis type="number" tick={{ fontSize: 12 }} />
+                          <YAxis 
+                            dataKey="name" 
+                            type="category" 
+                            tick={{ fontSize: 11 }}
+                            width={60}
+                          />
+                          <Tooltip 
+                            formatter={(value, name) => [value, name === 'hazingDeaths' ? 'Hazing Deaths' : 'Pledging Deaths']}
+                            contentStyle={{ 
+                              backgroundColor: 'hsl(var(--card))', 
+                              border: '1px solid hsl(var(--border))',
+                              borderRadius: '8px'
+                            }}
+                          />
+                          <Legend />
+                          <Bar dataKey="hazingDeaths" name="Hazing Deaths" fill="#ef4444" stackId="a" />
+                          <Bar dataKey="pledgingDeaths" name="Pledging Deaths" fill="#f97316" stackId="a" />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </div>
+
+                  {/* Legend */}
+                  <div className="mt-6 flex flex-wrap justify-center gap-3">
+                    {chartData.map((item, index) => (
+                      <div key={item.name} className="flex items-center gap-2 text-xs">
+                        <div 
+                          className="w-3 h-3 rounded-full" 
+                          style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                        />
+                        <span className="text-muted-foreground">{item.fullName.split(" (")[0]}</span>
+                      </div>
+                    ))}
                   </div>
                 </CardContent>
               </Card>
