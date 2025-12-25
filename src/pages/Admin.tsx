@@ -15,8 +15,9 @@ import { BetaTestersManager } from "@/components/admin/BetaTestersManager";
 import { EngagementScoresDashboard } from "@/components/admin/EngagementScoresDashboard";
 import { NotificationCampaigns } from "@/components/admin/NotificationCampaigns";
 import { ReengagementCampaigns } from "@/components/admin/ReengagementCampaigns";
-import { Home, Users, FileText, Lightbulb, MessageSquare, Heart, Video, Rocket, FlaskConical, BarChart3, Activity, Bell, RefreshCw, Gift } from "lucide-react";
+import { Home, Users, FileText, Lightbulb, MessageSquare, Heart, Video, Rocket, FlaskConical, BarChart3, Activity, Bell, RefreshCw, Gift, GraduationCap } from "lucide-react";
 import { GiftSubscriptionManager } from "@/components/admin/GiftSubscriptionManager";
+import { CoachingWaitlistManager } from "@/components/admin/CoachingWaitlistManager";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -203,6 +204,10 @@ const Admin = () => {
               <BarChart3 className="h-4 w-4" />
               <span className="hidden sm:inline">Analytics</span>
             </TabsTrigger>
+            <TabsTrigger value="coaching" className="flex items-center gap-2">
+              <GraduationCap className="h-4 w-4" />
+              <span className="hidden sm:inline">Coaching</span>
+            </TabsTrigger>
             <TabsTrigger value="gifts" className="flex items-center gap-2">
               <Gift className="h-4 w-4" />
               <span className="hidden sm:inline">Gifts</span>
@@ -324,6 +329,10 @@ const Admin = () => {
                 </Link>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="coaching">
+            <CoachingWaitlistManager />
           </TabsContent>
 
           <TabsContent value="gifts">
