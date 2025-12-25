@@ -9,6 +9,7 @@ import { ArrowLeft, Search, BookOpen, ExternalLink, Filter } from 'lucide-react'
 import { mythBusterContent, mythCategories, mythScenarios, mythOrganizations } from '@/data/mythBusterContent';
 import { ListenButton } from '@/components/ListenButton';
 import { FISTFramework } from '@/components/myth-buster/FISTFramework';
+import { MythBusterDownloads } from '@/components/myth-buster/MythBusterDownloads';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const MythBuster = () => {
@@ -40,6 +41,9 @@ const MythBuster = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8 max-w-4xl">
+        {/* Downloadable Resources */}
+        <MythBusterDownloads />
+
         {/* F.I.S.T. Framework */}
         <FISTFramework />
         
