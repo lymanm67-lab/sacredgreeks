@@ -686,6 +686,138 @@ const GreekLife = () => {
     },
   ];
 
+  const christianGreeks: Organization[] = [
+    {
+      name: "Beta Upsilon Chi",
+      greekLetters: "BYX",
+      founded: "1985",
+      foundedLocation: "University of Texas at Austin",
+      colors: "Royal Blue and White",
+      motto: "Brothers Under Christ",
+      symbol: "Cross and Greek Letters",
+      nickname: "BYX"
+    },
+    {
+      name: "Sigma Phi Lambda",
+      greekLetters: "ΣΦΛ",
+      founded: "October 2, 1988",
+      foundedLocation: "Texas A&M University",
+      colors: "Purple and Gold",
+      motto: "Sisters for the Lord",
+      symbol: "Cross and Lamb",
+      nickname: "SFL - Christian Sorority"
+    },
+    {
+      name: "Alpha Gamma Omega",
+      greekLetters: "ΑΓΩ",
+      founded: "1927",
+      foundedLocation: "UCLA",
+      colors: "Purple and Gold",
+      motto: "Brotherhood in Christ",
+      symbol: "The Alpha and Omega",
+      nickname: "AGO"
+    },
+    {
+      name: "Kappa Phi",
+      greekLetters: "ΚΦ",
+      founded: "1916",
+      foundedLocation: "University of Kansas",
+      colors: "Red and White",
+      motto: "Christian Women in Service",
+      symbol: "Cross",
+      nickname: "Christian Women's Sorority"
+    },
+    {
+      name: "Chi Alpha Omega",
+      greekLetters: "ΧΑΩ",
+      founded: "2000",
+      foundedLocation: "San Diego State University",
+      colors: "Navy Blue and Silver",
+      motto: "Serving Christ Through Brotherhood",
+      nickname: "Chi Alpha"
+    },
+    {
+      name: "Theta Alpha",
+      greekLetters: "ΘΑ",
+      founded: "1935",
+      foundedLocation: "United States",
+      colors: "Royal Blue and White",
+      motto: "God First",
+      symbol: "Cross",
+      nickname: "Nazarene Sorority"
+    },
+    {
+      name: "Phi Gamma Chi",
+      greekLetters: "ΦΓΧ",
+      founded: "1999",
+      foundedLocation: "University of Florida",
+      colors: "Black and Gold",
+      motto: "Faith, Growth, Christ",
+      nickname: "Christian Fraternity"
+    },
+    {
+      name: "Alpha Chi Rho (Christian Heritage)",
+      greekLetters: "ΑΧΡ",
+      founded: "1895",
+      foundedLocation: "Trinity College",
+      colors: "Garnet and White",
+      motto: "We Dare Maintain",
+      symbol: "Chi Rho",
+      nickname: "Crows - Episcopal roots"
+    },
+  ];
+
+  const lgbtqGreeks: Organization[] = [
+    {
+      name: "Delta Lambda Phi",
+      greekLetters: "ΔΛΦ",
+      founded: "October 1, 1986",
+      foundedLocation: "Washington, D.C.",
+      colors: "Purple, Red, and Green",
+      motto: "Philanthropy, Scholarship, and Social Responsibility",
+      symbol: "Triangle",
+      nickname: "DLP"
+    },
+    {
+      name: "Gamma Rho Lambda",
+      greekLetters: "ΓΡΛ",
+      founded: "November 2003",
+      foundedLocation: "Arizona State University",
+      colors: "Navy Blue, Yellow, and White",
+      motto: "Unity Through Diversity",
+      symbol: "Lambda",
+      nickname: "GRL - LGBTQ+ Sorority"
+    },
+    {
+      name: "Sigma Phi Beta",
+      greekLetters: "ΣΦΒ",
+      founded: "April 10, 2003",
+      foundedLocation: "Rutgers University",
+      colors: "Purple and Silver",
+      motto: "Be True to Yourself",
+      symbol: "Lambda Phoenix",
+      nickname: "SigPhiBeta"
+    },
+    {
+      name: "Lambda Delta Lambda",
+      greekLetters: "ΛΔΛ",
+      founded: "1988",
+      foundedLocation: "University of Vermont",
+      colors: "Purple and White",
+      motto: "Challenging Homophobia Through Education",
+      nickname: "Lesbian/Bisexual Sorority"
+    },
+    {
+      name: "Alpha Lambda Zeta",
+      greekLetters: "ΑΛΖ",
+      founded: "2006",
+      foundedLocation: "Wayne State University",
+      colors: "Blue and White",
+      motto: "Brotherhood Beyond Labels",
+      nickname: "Gay/Bisexual Fraternity"
+    },
+  ];
+
   const councils = [
     {
       id: "nphc",
@@ -758,6 +890,22 @@ const GreekLife = () => {
       description: "Freemasonry, Shriners, Eastern Star, and fraternal orders with Greek traditions",
       founded: "Various",
       organizations: masonicFraternal
+    },
+    {
+      id: "christian",
+      name: "Christian",
+      fullName: "Christian Fraternities & Sororities",
+      description: "Faith-based Greek organizations centered on Christian brotherhood and sisterhood",
+      founded: "Various",
+      organizations: christianGreeks
+    },
+    {
+      id: "lgbtq",
+      name: "LGBTQ+",
+      fullName: "LGBTQ+ Greek Organizations",
+      description: "Organizations providing community and belonging for LGBTQ+ students",
+      founded: "Various",
+      organizations: lgbtqGreeks
     }
   ];
 
@@ -915,6 +1063,8 @@ const GreekLife = () => {
               <TabsTrigger value="honor" className="text-xs px-2 py-1">Leadership</TabsTrigger>
               <TabsTrigger value="social" className="text-xs px-2 py-1">Social</TabsTrigger>
               <TabsTrigger value="masonic" className="text-xs px-2 py-1">Masonic</TabsTrigger>
+              <TabsTrigger value="christian" className="text-xs px-2 py-1">Christian</TabsTrigger>
+              <TabsTrigger value="lgbtq" className="text-xs px-2 py-1">LGBTQ+</TabsTrigger>
             </TabsList>
 
             {councils.map((council) => (
@@ -942,6 +1092,30 @@ const GreekLife = () => {
                         <p className="text-sm text-muted-foreground">
                           The Divine Nine organizations emerged during a time when African Americans faced significant barriers to education and social advancement. These organizations have shaped African American history through their commitment to scholarship, service, sisterhood, and brotherhood, providing safe spaces for intellectual discourse, leadership development, and community service.
                         </p>
+                      </div>
+                    )}
+
+                    {council.id === "christian" && (
+                      <div className="mb-4 p-4 rounded-lg bg-sacred/10 border border-sacred/20">
+                        <p className="text-sm text-muted-foreground">
+                          Christian Greek organizations provide fellowship opportunities for students who want their faith to be central to their Greek experience. These organizations integrate Bible study, worship, and Christian service into traditional Greek life structure.
+                        </p>
+                      </div>
+                    )}
+
+                    {council.id === "lgbtq" && (
+                      <div className="mb-4 p-4 rounded-lg bg-muted/50 border border-border">
+                        <div className="flex items-start gap-3">
+                          <Heart className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+                          <div className="space-y-2">
+                            <p className="text-sm text-muted-foreground">
+                              While perspectives on these organizations may vary, we recognize that all people deserve to be treated with dignity and respect. Every individual has the right to exist peacefully, free from harassment or harm.
+                            </p>
+                            <p className="text-sm text-muted-foreground italic">
+                              "So in everything, do to others what you would have them do to you." — Matthew 7:12
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     )}
                     
