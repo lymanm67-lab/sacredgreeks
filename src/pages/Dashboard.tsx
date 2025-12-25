@@ -204,22 +204,20 @@ const Dashboard = () => {
       <header className="border-b border-border bg-background sticky top-0 z-50">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-14">
-            <div className="flex items-center gap-3">
-              <Link to="/" className="flex items-center">
-                <img src={logo} alt="Sacred Greeks" className="h-8 w-auto" />
-              </Link>
+            <Link to="/" className="flex items-center flex-shrink-0">
+              <img src={logo} alt="Sacred Greeks" className="h-8 w-auto" />
+            </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-2">
               {isDemoMode && (
-                <Link to="/profile" className="hidden md:block">
+                <Link to="/profile">
                   <Badge variant="secondary" className="text-xs bg-amber-500/10 text-amber-600 border-amber-500/20 hover:bg-amber-500/20 cursor-pointer transition-colors">
                     <FlaskConical className="w-3 h-3 mr-1" />
                     Demo Mode
                   </Badge>
                 </Link>
               )}
-            </div>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-2">
               <SubscriptionBadge />
               <Link to="/profile">
                 <Button variant="ghost" size="sm">
