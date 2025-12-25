@@ -5,29 +5,77 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { ArrowLeft, Search, BookOpen, ExternalLink, Filter } from 'lucide-react';
+import { ArrowLeft, Search, BookOpen, ExternalLink, Filter, Copy, Check, MessageSquare, ChevronDown } from 'lucide-react';
 import { mythBusterContent, mythCategories, mythScenarios, mythOrganizations } from '@/data/mythBusterContent';
 import { ListenButton } from '@/components/ListenButton';
 import { FISTFramework } from '@/components/myth-buster/FISTFramework';
 import { MythBusterDownloads } from '@/components/myth-buster/MythBusterDownloads';
-import ConversationScripts from '@/components/myth-buster/ConversationScripts';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { toast } from 'sonner';
+
+const categoryIcons: Record<string, string> = {
+  faith: '✝️',
+  rituals: '🕯️',
+  community: '🤝',
+  lifestyle: '🌟',
+  history: '📜'
+};
+
+const categoryDescriptions: Record<string, string> = {
+  faith: 'Questions about worship, loyalty, and spiritual identity',
+  rituals: 'Concerns about ceremonies, symbols, and traditions',
+  community: 'Topics on service, fellowship, and organizational impact',
+  lifestyle: 'Matters of behavior, testimony, and daily living',
+  history: 'Questions about origins, founders, and historical roots'
+};
 
 const MythBuster = () => {
   const [search, setSearch] = useState('');
-  const [category, setCategory] = useState('all');
   const [scenario, setScenario] = useState('all');
   const [organization, setOrganization] = useState('all');
+  const [expandedCategories, setExpandedCategories] = useState<string[]>(['faith']);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const handleCopy = (text: string, id: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedId(id);
+    toast.success('Response copied to clipboard!');
+    setTimeout(() => setCopiedId(null), 2000);
+  };
+
+  const toggleCategory = (categoryId: string) => {
+    setExpandedCategories(prev => 
+      prev.includes(categoryId) 
+        ? prev.filter(c => c !== categoryId)
+        : [...prev, categoryId]
+    );
+  };
 
   const filtered = mythBusterContent.filter(myth => {
-    const matchesSearch = myth.myth.toLowerCase().includes(search.toLowerCase()) ||
+    const matchesSearch = search === '' || 
+      myth.myth.toLowerCase().includes(search.toLowerCase()) ||
       myth.shortAnswer.toLowerCase().includes(search.toLowerCase()) ||
+      myth.detailedResponse.toLowerCase().includes(search.toLowerCase()) ||
       myth.tags.some(t => t.toLowerCase().includes(search.toLowerCase()));
-    const matchesCategory = category === 'all' || myth.category === category;
     const matchesScenario = scenario === 'all' || myth.scenario === scenario;
     const matchesOrganization = organization === 'all' || myth.organization === organization;
-    return matchesSearch && matchesCategory && matchesScenario && matchesOrganization;
+    return matchesSearch && matchesScenario && matchesOrganization;
   });
+
+  // Group myths by category
+  const groupedMyths = mythCategories
+    .filter(cat => cat.id !== 'all')
+    .map(cat => ({
+      ...cat,
+      myths: filtered.filter(m => m.category === cat.id)
+    }))
+    .filter(group => group.myths.length > 0);
+
+  const generateQuickResponse = (myth: typeof mythBusterContent[0]) => {
+    const scripture = myth.scriptures[0];
+    return `${myth.detailedResponse}\n\nScripture: ${scripture.ref} - "${scripture.text}"`;
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
@@ -36,49 +84,30 @@ const MythBuster = () => {
           <Link to="/"><Button variant="ghost" size="icon"><ArrowLeft className="w-5 h-5" /></Button></Link>
           <div>
             <h1 className="text-xl font-bold">Myth Buster Library</h1>
-            <p className="text-sm text-muted-foreground">Searchable biblical responses to common accusations about Greek life</p>
+            <p className="text-sm text-muted-foreground">Biblical responses with ready-to-use scripts</p>
           </div>
         </div>
       </header>
 
       <main className="container mx-auto px-4 py-8 max-w-4xl">
-        {/* F.I.S.T. Framework - How Myths Become Truth */}
+        {/* F.I.S.T. Framework */}
         <FISTFramework />
-
-        {/* Conversation Scripts */}
-        <ConversationScripts />
         
-        {/* Search & Filter */}
-        <div className="mb-8 space-y-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-            <Input
-              placeholder="Search myths, topics, or keywords..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-          
-          {/* Category Filters */}
-          <div className="flex flex-wrap gap-2">
-            {mythCategories.map(cat => (
-              <Button
-                key={cat.id}
-                variant={category === cat.id ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setCategory(cat.id)}
-                className={category === cat.id ? 'bg-sacred hover:bg-sacred/90' : ''}
-              >
-                {cat.label}
-              </Button>
-            ))}
-          </div>
-          
-          {/* Additional Filters */}
-          <div className="flex flex-wrap gap-3">
+        {/* Search & Filter - Compact */}
+        <div className="mb-8 space-y-4 bg-card p-4 rounded-lg border">
+          <div className="flex flex-col sm:flex-row gap-3">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input
+                placeholder="Search myths, scriptures, or keywords..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="pl-9"
+              />
+            </div>
+            
             <Select value={scenario} onValueChange={setScenario}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-full sm:w-[160px]">
                 <Filter className="w-4 h-4 mr-2" />
                 <SelectValue placeholder="Scenario" />
               </SelectTrigger>
@@ -90,7 +119,7 @@ const MythBuster = () => {
             </Select>
             
             <Select value={organization} onValueChange={setOrganization}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-full sm:w-[160px]">
                 <SelectValue placeholder="Organization" />
               </SelectTrigger>
               <SelectContent>
@@ -99,70 +128,172 @@ const MythBuster = () => {
                 ))}
               </SelectContent>
             </Select>
-            
-            <Badge variant="secondary" className="self-center">
-              {filtered.length} myths found
-            </Badge>
+          </div>
+          
+          <div className="flex items-center justify-between text-sm">
+            <Badge variant="secondary">{filtered.length} myths found</Badge>
+            {search && (
+              <Button variant="ghost" size="sm" onClick={() => setSearch('')}>
+                Clear search
+              </Button>
+            )}
           </div>
         </div>
 
-        {/* Results */}
-        <div className="space-y-4">
-          {filtered.length === 0 ? (
-            <Card><CardContent className="py-8 text-center text-muted-foreground">No myths found matching your search.</CardContent></Card>
-          ) : (
-            filtered.map(myth => (
-              <Card key={myth.id}>
-                <CardHeader className="pb-2">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <Badge variant="outline" className="mb-2 capitalize">{myth.category}</Badge>
-                      <CardTitle className="text-lg">{myth.myth}</CardTitle>
-                    </div>
-                    <ListenButton text={`${myth.myth}. ${myth.shortAnswer}. ${myth.detailedResponse}`} itemId={myth.id} title={myth.myth} size="sm" />
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground mb-4">{myth.shortAnswer}</p>
-                  <Accordion type="single" collapsible>
-                    <AccordionItem value="details" className="border-none">
-                      <AccordionTrigger className="py-2 text-sacred hover:no-underline">
-                        <span className="flex items-center gap-2"><BookOpen className="w-4 h-4" /> Read Full Response</span>
-                      </AccordionTrigger>
-                      <AccordionContent className="space-y-4">
-                        <p className="text-muted-foreground leading-relaxed">{myth.detailedResponse}</p>
-                        <div>
-                          <h4 className="font-semibold mb-2">Scripture References</h4>
-                          <div className="space-y-2">
-                            {myth.scriptures.map((s, i) => (
-                              <div key={i} className="bg-muted/50 p-3 rounded-lg border-l-4 border-sacred">
-                                <p className="font-semibold text-sm text-sacred">{s.ref}</p>
-                                <p className="text-sm italic">"{s.text}"</p>
-                              </div>
-                            ))}
+        {/* Category Sections */}
+        {filtered.length === 0 ? (
+          <Card>
+            <CardContent className="py-12 text-center">
+              <p className="text-muted-foreground">No myths found matching your search.</p>
+              <Button variant="link" onClick={() => { setSearch(''); setScenario('all'); setOrganization('all'); }}>
+                Clear all filters
+              </Button>
+            </CardContent>
+          </Card>
+        ) : (
+          <div className="space-y-6">
+            {groupedMyths.map(group => (
+              <Collapsible 
+                key={group.id} 
+                open={expandedCategories.includes(group.id)}
+                onOpenChange={() => toggleCategory(group.id)}
+              >
+                <Card className="overflow-hidden">
+                  <CollapsibleTrigger className="w-full">
+                    <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <span className="text-2xl">{categoryIcons[group.id] || '📋'}</span>
+                          <div className="text-left">
+                            <CardTitle className="text-lg">{group.label}</CardTitle>
+                            <p className="text-sm text-muted-foreground font-normal">
+                              {categoryDescriptions[group.id]} • {group.myths.length} topics
+                            </p>
                           </div>
                         </div>
-                        {myth.relatedArticle && (
-                          <Link to={myth.relatedArticleUrl || '/articles'} className="inline-flex items-center gap-2 text-sacred hover:underline">
-                            <ExternalLink className="w-4 h-4" /> {myth.relatedArticle}
-                          </Link>
-                        )}
-                        <div className="flex flex-wrap gap-1">
-                          {myth.tags.map(tag => (
-                            <Badge key={tag} variant="secondary" className="text-xs">{tag}</Badge>
-                          ))}
+                        <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform ${expandedCategories.includes(group.id) ? 'rotate-180' : ''}`} />
+                      </div>
+                    </CardHeader>
+                  </CollapsibleTrigger>
+                  
+                  <CollapsibleContent>
+                    <CardContent className="pt-0 space-y-3">
+                      {group.myths.map(myth => (
+                        <div key={myth.id} className="border rounded-lg overflow-hidden">
+                          <Accordion type="single" collapsible>
+                            <AccordionItem value={myth.id} className="border-none">
+                              <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-muted/30">
+                                <div className="flex items-start gap-3 text-left flex-1">
+                                  <MessageSquare className="w-4 h-4 mt-1 text-sacred shrink-0" />
+                                  <div>
+                                    <p className="font-medium text-sm">{myth.myth}</p>
+                                    {myth.scenario && (
+                                      <Badge variant="outline" className="text-xs mt-1">{myth.scenario}</Badge>
+                                    )}
+                                  </div>
+                                </div>
+                              </AccordionTrigger>
+                              <AccordionContent className="px-4 pb-4">
+                                <div className="space-y-4">
+                                  {/* The Accusation */}
+                                  <div className="bg-destructive/5 border border-destructive/20 rounded-lg p-3">
+                                    <p className="text-xs font-semibold text-destructive mb-1">What They Say:</p>
+                                    <p className="text-sm italic text-muted-foreground">"{myth.shortAnswer}"</p>
+                                  </div>
+                                  
+                                  {/* Quick Response Script */}
+                                  <div className="bg-sacred/5 border border-sacred/20 rounded-lg p-3">
+                                    <div className="flex items-center justify-between mb-2">
+                                      <p className="text-xs font-semibold text-sacred">Your Response:</p>
+                                      <div className="flex gap-1">
+                                        <Button
+                                          variant="ghost"
+                                          size="sm"
+                                          className="h-7 px-2"
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleCopy(generateQuickResponse(myth), myth.id);
+                                          }}
+                                        >
+                                          {copiedId === myth.id ? (
+                                            <Check className="w-3 h-3 text-green-500" />
+                                          ) : (
+                                            <Copy className="w-3 h-3" />
+                                          )}
+                                          <span className="ml-1 text-xs">Copy</span>
+                                        </Button>
+                                        <ListenButton 
+                                          text={generateQuickResponse(myth)} 
+                                          itemId={myth.id} 
+                                          title={myth.myth} 
+                                          size="sm" 
+                                        />
+                                      </div>
+                                    </div>
+                                    <p className="text-sm leading-relaxed">{myth.detailedResponse}</p>
+                                  </div>
+                                  
+                                  {/* Scripture Support */}
+                                  <div>
+                                    <p className="text-xs font-semibold mb-2">Scripture Support:</p>
+                                    <div className="space-y-2">
+                                      {myth.scriptures.map((s, i) => (
+                                        <div key={i} className="bg-muted/50 p-3 rounded-lg border-l-4 border-sacred">
+                                          <div className="flex items-start justify-between gap-2">
+                                            <div className="flex-1">
+                                              <p className="font-semibold text-xs text-sacred">{s.ref}</p>
+                                              <p className="text-xs italic mt-1">"{s.text}"</p>
+                                            </div>
+                                            <Button
+                                              variant="ghost"
+                                              size="sm"
+                                              className="h-6 w-6 p-0 shrink-0"
+                                              onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleCopy(`${s.ref}: "${s.text}"`, `${myth.id}-${i}`);
+                                              }}
+                                            >
+                                              {copiedId === `${myth.id}-${i}` ? (
+                                                <Check className="w-3 h-3 text-green-500" />
+                                              ) : (
+                                                <Copy className="w-3 h-3" />
+                                              )}
+                                            </Button>
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                  
+                                  {/* Tags & Related */}
+                                  <div className="flex flex-wrap items-center gap-2 pt-2 border-t">
+                                    {myth.tags.slice(0, 4).map(tag => (
+                                      <Badge key={tag} variant="secondary" className="text-xs">{tag}</Badge>
+                                    ))}
+                                    {myth.relatedArticle && (
+                                      <Link to={myth.relatedArticleUrl || '/articles'} className="inline-flex items-center gap-1 text-xs text-sacred hover:underline ml-auto">
+                                        <ExternalLink className="w-3 h-3" /> Related article
+                                      </Link>
+                                    )}
+                                  </div>
+                                </div>
+                              </AccordionContent>
+                            </AccordionItem>
+                          </Accordion>
                         </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
-                </CardContent>
-              </Card>
-            ))
-          )}
-        </div>
+                      ))}
+                    </CardContent>
+                  </CollapsibleContent>
+                </Card>
+              </Collapsible>
+            ))}
+          </div>
+        )}
 
         {/* Downloadable Resources */}
-        <MythBusterDownloads />
+        <div className="mt-12">
+          <MythBusterDownloads />
+        </div>
       </main>
     </div>
   );
