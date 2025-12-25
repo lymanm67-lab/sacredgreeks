@@ -121,8 +121,8 @@ const StudyGuide = () => {
                 Back to Home
               </Button>
             </Link>
-            <Badge className="bg-sacred/10 text-sacred hover:bg-sacred/20 border-sacred/20" variant="outline">
-              Complete 5-Session Study Guide
+          <Badge className="bg-sacred/10 text-sacred hover:bg-sacred/20 border-sacred/20" variant="outline">
+            Complete 10-Session Study Guide
             </Badge>
           </div>
         </div>

@@ -181,7 +181,8 @@ const App = () => (
                     <Route path="/terms" element={<Terms />} />
                     <Route path="/install" element={<Install />} />
                     <Route path="/shared/:token" element={<SharedResult />} />
-                    <Route path="/study" element={<StudyGuide />} />
+                    <Route path="/study-guide" element={<StudyGuide />} />
+                    <Route path="/study" element={<Navigate to="/study-guide" replace />} />
                     <Route path="/podcast" element={<Podcast />} />
                     <Route path="/podcast-appearances" element={<PodcastAppearances />} />
                     <Route path="/did-you-know" element={<DidYouKnow />} />

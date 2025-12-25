@@ -1461,7 +1461,7 @@ export const sacredGreeksResults: Record<
   },
 };
 
-// Study Guide Content - 5 Session Starter Guide
+// Study Guide Content - 10 Session Complete Guide based on Sacred, Not Sinful book
 export interface StudySession {
   id: number;
   title: string;
@@ -1476,101 +1476,193 @@ export interface StudySession {
 export const studyGuideSessions: StudySession[] = [
   {
     id: 1,
-    title: "Session 1: I Love Jesus And I Love My Letters",
-    theme: "Naming the real tension without shame.",
-    scriptures: ["Matthew 22:37", "Colossians 3:17"],
+    title: "Session 1: Reclaiming Biblical Clarity",
+    theme: "Understanding Denounce, Renounce, and Redeem through Scripture.",
+    scriptures: ["Proverbs 18:21", "Matthew 5:33-37", "Galatians 3:13", "2 Corinthians 10:5"],
     teaching:
-      "This session helps believers admit the real tension many have never been allowed to say out loud. You love Jesus, and you also love your letters. For some, Greek life opened doors to leadership, scholarship, and service. For others, certain moments in the process were confusing, painful, or spiritually unclear. Many Christians have been told that the only faithful answer is to pretend the tension does not exist or to cut off part of their story and never speak of it again. In this study, we start with honesty instead of hiding.\n\nMatthew 22:37 calls us to love the Lord our God with all our heart, soul, and mind. That means God is not asking for part time loyalty. At the same time, Colossians 3:17 invites us to do everything in the name of the Lord Jesus. That includes how we wear your letters, how we show up in chapter life, and how we respond when people question our involvement. The point is not to pretend Greek life does not matter to you. The point is to bring your whole story, including your org, under the Lordship of Christ.\n\nIn this session, you will name both your gratitude and your grief. You will thank God for the ways He has used your organization to bless you or others. You will also give yourself permission to admit where your conscience still feels unsettled. This is not about performing for other Christians. This is about telling the truth in the presence of God so that He can lead you forward with a clean heart.",
+      "Throughout Christian history, believers have wrestled with how to respond to cultural practices, organizations, and traditions that do not fully align with the gospel of Christ. The choices often fall into three pathways: to denounce them as sinful, to renounce them by walking away, or to redeem them for God's glory. Each response carries theological weight and biblical precedent.\n\nTo denounce is to raise a prophetic voice against sin, injustice, or practices that contradict the holiness of God. The prophets of Israel consistently denounced idolatry and covenant-breaking (Jeremiah 2:11-13). Jesus Himself denounced hypocrisy in the Pharisees, calling them 'whitewashed tombs' (Matthew 23:27).\n\nTo renounce goes deeper than denouncing. It is to turn away from practices, affiliations, or spiritual allegiances that conflict with one's covenant loyalty to Christ. Scripture calls believers to 'have nothing to do with the fruitless deeds of darkness, but rather expose them' (Ephesians 5:11).\n\nRedemption is the highest expression of God's grace - the act of reclaiming what is broken and repurposing it for divine good. Paul writes that 'Christ redeemed us from the curse of the law' (Galatians 3:13), showing that what was once a curse can become a channel of blessing. As theologian Miroslav Volf reminds us, 'Redemption does not erase the past but transforms it for the sake of God's future.'",
     questions: [
-      "When you first think about your letters, what words or memories come to mind",
-      "In what ways has your organization helped you grow, serve, or find community",
-      "Are there moments in your Greek life story that still feel confusing, painful, or hard to talk about",
-      "How have churches or Christian voices spoken about BGLOs in your life so far",
-      "What do Matthew 22:37 and Colossians 3:17 say to you personally about loving God and living as a Christian Greek",
+      "What does it mean to you personally to denounce something versus renounce it",
+      "Can you think of examples where Christians have successfully redeemed cultural practices for God's glory",
+      "How do Proverbs 18:21 ('Death and life are in the power of the tongue') and Matthew 5:33-37 shape how you think about oaths and commitments",
+      "In what areas of your Greek life experience do you sense God calling you to denounce, renounce, or redeem",
+      "How does understanding these three pathways change the way you approach conversations about BGLOs"
     ],
     actionStep:
-      "Share a short version of your Greek life story with one trusted believer this week. Include both what you are grateful for and what still troubles you.",
+      "This week, identify one aspect of your Greek experience and prayerfully ask God: Should I denounce this, renounce it, or seek to redeem it? Write down your answer and the Scripture that supports your conclusion.",
     readMoreNote:
-      "Want to go deeper, read Chapter 1 in Sacred, Not Sinful. Need personal guidance, tap here to explore coaching with Dr. Lyman.",
+      "Want to go deeper? Read Chapter 1 in Sacred, Not Sinful for the full biblical framework on denouncing, renouncing, and redeeming.",
   },
   {
     id: 2,
-    title: "Session 2: Myths, Trauma, And Truth About BGLOs",
-    theme: "Separate internet panic from actual theology.",
-    scriptures: ["John 8:32", "Proverbs 18:13"],
+    title: "Session 2: The Weight of Words",
+    theme: "Understanding the spiritual significance of language, vows, and everyday expressions.",
+    scriptures: ["Proverbs 18:21", "Matthew 5:37", "1 Corinthians 10:25-26", "James 5:12"],
     teaching:
-      "This session focuses on the stories and sound bites that shape how people talk about BGLOs. Many believers have heard phrases like All Greek life is demonic or You cannot be saved and Greek. Some have watched dramatic denouncement videos online that stir fear and confusion without context. Others carry real church hurt or trauma from things that happened on campus or in ministry.\n\nJohn 8:32 tells us that the truth will make us free. That means freedom comes from Christ and from a clear understanding of what God has actually said, not from panic or pressure. Proverbs 18:13 warns against answering a matter before hearing it. When people condemn every Greek letter, color, and symbol without listening to real stories or learning the history, they are violating this wisdom.\n\nIn this study, you will take one common myth at a time and test it against Scripture. You will also begin to separate three things that often get tangled together: myths spread online, trauma from how people behaved, and what the Bible actually teaches about idolatry, vows, and Christian freedom. The aim is not to defend everything that has ever been done in Greek life. The goal is to tell the truth with a clear head and a tender heart so that you can follow Jesus without being ruled by fear.",
+      "Since the beginning of civilization, words have carried spiritual weight. In ancient cultures, speaking the name of a god or invoking a ritual phrase was regarded as a form of incantation - a means of summoning power from the spiritual realm. As Proverbs teaches, 'Death and life are in the power of the tongue' (Prov. 18:21).\n\nYet here lies a striking irony: Many church leaders condemn BGLOs because their rituals sometimes reference Greek letters or allegorical symbols, suggesting that speaking such names risks invoking demonic powers. But consider this: the word 'money' comes from Moneta, the Roman goddess. Our days of the week (Thursday - Thor's Day; Saturday - Saturn's Day) and months (January - named after Janus, the Roman god) are daily utterances of pagan deities.\n\nIf the logic holds that mere utterance of words tied to pagan history is inherently dangerous, Christians are 'invoking' pagan deities every time they say 'money,' write a check dated 'January,' or pray on a 'Sunday.' Yet these terms have been reinterpreted, redeemed, and integrated into Christian life.\n\nAs Paul makes clear in 1 Corinthians 10:25-26, urging believers to eat what is sold in the market without fear because 'the earth is the Lord's, and everything in it.' Just as food once offered to idols can be sanctified through thanksgiving, so too can cultural symbols and words once tied to idols be redeemed when placed under the Lordship of Christ.",
     questions: [
-      "What are some things you heard growing up or online about BGLOs and Christians",
-      "Which messages created the most fear or confusion in your heart",
-      "How does John 8:32 challenge the way you have seen people use fear to control decisions",
-      "Where have you seen people, on either side of the debate, answer before truly listening, like Proverbs 18:13 warns",
-      "Make two columns. In one, list messages you have heard about Greek life. In the other, write what you actually see in Scripture about idolatry, vows, conscience, and Christian freedom.",
+      "Were you aware that common words like 'money,' days of the week, and month names have pagan origins? How does this affect your view of Greek letters",
+      "How do you reconcile the selective condemnation of BGLO symbols while accepting other pagan-rooted words in daily life",
+      "What does 1 Corinthians 10:25-26 teach us about how Christians should approach things with questionable origins",
+      "In your own experience, how have words or phrases been used to create fear about Greek life",
+      "How can understanding the redemptive power of Christ over all things change how you think about symbols and language"
     ],
     actionStep:
-      "Make a simple chart with two lists: What I heard about BGLOs and What I see in Scripture. Bring that chart to prayer this week and ask God to show you where myth, trauma, and truth have been mixed together.",
+      "Make a list of common words, symbols, and traditions you use daily that have pagan origins (days of week, months, holidays). Reflect on how these have been redeemed in Christian practice, and consider how this applies to Greek life.",
     readMoreNote:
-      "Want to go deeper, read Chapter 2 in Sacred, Not Sinful. Need personal guidance, tap here to explore coaching with Dr. Lyman.",
+      "Want to go deeper? Read Chapter 1 sections on 'The Weight of Words' and 'Redeeming Words Through Christ' in Sacred, Not Sinful.",
   },
   {
     id: 3,
-    title: "Session 3: Trauma, Tradition, And Theology",
-    theme: "Sorting your story, your church background, and what the Bible truly teaches.",
-    scriptures: ["Psalm 34:18", "Mark 7:8"],
+    title: "Session 3: Rethinking D9 Secrecy",
+    theme: "Examining secrecy through the lens of Scripture and Jesus's own ministry.",
+    scriptures: ["Mark 1:43-44", "Matthew 16:20", "John 7:10", "Proverbs 11:13"],
     teaching:
-      "In this session, you begin to untangle three powerful forces in your story: trauma, tradition, and theology. Trauma includes painful experiences, harsh words, spiritual abuse, hazing, or betrayal that still echo in your body and memory. Tradition includes the habits and church cultures you grew up in, some healthy and some not. Theology is what Scripture actually teaches when read in context.\n\nPsalm 34:18 promises that the Lord is close to the brokenhearted and saves those who are crushed in spirit. If your experience with Greek life or with church leaders around this topic has left you feeling crushed, God is not standing far off with folded arms. He draws near. At the same time, Mark 7:8 warns about letting human traditions replace the commands of God. Some people grew up in churches where certain rules about clothes, music, or organizations were treated as if they were straight from Scripture, even when they were not.\n\nThis study invites you to ask three simple but searching questions: Is this memory trauma Is this just tradition Is this truly what Jesus and the apostles taught If something is trauma, it needs healing and possibly boundaries, not denial. If something is only tradition, it can be honored, revised, or released, but it should not be confused with the gospel. If something is clear theology from Scripture, then all of us, Greek or not, are called to respond in obedience. Naming which category something belongs in will help you walk in truth instead of staying stuck in a swirl of emotion and confusion.",
+      "One of the most common criticisms of BGLOs is their use of secrecy - private rituals, confidential membership processes, and guarded traditions. Critics argue that secrecy is inherently demonic, citing verses about works done in darkness.\n\nBut did Jesus Himself promote secrecy? Consider these examples: After healing the leper, Jesus 'sent him away at once with a strong warning: See that you don't tell anyone about this' (Mark 1:43-44). After Peter's confession, Jesus 'warned his disciples not to tell anyone that he was the Messiah' (Matthew 16:20). Jesus went to the festival secretly (John 7:10).\n\nJesus used selective disclosure - the Messianic Secret - not to hide sin but to avoid misunderstanding of His mission. His secrecy served a redemptive purpose: protecting the timing and nature of His ministry.\n\nPrinciple: Secrecy is not inherently sinful. Its morality depends on purpose and intent. Confidentiality in counseling, medical records, job interviews, and even church discipline processes all involve acceptable secrecy. The question for Christians in BGLOs is not 'Does my organization have secrets?' but 'What is the purpose of this secrecy, and does it conflict with my allegiance to Christ?'\n\nBiblical characters like Joseph of Arimathea and Nicodemus were 'secret disciples' who served God from positions within systems others might have condemned. Their hidden faith was strategic, not shameful.",
     questions: [
-      "When you think about Greek life and church conversations about it, what painful memories come up first",
-      "How have church traditions in your life shaped the way you think about what is holy or unholy",
-      "Can you name one example where a tradition was treated like Scripture in your background",
-      "Where do you sense there is real trauma that needs healing, apart from the Greek life debate itself",
-      "What helps you tell the difference between tradition and clear biblical teaching",
-      "How does knowing that God is close to the brokenhearted shape the way you want to move forward",
+      "How does knowing that Jesus practiced selective disclosure change your view of secrecy",
+      "What is the difference between secrecy that hides sin and secrecy that protects sacred things",
+      "Can you think of examples of acceptable secrecy in everyday Christian life (counseling, medical records, church discipline)",
+      "How do the examples of Joseph of Arimathea and Nicodemus challenge the idea that secret membership is always wrong",
+      "What aspects of your organization's confidentiality serve a redemptive purpose, and which might need examination"
     ],
     actionStep:
-      "Choose one memory that still feels heavy. Write it out as honestly as you can. Then ask: Is this trauma Is this tradition Is this theology Bring that written memory to God in prayer and, if needed, to a trusted counselor or mentor.",
+      "Examine one 'secret' aspect of your Greek experience. Ask yourself: Does this secrecy hide sin or protect something valuable? Is it serving God's purposes or conflicting with them? Write your reflection and pray over it.",
     readMoreNote:
-      "Want to go deeper, read Chapter 3 in Sacred, Not Sinful. Need personal guidance, tap here to explore coaching with Dr. Lyman.",
+      "Want to go deeper? Read Chapter 2 in Sacred, Not Sinful, especially 'Did Jesus Promote Secrecy?' and 'Secret Disciples in Positions of Power.'",
   },
   {
     id: 4,
-    title: "Session 4: The P.R.O.O.F. Framework",
-    theme: "Using Process, Rituals, Oaths, Obscurity, and Founding to examine your story.",
-    scriptures: ["1 Thessalonians 5:21-22"],
+    title: "Session 4: Freemasonry, History, and the D9 Legacy",
+    theme: "Understanding historical influences while avoiding the genetic fallacy.",
+    scriptures: ["John 7:24", "Romans 14:1-4", "1 Corinthians 8:4-6", "Proverbs 11:1"],
     teaching:
-      "This session walks you step by step through the P.R.O.O.F. framework so you can examine your Greek life involvement with honesty and hope. First, Process. Ask how your pledging and initiation shaped you. Did the process form Christlike discipline, humility, and service, or did it normalize cruelty, secrecy, and fear Some stories may hold both, and God can meet you in that tension.\n\nSecond, Rituals. Every community has rituals, from communion and baptism to graduation ceremonies and national holidays. The question is not whether a ritual exists, but what story it tells. Do your Greek rituals point you toward virtues like scholarship, service, and unity, or do they praise the flesh and mock what is holy If any ritual crosses a line in your conscience, you are free in Christ to step back, speak up, or refuse.\n\nThird, Oaths. Words matter. Jesus taught us to let our yes be yes and our no be no. P.R.O.O.F. invites you to review what you pledged. Where your words affirm truth, integrity, and service, live them out fully. Where any wording seems to elevate your org above Christ or ask for a loyalty that belongs only to God, bring that to Him in repentance and realignment.\n\nFourth, Obscurity. This asks whether you are hiding your faith to keep your letters or if you are willing to let your light shine as a Christian Greek. Finally, Founding. Every organization has a story that includes both beauty and brokenness. You cannot rewrite the past, but you can decide whether you will stay to influence the future or leave to walk in peace. P.R.O.O.F. does not assume you must stay or you must go. It gives you language and questions so that, whatever you decide, you move with a clean conscience before God.",
+      "This book was born out of a growing need to address a specific but powerful fallacy often found in Christian discourse: the genetic fallacy - the assumption that something is inherently evil or untrustworthy because of its origin, regardless of its present function or fruit.\n\nIn many church circles, BGLOs are quickly dismissed due to their use of Greek symbols or perceived ties to Masonic rituals. The concern is genuine, but the conclusion may be drawn too quickly. Does historical origin always determine spiritual reality?\n\nConsider the Christmas tree - once rooted in pre-Christian pagan customs, it now adorns sanctuaries worldwide as a cherished symbol of Advent. Wedding rings began as pagan symbols but today stand as a universal sign of covenantal love. If these once-pagan customs have been redeemed, why isn't the same grace extended to BGLOs whose current missions promote education, justice, and service?\n\nEven our calendar echoes ancient worship: Sunday for the Sun god, Thursday for Thor, Saturday for Saturn. Yet Christians mention them daily without fear. The Brotherhood of Sleeping Car Porters, founded by A. Philip Randolph, utilized structures inspired by Prince Hall Masonry, yet it became one of the greatest forces for economic justice in American history.\n\nAs Proverbs 11:1 teaches, 'A false balance is an abomination to the Lord, but a just weight is His delight.' To single out BGLOs while ignoring these other institutions reveals a selective application of critique.",
     questions: [
-      "Looking back, how did your process form you for better or for worse",
-      "Which Greek rituals feel most meaningful to you, and what story do they tell",
-      "Are there any parts of your pledge or oaths that trouble your conscience today",
-      "Where have you been tempted to hide your faith in order to avoid conflict in your organization",
-      "When you think about the founding story of your org, what parts feel aligned with Christlike values and what parts do not",
-      "What does it mean to you to test everything and hold fast to what is good, like 1 Thessalonians 5:21-22 teaches",
+      "What is the 'genetic fallacy' and how have you seen it applied to conversations about BGLOs",
+      "How do you respond to the fact that Christmas trees, wedding rings, and calendar days all have pagan origins yet are accepted by Christians",
+      "What does it mean to judge with 'right judgment' (John 7:24) rather than by appearances",
+      "How does Romans 14:1-4 guide us in dealing with disputable matters where Christians disagree",
+      "What would a 'just weight' (Proverbs 11:1) look like when evaluating BGLOs compared to other institutions"
     ],
     actionStep:
-      "Pick one letter from P.R.O.O.F. this week and act on it. That could mean having one honest conversation about your process, choosing to skip a ritual that violates your conscience, rewording an old vow in prayer before God, speaking more openly about your faith, or serving in a way that reflects the best of your founding values.",
+      "Research one accepted Christian tradition that has pagan origins (Christmas tree, Easter eggs, wedding customs). Compare how it has been redeemed to how BGLOs might be viewed. Share your findings with a friend or study partner.",
     readMoreNote:
-      "Want to go deeper, read Chapter 4 in Sacred, Not Sinful. Need personal guidance, tap here to explore coaching with Dr. Lyman.",
+      "Want to go deeper? Read Chapter 3 in Sacred, Not Sinful on 'Freemasonry & D9 Legacy' and Chapter 4 on 'Revisiting the Standard of Scrutiny.'",
   },
   {
     id: 5,
-    title: "Session 5: Lordship, Next Steps, And Living In Peace",
-    theme: "Letting Jesus lead your next move with a clean conscience.",
-    scriptures: ["Romans 12:1-2", "Colossians 1:18"],
+    title: "Session 5: Symbols - Hidden Meanings or Harmless Pride?",
+    theme: "Evaluating Greek symbols through a biblical lens of discernment.",
+    scriptures: ["1 Corinthians 8:4-6", "Romans 14:5-6", "Colossians 2:16-17", "Acts 17:22-23"],
     teaching:
-      "This final session brings everything back to the Lordship of Jesus. Romans 12:1-2 calls us to present our bodies as a living sacrifice and to be transformed by the renewing of our minds. Colossians 1:18 declares that Christ must have the first place in everything. That includes your identity as a Christian, your connection to your organization, and the way you respond to pressure from church, family, or social media.\n\nThe goal of this journey is not simply to defend Greek life or to attack it. The goal is to follow Jesus with a clear conscience and a steady heart. For some believers, that may mean staying in their organization with new boundaries, a clearer witness, and a commitment to be salt and light. For others, it may mean leaving or denouncing membership in a way that is healthy, prayed through, and not driven by public stunts or fear of being exposed online.\n\nIn this session, you will ask: What is Jesus asking me to do right now Is He calling me to rededicate my life to Him Is He inviting me to have a calm talk with my pastor, parents, or spouse Is He asking me to set new boundaries inside my chapter about what I will and will not participate in Or is He leading me to step away from my letters as an act of obedience, not as a performance for people watching As you answer, remember that the same Christ who saves you is the Christ who walks with you into every next step. His goal is not to trap you but to lead you into peace.",
+      "Divine Nine organizations use a variety of symbols - Greek letters, colors, mascots, hand signs, and ceremonial elements. Critics often argue these symbols have hidden demonic meanings. But what does Scripture actually teach about symbols and their power?\n\nPaul addresses this directly in 1 Corinthians 8:4-6: 'We know that an idol is nothing in the world, and that there is none other God but one.' The symbol itself has no inherent power - what matters is the heart and intention of the one using it.\n\nConsider how Paul engaged Greek culture on Mars Hill (Acts 17:22-23). Rather than condemning all Greek symbolism, he used their 'Unknown God' altar as a bridge to share the gospel. Paul demonstrated redemptive engagement, not fearful avoidance.\n\nModern examples abound: Nike (Greek goddess of victory) appears on shoes worn to church. Amazon (warrior women of mythology) delivers our Bibles. Starbucks uses a Greek siren on every coffee cup. The medical profession uses the Caduceus (Hermes' staff) and the Bowl of Hygieia (Greek goddess). Christian doctors take the Hippocratic Oath, which originally began with invocations to Greek gods.\n\nThe question is not whether a symbol once meant something pagan, but what it means now in the context it is being used. As Romans 14:5-6 teaches, 'Let every man be fully persuaded in his own mind.'",
     questions: [
-      "As you look back over the last four sessions, what has God highlighted most clearly to you",
-      "Where do you sense you have been living more to please people than to please Christ",
-      "What would it look like for Jesus to have first place in how you wear or do not wear your letters",
-      "Which next step feels most in line with faith and peace, even if it is also scary",
-      "Who do you need to talk to in order to move forward wisely, not in isolation",
-      "How would you explain your current conviction to someone who loves you but disagrees",
+      "How does 1 Corinthians 8:4-6 ('an idol is nothing in the world') inform your view of Greek symbols",
+      "What modern brands and institutions use Greek mythology in their symbols? Why don't Christians boycott Nike, Amazon, or Starbucks",
+      "How did Paul engage Greek culture on Mars Hill, and what can we learn from his approach",
+      "What symbols in your organization do you feel at peace about? Are there any that trouble your conscience",
+      "How do you balance personal conviction with grace toward those who see symbols differently"
     ],
     actionStep:
-      "Write a simple prayer that answers this question: Lord Jesus, based on what You have shown me, this is the next step I believe You are asking me to take. Then share that step with one trusted believer who will pray with you and walk with you.",
+      "Take inventory of the symbols in your daily life that have pagan or mythological origins (brands you use, buildings you enter, professions you interact with). Consider how the principle of redemption applies to your Greek symbols.",
     readMoreNote:
-      "Want to go deeper, read Chapter 5 in Sacred, Not Sinful. Need personal guidance, tap here to explore coaching with Dr. Lyman.",
+      "Want to go deeper? Read Chapter 4 in Sacred, Not Sinful on 'Scrutinized Symbols' and 'Symbols: Hidden Meanings or Harmless Pride?'",
+  },
+  {
+    id: 6,
+    title: "Session 6: Renounce or Denounce? The Anti-BGLO Movement",
+    theme: "Understanding the denouncement movement and evaluating the fruit of BGLOs.",
+    scriptures: ["Matthew 7:16-20", "Galatians 5:22-23", "1 John 4:1", "Proverbs 15:22"],
+    teaching:
+      "In recent years, a growing number of Christians have publicly renounced their affiliation with BGLOs, often citing personal convictions shaped by prayer, Scripture, and discipleship. Their testimonies deserve thoughtful consideration. Yet these stories have mainly emerged in a vacuum marked by the striking and persistent silence of clergy leadership.\n\nThis silence raises necessary questions: Are pastors hesitant to address the issue for fear of alienating congregants? Do they lack the theological or historical grounding to speak responsibly? The absence of balanced, biblically informed teaching has created a fragmented discourse, leaving believers vulnerable to confusion or extremes.\n\nJesus taught us to evaluate by fruit: 'By their fruit you will know them' (Matthew 7:16). What are the fruits of the Divine Nine? Voter registration drives. School desegregation efforts. Public health campaigns. Scholarship programs. Community service. Mentorship of generations of Black leaders. Organizations like Zeta Phi Beta, Alpha Kappa Alpha, and Delta Sigma Theta were founded by prayerful women active in church and civil rights activism.\n\nThe question is not simply 'What were the origins?' but 'What is the fruit today?' If the fruit aligns with the Fruit of the Spirit (Galatians 5:22-23) - love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, self-control - we must consider whether condemnation is warranted.",
+    questions: [
+      "Why do you think there has been such silence from church leadership on the BGLO question",
+      "How should we evaluate the 'fruit' of an organization according to Matthew 7:16-20",
+      "What positive fruits have you witnessed from BGLO involvement - in your own life or others",
+      "How do you respond to someone who has publicly denounced their membership? With judgment or grace",
+      "What does 1 John 4:1 ('test the spirits') mean in the context of evaluating teachings about Greek life"
+    ],
+    actionStep:
+      "Make a list of the fruits you have personally witnessed from your organization - both positive and negative. Evaluate them against Galatians 5:22-23. Share your assessment with a trusted mentor and seek their counsel.",
+    readMoreNote:
+      "Want to go deeper? Read Chapter 5 in Sacred, Not Sinful on 'Renounce or Denounce,' including 'The Fruit of the Tree' and 'Pillars of BGLO Excellence.'",
+  },
+  {
+    id: 7,
+    title: "Session 7: Pagan Influences in Everyday Life",
+    theme: "Examining how Christians already engage with pagan-rooted traditions.",
+    scriptures: ["1 Corinthians 10:31", "Romans 14:14", "Colossians 1:16-17", "Titus 1:15"],
+    teaching:
+      "Chapter 6 of Sacred, Not Sinful examines pagan influences that Christians readily accept: wedding ceremonies, Disney films, burial societies, and the Hippocratic Oath. This session expands our awareness of how deeply pagan roots run through accepted Christian practice.\n\nWedding Ceremonies: The white dress, wedding rings, the veil, 'giving away' the bride, and even the honeymoon all have pagan origins rooted in ancient fertility rites and superstition.\n\nThe Hippocratic Oath: The original oath begins, 'I swear by Apollo the physician, and Asclepius, and Hygieia, and Panacea, and all the gods and goddesses...' It was literally a vow sworn to pagan deities. Yet Christian doctors take versions of this oath without controversy.\n\nFuneral Traditions: Wreaths, black clothing, and many burial customs originated in pagan rituals meant to appease spirits of the dead.\n\nChurch Architecture: Many church buildings feature columns, domes, and designs borrowed from Greek and Roman temples. The Vatican itself sits on ancient pagan sites.\n\nAs Titus 1:15 teaches, 'To the pure, all things are pure.' And Romans 14:14: 'I am convinced, being fully persuaded in the Lord Jesus, that nothing is unclean in itself.' The issue is not origin but current use and intention.",
+    questions: [
+      "Were you aware of the pagan origins of wedding traditions, medical oaths, and funeral customs? How does this affect your perspective",
+      "Why do you think Christians readily accept these pagan-rooted traditions but question BGLOs",
+      "What does 'To the pure, all things are pure' (Titus 1:15) mean for how we evaluate cultural practices",
+      "How does Romans 14:14 ('nothing is unclean in itself') apply to Greek traditions",
+      "Where do you draw the line between acceptable cultural engagement and sinful participation"
+    ],
+    actionStep:
+      "Research the pagan origins of one Christian wedding tradition and one funeral tradition. Reflect on how the church has redeemed these practices. Apply the same framework to evaluate your Greek involvement.",
+    readMoreNote:
+      "Want to go deeper? Read Chapter 6 in Sacred, Not Sinful covering 'Wedding Ceremonies,' 'The Original Hippocratic Oath,' and 'Pagan Influence on the Church.'",
+  },
+  {
+    id: 8,
+    title: "Session 8: Christian Identity and BGLO Involvement",
+    theme: "Living out your faith while wearing your letters.",
+    scriptures: ["2 Corinthians 5:17", "Galatians 2:20", "Matthew 5:13-16", "1 Peter 2:9"],
+    teaching:
+      "This session addresses the practical question: How do I live as a Christian while being active in my Greek organization? Chapter 8 of Sacred, Not Sinful provides guidance across multiple areas of life.\n\nChristian Identity & Calling: Your primary identity is in Christ (2 Corinthians 5:17). Your Greek letters do not define you - they are a context in which you live out your calling. As 1 Peter 2:9 reminds us, you are 'a chosen generation, a royal priesthood, a holy nation, a peculiar people.'\n\nLeadership & Authority: Christian Greeks should lead with servant hearts (Mark 10:42-45), bringing biblical values of integrity, justice, and compassion to chapter leadership.\n\nRitual, Symbols & Participation: Not every ritual requires your participation. You have the freedom in Christ to opt out of anything that violates your conscience. As Paul taught, 'Everything is permissible for me - but not everything is beneficial' (1 Corinthians 6:12).\n\nPersonal Holiness & Lifestyle: Your Greek involvement should not lead you into sin. If your chapter activities consistently tempt you toward drunkenness, sexual immorality, or compromise, you must set firm boundaries.\n\nEvangelism & Witness: Your Greek organization is a mission field. You have access to people who might never enter a church. Be salt and light (Matthew 5:13-16).",
+    questions: [
+      "How do you maintain your primary identity in Christ while also identifying with your Greek organization",
+      "In what ways can you bring Christian leadership principles to your chapter",
+      "Are there rituals or activities you should abstain from based on your conscience",
+      "How has your Greek involvement challenged or strengthened your personal holiness",
+      "Who in your organization might be open to spiritual conversations? How can you be salt and light"
+    ],
+    actionStep:
+      "Identify one way you can be more intentional about your Christian witness within your organization this month - whether through leadership, conversation, service, or personal example.",
+    readMoreNote:
+      "Want to go deeper? Read Chapter 8 in Sacred, Not Sinful covering all nine sections on Christian Identity, Leadership, Ritual, Holiness, Evangelism, and more.",
+  },
+  {
+    id: 9,
+    title: "Session 9: A Christian's Response to Culture and Criticism",
+    theme: "Navigating criticism with grace, truth, and wisdom.",
+    scriptures: ["1 Peter 3:15", "Colossians 4:5-6", "2 Timothy 2:24-25", "Proverbs 15:1"],
+    teaching:
+      "As a Christian in a BGLO, you will face criticism - from church members, family, social media commentators, and even pastors. How you respond matters as much as what you say. Chapter 9 provides a framework for responding with grace and truth.\n\n1 Peter 3:15 instructs: 'Always be prepared to give an answer to everyone who asks you to give the reason for the hope that you have. But do this with gentleness and respect.' Your response should be prepared, hopeful, gentle, and respectful.\n\nColossians 4:5-6 adds: 'Be wise in the way you act toward outsiders; make the most of every opportunity. Let your conversation be always full of grace, seasoned with salt, so that you may know how to answer everyone.' Grace and truth must work together.\n\nWhen someone condemns your membership:\n- Listen first (Proverbs 18:13)\n- Respond with gentleness (Proverbs 15:1)\n- Share your reasoning with humility (2 Timothy 2:24-25)\n- Know when to disengage (Matthew 7:6)\n\nRemember: You are not responsible for changing everyone's mind. You are responsible for honoring Christ in how you respond. Some critics will never be satisfied - that's between them and God.",
+    questions: [
+      "How have you typically responded to criticism about your Greek involvement? With defense, anger, or grace",
+      "What does it mean to answer with 'gentleness and respect' even when someone is attacking you",
+      "How can you prepare thoughtful responses in advance for common criticisms",
+      "When is it wise to engage in dialogue, and when is it wise to disengage",
+      "How can you honor Christ even when someone refuses to hear your explanation"
+    ],
+    actionStep:
+      "Write out a brief, gracious response to the most common criticism you face about your Greek involvement. Practice delivering it with gentleness and respect. Ask a trusted friend to give you feedback.",
+    readMoreNote:
+      "Want to go deeper? Read Chapter 9 in Sacred, Not Sinful on 'A Christian's Response to Culture and Criticism,' including guidance on discerning cultural practices.",
+  },
+  {
+    id: 10,
+    title: "Session 10: Looking Back to Move Forward",
+    theme: "Letting Jesus lead your next steps with a clean conscience.",
+    scriptures: ["Romans 12:1-2", "Colossians 1:18", "Philippians 3:13-14", "Romans 14:22-23"],
+    teaching:
+      "This final session brings everything together as you discern your path forward. Chapter 10 of Sacred, Not Sinful provides guidance for parents, mentors, pastors, and individuals seeking clarity.\n\nRomans 12:1-2 calls us to 'present your bodies as a living sacrifice' and be 'transformed by the renewing of your mind.' This journey has been about renewing your mind with Scripture, not social media. Colossians 1:18 declares that Christ must have 'first place in everything' - including your Greek involvement.\n\nYour path forward may look different from others. Some will stay in their organizations with new boundaries and a clearer witness, committed to being salt and light. Others may sense God calling them to step away - not out of fear or public pressure, but from genuine conviction.\n\nRomans 14:22-23 provides a key principle: 'The faith that you have, keep between yourself and God... whoever has doubts is condemned if they eat, because their eating is not from faith; and everything that does not come from faith is sin.' Whatever you decide, it must be from faith - not from fear, pressure, or performance.\n\nPhilippians 3:13-14 encourages: 'Forgetting what is behind and straining toward what is ahead, I press on toward the goal.' Whether you stay or leave, press forward in Christ.\n\nRemember: The same Christ who saves you walks with you into every next step. His goal is not to trap you but to lead you into peace.",
+    questions: [
+      "As you look back over these ten sessions, what has God highlighted most clearly to you",
+      "Where do you sense you have been living more to please people than to please Christ",
+      "What would it look like for Jesus to have 'first place' in your Greek involvement",
+      "Is your current position on Greek life based on faith, fear, or pressure from others",
+      "What is the next step you believe God is asking you to take - and who will you share it with"
+    ],
+    actionStep:
+      "Write a prayer that completes this sentence: 'Lord Jesus, based on what You have shown me through this study, this is the next step I believe You are asking me to take...' Share your decision with one trusted believer who will pray with you and walk with you.",
+    readMoreNote:
+      "Want to go deeper? Read Chapter 10 in Sacred, Not Sinful, including 'A Word to Pastors and Church Leaders' and 'Advice for Parents and Mentors.'",
   },
 ];
 
