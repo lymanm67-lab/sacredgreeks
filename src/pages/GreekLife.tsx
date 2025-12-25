@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Home, Users, Shield, BookOpen, Compass, Heart, Award, ArrowRight } from "lucide-react";
+import { Home, Users, Shield, BookOpen, Compass, Heart, Award, ArrowRight, AlertTriangle } from "lucide-react";
 
 const GreekLife = () => {
   const councils = [
@@ -103,13 +103,20 @@ const GreekLife = () => {
                 <Award className="w-6 h-6 text-sacred" />
               </div>
               <div>
-                <CardTitle>{councils[0].name}</CardTitle>
-                <CardDescription>{councils[0].description}</CardDescription>
+                <CardTitle>The Divine Nine Legacy</CardTitle>
+                <CardDescription>A Brotherhood and Sisterhood of Excellence</CardDescription>
               </div>
             </div>
           </CardHeader>
-          <CardContent>
-            <div className="grid sm:grid-cols-3 gap-2">
+          <CardContent className="space-y-4">
+            <p className="text-sm text-muted-foreground">
+              The Divine Nine refers to the nine historically African American Greek-letter organizations that make up the National Pan-Hellenic Council (NPHC). These organizations have shaped African American history through their commitment to scholarship, service, sisterhood, and brotherhood.
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Founded between 1906 and 1963, these organizations emerged during a time when African Americans faced significant barriers to education and social advancement. They provided safe spaces for intellectual discourse, leadership development, and community service.
+            </p>
+            
+            <div className="grid sm:grid-cols-3 gap-2 py-2">
               {councils[0].organizations?.map((org, index) => (
                 <div key={index} className="text-sm text-muted-foreground flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-sacred" />
@@ -117,7 +124,27 @@ const GreekLife = () => {
                 </div>
               ))}
             </div>
-            <div className="mt-4 pt-4 border-t border-border">
+
+            {/* Anti-Hazing Link */}
+            <Link 
+              to="/anti-hazing" 
+              className="flex items-center gap-3 p-4 rounded-lg bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 transition-colors group"
+            >
+              <div className="p-2 rounded-lg bg-amber-500/20">
+                <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+              </div>
+              <div className="flex-1">
+                <span className="font-medium text-amber-700 dark:text-amber-300">
+                  Anti-Hazing Resources & Prevention
+                </span>
+                <p className="text-xs text-amber-600/80 dark:text-amber-400/80">
+                  Biblical guidance and practical resources for a hazing-free Greek experience
+                </p>
+              </div>
+              <ArrowRight className="w-4 h-4 text-amber-600 dark:text-amber-400 group-hover:translate-x-1 transition-transform" />
+            </Link>
+
+            <div className="pt-2 border-t border-border">
               <Button asChild variant="outline" size="sm">
                 <Link to="/symbol-guide?tab=organizations">
                   View Organization Details
