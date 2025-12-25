@@ -152,7 +152,21 @@ const topicContent = {
     { ref: 'Hebrews 5:14', text: 'But strong meat belongeth to them that are of full age, even those who by reason of use have their senses exercised to discern both good and evil.', theme: 'Spiritual Maturity' },
     { ref: 'Proverbs 14:12', text: 'There is a way which seemeth right unto a man, but the end thereof are the ways of death.', theme: 'Avoiding Deception' },
     { ref: 'Romans 12:2', text: 'And be not conformed to this world: but be ye transformed by the renewing of your mind, that ye may prove what is that good, and acceptable, and perfect, will of God.', theme: 'Renewed Mind' },
-    { ref: 'Colossians 2:8', text: 'Beware lest any man spoil you through philosophy and vain deceit, after the tradition of men, after the rudiments of the world, and not after Christ.', theme: 'Guarding Against False Teaching' }
+    { ref: 'Colossians 2:8', text: 'Beware lest any man spoil you through philosophy and vain deceit, after the tradition of men, after the rudiments of the world, and not after Christ.', theme: 'Guarding Against False Teaching' },
+    
+    // Wisdom in Greek Life Decisions
+    { ref: 'Proverbs 2:6', text: 'For the Lord giveth wisdom: out of his mouth cometh knowledge and understanding.', theme: 'Wisdom in Greek Life Decisions' },
+    { ref: 'Proverbs 11:14', text: 'Where no counsel is, the people fall: but in the multitude of counsellors there is safety.', theme: 'Wisdom in Greek Life Decisions' },
+    { ref: 'James 3:17', text: 'But the wisdom that is from above is first pure, then peaceable, gentle, and easy to be intreated, full of mercy and good fruits, without partiality, and without hypocrisy.', theme: 'Wisdom in Greek Life Decisions' },
+    { ref: 'Proverbs 4:7', text: 'Wisdom is the principal thing; therefore get wisdom: and with all thy getting get understanding.', theme: 'Wisdom in Greek Life Decisions' },
+    { ref: 'Ecclesiastes 7:12', text: 'For wisdom is a defence, and money is a defence: but the excellency of knowledge is, that wisdom giveth life to them that have it.', theme: 'Wisdom in Greek Life Decisions' },
+    
+    // Maintaining Integrity Under Pressure
+    { ref: 'Daniel 3:17-18', text: 'If it be so, our God whom we serve is able to deliver us from the burning fiery furnace, and he will deliver us out of thine hand, O king. But if not, be it known unto thee, O king, that we will not serve thy gods.', theme: 'Maintaining Integrity Under Pressure' },
+    { ref: 'Proverbs 10:9', text: 'He that walketh uprightly walketh surely: but he that perverteth his ways shall be known.', theme: 'Maintaining Integrity Under Pressure' },
+    { ref: 'Proverbs 11:3', text: 'The integrity of the upright shall guide them: but the perverseness of transgressors shall destroy them.', theme: 'Maintaining Integrity Under Pressure' },
+    { ref: '1 Corinthians 10:13', text: 'There hath no temptation taken you but such as is common to man: but God is faithful, who will not suffer you to be tempted above that ye are able.', theme: 'Maintaining Integrity Under Pressure' },
+    { ref: 'Psalm 26:1', text: 'Judge me, O Lord; for I have walked in mine integrity: I have trusted also in the Lord; therefore I shall not slide.', theme: 'Maintaining Integrity Under Pressure' }
   ],
   'foundation': [
     { ref: 'Matthew 7:24-25', text: 'Therefore whosoever heareth these sayings of mine, and doeth them, I will liken him unto a wise man, which built his house upon a rock: And the rain descended, and the floods came, and the winds blew, and beat upon that house; and it fell not: for it was founded upon a rock.', theme: 'Building on Christ' },
