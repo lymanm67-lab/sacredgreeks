@@ -5,7 +5,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { TrendingUp, LogOut, FileText, User, BookOpen, FlaskConical, Calendar, Menu, X, Home, Heart, MessageSquare, Settings } from 'lucide-react';
+import { TrendingUp, LogOut, FileText, User, BookOpen, FlaskConical, Calendar, Menu, Home, Heart, MessageSquare } from 'lucide-react';
+import { DemoModeControl } from '@/components/GlobalDemoIndicator';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useToast } from '@/hooks/use-toast';
 import logo from '@/assets/sacred-greeks-logo.png';
@@ -210,17 +211,7 @@ const Dashboard = () => {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-1.5 flex-shrink-0">
-              {isDemoMode && (
-                <Link to="/profile" className="hidden lg:block">
-                  <Badge
-                    variant="secondary"
-                    className="text-xs bg-amber-500/10 text-amber-600 border-amber-500/20 hover:bg-amber-500/20 cursor-pointer transition-colors"
-                  >
-                    <FlaskConical className="w-3 h-3 mr-1" />
-                    Demo Mode
-                  </Badge>
-                </Link>
-              )}
+              <DemoModeControl className="hidden lg:block" />
               <SubscriptionBadge />
               <Link to="/profile">
                 <Button variant="ghost" size="sm" className="gap-2">
@@ -244,9 +235,12 @@ const Dashboard = () => {
                 </SheetTrigger>
                 <SheetContent side="right" className="w-72 bg-background">
                   <SheetHeader>
-                    <SheetTitle className="flex items-center gap-2">
-                      <img src={logo} alt="Sacred Greeks" className="h-6 w-auto" />
-                      Menu
+                    <SheetTitle className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <img src={logo} alt="Sacred Greeks" className="h-6 w-auto" />
+                        Menu
+                      </div>
+                      <DemoModeControl isMobile align="end" />
                     </SheetTitle>
                   </SheetHeader>
                   <nav className="flex flex-col gap-2 mt-6">
