@@ -942,10 +942,121 @@ const GreekLife = () => {
     },
   ];
 
+  const nativeAmericanGreeks: Organization[] = [
+    {
+      name: "Alpha Pi Omega",
+      greekLetters: "ΑΠΩ",
+      founded: "September 1, 1994",
+      foundedLocation: "University of North Carolina at Chapel Hill",
+      colors: "Red and White",
+      motto: "Wisdom Through Service",
+      nickname: "First Native American Sorority"
+    },
+    {
+      name: "Phi Sigma Nu",
+      greekLetters: "ΦΣΝ",
+      founded: "December 5, 1996",
+      foundedLocation: "University of Oklahoma",
+      colors: "Black, Red, and White",
+      motto: "Pride, Strength, and Nobility",
+      nickname: "First Native American Fraternity"
+    },
+    {
+      name: "Sigma Omicron Epsilon",
+      greekLetters: "ΣΟΕ",
+      founded: "2003",
+      foundedLocation: "New Mexico State University",
+      colors: "Turquoise and Silver",
+      motto: "Native Pride Through Brotherhood"
+    },
+    {
+      name: "Gamma Delta Pi",
+      greekLetters: "ΓΔΠ",
+      founded: "1999",
+      foundedLocation: "Northern Arizona University",
+      colors: "Turquoise, Gold, and Black",
+      motto: "Native Sisterhood"
+    },
+  ];
+
+  const hbcuGreeks: Organization[] = [
+    {
+      name: "Sigma Pi Phi (The Boulé)",
+      greekLetters: "ΣΠΦ",
+      founded: "May 15, 1904",
+      foundedLocation: "Philadelphia, Pennsylvania",
+      colors: "Royal Blue and White",
+      motto: "The First Black Greek-Letter Organization",
+      symbol: "Sphinx",
+      nickname: "The Boulé - Oldest Black Greek Org"
+    },
+    {
+      name: "Chi Eta Phi",
+      greekLetters: "ΧΗΦ",
+      founded: "October 16, 1932",
+      foundedLocation: "Washington, D.C.",
+      colors: "Red and White",
+      motto: "Service for Humanity",
+      nickname: "Black Nursing Sorority"
+    },
+    {
+      name: "Chi Delta Mu",
+      greekLetters: "ΧΔΜ",
+      founded: "1913",
+      foundedLocation: "Howard University",
+      colors: "Blue and Gold",
+      motto: "First Black Medical Fraternity",
+      nickname: "Physicians Fraternity"
+    },
+    {
+      name: "Phi Delta Epsilon (Black Chapter)",
+      greekLetters: "ΦΔΕ",
+      founded: "1913",
+      foundedLocation: "Various HBCUs",
+      colors: "Green and White",
+      motto: "Medical Excellence"
+    },
+    {
+      name: "Alpha Phi Chi",
+      greekLetters: "ΑΦΧ",
+      founded: "1963",
+      foundedLocation: "Howard University",
+      colors: "Gold and White",
+      motto: "Service Through Sisterhood",
+      nickname: "HBCU Sorority"
+    },
+    {
+      name: "Eta Phi Beta",
+      greekLetters: "ΗΦΒ",
+      founded: "1942",
+      foundedLocation: "Detroit, Michigan",
+      colors: "Pink and Green",
+      motto: "First Business and Professional Sorority",
+      nickname: "Business Sorority"
+    },
+    {
+      name: "Gamma Phi Delta",
+      greekLetters: "ΓΦΔ",
+      founded: "1943",
+      foundedLocation: "Detroit, Michigan",
+      colors: "Black and Gold",
+      motto: "Service and Education",
+      nickname: "Black Sorority"
+    },
+    {
+      name: "Tau Gamma Delta",
+      greekLetters: "ΤΓΔ",
+      founded: "1942",
+      foundedLocation: "Chicago, Illinois",
+      colors: "Blue and White",
+      motto: "Teachers Sorority"
+    },
+  ];
+
   const councils = [
     {
       id: "nphc",
-      name: "NPHC - Divine Nine",
+      name: "NPHC",
       fullName: "National Pan-Hellenic Council",
       description: "Nine historically Black Greek Letter Organizations founded between 1906-1963",
       founded: "May 10, 1930",
@@ -968,12 +1079,28 @@ const GreekLife = () => {
       organizations: ifcFraternities
     },
     {
-      id: "multicultural",
-      name: "Multicultural",
-      fullName: "Multicultural Greek Organizations",
-      description: "Latino, Asian, South Asian, and multicultural Greek organizations (NALFO, NAPA)",
+      id: "cbo",
+      name: "CBOs",
+      fullName: "Culturally Based Organizations",
+      description: "Latino, Asian, South Asian, Native American, and culturally-focused Greek organizations (NALFO, NAPA)",
       founded: "Various",
       organizations: multiculturalGreeks
+    },
+    {
+      id: "native",
+      name: "Native American",
+      fullName: "Native American Greek Organizations",
+      description: "Fraternities and sororities celebrating Indigenous heritage and culture",
+      founded: "Various",
+      organizations: nativeAmericanGreeks
+    },
+    {
+      id: "hbcu",
+      name: "HBCU Greeks",
+      fullName: "HBCU & Black Greek Organizations",
+      description: "Additional historically Black Greek organizations beyond the NPHC",
+      founded: "Various",
+      organizations: hbcuGreeks
     },
     {
       id: "professional",
@@ -1178,10 +1305,12 @@ const GreekLife = () => {
           {/* Councils Tabs */}
           <Tabs defaultValue="nphc" className="space-y-6">
             <TabsList className="flex flex-wrap justify-center gap-1">
-              <TabsTrigger value="nphc" className="text-xs px-2 py-1">Divine Nine</TabsTrigger>
+              <TabsTrigger value="nphc" className="text-xs px-2 py-1">NPHC</TabsTrigger>
               <TabsTrigger value="npc" className="text-xs px-2 py-1">NPC</TabsTrigger>
               <TabsTrigger value="ifc" className="text-xs px-2 py-1">IFC</TabsTrigger>
-              <TabsTrigger value="multicultural" className="text-xs px-2 py-1">Multicultural</TabsTrigger>
+              <TabsTrigger value="cbo" className="text-xs px-2 py-1">CBOs</TabsTrigger>
+              <TabsTrigger value="native" className="text-xs px-2 py-1">Native American</TabsTrigger>
+              <TabsTrigger value="hbcu" className="text-xs px-2 py-1">HBCU Greeks</TabsTrigger>
               <TabsTrigger value="jewish" className="text-xs px-2 py-1">Jewish</TabsTrigger>
               <TabsTrigger value="professional" className="text-xs px-2 py-1">Professional</TabsTrigger>
               <TabsTrigger value="honor" className="text-xs px-2 py-1">Leadership</TabsTrigger>
