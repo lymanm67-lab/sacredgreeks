@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { ArrowLeft, Search, BookOpen, ExternalLink, Filter, Copy, Check, MessageSquare, ChevronDown } from 'lucide-react';
+import { ArrowLeft, Search, BookOpen, ExternalLink, Filter, Copy, Check, MessageSquare, ChevronDown, Download, FileText } from 'lucide-react';
 import { mythBusterContent, mythCategories, mythScenarios, mythOrganizations } from '@/data/mythBusterContent';
 import { ListenButton } from '@/components/ListenButton';
 import { FISTFramework } from '@/components/myth-buster/FISTFramework';
@@ -13,6 +13,7 @@ import { MythBusterDownloads } from '@/components/myth-buster/MythBusterDownload
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { toast } from 'sonner';
+import { downloadMythBusterPDF } from '@/lib/myth-buster-pdf';
 
 const categoryIcons: Record<string, string> = {
   identity: '✝️',
@@ -39,6 +40,7 @@ const MythBuster = () => {
   const [scenario, setScenario] = useState('all');
   const [organization, setOrganization] = useState('all');
   const [expandedCategories, setExpandedCategories] = useState<string[]>(['identity']);
+  const [isDownloading, setIsDownloading] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const handleCopy = (text: string, id: string) => {
@@ -54,6 +56,20 @@ const MythBuster = () => {
         ? prev.filter(c => c !== categoryId)
         : [...prev, categoryId]
     );
+  };
+
+  const handleDownloadPDF = async () => {
+    setIsDownloading(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 100)); // Allow UI to update
+      downloadMythBusterPDF();
+      toast.success('PDF downloaded! Check your downloads folder.');
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      toast.error('Failed to generate PDF. Please try again.');
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   const filtered = mythBusterContent.filter(myth => {
@@ -134,13 +150,28 @@ const MythBuster = () => {
             </Select>
           </div>
           
-          <div className="flex items-center justify-between text-sm">
+          <div className="flex items-center justify-between text-sm flex-wrap gap-2">
             <Badge variant="secondary">{filtered.length} myths found</Badge>
-            {search && (
-              <Button variant="ghost" size="sm" onClick={() => setSearch('')}>
-                Clear search
+            <div className="flex items-center gap-2">
+              {search && (
+                <Button variant="ghost" size="sm" onClick={() => setSearch('')}>
+                  Clear search
+                </Button>
+              )}
+              <Button 
+                size="sm" 
+                onClick={handleDownloadPDF}
+                disabled={isDownloading}
+                className="gap-2"
+              >
+                {isDownloading ? (
+                  <Download className="w-4 h-4 animate-pulse" />
+                ) : (
+                  <FileText className="w-4 h-4" />
+                )}
+                Download All as PDF
               </Button>
-            )}
+            </div>
           </div>
         </div>
 
