@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -12,28 +13,72 @@ import {
   Users,
   FileText,
   Briefcase,
-  Volume2
+  Volume2,
+  Square,
+  Loader2
 } from "lucide-react";
 import { SEOHead } from "@/components/SEOHead";
+import { toast } from "sonner";
 
 const essentialArticles = [
   {
     title: "Are BGLOs Sinful? A Biblical Response for Christians",
     description: "Dr. Montgomery's foundational article addressing the core question many Christians have about Black Greek Letter Organizations.",
     readTime: "10 min",
-    icon: BookOpen
+    icon: BookOpen,
+    content: `Are Black Greek Letter Organizations sinful? This is perhaps the most common question I receive from Christians navigating Greek life. The answer requires careful biblical analysis rather than emotional reactions.
+
+First, we must acknowledge that the Bible does not explicitly mention fraternities or sororities. These organizations were founded in the 19th and 20th centuries, long after biblical times. Therefore, we must apply biblical principles rather than seek direct commands.
+
+The key question is not whether Greek organizations exist in Scripture, but whether participation in them violates biblical principles. Let's examine the most common concerns:
+
+Rituals and Ceremonies: Many critics point to initiation rituals as evidence of spiritual danger. However, rituals themselves are not inherently sinful. The church has many rituals including baptism, communion, and ordination. The question is what the rituals mean and what they require of participants.
+
+Secrecy: Some argue that secrecy is unbiblical. Yet Scripture shows that even Jesus shared certain teachings only with his disciples. The issue is not secrecy itself, but what is being hidden and why.
+
+Brotherhood and Sisterhood: The emphasis on fraternal bonds is actually consistent with biblical teaching about community, mutual support, and bearing one another's burdens.
+
+Service: BGLOs have a strong tradition of community service, which aligns perfectly with Christ's call to serve others.
+
+In conclusion, membership in a BGLO is not inherently sinful. What matters is how individual members conduct themselves, whether they maintain their Christian witness, and whether they participate in anything that directly contradicts Scripture.`
   },
   {
     title: "Should Christians Denounce BGLOs? Truth, Trauma, and Theology",
     description: "Explores whether Christians should denounce BGLOs, offering a nuanced, biblically-grounded perspective.",
     readTime: "8 min",
-    icon: Heart
+    icon: Heart,
+    content: `The question of whether Christians should denounce their involvement in Black Greek Letter Organizations has become increasingly prevalent, particularly on social media. This article addresses this sensitive topic with compassion and biblical wisdom.
+
+First, let's understand why some feel compelled to denounce. Many have encountered teaching that presents BGLOs as categorically demonic or spiritually dangerous. Others have had genuinely harmful experiences during their membership. Still others feel convicted after learning more about certain aspects of their organization.
+
+However, we must distinguish between personal conviction and universal mandate. The apostle Paul addressed similar issues in Romans 14, where he discussed matters of conscience. Some believers felt convicted about eating meat sacrificed to idols; others did not. Paul's guidance was that each person should be fully convinced in their own mind.
+
+The trauma aspect is significant. Some members have experienced hazing, peer pressure, or spiritual confusion. These are valid concerns that deserve pastoral care. However, healing from trauma does not require public denouncement.
+
+Theologically, we must ask what "denouncing" accomplishes. If someone believes they sinned during their Greek experience, the biblical remedy is confession to God, not public spectacle. If someone was harmed, the path is healing and forgiveness, not bitterness.
+
+My counsel is this: Follow your personal conviction. If the Holy Spirit is leading you away from active participation, obey. But be cautious about demanding others follow your path. Grace allows for different journeys.`
   },
   {
     title: "Why Some Call Black Greek Letter Organizations Demonic",
     description: "Examines claims that BGLOs are demonic, providing a theological analysis to discern truth from misinformation.",
     readTime: "12 min",
-    icon: Church
+    icon: Church,
+    content: `The claim that Black Greek Letter Organizations are demonic has spread widely through social media, books, and some church teachings. This article provides a thoughtful theological analysis of these claims.
+
+Common arguments for the demonic narrative include: references to Greek mythology in organizational symbols, certain elements of initiation ceremonies, the secretive nature of some practices, and historical connections to Freemasonry.
+
+Let's examine each claim biblically and historically:
+
+Greek Mythology References: Many BGLOs use names and symbols from Greek mythology. Critics argue this connects members to pagan deities. However, using mythological imagery does not equal worship. Many Christian institutions, including churches and universities, incorporate classical imagery without spiritual implications.
+
+Initiation Ceremonies: Some critics claim initiation rituals invoke spirits or require oaths to false gods. While I cannot speak to every organization's practices, most official BGLO rituals emphasize character development, service, and brotherhood or sisterhood. The question for Christians is whether any specific element of their organization's practices conflicts with Scripture.
+
+Secrecy: The secretive nature of some practices concerns many Christians. Jesus said we should not fear what is done in darkness. However, organizations have legitimate reasons for protecting certain traditions. The key is whether the secrecy hides something sinful.
+
+Masonic Connections: Some Divine Nine organizations have historical ties to Freemasonry. This connection troubles some believers. However, historical influence does not determine present spiritual reality. Each organization and individual must be evaluated on current practices.
+
+The most balanced approach is to encourage individual discernment. Rather than making blanket statements about organizations serving millions of members, we should equip Christians to evaluate their own involvement through Scripture, prayer, and wise counsel.`
   }
 ];
 
@@ -215,6 +260,76 @@ const guideResources = [
 ];
 
 const ChurchLeaders = () => {
+  const [playingArticle, setPlayingArticle] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState<number | null>(null);
+  const [audioRef, setAudioRef] = useState<HTMLAudioElement | null>(null);
+
+  const handleListenClick = async (index: number, article: typeof essentialArticles[0]) => {
+    // If already playing this article, stop it
+    if (playingArticle === index && audioRef) {
+      audioRef.pause();
+      audioRef.currentTime = 0;
+      setPlayingArticle(null);
+      setAudioRef(null);
+      return;
+    }
+
+    // Stop any currently playing audio
+    if (audioRef) {
+      audioRef.pause();
+      audioRef.currentTime = 0;
+    }
+
+    setIsLoading(index);
+    
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/text-to-speech-article`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          },
+          body: JSON.stringify({ 
+            text: `${article.title}. ${article.content}`,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to generate audio');
+      }
+
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+      
+      audio.onended = () => {
+        setPlayingArticle(null);
+        setAudioRef(null);
+        URL.revokeObjectURL(audioUrl);
+      };
+
+      audio.onerror = () => {
+        toast.error("Error playing audio");
+        setPlayingArticle(null);
+        setAudioRef(null);
+      };
+
+      await audio.play();
+      setAudioRef(audio);
+      setPlayingArticle(index);
+      toast.success("Now playing article");
+    } catch (error) {
+      console.error('TTS error:', error);
+      toast.error("Failed to generate audio. Please try again.");
+    } finally {
+      setIsLoading(null);
+    }
+  };
+
   return (
     <>
       <SEOHead 
@@ -289,8 +404,21 @@ const ChurchLeaders = () => {
                         {article.readTime}
                       </Badge>
                       <div className="flex items-center gap-1">
-                        <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary" title="Listen to article">
-                          <Volume2 className="w-4 h-4" />
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className={playingArticle === index ? "text-primary" : "text-muted-foreground hover:text-primary"} 
+                          title={playingArticle === index ? "Stop listening" : "Listen to article"}
+                          onClick={() => handleListenClick(index, article)}
+                          disabled={isLoading !== null && isLoading !== index}
+                        >
+                          {isLoading === index ? (
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                          ) : playingArticle === index ? (
+                            <Square className="w-4 h-4" />
+                          ) : (
+                            <Volume2 className="w-4 h-4" />
+                          )}
                         </Button>
                         <Button variant="ghost" size="sm" className="text-primary">
                           Read
