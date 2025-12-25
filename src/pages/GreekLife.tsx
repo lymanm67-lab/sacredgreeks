@@ -474,6 +474,69 @@ const GreekLife = () => {
       colors: "Purple, Pink, and White",
       motto: "Achieving Through Unity"
     },
+    {
+      name: "Omega Delta Phi",
+      greekLetters: "ΩΔΦ",
+      founded: "November 25, 1987",
+      foundedLocation: "Texas Tech University",
+      colors: "Scarlet and Gold",
+      motto: "Honesty, Integrity, Culture",
+      nickname: "First Latino fraternity in Texas"
+    },
+    {
+      name: "Lambda Pi Upsilon",
+      greekLetters: "ΛΠΥ",
+      founded: "December 16, 1992",
+      foundedLocation: "Cornell University",
+      colors: "Royal Blue and White",
+      motto: "Latinas Poderosas Unidas",
+      nickname: "Latina Sorority - LPU"
+    },
+    {
+      name: "Sigma Iota Alpha",
+      greekLetters: "ΣΙΑ",
+      founded: "September 29, 1990",
+      foundedLocation: "SUNY Albany",
+      colors: "Burgundy and Gold",
+      motto: "Semper Unum et Inseparabilis",
+      nickname: "First Latina-based sorority in NE USA"
+    },
+    {
+      name: "Lambda Sigma Upsilon",
+      greekLetters: "ΛΣΥ",
+      founded: "April 5, 1979",
+      foundedLocation: "Rutgers University",
+      colors: "Olive Green, Black, and White",
+      motto: "Latino Social Unity",
+      nickname: "LSU - Machete Movement"
+    },
+    {
+      name: "Lambda Pi Chi",
+      greekLetters: "ΛΠΧ",
+      founded: "April 16, 1988",
+      foundedLocation: "Cornell University",
+      colors: "Purple and White",
+      motto: "Love, Power, Courage",
+      nickname: "LPC - Latina Sorority"
+    },
+    {
+      name: "Sigma Lambda Alpha",
+      greekLetters: "ΣΛΑ",
+      founded: "April 4, 1992",
+      foundedLocation: "Texas Woman's University",
+      colors: "Royal Blue and Hot Pink",
+      motto: "Semper Laborem Admovere",
+      nickname: "Señoritas Latinas Activas"
+    },
+    {
+      name: "Omega Phi Beta",
+      greekLetters: "ΩΦΒ",
+      founded: "March 15, 1989",
+      foundedLocation: "SUNY Albany",
+      colors: "Aqua and Fuchsia",
+      motto: "Sirviendo y Educando a Través de Nuestra Diversidad",
+      nickname: "First Latina-founded and based sorority in NY"
+    },
   ];
 
   // NAPA - National APIA Panhellenic Association (Asian Pacific Islander American)
@@ -551,6 +614,69 @@ const GreekLife = () => {
       foundedLocation: "University of Pittsburgh",
       colors: "Navy Blue and White",
       motto: "Asian-American Fraternity"
+    },
+    {
+      name: "Sigma Omicron Pi",
+      greekLetters: "ΣΟΠ",
+      founded: "February 18, 1930",
+      foundedLocation: "UC Berkeley",
+      colors: "Black and Gold",
+      motto: "First Asian-American Sorority",
+      nickname: "SOP - Oldest APIA Sorority"
+    },
+    {
+      name: "Delta Epsilon Mu",
+      greekLetters: "ΔΕΜ",
+      founded: "September 14, 1996",
+      foundedLocation: "Rutgers University",
+      colors: "Navy Blue and Silver",
+      motto: "Dedicated Enthusiastic Members",
+      nickname: "Pre-Health Asian-Interest Fraternity"
+    },
+    {
+      name: "Nu Alpha Kappa",
+      greekLetters: "ΝΑΚ",
+      founded: "March 15, 1988",
+      foundedLocation: "Cal Poly Pomona",
+      colors: "Burgundy and Gold",
+      motto: "Nuestra Aspiración es Conocimiento",
+      nickname: "NAK - Multicultural Fraternity"
+    },
+    {
+      name: "Sigma Beta Rho",
+      greekLetters: "ΣΒΡ",
+      founded: "1996",
+      foundedLocation: "Pennsylvania State University",
+      colors: "Navy Blue and Metallic Gold",
+      motto: "Cultura, Servicio, Hermandad",
+      nickname: "SBRho - South Asian-Interest Fraternity"
+    },
+    {
+      name: "Delta Phi Lambda",
+      greekLetters: "ΔΦΛ",
+      founded: "April 1998",
+      foundedLocation: "University of Georgia",
+      colors: "Plum and Silver",
+      motto: "Building Tomorrow's Leaders Today",
+      nickname: "Asian-Interest Sorority"
+    },
+    {
+      name: "Sigma Phi Omega",
+      greekLetters: "ΣΦΩ",
+      founded: "March 1, 1986",
+      foundedLocation: "UCLA",
+      colors: "Royal Blue and White",
+      motto: "Asian-American Sorority",
+      nickname: "SPO"
+    },
+    {
+      name: "Lambda Psi Delta",
+      greekLetters: "ΛΨΔ",
+      founded: "April 1998",
+      foundedLocation: "UCLA",
+      colors: "Navy Blue and Silver",
+      motto: "Unity Through Sisterhood",
+      nickname: "Asian-Interest Sorority"
     },
   ];
 
@@ -728,23 +854,53 @@ const GreekLife = () => {
   const masonicFraternal: Organization[] = [
     {
       name: "Freemasonry (Blue Lodge)",
-      greekLetters: "F&AM",
+      greekLetters: "F&AM / AF&AM",
       founded: "1717",
       foundedLocation: "London, England",
       colors: "Blue and Gold",
       motto: "Brotherly Love, Relief, and Truth",
-      symbol: "Square and Compass",
-      nickname: "The Craft"
+      symbol: "Square and Compass with 'G'",
+      nickname: "The Craft - First Three Degrees"
     },
     {
       name: "Prince Hall Freemasonry",
-      greekLetters: "PHAF&AM",
-      founded: "1784",
+      greekLetters: "MWPHGL",
+      founded: "March 6, 1775",
       foundedLocation: "Boston, Massachusetts",
       colors: "Blue and Gold",
       motto: "Brotherly Love, Relief, and Truth",
       symbol: "Square and Compass",
-      nickname: "Prince Hall Masons"
+      nickname: "Founded by Prince Hall - Oldest Black fraternal organization"
+    },
+    {
+      name: "Scottish Rite (Southern Jurisdiction)",
+      greekLetters: "AASR-SJ",
+      founded: "May 31, 1801",
+      foundedLocation: "Charleston, South Carolina",
+      colors: "Black, White, and Red",
+      motto: "Spes Mea In Deo Est (My Hope Is In God)",
+      symbol: "Double-Headed Eagle",
+      nickname: "4th-33rd Degrees - Mother Supreme Council"
+    },
+    {
+      name: "Scottish Rite (Northern Masonic Jurisdiction)",
+      greekLetters: "AASR-NMJ",
+      founded: "1813",
+      foundedLocation: "New York City",
+      colors: "Purple and Gold",
+      motto: "Virtus Junxit Mors Non Separabit",
+      symbol: "Double-Headed Eagle",
+      nickname: "4th-33rd Degrees - Northern Jurisdiction"
+    },
+    {
+      name: "York Rite",
+      greekLetters: "RAM/KT",
+      founded: "Various (1700s)",
+      foundedLocation: "England/United States",
+      colors: "Royal Purple, Gold, White",
+      motto: "In Hoc Signo Vinces (In This Sign You Shall Conquer)",
+      symbol: "Triple Tau, Red Cross, Malta Cross",
+      nickname: "Capitular, Cryptic, and Chivalric Orders"
     },
     {
       name: "Order of the Eastern Star",
@@ -753,8 +909,18 @@ const GreekLife = () => {
       foundedLocation: "United States",
       colors: "Blue, Yellow, White, Green, Red",
       motto: "Fairest Among Thousands, Altogether Lovely",
+      symbol: "Five-Pointed Inverted Star (Each point = Biblical heroine)",
+      nickname: "Masonic co-ed order for Masons and female relatives"
+    },
+    {
+      name: "Prince Hall Order of the Eastern Star",
+      greekLetters: "PHA-OES",
+      founded: "1874",
+      foundedLocation: "Washington, D.C.",
+      colors: "Blue, Yellow, White, Green, Red",
+      motto: "We Are One",
       symbol: "Five-Pointed Star",
-      nickname: "Eastern Star"
+      nickname: "Prince Hall Affiliated Eastern Star"
     },
     {
       name: "Shriners International",
@@ -763,18 +929,38 @@ const GreekLife = () => {
       foundedLocation: "New York City",
       colors: "Red and Gold",
       motto: "Shriners Having Fun and Helping Kids",
-      symbol: "Crescent, Scimitar, Star",
-      nickname: "Shriners"
+      symbol: "Crescent, Scimitar, Star, Sphinx",
+      nickname: "Requires Master Mason degree - Operates 22 children's hospitals"
     },
     {
       name: "AEAONMS (Prince Hall Shriners)",
       greekLetters: "AEAONMS",
-      founded: "1893",
+      founded: "June 10, 1893",
       foundedLocation: "Chicago, Illinois",
       colors: "Red and Gold",
       motto: "We Never Sleep",
-      symbol: "Crescent and Star",
-      nickname: "Prince Hall Shriners"
+      symbol: "Crescent and Star with Scimitar",
+      nickname: "Prince Hall Affiliated Shriners"
+    },
+    {
+      name: "Knights Templar (Masonic)",
+      greekLetters: "KT",
+      founded: "1769",
+      foundedLocation: "Boston, Massachusetts",
+      colors: "Black, White, and Red",
+      motto: "In Hoc Signo Vinces",
+      symbol: "Cross and Crown, Malta Cross",
+      nickname: "Commandery - Christian Masonic Order"
+    },
+    {
+      name: "The Grotto (MOVPER)",
+      greekLetters: "MOVPER",
+      founded: "September 10, 1889",
+      foundedLocation: "Hamilton, New York",
+      colors: "Black, Red, and White",
+      motto: "Good Fellowship and Humanitarianism",
+      symbol: "Mokanna, Palm Tree",
+      nickname: "Mystic Order of Veiled Prophets of Enchanted Realm"
     },
     {
       name: "Knights of Pythias",
@@ -783,28 +969,108 @@ const GreekLife = () => {
       foundedLocation: "Washington, D.C.",
       colors: "Blue, Yellow, and Red",
       motto: "Friendship, Charity, and Benevolence",
-      symbol: "Shield, Sword, Helmet",
-      nickname: "First fraternity chartered by Congress"
+      symbol: "Shield, Sword, Helmet, FCB",
+      nickname: "First fraternity chartered by U.S. Congress"
+    },
+    {
+      name: "Independent Order of Odd Fellows",
+      greekLetters: "IOOF",
+      founded: "1819",
+      foundedLocation: "Baltimore, Maryland",
+      colors: "Pink and Blue",
+      motto: "Friendship, Love, and Truth",
+      symbol: "Three Links Chain, All-Seeing Eye",
+      nickname: "FLT - Three Links Fraternity"
+    },
+    {
+      name: "Grand United Order of Odd Fellows",
+      greekLetters: "GUOOF",
+      founded: "1843",
+      foundedLocation: "New York City",
+      colors: "Pink and Blue",
+      motto: "Friendship, Love, and Truth",
+      symbol: "Three Links, Heart in Hand",
+      nickname: "African American Odd Fellows"
     },
     {
       name: "Improved Benevolent Protective Order of Elks of the World",
       greekLetters: "IBPOEW",
-      founded: "1898",
+      founded: "November 17, 1898",
       foundedLocation: "Cincinnati, Ohio",
       colors: "Purple and White",
       motto: "The Best People on Earth",
-      symbol: "Elk",
-      nickname: "Black Elks"
+      symbol: "Elk Head, Clock at 11 o'clock",
+      nickname: "African American Elks - Largest Black fraternal order"
+    },
+    {
+      name: "Benevolent and Protective Order of Elks",
+      greekLetters: "BPOE",
+      founded: "February 16, 1868",
+      foundedLocation: "New York City",
+      colors: "Purple and White",
+      motto: "The Faults of Our Brothers We Write Upon the Sand",
+      symbol: "Elk, Clock Striking Eleven",
+      nickname: "Elks Lodge"
     },
     {
       name: "Daughters of Isis",
       greekLetters: "DOI",
-      founded: "1910",
+      founded: "August 1910",
       foundedLocation: "United States",
       colors: "Green and Gold",
       motto: "Charity, Truth, and Love",
-      symbol: "Sphinx, Pyramid",
-      nickname: "Shriners Auxiliary"
+      symbol: "Sphinx, Pyramid, Egyptian Symbols",
+      nickname: "Female auxiliary to Prince Hall Shriners"
+    },
+    {
+      name: "Daughters of the Nile",
+      greekLetters: "DON",
+      founded: "1913",
+      foundedLocation: "Seattle, Washington",
+      colors: "White and Gold",
+      motto: "None But the Best",
+      symbol: "Lotus, Pyramid, Egyptian Crown",
+      nickname: "Female auxiliary to Shriners International"
+    },
+    {
+      name: "DeMolay International",
+      greekLetters: "DeMolay",
+      founded: "March 18, 1919",
+      foundedLocation: "Kansas City, Missouri",
+      colors: "Blue and Gold",
+      motto: "Clean Living, Deep Thinking, Loyal Friendship",
+      symbol: "Crown, Crescent, Stars",
+      nickname: "Masonic youth organization for young men 12-21"
+    },
+    {
+      name: "International Order of the Rainbow for Girls",
+      greekLetters: "IORG",
+      founded: "April 6, 1922",
+      foundedLocation: "McAlester, Oklahoma",
+      colors: "Seven colors of the Rainbow",
+      motto: "Faith, Hope, and Charity",
+      symbol: "Rainbow, Pot of Gold",
+      nickname: "Masonic youth organization for young women 11-20"
+    },
+    {
+      name: "Job's Daughters International",
+      greekLetters: "JDI",
+      founded: "October 20, 1920",
+      foundedLocation: "Omaha, Nebraska",
+      colors: "Purple and White",
+      motto: "Virtue is a Quality Which Highly Adorns Woman",
+      symbol: "Three Daughters of Job, Triangle",
+      nickname: "Masonic-related youth organization for young women"
+    },
+    {
+      name: "Ancient Egyptian Arabic Order Nobles Mystic Shrine",
+      greekLetters: "AEAONMS",
+      founded: "1893",
+      foundedLocation: "Chicago, Illinois",
+      colors: "Red and Gold",
+      motto: "We Never Sleep (Robur et Furor)",
+      symbol: "Crescent, Scimitar, Sphinx",
+      nickname: "Prince Hall Shriners - Full Name"
     },
   ];
 
