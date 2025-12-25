@@ -14,6 +14,7 @@ import { usePullToRefresh } from '@/hooks/use-pull-to-refresh';
 import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
 import { SEOHead, pageSEO } from '@/components/SEOHead';
 import { FeaturedActions } from '@/components/dashboard/FeaturedActions';
+import { HeroSection } from '@/components/dashboard/HeroSection';
 import { SubscriptionBadge } from '@/components/dashboard/SubscriptionBadge';
 import { useDemoMode } from '@/contexts/DemoModeContext';
 import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
@@ -233,14 +234,9 @@ const Dashboard = () => {
 
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-5xl mx-auto space-y-8">
-          {/* Welcome Section */}
-          <div className="text-center space-y-2">
-            <h1 className="text-3xl font-bold text-foreground">
-              Welcome back{user?.user_metadata?.full_name ? `, ${user.user_metadata.full_name}` : ''}
-            </h1>
-            <p className="text-muted-foreground">
-              Continue your spiritual journey with these essential tools
-            </p>
+          {/* Hero Section with Welcome & Video */}
+          <div className="animate-fade-in">
+            <HeroSection />
           </div>
 
           {/* Featured Actions - The 3 Core Tools */}
