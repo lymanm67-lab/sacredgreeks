@@ -104,8 +104,21 @@ export default defineConfig(({ mode }) => ({
       '@radix-ui/react-slot',
       '@radix-ui/react-primitive',
       '@radix-ui/react-context',
-      '@tanstack/react-query'
+      '@tanstack/react-query',
+      '@supabase/supabase-js'
     ],
     force: true,
+    esbuildOptions: {
+      // Force fresh module resolution
+      define: {
+        global: 'globalThis',
+      },
+    },
+  },
+  build: {
+    commonjsOptions: {
+      include: [/node_modules/],
+      transformMixedEsModules: true,
+    },
   },
 }));
