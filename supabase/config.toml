@@ -122,3 +122,9 @@ verify_jwt = false
 
 [functions.send-targeted-notification]
 verify_jwt = false
+
+[functions.text-to-speech-article]
+verify_jwt = false
+
+[functions.notify-coaching-waitlist]
+verify_jwt = false

@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Home, Users, Heart, BookOpen, MessageSquare, Filter, Sparkles, ChevronRight, Video, Users2, HelpCircle, Award, Clock, GraduationCap, Quote } from 'lucide-react';
+import { Home, Users, Heart, BookOpen, MessageSquare, Filter, Sparkles, ChevronRight, Video, Users2, HelpCircle, Award, Clock, GraduationCap, Quote, ExternalLink } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
@@ -67,8 +67,23 @@ const OrgCommunity = () => {
         });
 
       if (error) throw error;
+
+      // Send email notification
+      try {
+        await supabase.functions.invoke('notify-coaching-waitlist', {
+          body: {
+            fullName: waitlistForm.fullName.trim(),
+            email: waitlistForm.email.trim(),
+            organization: waitlistForm.organization.trim() || undefined,
+            goals: waitlistForm.goals.trim() || undefined
+          }
+        });
+      } catch (emailError) {
+        console.error('Email notification failed:', emailError);
+        // Don't fail the whole submission if email fails
+      }
       
-      toast.success('You have been added to the waitlist! We will notify you when the next cohort opens.');
+      toast.success('You have been added to the waitlist! Check your email for confirmation.');
       setWaitlistForm({ fullName: '', email: '', organization: '', goals: '' });
     } catch (error) {
       console.error('Error submitting waitlist:', error);
@@ -404,6 +419,40 @@ const OrgCommunity = () => {
                   </Card>
                 ))}
               </div>
+
+              {/* Zoom Session Info */}
+              <Card className="border-blue-500/30 bg-gradient-to-r from-blue-500/5 to-indigo-500/5">
+                <CardContent className="pt-6">
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+                        <Video className="w-6 h-6 text-blue-500" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-lg">Weekly Zoom Sessions</h3>
+                        <p className="text-sm text-muted-foreground">
+                          Live group coaching calls every Thursday at 7:00 PM EST
+                        </p>
+                      </div>
+                    </div>
+                    <a 
+                      href="https://zoom.us/j/sacredgreeks" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex"
+                    >
+                      <Button className="bg-blue-600 hover:bg-blue-700 gap-2">
+                        <Video className="w-4 h-4" />
+                        Join Zoom Call
+                        <ExternalLink className="w-4 h-4" />
+                      </Button>
+                    </a>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-4 text-center md:text-left">
+                    Meeting ID will be provided to enrolled members. Sessions are recorded for those who cannot attend live.
+                  </p>
+                </CardContent>
+              </Card>
 
               {/* Waitlist Form */}
               <Card className="border-sacred/20">
