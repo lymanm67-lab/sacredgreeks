@@ -209,10 +209,18 @@ const OrgCommunity = () => {
               </Link>
               <div>
                 <h1 className="text-2xl font-bold flex items-center gap-2">
-                  <Users className="h-6 w-6 text-sacred" />
-                  Organization Community
+                  {activeTab === 'coaching' ? (
+                    <GraduationCap className="h-6 w-6 text-sacred" />
+                  ) : (
+                    <Users className="h-6 w-6 text-sacred" />
+                  )}
+                  {activeTab === 'coaching' ? 'Group Coaching' : 'Organization Community'}
                 </h1>
-                <p className="text-sm text-muted-foreground">Connect with Greeks who share your faith</p>
+                <p className="text-sm text-muted-foreground">
+                  {activeTab === 'coaching' 
+                    ? 'Go deeper with Dr. Lyman Montgomery' 
+                    : 'Connect with Greeks who share your faith'}
+                </p>
               </div>
             </div>
           </div>
