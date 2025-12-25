@@ -942,6 +942,142 @@ const GreekLife = () => {
     },
   ];
 
+  const filipinoGreeks: Organization[] = [
+    {
+      name: "Kappa Psi Epsilon",
+      greekLetters: "ΚΨΕ",
+      founded: "1994",
+      foundedLocation: "University of California, Berkeley",
+      colors: "Maroon and Silver",
+      motto: "Strength Through Unity",
+      nickname: "Filipino-American Sorority"
+    },
+    {
+      name: "Lambda Theta Delta",
+      greekLetters: "ΛΘΔ",
+      founded: "1993",
+      foundedLocation: "University of Washington",
+      colors: "Royal Blue and White",
+      motto: "Leading Through Diversity",
+      nickname: "Filipino-Interest Sorority"
+    },
+    {
+      name: "Pi Alpha Phi",
+      greekLetters: "ΠΑΦ",
+      founded: "1929",
+      foundedLocation: "University of California, Berkeley",
+      colors: "Blue and Gold",
+      motto: "First Asian-American Fraternity",
+      nickname: "Includes Filipino heritage"
+    },
+    {
+      name: "Gamma Zeta Alpha",
+      greekLetters: "ΓΖΑ",
+      founded: "1987",
+      foundedLocation: "California State University, Chico",
+      colors: "Red, Green, and White",
+      motto: "Filipino-Interest Fraternity"
+    },
+    {
+      name: "Chi Rho Omicron",
+      greekLetters: "ΧΡΟ",
+      founded: "1997",
+      foundedLocation: "UCLA",
+      colors: "Red, White, and Blue",
+      motto: "Filipino-American Fraternity"
+    },
+    {
+      name: "Kappa Malong Malong",
+      greekLetters: "ΚΜΜ",
+      founded: "2002",
+      foundedLocation: "University of California, San Diego",
+      colors: "Maroon and Gold",
+      motto: "Filipino-Interest Sorority"
+    },
+    {
+      name: "Pilipino American Collegiate Endeavor (PACE) Greeks",
+      greekLetters: "PACE",
+      founded: "Various",
+      foundedLocation: "California",
+      colors: "Varies",
+      motto: "Filipino Heritage Organizations",
+      nickname: "Various Filipino Organizations"
+    },
+  ];
+
+  const militaryGreeks: Organization[] = [
+    {
+      name: "Sigma Alpha Epsilon Pi (Military Chapter)",
+      greekLetters: "ΣΑΕΠ",
+      founded: "1856",
+      foundedLocation: "University of Alabama",
+      colors: "Royal Purple and Old Gold",
+      motto: "True Gentlemen - Military Heritage",
+      nickname: "Many military chapters"
+    },
+    {
+      name: "Phi Delta Theta (Military Heritage)",
+      greekLetters: "ΦΔΘ",
+      founded: "1848",
+      foundedLocation: "Miami University",
+      colors: "Azure and Argent",
+      motto: "Founded by soldiers",
+      nickname: "Strong military tradition"
+    },
+    {
+      name: "Alpha Tau Omega",
+      greekLetters: "ΑΤΩ",
+      founded: "September 11, 1865",
+      foundedLocation: "Virginia Military Institute",
+      colors: "Azure and Gold",
+      motto: "Founded by Civil War veterans",
+      nickname: "First fraternity founded after Civil War"
+    },
+    {
+      name: "Sigma Nu",
+      greekLetters: "ΣΝ",
+      founded: "January 1, 1869",
+      foundedLocation: "Virginia Military Institute",
+      colors: "Black, White, and Gold",
+      motto: "Love, Honor, Truth",
+      nickname: "VMI Military Heritage"
+    },
+    {
+      name: "Alpha Phi Delta (Military Service)",
+      greekLetters: "ΑΦΔ",
+      founded: "1914",
+      foundedLocation: "Syracuse University",
+      colors: "Green and White",
+      motto: "Strong veteran membership"
+    },
+    {
+      name: "Omega Delta Sigma",
+      greekLetters: "ΩΔΣ",
+      founded: "2010",
+      foundedLocation: "Texas A&M University",
+      colors: "Green and Gold",
+      motto: "First Veteran-Only Fraternity",
+      nickname: "For student veterans"
+    },
+    {
+      name: "Delta Sigma Mu",
+      greekLetters: "ΔΣΜ",
+      founded: "2012",
+      foundedLocation: "University of Central Florida",
+      colors: "Red, White, and Blue",
+      motto: "Veteran Fraternity",
+      nickname: "Student veteran brotherhood"
+    },
+    {
+      name: "Omega Delta Phi (Military Heritage)",
+      greekLetters: "ΩΔΦ",
+      founded: "1987",
+      foundedLocation: "Texas Tech University",
+      colors: "Royal Blue, Kelly Green, and White",
+      motto: "Supports military members"
+    },
+  ];
+
   const nativeAmericanGreeks: Organization[] = [
     {
       name: "Alpha Pi Omega",
@@ -1157,6 +1293,22 @@ const GreekLife = () => {
       description: "Organizations providing community and belonging for LGBTQ+ students",
       founded: "Various",
       organizations: lgbtqGreeks
+    },
+    {
+      id: "filipino",
+      name: "Filipino",
+      fullName: "Filipino Greek Organizations",
+      description: "Fraternities and sororities celebrating Filipino heritage and culture",
+      founded: "Various",
+      organizations: filipinoGreeks
+    },
+    {
+      id: "military",
+      name: "Military",
+      fullName: "Military & Veteran Greek Organizations",
+      description: "Fraternities and sororities for service members, veterans, and military families",
+      founded: "Various",
+      organizations: militaryGreeks
     }
   ];
 
@@ -1318,6 +1470,8 @@ const GreekLife = () => {
               <TabsTrigger value="masonic" className="text-xs px-2 py-1">Masonic</TabsTrigger>
               <TabsTrigger value="christian" className="text-xs px-2 py-1">Christian</TabsTrigger>
               <TabsTrigger value="lgbtq" className="text-xs px-2 py-1">LGBTQ+</TabsTrigger>
+              <TabsTrigger value="filipino" className="text-xs px-2 py-1">Filipino</TabsTrigger>
+              <TabsTrigger value="military" className="text-xs px-2 py-1">Military</TabsTrigger>
             </TabsList>
 
             {councils.map((council) => (

@@ -314,6 +314,253 @@ export const symbolGuideContent: SymbolEntry[] = [
     christianPerspective: "Elephants represent strength, wisdom, and community loyalty. While not mentioned in Scripture, these qualities are celebrated throughout the Bible.",
     cautionLevel: "low"
   },
+  // Greek Deities
+  {
+    id: "zeus-deity",
+    name: "Zeus (Jupiter)",
+    category: "deity",
+    description: "King of the Greek gods, god of sky, thunder, and justice. Roman equivalent: Jupiter.",
+    christianPerspective: "Zeus appears on government buildings, university seals, and civic imagery worldwide. In organizational contexts, references to Zeus typically represent power, justice, or authority—not worship. The Apostle Paul engaged with Greek religious culture at the Areopagus without condemning all Greek imagery.",
+    cautionLevel: "medium",
+    cautionNote: "Context matters. Imagery representing authority differs from invocation for spiritual power.",
+    scripturalContext: "Acts 17:22-28 - Paul at the Areopagus, engaging Greek religious thought."
+  },
+  {
+    id: "athena-deity",
+    name: "Athena (Minerva)",
+    category: "deity",
+    description: "Goddess of wisdom, craft, and strategic warfare. Roman equivalent: Minerva. Appears on countless university seals.",
+    christianPerspective: "Athena represents wisdom and learning in academic contexts. The seal of California, many Ivy League universities, and countless academic institutions feature Athena without religious intent. She symbolizes the pursuit of knowledge.",
+    cautionLevel: "low",
+    scripturalContext: "Proverbs 4:7 - 'Wisdom is the principal thing; therefore get wisdom.'"
+  },
+  {
+    id: "apollo-deity",
+    name: "Apollo",
+    category: "deity",
+    description: "God of music, poetry, art, sun, light, and knowledge. Patron of the arts and healing.",
+    christianPerspective: "Apollo imagery appears on government buildings, arts institutions, and medical symbols worldwide. In organizational contexts, Apollo represents artistic excellence, enlightenment, and healing—values celebrated in Scripture.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 33:3 - 'Sing to him a new song; play skillfully, and shout for joy.'"
+  },
+  {
+    id: "hermes-deity",
+    name: "Hermes (Mercury)",
+    category: "deity",
+    description: "Messenger god, god of commerce, eloquence, and travelers. Roman equivalent: Mercury.",
+    christianPerspective: "Hermes/Mercury appears in business logos, communication symbols, and the caduceus used in medicine. These represent commerce and communication, not worship. Paul was mistakenly called Hermes because of his eloquent speaking (Acts 14:12).",
+    cautionLevel: "low",
+    scripturalContext: "Acts 14:12 - Reference to Hermes in the context of Paul's ministry."
+  },
+  {
+    id: "ares-deity",
+    name: "Ares (Mars)",
+    category: "deity",
+    description: "God of war, courage, and civil order. Roman equivalent: Mars.",
+    christianPerspective: "Mars gives us 'March' and military terminology. Military academies and organizations reference Mars for valor and courage. The concept of spiritual warfare in Scripture shows combat imagery can serve righteous purposes.",
+    cautionLevel: "medium",
+    cautionNote: "War imagery should emphasize just causes and protection, not violence for its own sake.",
+    scripturalContext: "Ephesians 6:10-18 - The armor of God and spiritual warfare."
+  },
+  {
+    id: "aphrodite-deity",
+    name: "Aphrodite (Venus)",
+    category: "deity",
+    description: "Goddess of love, beauty, and desire. Roman equivalent: Venus.",
+    christianPerspective: "Venus gives us 'venerate' and Friday (Freitag). Beauty and love are celebrated in Scripture—the Song of Solomon is essentially a love poem. Artistic representations of beauty have Christian heritage in Renaissance art.",
+    cautionLevel: "low",
+    scripturalContext: "Song of Solomon 4:7 - 'You are altogether beautiful, my darling.'"
+  },
+  {
+    id: "poseidon-deity",
+    name: "Poseidon (Neptune)",
+    category: "deity",
+    description: "God of the sea, earthquakes, and horses. Roman equivalent: Neptune.",
+    christianPerspective: "Neptune imagery appears in coastal cities, naval traditions, and maritime organizations. God Himself 'divided the sea' and controls the waters. Imagery of sea mastery reflects creation's grandeur.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 89:9 - 'You rule over the surging sea.'"
+  },
+  {
+    id: "hades-deity",
+    name: "Hades (Pluto)",
+    category: "deity",
+    description: "God of the underworld and the dead. Roman equivalent: Pluto.",
+    christianPerspective: "The Greek word 'Hades' is used in the New Testament itself to describe the realm of the dead. Jesus said the gates of Hades would not prevail against His church. The term has biblical usage.",
+    cautionLevel: "medium",
+    cautionNote: "While the term is biblical, imagery celebrating death or darkness should be evaluated carefully.",
+    scripturalContext: "Matthew 16:18 - 'The gates of Hades will not overcome it.'"
+  },
+  {
+    id: "demeter-deity",
+    name: "Demeter (Ceres)",
+    category: "deity",
+    description: "Goddess of harvest, agriculture, and fertility. Roman equivalent: Ceres (hence 'cereal').",
+    christianPerspective: "Harvest imagery is deeply biblical. God provides the harvest, and thanksgiving for abundance is scriptural. Agricultural symbolism represents God's provision, not pagan worship.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 65:9-13 - God crowning the year with bounty."
+  },
+  {
+    id: "hera-deity",
+    name: "Hera (Juno)",
+    category: "deity",
+    description: "Queen of the gods, goddess of marriage and family. Roman equivalent: Juno (hence 'June' for weddings).",
+    christianPerspective: "June remains the most popular month for Christian weddings. Marriage and family are celebrated throughout Scripture. The imagery represents commitment and family values.",
+    cautionLevel: "low",
+    scripturalContext: "Ephesians 5:31-32 - Marriage as a sacred covenant."
+  },
+  {
+    id: "dionysus-deity",
+    name: "Dionysus (Bacchus)",
+    category: "deity",
+    description: "God of wine, festivity, and ecstasy. Roman equivalent: Bacchus.",
+    christianPerspective: "While Dionysus represented excess, Jesus Himself turned water into wine at a wedding feast. Celebration in moderation is biblical. The imagery of vine and wine appears throughout Scripture.",
+    cautionLevel: "medium",
+    cautionNote: "Celebrate joyfully but avoid imagery promoting excess or drunkenness.",
+    scripturalContext: "John 2:1-11 - Jesus at the wedding in Cana; John 15:5 - 'I am the vine.'"
+  },
+  {
+    id: "hephaestus-deity",
+    name: "Hephaestus (Vulcan)",
+    category: "deity",
+    description: "God of fire, metalworking, and craftsmanship. Roman equivalent: Vulcan.",
+    christianPerspective: "Craftsmanship is celebrated in Scripture—Bezalel was filled with the Spirit for skilled work on the tabernacle. Blacksmithing and metalwork imagery represents creative skill and labor.",
+    cautionLevel: "low",
+    scripturalContext: "Exodus 31:1-5 - Bezalel filled with skill, ability, and knowledge."
+  },
+  {
+    id: "artemis-deity",
+    name: "Artemis (Diana)",
+    category: "deity",
+    description: "Goddess of the hunt, wilderness, and the moon. Roman equivalent: Diana.",
+    christianPerspective: "Paul confronted the worship of Artemis at Ephesus (Acts 19). However, nature imagery and wilderness appreciation are biblical. The distinction is worship vs. aesthetic appreciation.",
+    cautionLevel: "medium",
+    cautionNote: "Paul's confrontation was about actual worship, not all nature imagery.",
+    scripturalContext: "Acts 19:24-35 - Paul at Ephesus regarding Artemis worship."
+  },
+  // Egyptian Deities
+  {
+    id: "isis-deity",
+    name: "Isis",
+    category: "deity",
+    description: "Egyptian goddess of magic, motherhood, and wisdom. One of the most widely worshiped deities in ancient Mediterranean world.",
+    christianPerspective: "Isis imagery appears in organizations like the Daughters of Isis (Shriner auxiliary). In organizational contexts, she represents wisdom and feminine strength. Early Christians in Egypt adapted some Isis imagery to honor Mary.",
+    cautionLevel: "medium",
+    cautionNote: "Context matters. Organizational usage differs from worship.",
+    scripturalContext: "Proverbs 31:25-26 - The virtuous woman described with strength and wisdom."
+  },
+  {
+    id: "osiris-deity",
+    name: "Osiris",
+    category: "deity",
+    description: "Egyptian god of the afterlife, death, resurrection, and agriculture. Often depicted with green skin.",
+    christianPerspective: "The Osiris myth of death and resurrection influenced ancient world concepts that Paul engaged. The Christian doctrine of resurrection fulfilled what pagans glimpsed dimly.",
+    cautionLevel: "medium",
+    cautionNote: "The resurrection theme can open discussions about Christ's true resurrection.",
+    scripturalContext: "1 Corinthians 15:20-22 - Christ's resurrection as firstfruits."
+  },
+  {
+    id: "horus-deity",
+    name: "Horus",
+    category: "deity",
+    description: "Egyptian sky god, often depicted as a falcon. The Eye of Horus is a common symbol of protection.",
+    christianPerspective: "The Eye of Horus appears in some fraternal imagery. Ancient symbols of protection and watchfulness echo biblical themes of God's watchful care over His people.",
+    cautionLevel: "medium",
+    cautionNote: "Protection symbolism can point to God as true protector.",
+    scripturalContext: "Psalm 121:4 - 'He who watches over Israel will neither slumber nor sleep.'"
+  },
+  {
+    id: "ra-deity",
+    name: "Ra (Re)",
+    category: "deity",
+    description: "Egyptian sun god, king of the gods. Often depicted with a sun disk.",
+    christianPerspective: "Sun imagery appears throughout Scripture positively. Jesus is called the 'Sun of Righteousness.' Light and sun symbolism can point to Christ, the true light of the world.",
+    cautionLevel: "low",
+    scripturalContext: "Malachi 4:2 - 'The Sun of Righteousness will rise with healing in his wings.'"
+  },
+  {
+    id: "anubis-deity",
+    name: "Anubis",
+    category: "deity",
+    description: "Egyptian god of mummification and the afterlife, depicted with a jackal head.",
+    christianPerspective: "Anubis guided souls in Egyptian belief. Christians have the Holy Spirit as guide. Death-related imagery can be redeemed to point to Christian hope of resurrection.",
+    cautionLevel: "medium",
+    cautionNote: "Death imagery should point to resurrection hope, not darkness.",
+    scripturalContext: "1 Thessalonians 4:13-14 - Hope in death through Christ."
+  },
+  {
+    id: "thoth-deity",
+    name: "Thoth",
+    category: "deity",
+    description: "Egyptian god of wisdom, writing, and knowledge. Depicted with an ibis head.",
+    christianPerspective: "Thoth as patron of writing and wisdom represents intellectual pursuit. God Himself gave humanity language and the capacity to write Scripture. Wisdom pursuit is biblical.",
+    cautionLevel: "low",
+    scripturalContext: "Proverbs 2:6 - 'The LORD gives wisdom; from his mouth come knowledge and understanding.'"
+  },
+  {
+    id: "maat-deity",
+    name: "Maat",
+    category: "deity",
+    description: "Egyptian goddess of truth, justice, and cosmic order. Often depicted with an ostrich feather.",
+    christianPerspective: "Maat represented truth and justice—values central to Scripture. God is a God of justice and truth. The concept of moral order reflects God's design.",
+    cautionLevel: "low",
+    scripturalContext: "Micah 6:8 - 'Act justly and to love mercy and to walk humbly with your God.'"
+  },
+  {
+    id: "sekhmet-deity",
+    name: "Sekhmet",
+    category: "deity",
+    description: "Egyptian warrior goddess with a lioness head. Associated with healing and protection.",
+    christianPerspective: "Lion imagery is biblical—Jesus is the Lion of Judah. Warrior and protector themes echo God as our refuge and fortress. Strength imagery can point to divine protection.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 91:1-2 - 'Whoever dwells in the shelter of the Most High.'"
+  },
+  {
+    id: "bastet-deity",
+    name: "Bastet",
+    category: "deity",
+    description: "Egyptian goddess depicted as a cat, associated with home, fertility, and protection.",
+    christianPerspective: "Bastet represented domestic protection and care. God's care for His people, especially families and homes, is a major biblical theme.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 127:1 - 'Unless the LORD watches over the city, the guards stand watch in vain.'"
+  },
+  // Roman Additions (distinct from Greek equivalents)
+  {
+    id: "janus-deity",
+    name: "Janus",
+    category: "deity",
+    description: "Roman god of beginnings, transitions, doorways, and endings. Two-faced, looking forward and backward. January is named for him.",
+    christianPerspective: "January, our calendar month, comes from Janus. Christians use this calendar without issue. Transitions and new beginnings are celebrated throughout Scripture.",
+    cautionLevel: "low",
+    scripturalContext: "Lamentations 3:22-23 - 'His mercies are new every morning.'"
+  },
+  {
+    id: "vesta-deity",
+    name: "Vesta",
+    category: "deity",
+    description: "Roman goddess of hearth, home, and family. The Vestal Virgins kept her eternal flame.",
+    christianPerspective: "Hearth and home are central to biblical family values. The concept of an eternal flame was adopted by Christians (sanctuary lamps). Home as sanctuary is deeply biblical.",
+    cautionLevel: "low",
+    scripturalContext: "Deuteronomy 6:6-7 - Teaching faith in the home."
+  },
+  {
+    id: "fortuna-deity",
+    name: "Fortuna",
+    category: "deity",
+    description: "Roman goddess of fortune and luck. Often depicted with a wheel and cornucopia.",
+    christianPerspective: "While Christians don't believe in luck but in God's providence, the concept of blessing and provision is biblical. Fortune imagery often represents success and blessing.",
+    cautionLevel: "medium",
+    cautionNote: "Redirect discussions of 'luck' to God's providence and blessing.",
+    scripturalContext: "Jeremiah 29:11 - 'Plans to prosper you and not to harm you.'"
+  },
+  {
+    id: "victoria-deity",
+    name: "Victoria (Nike)",
+    category: "deity",
+    description: "Roman goddess of victory. Greek equivalent: Nike. The Nike swoosh comes from her wing.",
+    christianPerspective: "Victory is a major biblical theme. 'In all these things we are more than conquerors.' Christians wear Nike shoes without spiritual concern. Victory imagery points to Christ's triumph.",
+    cautionLevel: "low",
+    scripturalContext: "Romans 8:37 - 'We are more than conquerors through him who loved us.'"
+  },
   // Published Ritual Elements
   {
     id: "candle-lighting",
