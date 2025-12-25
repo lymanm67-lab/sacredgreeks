@@ -111,7 +111,7 @@ const Index = () => {
                     Meet Dr. Lyman
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="w-64 p-2">
+                    <div className="w-64 p-2 bg-background border border-border rounded-md shadow-lg">
                       <Link to="/meet-dr-lyman" className="block px-3 py-2 text-sm rounded-md hover:bg-muted font-medium">
                         Overview
                       </Link>
@@ -122,8 +122,19 @@ const Index = () => {
                         Podcast Appearances
                       </Link>
                       <Link to="/coaching-application" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
-                        Coaching Application
+                        Book Speaking
                       </Link>
+                      <Link to="/contact" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
+                        Press & Media
+                      </Link>
+                      <a 
+                        href="/resources/lyman-media-kit-2025.pdf" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="block px-3 py-2 text-sm rounded-md hover:bg-muted"
+                      >
+                        Media Kit
+                      </a>
                     </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
@@ -276,7 +287,17 @@ const Index = () => {
                         <MobileNavLink to="/meet-dr-lyman">Overview</MobileNavLink>
                         <MobileNavLink to="/about">About Dr. Montgomery</MobileNavLink>
                         <MobileNavLink to="/podcast-appearances">Podcast Appearances</MobileNavLink>
-                        <MobileNavLink to="/coaching-application">Coaching Application</MobileNavLink>
+                        <MobileNavLink to="/coaching-application">Book Speaking</MobileNavLink>
+                        <a 
+                          href="/resources/lyman-media-kit-2025.pdf" 
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={closeMobileMenu}
+                          className="block px-4 py-2 text-sm text-foreground hover:bg-muted rounded-md transition-colors"
+                        >
+                          Media Kit
+                        </a>
+                        <MobileNavLink to="/contact">Press & Media</MobileNavLink>
                       </MobileNavSection>
 
                       <MobileNavSection title="The Challenge">
