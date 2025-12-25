@@ -6,8 +6,9 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Filter, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, Book, ExternalLink, Share2, FileDown, Scale, History, Sparkles, Printer } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Filter, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, Book, ExternalLink, Share2, FileDown, Scale, History, Sparkles, Printer, Users } from 'lucide-react';
 import { symbolGuideContent, ritualGuideContent, symbolCategories, culturalComparisons, culturalComparisonCategories, SymbolEntry, RitualEntry, CulturalComparisonEntry } from '@/data/symbolGuideContent';
+import { allGreekOrganizations, councilLabels, GreekOrganization } from '@/data/greekOrganizationsGuide';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -47,6 +48,7 @@ const SymbolGuide = () => {
   const queryClient = useQueryClient();
   const [symbolCategory, setSymbolCategory] = useState('all');
   const [comparisonCategory, setComparisonCategory] = useState('all');
+  const [orgCouncil, setOrgCouncil] = useState('all');
   const [cautionLevel, setCautionLevel] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [bookmarksOpen, setBookmarksOpen] = useState(false);
@@ -58,6 +60,14 @@ const SymbolGuide = () => {
     notes: string;
     bookmarkId?: string;
   }>({ open: false, itemId: '', itemType: 'symbol', itemName: '', notes: '' });
+
+  const councilFilters = [
+    { id: "all", label: "All Organizations" },
+    { id: "NPHC", label: "Divine Nine" },
+    { id: "NPC", label: "NPC Sororities" },
+    { id: "IFC", label: "IFC Fraternities" },
+    { id: "cultural", label: "Cultural Greeks" }
+  ];
 
   // Fetch bookmarks
   const { data: bookmarks = [] } = useQuery({
@@ -381,6 +391,20 @@ const SymbolGuide = () => {
     });
   }, [comparisonCategory, searchQuery]);
 
+  const filteredOrganizations = useMemo(() => {
+    return allGreekOrganizations.filter(org => {
+      const matchesCouncil = orgCouncil === 'all' || 
+        (orgCouncil === 'cultural' && ['NAPA', 'NALFO', 'MGC', 'Jewish'].includes(org.council)) ||
+        org.council === orgCouncil;
+      const matchesSearch = searchQuery === '' ||
+        org.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        org.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        org.christianPerspective.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (org.motto?.toLowerCase().includes(searchQuery.toLowerCase()));
+      return matchesCouncil && matchesSearch;
+    });
+  }, [orgCouncil, searchQuery]);
+
   const renderComparisonCard = (comparison: CulturalComparisonEntry) => {
     const categoryLabel = culturalComparisonCategories.find(c => c.id === comparison.category)?.label || comparison.category;
     return (
@@ -421,6 +445,45 @@ const SymbolGuide = () => {
                 <h4 className="font-semibold text-sm text-sacred mb-1">How This Helps You</h4>
                 <p className="text-sm text-muted-foreground">{comparison.appUsage}</p>
               </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  };
+
+  const renderOrganizationCard = (org: GreekOrganization) => {
+    return (
+      <Card key={org.id} className="overflow-hidden">
+        <CardHeader className="pb-2 bg-gradient-to-r from-sacred/5 to-muted/30">
+          <div className="flex items-start justify-between gap-2">
+            <div>
+              <CardTitle className="text-lg">{org.name}</CardTitle>
+              {org.motto && <p className="text-xs text-muted-foreground italic mt-1">"{org.motto}"</p>}
+            </div>
+            <div className="flex flex-col items-end gap-1">
+              <Badge variant="outline" className="capitalize">{org.type}</Badge>
+              <Badge className="bg-sacred/20 text-sacred border-sacred/30">{org.council}</Badge>
+            </div>
+          </div>
+          {org.colors && <p className="text-xs text-muted-foreground">Colors: {org.colors}</p>}
+        </CardHeader>
+        <CardContent className="space-y-3 pt-4">
+          <p className="text-sm text-muted-foreground">{org.description}</p>
+          <div className="bg-sacred/5 p-3 rounded-lg border border-sacred/20">
+            <h4 className="font-semibold text-sm mb-1 flex items-center gap-2">
+              <Book className="w-4 h-4 text-sacred" /> Christian Perspective
+            </h4>
+            <p className="text-sm text-muted-foreground">{org.christianPerspective}</p>
+          </div>
+          <div className="space-y-1">
+            <h4 className="font-semibold text-xs text-muted-foreground">Scripture References:</h4>
+            <div className="flex flex-wrap gap-1">
+              {org.scriptureReferences.map((ref, i) => (
+                <Link key={i} to={`/bible-study?search=${encodeURIComponent(ref.ref)}`}>
+                  <Badge variant="secondary" className="text-xs cursor-pointer hover:bg-sacred/20">{ref.ref}</Badge>
+                </Link>
+              ))}
             </div>
           </div>
         </CardContent>
@@ -728,12 +791,49 @@ const SymbolGuide = () => {
           </div>
         </div>
 
-        <Tabs defaultValue="symbols" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
+        <Tabs defaultValue="organizations" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="organizations">Organizations ({filteredOrganizations.length})</TabsTrigger>
             <TabsTrigger value="symbols">Symbols ({filteredSymbols.length})</TabsTrigger>
             <TabsTrigger value="rituals">Rituals ({filteredRituals.length})</TabsTrigger>
             <TabsTrigger value="comparisons">Comparisons ({filteredComparisons.length})</TabsTrigger>
           </TabsList>
+
+          <TabsContent value="organizations" className="space-y-4">
+            <Card className="mb-4 bg-gradient-to-r from-sacred/10 to-warm-blue/10 border-sacred/20">
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-2 mb-2">
+                  <Users className="w-5 h-5 text-sacred" />
+                  <h3 className="font-semibold">Greek Organizations & Christian Perspectives</h3>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Explore how the values, mottos, and principles of Greek organizations align with biblical teachings. 
+                  Each entry provides Scripture references and Christian perspectives.
+                </p>
+              </CardContent>
+            </Card>
+            <div className="flex flex-wrap gap-2 mb-4">
+              {councilFilters.map(filter => (
+                <Button
+                  key={filter.id}
+                  variant={orgCouncil === filter.id ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setOrgCouncil(filter.id)}
+                  className={orgCouncil === filter.id ? 'bg-sacred hover:bg-sacred/90' : ''}
+                >
+                  {filter.label}
+                </Button>
+              ))}
+            </div>
+            {filteredOrganizations.length === 0 && (
+              <Card className="p-8 text-center">
+                <p className="text-muted-foreground">No organizations found matching your filters</p>
+              </Card>
+            )}
+            <div className="grid gap-4 md:grid-cols-2">
+              {filteredOrganizations.map(renderOrganizationCard)}
+            </div>
+          </TabsContent>
 
           <TabsContent value="symbols" className="space-y-4">
             <div className="flex flex-wrap gap-2 mb-4">
