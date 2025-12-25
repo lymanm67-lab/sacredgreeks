@@ -2,24 +2,58 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Headphones, Play, Download, BookOpen } from "lucide-react";
+import { ArrowLeft, Headphones, Play, Download, BookOpen, Rss, ExternalLink } from "lucide-react";
 import { useEffect, useState } from "react";
 
+interface PodcastEpisode {
+  title: string;
+  description: string;
+  pubDate: string;
+  audioUrl: string;
+  duration?: string;
+}
+
 const Podcast = () => {
-  const [podcastLoaded, setPodcastLoaded] = useState(false);
+  const [episodes, setEpisodes] = useState<PodcastEpisode[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [currentAudio, setCurrentAudio] = useState<string | null>(null);
+
+  const RSS_URL = "https://sacredgreeks.jellypod.ai/rss";
 
   useEffect(() => {
-    // Load Buzzsprout embed script
-    const script = document.createElement("script");
-    script.src = "https://www.buzzsprout.com/2533260.js?container_id=buzzsprout-large-player&player=large";
-    script.async = true;
-    script.onload = () => setPodcastLoaded(true);
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
+    const fetchRSS = async () => {
+      try {
+        // Use a CORS proxy or fetch directly if allowed
+        const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}`);
+        const data = await response.json();
+        
+        if (data.status === "ok" && data.items) {
+          const parsedEpisodes: PodcastEpisode[] = data.items.map((item: any) => ({
+            title: item.title,
+            description: item.description?.replace(/<[^>]*>/g, '').slice(0, 200) + '...' || '',
+            pubDate: new Date(item.pubDate).toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            }),
+            audioUrl: item.enclosure?.link || '',
+            duration: item.itunes?.duration || ''
+          }));
+          setEpisodes(parsedEpisodes);
+        }
+      } catch (error) {
+        console.error("Error fetching RSS:", error);
+      } finally {
+        setLoading(false);
+      }
     };
+
+    fetchRSS();
   }, []);
+
+  const handlePlay = (audioUrl: string) => {
+    setCurrentAudio(currentAudio === audioUrl ? null : audioUrl);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-muted/30 to-background">
@@ -85,17 +119,67 @@ const Podcast = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {/* Buzzsprout Player Container */}
-              <div 
-                id="buzzsprout-large-player"
-                className="min-h-[400px] w-full"
-              />
-              
-              {!podcastLoaded && (
+              {loading ? (
                 <div className="flex items-center justify-center py-12">
                   <div className="animate-pulse text-muted-foreground">
-                    Loading podcast player...
+                    Loading podcast episodes...
                   </div>
+                </div>
+              ) : episodes.length > 0 ? (
+                <div className="space-y-4">
+                  {episodes.map((episode, index) => (
+                    <div 
+                      key={index}
+                      className="border border-border rounded-lg p-4 hover:bg-muted/50 transition-colors"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-foreground mb-1">{episode.title}</h3>
+                          <p className="text-sm text-muted-foreground mb-2">{episode.description}</p>
+                          <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                            <span>{episode.pubDate}</span>
+                            {episode.duration && <span>{episode.duration}</span>}
+                          </div>
+                        </div>
+                        {episode.audioUrl && (
+                          <Button 
+                            size="sm" 
+                            variant={currentAudio === episode.audioUrl ? "default" : "outline"}
+                            onClick={() => handlePlay(episode.audioUrl)}
+                          >
+                            <Play className="w-4 h-4" />
+                          </Button>
+                        )}
+                      </div>
+                      
+                      {currentAudio === episode.audioUrl && episode.audioUrl && (
+                        <div className="mt-4">
+                          <audio 
+                            controls 
+                            autoPlay
+                            className="w-full"
+                            src={episode.audioUrl}
+                          >
+                            Your browser does not support the audio element.
+                          </audio>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-12">
+                  <p className="text-muted-foreground mb-4">Episodes loading or coming soon!</p>
+                  <a 
+                    href={RSS_URL} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    <Button variant="outline" className="gap-2">
+                      <Rss className="w-4 h-4" />
+                      View RSS Feed
+                    </Button>
+                  </a>
                 </div>
               )}
             </CardContent>
@@ -114,7 +198,29 @@ const Podcast = () => {
                 Get new episodes automatically delivered to your device. Subscribe on:
               </p>
               
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <a
+                  href="https://sacredgreeks.jellypod.ai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                >
+                  <Button variant="outline" className="w-full gap-2">
+                    <ExternalLink className="w-4 h-4" />
+                    Jellypod
+                  </Button>
+                </a>
+                <a
+                  href={RSS_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                >
+                  <Button variant="outline" className="w-full gap-2">
+                    <Rss className="w-4 h-4" />
+                    RSS Feed
+                  </Button>
+                </a>
                 <a
                   href="https://podcasts.apple.com/podcast/id-needed"
                   target="_blank"
@@ -133,16 +239,6 @@ const Podcast = () => {
                 >
                   <Button variant="outline" className="w-full">
                     Spotify
-                  </Button>
-                </a>
-                <a
-                  href="https://www.buzzsprout.com/2533260"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block"
-                >
-                  <Button variant="outline" className="w-full">
-                    Buzzsprout
                   </Button>
                 </a>
               </div>
