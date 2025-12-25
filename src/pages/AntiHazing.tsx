@@ -1096,6 +1096,31 @@ const AntiHazing = () => {
           name: "Trivia & Quiz Bowl Nights",
           detail: "Team-based trivia competitions covering pop culture, Black history, and organizational knowledge",
           example: "Kappa Alpha Psi's 'Kappa Kwiz' challenges teams on fraternity history and current events"
+        },
+        {
+          name: "Plan & Lead a Chapter Meeting",
+          detail: "Challenge new members to create agendas, facilitate discussions, and lead a full meeting",
+          example: "Each aspirant leads one chapter meeting, learning parliamentary procedure and leadership"
+        },
+        {
+          name: "Organize a Community Service Project",
+          detail: "From start to finish—planning, logistics, volunteer coordination, and execution",
+          example: "New member lines organize their own service day, from selecting the cause to execution"
+        },
+        {
+          name: "Event Planning Challenge",
+          detail: "Plan and execute a chapter event including budgeting, venue, and marketing",
+          example: "Aspirants plan a successful social, fundraiser, or educational program within budget"
+        },
+        {
+          name: "Committee Leadership Project",
+          detail: "Lead a specific committee (social, service, academic) for a set period",
+          example: "New members chair committees alongside actives, gaining real leadership experience"
+        },
+        {
+          name: "Professional Presentation Challenge",
+          detail: "Research and present on organizational history, values, or a relevant topic",
+          example: "Each new member presents on a founder, chapter milestone, or service initiative"
         }
       ]
     },
