@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Home, Users, Heart, BookOpen, MessageSquare, Filter, Sparkles, ChevronRight, Video, Users2, HelpCircle, Award, Clock, GraduationCap, Quote, ExternalLink } from 'lucide-react';
+import { Home, Users, Heart, BookOpen, MessageSquare, Filter, Sparkles, ChevronRight, Video, Users2, HelpCircle, Award, Clock, GraduationCap, Quote, ExternalLink, Calendar } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
@@ -47,6 +47,49 @@ const OrgCommunity = () => {
     goals: ''
   });
   const [submittingWaitlist, setSubmittingWaitlist] = useState(false);
+
+  const generateCalendarInvite = () => {
+    // Get next Thursday at 7 PM EST
+    const now = new Date();
+    const nextThursday = new Date(now);
+    const daysUntilThursday = (4 - now.getDay() + 7) % 7 || 7;
+    nextThursday.setDate(now.getDate() + daysUntilThursday);
+    nextThursday.setHours(19, 0, 0, 0); // 7 PM
+
+    // Convert to UTC for .ics format (EST is UTC-5)
+    const startUTC = new Date(nextThursday.getTime() + 5 * 60 * 60 * 1000);
+    const endUTC = new Date(startUTC.getTime() + 60 * 60 * 1000); // 1 hour session
+
+    const formatICSDate = (date: Date) => {
+      return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    };
+
+    const icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sacred Greeks//Coaching Session//EN
+BEGIN:VEVENT
+DTSTART:${formatICSDate(startUTC)}
+DTEND:${formatICSDate(endUTC)}
+RRULE:FREQ=WEEKLY;BYDAY=TH
+SUMMARY:Sacred Not Sinful - Group Coaching with Dr. Lyman
+DESCRIPTION:Weekly group coaching session with Dr. Lyman Montgomery.\\n\\nJoin Zoom: https://us06web.zoom.us/j/5590911918?pwd=0rafTI5b2OvJGRjHi1z3lzZePsGGnh.1
+LOCATION:https://us06web.zoom.us/j/5590911918?pwd=0rafTI5b2OvJGRjHi1z3lzZePsGGnh.1
+URL:https://us06web.zoom.us/j/5590911918?pwd=0rafTI5b2OvJGRjHi1z3lzZePsGGnh.1
+STATUS:CONFIRMED
+ORGANIZER;CN=Dr. Lyman Montgomery:mailto:noreply@sacredgreeks.com
+END:VEVENT
+END:VCALENDAR`;
+
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'sacred-greeks-coaching.ics';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+    toast.success('Calendar invite downloaded!');
+  };
 
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -435,18 +478,28 @@ const OrgCommunity = () => {
                         </p>
                       </div>
                     </div>
-                    <a 
-                      href="https://us06web.zoom.us/j/5590911918?pwd=0rafTI5b2OvJGRjHi1z3lzZePsGGnh.1" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="inline-flex"
-                    >
-                      <Button className="bg-blue-600 hover:bg-blue-700 gap-2">
-                        <Video className="w-4 h-4" />
-                        Join Zoom Call
-                        <ExternalLink className="w-4 h-4" />
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <a 
+                        href="https://us06web.zoom.us/j/5590911918?pwd=0rafTI5b2OvJGRjHi1z3lzZePsGGnh.1" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex"
+                      >
+                        <Button className="bg-blue-600 hover:bg-blue-700 gap-2">
+                          <Video className="w-4 h-4" />
+                          Join Zoom Call
+                          <ExternalLink className="w-4 h-4" />
+                        </Button>
+                      </a>
+                      <Button 
+                        variant="outline" 
+                        onClick={generateCalendarInvite}
+                        className="gap-2"
+                      >
+                        <Calendar className="w-4 h-4" />
+                        Add to Calendar
                       </Button>
-                    </a>
+                    </div>
                   </div>
                   <p className="text-xs text-muted-foreground mt-4 text-center md:text-left">
                     Meeting ID will be provided to enrolled members. Sessions are recorded for those who cannot attend live.
