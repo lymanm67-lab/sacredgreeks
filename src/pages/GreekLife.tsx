@@ -424,6 +424,56 @@ const GreekLife = () => {
       colors: "Shocking Pink and Majestic Purple",
       motto: "Culture is Pride and Pride is Success"
     },
+    {
+      name: "Lambda Upsilon Lambda",
+      greekLetters: "ΛΥΛ",
+      founded: "February 19, 1982",
+      foundedLocation: "Cornell University",
+      colors: "Purple and Black",
+      motto: "La Unidad Para Siempre",
+      nickname: "LUL"
+    },
+    {
+      name: "Phi Iota Alpha",
+      greekLetters: "ΦΙΑ",
+      founded: "December 26, 1931",
+      foundedLocation: "Rensselaer Polytechnic Institute",
+      colors: "Blue and Gold",
+      motto: "Semper Parati Semper Juncti",
+      nickname: "Oldest Latino Fraternity"
+    },
+    {
+      name: "Lambda Alpha Upsilon",
+      greekLetters: "ΛΑΥ",
+      founded: "December 10, 1982",
+      foundedLocation: "University at Buffalo",
+      colors: "Powder Blue, Black, and Gold",
+      motto: "Once a Lambda Man, Always a Lambda Man"
+    },
+    {
+      name: "Chi Upsilon Sigma",
+      greekLetters: "ΧΥΣ",
+      founded: "April 29, 1980",
+      foundedLocation: "Rutgers University",
+      colors: "Red, Black, and White",
+      motto: "Corazones Unidos Siempre"
+    },
+    {
+      name: "Kappa Delta Chi",
+      greekLetters: "ΚΔΧ",
+      founded: "April 6, 1987",
+      foundedLocation: "Texas Tech University",
+      colors: "Orange and White",
+      motto: "Hermandad, Unidad, Liderazgo"
+    },
+    {
+      name: "Gamma Phi Omega",
+      greekLetters: "ΓΦΩ",
+      founded: "February 5, 1991",
+      foundedLocation: "Indiana University",
+      colors: "Purple, Pink, and White",
+      motto: "Achieving Through Unity"
+    },
     // NAPA - Asian Organizations
     {
       name: "Lambda Phi Epsilon",
@@ -449,7 +499,7 @@ const GreekLife = () => {
       founded: "March 9, 1995",
       foundedLocation: "Binghamton University",
       colors: "Red and Crème",
-      motto: "Asian-American Interest Sorority"
+      motto: "Sisterhood, Service, Cultural Diversity"
     },
     {
       name: "Pi Delta Psi",
@@ -459,14 +509,73 @@ const GreekLife = () => {
       colors: "Navy and Silver",
       motto: "Strength in Brotherhood, Excellence in Diversity"
     },
+    {
+      name: "Chi Sigma Tau",
+      greekLetters: "ΧΣΤ",
+      founded: "1999",
+      foundedLocation: "SUNY Plattsburgh",
+      colors: "Royal Blue and White",
+      motto: "Cultura, Servicio, Trabajo"
+    },
+    {
+      name: "Psi Sigma Phi",
+      greekLetters: "ΨΣΦ",
+      founded: "1990",
+      foundedLocation: "Troy State University",
+      colors: "Blue, White, and Gold",
+      motto: "Promoting Asian-American Awareness"
+    },
+    {
+      name: "Sigma Psi Zeta",
+      greekLetters: "ΣΨΖ",
+      founded: "March 23, 1994",
+      foundedLocation: "University at Albany",
+      colors: "Royal Blue and White",
+      motto: "Empowering Womyn for Over 30 Years"
+    },
+    {
+      name: "Delta Kappa Delta",
+      greekLetters: "ΔΚΔ",
+      founded: "1998",
+      foundedLocation: "University of Texas at Dallas",
+      colors: "White and Blue",
+      motto: "Asian-Interest Sorority"
+    },
+    {
+      name: "Omega Phi Alpha",
+      greekLetters: "ΩΦΑ",
+      founded: "March 3, 1990",
+      foundedLocation: "University of Pittsburgh",
+      colors: "Navy Blue and White",
+      motto: "Asian-American Fraternity"
+    },
     // South Asian Organizations
+    {
+      name: "Delta Epsilon Psi",
+      greekLetters: "ΔΕΨ",
+      founded: "November 3, 1998",
+      foundedLocation: "University of Texas at Austin",
+      colors: "Purple and Gold",
+      motto: "Brotherhood Through Diversity",
+      nickname: "First South Asian Fraternity in Texas"
+    },
+    {
+      name: "Sigma Sigma Rho",
+      greekLetters: "ΣΣΡ",
+      founded: "September 24, 1998",
+      foundedLocation: "The College of New Jersey",
+      colors: "Purple and White",
+      motto: "Shaping Young Women Into Leaders",
+      nickname: "South Asian Sorority"
+    },
     {
       name: "Delta Phi Omega",
       greekLetters: "ΔΦΩ",
       founded: "November 1998",
       foundedLocation: "University of Texas at Dallas",
       colors: "Maroon and White",
-      motto: "First South Asian Sorority"
+      motto: "Dare Pursue Own",
+      nickname: "First South Asian Sorority"
     },
     {
       name: "Sigma Beta Rho",
@@ -474,24 +583,39 @@ const GreekLife = () => {
       founded: "May 15, 1996",
       foundedLocation: "University of Pennsylvania",
       colors: "Royal Blue and Chocolate Brown",
-      motto: "South Asian Interest Fraternity"
-    },
-    // Other Multicultural
-    {
-      name: "Lambda Alpha Upsilon",
-      greekLetters: "ΛΑΥ",
-      founded: "December 10, 1982",
-      foundedLocation: "University at Buffalo",
-      colors: "Powder Blue, Black, and Gold",
-      motto: "Latino Fraternity"
+      motto: "Friendship, Brotherhood, and Scholarship"
     },
     {
-      name: "Chi Upsilon Sigma",
-      greekLetters: "ΧΥΣ",
-      founded: "April 29, 1980",
-      foundedLocation: "Rutgers University",
-      colors: "Red, Black, and White",
-      motto: "Latina Sorority"
+      name: "Kappa Phi Gamma",
+      greekLetters: "ΚΦΓ",
+      founded: "August 1998",
+      foundedLocation: "University of Pennsylvania",
+      colors: "Fuchsia and Black",
+      motto: "First South Asian Interest Sorority"
+    },
+    {
+      name: "Beta Chi Theta",
+      greekLetters: "ΒΧΘ",
+      founded: "February 11, 1999",
+      foundedLocation: "UCLA",
+      colors: "Crimson and Gold",
+      motto: "Brotherhood, Courage, Honor"
+    },
+    {
+      name: "Delta Sigma Iota",
+      greekLetters: "ΔΣΙ",
+      founded: "October 11, 2000",
+      foundedLocation: "Texas A&M University",
+      colors: "Blue, Gold, and White",
+      motto: "Dedication, Service, Integrity"
+    },
+    {
+      name: "Sigma Alpha Epsilon Pi",
+      greekLetters: "ΣΑΕΠ",
+      founded: "1998",
+      foundedLocation: "UCLA",
+      colors: "Pink and Black",
+      motto: "Jewish Sisterhood with South Asian chapters"
     },
   ];
 
@@ -1088,9 +1212,12 @@ const GreekLife = () => {
                     </div>
                     
                     {council.id === "nphc" && (
-                      <div className="mb-4 p-4 rounded-lg bg-muted/50">
+                      <div className="mb-4 p-4 rounded-lg bg-muted/50 space-y-3">
                         <p className="text-sm text-muted-foreground">
                           The Divine Nine organizations emerged during a time when African Americans faced significant barriers to education and social advancement. These organizations have shaped African American history through their commitment to scholarship, service, sisterhood, and brotherhood, providing safe spaces for intellectual discourse, leadership development, and community service.
+                        </p>
+                        <p className="text-sm text-muted-foreground italic border-t border-border pt-3">
+                          <strong>Note:</strong> Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection. Many universities, government institutions, and civic organizations display Greek and Roman mythology openly—from Athena on university seals to Apollo on government buildings. Consistency in critique matters.
                         </p>
                       </div>
                     )}
