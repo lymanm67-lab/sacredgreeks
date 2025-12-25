@@ -101,6 +101,7 @@ const ToolsResources = lazy(() => import("./pages/ToolsResources"));
 const HealingResources = lazy(() => import("./pages/HealingResources"));
 const OrganizationDetail = lazy(() => import("./pages/OrganizationDetail"));
 const ProofCourse = lazy(() => import("./pages/ProofCourse"));
+const ChurchLeaders = lazy(() => import("./pages/ChurchLeaders"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -228,6 +229,7 @@ const App = () => (
                     <Route path="/tools-resources" element={<ToolsResources />} />
                     <Route path="/healing-resources" element={<HealingResources />} />
                     <Route path="/proof-course" element={<ProofCourse />} />
+                    <Route path="/church-leaders" element={<ChurchLeaders />} />
                     
                     {/* Protected routes - with sidebar */}
                     <Route
