@@ -1,8 +1,20 @@
+export type OrganizationCategory = 
+  | "divine-nine" 
+  | "multicultural" 
+  | "professional" 
+  | "leadership-honor" 
+  | "service-band" 
+  | "social" 
+  | "masonic-fraternal" 
+  | "christian" 
+  | "lgbtq";
+
 export interface GreekOrganization {
   id: string;
   name: string;
   type: "fraternity" | "sorority";
-  council: "NPHC" | "NPC" | "IFC" | "NAPA" | "NALFO" | "MGC" | "Jewish";
+  council: "NPHC" | "NPC" | "IFC" | "NAPA" | "NALFO" | "MGC" | "Jewish" | "Professional" | "Honor" | "Service" | "Christian" | "LGBTQ" | "Masonic";
+  category: OrganizationCategory;
   colors?: string;
   founded?: string;
   motto?: string;
@@ -12,12 +24,26 @@ export interface GreekOrganization {
   scriptureReferences: { ref: string; text?: string }[];
 }
 
+export const organizationCategories = [
+  { id: "all", label: "All" },
+  { id: "divine-nine", label: "Divine Nine" },
+  { id: "multicultural", label: "Multicultural" },
+  { id: "professional", label: "Professional" },
+  { id: "leadership-honor", label: "Leadership & Honor" },
+  { id: "service-band", label: "Service & Band" },
+  { id: "social", label: "Social Fellowships" },
+  { id: "masonic-fraternal", label: "Masonic & Fraternal" },
+  { id: "christian", label: "Christian" },
+  { id: "lgbtq", label: "LGBTQ Councils" },
+];
+
 export const divineNineOrganizations: GreekOrganization[] = [
   {
     id: "alpha-phi-alpha",
     name: "Alpha Phi Alpha",
     type: "fraternity",
     council: "NPHC",
+    category: "divine-nine",
     colors: "Black & Gold",
     founded: "1906 at Cornell University",
     motto: "First of All, Servants of All, We Shall Transcend All",
@@ -38,6 +64,7 @@ export const divineNineOrganizations: GreekOrganization[] = [
     name: "Alpha Kappa Alpha",
     type: "sorority",
     council: "NPHC",
+    category: "divine-nine",
     colors: "Salmon Pink & Apple Green",
     founded: "1908 at Howard University",
     motto: "By Culture and By Merit",
@@ -58,6 +85,7 @@ export const divineNineOrganizations: GreekOrganization[] = [
     name: "Kappa Alpha Psi",
     type: "fraternity",
     council: "NPHC",
+    category: "divine-nine",
     colors: "Crimson & Cream",
     founded: "1911 at Indiana University",
     motto: "Achievement in Every Field of Human Endeavor",
@@ -78,6 +106,7 @@ export const divineNineOrganizations: GreekOrganization[] = [
     name: "Omega Psi Phi",
     type: "fraternity",
     council: "NPHC",
+    category: "divine-nine",
     colors: "Purple & Gold",
     founded: "1911 at Howard University",
     motto: "Friendship is Essential to the Soul",
@@ -98,6 +127,7 @@ export const divineNineOrganizations: GreekOrganization[] = [
     name: "Delta Sigma Theta",
     type: "sorority",
     council: "NPHC",
+    category: "divine-nine",
     colors: "Crimson & Cream",
     founded: "1913 at Howard University",
     motto: "Intelligence is the Torch of Wisdom",
@@ -118,6 +148,7 @@ export const divineNineOrganizations: GreekOrganization[] = [
     name: "Phi Beta Sigma",
     type: "fraternity",
     council: "NPHC",
+    category: "divine-nine",
     colors: "Blue & White",
     founded: "1914 at Howard University",
     motto: "Culture For Service and Service For Humanity",
@@ -138,6 +169,7 @@ export const divineNineOrganizations: GreekOrganization[] = [
     name: "Zeta Phi Beta",
     type: "sorority",
     council: "NPHC",
+    category: "divine-nine",
     colors: "Royal Blue & White",
     founded: "1920 at Howard University",
     motto: "A Community Conscious, Action-Oriented Organization",
@@ -158,6 +190,7 @@ export const divineNineOrganizations: GreekOrganization[] = [
     name: "Sigma Gamma Rho",
     type: "sorority",
     council: "NPHC",
+    category: "divine-nine",
     colors: "Royal Blue & Gold",
     founded: "1922 at Butler University",
     motto: "Greater Service, Greater Progress",
@@ -178,6 +211,7 @@ export const divineNineOrganizations: GreekOrganization[] = [
     name: "Iota Phi Theta",
     type: "fraternity",
     council: "NPHC",
+    category: "divine-nine",
     colors: "Brown & Gold",
     founded: "1963 at Morgan State University",
     motto: "Building a Tradition, Not Resting Upon One",
@@ -201,6 +235,7 @@ export const npcSororities: GreekOrganization[] = [
     name: "Chi Omega",
     type: "sorority",
     council: "NPC",
+    category: "social",
     founded: "1895 at University of Arkansas",
     description: "Largest women's fraternal organization. Emphasizes sisterhood, high standards, scholarship, community service, and career development.",
     christianPerspective: "Chi Omega's stand against hazing reflects moral courage. Christian women can model the Titus 2 woman - teaching, mentoring, and building up younger sisters in love.",
@@ -219,6 +254,7 @@ export const npcSororities: GreekOrganization[] = [
     name: "Delta Delta Delta (Tri Delta)",
     type: "sorority",
     council: "NPC",
+    category: "social",
     founded: "1888 at Boston University",
     motto: "Let Us Steadfastly Love One Another",
     description: "The trident symbol represents the three founders and commitment to sisterhood.",
@@ -238,6 +274,7 @@ export const npcSororities: GreekOrganization[] = [
     name: "Gamma Phi Beta",
     type: "sorority",
     council: "NPC",
+    category: "social",
     founded: "1874 at Syracuse University",
     motto: "Founded on a Rock",
     description: "First organization to be called a 'sorority.' Emphasizes lasting friendship built on solid principles.",
@@ -257,6 +294,7 @@ export const npcSororities: GreekOrganization[] = [
     name: "Kappa Kappa Gamma",
     type: "sorority",
     council: "NPC",
+    category: "social",
     founded: "1870 at Monmouth College",
     description: "Emphasizes intellectual, social, and moral development. The key symbol represents friendship and unlocking potential.",
     christianPerspective: "Kappa's key symbol parallels the keys given to Peter (Matthew 16:19). Christian Kappas can see their sisterhood as a key that unlocks potential and opens doors for service.",
@@ -275,6 +313,7 @@ export const npcSororities: GreekOrganization[] = [
     name: "Pi Beta Phi",
     type: "sorority",
     council: "NPC",
+    category: "social",
     founded: "1867 at Monmouth College",
     description: "First national secret college society for women. The arrow symbol represents aiming for higher ideals.",
     christianPerspective: "Pi Phi's arrow symbolizes direction and purpose. Scripture speaks of children as arrows in a warrior's hand (Psalm 127:4). Christian Pi Phis can see themselves aimed toward God's purposes.",
@@ -293,6 +332,7 @@ export const npcSororities: GreekOrganization[] = [
     name: "Alpha Chi Omega",
     type: "sorority",
     council: "NPC",
+    category: "social",
     founded: "1885 at DePauw University",
     motto: "Together Let Us Seek the Heights",
     description: "The lyre symbol represents harmony and the arts.",
@@ -312,6 +352,7 @@ export const npcSororities: GreekOrganization[] = [
     name: "Alpha Phi",
     type: "sorority",
     council: "NPC",
+    category: "social",
     founded: "1872 at Syracuse University",
     description: "Emphasizes sisterhood, service, scholarship, and character development. The ivy leaf symbolizes enduring friendship.",
     christianPerspective: "Alpha Phi's 'Union Hand in Hand' reflects the unity Christ prayed for (John 17:21). The ivy leaf, like John 15, represents abiding connection.",
@@ -333,6 +374,7 @@ export const ifcFraternities: GreekOrganization[] = [
     name: "Beta Theta Pi",
     type: "fraternity",
     council: "IFC",
+    category: "social",
     founded: "1839 at Miami University",
     description: "One of the oldest fraternities. 'Men of Principle' initiative focuses on integrity, intellectual growth, responsible conduct, and mutual assistance.",
     christianPerspective: "Beta's Men of Principle aligns with the call to be men of integrity. Scripture emphasizes character and principle-centered living.",
@@ -351,6 +393,7 @@ export const ifcFraternities: GreekOrganization[] = [
     name: "Phi Delta Theta",
     type: "fraternity",
     council: "IFC",
+    category: "social",
     founded: "1848 at Miami University",
     description: "Cardinal principles: Friendship, Sound Learning, and Rectitude. Became alcohol-free in 2000.",
     christianPerspective: "Phi Delt's three principles directly reflect biblical values - friendship mirrors David and Jonathan, sound learning honors God with our minds, and rectitude embodies moral integrity.",
@@ -369,6 +412,7 @@ export const ifcFraternities: GreekOrganization[] = [
     name: "Pi Kappa Alpha (PIKE)",
     type: "fraternity",
     council: "IFC",
+    category: "social",
     founded: "1868 at University of Virginia",
     description: "Emphasizes being Scholars, Leaders, Athletes, and Gentlemen (SLAG). Focuses on academic achievement and community service.",
     christianPerspective: "PIKE's SLAG principles align with holistic development - growth in mind, leadership, body, and character. Christians can pursue excellence while giving glory to God.",
@@ -387,6 +431,7 @@ export const ifcFraternities: GreekOrganization[] = [
     name: "Sigma Alpha Epsilon",
     type: "fraternity",
     council: "IFC",
+    category: "social",
     founded: "1856 at University of Alabama",
     description: "Promotes the True Gentleman ideal - nobility of character, integrity, and respect for others.",
     christianPerspective: "The True Gentleman creed emphasizes character traits that align with Scripture - kindness, self-control, and respect. Christians can embody Christ-like character.",
@@ -405,6 +450,7 @@ export const ifcFraternities: GreekOrganization[] = [
     name: "Kappa Sigma",
     type: "fraternity",
     council: "IFC",
+    category: "social",
     founded: "1869 at University of Virginia",
     description: "Traces heritage to medieval Bologna. Four Pillars: Fellowship, Leadership, Scholarship, and Service.",
     christianPerspective: "Kappa Sigma's Four Pillars reflect biblical values - fellowship mirrors Christian community, leadership reflects servant leadership, scholarship honors God with our minds.",
@@ -426,6 +472,7 @@ export const culturalGreekOrganizations: GreekOrganization[] = [
     name: "Lambda Phi Epsilon",
     type: "fraternity",
     council: "NAPA",
+    category: "multicultural",
     founded: "1981 at UCLA",
     motto: "To Be a Lambda is Not For a Day, But For Life",
     description: "Largest Asian-interest fraternity.",
@@ -445,6 +492,7 @@ export const culturalGreekOrganizations: GreekOrganization[] = [
     name: "Lambda Theta Phi",
     type: "fraternity",
     council: "NALFO",
+    category: "multicultural",
     founded: "1975 at Kean University",
     motto: "Chivalry Above Self",
     description: "First Latino fraternity in the nation. Committed to Latino unity and cultural awareness.",
@@ -464,6 +512,7 @@ export const culturalGreekOrganizations: GreekOrganization[] = [
     name: "alpha Kappa Delta Phi",
     type: "sorority",
     council: "NAPA",
+    category: "multicultural",
     founded: "1990 at UC Berkeley",
     description: "Largest Asian-interest sorority. Promotes sisterhood, scholarship, leadership, and service.",
     christianPerspective: "The four pillars of sisterhood, scholarship, leadership, and service align with the biblical model of developing godly character while serving others.",
@@ -482,6 +531,7 @@ export const culturalGreekOrganizations: GreekOrganization[] = [
     name: "Lambda Theta Alpha",
     type: "sorority",
     council: "NALFO",
+    category: "multicultural",
     founded: "1975 at Kean University",
     description: "First Latina sorority in the nation. Focuses on unity, love, and respect among Latin women.",
     christianPerspective: "The emphasis on unity, love, and respect reflects the New Testament call for believers to love one another and maintain unity in the bond of peace.",
@@ -500,6 +550,7 @@ export const culturalGreekOrganizations: GreekOrganization[] = [
     name: "Alpha Epsilon Pi",
     type: "fraternity",
     council: "Jewish",
+    category: "multicultural",
     founded: "1913 at New York University",
     description: "World's Jewish fraternity. Focuses on developing Jewish leaders through commitment to Jewish values.",
     christianPerspective: "AEPi's foundation in Jewish values connects directly to the Hebrew Scriptures shared by Christians. Their emphasis on community and charity aligns with biblical principles.",

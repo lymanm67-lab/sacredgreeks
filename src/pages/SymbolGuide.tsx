@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Filter, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, Book, ExternalLink, Share2, FileDown, Scale, History, Sparkles, Printer, Users } from 'lucide-react';
 import { symbolGuideContent, ritualGuideContent, symbolCategories, culturalComparisons, culturalComparisonCategories, SymbolEntry, RitualEntry, CulturalComparisonEntry } from '@/data/symbolGuideContent';
-import { allGreekOrganizations, councilLabels, GreekOrganization } from '@/data/greekOrganizationsGuide';
+import { allGreekOrganizations, councilLabels, organizationCategories, GreekOrganization } from '@/data/greekOrganizationsGuide';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -48,7 +48,7 @@ const SymbolGuide = () => {
   const queryClient = useQueryClient();
   const [symbolCategory, setSymbolCategory] = useState('all');
   const [comparisonCategory, setComparisonCategory] = useState('all');
-  const [orgCouncil, setOrgCouncil] = useState('all');
+  const [orgCategory, setOrgCategory] = useState('all');
   const [cautionLevel, setCautionLevel] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [bookmarksOpen, setBookmarksOpen] = useState(false);
@@ -61,13 +61,6 @@ const SymbolGuide = () => {
     bookmarkId?: string;
   }>({ open: false, itemId: '', itemType: 'symbol', itemName: '', notes: '' });
 
-  const councilFilters = [
-    { id: "all", label: "All Organizations" },
-    { id: "NPHC", label: "Divine Nine" },
-    { id: "NPC", label: "NPC Sororities" },
-    { id: "IFC", label: "IFC Fraternities" },
-    { id: "cultural", label: "Cultural Greeks" }
-  ];
 
   // Fetch bookmarks
   const { data: bookmarks = [] } = useQuery({
@@ -393,17 +386,15 @@ const SymbolGuide = () => {
 
   const filteredOrganizations = useMemo(() => {
     return allGreekOrganizations.filter(org => {
-      const matchesCouncil = orgCouncil === 'all' || 
-        (orgCouncil === 'cultural' && ['NAPA', 'NALFO', 'MGC', 'Jewish'].includes(org.council)) ||
-        org.council === orgCouncil;
+      const matchesCategory = orgCategory === 'all' || org.category === orgCategory;
       const matchesSearch = searchQuery === '' ||
         org.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         org.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         org.christianPerspective.toLowerCase().includes(searchQuery.toLowerCase()) ||
         (org.motto?.toLowerCase().includes(searchQuery.toLowerCase()));
-      return matchesCouncil && matchesSearch;
+      return matchesCategory && matchesSearch;
     });
-  }, [orgCouncil, searchQuery]);
+  }, [orgCategory, searchQuery]);
 
   const renderComparisonCard = (comparison: CulturalComparisonEntry) => {
     const categoryLabel = culturalComparisonCategories.find(c => c.id === comparison.category)?.label || comparison.category;
@@ -813,13 +804,13 @@ const SymbolGuide = () => {
               </CardContent>
             </Card>
             <div className="flex flex-wrap gap-2 mb-4">
-              {councilFilters.map(filter => (
+              {organizationCategories.map(filter => (
                 <Button
                   key={filter.id}
-                  variant={orgCouncil === filter.id ? 'default' : 'outline'}
+                  variant={orgCategory === filter.id ? 'default' : 'outline'}
                   size="sm"
-                  onClick={() => setOrgCouncil(filter.id)}
-                  className={orgCouncil === filter.id ? 'bg-sacred hover:bg-sacred/90' : ''}
+                  onClick={() => setOrgCategory(filter.id)}
+                  className={orgCategory === filter.id ? 'bg-sacred hover:bg-sacred/90' : ''}
                 >
                   {filter.label}
                 </Button>
