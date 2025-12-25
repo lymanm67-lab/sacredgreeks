@@ -183,20 +183,39 @@ const GreekLife = () => {
       motto: "Love of learning is the guide of life"
     },
     {
+      name: "Tau Beta Pi",
+      greekLetters: "ΤΒΠ",
+      founded: "1885",
+      foundedLocation: "Lehigh University",
+      colors: "Seal Brown and White",
+      motto: "Integrity and Excellence in Engineering",
+      nickname: "Engineering Honor Society"
+    },
+    {
+      name: "Beta Gamma Sigma",
+      greekLetters: "ΒΓΣ",
+      founded: "1913",
+      foundedLocation: "University of Wisconsin-Madison",
+      colors: "Blue and Gold",
+      motto: "Honor and Integrity in Business",
+      nickname: "Business Honor Society"
+    },
+    {
+      name: "Psi Chi",
+      greekLetters: "ΨΧ",
+      founded: "1929",
+      foundedLocation: "Ninth International Congress of Psychology",
+      colors: "Blue and Gold",
+      motto: "Eye to the future, hand to the past",
+      nickname: "Psychology Honor Society"
+    },
+    {
       name: "Phi Kappa Phi",
       greekLetters: "ΦΚΦ",
       founded: "1897",
       foundedLocation: "University of Maine",
       colors: "Gold and White",
       motto: "Let the love of learning rule humanity"
-    },
-    {
-      name: "Golden Key International",
-      greekLetters: "GK",
-      founded: "1977",
-      foundedLocation: "Georgia State University",
-      colors: "Gold and Black",
-      motto: "Excellence, Integrity, Leadership"
     },
     {
       name: "Alpha Lambda Delta",
@@ -213,6 +232,139 @@ const GreekLife = () => {
       foundedLocation: "Washington and Lee University",
       colors: "Sky Blue, White, and Black",
       motto: "Leadership in worthwhile activities"
+    },
+    {
+      name: "Alpha Epsilon Delta",
+      greekLetters: "ΑΕΔ",
+      founded: "1926",
+      foundedLocation: "University of Alabama",
+      colors: "Red and Violet",
+      motto: "Pre-Health Honor Society",
+      nickname: "Pre-Med Honor Society"
+    },
+    {
+      name: "Sigma Tau Delta",
+      greekLetters: "ΣΤΔ",
+      founded: "1924",
+      foundedLocation: "Dakota Wesleyan University",
+      colors: "Red and Black",
+      motto: "English Honor Society",
+      nickname: "International English Honor Society"
+    },
+    {
+      name: "Delta Sigma Pi",
+      greekLetters: "ΔΣΠ",
+      founded: "1907",
+      foundedLocation: "New York University",
+      colors: "Purple and Gold",
+      motto: "Professional Business Fraternity"
+    },
+  ];
+
+  const multiculturalGreeks: Organization[] = [
+    // NALFO - Latino Organizations
+    {
+      name: "Lambda Theta Alpha",
+      greekLetters: "ΛΘΑ",
+      founded: "December 1975",
+      foundedLocation: "Kean University",
+      colors: "Burgundy and Gray",
+      motto: "Latinas Leading Through Diversity",
+      nickname: "First Latina Sorority"
+    },
+    {
+      name: "Lambda Theta Phi",
+      greekLetters: "ΛΘΦ",
+      founded: "December 1, 1975",
+      foundedLocation: "Kean University",
+      colors: "Brown and White",
+      motto: "Chivalry Above Self",
+      nickname: "First Latino Fraternity"
+    },
+    {
+      name: "Sigma Lambda Beta",
+      greekLetters: "ΣΛΒ",
+      founded: "April 4, 1986",
+      foundedLocation: "University of Iowa",
+      colors: "Royal Purple and Pure White",
+      motto: "Opportunity for Wisdom, Wisdom for Culture"
+    },
+    {
+      name: "Sigma Lambda Gamma",
+      greekLetters: "ΣΛΓ",
+      founded: "April 9, 1990",
+      foundedLocation: "University of Iowa",
+      colors: "Shocking Pink and Majestic Purple",
+      motto: "Culture is Pride and Pride is Success"
+    },
+    // NAPA - Asian Organizations
+    {
+      name: "Lambda Phi Epsilon",
+      greekLetters: "ΛΦΕ",
+      founded: "February 25, 1981",
+      foundedLocation: "UCLA",
+      colors: "Royal Blue and White",
+      motto: "To Be a Leader Among Men",
+      nickname: "Largest Asian-Interest Fraternity"
+    },
+    {
+      name: "alpha Kappa Delta Phi",
+      greekLetters: "αΚΔΦ",
+      founded: "February 7, 1990",
+      foundedLocation: "UC Berkeley",
+      colors: "Violet and White",
+      motto: "Timeless Friendship Through Sisterhood",
+      nickname: "Largest Asian-Interest Sorority"
+    },
+    {
+      name: "Kappa Phi Lambda",
+      greekLetters: "ΚΦΛ",
+      founded: "March 9, 1995",
+      foundedLocation: "Binghamton University",
+      colors: "Red and Crème",
+      motto: "Asian-American Interest Sorority"
+    },
+    {
+      name: "Pi Delta Psi",
+      greekLetters: "ΠΔΨ",
+      founded: "February 20, 1994",
+      foundedLocation: "Binghamton University",
+      colors: "Navy and Silver",
+      motto: "Strength in Brotherhood, Excellence in Diversity"
+    },
+    // South Asian Organizations
+    {
+      name: "Delta Phi Omega",
+      greekLetters: "ΔΦΩ",
+      founded: "November 1998",
+      foundedLocation: "University of Texas at Dallas",
+      colors: "Maroon and White",
+      motto: "First South Asian Sorority"
+    },
+    {
+      name: "Sigma Beta Rho",
+      greekLetters: "ΣΒΡ",
+      founded: "May 15, 1996",
+      foundedLocation: "University of Pennsylvania",
+      colors: "Royal Blue and Chocolate Brown",
+      motto: "South Asian Interest Fraternity"
+    },
+    // Other Multicultural
+    {
+      name: "Lambda Alpha Upsilon",
+      greekLetters: "ΛΑΥ",
+      founded: "December 10, 1982",
+      foundedLocation: "University at Buffalo",
+      colors: "Powder Blue, Black, and Gold",
+      motto: "Latino Fraternity"
+    },
+    {
+      name: "Chi Upsilon Sigma",
+      greekLetters: "ΧΥΣ",
+      founded: "April 29, 1980",
+      foundedLocation: "Rutgers University",
+      colors: "Red, Black, and White",
+      motto: "Latina Sorority"
     },
   ];
 
@@ -240,6 +392,14 @@ const GreekLife = () => {
       description: "Men's fraternities across North America",
       founded: "November 27, 1909",
       organizations: ifcFraternities
+    },
+    {
+      id: "multicultural",
+      name: "Multicultural",
+      fullName: "Multicultural Greek Organizations",
+      description: "Latino, Asian, South Asian, and multicultural Greek organizations (NALFO, NAPA)",
+      founded: "Various",
+      organizations: multiculturalGreeks
     },
     {
       id: "honor",
@@ -374,11 +534,12 @@ const GreekLife = () => {
 
           {/* Councils Tabs */}
           <Tabs defaultValue="nphc" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="nphc">Divine Nine</TabsTrigger>
-              <TabsTrigger value="npc">NPC Sororities</TabsTrigger>
-              <TabsTrigger value="ifc">IFC Fraternities</TabsTrigger>
-              <TabsTrigger value="honor">Honor Societies</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-5">
+              <TabsTrigger value="nphc" className="text-xs sm:text-sm">Divine Nine</TabsTrigger>
+              <TabsTrigger value="npc" className="text-xs sm:text-sm">NPC</TabsTrigger>
+              <TabsTrigger value="ifc" className="text-xs sm:text-sm">IFC</TabsTrigger>
+              <TabsTrigger value="multicultural" className="text-xs sm:text-sm">Multicultural</TabsTrigger>
+              <TabsTrigger value="honor" className="text-xs sm:text-sm">Honor</TabsTrigger>
             </TabsList>
 
             {councils.map((council) => (
