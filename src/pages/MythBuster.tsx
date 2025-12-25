@@ -5,21 +5,26 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { ArrowLeft, Search, BookOpen, ExternalLink } from 'lucide-react';
-import { mythBusterContent, mythCategories } from '@/data/mythBusterContent';
+import { ArrowLeft, Search, BookOpen, ExternalLink, Filter } from 'lucide-react';
+import { mythBusterContent, mythCategories, mythScenarios, mythOrganizations } from '@/data/mythBusterContent';
 import { ListenButton } from '@/components/ListenButton';
 import { FISTFramework } from '@/components/myth-buster/FISTFramework';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const MythBuster = () => {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('all');
+  const [scenario, setScenario] = useState('all');
+  const [organization, setOrganization] = useState('all');
 
   const filtered = mythBusterContent.filter(myth => {
     const matchesSearch = myth.myth.toLowerCase().includes(search.toLowerCase()) ||
       myth.shortAnswer.toLowerCase().includes(search.toLowerCase()) ||
       myth.tags.some(t => t.toLowerCase().includes(search.toLowerCase()));
     const matchesCategory = category === 'all' || myth.category === category;
-    return matchesSearch && matchesCategory;
+    const matchesScenario = scenario === 'all' || myth.scenario === scenario;
+    const matchesOrganization = organization === 'all' || myth.organization === organization;
+    return matchesSearch && matchesCategory && matchesScenario && matchesOrganization;
   });
 
   return (
@@ -29,7 +34,7 @@ const MythBuster = () => {
           <Link to="/"><Button variant="ghost" size="icon"><ArrowLeft className="w-5 h-5" /></Button></Link>
           <div>
             <h1 className="text-xl font-bold">Myth Buster Library</h1>
-            <p className="text-sm text-muted-foreground">Biblical responses to common accusations</p>
+            <p className="text-sm text-muted-foreground">Searchable biblical responses to common accusations about Greek life</p>
           </div>
         </div>
       </header>
@@ -37,6 +42,7 @@ const MythBuster = () => {
       <main className="container mx-auto px-4 py-8 max-w-4xl">
         {/* F.I.S.T. Framework */}
         <FISTFramework />
+        
         {/* Search & Filter */}
         <div className="mb-8 space-y-4">
           <div className="relative">
@@ -48,6 +54,8 @@ const MythBuster = () => {
               className="pl-10"
             />
           </div>
+          
+          {/* Category Filters */}
           <div className="flex flex-wrap gap-2">
             {mythCategories.map(cat => (
               <Button
@@ -60,6 +68,36 @@ const MythBuster = () => {
                 {cat.label}
               </Button>
             ))}
+          </div>
+          
+          {/* Additional Filters */}
+          <div className="flex flex-wrap gap-3">
+            <Select value={scenario} onValueChange={setScenario}>
+              <SelectTrigger className="w-[180px]">
+                <Filter className="w-4 h-4 mr-2" />
+                <SelectValue placeholder="Scenario" />
+              </SelectTrigger>
+              <SelectContent>
+                {mythScenarios.map(s => (
+                  <SelectItem key={s.id} value={s.id}>{s.label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            
+            <Select value={organization} onValueChange={setOrganization}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Organization" />
+              </SelectTrigger>
+              <SelectContent>
+                {mythOrganizations.map(o => (
+                  <SelectItem key={o.id} value={o.id}>{o.label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            
+            <Badge variant="secondary" className="self-center">
+              {filtered.length} myths found
+            </Badge>
           </div>
         </div>
 
