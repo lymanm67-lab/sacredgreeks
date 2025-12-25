@@ -165,6 +165,9 @@ const Index = () => {
                       <Link to="/journey" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
                         30-Day Journey
                       </Link>
+                      <Link to="/anti-hazing" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
+                        Anti-Hazing Resources
+                      </Link>
                     </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>

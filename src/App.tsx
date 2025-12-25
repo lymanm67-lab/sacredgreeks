@@ -90,6 +90,7 @@ const ShareToolkit = lazy(() => import("./pages/ShareToolkit"));
 const AnalyticsDashboard = lazy(() => import("./pages/AnalyticsDashboard"));
 const NotificationPreferences = lazy(() => import("./pages/NotificationPreferences"));
 const CoachingApplication = lazy(() => import("./pages/CoachingApplication"));
+const AntiHazing = lazy(() => import("./pages/AntiHazing"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -203,6 +204,7 @@ const App = () => (
                     <Route path="/install-guide" element={<InstallGuide />} />
                     <Route path="/share-toolkit" element={<ShareToolkit />} />
                     <Route path="/coaching-application" element={<CoachingApplication />} />
+                    <Route path="/anti-hazing" element={<AntiHazing />} />
                     
                     {/* Protected routes - with sidebar */}
                     <Route
