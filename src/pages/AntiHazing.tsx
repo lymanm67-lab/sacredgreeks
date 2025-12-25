@@ -1081,6 +1081,21 @@ const AntiHazing = () => {
           name: "Road Trip Retreats",
           detail: "Bonding trips to conferences, historical sites, or service destinations",
           example: "Omega Psi Phi chapters organize visits to civil rights landmarks"
+        },
+        {
+          name: "Knowledge Challenge Game Nights",
+          detail: "Wheel of Fortune or Jeopardy-style competitions testing Greek history, current events, and academics",
+          example: "NPHC councils host 'Greek Feud' tournaments with prizes for winning organizations"
+        },
+        {
+          name: "Card Game Tournaments",
+          detail: "Spades, Uno, or bid whist tournaments that foster friendly competition and bonding",
+          example: "Many BGLO chapters host 'Spades Night' as a signature bonding tradition"
+        },
+        {
+          name: "Trivia & Quiz Bowl Nights",
+          detail: "Team-based trivia competitions covering pop culture, Black history, and organizational knowledge",
+          example: "Kappa Alpha Psi's 'Kappa Kwiz' challenges teams on fraternity history and current events"
         }
       ]
     },
@@ -1145,6 +1160,31 @@ const AntiHazing = () => {
           name: "Environmental Cleanups",
           detail: "Campus and community beautification projects",
           example: "Adopt-a-Highway programs and campus sustainability initiatives"
+        },
+        {
+          name: "Homeless Sleep-Out Events",
+          detail: "Spend a night sleeping outside to raise awareness and funds for homelessness",
+          example: "Annual 'Cardboard City' events raise thousands for local homeless shelters"
+        },
+        {
+          name: "Plasma & Blood Drives",
+          detail: "Organize campus-wide blood and plasma donation drives that save lives",
+          example: "Alpha Kappa Alpha's 'Give Life' initiative partners with Red Cross for quarterly drives"
+        },
+        {
+          name: "Canned Food Drives",
+          detail: "Chapter-wide food collection competitions to stock local food pantries",
+          example: "Phi Beta Sigma's 'Fill the Pantry' challenge collects 10,000+ cans annually"
+        },
+        {
+          name: "Clothing & Coat Drives",
+          detail: "Collect gently used clothing for community members in need",
+          example: "Zeta Phi Beta's 'Warm Hearts' winter coat drive serves families across the country"
+        },
+        {
+          name: "Back-to-School Supply Drives",
+          detail: "Collect and distribute school supplies to underserved students",
+          example: "Delta Sigma Theta's annual backpack giveaways equip thousands of students"
         }
       ]
     },
