@@ -211,8 +211,8 @@ const Dashboard = () => {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-1.5 flex-shrink-0">
-              <DemoModeControl className="hidden lg:block" />
               <SubscriptionBadge />
+              <DemoModeControl className="hidden lg:block" />
               <Link to="/profile">
                 <Button variant="ghost" size="sm" className="gap-2">
                   <User className="w-4 h-4" />
