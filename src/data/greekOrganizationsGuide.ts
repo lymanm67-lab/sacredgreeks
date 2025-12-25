@@ -1418,6 +1418,30 @@ export const lgbtqOrganizations: GreekOrganization[] = [
 
 export const leadershipHonorOrganizations: GreekOrganization[] = [
   {
+    id: "sigma-alpha-pi-nsls",
+    name: "Sigma Alpha Pi (The National Society of Leadership and Success)",
+    type: "honor-society",
+    council: "Honor",
+    category: "leadership-honor",
+    colors: "Blue & Gold",
+    founded: "2001",
+    symbol: "Torch of Leadership",
+    motto: "Building Leaders Who Make a Better World",
+    description: "The nation's largest leadership honor society, with over 800 chapters and more than 1.8 million members. Focuses on helping students discover and achieve their goals through a step-by-step program.",
+    notableMembers: ["College and university leaders across 800+ campuses"],
+    christianPerspective: "NSLS's focus on building leaders who serve others reflects Christ's model of servant leadership. The emphasis on goal achievement and personal development aligns with stewarding God-given potential.",
+    biblicalParallels: [
+      "Servant leadership as modeled by Christ",
+      "Developing potential to serve others",
+      "Iron sharpens iron in community"
+    ],
+    scriptureReferences: [
+      { ref: "Mark 10:43-45", text: "Whoever wants to become great among you must be your servant." },
+      { ref: "Proverbs 27:17", text: "As iron sharpens iron, so one person sharpens another." },
+      { ref: "Jeremiah 29:11" }
+    ]
+  },
+  {
     id: "omicron-delta-kappa",
     name: "Omicron Delta Kappa (ODK)",
     type: "honor-society",
