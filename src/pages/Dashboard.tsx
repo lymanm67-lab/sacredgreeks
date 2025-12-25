@@ -19,6 +19,7 @@ import { FeaturedActions } from '@/components/dashboard/FeaturedActions';
 import { HeroSection } from '@/components/dashboard/HeroSection';
 import { OrgWelcomeCard } from '@/components/dashboard/OrgWelcomeCard';
 import { SubscriptionBadge } from '@/components/dashboard/SubscriptionBadge';
+import { GreekCommunitySection } from '@/components/dashboard/GreekCommunitySection';
 import { useDemoMode } from '@/contexts/DemoModeContext';
 import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
 import { prefetchCommonRoutes } from '@/hooks/use-prefetch';
@@ -310,6 +311,11 @@ const Dashboard = () => {
           {/* Organization Welcome Card */}
           <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
             <OrgWelcomeCard />
+          </div>
+
+          {/* Greek Community Section */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.15s' }}>
+            <GreekCommunitySection />
           </div>
 
           {/* Featured Actions - The 3 Core Tools */}
