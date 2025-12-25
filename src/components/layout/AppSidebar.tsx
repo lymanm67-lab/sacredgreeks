@@ -1,21 +1,20 @@
 import { 
   Home, 
-  User,
-  Swords,
+  Target,
+  Calendar,
+  BookHeart,
   BookOpen, 
-  BookMarked,
-  Wrench,
-  GraduationCap,
+  Heart,
+  MessageSquare,
   Users, 
-  Mail,
-  Settings, 
-  HelpCircle,
-  LogOut,
-  Bell,
-  Trophy,
+  GraduationCap,
   ShieldAlert,
-  Headphones,
-  Target
+  Compass,
+  Zap,
+  Trophy,
+  Bell,
+  Settings, 
+  LogOut,
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -25,6 +24,8 @@ import { Badge } from "@/components/ui/badge";
 import { SidebarSearch } from "./SidebarSearch";
 import { useSidebarPreferences } from "@/hooks/use-sidebar-preferences";
 import { useFeaturePreferences } from "@/hooks/use-feature-preferences";
+import { SubscriptionBadge } from "@/components/dashboard/SubscriptionBadge";
+import { DemoModeControl } from "@/components/GlobalDemoIndicator";
 import {
   Sidebar,
   SidebarContent,
@@ -40,27 +41,31 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
-// Main navigation items
+// Main section - Core features
 const mainNavItems = [
-  { title: "Home", url: "/dashboard", icon: Home, featureId: null },
-  { title: "Meet Dr. Lyman", url: "/meet-dr-lyman", icon: User, featureId: null },
-  { title: "The Challenge", url: "/the-challenge", icon: Swords, featureId: null },
+  { title: "Dashboard", url: "/dashboard", icon: Home, featureId: null },
   { title: "PROOF Course", url: "/proof-course", icon: Target, featureId: null },
-  { title: "Biblical Guide", url: "/biblical-guides", icon: BookOpen, featureId: null },
-  { title: "The Book", url: "/the-book", icon: BookMarked, featureId: null },
-  { title: "Podcast", url: "/podcast", icon: Headphones, featureId: null },
-  { title: "Tools & Resources", url: "/tools-resources", icon: Wrench, featureId: null },
-  { title: "Greek Life", url: "/greek-life", icon: GraduationCap, featureId: null },
-  { title: "Anti-Hazing", url: "/anti-hazing", icon: ShieldAlert, featureId: null },
-  { title: "Community", url: "/community", icon: Users, featureId: null },
-  { title: "Contact", url: "/contact", icon: Mail, featureId: null },
+  { title: "30-Day Journey", url: "/journey", icon: Calendar, featureId: null },
+  { title: "Prayer Journal", url: "/prayer-journal", icon: BookHeart, featureId: null },
+  { title: "Bible Study", url: "/bible-study", icon: BookOpen, featureId: null },
 ];
 
-const footerItems = [
+// Community section
+const communityNavItems = [
+  { title: "Prayer Wall", url: "/prayer-wall", icon: Heart, featureId: null },
+  { title: "Forum", url: "/forum", icon: MessageSquare, featureId: null },
+  { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null },
+  { title: "Group Coaching", url: "/community", icon: GraduationCap, featureId: null },
+];
+
+// Tools & Resources section
+const toolsNavItems = [
+  { title: "Anti-Hazing", url: "/anti-hazing", icon: ShieldAlert, featureId: null },
+  { title: "Symbol Guide", url: "/symbol-guide", icon: Compass, featureId: null },
+  { title: "Myth Busters", url: "/myth-buster", icon: Zap, featureId: null },
   { title: "Achievements", url: "/achievements", icon: Trophy, featureId: 'achievements' },
   { title: "Notifications", url: "/notification-preferences", icon: Bell, featureId: null },
-  { title: "Profile", url: "/profile", icon: Settings, featureId: null },
-  { title: "FAQ", url: "/faq", icon: HelpCircle, featureId: null },
+  { title: "Settings", url: "/profile", icon: Settings, featureId: null },
 ];
 
 export function AppSidebar() {
@@ -82,7 +87,8 @@ export function AppSidebar() {
   };
 
   const filteredMainNav = filterNavItems(mainNavItems);
-  const filteredFooterNav = filterNavItems(footerItems);
+  const filteredCommunityNav = filterNavItems(communityNavItems);
+  const filteredToolsNav = filterNavItems(toolsNavItems);
 
   const getInitials = () => {
     if (profile?.full_name) {
@@ -133,20 +139,56 @@ export function AppSidebar() {
             </div>
           )}
         </NavLink>
+        
+        {/* Upgrade to Pro + Demo button */}
+        {!collapsed && (
+          <div className="flex items-center gap-2">
+            <SubscriptionBadge />
+            <DemoModeControl />
+          </div>
+        )}
+        
         <SidebarSearch collapsed={collapsed} />
       </SidebarHeader>
 
       <SidebarSeparator />
 
-      {/* Demo Mode indicator removed - now only shows in header next to Upgrade to Pro */}
-
       <SidebarContent>
+        {/* Main Section */}
         {preferences.showMain && filteredMainNav.length > 0 && (
           <SidebarGroup>
-            <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+            <SidebarGroupLabel>Main</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {filteredMainNav.map((item) => (
+                  <NavItem key={item.url} item={item} />
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
+
+        {/* Community Section */}
+        {filteredCommunityNav.length > 0 && (
+          <SidebarGroup>
+            <SidebarGroupLabel>Community</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {filteredCommunityNav.map((item) => (
+                  <NavItem key={item.url} item={item} />
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
+
+        {/* Tools & Resources Section */}
+        {filteredToolsNav.length > 0 && (
+          <SidebarGroup>
+            <SidebarGroupLabel>Tools & Resources</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {filteredToolsNav.map((item) => (
                   <NavItem key={item.url} item={item} />
                 ))}
               </SidebarMenu>
@@ -160,9 +202,6 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {filteredFooterNav.map((item) => (
-                <NavItem key={item.url} item={item} />
-              ))}
               <SidebarMenuItem>
                 <SidebarMenuButton
                   onClick={() => signOut()}
