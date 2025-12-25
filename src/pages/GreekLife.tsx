@@ -388,8 +388,8 @@ const GreekLife = () => {
     },
   ];
 
-  const multiculturalGreeks: Organization[] = [
-    // NALFO - Latino Organizations
+  // NALFO - National Association of Latino Fraternal Organizations
+  const nalfoGreeks: Organization[] = [
     {
       name: "Lambda Theta Alpha",
       greekLetters: "ΛΘΑ",
@@ -474,7 +474,10 @@ const GreekLife = () => {
       colors: "Purple, Pink, and White",
       motto: "Achieving Through Unity"
     },
-    // NAPA - Asian Organizations
+  ];
+
+  // NAPA - National APIA Panhellenic Association (Asian Pacific Islander American)
+  const napaGreeks: Organization[] = [
     {
       name: "Lambda Phi Epsilon",
       greekLetters: "ΛΦΕ",
@@ -549,7 +552,10 @@ const GreekLife = () => {
       colors: "Navy Blue and White",
       motto: "Asian-American Fraternity"
     },
-    // South Asian Organizations
+  ];
+
+  // South Asian Organizations (SASA - South Asian Greek Council)
+  const southAsianGreeks: Organization[] = [
     {
       name: "Delta Epsilon Psi",
       greekLetters: "ΔΕΨ",
@@ -608,14 +614,6 @@ const GreekLife = () => {
       foundedLocation: "Texas A&M University",
       colors: "Blue, Gold, and White",
       motto: "Dedication, Service, Integrity"
-    },
-    {
-      name: "Sigma Alpha Epsilon Pi",
-      greekLetters: "ΣΑΕΠ",
-      founded: "1998",
-      foundedLocation: "UCLA",
-      colors: "Pink and Black",
-      motto: "Jewish Sisterhood with South Asian chapters"
     },
   ];
 
@@ -1456,12 +1454,36 @@ const GreekLife = () => {
       organizations: ifcFraternities
     },
     {
-      id: "cbo",
-      name: "CBOs",
-      fullName: "Culturally Based Organizations",
-      description: "Latino, Asian, South Asian, Filipino, Middle Eastern, African, Native American, Hindu/Buddhist heritage, and culturally-focused Greek organizations (NALFO, NAPA)",
+      id: "nalfo",
+      name: "NALFO",
+      fullName: "National Association of Latino Fraternal Organizations",
+      description: "Latino fraternities and sororities promoting Latino culture, heritage, and service",
+      founded: "1998",
+      organizations: nalfoGreeks
+    },
+    {
+      id: "napa",
+      name: "NAPA",
+      fullName: "National APIA Panhellenic Association",
+      description: "Asian Pacific Islander American fraternities and sororities",
+      founded: "2005",
+      organizations: napaGreeks
+    },
+    {
+      id: "southasian",
+      name: "South Asian",
+      fullName: "South Asian Greek Organizations",
+      description: "Fraternities and sororities celebrating South Asian heritage and culture",
       founded: "Various",
-      organizations: [...multiculturalGreeks, ...filipinoGreeks, ...middleEasternGreeks, ...africanGreeks, ...hinduBuddhistGreeks, ...nativeAmericanGreeks]
+      organizations: southAsianGreeks
+    },
+    {
+      id: "cbo",
+      name: "Other CBOs",
+      fullName: "Other Culturally Based Organizations",
+      description: "Filipino, Middle Eastern, African, Native American, Hindu/Buddhist heritage, and other culturally-focused Greek organizations",
+      founded: "Various",
+      organizations: [...filipinoGreeks, ...middleEasternGreeks, ...africanGreeks, ...hinduBuddhistGreeks, ...nativeAmericanGreeks]
     },
     {
       id: "hbcu",
