@@ -72,6 +72,9 @@ const Index = () => {
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="w-64 p-2">
+                      <Link to="/meet-dr-lyman" className="block px-3 py-2 text-sm rounded-md hover:bg-muted font-medium">
+                        Overview
+                      </Link>
                       <Link to="/about" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
                         About Dr. Montgomery
                       </Link>
@@ -91,6 +94,9 @@ const Index = () => {
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="w-64 p-2">
+                      <Link to="/the-challenge" className="block px-3 py-2 text-sm rounded-md hover:bg-muted font-medium">
+                        Overview
+                      </Link>
                       <Link to="/guide" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
                         P.R.O.O.F. Assessment
                       </Link>
@@ -107,6 +113,9 @@ const Index = () => {
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="w-64 p-2">
+                      <Link to="/biblical-guides" className="block px-3 py-2 text-sm rounded-md hover:bg-muted font-medium">
+                        Overview
+                      </Link>
                       <Link to="/symbol-guide" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
                         Symbol Guide
                       </Link>
@@ -121,14 +130,15 @@ const Index = () => {
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <a 
-                    href="https://www.amazon.com/dp/B0DYQ5K1YH" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
-                  >
+                  <Link to="/the-book" className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
                     The Book
-                  </a>
+                  </Link>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <Link to="/podcast" className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
+                    Podcast
+                  </Link>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
@@ -137,14 +147,14 @@ const Index = () => {
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="w-64 p-2">
+                      <Link to="/tools-resources" className="block px-3 py-2 text-sm rounded-md hover:bg-muted font-medium">
+                        Overview
+                      </Link>
                       <Link to="/resources" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
                         Resources Library
                       </Link>
                       <Link to="/study" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
                         Study Guide
-                      </Link>
-                      <Link to="/podcast" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
-                        Podcast
                       </Link>
                       <Link to="/video-library" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
                         Video Library
@@ -159,6 +169,9 @@ const Index = () => {
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="w-64 p-2">
+                      <Link to="/greek-life" className="block px-3 py-2 text-sm rounded-md hover:bg-muted font-medium">
+                        Overview
+                      </Link>
                       <Link to="/symbol-guide" className="block px-3 py-2 text-sm rounded-md hover:bg-muted">
                         Organizations Guide
                       </Link>
@@ -192,7 +205,7 @@ const Index = () => {
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <Link to="/faq" className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
+                  <Link to="/contact" className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
                     Contact
                   </Link>
                 </NavigationMenuItem>
