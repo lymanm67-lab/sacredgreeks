@@ -1078,6 +1078,163 @@ const GreekLife = () => {
     },
   ];
 
+  const middleEasternGreeks: Organization[] = [
+    {
+      name: "Alpha Epsilon Omega",
+      greekLetters: "ΑΕΩ",
+      founded: "1994",
+      foundedLocation: "Rutgers University",
+      colors: "Red, White, and Green",
+      motto: "Arab-American Brotherhood",
+      nickname: "First Arab-American Fraternity"
+    },
+    {
+      name: "Gamma Eta",
+      greekLetters: "ΓΗ",
+      founded: "1998",
+      foundedLocation: "UCLA",
+      colors: "Green and White",
+      motto: "Persian Heritage",
+      nickname: "Persian-American Fraternity"
+    },
+    {
+      name: "Sigma Alpha Epsilon Pi",
+      greekLetters: "ΣΑΕΠ",
+      founded: "1998",
+      foundedLocation: "UCLA",
+      colors: "Pink and Black",
+      motto: "Jewish Sorority with Middle Eastern chapters"
+    },
+    {
+      name: "Alpha Omega Epsilon (Armenian)",
+      greekLetters: "ΑΩΕ",
+      founded: "1983",
+      foundedLocation: "Marquette University",
+      colors: "Red, Blue, and Orange",
+      motto: "Armenian Heritage Sorority",
+      nickname: "Engineering Sorority with Armenian chapters"
+    },
+    {
+      name: "Alpha Gamma Kappa",
+      greekLetters: "ΑΓΚ",
+      founded: "1989",
+      foundedLocation: "California State University, Fresno",
+      colors: "Red, Blue, and Orange",
+      motto: "Armenian Fraternity",
+      nickname: "Armenian Heritage"
+    },
+    {
+      name: "Lambda Sigma Upsilon",
+      greekLetters: "ΛΣΥ",
+      founded: "April 5, 1979",
+      foundedLocation: "Rutgers University",
+      colors: "Brown and Gold",
+      motto: "Latino Unity and Solidarity",
+      nickname: "Includes Middle Eastern members"
+    },
+    {
+      name: "Tau Kappa Epsilon (Middle East Chapters)",
+      greekLetters: "ΤΚΕ",
+      founded: "1899",
+      foundedLocation: "Illinois Wesleyan University",
+      colors: "Cherry and Gray",
+      motto: "Better Men for a Better World",
+      nickname: "Large Middle Eastern membership"
+    },
+    {
+      name: "Persian-American Civic Action Network Greeks",
+      greekLetters: "PACAN",
+      founded: "2005",
+      foundedLocation: "Various",
+      colors: "Green, White, and Red",
+      motto: "Persian Pride Through Service"
+    },
+  ];
+
+  const africanGreeks: Organization[] = [
+    {
+      name: "Omega Psi Phi (African Diaspora)",
+      greekLetters: "ΩΨΦ",
+      founded: "November 17, 1911",
+      foundedLocation: "Howard University",
+      colors: "Royal Purple and Old Gold",
+      motto: "Friendship Is Essential to the Soul",
+      nickname: "Strong African connections"
+    },
+    {
+      name: "Lambda Pi Chi",
+      greekLetters: "ΛΠΧ",
+      founded: "1988",
+      foundedLocation: "Cornell University",
+      colors: "Black and Purple",
+      motto: "Latinas Poderosas, Caribbean and Latin heritage",
+      nickname: "Caribbean Heritage Sorority"
+    },
+    {
+      name: "Lambda Upsilon Lambda",
+      greekLetters: "ΛΥΛ",
+      founded: "February 19, 1982",
+      foundedLocation: "Cornell University",
+      colors: "Purple and Black",
+      motto: "La Unidad Para Siempre",
+      nickname: "Afro-Latino membership"
+    },
+    {
+      name: "Mu Sigma Upsilon",
+      greekLetters: "ΜΣΥ",
+      founded: "November 20, 1981",
+      foundedLocation: "Rutgers University",
+      colors: "Purple and White",
+      motto: "Mujeres Seeking Unity",
+      nickname: "Caribbean and Latina Sorority"
+    },
+    {
+      name: "Sigma Iota Alpha",
+      greekLetters: "ΣΙΑ",
+      founded: "September 29, 1990",
+      foundedLocation: "SUNY Albany",
+      colors: "Red and Black",
+      motto: "Semper Unum et Inseparabilis",
+      nickname: "Caribbean and Latina Sorority"
+    },
+    {
+      name: "Phi Beta Sigma (Caribbean Chapters)",
+      greekLetters: "ΦΒΣ",
+      founded: "January 9, 1914",
+      foundedLocation: "Howard University",
+      colors: "Royal Blue and Pure White",
+      motto: "Culture for Service and Service for Humanity",
+      nickname: "Strong Caribbean presence"
+    },
+    {
+      name: "Alpha Kappa Alpha (African Diaspora)",
+      greekLetters: "ΑΚΑ",
+      founded: "January 15, 1908",
+      foundedLocation: "Howard University",
+      colors: "Salmon Pink and Apple Green",
+      motto: "By Culture and By Merit",
+      nickname: "International African diaspora chapters"
+    },
+    {
+      name: "Caribbean Students Association Greeks",
+      greekLetters: "CSA",
+      founded: "Various",
+      foundedLocation: "Various campuses",
+      colors: "Various",
+      motto: "Celebrating Caribbean Heritage",
+      nickname: "Pan-Caribbean Organizations"
+    },
+    {
+      name: "African Students Association Greeks",
+      greekLetters: "ASA",
+      founded: "Various",
+      foundedLocation: "Various campuses",
+      colors: "Various",
+      motto: "Celebrating African Heritage",
+      nickname: "Pan-African Organizations"
+    },
+  ];
+
   const nativeAmericanGreeks: Organization[] = [
     {
       name: "Alpha Pi Omega",
@@ -1309,6 +1466,22 @@ const GreekLife = () => {
       description: "Fraternities and sororities for service members, veterans, and military families",
       founded: "Various",
       organizations: militaryGreeks
+    },
+    {
+      id: "middleeast",
+      name: "Middle Eastern",
+      fullName: "Middle Eastern Greek Organizations",
+      description: "Armenian, Persian, Arab, and other Middle Eastern heritage fraternities and sororities",
+      founded: "Various",
+      organizations: middleEasternGreeks
+    },
+    {
+      id: "african",
+      name: "African",
+      fullName: "African & Caribbean Greek Organizations",
+      description: "Organizations celebrating African and Caribbean heritage and diaspora culture",
+      founded: "Various",
+      organizations: africanGreeks
     }
   ];
 
@@ -1472,6 +1645,8 @@ const GreekLife = () => {
               <TabsTrigger value="lgbtq" className="text-xs px-2 py-1">LGBTQ+</TabsTrigger>
               <TabsTrigger value="filipino" className="text-xs px-2 py-1">Filipino</TabsTrigger>
               <TabsTrigger value="military" className="text-xs px-2 py-1">Military</TabsTrigger>
+              <TabsTrigger value="middleeast" className="text-xs px-2 py-1">Middle Eastern</TabsTrigger>
+              <TabsTrigger value="african" className="text-xs px-2 py-1">African</TabsTrigger>
             </TabsList>
 
             {councils.map((council) => (
