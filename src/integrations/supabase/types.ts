@@ -733,6 +733,33 @@ export type Database = {
         }
         Relationships: []
       }
+      myth_buster_downloads: {
+        Row: {
+          created_at: string
+          download_count: number
+          id: string
+          resource_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          download_count?: number
+          id?: string
+          resource_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          download_count?: number
+          id?: string
+          resource_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       notification_campaigns: {
         Row: {
           created_at: string
@@ -1997,6 +2024,10 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      increment_download_count: {
+        Args: { resource_id_param: string }
+        Returns: number
       }
       update_user_streak: { Args: { _user_id: string }; Returns: Json }
     }
