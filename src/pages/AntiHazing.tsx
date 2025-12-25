@@ -27,7 +27,7 @@ import {
   FileText,
   Download
 } from "lucide-react";
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, LineChart, Line, AreaChart, Area, ReferenceLine } from "recharts";
 
 const AntiHazing = () => {
   const [selectedState, setSelectedState] = useState<string | null>(null);
@@ -849,6 +849,109 @@ const AntiHazing = () => {
 
   const COLORS = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#06b6d4', '#8b5cf6', '#ec4899'];
 
+  // Timeline data by decade with deaths and key legislation
+  const timelineData = [
+    { 
+      decade: "1830s", 
+      deaths: 1,
+      legislation: [],
+      keyEvent: "First documented hazing death (1838)"
+    },
+    { 
+      decade: "1840s-1900s", 
+      deaths: 12,
+      legislation: [],
+      keyEvent: "Greek system expansion begins"
+    },
+    { 
+      decade: "1910s", 
+      deaths: 8,
+      legislation: [],
+      keyEvent: "Early fraternity growth period"
+    },
+    { 
+      decade: "1920s", 
+      deaths: 15,
+      legislation: [],
+      keyEvent: "Post-WWI campus culture shift"
+    },
+    { 
+      decade: "1930s", 
+      deaths: 10,
+      legislation: [],
+      keyEvent: "Great Depression era"
+    },
+    { 
+      decade: "1940s", 
+      deaths: 7,
+      legislation: [],
+      keyEvent: "WWII disrupts Greek life"
+    },
+    { 
+      decade: "1950s", 
+      deaths: 14,
+      legislation: [],
+      keyEvent: "Post-war Greek expansion"
+    },
+    { 
+      decade: "1960s", 
+      deaths: 18,
+      legislation: [],
+      keyEvent: "Civil rights era changes"
+    },
+    { 
+      decade: "1970s", 
+      deaths: 22,
+      legislation: ["New York (1980) - First comprehensive state hazing law"],
+      keyEvent: "Rising awareness of hazing dangers"
+    },
+    { 
+      decade: "1980s", 
+      deaths: 28,
+      legislation: ["Texas (1989)", "Florida (1989)"],
+      keyEvent: "Multiple high-profile deaths spark reform"
+    },
+    { 
+      decade: "1990s", 
+      deaths: 35,
+      legislation: ["California (1994)", "Illinois (1995)", "Missouri (1996)"],
+      keyEvent: "Michael Davis death leads to renewed focus"
+    },
+    { 
+      decade: "2000s", 
+      deaths: 45,
+      legislation: ["Chad Meredith Act FL (2001)", "Matt's Law CA (2005)"],
+      keyEvent: "Internet era increases reporting"
+    },
+    { 
+      decade: "2010s", 
+      deaths: 68,
+      legislation: ["Robert Champion Act FL (2012)", "Tucker Hipps Act SC (2015)", "Max Gruver Act LA (2018)", "Timothy Piazza Law PA (2018)"],
+      keyEvent: "Landmark legislation after high-profile deaths"
+    },
+    { 
+      decade: "2020s", 
+      deaths: 32,
+      legislation: ["Adam's Law VA (2021)", "Collin's Law OH (2021)", "Sam's Law WA (2022)"],
+      keyEvent: "Continued legislative response"
+    }
+  ];
+
+  const legislativeMilestones = [
+    { year: 1838, event: "First documented hazing death", type: "death", description: "John Butler Groves dies at Franklin Seminary" },
+    { year: 1980, event: "New York passes first state law", type: "law", description: "First comprehensive anti-hazing statute" },
+    { year: 1989, event: "Texas & Florida pass laws", type: "law", description: "Multiple states follow New York's lead" },
+    { year: 1994, event: "Michael Davis death", type: "death", description: "Kappa Alpha Psi death leads to reform" },
+    { year: 2002, event: "Chad Meredith Act", type: "law", description: "Florida strengthens penalties" },
+    { year: 2005, event: "Matt's Law (California)", type: "law", description: "Felony charges for hazing deaths" },
+    { year: 2011, event: "Robert Champion death", type: "death", description: "FAMU band hazing sparks national attention" },
+    { year: 2014, event: "Tucker Hipps death", type: "death", description: "Clemson death leads to transparency law" },
+    { year: 2017, event: "Tim Piazza & Max Gruver", type: "death", description: "Two deaths lead to major reforms" },
+    { year: 2018, event: "Landmark legislation", type: "law", description: "PA, LA, OH pass comprehensive laws" },
+    { year: 2021, event: "Adam Oakes & Stone Foltz", type: "death", description: "Deaths lead to more state laws" },
+    { year: 2025, event: "Caleb Wilson death", type: "death", description: "Southern University pledging death" }
+  ];
+
   const sourceCitations = [
     {
       id: 1,
@@ -1432,6 +1535,127 @@ const AntiHazing = () => {
                           of students came to college having already experienced hazing
                         </div>
                       </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Timeline Visualization */}
+              <Card>
+                <CardHeader className="text-center">
+                  <CardTitle className="text-xl">Hazing Deaths Timeline: 1838-2025</CardTitle>
+                  <CardDescription className="max-w-2xl mx-auto">
+                    Historical trend of documented hazing deaths by decade with key legislative milestones
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {/* Area Chart */}
+                  <div className="mb-8">
+                    <ResponsiveContainer width="100%" height={350}>
+                      <AreaChart data={timelineData} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
+                        <defs>
+                          <linearGradient id="deathsGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#ef4444" stopOpacity={0.8}/>
+                            <stop offset="95%" stopColor="#ef4444" stopOpacity={0.1}/>
+                          </linearGradient>
+                        </defs>
+                        <XAxis 
+                          dataKey="decade" 
+                          tick={{ fontSize: 11 }} 
+                          angle={-45}
+                          textAnchor="end"
+                          height={60}
+                        />
+                        <YAxis tick={{ fontSize: 12 }} />
+                        <Tooltip 
+                          contentStyle={{ 
+                            backgroundColor: 'hsl(var(--card))', 
+                            border: '1px solid hsl(var(--border))',
+                            borderRadius: '8px'
+                          }}
+                          formatter={(value) => [`${value} deaths`, 'Deaths']}
+                          labelFormatter={(label) => `Decade: ${label}`}
+                        />
+                        <Area 
+                          type="monotone" 
+                          dataKey="deaths" 
+                          stroke="#ef4444" 
+                          fill="url(#deathsGradient)"
+                          strokeWidth={2}
+                        />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
+
+                  {/* Legislative Milestones Timeline */}
+                  <div className="border-t border-border pt-6">
+                    <h4 className="text-sm font-semibold text-center mb-6">Key Legislative Milestones</h4>
+                    <div className="relative">
+                      {/* Timeline line */}
+                      <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-destructive via-primary to-primary/50" />
+                      
+                      <div className="space-y-4">
+                        {legislativeMilestones.map((milestone, index) => (
+                          <div 
+                            key={index} 
+                            className={`relative flex items-start gap-4 ${
+                              index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                            }`}
+                          >
+                            {/* Content */}
+                            <div className={`flex-1 ml-10 md:ml-0 ${index % 2 === 0 ? 'md:pr-8 md:text-right' : 'md:pl-8'}`}>
+                              <div className={`p-3 rounded-lg border ${
+                                milestone.type === 'death' 
+                                  ? 'bg-destructive/5 border-destructive/20' 
+                                  : 'bg-primary/5 border-primary/20'
+                              }`}>
+                                <div className="flex items-center gap-2 justify-between md:justify-start">
+                                  <Badge variant={milestone.type === 'death' ? 'destructive' : 'default'} className="text-xs">
+                                    {milestone.year}
+                                  </Badge>
+                                  <Badge variant="outline" className="text-xs hidden sm:inline-flex">
+                                    {milestone.type === 'death' ? 'Tragic Event' : 'Legislation'}
+                                  </Badge>
+                                </div>
+                                <h5 className="font-medium text-sm mt-2">{milestone.event}</h5>
+                                <p className="text-xs text-muted-foreground mt-1">{milestone.description}</p>
+                              </div>
+                            </div>
+
+                            {/* Timeline dot */}
+                            <div className={`absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-2 ${
+                              milestone.type === 'death'
+                                ? 'bg-destructive border-destructive'
+                                : 'bg-primary border-primary'
+                            }`} />
+
+                            {/* Spacer for alternating layout */}
+                            <div className="hidden md:block flex-1" />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Summary stats */}
+                  <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 p-4 rounded-lg bg-muted/50 border border-border">
+                    <div className="text-center">
+                      <div className="text-xl font-bold text-destructive">
+                        {timelineData.reduce((sum, d) => sum + d.deaths, 0)}+
+                      </div>
+                      <div className="text-xs text-muted-foreground">Total Deaths Since 1838</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-xl font-bold text-primary">44</div>
+                      <div className="text-xs text-muted-foreground">States with Laws</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-xl font-bold text-warning">68</div>
+                      <div className="text-xs text-muted-foreground">Deaths in 2010s (Peak)</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-xl font-bold text-foreground">187</div>
+                      <div className="text-xs text-muted-foreground">Years of Documented Hazing</div>
                     </div>
                   </div>
                 </CardContent>
