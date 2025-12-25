@@ -6,13 +6,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { 
   Home, Heart, Brain, User, Users, BookOpen, Phone, MessageSquare,
-  ArrowRight, Shield, Sparkles, FileText, Cross, Search, X
+  ArrowRight, Shield, Sparkles, FileText, Cross, Search, X, Bookmark
 } from "lucide-react";
+import { useHealingFavorites } from "@/hooks/use-healing-favorites";
+import { cn } from "@/lib/utils";
 
 const HealingResources = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+  
+  const { favorites, toggleFavorite, isFavorite, isAuthenticated } = useHealingFavorites();
   const healingArticles = [
     {
       icon: Heart,
@@ -133,18 +138,20 @@ const HealingResources = () => {
       
       const matchesCategory = !selectedCategory || article.category === selectedCategory;
       const matchesType = !selectedType || article.type === selectedType;
+      const matchesFavorites = !showFavoritesOnly || isFavorite(article.title);
       
-      return matchesSearch && matchesCategory && matchesType;
+      return matchesSearch && matchesCategory && matchesType && matchesFavorites;
     });
-  }, [searchQuery, selectedCategory, selectedType]);
+  }, [searchQuery, selectedCategory, selectedType, showFavoritesOnly, favorites]);
 
   const clearFilters = () => {
     setSearchQuery("");
     setSelectedCategory(null);
     setSelectedType(null);
+    setShowFavoritesOnly(false);
   };
 
-  const hasActiveFilters = searchQuery || selectedCategory || selectedType;
+  const hasActiveFilters = searchQuery || selectedCategory || selectedType || showFavoritesOnly;
 
   return (
     <div className="min-h-screen bg-background">
@@ -252,6 +259,26 @@ const HealingResources = () => {
                   </Badge>
                 </div>
               </div>
+
+              {/* Favorites Filter */}
+              {isAuthenticated && (
+                <div className="space-y-2">
+                  <span className="text-xs text-muted-foreground font-medium">Saved:</span>
+                  <div className="flex gap-1.5">
+                    <Badge
+                      variant={showFavoritesOnly ? "default" : "outline"}
+                      className={cn(
+                        "cursor-pointer hover:bg-sacred/10 gap-1",
+                        showFavoritesOnly && "bg-sacred text-sacred-foreground"
+                      )}
+                      onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
+                    >
+                      <Bookmark className="w-3 h-3" />
+                      My Favorites {favorites.length > 0 && `(${favorites.length})`}
+                    </Badge>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Active Filters & Results Count */}
@@ -271,7 +298,26 @@ const HealingResources = () => {
 
         {/* Featured Resource - only show when no filters active */}
         {!hasActiveFilters && (
-          <Card className="border-sacred/30 bg-gradient-to-br from-sacred/5 to-background overflow-hidden">
+          <Card className="border-sacred/30 bg-gradient-to-br from-sacred/5 to-background overflow-hidden relative">
+            {/* Favorite Button for Featured */}
+            <button
+              onClick={() => toggleFavorite({
+                title: "Breaking Free from Guilt",
+                category: "Faith Development",
+                type: "article",
+                description: "Guidance for members struggling with guilt about their Greek membership and how to find peace in Christ.",
+              })}
+              className={cn(
+                "absolute top-4 right-4 p-2 rounded-full transition-all z-10",
+                isFavorite("Breaking Free from Guilt")
+                  ? "bg-sacred text-white"
+                  : "bg-muted/80 text-muted-foreground hover:bg-sacred/20 hover:text-sacred"
+              )}
+              title={isFavorite("Breaking Free from Guilt") ? "Remove from favorites" : "Add to favorites"}
+            >
+              <Bookmark className={cn("w-4 h-4", isFavorite("Breaking Free from Guilt") && "fill-current")} />
+            </button>
+
             <CardContent className="p-8">
               <div className="md:flex items-start gap-8">
                 <div className="md:w-2/3 space-y-4">
@@ -324,9 +370,29 @@ const HealingResources = () => {
           ) : (
             <div className="grid md:grid-cols-2 gap-6">
               {(hasActiveFilters ? filteredArticles : filteredArticles.slice(1)).map((article, index) => (
-                <Card key={index} className="overflow-hidden hover:shadow-lg transition-all duration-300 group">
+                <Card key={index} className="overflow-hidden hover:shadow-lg transition-all duration-300 group relative">
                   <div className={`h-2 bg-gradient-to-r ${article.color} to-sacred/10`} />
-                  <CardHeader>
+                  
+                  {/* Favorite Button */}
+                  <button
+                    onClick={() => toggleFavorite({
+                      title: article.title,
+                      category: article.category,
+                      type: article.type,
+                      description: article.description,
+                    })}
+                    className={cn(
+                      "absolute top-4 right-4 p-2 rounded-full transition-all z-10",
+                      isFavorite(article.title)
+                        ? "bg-sacred text-white"
+                        : "bg-muted/80 text-muted-foreground hover:bg-sacred/20 hover:text-sacred"
+                    )}
+                    title={isFavorite(article.title) ? "Remove from favorites" : "Add to favorites"}
+                  >
+                    <Bookmark className={cn("w-4 h-4", isFavorite(article.title) && "fill-current")} />
+                  </button>
+
+                  <CardHeader className="pr-14">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Badge variant="outline">{article.category}</Badge>
