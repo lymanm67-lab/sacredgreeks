@@ -60,6 +60,7 @@ const SymbolGuide = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [bookmarksOpen, setBookmarksOpen] = useState(false);
   const [viewMode, setViewMode] = useState<'cards' | 'list'>('cards');
+  const [activeTab, setActiveTab] = useState('symbols');
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const [notesDialog, setNotesDialog] = useState<{
     open: boolean;
@@ -1002,7 +1003,7 @@ const SymbolGuide = () => {
           </div>
         </div>
 
-        <Tabs defaultValue="symbols" className="space-y-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="symbols">Reference Guide ({filteredSymbols.length})</TabsTrigger>
             <TabsTrigger value="rituals">Practical Guidance ({filteredRituals.length})</TabsTrigger>
