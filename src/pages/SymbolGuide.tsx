@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, ExternalLink, Share2, FileDown, Scale, History, Sparkles, Printer, Crown, Building, GraduationCap, Landmark, Users, Heart, Scroll, BookOpen } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, ExternalLink, Share2, FileDown, Scale, History, Sparkles, Printer, Crown, Building, GraduationCap, Landmark, Users, Heart, Scroll, BookOpen, LayoutGrid, List } from 'lucide-react';
 import { symbolGuideContent, ritualGuideContent, symbolCategories, culturalComparisons, culturalComparisonCategories, SymbolEntry, RitualEntry, CulturalComparisonEntry } from '@/data/symbolGuideContent';
 import { getSymbolImageUrl } from '@/data/symbolImageUrls';
 import { ListenButton } from '@/components/ListenButton';
@@ -58,6 +58,7 @@ const SymbolGuide = () => {
   const [comparisonCategory, setComparisonCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [bookmarksOpen, setBookmarksOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<'cards' | 'list'>('cards');
   const [notesDialog, setNotesDialog] = useState<{
     open: boolean;
     itemId: string;
@@ -617,6 +618,76 @@ const SymbolGuide = () => {
     );
   };
 
+  // Compact list view for symbols
+  const renderSymbolListItem = (symbol: SymbolEntry) => {
+    const bookmark = getBookmark(symbol.id, 'symbol');
+    return (
+      <div 
+        key={symbol.id} 
+        className="flex items-center gap-3 p-3 rounded-lg border bg-card hover:bg-muted/30 transition-colors"
+      >
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="font-medium truncate">{symbol.name}</span>
+            <CautionBadge level={symbol.cautionLevel} />
+          </div>
+          <p className="text-xs text-muted-foreground truncate mt-0.5">{symbol.description}</p>
+        </div>
+        <div className="flex items-center gap-1 shrink-0">
+          {user && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-7 w-7"
+              onClick={() => handleBookmarkClick(symbol.id, 'symbol', symbol.name)}
+            >
+              {bookmark ? (
+                <BookmarkCheck className="w-3.5 h-3.5 text-sacred" />
+              ) : (
+                <Bookmark className="w-3.5 h-3.5" />
+              )}
+            </Button>
+          )}
+        </div>
+      </div>
+    );
+  };
+
+  // Compact list view for rituals
+  const renderRitualListItem = (ritual: RitualEntry) => {
+    const bookmark = getBookmark(ritual.id, 'ritual');
+    return (
+      <div 
+        key={ritual.id} 
+        className="flex items-center gap-3 p-3 rounded-lg border bg-card hover:bg-muted/30 transition-colors"
+      >
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="font-medium truncate">{ritual.name}</span>
+            <CautionBadge level={ritual.cautionLevel} />
+          </div>
+          <p className="text-xs text-muted-foreground truncate mt-0.5">{ritual.description}</p>
+        </div>
+        <div className="flex items-center gap-1 shrink-0">
+          {user && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-7 w-7"
+              onClick={() => handleBookmarkClick(ritual.id, 'ritual', ritual.name)}
+            >
+              {bookmark ? (
+                <BookmarkCheck className="w-3.5 h-3.5 text-sacred" />
+              ) : (
+                <Bookmark className="w-3.5 h-3.5" />
+              )}
+            </Button>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
       <header className="border-b bg-card/80 backdrop-blur-lg sticky top-0 z-50">
@@ -781,9 +852,9 @@ const SymbolGuide = () => {
           </Collapsible>
         )}
 
-        {/* Search */}
-        <div className="space-y-4 mb-6">
-          <div className="relative">
+        {/* Search and View Toggle */}
+        <div className="flex gap-2 mb-6">
+          <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
               placeholder="Search symbols, rituals, comparisons..."
@@ -791,6 +862,26 @@ const SymbolGuide = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10"
             />
+          </div>
+          <div className="flex border rounded-lg overflow-hidden">
+            <Button
+              variant={viewMode === 'cards' ? 'default' : 'ghost'}
+              size="icon"
+              className={`rounded-none h-10 w-10 ${viewMode === 'cards' ? 'bg-sacred hover:bg-sacred/90' : ''}`}
+              onClick={() => setViewMode('cards')}
+              title="Card view"
+            >
+              <LayoutGrid className="w-4 h-4" />
+            </Button>
+            <Button
+              variant={viewMode === 'list' ? 'default' : 'ghost'}
+              size="icon"
+              className={`rounded-none h-10 w-10 ${viewMode === 'list' ? 'bg-sacred hover:bg-sacred/90' : ''}`}
+              onClick={() => setViewMode('list')}
+              title="List view"
+            >
+              <List className="w-4 h-4" />
+            </Button>
           </div>
         </div>
 
@@ -822,8 +913,8 @@ const SymbolGuide = () => {
                 <p className="text-muted-foreground">No symbols found matching your filters</p>
               </Card>
             )}
-            <div className="space-y-4">
-              {filteredSymbols.map(renderSymbolCard)}
+            <div className={viewMode === 'list' ? 'space-y-2' : 'space-y-4'}>
+              {filteredSymbols.map(viewMode === 'list' ? renderSymbolListItem : renderSymbolCard)}
             </div>
           </TabsContent>
 
@@ -833,8 +924,8 @@ const SymbolGuide = () => {
                 <p className="text-muted-foreground">No rituals found matching your filters</p>
               </Card>
             )}
-            <div className="space-y-4">
-              {filteredRituals.map(renderRitualCard)}
+            <div className={viewMode === 'list' ? 'space-y-2' : 'space-y-4'}>
+              {filteredRituals.map(viewMode === 'list' ? renderRitualListItem : renderRitualCard)}
             </div>
           </TabsContent>
 
