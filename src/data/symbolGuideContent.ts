@@ -2506,19 +2506,38 @@ export const symbolGuideContent: SymbolEntry[] = [
   },
   {
     id: "custom-call-response",
-    name: "Call and Response Worship",
+    name: "Call and Response & Whooping Style Preaching",
     category: "customs",
     organizationType: "African Heritage",
-    description: "Call and response—where a leader calls out and the congregation responds—is a West African worship practice that became foundational to Black church tradition. In West African religions, this pattern connected the community to the divine and to ancestors. The enslaved transformed it into Christian worship, creating spirituals, gospel music, and the distinctive Black preaching style where congregation responds 'Amen,' 'Yes Lord,' and 'Preach!'",
-    doubleStandard: "Call and response is the heartbeat of Black church worship, universally embraced despite its roots in West African traditional religion. Yet other African-derived practices in organizational settings face scrutiny for the same origins.",
-    christianPerspective: "Antiphonal worship appears throughout Scripture. The Psalms were sung responsively. Moses and Israel sang together (Exodus 15). Call and response is not merely African—it is biblical worship that African traditions also preserved.",
+    description: "Call and response—where a leader calls out and the congregation responds—is a West African worship practice that became foundational to Black church tradition. This tradition traces directly to the Griots of Yoruba and other West African cultures, who served as oral historians, storytellers, and spiritual leaders. The Griots used melodic speech patterns, rhythmic cadences, and audience engagement that evolved into what we now call 'whooping' or 'tuning' in Black preaching—the distinctive musical intonation where the preacher moves from speaking to singing. In West African religions, this pattern connected the community to the divine and ancestors. The enslaved transformed it into Christian worship, creating spirituals, gospel music, and the distinctive Black preaching style where the congregation responds 'Amen,' 'Yes Lord,' 'Well!' and 'Preach!'",
+    doubleStandard: "Call and response and whooping style preaching are the heartbeat of Black church worship, universally embraced despite their direct roots in Yoruba Griot tradition. Yet other African-derived practices in organizational settings face scrutiny for the same origins.",
+    christianPerspective: "Antiphonal worship appears throughout Scripture. The Psalms were sung responsively. Moses and Israel sang together (Exodus 15). Call and response is not merely African—it is biblical worship that African traditions also preserved. The musical, Spirit-filled delivery we see in Black preaching echoes how Scripture was meant to be proclaimed—with passion, rhythm, and community participation.",
     biblicalParallels: [
       "Moses and Israel sang (Exodus 15:1, 21)",
       "Speak to one another with psalms (Ephesians 5:19)",
       "I will declare your name; in the assembly I will praise you (Psalm 22:22)",
-      "The people answered together: All that the Lord has spoken we will do (Exodus 19:8)"
+      "The people answered together: All that the Lord has spoken we will do (Exodus 19:8)",
+      "Let the redeemed of the Lord tell their story (Psalm 107:2)"
     ],
-    scriptureReferences: ["Exodus 15:1-21", "Ephesians 5:19", "Psalm 22:22", "Exodus 19:8"],
+    scriptureReferences: ["Exodus 15:1-21", "Ephesians 5:19", "Psalm 22:22", "Exodus 19:8", "Psalm 107:2"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-cornrows",
+    name: "Cornrows & Braided Hairstyles",
+    category: "customs",
+    organizationType: "African Heritage",
+    description: "Cornrows and braided hairstyles carry deep spiritual and cultural significance from West Africa. The intricate patterns often represented rivers, with the cornrow paths symbolizing the life-giving waterways that sustained communities. In some traditions, the braids specifically represented the Nile River—the source of Egyptian civilization and spiritual symbolism. Braiding patterns also served practical purposes: they could encode maps for escape routes during slavery, indicate tribal affiliation, marital status, wealth, or spiritual power. The act of braiding itself was a communal, sacred practice where stories and wisdom were passed down from elder to younger.",
+    doubleStandard: "Cornrows are worn proudly in churches today as cultural expression. Yet for decades, these same hairstyles were deemed 'unprofessional' or 'worldly' by some churches—policing the very African heritage that churches now celebrate. Meanwhile, Greek organizational symbols face ongoing scrutiny while African hair traditions are embraced.",
+    christianPerspective: "Hair is described as a woman's glory in Scripture, and elaborate braiding has biblical precedent. The significance of rivers—from the rivers of Eden to the River Jordan to the river of life in Revelation—shows that water imagery represents God's life-giving provision. These cultural expressions honor the heritage God gave to African peoples.",
+    biblicalParallels: [
+      "A river watering the garden flowed from Eden (Genesis 2:10)",
+      "There is a river whose streams make glad the city of God (Psalm 46:4)",
+      "Let justice roll on like a river (Amos 5:24)",
+      "The river of the water of life (Revelation 22:1)",
+      "Her hair is like a flock of goats (Song of Solomon 4:1)"
+    ],
+    scriptureReferences: ["Genesis 2:10", "Psalm 46:4", "Amos 5:24", "Revelation 22:1", "Song of Solomon 4:1"],
     cautionLevel: "low"
   },
   {
