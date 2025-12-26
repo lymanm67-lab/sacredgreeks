@@ -59,6 +59,7 @@ const SymbolGuide = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [bookmarksOpen, setBookmarksOpen] = useState(false);
   const [viewMode, setViewMode] = useState<'cards' | 'list'>('cards');
+  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const [notesDialog, setNotesDialog] = useState<{
     open: boolean;
     itemId: string;
@@ -618,73 +619,190 @@ const SymbolGuide = () => {
     );
   };
 
-  // Compact list view for symbols
+  // Toggle expanded state for list items
+  const toggleExpanded = (id: string) => {
+    setExpandedItems(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
+
+  // Compact list view for symbols with expandable details
   const renderSymbolListItem = (symbol: SymbolEntry) => {
     const bookmark = getBookmark(symbol.id, 'symbol');
+    const isExpanded = expandedItems.has(symbol.id);
+    const CategoryBadge = categoryIcons[symbol.category] || <Badge variant="outline" className="capitalize text-xs">{symbol.category}</Badge>;
+    
     return (
-      <div 
+      <Collapsible 
         key={symbol.id} 
-        className="flex items-center gap-3 p-3 rounded-lg border bg-card hover:bg-muted/30 transition-colors"
+        open={isExpanded}
+        onOpenChange={() => toggleExpanded(symbol.id)}
       >
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-medium truncate">{symbol.name}</span>
-            <CautionBadge level={symbol.cautionLevel} />
-          </div>
-          <p className="text-xs text-muted-foreground truncate mt-0.5">{symbol.description}</p>
-        </div>
-        <div className="flex items-center gap-1 shrink-0">
-          {user && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-7 w-7"
-              onClick={() => handleBookmarkClick(symbol.id, 'symbol', symbol.name)}
-            >
-              {bookmark ? (
-                <BookmarkCheck className="w-3.5 h-3.5 text-sacred" />
-              ) : (
-                <Bookmark className="w-3.5 h-3.5" />
+        <div className="rounded-lg border bg-card overflow-hidden">
+          <CollapsibleTrigger asChild>
+            <div className="flex items-center gap-3 p-3 hover:bg-muted/30 transition-colors cursor-pointer">
+              <ChevronDown className={`w-4 h-4 shrink-0 text-muted-foreground transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="font-medium">{symbol.name}</span>
+                  <CautionBadge level={symbol.cautionLevel} />
+                </div>
+                {!isExpanded && (
+                  <p className="text-xs text-muted-foreground truncate mt-0.5">{symbol.description}</p>
+                )}
+              </div>
+              <div className="flex items-center gap-1 shrink-0" onClick={(e) => e.stopPropagation()}>
+                {user && (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-7 w-7"
+                    onClick={() => handleBookmarkClick(symbol.id, 'symbol', symbol.name)}
+                  >
+                    {bookmark ? (
+                      <BookmarkCheck className="w-3.5 h-3.5 text-sacred" />
+                    ) : (
+                      <Bookmark className="w-3.5 h-3.5" />
+                    )}
+                  </Button>
+                )}
+              </div>
+            </div>
+          </CollapsibleTrigger>
+          
+          <CollapsibleContent>
+            <div className="px-3 pb-3 pt-0 space-y-3 border-t bg-muted/10">
+              <div className="pt-3">
+                {CategoryBadge}
+              </div>
+              
+              <p className="text-sm text-muted-foreground">{symbol.description}</p>
+              
+              {/* Christian Perspective */}
+              <div className="bg-sacred/5 p-3 rounded-lg border border-sacred/20">
+                <h4 className="font-semibold text-sm mb-1 flex items-center gap-2">
+                  <BookOpen className="w-4 h-4 text-sacred" />
+                  Christian Perspective
+                </h4>
+                <p className="text-sm text-muted-foreground">{symbol.christianPerspective}</p>
+              </div>
+              
+              {/* Double Standard */}
+              {symbol.doubleStandard && (
+                <div className="bg-amber-500/10 p-3 rounded-lg border border-amber-500/20">
+                  <h4 className="font-semibold text-sm mb-1 text-amber-700 dark:text-amber-400 flex items-center gap-2">
+                    <Scale className="w-4 h-4" />
+                    The Double Standard
+                  </h4>
+                  <p className="text-sm text-muted-foreground">{symbol.doubleStandard}</p>
+                </div>
               )}
-            </Button>
-          )}
+              
+              {/* Scripture References */}
+              {symbol.scriptureReferences && symbol.scriptureReferences.length > 0 && (
+                <div className="space-y-2">
+                  <h4 className="font-semibold text-sm flex items-center gap-2">
+                    <BookOpen className="w-4 h-4 text-sacred" />
+                    Scripture References
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {symbol.scriptureReferences.map((ref, idx) => (
+                      <Link key={idx} to={`/bible-study?search=${encodeURIComponent(ref)}`}>
+                        <Badge variant="outline" className="text-xs text-sacred hover:bg-sacred/10 cursor-pointer">
+                          {ref}
+                        </Badge>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </CollapsibleContent>
         </div>
-      </div>
+      </Collapsible>
     );
   };
 
-  // Compact list view for rituals
+  // Compact list view for rituals with expandable details
   const renderRitualListItem = (ritual: RitualEntry) => {
     const bookmark = getBookmark(ritual.id, 'ritual');
+    const isExpanded = expandedItems.has(ritual.id);
+    
     return (
-      <div 
+      <Collapsible 
         key={ritual.id} 
-        className="flex items-center gap-3 p-3 rounded-lg border bg-card hover:bg-muted/30 transition-colors"
+        open={isExpanded}
+        onOpenChange={() => toggleExpanded(ritual.id)}
       >
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-medium truncate">{ritual.name}</span>
-            <CautionBadge level={ritual.cautionLevel} />
-          </div>
-          <p className="text-xs text-muted-foreground truncate mt-0.5">{ritual.description}</p>
-        </div>
-        <div className="flex items-center gap-1 shrink-0">
-          {user && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-7 w-7"
-              onClick={() => handleBookmarkClick(ritual.id, 'ritual', ritual.name)}
-            >
-              {bookmark ? (
-                <BookmarkCheck className="w-3.5 h-3.5 text-sacred" />
-              ) : (
-                <Bookmark className="w-3.5 h-3.5" />
+        <div className="rounded-lg border bg-card overflow-hidden">
+          <CollapsibleTrigger asChild>
+            <div className="flex items-center gap-3 p-3 hover:bg-muted/30 transition-colors cursor-pointer">
+              <ChevronDown className={`w-4 h-4 shrink-0 text-muted-foreground transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="font-medium">{ritual.name}</span>
+                  <CautionBadge level={ritual.cautionLevel} />
+                </div>
+                {!isExpanded && (
+                  <p className="text-xs text-muted-foreground truncate mt-0.5">{ritual.description}</p>
+                )}
+              </div>
+              <div className="flex items-center gap-1 shrink-0" onClick={(e) => e.stopPropagation()}>
+                {user && (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-7 w-7"
+                    onClick={() => handleBookmarkClick(ritual.id, 'ritual', ritual.name)}
+                  >
+                    {bookmark ? (
+                      <BookmarkCheck className="w-3.5 h-3.5 text-sacred" />
+                    ) : (
+                      <Bookmark className="w-3.5 h-3.5" />
+                    )}
+                  </Button>
+                )}
+              </div>
+            </div>
+          </CollapsibleTrigger>
+          
+          <CollapsibleContent>
+            <div className="px-3 pb-3 pt-0 space-y-3 border-t bg-muted/10">
+              <p className="text-sm text-muted-foreground pt-3">{ritual.description}</p>
+              
+              {/* Christian Approach */}
+              <div className="bg-sacred/5 p-3 rounded-lg border border-sacred/20">
+                <h4 className="font-semibold text-sm mb-1 flex items-center gap-2">
+                  <BookOpen className="w-4 h-4 text-sacred" />
+                  Christian Approach
+                </h4>
+                <p className="text-sm text-muted-foreground">{ritual.christianApproach}</p>
+              </div>
+              
+              {/* Scriptural Context */}
+              {ritual.scripturalContext && (
+                <div className="bg-sacred/5 p-3 rounded-lg border border-sacred/20">
+                  <div className="flex items-start justify-between gap-2">
+                    <p className="text-sm text-sacred">{ritual.scripturalContext}</p>
+                    <Link to={`/bible-study?search=${encodeURIComponent(ritual.scripturalContext)}`}>
+                      <Button variant="ghost" size="sm" className="gap-1 text-xs h-7 px-2">
+                        <ExternalLink className="w-3 h-3" />
+                        Study
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
               )}
-            </Button>
-          )}
+            </div>
+          </CollapsibleContent>
         </div>
-      </div>
+      </Collapsible>
     );
   };
 
