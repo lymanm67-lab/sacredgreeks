@@ -1004,9 +1004,9 @@ const SymbolGuide = () => {
 
         <Tabs defaultValue="symbols" className="space-y-6">
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="symbols">Symbols ({filteredSymbols.length})</TabsTrigger>
-            <TabsTrigger value="rituals">Rituals ({filteredRituals.length})</TabsTrigger>
-            <TabsTrigger value="comparisons">Comparisons ({filteredComparisons.length})</TabsTrigger>
+            <TabsTrigger value="symbols">Reference Guide ({filteredSymbols.length})</TabsTrigger>
+            <TabsTrigger value="rituals">Practical Guidance ({filteredRituals.length})</TabsTrigger>
+            <TabsTrigger value="comparisons">Double Standards ({filteredComparisons.length})</TabsTrigger>
           </TabsList>
 
           <TabsContent value="symbols" className="space-y-4">
