@@ -1,54 +1,102 @@
 // Image URL mappings for Symbol Guide entries
 // These are imported dynamically based on entry ID
 
+// Deity images
+import ahuraMazda from '@/assets/symbols/ahura-mazda.jpg';
+import anubis from '@/assets/symbols/anubis.jpg';
+import apollo from '@/assets/symbols/apollo.jpg';
+import asclepius from '@/assets/symbols/asclepius.jpg';
+import athena from '@/assets/symbols/athena.jpg';
+import elDeity from '@/assets/symbols/el-deity.jpg';
+import hermes from '@/assets/symbols/hermes.jpg';
+import horusEye from '@/assets/symbols/horus-eye.jpg';
+import hygieia from '@/assets/symbols/hygieia.jpg';
+import ishtarGate from '@/assets/symbols/ishtar-gate.jpg';
+import isis from '@/assets/symbols/isis.jpg';
+import ladyJustice from '@/assets/symbols/lady-justice.jpg';
+import lampKnowledge from '@/assets/symbols/lamp-knowledge.jpg';
+import maat from '@/assets/symbols/maat.jpg';
+import marduk from '@/assets/symbols/marduk.jpg';
+import mithra from '@/assets/symbols/mithra.jpg';
+import omegaSymbol from '@/assets/symbols/omega-symbol.jpg';
+import phoenix from '@/assets/symbols/phoenix.jpg';
+import ra from '@/assets/symbols/ra.jpg';
+import scarab from '@/assets/symbols/scarab.jpg';
+import shamash from '@/assets/symbols/shamash.jpg';
+import sphinx from '@/assets/symbols/sphinx.jpg';
+import thoth from '@/assets/symbols/thoth.jpg';
+import zeus from '@/assets/symbols/zeus.jpg';
+import poseidon from '@/assets/symbols/poseidon.jpg';
+import demeter from '@/assets/symbols/demeter.jpg';
+import hera from '@/assets/symbols/hera.jpg';
+import odin from '@/assets/symbols/odin.jpg';
+import thor from '@/assets/symbols/thor.jpg';
+import freya from '@/assets/symbols/freya.jpg';
+
+// Seal images
+import greatSealUs from '@/assets/symbols/great-seal-us.jpg';
+import statueFreedom from '@/assets/symbols/statue-freedom.jpg';
+import supremeCourtFrieze from '@/assets/symbols/supreme-court-frieze.jpg';
+import libraryCongressMinerva from '@/assets/symbols/library-congress-minerva.jpg';
+import virginiaSeal from '@/assets/symbols/virginia-seal.jpg';
+import californiaSeal from '@/assets/symbols/california-seal.jpg';
+import newYorkSeal from '@/assets/symbols/new-york-seal.jpg';
+import columbiaUniversitySeal from '@/assets/symbols/columbia-university-seal.jpg';
+import yaleUniversitySeal from '@/assets/symbols/yale-university-seal.jpg';
+import princetonUniversitySeal from '@/assets/symbols/princeton-university-seal.jpg';
+import harvardUniversitySeal from '@/assets/symbols/harvard-university-seal.jpg';
+import howardUniversitySeal from '@/assets/symbols/howard-university-seal.jpg';
+import spelmanCollegeSeal from '@/assets/symbols/spelman-college-seal.jpg';
+import morehouseCollegeSeal from '@/assets/symbols/morehouse-college-seal.jpg';
+
 export const symbolImageUrls: Record<string, string> = {
   // Deities
-  "ahura-mazda": "/src/assets/symbols/ahura-mazda.jpg",
-  "anubis-deity": "/src/assets/symbols/anubis.jpg",
-  "apollo-deity": "/src/assets/symbols/apollo.jpg",
-  "asclepius-deity": "/src/assets/symbols/asclepius.jpg",
-  "athena-deity": "/src/assets/symbols/athena.jpg",
-  "el-deity": "/src/assets/symbols/el-deity.jpg",
-  "hermes-deity": "/src/assets/symbols/hermes.jpg",
-  "horus-eye-deity": "/src/assets/symbols/horus-eye.jpg",
-  "hygieia-deity": "/src/assets/symbols/hygieia.jpg",
-  "ishtar-gate": "/src/assets/symbols/ishtar-gate.jpg",
-  "isis-deity": "/src/assets/symbols/isis.jpg",
-  "lady-justice-deity": "/src/assets/symbols/lady-justice.jpg",
-  "lamp-knowledge-deity": "/src/assets/symbols/lamp-knowledge.jpg",
-  "maat-deity": "/src/assets/symbols/maat.jpg",
-  "marduk-deity": "/src/assets/symbols/marduk.jpg",
-  "mithra-deity": "/src/assets/symbols/mithra.jpg",
-  "omega-symbol-deity": "/src/assets/symbols/omega-symbol.jpg",
-  "phoenix-deity": "/src/assets/symbols/phoenix.jpg",
-  "ra-deity": "/src/assets/symbols/ra.jpg",
-  "scarab-deity": "/src/assets/symbols/scarab.jpg",
-  "shamash-deity": "/src/assets/symbols/shamash.jpg",
-  "sphinx-deity": "/src/assets/symbols/sphinx.jpg",
-  "thoth-deity": "/src/assets/symbols/thoth.jpg",
-  "zeus-deity": "/src/assets/symbols/zeus.jpg",
-  "poseidon-deity": "/src/assets/symbols/poseidon.jpg",
-  "demeter-deity": "/src/assets/symbols/demeter.jpg",
-  "hera-deity": "/src/assets/symbols/hera.jpg",
-  "odin-deity": "/src/assets/symbols/odin.jpg",
-  "thor-deity": "/src/assets/symbols/thor.jpg",
-  "freya-deity": "/src/assets/symbols/freya.jpg",
+  "ahura-mazda": ahuraMazda,
+  "anubis-deity": anubis,
+  "apollo-deity": apollo,
+  "asclepius-deity": asclepius,
+  "athena-deity": athena,
+  "el-deity": elDeity,
+  "hermes-deity": hermes,
+  "horus-eye-deity": horusEye,
+  "hygieia-deity": hygieia,
+  "ishtar-gate": ishtarGate,
+  "isis-deity": isis,
+  "lady-justice-deity": ladyJustice,
+  "lamp-knowledge-deity": lampKnowledge,
+  "maat-deity": maat,
+  "marduk-deity": marduk,
+  "mithra-deity": mithra,
+  "omega-symbol-deity": omegaSymbol,
+  "phoenix-deity": phoenix,
+  "ra-deity": ra,
+  "scarab-deity": scarab,
+  "shamash-deity": shamash,
+  "sphinx-deity": sphinx,
+  "thoth-deity": thoth,
+  "zeus-deity": zeus,
+  "poseidon-deity": poseidon,
+  "demeter-deity": demeter,
+  "hera-deity": hera,
+  "odin-deity": odin,
+  "thor-deity": thor,
+  "freya-deity": freya,
   
   // Seals
-  "great-seal-us": "/src/assets/symbols/great-seal-us.jpg",
-  "statue-of-freedom": "/src/assets/symbols/statue-freedom.jpg",
-  "supreme-court-frieze": "/src/assets/symbols/supreme-court-frieze.jpg",
-  "library-congress-minerva": "/src/assets/symbols/library-congress-minerva.jpg",
-  "virginia-seal": "/src/assets/symbols/virginia-seal.jpg",
-  "california-seal": "/src/assets/symbols/california-seal.jpg",
-  "new-york-seal": "/src/assets/symbols/new-york-seal.jpg",
-  "columbia-university-seal": "/src/assets/symbols/columbia-university-seal.jpg",
-  "yale-university-seal": "/src/assets/symbols/yale-university-seal.jpg",
-  "princeton-university-seal": "/src/assets/symbols/princeton-university-seal.jpg",
-  "harvard-university-seal": "/src/assets/symbols/harvard-university-seal.jpg",
-  "howard-university-seal": "/src/assets/symbols/howard-university-seal.jpg",
-  "spelman-college-seal": "/src/assets/symbols/spelman-college-seal.jpg",
-  "morehouse-college-seal": "/src/assets/symbols/morehouse-college-seal.jpg",
+  "great-seal-us": greatSealUs,
+  "statue-of-freedom": statueFreedom,
+  "supreme-court-frieze": supremeCourtFrieze,
+  "library-congress-minerva": libraryCongressMinerva,
+  "virginia-seal": virginiaSeal,
+  "california-seal": californiaSeal,
+  "new-york-seal": newYorkSeal,
+  "columbia-university-seal": columbiaUniversitySeal,
+  "yale-university-seal": yaleUniversitySeal,
+  "princeton-university-seal": princetonUniversitySeal,
+  "harvard-university-seal": harvardUniversitySeal,
+  "howard-university-seal": howardUniversitySeal,
+  "spelman-college-seal": spelmanCollegeSeal,
+  "morehouse-college-seal": morehouseCollegeSeal,
 };
 
 export const getSymbolImageUrl = (id: string): string | undefined => {
