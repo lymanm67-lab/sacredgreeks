@@ -46,32 +46,32 @@ import {
 
 // Main section - Core features
 const mainNavItems = [
-  { title: "Dashboard", url: "/dashboard", icon: Home, featureId: null },
-  { title: "PROOF Course", url: "/proof-course", icon: Target, featureId: null },
-  { title: "30-Day Journey", url: "/journey", icon: Calendar, featureId: null },
-  { title: "Prayer Journal", url: "/prayer-journal", icon: BookHeart, featureId: null },
-  { title: "Bible Study", url: "/bible-study", icon: BookOpen, featureId: null },
+  { title: "Dashboard", url: "/dashboard", icon: Home, featureId: null, iconColor: "text-blue-500" },
+  { title: "PROOF Course", url: "/proof-course", icon: Target, featureId: null, iconColor: "text-amber-500" },
+  { title: "30-Day Journey", url: "/journey", icon: Calendar, featureId: null, iconColor: "text-emerald-500" },
+  { title: "Prayer Journal", url: "/prayer-journal", icon: BookHeart, featureId: null, iconColor: "text-rose-500" },
+  { title: "Bible Study", url: "/bible-study", icon: BookOpen, featureId: null, iconColor: "text-purple-500" },
 ];
 
 // Community section
 const communityNavItems = [
-  { title: "Prayer Wall", url: "/prayer-wall", icon: Heart, featureId: null },
-  { title: "Forum", url: "/forum", icon: MessageSquare, featureId: null },
-  { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null },
-  { title: "Group Coaching", url: "/community", icon: GraduationCap, featureId: null },
+  { title: "Prayer Wall", url: "/prayer-wall", icon: Heart, featureId: null, iconColor: "text-pink-500" },
+  { title: "Forum", url: "/forum", icon: MessageSquare, featureId: null, iconColor: "text-cyan-500" },
+  { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null, iconColor: "text-indigo-500" },
+  { title: "Group Coaching", url: "/community", icon: GraduationCap, featureId: null, iconColor: "text-orange-500" },
 ];
 
 // Tools & Resources section
 const toolsNavItems = [
-  { title: "Greek Life", url: "/greek-life", icon: Building2, featureId: null },
-  { title: "Anti-Hazing", url: "/anti-hazing", icon: ShieldAlert, featureId: null },
-  { title: "Symbol Guide", url: "/symbol-guide", icon: Compass, featureId: null },
-  { title: "Myth Busters", url: "/myth-buster", icon: Zap, featureId: null },
-  { title: "Video Library", url: "/video-library", icon: Video, featureId: null },
-  { title: "Church Leaders", url: "/church-leaders", icon: Church, featureId: null },
-  { title: "Achievements", url: "/achievements", icon: Trophy, featureId: 'achievements' },
-  { title: "Notifications", url: "/notification-preferences", icon: Bell, featureId: null },
-  { title: "Settings", url: "/profile", icon: Settings, featureId: null },
+  { title: "Greek Life", url: "/greek-life", icon: Building2, featureId: null, iconColor: "text-violet-500" },
+  { title: "Anti-Hazing", url: "/anti-hazing", icon: ShieldAlert, featureId: null, iconColor: "text-red-500" },
+  { title: "Symbol Guide", url: "/symbol-guide", icon: Compass, featureId: null, iconColor: "text-teal-500" },
+  { title: "Myth Busters", url: "/myth-buster", icon: Zap, featureId: null, iconColor: "text-yellow-500" },
+  { title: "Video Library", url: "/video-library", icon: Video, featureId: null, iconColor: "text-sky-500" },
+  { title: "Church Leaders", url: "/church-leaders", icon: Church, featureId: null, iconColor: "text-lime-500" },
+  { title: "Achievements", url: "/achievements", icon: Trophy, featureId: 'achievements', iconColor: "text-amber-400" },
+  { title: "Notifications", url: "/notification-preferences", icon: Bell, featureId: null, iconColor: "text-fuchsia-500" },
+  { title: "Settings", url: "/profile", icon: Settings, featureId: null, iconColor: "text-slate-500" },
 ];
 
 export function AppSidebar() {
@@ -106,7 +106,7 @@ export function AppSidebar() {
     return 'U';
   };
 
-  const NavItem = ({ item }: { item: { title: string; url: string; icon: React.ComponentType<{ className?: string }> } }) => (
+  const NavItem = ({ item }: { item: { title: string; url: string; icon: React.ComponentType<{ className?: string }>; iconColor?: string } }) => (
     <SidebarMenuItem>
       <SidebarMenuButton
         asChild
@@ -120,7 +120,7 @@ export function AppSidebar() {
             isActive(item.url) && "text-primary font-medium"
           )}
         >
-          <item.icon className="h-4 w-4 shrink-0" />
+          <item.icon className={cn("h-4 w-4 shrink-0", item.iconColor)} />
           <span>{item.title}</span>
         </NavLink>
       </SidebarMenuButton>
