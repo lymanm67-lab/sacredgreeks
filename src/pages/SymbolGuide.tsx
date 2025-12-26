@@ -451,8 +451,8 @@ const SymbolGuide = () => {
                           </button>
                         </CollapsibleTrigger>
                         <CollapsibleContent>
-                          <div className="bg-amber-500/10 p-3 rounded-b-lg border border-t-0 border-amber-500/30">
-                            <p className="text-sm text-amber-900 dark:text-amber-200 italic font-serif whitespace-pre-wrap">
+                          <div className="bg-muted/40 p-3 rounded-b-lg border border-t-0">
+                            <p className="text-sm text-foreground italic font-serif whitespace-pre-wrap">
                               {content}
                             </p>
                           </div>
@@ -473,8 +473,8 @@ const SymbolGuide = () => {
                           </button>
                         </CollapsibleTrigger>
                         <CollapsibleContent>
-                          <div className="bg-blue-500/10 p-3 rounded-b-lg border border-t-0 border-blue-500/30">
-                            <p className="text-sm text-blue-900 dark:text-blue-200 whitespace-pre-wrap">
+                          <div className="bg-muted/40 p-3 rounded-b-lg border border-t-0">
+                            <p className="text-sm text-foreground whitespace-pre-wrap">
                               {content}
                             </p>
                           </div>
@@ -496,8 +496,8 @@ const SymbolGuide = () => {
                           </button>
                         </CollapsibleTrigger>
                         <CollapsibleContent>
-                          <div className="bg-emerald-500/10 p-3 rounded-b-lg border border-t-0 border-emerald-500/30">
-                            <p className="text-sm text-emerald-900 dark:text-emerald-200 whitespace-pre-wrap">
+                          <div className="bg-muted/40 p-3 rounded-b-lg border border-t-0">
+                            <p className="text-sm text-foreground whitespace-pre-wrap">
                               {content}
                             </p>
                           </div>
