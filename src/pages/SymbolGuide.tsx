@@ -848,7 +848,7 @@ const SymbolGuide = () => {
 
       <main className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Quick Navigation Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-6">
           <Link to="/greek-life">
             <Card className="hover:border-sacred/50 transition-colors cursor-pointer h-full">
               <CardContent className="p-4 flex items-center gap-3">
@@ -862,11 +862,37 @@ const SymbolGuide = () => {
               </CardContent>
             </Card>
           </Link>
-          <Link to="/myth-buster">
+          <Link to="/oaths">
+            <Card className="hover:border-sacred/50 transition-colors cursor-pointer h-full">
+              <CardContent className="p-4 flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-blue-500/10">
+                  <Scroll className="w-5 h-5 text-blue-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-sm">Oaths Guide</h3>
+                  <p className="text-xs text-muted-foreground">Sacred commitments</p>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link to="/beauty-origins">
             <Card className="hover:border-sacred/50 transition-colors cursor-pointer h-full">
               <CardContent className="p-4 flex items-center gap-3">
                 <div className="p-2 rounded-lg bg-amber-500/10">
-                  <AlertTriangle className="w-5 h-5 text-amber-600" />
+                  <Sparkles className="w-5 h-5 text-amber-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-sm">Beauty Origins</h3>
+                  <p className="text-xs text-muted-foreground">Egyptian & Roman roots</p>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link to="/myth-buster">
+            <Card className="hover:border-sacred/50 transition-colors cursor-pointer h-full">
+              <CardContent className="p-4 flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-purple-500/10">
+                  <AlertTriangle className="w-5 h-5 text-purple-600" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-sm">Myth Buster</h3>

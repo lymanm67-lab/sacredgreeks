@@ -69,6 +69,7 @@ const Journey = lazy(() => import("./pages/Journey"));
 const MythBuster = lazy(() => import("./pages/MythBuster"));
 const SymbolGuide = lazy(() => import("./pages/SymbolGuide"));
 const OathsGuide = lazy(() => import("./pages/OathsGuide"));
+const BeautyOrigins = lazy(() => import("./pages/BeautyOrigins"));
 const AskDrLyman = lazy(() => import("./pages/AskDrLyman"));
 const ContentHub = lazy(() => import("./pages/ContentHub"));
 const Subscription = lazy(() => import("./pages/Subscription"));
@@ -202,6 +203,7 @@ const App = () => (
                     <Route path="/myth-buster" element={<MythBuster />} />
                     <Route path="/symbol-guide" element={<SymbolGuide />} />
                     <Route path="/oaths" element={<OathsGuide />} />
+                    <Route path="/beauty-origins" element={<BeautyOrigins />} />
                     <Route path="/organization/:orgId" element={<OrganizationDetail />} />
                     <Route path="/ask-dr-lyman" element={<AskDrLyman />} />
                     <Route path="/content-hub" element={<ContentHub />} />
