@@ -44,12 +44,13 @@ interface SymbolBookmark {
 // Category icons for better visual navigation
 const categoryIcons: Record<string, React.ReactNode> = {
   organizational: <Badge variant="outline" className="gap-1"><Building className="w-3 h-3" /> Organizational</Badge>,
+  cultural: <Badge variant="outline" className="gap-1"><Users className="w-3 h-3" /> Cultural</Badge>,
   ritual: <Badge variant="outline" className="gap-1"><History className="w-3 h-3" /> Ritual</Badge>,
   deity: <Badge variant="outline" className="gap-1"><Crown className="w-3 h-3" /> Deity</Badge>,
   seals: <Badge variant="outline" className="gap-1"><Landmark className="w-3 h-3" /> Seals</Badge>,
   symbols: <Badge variant="outline" className="gap-1"><Sparkles className="w-3 h-3" /> Symbols</Badge>,
   oaths: <Badge variant="outline" className="gap-1"><Scroll className="w-3 h-3" /> Oaths</Badge>,
-  customs: <Badge variant="outline" className="gap-1"><History className="w-3 h-3" /> Customs</Badge>,
+  customs: <Badge variant="outline" className="gap-1"><Heart className="w-3 h-3" /> Customs</Badge>,
 };
 
 type OathTone = 'amber' | 'blue' | 'emerald' | 'muted';

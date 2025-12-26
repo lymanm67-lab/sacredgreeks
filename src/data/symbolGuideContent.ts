@@ -2541,6 +2541,57 @@ export const symbolGuideContent: SymbolEntry[] = [
     cautionLevel: "low"
   },
   {
+    id: "custom-locs",
+    name: "Locs (Dreadlocks)",
+    category: "customs",
+    organizationType: "African Heritage",
+    description: "Locs have ancient spiritual significance across African cultures. In many West and East African traditions, locs represented a spiritual vow, wisdom, and connection to the divine. Ethiopian Orthodox Christians wore locs as a sign of devotion. The Maasai and other East African peoples wore them as marks of warrior status. Rastafarian culture drew from these African roots, connecting locs to the Nazarite vow in the Bible. The style represents patience (the years of growth), spiritual journey, and rejection of Western beauty standards that attempted to erase African identity.",
+    doubleStandard: "Locs are now celebrated in many churches as natural African beauty, yet were once banned from pulpits and deemed 'unkempt' or 'worldly.' The same churches that embrace locs today often question organizational symbols with far less spiritual significance in their origins.",
+    christianPerspective: "The Nazarite vow in Numbers 6 specifically instructed not cutting the hair as a sign of consecration to God. Samson's strength was connected to his uncut hair. Locs represent a biblical precedent of hair as spiritual expression and covenant symbol.",
+    biblicalParallels: [
+      "During the entire period of their Nazarite vow, no razor may be used on their head (Numbers 6:5)",
+      "Samson's seven locks of hair (Judges 16:13, 19)",
+      "I am fearfully and wonderfully made (Psalm 139:14)",
+      "Does not the very nature of things teach you (1 Corinthians 11:14-15)"
+    ],
+    scriptureReferences: ["Numbers 6:5", "Judges 16:13", "Judges 16:19", "Psalm 139:14"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-bantu-knots",
+    name: "Bantu Knots",
+    category: "customs",
+    organizationType: "African Heritage",
+    description: "Bantu knots originated with the Zulu and other Bantu-speaking peoples of southern Africa, with a history spanning over 100 years. The coiled knots held spiritual significance—the circular shape represented unity, the cosmos, and the cyclical nature of life. Different knot patterns could indicate marital status, age, tribe, or spiritual role. During the African diaspora, Bantu knots became a symbol of resistance and cultural pride, maintaining African identity against forced assimilation.",
+    doubleStandard: "Bantu knots are now featured in church fashion shows and worn by worship leaders, yet African Americans who wore them decades ago faced discrimination in Christian spaces for looking 'too African.' Meanwhile, church members critique Greek symbols while celebrating these African-originated styles.",
+    christianPerspective: "The circular, unified design of Bantu knots reflects themes of wholeness and unity found throughout Scripture. God's creation moves in cycles—seasons, sabbaths, generations. These cultural expressions honor the creativity God placed in African peoples.",
+    biblicalParallels: [
+      "There is a time for everything, and a season for every activity (Ecclesiastes 3:1)",
+      "From one man he made all the nations (Acts 17:26)",
+      "How good and pleasant it is when God's people live together in unity (Psalm 133:1)",
+      "I praise you because I am fearfully and wonderfully made (Psalm 139:14)"
+    ],
+    scriptureReferences: ["Ecclesiastes 3:1", "Acts 17:26", "Psalm 133:1", "Psalm 139:14"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-headwraps",
+    name: "Headwraps (Gele, Dhuku, Tignon)",
+    category: "customs",
+    organizationType: "African Heritage",
+    description: "Headwraps have deep spiritual and cultural roots across Africa. In West Africa, the gele (Nigeria) and other wraps indicated social status, religion, and occasion. In many African traditions, covering the head showed respect for ancestors and the divine. During slavery and the colonial era, laws like the Louisiana Tignon Laws (1786) forced Black women to cover their hair—intended as suppression, it was transformed into art and resistance. Today, headwraps represent African pride, spiritual covering, and the triumph of culture over oppression.",
+    doubleStandard: "Church mothers and first ladies are honored when wearing elaborate headwraps rooted in African spiritual traditions. Yet the same congregations may question Greek organizational practices that have far less spiritual content in their origins.",
+    christianPerspective: "Head covering has biblical precedent. Paul discussed head coverings in worship (1 Corinthians 11). Rebekah covered her head when meeting Isaac. The headwrap tradition aligns with scriptural themes of modesty, honor, and covering as spiritual symbolism.",
+    biblicalParallels: [
+      "Rebekah took her veil and covered herself (Genesis 24:65)",
+      "Every woman who prays with her head uncovered dishonors her head (1 Corinthians 11:5)",
+      "Strength and dignity are her clothing (Proverbs 31:25)",
+      "Your beauty should not come from outward adornment (1 Peter 3:3-4)"
+    ],
+    scriptureReferences: ["Genesis 24:65", "1 Corinthians 11:5", "Proverbs 31:25", "1 Peter 3:3-4"],
+    cautionLevel: "low"
+  },
+  {
     id: "custom-jumping-broom",
     name: "Jumping the Broom",
     category: "customs",
@@ -2970,10 +3021,11 @@ export const ritualGuideContent: RitualEntry[] = [
 export const symbolCategories = [
   { id: "all", label: "All" },
   { id: "organizational", label: "Organizational" },
+  { id: "cultural", label: "Cultural" },
   { id: "ritual", label: "Ritual" },
   { id: "symbols", label: "Symbols" },
   { id: "oaths", label: "Oaths" },
-  { id: "customs", label: "All Customs" },
+  { id: "customs", label: "Customs" },
   { id: "deity", label: "Deities" },
   { id: "seals", label: "Seals" }
 ];
