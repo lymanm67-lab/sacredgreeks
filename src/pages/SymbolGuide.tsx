@@ -336,6 +336,17 @@ const SymbolGuide = () => {
     
     return (
       <Card key={symbol.id} className="overflow-hidden">
+        {/* Symbol Image */}
+        {symbol.imageUrl && (
+          <div className="relative h-48 w-full overflow-hidden bg-gradient-to-br from-sacred/5 to-muted">
+            <img 
+              src={symbol.imageUrl} 
+              alt={symbol.name}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+          </div>
+        )}
         <CardHeader className="pb-2">
           <div className="flex items-start justify-between gap-2">
             <div className="space-y-1">
