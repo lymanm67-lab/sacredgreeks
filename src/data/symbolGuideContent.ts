@@ -1267,6 +1267,284 @@ export const symbolGuideContent: SymbolEntry[] = [
     scriptureReferences: ["Mark 12:31", "Proverbs 11:13", "Genesis 1:27", "Philippians 2:3-4"],
     cautionLevel: "low",
     cautionNote: "DECLARATION OF GENEVA (2017 revision):\n\n'As a member of the medical profession:\n\nI SOLEMNLY PLEDGE to dedicate my life to the service of humanity;\nThe health and well-being of my patient will be my first consideration;\nI WILL RESPECT the autonomy and dignity of my patient;\nI WILL MAINTAIN the utmost respect for human life;\nI WILL NOT PERMIT considerations of age, disease or disability, creed, ethnic origin, gender, nationality, political affiliation, race, sexual orientation, social standing, or any other factor to intervene between my duty and my patient;\nI WILL RESPECT the secrets that are confided in me;\nI WILL PRACTICE my profession with conscience and dignity;\nI WILL MAKE the health of my patient my first consideration;\nI MAKE THESE PROMISES solemnly, freely, and upon my honour.'"
+  },
+  // =====================================================
+  // FRATERNITIES - NPHC, IFC Organizations
+  // =====================================================
+  {
+    id: "alpha-phi-alpha",
+    name: "Alpha Phi Alpha Fraternity, Inc.",
+    category: "fraternities",
+    organizationType: "NPHC - Divine Nine",
+    description: "Founded December 4, 1906 at Cornell University, Alpha Phi Alpha is the first intercollegiate Greek-letter fraternity established for African Americans. Known for the sphinx symbol, gold and black colors, and producing leaders like Martin Luther King Jr., Thurgood Marshall, and W.E.B. Du Bois.",
+    doubleStandard: "Critics condemn the sphinx symbol as 'Egyptian idolatry' while ignoring that this ancient symbol represents wisdom and strength—qualities celebrated in Proverbs.",
+    christianPerspective: "Alpha Phi Alpha has produced countless Christian leaders who integrated faith with fraternal service. The organization's motto 'First of All, Servants of All, We Shall Transcend All' echoes Christ's teaching on servant leadership.",
+    biblicalParallels: [
+      "The greatest among you shall be your servant (Matthew 23:11)",
+      "Wisdom is more precious than rubies (Proverbs 8:11)",
+      "Train up a child in the way he should go (Proverbs 22:6)",
+      "Let your light shine before others (Matthew 5:16)"
+    ],
+    scriptureReferences: ["Matthew 23:11", "Proverbs 8:11", "Matthew 5:16", "Philippians 2:3-4"],
+    cautionLevel: "low"
+  },
+  {
+    id: "kappa-alpha-psi",
+    name: "Kappa Alpha Psi Fraternity, Inc.",
+    category: "fraternities",
+    organizationType: "NPHC - Divine Nine",
+    description: "Founded January 5, 1911 at Indiana University, Kappa Alpha Psi is known for the diamond symbol representing 'achievement in every field of human endeavor.' Colors are crimson and cream. Notable members include Colin Powell, Cedric the Entertainer, and Arthur Ashe.",
+    doubleStandard: "The diamond symbol represents refinement through pressure—exactly what Scripture teaches about character development through trials (James 1:2-4).",
+    christianPerspective: "Kappa Alpha Psi's emphasis on achievement aligns with the biblical call to excellence and using God-given talents. Many Kappas serve in ministry and Christian leadership while maintaining fraternal bonds.",
+    biblicalParallels: [
+      "Whatever you do, work at it with all your heart (Colossians 3:23)",
+      "Consider it pure joy when you face trials (James 1:2-4)",
+      "Diamonds formed under pressure parallel character refinement",
+      "Be diligent in these matters (1 Timothy 4:15)"
+    ],
+    scriptureReferences: ["Colossians 3:23", "James 1:2-4", "1 Timothy 4:15", "Proverbs 22:29"],
+    cautionLevel: "low"
+  },
+  {
+    id: "omega-psi-phi",
+    name: "Omega Psi Phi Fraternity, Inc.",
+    category: "fraternities",
+    organizationType: "NPHC - Divine Nine",
+    description: "Founded November 17, 1911 at Howard University, Omega Psi Phi was the first Black Greek-letter organization founded at an HBCU. Known for the lamp symbol, purple and gold colors, and cardinal principles: Manhood, Scholarship, Perseverance, and Uplift.",
+    doubleStandard: "The lamp symbol directly echoes Scripture—'Your word is a lamp for my feet' (Psalm 119:105). Critics ignore this biblical connection.",
+    christianPerspective: "The Omega lamp represents enlightenment and guidance, themes central to Christian faith. The cardinal principle of 'Uplift' parallels the biblical mandate to lift up the downtrodden and serve others.",
+    biblicalParallels: [
+      "Your word is a lamp for my feet (Psalm 119:105)",
+      "Let your light shine before others (Matthew 5:14-16)",
+      "Perseverance produces character (Romans 5:3-4)",
+      "Lift up the weak (1 Thessalonians 5:14)"
+    ],
+    scriptureReferences: ["Psalm 119:105", "Matthew 5:14-16", "Romans 5:3-4", "Isaiah 58:10"],
+    cautionLevel: "low"
+  },
+  {
+    id: "phi-beta-sigma",
+    name: "Phi Beta Sigma Fraternity, Inc.",
+    category: "fraternities",
+    organizationType: "NPHC - Divine Nine",
+    description: "Founded January 9, 1914 at Howard University. Known for the dove and crescent moon symbols, blue and white colors. The only NPHC fraternity constitutionally bound to a sorority (Zeta Phi Beta). Motto: 'Culture for Service and Service for Humanity.'",
+    doubleStandard: "The dove is perhaps the most biblical symbol in Greek life—representing the Holy Spirit at Christ's baptism (Matthew 3:16). Critics ignore this connection.",
+    christianPerspective: "The dove symbol directly connects to Christian faith. Phi Beta Sigma's emphasis on service and humanity aligns with Christ's command to love and serve others. The crescent represents cycles of growth and renewal.",
+    biblicalParallels: [
+      "The Spirit descended like a dove (Matthew 3:16)",
+      "Be wise as serpents, innocent as doves (Matthew 10:16)",
+      "Serve one another in love (Galatians 5:13)",
+      "Pure religion is caring for orphans and widows (James 1:27)"
+    ],
+    scriptureReferences: ["Matthew 3:16", "Galatians 5:13", "James 1:27", "Micah 6:8"],
+    cautionLevel: "low"
+  },
+  {
+    id: "iota-phi-theta",
+    name: "Iota Phi Theta Fraternity, Inc.",
+    category: "fraternities",
+    organizationType: "NPHC - Divine Nine",
+    description: "Founded September 19, 1963 at Morgan State University, making it the youngest NPHC fraternity. Known for the centaur symbol, brown and gold colors. Founded during the Civil Rights Movement, emphasizing the balance of mind and body.",
+    doubleStandard: "The centaur represents integration of intellect and physical strength—concepts Paul addresses when calling us to offer our bodies as living sacrifices while renewing our minds (Romans 12:1-2).",
+    christianPerspective: "Iota Phi Theta's emphasis on complete development—mental and physical—echoes biblical teaching on honoring God with our whole being. Founded during the Civil Rights era, the organization embodies the fight for justice.",
+    biblicalParallels: [
+      "Present your bodies as living sacrifices (Romans 12:1-2)",
+      "Love the Lord with all your heart, soul, mind, and strength (Mark 12:30)",
+      "Physical training has some value (1 Timothy 4:8)",
+      "Do justice, love mercy (Micah 6:8)"
+    ],
+    scriptureReferences: ["Romans 12:1-2", "Mark 12:30", "1 Timothy 4:8", "Micah 6:8"],
+    cautionLevel: "low"
+  },
+  {
+    id: "sigma-phi-epsilon",
+    name: "Sigma Phi Epsilon",
+    category: "fraternities",
+    organizationType: "IFC - Interfraternity Council",
+    description: "Founded November 1, 1901 at Richmond College (now University of Richmond). One of the largest fraternities in North America. Known for the heart symbol, purple and red colors. Cardinal Principles: Virtue, Diligence, and Brotherly Love.",
+    doubleStandard: "The heart symbol represents love—the greatest commandment according to Jesus. The Cardinal Principle of 'Virtue' aligns with biblical calls to moral excellence.",
+    christianPerspective: "Sigma Phi Epsilon's emphasis on virtue and brotherly love directly parallels biblical teaching. The organization's Balanced Man Program focuses on character development consistent with Christian values.",
+    biblicalParallels: [
+      "Love one another as I have loved you (John 15:12)",
+      "Add to your faith virtue (2 Peter 1:5)",
+      "Whatever is pure, whatever is lovely, think on these things (Philippians 4:8)",
+      "Be diligent (2 Peter 3:14)"
+    ],
+    scriptureReferences: ["John 15:12", "2 Peter 1:5", "Philippians 4:8", "1 Peter 3:8"],
+    cautionLevel: "low"
+  },
+  {
+    id: "kappa-sigma",
+    name: "Kappa Sigma",
+    category: "fraternities",
+    organizationType: "IFC - Interfraternity Council",
+    description: "Claims origins in Bologna, Italy in 1400, formally founded in the U.S. December 10, 1869 at the University of Virginia. Known for the star and crescent symbols, scarlet, white, and emerald green colors. One of the largest fraternities globally.",
+    doubleStandard: "The star guided the Magi to Christ (Matthew 2:2). Stars represent God's promises and guidance throughout Scripture—yet in Greek organizations, stars are somehow suspicious.",
+    christianPerspective: "Kappa Sigma's Four Pillars—Fellowship, Leadership, Scholarship, and Service—align with Christian values. The star symbol connects to biblical themes of divine guidance and promise.",
+    biblicalParallels: [
+      "We saw his star when it rose (Matthew 2:2)",
+      "Those who lead many to righteousness will shine like stars (Daniel 12:3)",
+      "He determines the number of stars (Psalm 147:4)",
+      "Serve one another in love (Galatians 5:13)"
+    ],
+    scriptureReferences: ["Matthew 2:2", "Daniel 12:3", "Psalm 147:4", "Galatians 5:13"],
+    cautionLevel: "low"
+  },
+  {
+    id: "phi-gamma-delta",
+    name: "Phi Gamma Delta (FIJI)",
+    category: "fraternities",
+    organizationType: "IFC - Interfraternity Council",
+    description: "Founded May 1, 1848 at Jefferson College in Pennsylvania. Known as FIJI, with royal purple as the primary color. The owl symbol represents wisdom. Values include friendship, knowledge, service, morality, and excellence.",
+    doubleStandard: "The owl represents wisdom—a virtue Proverbs repeatedly commands us to pursue. 'Get wisdom, get understanding' (Proverbs 4:5).",
+    christianPerspective: "FIJI's emphasis on morality and service aligns with Christian teaching. The pursuit of wisdom is a biblical mandate, and the organization's values of friendship and excellence reflect scriptural principles.",
+    biblicalParallels: [
+      "Get wisdom, get understanding (Proverbs 4:5)",
+      "The fear of the Lord is the beginning of wisdom (Proverbs 9:10)",
+      "A friend loves at all times (Proverbs 17:17)",
+      "Whatever is excellent, think on these things (Philippians 4:8)"
+    ],
+    scriptureReferences: ["Proverbs 4:5", "Proverbs 9:10", "Proverbs 17:17", "Ecclesiastes 4:9-10"],
+    cautionLevel: "low"
+  },
+  // =====================================================
+  // SORORITIES - NPHC, NPC Organizations
+  // =====================================================
+  {
+    id: "alpha-kappa-alpha",
+    name: "Alpha Kappa Alpha Sorority, Inc.",
+    category: "sororities",
+    organizationType: "NPHC - Divine Nine",
+    description: "Founded January 15, 1908 at Howard University, Alpha Kappa Alpha is the first Greek-letter sorority established for African American women. Known for the ivy leaf symbol, salmon pink and apple green colors. Notable members include Vice President Kamala Harris, Maya Angelou, and Coretta Scott King.",
+    doubleStandard: "The ivy leaf represents growth and flourishing—exactly what Psalm 1 describes for the righteous who are 'like a tree planted by streams of water.'",
+    christianPerspective: "AKA's emphasis on service to all mankind aligns with Christ's command to love our neighbors. The ivy leaf symbolizes continuous growth and connection, reflecting spiritual growth and Christian community.",
+    biblicalParallels: [
+      "Like a tree planted by streams of water (Psalm 1:3)",
+      "I am the vine, you are the branches (John 15:5)",
+      "Grow in grace and knowledge (2 Peter 3:18)",
+      "Bear fruit in every good work (Colossians 1:10)"
+    ],
+    scriptureReferences: ["Psalm 1:3", "John 15:5", "2 Peter 3:18", "Colossians 1:10"],
+    cautionLevel: "low"
+  },
+  {
+    id: "delta-sigma-theta",
+    name: "Delta Sigma Theta Sorority, Inc.",
+    category: "sororities",
+    organizationType: "NPHC - Divine Nine",
+    description: "Founded January 13, 1913 at Howard University. Known for the pyramid and elephant symbols, crimson and cream colors. The largest NPHC organization with 350,000+ members. Participated in the Women's Suffrage March of 1913 just weeks after founding.",
+    doubleStandard: "The pyramid represents building on solid foundations—Jesus used this exact imagery when teaching about the wise builder (Matthew 7:24-25).",
+    christianPerspective: "Delta's commitment to public service and social action reflects prophetic biblical tradition. The pyramid symbolizes building lasting legacies and foundations, echoing Christ's teaching about building on rock.",
+    biblicalParallels: [
+      "Build your house on the rock (Matthew 7:24-25)",
+      "Unless the Lord builds the house (Psalm 127:1)",
+      "Speak up for those who cannot speak for themselves (Proverbs 31:8)",
+      "Faith without works is dead (James 2:17)"
+    ],
+    scriptureReferences: ["Matthew 7:24-25", "Psalm 127:1", "Proverbs 31:8-9", "James 2:17"],
+    cautionLevel: "low"
+  },
+  {
+    id: "zeta-phi-beta",
+    name: "Zeta Phi Beta Sorority, Inc.",
+    category: "sororities",
+    organizationType: "NPHC - Divine Nine",
+    description: "Founded January 16, 1920 at Howard University. Known for the dove symbol, royal blue and white colors. Constitutionally bound to Phi Beta Sigma Fraternity. Principles: Scholarship, Service, Sisterly Love, and Finer Womanhood.",
+    doubleStandard: "The dove is the symbol of the Holy Spirit in Christian tradition (Matthew 3:16). How can critics condemn this most biblical of symbols?",
+    christianPerspective: "Zeta's dove symbol directly connects to Christian faith, representing peace and the Holy Spirit. The principle of 'Finer Womanhood' echoes Proverbs 31's description of the virtuous woman.",
+    biblicalParallels: [
+      "The Spirit descended like a dove (Matthew 3:16)",
+      "Blessed are the peacemakers (Matthew 5:9)",
+      "A woman who fears the Lord is to be praised (Proverbs 31:30)",
+      "Encourage one another (1 Thessalonians 5:11)"
+    ],
+    scriptureReferences: ["Matthew 3:16", "Matthew 5:9", "Proverbs 31:10-31", "Titus 2:3-5"],
+    cautionLevel: "low"
+  },
+  {
+    id: "sigma-gamma-rho",
+    name: "Sigma Gamma Rho Sorority, Inc.",
+    category: "sororities",
+    organizationType: "NPHC - Divine Nine",
+    description: "Founded November 12, 1922 at Butler University in Indianapolis—the only NPHC sorority founded at a predominantly white institution. Known for the poodle mascot, royal blue and gold colors. Focus on community service and education.",
+    doubleStandard: "The poodle represents elegance, intelligence, and loyalty—qualities celebrated throughout Proverbs and in descriptions of virtuous women.",
+    christianPerspective: "Sigma Gamma Rho's emphasis on community service and uplifting underserved communities aligns with biblical mandates to care for the vulnerable. The organization's educational focus honors the scriptural value of wisdom.",
+    biblicalParallels: [
+      "Wisdom is more precious than rubies (Proverbs 3:15)",
+      "Care for orphans and widows (James 1:27)",
+      "Do good to all people (Galatians 6:10)",
+      "Train up a child (Proverbs 22:6)"
+    ],
+    scriptureReferences: ["Proverbs 3:15", "James 1:27", "Galatians 6:10", "Proverbs 22:6"],
+    cautionLevel: "low"
+  },
+  {
+    id: "chi-omega",
+    name: "Chi Omega",
+    category: "sororities",
+    organizationType: "NPC - National Panhellenic Conference",
+    description: "Founded April 5, 1895 at the University of Arkansas. The largest women's fraternal organization with 400,000+ members. Known for the owl and skull symbols, cardinal and straw colors. Six Cardinal Virtues include Hellenic Culture, Integrity, and Community Service.",
+    doubleStandard: "The owl represents wisdom—Scripture repeatedly commands pursuing wisdom (Proverbs 4:7). The skull (memento mori) was a Christian practice reminding believers of life's brevity.",
+    christianPerspective: "Chi Omega's emphasis on integrity and community service reflects Christian values. The owl's connection to wisdom aligns with biblical teaching, and memento mori has deep Christian roots in monastic tradition.",
+    biblicalParallels: [
+      "Wisdom is supreme; therefore get wisdom (Proverbs 4:7)",
+      "Teach us to number our days (Psalm 90:12)",
+      "Walk in integrity (Proverbs 10:9)",
+      "Serve one another in love (Galatians 5:13)"
+    ],
+    scriptureReferences: ["Proverbs 4:7", "Psalm 90:12", "Proverbs 10:9", "Galatians 5:13"],
+    cautionLevel: "low"
+  },
+  {
+    id: "kappa-kappa-gamma",
+    name: "Kappa Kappa Gamma",
+    category: "sororities",
+    organizationType: "NPC - National Panhellenic Conference",
+    description: "Founded October 13, 1870 at Monmouth College in Illinois. Known for the key and fleur-de-lis symbols, dark blue and light blue colors. One of the oldest NPC sororities with emphasis on women's advancement and education.",
+    doubleStandard: "The key symbol directly echoes Christ's words—'I will give you the keys of the kingdom' (Matthew 16:19). Keys represent authority and access in biblical imagery.",
+    christianPerspective: "Kappa's key symbol connects to Jesus giving Peter the keys of the kingdom. The emphasis on women's education and advancement aligns with biblical examples of wise, influential women like Deborah, Esther, and Priscilla.",
+    biblicalParallels: [
+      "I will give you the keys of the kingdom (Matthew 16:19)",
+      "The key of knowledge (Luke 11:52)",
+      "Women of wisdom and influence (Proverbs 31)",
+      "Teach what is good (Titus 2:3)"
+    ],
+    scriptureReferences: ["Matthew 16:19", "Luke 11:52", "Proverbs 31:26", "Titus 2:3-5"],
+    cautionLevel: "low"
+  },
+  {
+    id: "delta-delta-delta",
+    name: "Delta Delta Delta (Tri Delta)",
+    category: "sororities",
+    organizationType: "NPC - National Panhellenic Conference",
+    description: "Founded Thanksgiving Eve, 1888 at Boston University. Known as Tri Delta, with the trident/dolphin symbols and silver, gold, and cerulean blue colors. Motto: 'Let us steadfastly love one another.'",
+    doubleStandard: "The trident in Greek life represents strength and stability—not Poseidon worship. The motto directly echoes the greatest commandment to love one another.",
+    christianPerspective: "Tri Delta's motto 'Let us steadfastly love one another' is essentially a paraphrase of 1 John 4:7. The organization's emphasis on sincere friendship and philanthropic service reflects Christian love in action.",
+    biblicalParallels: [
+      "Let us love one another (1 John 4:7)",
+      "Love one another as I have loved you (John 15:12)",
+      "A friend loves at all times (Proverbs 17:17)",
+      "Be devoted to one another in love (Romans 12:10)"
+    ],
+    scriptureReferences: ["1 John 4:7", "John 15:12", "Proverbs 17:17", "Romans 12:10"],
+    cautionLevel: "low"
+  },
+  {
+    id: "alpha-delta-pi",
+    name: "Alpha Delta Pi",
+    category: "sororities",
+    organizationType: "NPC - National Panhellenic Conference",
+    description: "Founded May 15, 1851 at Wesleyan Female College in Macon, Georgia—the first secret society for college women in the world. Known for the diamond and lion symbols, azure blue and white colors. Founded at a Methodist institution.",
+    doubleStandard: "Founded at a Methodist college by Christian women. The lion is the symbol of Christ—'the Lion of the tribe of Judah' (Revelation 5:5). The diamond represents refinement through pressure.",
+    christianPerspective: "Alpha Delta Pi was founded at a Christian institution by women of faith. The lion symbol connects directly to Christ as the Lion of Judah. The organization's long history demonstrates how Christian women can lead in fraternal spaces.",
+    biblicalParallels: [
+      "The Lion of the tribe of Judah has triumphed (Revelation 5:5)",
+      "Be strong and courageous (Joshua 1:9)",
+      "Refined like gold (1 Peter 1:7)",
+      "Women of noble character (Proverbs 31:10)"
+    ],
+    scriptureReferences: ["Revelation 5:5", "Joshua 1:9", "1 Peter 1:7", "Proverbs 31:10"],
+    cautionLevel: "low"
   }
 ];
 
