@@ -68,6 +68,7 @@ const FamilyMinistryFallout = lazy(() => import("./pages/FamilyMinistryFallout")
 const Journey = lazy(() => import("./pages/Journey"));
 const MythBuster = lazy(() => import("./pages/MythBuster"));
 const SymbolGuide = lazy(() => import("./pages/SymbolGuide"));
+const OathsGuide = lazy(() => import("./pages/OathsGuide"));
 const AskDrLyman = lazy(() => import("./pages/AskDrLyman"));
 const ContentHub = lazy(() => import("./pages/ContentHub"));
 const Subscription = lazy(() => import("./pages/Subscription"));
@@ -200,10 +201,10 @@ const App = () => (
                     <Route path="/journey" element={<Journey />} />
                     <Route path="/myth-buster" element={<MythBuster />} />
                     <Route path="/symbol-guide" element={<SymbolGuide />} />
+                    <Route path="/oaths" element={<OathsGuide />} />
                     <Route path="/organization/:orgId" element={<OrganizationDetail />} />
                     <Route path="/ask-dr-lyman" element={<AskDrLyman />} />
                     <Route path="/content-hub" element={<ContentHub />} />
-                    <Route path="/subscription" element={<Subscription />} />
                     <Route path="/pricing" element={<Subscription />} />
                     <Route path="/shattered-masks" element={<ShatteredMasks />} />
                     <Route path="/shared-symbols/:shareToken" element={<SharedSymbolBookmarks />} />
