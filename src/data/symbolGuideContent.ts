@@ -1536,7 +1536,43 @@ export const symbolGuideContent: SymbolEntry[] = [
     ],
     scriptureReferences: ["Proverbs 31:8-9", "Micah 6:8", "Isaiah 1:17", "Amos 5:24"],
     cautionLevel: "low",
-    cautionNote: "MODERN ATTORNEY OATH (varies by state):\n\n'I do solemnly swear that I will support the Constitution of the United States and the Constitution of this State; that I will maintain the respect due to courts of justice and judicial officers; that I will not counsel or maintain any suit or proceeding which shall appear to me to be unjust, nor any defense except such as I believe to be honestly debatable under the law; that I will employ such means only as are consistent with truth and honor; and that I will never seek to mislead the judge or jury by any artifice or false statement of fact or law. So help me God.'"
+    cautionNote: "ORIGINAL LATIN (Roman Advocatus Oath, c. 100 CE):\n\n'Iuro per Iovem et deos Penates me bonam fidem praestaturum, causam clientis mei fideliter defensurum, neque pecuniam neque gratiam praeposituram veritati et iustitiae...'\n\nORIGINAL ENGLISH TRANSLATION:\n\n'I swear by Jupiter and the household gods that I will act in good faith, faithfully defend the cause of my client, and not place money or favor before truth and justice...'\n\nMODERN ATTORNEY OATH (varies by state):\n\n'I do solemnly swear that I will support the Constitution of the United States and the Constitution of this State; that I will maintain the respect due to courts of justice and judicial officers; that I will not counsel or maintain any suit or proceeding which shall appear to me to be unjust, nor any defense except such as I believe to be honestly debatable under the law; that I will employ such means only as are consistent with truth and honor; and that I will never seek to mislead the judge or jury by any artifice or false statement of fact or law. So help me God.'"
+  },
+  {
+    id: "oath-trade-union",
+    name: "Trade Union Oath",
+    category: "oaths",
+    organizationType: "Labor Organizations",
+    description: "Trade union oaths trace to medieval guild traditions where craftsmen swore before patron saints and God to uphold quality standards, protect trade secrets, and support fellow workers. These oaths created binding fraternal obligations similar to Greek organizations.",
+    doubleStandard: "Union members take oaths of solidarity and mutual support rooted in medieval guild traditions without religious scrutiny. Yet Greek organizations face criticism for similar fraternal commitments.",
+    christianPerspective: "The early church practiced mutual support and shared resources (Acts 2:44-45). Trade unions embody biblical principles of fair wages (James 5:4), protecting workers from exploitation, and collective care for one another.",
+    biblicalParallels: [
+      "The worker deserves his wages (Luke 10:7)",
+      "Do not hold back wages of a hired worker (Leviticus 19:13)",
+      "All the believers had everything in common (Acts 2:44)",
+      "Bear one another's burdens (Galatians 6:2)"
+    ],
+    scriptureReferences: ["Luke 10:7", "James 5:4", "Leviticus 19:13", "Galatians 6:2"],
+    cautionLevel: "low",
+    cautionNote: "ORIGINAL MEDIEVAL GUILD OATH (c. 1200 CE):\n\n'In nomine Patris et Filii et Spiritus Sancti, ego iuro per Sanctum [Patronum] me artem meam fideliter exerciturum, secreta gildae servaturum, fratres meos adiuturum...'\n\nORIGINAL ENGLISH TRANSLATION:\n\n'In the name of the Father, Son, and Holy Spirit, I swear by Saint [Patron] that I will faithfully practice my craft, keep the secrets of the guild, help my brothers in need, and uphold the standards of our trade...'\n\nMODERN UNION PLEDGE (AFL-CIO example):\n\n'I pledge my honor to faithfully observe the Constitution and laws of the [Union], to comply with all the rules and regulations for the government thereof, not to discriminate against a fellow worker on account of creed, color, or nationality, to defend freedom of thought and the right of all to organize, and to support the principles of trade unionism.'"
+  },
+  {
+    id: "oath-funeral-director",
+    name: "Funeral Director's Oath",
+    category: "oaths",
+    organizationType: "Mortuary Profession",
+    description: "Funeral directors take professional oaths rooted in ancient traditions of honoring the dead. From Egyptian embalmers who served Anubis to Roman funeratores who invoked the Manes (spirits of ancestors), caring for the deceased has always carried sacred obligations.",
+    doubleStandard: "Funeral professionals serve in a field with deep pagan roots—Egyptian embalming invoked Anubis and Osiris—yet face no religious criticism. Greek organizations using far less religious imagery receive disproportionate scrutiny.",
+    christianPerspective: "Caring for the dead is a biblical virtue. Joseph of Arimathea honored Christ by preparing his body for burial. Treating the deceased with dignity reflects the Christian belief that our bodies are temples of the Holy Spirit.",
+    biblicalParallels: [
+      "Joseph of Arimathea cared for Jesus' body (Matthew 27:57-60)",
+      "Tobit buried the dead as righteous service (Tobit 1:17-18)",
+      "Your body is a temple of the Holy Spirit (1 Corinthians 6:19)",
+      "Blessed are those who mourn (Matthew 5:4)"
+    ],
+    scriptureReferences: ["Matthew 27:57-60", "1 Corinthians 6:19", "Matthew 5:4", "Ecclesiastes 7:2"],
+    cautionLevel: "low",
+    cautionNote: "ORIGINAL EGYPTIAN EMBALMER'S PRAYER (c. 1500 BCE):\n\n'O Anubis, Guardian of the Dead, guide my hands as I prepare this body for the journey to the West. O Osiris, Lord of the Underworld, receive this one who comes to you...'\n\nORIGINAL ENGLISH TRANSLATION:\n\n'The Egyptian embalmers invoked Anubis (jackal-headed god of mummification) and Osiris (god of the afterlife) during the 70-day embalming process. These religious rituals were inseparable from the technical practice.'\n\nMODERN FUNERAL DIRECTOR'S PLEDGE (NFDA Code of Ethics):\n\n'As a funeral director, I pledge to serve the public in a manner that is caring, competent, and ethical. I will treat the deceased and their families with dignity, respect, and compassion. I will maintain the highest professional standards, uphold the trust placed in me, and conduct myself with integrity in all professional matters.'"
   },
   {
     id: "oath-physician-modern",
