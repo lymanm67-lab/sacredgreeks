@@ -2403,7 +2403,7 @@ export const symbolGuideContent: SymbolEntry[] = [
   {
     id: "custom-libation",
     name: "Libation Ceremonies",
-    category: "customs",
+    category: "ritual",
     organizationType: "African Heritage",
     description: "Libation—pouring liquid (water, wine, or spirits) onto the ground while calling ancestors' names—is a West African tradition honoring deceased ancestors. The Akan, Yoruba, Igbo, and other West African peoples believed ancestors remained spiritually present and required acknowledgment. This practice survived the Middle Passage and influenced African American commemorative traditions.",
     doubleStandard: "Christians pour out wine at communion, toast at weddings, and some traditions pour out drinks for deceased loved ones informally. Yet when African American organizations incorporate libation elements, it is labeled as 'ancestor worship.'",
