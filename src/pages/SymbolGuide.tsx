@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, ExternalLink, Share2, FileDown, Scale, History, Sparkles, Printer, Crown, Building, GraduationCap, Landmark, Users, Heart, Scroll, BookOpen, LayoutGrid, List } from 'lucide-react';
-import { symbolGuideContent, ritualGuideContent, symbolCategories, culturalComparisons, culturalComparisonCategories, SymbolEntry, RitualEntry, CulturalComparisonEntry } from '@/data/symbolGuideContent';
+import { symbolGuideContent, ritualGuideContent, symbolCategories, customsSubcategories, culturalComparisons, culturalComparisonCategories, SymbolEntry, RitualEntry, CulturalComparisonEntry } from '@/data/symbolGuideContent';
 import { getSymbolImageUrl } from '@/data/symbolImageUrls';
 import { ListenButton } from '@/components/ListenButton';
 import { useAuth } from '@/contexts/AuthContext';
@@ -126,6 +126,7 @@ const SymbolGuide = () => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [symbolCategory, setSymbolCategory] = useState('all');
+  const [customsSubcategory, setCustomsSubcategory] = useState('all');
   const [comparisonCategory, setComparisonCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [bookmarksOpen, setBookmarksOpen] = useState(false);
@@ -323,13 +324,17 @@ const SymbolGuide = () => {
   const filteredSymbols = useMemo(() => {
     return symbolGuideContent.filter(s => {
       const matchesCategory = symbolCategory === 'all' || s.category === symbolCategory;
+      // Apply subcategory filter when customs is selected
+      const matchesSubcategory = symbolCategory !== 'customs' || 
+        customsSubcategory === 'all' || 
+        s.organizationType === customsSubcategory;
       const matchesSearch = searchQuery === '' || 
         s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         s.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         s.christianPerspective.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesCategory && matchesSearch;
+      return matchesCategory && matchesSubcategory && matchesSearch;
     });
-  }, [symbolCategory, searchQuery]);
+  }, [symbolCategory, customsSubcategory, searchQuery]);
 
   const filteredRituals = useMemo(() => {
     return ritualGuideContent.filter(r => {
@@ -1072,13 +1077,39 @@ const SymbolGuide = () => {
                   key={cat.id}
                   variant={symbolCategory === cat.id ? 'default' : 'outline'}
                   size="sm"
-                  onClick={() => setSymbolCategory(cat.id)}
+                  onClick={() => {
+                    setSymbolCategory(cat.id);
+                    if (cat.id !== 'customs') {
+                      setCustomsSubcategory('all');
+                    }
+                  }}
                   className={symbolCategory === cat.id ? 'bg-sacred hover:bg-sacred/90' : ''}
                 >
                   {cat.label}
                 </Button>
               ))}
             </div>
+
+            {/* Customs Subcategory Filter - Only shown when Customs is selected */}
+            {symbolCategory === 'customs' && (
+              <div className="flex flex-wrap gap-2 mb-4 p-3 bg-muted/50 rounded-lg border">
+                <span className="text-sm text-muted-foreground mr-2 self-center">Filter by type:</span>
+                {customsSubcategories.map(sub => (
+                  <Button
+                    key={sub.id}
+                    variant={customsSubcategory === sub.id ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => setCustomsSubcategory(sub.id)}
+                    className={cn(
+                      "h-7 text-xs",
+                      customsSubcategory === sub.id ? 'bg-amber-600 hover:bg-amber-700' : ''
+                    )}
+                  >
+                    {sub.label}
+                  </Button>
+                ))}
+              </div>
+            )}
 
             {filteredSymbols.length === 0 && (
               <Card className="p-8 text-center">

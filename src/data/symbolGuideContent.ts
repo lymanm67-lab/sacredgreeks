@@ -2098,9 +2098,9 @@ export const symbolGuideContent: SymbolEntry[] = [
     name: "Repass (Funeral Meal)",
     category: "customs",
     organizationType: "Funeral Tradition",
-    description: "The funeral repass descends from Roman silicernium (funeral feast) and Greek perideipnon. Romans believed sharing a meal near the deceased would satisfy their spirit and prevent haunting. Food was often left on graves for the dead to consume. The meal also protected the living from death contamination.",
-    doubleStandard: "Churches routinely host repass meals after funerals—a practice rooted in feeding ancestral spirits—without any spiritual concern. Yet Greek organizational meals with ceremonial elements face scrutiny.",
-    christianPerspective: "Jesus ate with his disciples after resurrection, transforming the funeral meal from spirit appeasement to celebration of eternal life. The Church converted pagan funeral feasts into agape meals and wakes that honor the deceased while affirming resurrection hope.",
+    description: "The funeral repass descends from Roman silicernium (funeral feast), Greek perideipnon, and West African Yoruba traditions. Romans believed sharing a meal near the deceased would satisfy their spirit and prevent haunting. Food was often left on graves for the dead to consume. In Yoruba tradition, the meal was explicitly for the dead—not just the living—as ancestors were believed to join the feast and needed nourishment for their journey to the afterlife. The Yoruba 'ase' (life force) was believed to transfer through shared food with the spirits.",
+    doubleStandard: "Churches routinely host repass meals after funerals—a practice rooted in feeding ancestral spirits in Roman, Greek, and African traditions—without any spiritual concern. Yet Greek organizational meals with ceremonial elements face scrutiny.",
+    christianPerspective: "Jesus ate with his disciples after resurrection, transforming the funeral meal from spirit appeasement to celebration of eternal life. The Church converted pagan funeral feasts into agape meals and wakes that honor the deceased while affirming resurrection hope. The communal meal now celebrates Christian hope, not ancestral appeasement.",
     biblicalParallels: [
       "Jesus ate with disciples after resurrection (Luke 24:41-43)",
       "Breaking bread together in Christian community (Acts 2:46)",
@@ -2815,9 +2815,21 @@ export const symbolCategories = [
   { id: "ritual", label: "Ritual" },
   { id: "symbols", label: "Symbols" },
   { id: "oaths", label: "Oaths" },
-  { id: "customs", label: "Customs" },
+  { id: "customs", label: "All Customs" },
   { id: "deity", label: "Deities" },
   { id: "seals", label: "Seals" }
+];
+
+// Subcategories for Customs - filter by organizationType
+export const customsSubcategories = [
+  { id: "all", label: "All Customs" },
+  { id: "Funeral Tradition", label: "Funeral & Memorial" },
+  { id: "Marriage Tradition", label: "Wedding & Marriage" },
+  { id: "Birthday Tradition", label: "Birthday" },
+  { id: "Religious Holiday", label: "Religious Holidays" },
+  { id: "Cultural Holiday", label: "Cultural Holidays" },
+  { id: "Beauty Tradition", label: "Beauty & Fashion" },
+  { id: "Architecture", label: "Church Architecture" }
 ];
 
 export interface CulturalComparisonEntry {
