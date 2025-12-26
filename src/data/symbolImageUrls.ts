@@ -58,6 +58,17 @@ import oathPresidential from '@/assets/symbols/oath-presidential.jpg';
 import oathAttorney from '@/assets/symbols/oath-attorney.jpg';
 import oathPhysicianModern from '@/assets/symbols/oath-physician-modern.jpg';
 
+// Symbol images (Symbols category)
+import alphaOmegaSymbol from '@/assets/symbols/alpha-omega-symbol.jpg';
+import chiRhoSymbol from '@/assets/symbols/chi-rho-symbol.jpg';
+import ichthysFishSymbol from '@/assets/symbols/ichthys-fish-symbol.jpg';
+import deltaTriangleSymbol from '@/assets/symbols/delta-triangle-symbol.jpg';
+import torchFlameSymbol from '@/assets/symbols/torch-flame-symbol.jpg';
+import laurelWreathSymbol from '@/assets/symbols/laurel-wreath-symbol.jpg';
+import handshakeGripSymbol from '@/assets/symbols/handshake-grip-symbol.jpg';
+import doveSymbol from '@/assets/symbols/dove-symbol.jpg';
+import lampLightSymbol from '@/assets/symbols/lamp-light-symbol.jpg';
+
 export const symbolImageUrls: Record<string, string> = {
   // Deities
   "ahura-mazda": ahuraMazda,
@@ -115,6 +126,19 @@ export const symbolImageUrls: Record<string, string> = {
   "oath-presidential": oathPresidential,
   "oath-attorney": oathAttorney,
   "oath-physician-modern": oathPhysicianModern,
+  
+  // Symbols (Symbols category)
+  "alpha-omega-symbol": alphaOmegaSymbol,
+  "chi-rho-symbol": chiRhoSymbol,
+  "ichthys-fish-symbol": ichthysFishSymbol,
+  "delta-triangle-symbol": deltaTriangleSymbol,
+  "torch-flame-symbol": torchFlameSymbol,
+  "pyramid-symbol": sphinx, // Reusing sphinx image for pyramid
+  "sphinx-symbol": sphinx,
+  "laurel-wreath-symbol": laurelWreathSymbol,
+  "handshake-grip-symbol": handshakeGripSymbol,
+  "dove-symbol": doveSymbol,
+  "lamp-light-symbol": lampLightSymbol,
 };
 
 export const getSymbolImageUrl = (id: string): string | undefined => {
