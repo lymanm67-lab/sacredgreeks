@@ -441,14 +441,14 @@ const SymbolGuide = () => {
                     const content = trimmedSection.split('\n').slice(1).join('\n').replace(/^'|'$/g, '');
                     return (
                       <Collapsible key={index}>
-                        <CollapsibleTrigger className="w-full">
-                          <div className="bg-amber-500/20 hover:bg-amber-500/30 p-3 rounded-lg border border-amber-500/40 cursor-pointer transition-colors flex items-center justify-between">
+                        <CollapsibleTrigger asChild>
+                          <button className="w-full bg-amber-500/20 hover:bg-amber-500/30 p-3 rounded-lg border border-amber-500/40 cursor-pointer transition-colors flex items-center justify-between">
                             <h5 className="font-semibold text-amber-700 dark:text-amber-400 text-sm flex items-center gap-2">
                               <History className="w-4 h-4" />
                               {title}
                             </h5>
                             <ChevronDown className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                          </div>
+                          </button>
                         </CollapsibleTrigger>
                         <CollapsibleContent>
                           <div className="bg-amber-500/10 p-3 rounded-b-lg border border-t-0 border-amber-500/30">
@@ -463,14 +463,14 @@ const SymbolGuide = () => {
                     const content = trimmedSection.split('\n').slice(1).join('\n').replace(/^'|'$/g, '');
                     return (
                       <Collapsible key={index}>
-                        <CollapsibleTrigger className="w-full">
-                          <div className="bg-blue-500/20 hover:bg-blue-500/30 p-3 rounded-lg border border-blue-500/40 cursor-pointer transition-colors flex items-center justify-between">
+                        <CollapsibleTrigger asChild>
+                          <button className="w-full bg-blue-500/20 hover:bg-blue-500/30 p-3 rounded-lg border border-blue-500/40 cursor-pointer transition-colors flex items-center justify-between">
                             <h5 className="font-semibold text-blue-700 dark:text-blue-400 text-sm flex items-center gap-2">
                               <BookOpen className="w-4 h-4" />
                               English Translation
                             </h5>
                             <ChevronDown className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                          </div>
+                          </button>
                         </CollapsibleTrigger>
                         <CollapsibleContent>
                           <div className="bg-blue-500/10 p-3 rounded-b-lg border border-t-0 border-blue-500/30">
@@ -486,14 +486,14 @@ const SymbolGuide = () => {
                     const content = trimmedSection.split('\n').slice(1).join('\n').replace(/^'|'$/g, '');
                     return (
                       <Collapsible key={index} defaultOpen>
-                        <CollapsibleTrigger className="w-full">
-                          <div className="bg-emerald-500/20 hover:bg-emerald-500/30 p-3 rounded-lg border border-emerald-500/40 cursor-pointer transition-colors flex items-center justify-between">
+                        <CollapsibleTrigger asChild>
+                          <button className="w-full bg-emerald-500/20 hover:bg-emerald-500/30 p-3 rounded-lg border border-emerald-500/40 cursor-pointer transition-colors flex items-center justify-between">
                             <h5 className="font-semibold text-emerald-700 dark:text-emerald-400 text-sm flex items-center gap-2">
                               <Scroll className="w-4 h-4" />
                               {title}
                             </h5>
                             <ChevronDown className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                          </div>
+                          </button>
                         </CollapsibleTrigger>
                         <CollapsibleContent>
                           <div className="bg-emerald-500/10 p-3 rounded-b-lg border border-t-0 border-emerald-500/30">
