@@ -335,10 +335,17 @@ const SymbolGuide = () => {
     const CategoryBadge = categoryIcons[symbol.category] || <Badge variant="outline" className="capitalize">{symbol.category}</Badge>;
     
     return (
-      <Card key={symbol.id}>
+      <Card key={symbol.id} className="overflow-hidden">
         <CardHeader className="pb-2">
           <div className="flex items-start justify-between gap-2">
-            <CardTitle className="text-lg">{symbol.name}</CardTitle>
+            <div className="space-y-1">
+              <CardTitle className="text-lg">{symbol.name}</CardTitle>
+              {symbol.organizationType && (
+                <Badge variant="secondary" className="text-xs font-normal">
+                  {symbol.organizationType}
+                </Badge>
+              )}
+            </div>
             <div className="flex items-center gap-2">
               {user && (
                 <Button
@@ -359,17 +366,67 @@ const SymbolGuide = () => {
           </div>
           {CategoryBadge}
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="space-y-4">
+          {/* Description */}
           <p className="text-sm text-muted-foreground">{symbol.description}</p>
+          
+          {/* The Double Standard */}
+          {symbol.doubleStandard && (
+            <div className="bg-amber-500/10 p-3 rounded-lg border border-amber-500/20">
+              <h4 className="font-semibold text-sm mb-1 text-amber-700 dark:text-amber-400 flex items-center gap-2">
+                <Scale className="w-4 h-4" />
+                The Double Standard
+              </h4>
+              <p className="text-sm text-muted-foreground">{symbol.doubleStandard}</p>
+            </div>
+          )}
+          
+          {/* Christian Perspective */}
           <div className="bg-muted/50 p-3 rounded-lg">
             <h4 className="font-semibold text-sm mb-1">Christian Perspective</h4>
             <p className="text-sm text-muted-foreground">{symbol.christianPerspective}</p>
           </div>
+          
+          {/* Biblical Parallels */}
+          {symbol.biblicalParallels && symbol.biblicalParallels.length > 0 && (
+            <div className="bg-sacred/5 p-3 rounded-lg border border-sacred/20">
+              <h4 className="font-semibold text-sm mb-2 text-sacred flex items-center gap-2">
+                <Sparkles className="w-4 h-4" />
+                Biblical Parallels
+              </h4>
+              <ul className="space-y-1">
+                {symbol.biblicalParallels.map((parallel, index) => (
+                  <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                    <span className="text-sacred mt-0.5">•</span>
+                    <span>{parallel}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          
+          {/* Scripture References */}
+          {symbol.scriptureReferences && symbol.scriptureReferences.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              <span className="text-xs font-medium text-muted-foreground">Scripture:</span>
+              {symbol.scriptureReferences.map((ref, index) => (
+                <Link key={index} to={`https://www.biblegateway.com/passage/?search=${encodeURIComponent(ref)}&version=NIV`} target="_blank" rel="noopener noreferrer">
+                  <Badge variant="outline" className="text-xs hover:bg-sacred/10 hover:border-sacred/50 cursor-pointer transition-colors">
+                    {ref}
+                    <ExternalLink className="w-3 h-3 ml-1" />
+                  </Badge>
+                </Link>
+              ))}
+            </div>
+          )}
+          
+          {/* Caution Note */}
           {symbol.cautionNote && (
             <div className="bg-badge-warning/10 p-3 rounded-lg border border-badge-warning/20">
               <p className="text-sm text-badge-warning-foreground"><AlertCircle className="w-4 h-4 inline mr-1" /> {symbol.cautionNote}</p>
             </div>
           )}
+          
           {symbol.cautionLevel === 'medium' && (
             <DiscernmentGuidanceDialog
               itemName={symbol.name}
@@ -381,7 +438,9 @@ const SymbolGuide = () => {
               }
             />
           )}
-          {symbol.scripturalContext && (
+          
+          {/* Legacy scripturalContext (for older entries) */}
+          {symbol.scripturalContext && !symbol.scriptureReferences && (
             <div className="bg-sacred/5 p-3 rounded-lg border border-sacred/20">
               <div className="flex items-start justify-between gap-2">
                 <p className="text-sm text-sacred">{symbol.scripturalContext}</p>
