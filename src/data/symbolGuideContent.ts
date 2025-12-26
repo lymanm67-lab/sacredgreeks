@@ -2055,6 +2055,230 @@ export const symbolGuideContent: SymbolEntry[] = [
     cautionLevel: "low",
     scriptureReferences: ["Psalm 119:105", "Matthew 25:1-13", "Proverbs 6:23", "Matthew 5:15"],
     doubleStandard: "Churches display lamps and candles. Universities use lamp imagery. Greek organizations doing the same are criticized—inconsistently."
+  },
+  // =====================================================
+  // CUSTOMS - Roots of Modern Traditions
+  // =====================================================
+  {
+    id: "custom-memorial-day",
+    name: "Memorial Day",
+    category: "customs",
+    organizationType: "National Holiday",
+    description: "Memorial Day descends from ancient Roman Parentalia (February 13-21), a nine-day festival honoring deceased ancestors with food offerings, flowers, and grave decorations. The Romans believed spirits of the dead required annual appeasement to prevent them from haunting the living. Similar practices existed in Greek Anthesteria and Celtic Samhain.",
+    doubleStandard: "Christians decorate graves with flowers on Memorial Day—a practice directly from Roman ancestor worship festivals—without spiritual concern. Yet Greek organizations honoring founders are labeled as practicing 'ancestor worship.'",
+    christianPerspective: "Honoring the deceased is biblical (Joseph buried Jacob with great ceremony, Genesis 50). The Church transformed pagan memorial practices into All Saints Day and All Souls Day. Memorial Day continues this tradition of honoring sacrifice and remembering the departed.",
+    biblicalParallels: [
+      "Honor your father and mother (Exodus 20:12)",
+      "Remember your leaders who spoke the word of God (Hebrews 13:7)",
+      "Precious in the sight of the Lord is the death of his saints (Psalm 116:15)",
+      "Joseph mourned his father forty days (Genesis 50:3)"
+    ],
+    scriptureReferences: ["Genesis 50:1-14", "Hebrews 13:7", "Psalm 116:15", "1 Thessalonians 4:13"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-eulogy",
+    name: "Eulogy (Funeral Oration)",
+    category: "customs",
+    organizationType: "Funeral Tradition",
+    description: "The eulogy comes from Greek 'eulogia' (praise/blessing) and Roman 'laudatio funebris.' Romans believed that properly praising the dead ensured their spirits would rest peacefully and not return as malevolent lemures (ghosts). Professional mourners were hired to wail and praise the deceased to appease the Manes (ancestor spirits).",
+    doubleStandard: "Every Christian funeral includes eulogies—a practice designed to appease Roman ancestor spirits—yet no one questions this pagan origin. Greek organizations receive criticism for far less spiritually-rooted practices.",
+    christianPerspective: "The Church redeemed the eulogy tradition, transforming it from spirit appeasement into celebration of a life lived in faith. Christians can give and receive eulogies as testimony to God's faithfulness, not as pagan ritual.",
+    biblicalParallels: [
+      "David's eulogy for Saul and Jonathan (2 Samuel 1:17-27)",
+      "Stephen's final testimony (Acts 7)",
+      "Let the memory of the righteous be blessed (Proverbs 10:7)",
+      "We do not grieve as those without hope (1 Thessalonians 4:13)"
+    ],
+    scriptureReferences: ["2 Samuel 1:17-27", "Proverbs 10:7", "1 Thessalonians 4:13", "Revelation 14:13"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-repass",
+    name: "Repass (Funeral Meal)",
+    category: "customs",
+    organizationType: "Funeral Tradition",
+    description: "The funeral repass descends from Roman silicernium (funeral feast) and Greek perideipnon. Romans believed sharing a meal near the deceased would satisfy their spirit and prevent haunting. Food was often left on graves for the dead to consume. The meal also protected the living from death contamination.",
+    doubleStandard: "Churches routinely host repass meals after funerals—a practice rooted in feeding ancestral spirits—without any spiritual concern. Yet Greek organizational meals with ceremonial elements face scrutiny.",
+    christianPerspective: "Jesus ate with his disciples after resurrection, transforming the funeral meal from spirit appeasement to celebration of eternal life. The Church converted pagan funeral feasts into agape meals and wakes that honor the deceased while affirming resurrection hope.",
+    biblicalParallels: [
+      "Jesus ate with disciples after resurrection (Luke 24:41-43)",
+      "Breaking bread together in Christian community (Acts 2:46)",
+      "The Lord prepares a table (Psalm 23:5)",
+      "Funeral meal mentioned in Jeremiah (Jeremiah 16:7)"
+    ],
+    scriptureReferences: ["Luke 24:41-43", "Acts 2:46", "Jeremiah 16:7", "John 21:12-13"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-wedding-ceremony",
+    name: "Wedding Ceremony",
+    category: "customs",
+    organizationType: "Marriage Tradition",
+    description: "Modern weddings combine Roman, Greek, and medieval traditions. The Roman bride wore a flame-colored veil (flammeum) to ward off evil spirits. Greeks sacrificed to Hera before the ceremony. Medieval Christians believed demons would attack the bride on her wedding day, requiring protective rituals, attendants, and prayers.",
+    doubleStandard: "Christian weddings incorporate dozens of practices designed to ward off demons and pagan deities—all without spiritual concern. Yet Greek organizations using protective symbolism are labeled as practicing witchcraft.",
+    christianPerspective: "God instituted marriage before any culture (Genesis 2:24). The Church has always adapted cultural wedding practices, infusing them with Christian meaning. The ceremony celebrates God's design for covenant love, regardless of its cultural packaging.",
+    biblicalParallels: [
+      "Marriage instituted by God (Genesis 2:24)",
+      "Wedding at Cana blessed by Jesus (John 2:1-11)",
+      "Marriage represents Christ and the Church (Ephesians 5:31-32)",
+      "What God has joined, let no one separate (Matthew 19:6)"
+    ],
+    scriptureReferences: ["Genesis 2:24", "John 2:1-11", "Ephesians 5:31-32", "Matthew 19:6"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-wedding-ring",
+    name: "Wedding Rings",
+    category: "customs",
+    organizationType: "Marriage Tradition",
+    description: "Wedding rings originated in ancient Egypt and Rome. Romans believed the 'vena amoris' (vein of love) ran directly from the ring finger to the heart. The unbroken circle represented eternal binding—originally a property claim, then a magical ward against spirits trying to separate the couple. Medieval Christians adopted the practice, blessing rings with holy water.",
+    doubleStandard: "Christians wear wedding rings—originally Egyptian amulets and Roman property markers—on the 'magical' vein of love without spiritual qualms. Yet Greek organizations using symbolic jewelry face accusations of occult practice.",
+    christianPerspective: "The wedding ring has become a universal symbol of marital covenant. Its pagan origins have been completely transformed into a Christian symbol of faithfulness and unending love. The Church blessed and redeemed this practice centuries ago.",
+    biblicalParallels: [
+      "Rings as symbols of authority and covenant (Genesis 41:42)",
+      "The prodigal son received a ring of restoration (Luke 15:22)",
+      "Signet rings sealed important covenants (Esther 8:8)",
+      "Eternal love that never ends (1 Corinthians 13:8)"
+    ],
+    scriptureReferences: ["Genesis 41:42", "Luke 15:22", "Esther 8:8", "Song of Solomon 8:6"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-wedding-party",
+    name: "Bridesmaids & Groomsmen",
+    category: "customs",
+    organizationType: "Marriage Tradition",
+    description: "Bridesmaids and groomsmen originated as spirit decoys. Romans and medieval Europeans believed evil spirits and jealous demons would try to steal the bride or curse the marriage. Attendants dressed identically to the bride and groom to confuse these malevolent spirits about who was actually getting married.",
+    doubleStandard: "Every Christian wedding includes bridesmaids dressed alike—originally to confuse demons trying to kidnap the bride—yet this overtly superstitious practice raises no concern. Greek organizations receive harsher scrutiny for less explicitly spirit-related traditions.",
+    christianPerspective: "The wedding party has been completely reinterpreted as a celebration of friendship and support. No modern Christian believes they are confusing demons. This demonstrates how cultural practices can be fully transformed in meaning while retaining their form.",
+    biblicalParallels: [
+      "The ten virgins attending the wedding (Matthew 25:1-13)",
+      "Friends who support and rejoice together (Ecclesiastes 4:9-10)",
+      "Bear one another's burdens (Galatians 6:2)",
+      "Rejoice with those who rejoice (Romans 12:15)"
+    ],
+    scriptureReferences: ["Matthew 25:1-13", "Ecclesiastes 4:9-10", "Galatians 6:2", "Romans 12:15"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-wedding-veil",
+    name: "Bridal Veil",
+    category: "customs",
+    organizationType: "Marriage Tradition",
+    description: "The bridal veil comes from Roman flammeum (flame-colored veil) worn to hide the bride from evil spirits and jealous gods. Greeks veiled brides to prevent the 'evil eye' from cursing them. Medieval Europeans believed demons could possess an unveiled bride, so the face remained covered until safely married.",
+    doubleStandard: "Christian brides wear veils—explicitly designed to hide from demons—as a cherished tradition. Yet Greek organizational regalia with no spirit-related origin is condemned as occultic.",
+    christianPerspective: "Paul mentions head coverings in worship (1 Corinthians 11), and the veil has been reinterpreted as modesty, mystery, and reverence. Its protective-magic origins are forgotten, replaced with Christian symbolism of purity and the unveiling of intimacy in marriage.",
+    biblicalParallels: [
+      "Rebekah veiled herself before meeting Isaac (Genesis 24:65)",
+      "Moses veiled his face after encountering God (Exodus 34:33-35)",
+      "The veil between humanity and God (Hebrews 10:20)",
+      "Head coverings in worship (1 Corinthians 11:5-6)"
+    ],
+    scriptureReferences: ["Genesis 24:65", "Exodus 34:33-35", "1 Corinthians 11:5-6", "2 Corinthians 3:16"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-birthday-cake",
+    name: "Birthday Cake & Candles",
+    category: "customs",
+    organizationType: "Birthday Tradition",
+    description: "Birthday cakes with candles trace to Greek worship of Artemis, goddess of the moon. Round cakes with lit candles represented the glowing moon, offered at her temple. Blowing out candles sent prayers to the gods on rising smoke. Germans added the modern tradition, believing candles protected the birthday child from evil spirits for the coming year.",
+    doubleStandard: "Christians celebrate birthdays with moon-shaped cakes, candles for Artemis, and wish-magic without any spiritual concern. Yet Greek organizations using symbolic candles in ceremonies are accused of pagan worship.",
+    christianPerspective: "Birthday celebrations acknowledge the gift of life from God. The Church has never forbidden birthday observances, and blowing out candles has no spiritual power—it is simply a fun tradition. Christians can celebrate Gods gift of another year of life.",
+    biblicalParallels: [
+      "Pharaoh celebrated his birthday (Genesis 40:20)",
+      "Jobs children held birthday feasts (Job 1:4)",
+      "Every good gift comes from above (James 1:17)",
+      "Celebrate and be glad, for this day the Lord has made (Psalm 118:24)"
+    ],
+    scriptureReferences: ["Genesis 40:20", "Job 1:4", "James 1:17", "Psalm 139:13-16"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-christmas",
+    name: "Christmas Traditions",
+    category: "customs",
+    organizationType: "Religious Holiday",
+    description: "Christmas combines Roman Saturnalia (December 17-23) and Sol Invictus (December 25, 'Birthday of the Unconquered Sun') with Norse Yule traditions. Gift-giving, feasting, decorating trees, and holly/mistletoe all derive from pagan winter solstice festivals. The date December 25 was chosen to Christianize existing Roman celebrations.",
+    doubleStandard: "Christians enthusiastically celebrate Christmas—a holiday built on Saturnalia, sun worship, and Norse paganism—while condemning Greek organizations for far more tenuous pagan connections.",
+    christianPerspective: "The Church deliberately placed Christmas on December 25 to transform pagan celebrations into Christ-centered worship. This is the textbook example of Christian redemption of culture. The practice demonstrates that origins do not determine current meaning.",
+    biblicalParallels: [
+      "The true Light that gives light to everyone (John 1:9)",
+      "Christ the Sun of Righteousness (Malachi 4:2)",
+      "For unto us a child is born (Isaiah 9:6)",
+      "The gift of God is eternal life (Romans 6:23)"
+    ],
+    scriptureReferences: ["John 1:9", "Malachi 4:2", "Isaiah 9:6", "Luke 2:10-11"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-new-years",
+    name: "New Years Celebrations",
+    category: "customs",
+    organizationType: "Cultural Holiday",
+    description: "New Years celebrations descend from Babylonian Akitu festival and Roman Janus worship. January is named for Janus, the two-faced god of beginnings and transitions. Romans exchanged gifts, made resolutions to Janus, and held wild parties. Noisemaking was believed to scare away evil spirits from the new year.",
+    doubleStandard: "Christians ring in the New Year on a date named for a Roman god, making resolutions (vows to Janus), and noisemaking to scare demons—all without spiritual concern. Greek organizations face stricter scrutiny for less pagan-connected practices.",
+    christianPerspective: "The Church created Watchnight services to redeem New Years Eve, turning it into a time of prayer, gratitude, and covenant renewal with God. Christians can mark new beginnings while acknowledging that all time belongs to the Lord.",
+    biblicalParallels: [
+      "Behold, I am doing a new thing (Isaiah 43:19)",
+      "His mercies are new every morning (Lamentations 3:22-23)",
+      "Forgetting what is behind, pressing forward (Philippians 3:13-14)",
+      "Now is the acceptable time (2 Corinthians 6:2)"
+    ],
+    scriptureReferences: ["Isaiah 43:19", "Lamentations 3:22-23", "Philippians 3:13-14", "Revelation 21:5"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-valentines-day",
+    name: "Valentines Day",
+    category: "customs",
+    organizationType: "Cultural Holiday",
+    description: "Valentines Day derives from Roman Lupercalia (February 13-15), a fertility festival where priests sacrificed goats and dogs, then ran through streets whipping women with bloody hides to ensure fertility. Young men drew names of young women from a jar for temporary sexual pairings. The Church replaced this with St. Valentines feast day.",
+    doubleStandard: "Christians celebrate Valentines Day—a Christianized version of a Roman fertility cult involving ritual whipping and sexual lottery—without moral concern. Yet Greek organizations with no fertility cult connections face spiritual condemnation.",
+    christianPerspective: "The Church successfully transformed Lupercalia from a pagan fertility rite into a celebration of Christian love and martyrdom. St. Valentine reportedly performed secret Christian marriages. This transformation demonstrates the power of Christian redemption over pagan practices.",
+    biblicalParallels: [
+      "Love one another as I have loved you (John 15:12)",
+      "Greater love has no one than this (John 15:13)",
+      "Love is patient, love is kind (1 Corinthians 13:4)",
+      "Above all, put on love (Colossians 3:14)"
+    ],
+    scriptureReferences: ["John 15:12-13", "1 Corinthians 13:4-7", "Colossians 3:14", "1 John 4:7-8"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-throwing-rice",
+    name: "Throwing Rice at Weddings",
+    category: "customs",
+    organizationType: "Marriage Tradition",
+    description: "Throwing rice (or grain) at newlyweds comes from Roman fertility rites invoking Ceres, goddess of agriculture. Romans threw wheat to ensure the bride would bear many children. The practice was also believed to distract evil spirits who would stop to count the grains instead of attacking the couple.",
+    doubleStandard: "Christians throw rice at weddings—invoking Ceres for fertility and distracting demons—as a joyful tradition. Greek organizations using any symbolic throwing or scattering ritual face accusations of pagan practice.",
+    christianPerspective: "Throwing rice has been completely separated from its pagan origins. Modern participants see it as celebration and blessing, not fertility magic. This illustrates how practices can be entirely transformed in meaning over time.",
+    biblicalParallels: [
+      "Be fruitful and multiply (Genesis 1:28)",
+      "Children are a heritage from the Lord (Psalm 127:3)",
+      "The blessing of the Lord makes rich (Proverbs 10:22)",
+      "Scatter seeds of blessing (2 Corinthians 9:6)"
+    ],
+    scriptureReferences: ["Genesis 1:28", "Psalm 127:3", "Proverbs 10:22", "2 Corinthians 9:6"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-something-borrowed",
+    name: "Something Old, New, Borrowed, Blue",
+    category: "customs",
+    organizationType: "Marriage Tradition",
+    description: "This Victorian rhyme combines ancient protective magic: Old connects to ancestors protective spirits; New represents hope for the future; Borrowed transfers luck from a happily married woman; Blue wards off the evil eye (blue was sacred to Roman goddess Juno, protector of women). A sixpence in the shoe invoked prosperity magic.",
+    doubleStandard: "Christian brides eagerly collect these items—each one rooted in spirit invocation, luck transfer, and goddess worship—as sweet tradition. Greek organizations using symbolic objects for any reason face harsher judgment.",
+    christianPerspective: "Modern brides follow this rhyme as fun tradition, not believing in its magical origins. The practice has been completely drained of spiritual content and repurposed as sentimental preparation. This demonstrates how form can persist while meaning transforms entirely.",
+    biblicalParallels: [
+      "The old has gone, the new has come (2 Corinthians 5:17)",
+      "Give, and it will be given to you (Luke 6:38)",
+      "Blue in priestly garments represented heaven (Exodus 28:31)",
+      "The Lord gives wisdom and prosperity (Proverbs 2:6-7)"
+    ],
+    scriptureReferences: ["2 Corinthians 5:17", "Luke 6:38", "Exodus 28:31", "Proverbs 2:6-7"],
+    cautionLevel: "low"
   }
 ];
 
@@ -2475,6 +2699,7 @@ export const symbolCategories = [
   { id: "sororities", label: "Sororities" },
   { id: "symbols", label: "Symbols" },
   { id: "oaths", label: "Oaths" },
+  { id: "customs", label: "Customs" },
   { id: "deity", label: "Deities" },
   { id: "seals", label: "Seals" }
 ];
