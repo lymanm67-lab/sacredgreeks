@@ -2398,6 +2398,145 @@ export const symbolGuideContent: SymbolEntry[] = [
     ],
     scriptureReferences: ["1 Kings 7:21", "Revelation 3:12", "1 Timothy 3:15", "Psalm 48:2"],
     cautionLevel: "low"
+  },
+  // West African Heritage Traditions
+  {
+    id: "custom-libation",
+    name: "Libation Ceremonies",
+    category: "customs",
+    organizationType: "African Heritage",
+    description: "Libation—pouring liquid (water, wine, or spirits) onto the ground while calling ancestors' names—is a West African tradition honoring deceased ancestors. The Akan, Yoruba, Igbo, and other West African peoples believed ancestors remained spiritually present and required acknowledgment. This practice survived the Middle Passage and influenced African American commemorative traditions.",
+    doubleStandard: "Christians pour out wine at communion, toast at weddings, and some traditions pour out drinks for deceased loved ones informally. Yet when African American organizations incorporate libation elements, it is labeled as 'ancestor worship.'",
+    christianPerspective: "Hebrews 12 speaks of being surrounded by 'a great cloud of witnesses'—those who have gone before us in faith. Honoring and remembering ancestors is biblical; worshiping them is not. The distinction is intent: acknowledgment and gratitude versus prayer and supplication.",
+    biblicalParallels: [
+      "Great cloud of witnesses surrounds us (Hebrews 12:1)",
+      "Honor your father and mother (Exodus 20:12)",
+      "Remember your leaders who spoke Gods word (Hebrews 13:7)",
+      "The memory of the righteous is a blessing (Proverbs 10:7)"
+    ],
+    scriptureReferences: ["Hebrews 12:1", "Exodus 20:12", "Hebrews 13:7", "Proverbs 10:7"],
+    cautionLevel: "medium",
+    cautionNote: "Participation depends on specific content. Honoring ancestors' memory is appropriate; praying to them is not. Understand the specific ceremony before participating."
+  },
+  {
+    id: "custom-naming-ceremony",
+    name: "Naming Ceremonies (Outdooring)",
+    category: "customs",
+    organizationType: "African Heritage",
+    description: "West African naming ceremonies (like Ghanaian 'outdooring' or Yoruba 'isomoloruko') introduce newborns to the community, ancestors, and the divine. Babies receive names reflecting family hopes, circumstances of birth, or ancestral connections. The ceremony often occurs on the 8th day—matching the Hebrew tradition of circumcision and naming.",
+    doubleStandard: "Christian baby dedications, infant baptisms, and christenings serve identical purposes—introducing children to God and community. Yet African naming ceremonies with similar functions are sometimes viewed suspiciously by the same Christians who embrace European christening traditions.",
+    christianPerspective: "Hannah dedicated Samuel to the Lord (1 Samuel 1). Jesus was presented at the temple on the 8th day (Luke 2:21-22). Naming and dedicating children to God is deeply biblical. The African tradition mirrors biblical practice.",
+    biblicalParallels: [
+      "Jesus named and circumcised on 8th day (Luke 2:21)",
+      "Hannah dedicated Samuel to the Lord (1 Samuel 1:27-28)",
+      "Let the children come to me (Mark 10:14)",
+      "Train up a child in the way they should go (Proverbs 22:6)"
+    ],
+    scriptureReferences: ["Luke 2:21-22", "1 Samuel 1:27-28", "Mark 10:14", "Proverbs 22:6"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-ring-shout",
+    name: "Ring Shout",
+    category: "customs",
+    organizationType: "African Heritage",
+    description: "The Ring Shout is a West African-derived worship practice where participants move counterclockwise in a circle while singing, clapping, and praising. Enslaved Africans adapted this practice as Christian worship, creating one of the earliest forms of African American sacred music. The Gullah-Geechee people preserved this tradition, which influenced gospel music, spirituals, and Black church worship.",
+    doubleStandard: "The Ring Shout is the foundation of Black church praise and worship, influencing everything from choir processionals to contemporary worship dance. Yet some criticize African-derived circular movement as 'pagan' while embracing its musical and worship descendants.",
+    christianPerspective: "David danced before the Lord with all his might (2 Samuel 6:14). Psalm 149:3 commands praising God with dancing. The Ring Shout transformed African communal worship into Christian praise, demonstrating how African spirituality was baptized into Christianity by the enslaved.",
+    biblicalParallels: [
+      "David danced before the Lord (2 Samuel 6:14)",
+      "Praise His name with dancing (Psalm 149:3)",
+      "Miriam led women in dancing (Exodus 15:20)",
+      "Let everything that has breath praise the Lord (Psalm 150:6)"
+    ],
+    scriptureReferences: ["2 Samuel 6:14", "Psalm 149:3", "Exodus 15:20", "Psalm 150:6"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-blackeyed-peas",
+    name: "Black-Eyed Peas on New Years",
+    category: "customs",
+    organizationType: "African Heritage",
+    description: "Eating black-eyed peas on New Year's Day for luck and prosperity is a tradition brought from West Africa, where black-eyed peas (cowpeas) held spiritual significance. The Yoruba associated them with the orisha Ogun, representing prosperity and forward movement. Enslaved Africans continued the tradition, and it spread throughout the South. Collard greens (representing money) and cornbread (representing gold) were added.",
+    doubleStandard: "Christians across the South eat black-eyed peas on New Year's Day 'for luck' without any spiritual hesitation—despite its roots in Yoruba orisha traditions. Yet the same Christians may criticize African American organizations for incorporating any element with African spiritual origins.",
+    christianPerspective: "Food traditions marking new beginnings exist across cultures. Scripture speaks of firstfruits and harvest celebrations. The practice has been completely secularized into a family and cultural tradition celebrating hope for the new year.",
+    biblicalParallels: [
+      "Honor the Lord with firstfruits (Proverbs 3:9)",
+      "Celebrate the Festival of Harvest (Exodus 23:16)",
+      "Everything God created is good (1 Timothy 4:4)",
+      "Whether you eat or drink, do all to Gods glory (1 Corinthians 10:31)"
+    ],
+    scriptureReferences: ["Proverbs 3:9", "Exodus 23:16", "1 Timothy 4:4", "1 Corinthians 10:31"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-watch-night",
+    name: "Watch Night Service (Freedom Eve)",
+    category: "customs",
+    organizationType: "African Heritage",
+    description: "Watch Night services on December 31st have special significance in African American churches, commemorating 'Freedom Eve'—December 31, 1862, when enslaved people gathered in churches awaiting the Emancipation Proclamation to take effect at midnight on January 1, 1863. They prayed, sang, and 'watched' for freedom. The tradition blends Moravian Watch Night practices (which John Wesley brought to Methodism) with this sacred African American memory.",
+    doubleStandard: "Watch Night is embraced as sacred Black church tradition, though it combines European Moravian practices with African American historical significance. The blending of traditions is celebrated here but critiqued when done in Greek organizations.",
+    christianPerspective: "Watching and praying through the night is deeply biblical. Jesus asked disciples to watch with Him (Matthew 26:40). The enslaved who watched for freedom demonstrated profound faith—believing God would deliver them. Watch Night continues as testimony to Gods faithfulness.",
+    biblicalParallels: [
+      "Watch and pray (Matthew 26:41)",
+      "Proclaim liberty throughout the land (Leviticus 25:10)",
+      "The Lord heard our voice and saw our misery (Deuteronomy 26:7)",
+      "He has sent me to proclaim freedom (Luke 4:18)"
+    ],
+    scriptureReferences: ["Matthew 26:40-41", "Leviticus 25:10", "Deuteronomy 26:7", "Luke 4:18"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-ancestor-remembrance",
+    name: "Ancestor Remembrance & Altars",
+    category: "customs",
+    organizationType: "African Heritage",
+    description: "West African cultures maintained ancestor altars with photographs, candles, food offerings, and personal items. These practices influenced African American traditions of displaying deceased relatives' photographs prominently, keeping their belongings as sacred items, visiting graves regularly, and speaking to or about the dead as if present. The 'home-going' funeral celebration reflects African beliefs about ancestors joining the spiritual realm.",
+    doubleStandard: "Christians display photos of deceased loved ones, keep grandma's Bible, visit graves on birthdays and holidays, and speak of the dead as 'looking down from heaven.' Yet similar African practices are labeled as 'ancestor worship' when done by others.",
+    christianPerspective: "Honoring the memory of faithful predecessors is biblical (Hebrews 11 is an ancestor hall of fame). The distinction is between remembrance and worship. Keeping photos, treasuring belongings, and honoring memory differ from praying to or worshiping ancestors.",
+    biblicalParallels: [
+      "Remember your leaders who spoke Gods word (Hebrews 13:7)",
+      "By faith Abel, Enoch, Noah, Abraham... (Hebrews 11)",
+      "Honor your father and mother (Exodus 20:12)",
+      "Rise in the presence of the aged (Leviticus 19:32)"
+    ],
+    scriptureReferences: ["Hebrews 13:7", "Hebrews 11:1-40", "Exodus 20:12", "Leviticus 19:32"],
+    cautionLevel: "medium",
+    cautionNote: "Honoring ancestors' memory is appropriate and biblical. Prayer, supplication, or worship directed to ancestors crosses into territory reserved for God alone. Intent and practice matter."
+  },
+  {
+    id: "custom-call-response",
+    name: "Call and Response Worship",
+    category: "customs",
+    organizationType: "African Heritage",
+    description: "Call and response—where a leader calls out and the congregation responds—is a West African worship practice that became foundational to Black church tradition. In West African religions, this pattern connected the community to the divine and to ancestors. The enslaved transformed it into Christian worship, creating spirituals, gospel music, and the distinctive Black preaching style where congregation responds 'Amen,' 'Yes Lord,' and 'Preach!'",
+    doubleStandard: "Call and response is the heartbeat of Black church worship, universally embraced despite its roots in West African traditional religion. Yet other African-derived practices in organizational settings face scrutiny for the same origins.",
+    christianPerspective: "Antiphonal worship appears throughout Scripture. The Psalms were sung responsively. Moses and Israel sang together (Exodus 15). Call and response is not merely African—it is biblical worship that African traditions also preserved.",
+    biblicalParallels: [
+      "Moses and Israel sang (Exodus 15:1, 21)",
+      "Speak to one another with psalms (Ephesians 5:19)",
+      "I will declare your name; in the assembly I will praise you (Psalm 22:22)",
+      "The people answered together: All that the Lord has spoken we will do (Exodus 19:8)"
+    ],
+    scriptureReferences: ["Exodus 15:1-21", "Ephesians 5:19", "Psalm 22:22", "Exodus 19:8"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-jumping-broom",
+    name: "Jumping the Broom",
+    category: "customs",
+    organizationType: "African Heritage",
+    description: "Jumping the broom at weddings is an African American tradition with roots in West African cultures and adapted during slavery when legal marriage was denied. In some African cultures, the broom represented sweeping away the past and beginning new. During slavery, jumping the broom before witnesses created recognized unions. Today it honors ancestors who could not legally marry while celebrating African heritage.",
+    doubleStandard: "Christians include jumping the broom in church weddings as a beautiful honoring of heritage. The practice has African spiritual origins yet is embraced without theological concern when performed in Christian ceremonies.",
+    christianPerspective: "The broom jumping tradition has been fully redeemed as a symbol of African American resilience, ancestral honor, and new beginnings. It testifies to faith that persisted even when marriage was forbidden. Christians can embrace it as part of heritage without spiritual compromise.",
+    biblicalParallels: [
+      "Therefore a man shall leave his father and mother (Genesis 2:24)",
+      "Forget the former things; I am doing a new thing (Isaiah 43:18-19)",
+      "Remember the wonders he has done (Psalm 105:5)",
+      "He has sent me to bind up the brokenhearted (Isaiah 61:1)"
+    ],
+    scriptureReferences: ["Genesis 2:24", "Isaiah 43:18-19", "Psalm 105:5", "Isaiah 61:1"],
+    cautionLevel: "low"
   }
 ];
 
@@ -2823,6 +2962,7 @@ export const symbolCategories = [
 // Subcategories for Customs - filter by organizationType
 export const customsSubcategories = [
   { id: "all", label: "All Customs" },
+  { id: "African Heritage", label: "African Heritage" },
   { id: "Funeral Tradition", label: "Funeral & Memorial" },
   { id: "Marriage Tradition", label: "Wedding & Marriage" },
   { id: "Birthday Tradition", label: "Birthday" },
