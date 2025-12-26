@@ -2,8 +2,12 @@ export interface SymbolEntry {
   id: string;
   name: string;
   category: string;
+  organizationType?: string; // e.g., "Medical Societies", "Arts & Music Organizations"
   description: string;
+  doubleStandard?: string; // "The Double Standard" section
   christianPerspective: string;
+  biblicalParallels?: string[]; // Array of biblical parallel points
+  scriptureReferences?: string[]; // List of scripture references
   cautionLevel: "low" | "medium" | "high";
   cautionNote?: string;
   scripturalContext?: string;
@@ -314,644 +318,760 @@ export const symbolGuideContent: SymbolEntry[] = [
     christianPerspective: "Elephants represent strength, wisdom, and community loyalty. While not mentioned in Scripture, these qualities are celebrated throughout the Bible.",
     cautionLevel: "low"
   },
-  // Greek Deities
+  // =====================================================
+  // DEITIES - Comprehensive Guide with Biblical Parallels
+  // =====================================================
   {
-    id: "zeus-deity",
-    name: "Zeus (Jupiter)",
+    id: "ahura-mazda",
+    name: "Ahura Mazda (Persian Supreme God)",
     category: "deity",
-    description: "King of the Greek gods, god of sky, thunder, and justice. Roman equivalent: Jupiter.",
-    christianPerspective: "Zeus appears on government buildings, university seals, and civic imagery worldwide. In organizational contexts, references to Zeus typically represent power, justice, or authority—not worship. The Apostle Paul engaged with Greek religious culture at the Areopagus without condemning all Greek imagery.",
-    cautionLevel: "medium",
-    cautionNote: "Context matters. Imagery representing authority differs from invocation for spiritual power.",
-    scripturalContext: "Acts 17:22-28 - Paul at the Areopagus, engaging Greek religious thought."
-  },
-  {
-    id: "athena-deity",
-    name: "Athena (Minerva)",
-    category: "deity",
-    description: "Goddess of wisdom, craft, and strategic warfare. Roman equivalent: Minerva. Appears on countless university seals.",
-    christianPerspective: "Athena represents wisdom and learning in academic contexts. The seal of California, many Ivy League universities, and countless academic institutions feature Athena without religious intent. She symbolizes the pursuit of knowledge.",
-    cautionLevel: "low",
-    scripturalContext: "Proverbs 4:7 - 'Wisdom is the principal thing; therefore get wisdom.'"
-  },
-  {
-    id: "apollo-deity",
-    name: "Apollo",
-    category: "deity",
-    description: "God of music, poetry, art, sun, light, and knowledge. Patron of the arts and healing.",
-    christianPerspective: "Apollo imagery appears on government buildings, arts institutions, and medical symbols worldwide. In organizational contexts, Apollo represents artistic excellence, enlightenment, and healing—values celebrated in Scripture.",
-    cautionLevel: "low",
-    scripturalContext: "Psalm 33:3 - 'Sing to him a new song; play skillfully, and shout for joy.'"
-  },
-  {
-    id: "hermes-deity",
-    name: "Hermes (Mercury)",
-    category: "deity",
-    description: "Messenger god, god of commerce, eloquence, and travelers. Roman equivalent: Mercury.",
-    christianPerspective: "Hermes/Mercury appears in business logos, communication symbols, and the caduceus used in medicine. These represent commerce and communication, not worship. Paul was mistakenly called Hermes because of his eloquent speaking (Acts 14:12).",
-    cautionLevel: "low",
-    scripturalContext: "Acts 14:12 - Reference to Hermes in the context of Paul's ministry."
-  },
-  {
-    id: "ares-deity",
-    name: "Ares (Mars)",
-    category: "deity",
-    description: "God of war, courage, and civil order. Roman equivalent: Mars.",
-    christianPerspective: "Mars gives us 'March' and military terminology. Military academies and organizations reference Mars for valor and courage. The concept of spiritual warfare in Scripture shows combat imagery can serve righteous purposes.",
-    cautionLevel: "medium",
-    cautionNote: "War imagery should emphasize just causes and protection, not violence for its own sake.",
-    scripturalContext: "Ephesians 6:10-18 - The armor of God and spiritual warfare."
-  },
-  {
-    id: "aphrodite-deity",
-    name: "Aphrodite (Venus)",
-    category: "deity",
-    description: "Goddess of love, beauty, and desire. Roman equivalent: Venus.",
-    christianPerspective: "Venus gives us 'venerate' and Friday (Freitag). Beauty and love are celebrated in Scripture—the Song of Solomon is essentially a love poem. Artistic representations of beauty have Christian heritage in Renaissance art.",
-    cautionLevel: "low",
-    scripturalContext: "Song of Solomon 4:7 - 'You are altogether beautiful, my darling.'"
-  },
-  {
-    id: "poseidon-deity",
-    name: "Poseidon (Neptune)",
-    category: "deity",
-    description: "God of the sea, earthquakes, and horses. Roman equivalent: Neptune.",
-    christianPerspective: "Neptune imagery appears in coastal cities, naval traditions, and maritime organizations. God Himself 'divided the sea' and controls the waters. Imagery of sea mastery reflects creation's grandeur.",
-    cautionLevel: "low",
-    scripturalContext: "Psalm 89:9 - 'You rule over the surging sea.'"
-  },
-  {
-    id: "hades-deity",
-    name: "Hades (Pluto)",
-    category: "deity",
-    description: "God of the underworld and the dead. Roman equivalent: Pluto.",
-    christianPerspective: "The Greek word 'Hades' is used in the New Testament itself to describe the realm of the dead. Jesus said the gates of Hades would not prevail against His church. The term has biblical usage.",
-    cautionLevel: "medium",
-    cautionNote: "While the term is biblical, imagery celebrating death or darkness should be evaluated carefully.",
-    scripturalContext: "Matthew 16:18 - 'The gates of Hades will not overcome it.'"
-  },
-  {
-    id: "demeter-deity",
-    name: "Demeter (Ceres)",
-    category: "deity",
-    description: "Goddess of harvest, agriculture, and fertility. Roman equivalent: Ceres (hence 'cereal').",
-    christianPerspective: "Harvest imagery is deeply biblical. God provides the harvest, and thanksgiving for abundance is scriptural. Agricultural symbolism represents God's provision, not pagan worship.",
-    cautionLevel: "low",
-    scripturalContext: "Psalm 65:9-13 - God crowning the year with bounty."
-  },
-  {
-    id: "hera-deity",
-    name: "Hera (Juno)",
-    category: "deity",
-    description: "Queen of the gods, goddess of marriage and family. Roman equivalent: Juno (hence 'June' for weddings).",
-    christianPerspective: "June remains the most popular month for Christian weddings. Marriage and family are celebrated throughout Scripture. The imagery represents commitment and family values.",
-    cautionLevel: "low",
-    scripturalContext: "Ephesians 5:31-32 - Marriage as a sacred covenant."
-  },
-  {
-    id: "dionysus-deity",
-    name: "Dionysus (Bacchus)",
-    category: "deity",
-    description: "God of wine, festivity, and ecstasy. Roman equivalent: Bacchus.",
-    christianPerspective: "While Dionysus represented excess, Jesus Himself turned water into wine at a wedding feast. Celebration in moderation is biblical. The imagery of vine and wine appears throughout Scripture.",
-    cautionLevel: "medium",
-    cautionNote: "Celebrate joyfully but avoid imagery promoting excess or drunkenness.",
-    scripturalContext: "John 2:1-11 - Jesus at the wedding in Cana; John 15:5 - 'I am the vine.'"
-  },
-  {
-    id: "hephaestus-deity",
-    name: "Hephaestus (Vulcan)",
-    category: "deity",
-    description: "God of fire, metalworking, and craftsmanship. Roman equivalent: Vulcan.",
-    christianPerspective: "Craftsmanship is celebrated in Scripture—Bezalel was filled with the Spirit for skilled work on the tabernacle. Blacksmithing and metalwork imagery represents creative skill and labor.",
-    cautionLevel: "low",
-    scripturalContext: "Exodus 31:1-5 - Bezalel filled with skill, ability, and knowledge."
-  },
-  {
-    id: "artemis-deity",
-    name: "Artemis (Diana)",
-    category: "deity",
-    description: "Goddess of the hunt, wilderness, and the moon. Roman equivalent: Diana.",
-    christianPerspective: "Paul confronted the worship of Artemis at Ephesus (Acts 19). However, nature imagery and wilderness appreciation are biblical. The distinction is worship vs. aesthetic appreciation.",
-    cautionLevel: "medium",
-    cautionNote: "Paul's confrontation was about actual worship, not all nature imagery.",
-    scripturalContext: "Acts 19:24-35 - Paul at Ephesus regarding Artemis worship."
-  },
-  // Egyptian Deities
-  {
-    id: "isis-deity",
-    name: "Isis",
-    category: "deity",
-    description: "Egyptian goddess of magic, motherhood, and wisdom. One of the most widely worshiped deities in ancient Mediterranean world.",
-    christianPerspective: "Isis imagery appears in organizations like the Daughters of Isis (Shriner auxiliary). In organizational contexts, she represents wisdom and feminine strength. Early Christians in Egypt adapted some Isis imagery to honor Mary.",
-    cautionLevel: "medium",
-    cautionNote: "Context matters. Organizational usage differs from worship.",
-    scripturalContext: "Proverbs 31:25-26 - The virtuous woman described with strength and wisdom."
-  },
-  {
-    id: "osiris-deity",
-    name: "Osiris",
-    category: "deity",
-    description: "Egyptian god of the afterlife, death, resurrection, and agriculture. Often depicted with green skin.",
-    christianPerspective: "The Osiris myth of death and resurrection influenced ancient world concepts that Paul engaged. The Christian doctrine of resurrection fulfilled what pagans glimpsed dimly.",
-    cautionLevel: "medium",
-    cautionNote: "The resurrection theme can open discussions about Christ's true resurrection.",
-    scripturalContext: "1 Corinthians 15:20-22 - Christ's resurrection as firstfruits."
-  },
-  {
-    id: "horus-deity",
-    name: "Horus",
-    category: "deity",
-    description: "Egyptian sky god, often depicted as a falcon. The Eye of Horus is a common symbol of protection.",
-    christianPerspective: "The Eye of Horus appears in some fraternal imagery. Ancient symbols of protection and watchfulness echo biblical themes of God's watchful care over His people.",
-    cautionLevel: "medium",
-    cautionNote: "Protection symbolism can point to God as true protector.",
-    scripturalContext: "Psalm 121:4 - 'He who watches over Israel will neither slumber nor sleep.'"
-  },
-  {
-    id: "ra-deity",
-    name: "Ra (Re)",
-    category: "deity",
-    description: "Egyptian sun god, king of the gods. Often depicted with a sun disk.",
-    christianPerspective: "Sun imagery appears throughout Scripture positively. Jesus is called the 'Sun of Righteousness.' Light and sun symbolism can point to Christ, the true light of the world.",
-    cautionLevel: "low",
-    scripturalContext: "Malachi 4:2 - 'The Sun of Righteousness will rise with healing in his wings.'"
+    organizationType: "Religious/Historical",
+    description: "Ahura Mazda—\"Lord of Wisdom\"—was Persia's supreme deity representing light, truth, and righteousness. His winged symbol (Faravahar) appears on Iranian architecture and influenced angelology. Zoroastrian concepts of heaven, hell, angels, and final judgment entered Jewish thought during the Persian period and influenced Christian theology.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "God used the Persian period to develop Jewish understanding of angels, resurrection, and apocalyptic hope. Cyrus the Great, who worshipped Ahura Mazda, is called God's \"anointed\" (Isaiah 45:1). God works through various cultures to accomplish His purposes. Truth about light overcoming darkness transcends any single culture.",
+    biblicalParallels: [
+      "Cyrus called God's anointed/messiah (Isaiah 45:1)",
+      "God is light, in Him is no darkness (1 John 1:5)",
+      "The Lord is my light and salvation (Psalm 27:1)",
+      "Light shines in darkness (John 1:5)"
+    ],
+    scriptureReferences: ["Isaiah 45:1", "1 John 1:5", "Psalm 27:1", "John 1:5"],
+    cautionLevel: "low"
   },
   {
     id: "anubis-deity",
-    name: "Anubis",
+    name: "Anubis (Egyptian God)",
     category: "deity",
-    description: "Egyptian god of mummification and the afterlife, depicted with a jackal head.",
-    christianPerspective: "Anubis guided souls in Egyptian belief. Christians have the Holy Spirit as guide. Death-related imagery can be redeemed to point to Christian hope of resurrection.",
-    cautionLevel: "medium",
-    cautionNote: "Death imagery should point to resurrection hope, not darkness.",
-    scripturalContext: "1 Thessalonians 4:13-14 - Hope in death through Christ."
+    organizationType: "Funeral/Memorial",
+    description: "Anubis—jackal-headed guardian of the dead—appears in funeral home logos, cemetery art, and mortuary science programs. His role guiding souls to judgment parallels concepts Christians hold. Funeral industry professionals work within imagery descended from Anubis without religious objection from Christians.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Christians believe in life after death and the soul's journey to judgment. Angels escort believers to Abraham's bosom (Luke 16:22). The concept of a guide through death to new life resonates with Christian hope. Funeral practices honoring the deceased reflect belief in resurrection and eternal life.",
+    biblicalParallels: [
+      "Angels carried Lazarus to Abraham's side (Luke 16:22)",
+      "To be absent from the body is to be present with the Lord (2 Corinthians 5:8)",
+      "Death is swallowed up in victory (1 Corinthians 15:54)",
+      "Precious in the sight of the Lord is the death of His saints (Psalm 116:15)"
+    ],
+    scriptureReferences: ["Luke 16:22", "2 Corinthians 5:8", "1 Corinthians 15:54", "Psalm 116:15"],
+    cautionLevel: "low"
   },
   {
-    id: "thoth-deity",
-    name: "Thoth",
+    id: "apollo-deity",
+    name: "Apollo (God of Light, Music, Arts)",
     category: "deity",
-    description: "Egyptian god of wisdom, writing, and knowledge. Depicted with an ibis head.",
-    christianPerspective: "Thoth as patron of writing and wisdom represents intellectual pursuit. God Himself gave humanity language and the capacity to write Scripture. Wisdom pursuit is biblical.",
-    cautionLevel: "low",
-    scripturalContext: "Proverbs 2:6 - 'The LORD gives wisdom; from his mouth come knowledge and understanding.'"
-  },
-  {
-    id: "maat-deity",
-    name: "Maat",
-    category: "deity",
-    description: "Egyptian goddess of truth, justice, and cosmic order. Often depicted with an ostrich feather.",
-    christianPerspective: "Maat represented truth and justice—values central to Scripture. God is a God of justice and truth. The concept of moral order reflects God's design.",
-    cautionLevel: "low",
-    scripturalContext: "Micah 6:8 - 'Act justly and to love mercy and to walk humbly with your God.'"
-  },
-  {
-    id: "sekhmet-deity",
-    name: "Sekhmet",
-    category: "deity",
-    description: "Egyptian warrior goddess with a lioness head. Associated with healing and protection.",
-    christianPerspective: "Lion imagery is biblical—Jesus is the Lion of Judah. Warrior and protector themes echo God as our refuge and fortress. Strength imagery can point to divine protection.",
-    cautionLevel: "low",
-    scripturalContext: "Psalm 91:1-2 - 'Whoever dwells in the shelter of the Most High.'"
-  },
-  {
-    id: "bastet-deity",
-    name: "Bastet",
-    category: "deity",
-    description: "Egyptian goddess depicted as a cat, associated with home, fertility, and protection.",
-    christianPerspective: "Bastet represented domestic protection and care. God's care for His people, especially families and homes, is a major biblical theme.",
-    cautionLevel: "low",
-    scripturalContext: "Psalm 127:1 - 'Unless the LORD watches over the city, the guards stand watch in vain.'"
-  },
-  // Additional Greek Deities
-  {
-    id: "persephone-deity",
-    name: "Persephone (Proserpina)",
-    category: "deity",
-    description: "Greek goddess of spring and queen of the underworld. Her myth explains the seasons. Roman equivalent: Proserpina.",
-    christianPerspective: "The Persephone myth of descent and return echoes themes of death and resurrection. Spring as renewal is a Christian theme—Easter celebrates resurrection in spring. The imagery of life conquering death is biblical.",
-    cautionLevel: "low",
-    scripturalContext: "Romans 6:9 - 'Christ, being raised from the dead, will never die again; death no longer has dominion over him.'"
-  },
-  {
-    id: "pan-deity",
-    name: "Pan (Faunus)",
-    category: "deity",
-    description: "Greek god of nature, shepherds, and rustic music. Depicted with goat legs and horns. Roman equivalent: Faunus.",
-    christianPerspective: "While Pan's imagery has been misused, the pastoral shepherd theme is deeply biblical. Jesus is the Good Shepherd. Pan represents nature and wilderness—God's creation that declares His glory.",
-    cautionLevel: "medium",
-    cautionNote: "Distinguish pastoral imagery from darker misappropriations. Shepherding is deeply biblical.",
-    scripturalContext: "John 10:11 - 'I am the good shepherd. The good shepherd lays down his life for the sheep.'"
-  },
-  {
-    id: "hecate-deity",
-    name: "Hecate (Trivia)",
-    category: "deity",
-    description: "Greek goddess of crossroads, magic, and the moon. Often depicted with three faces. Roman equivalent: Trivia.",
-    christianPerspective: "Hecate represents choices and transitions. Christians face crossroads decisions guided by Scripture and the Holy Spirit. The imagery of choosing the right path is biblical.",
-    cautionLevel: "medium",
-    cautionNote: "Focus on the decision-making symbolism rather than magical associations.",
-    scripturalContext: "Proverbs 3:5-6 - 'Trust in the LORD with all your heart... and he will make your paths straight.'"
-  },
-  {
-    id: "helios-deity",
-    name: "Helios (Sol)",
-    category: "deity",
-    description: "Greek titan god of the sun who drove his chariot across the sky. Roman equivalent: Sol.",
-    christianPerspective: "Sun imagery is extensively biblical. Jesus is called the 'Sun of Righteousness.' The concept of light overcoming darkness is central to Christian faith.",
-    cautionLevel: "low",
-    scripturalContext: "Malachi 4:2 - 'The sun of righteousness will rise with healing in its rays.'"
-  },
-  {
-    id: "eros-deity",
-    name: "Eros (Cupid)",
-    category: "deity",
-    description: "Greek god of love and desire. Son of Aphrodite. Roman equivalent: Cupid, familiar in Valentine's imagery.",
-    christianPerspective: "Love is central to Christian faith—God is love. Eros represents romantic love, which is celebrated in Song of Solomon. Cupid imagery appears in countless churches and Christian weddings.",
-    cautionLevel: "low",
-    scripturalContext: "1 John 4:8 - 'Whoever does not love does not know God, because God is love.'"
-  },
-  {
-    id: "nike-deity",
-    name: "Nike",
-    category: "deity",
-    description: "Greek goddess of victory, often depicted with wings. The famous Nike swoosh represents her wing.",
-    christianPerspective: "Victory through Christ is a major New Testament theme. 'Thanks be to God who gives us the victory through our Lord Jesus Christ.' Christians wear Nike products without spiritual concern.",
-    cautionLevel: "low",
-    scripturalContext: "1 Corinthians 15:57 - 'Thanks be to God! He gives us the victory through our Lord Jesus Christ.'"
-  },
-  {
-    id: "tyche-deity",
-    name: "Tyche",
-    category: "deity",
-    description: "Greek goddess of fortune, chance, and prosperity of a city. Often depicted with a crown of city walls.",
-    christianPerspective: "While we trust in God's providence rather than chance, the concept of city blessing and prosperity is biblical. Jeremiah urged prayers for the prosperity of the city.",
-    cautionLevel: "low",
-    scripturalContext: "Jeremiah 29:7 - 'Seek the peace and prosperity of the city to which I have carried you.'"
-  },
-  {
-    id: "nemesis-deity",
-    name: "Nemesis",
-    category: "deity",
-    description: "Greek goddess of divine retribution against those who succumb to hubris. Represents balance and justice.",
-    christianPerspective: "Divine justice is thoroughly biblical. God opposes the proud and gives grace to the humble. The concept of consequences for arrogance appears throughout Scripture.",
-    cautionLevel: "low",
-    scripturalContext: "Proverbs 16:18 - 'Pride goes before destruction, a haughty spirit before a fall.'"
+    organizationType: "Arts & Music Organizations",
+    description: "Apollo represents light, truth, music, poetry, and healing. His imagery appears at the Kennedy Center, on music conservatory logos, and arts institutions. Christians who enjoy classical music, attend symphony orchestras, or study at arts schools regularly encounter Apollo's legacy without objection.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "God is described as Light (1 John 1:5) and the source of all creativity and beauty. Music and arts are forms of worship—David was a musician, and heaven is filled with song. Apollo's association with light and truth echoes biblical themes of Christ as the Light of the World and the Truth.",
+    biblicalParallels: [
+      "God is Light (1 John 1:5)",
+      "Jesus is the Light of the World (John 8:12)",
+      "Make music to the Lord (Ephesians 5:19)",
+      "Every good gift comes from the Father of Lights (James 1:17)"
+    ],
+    scriptureReferences: ["John 8:12", "1 John 1:5", "Ephesians 5:19", "James 1:17"],
+    cautionLevel: "low"
   },
   {
     id: "asclepius-deity",
-    name: "Asclepius",
+    name: "Asclepius (Rod of Asclepius)",
     category: "deity",
-    description: "Greek god of medicine and healing. His rod with a serpent is the symbol of medicine worldwide.",
-    christianPerspective: "The Rod of Asclepius appears on ambulances, hospitals, and medical schools globally. Moses lifted a bronze serpent for healing (Numbers 21). Healing is a biblical ministry.",
-    cautionLevel: "low",
-    scripturalContext: "Numbers 21:8-9 - The bronze serpent lifted up for healing, prefiguring Christ (John 3:14)."
+    organizationType: "Medical Societies",
+    description: "The Rod of Asclepius—a serpent-wrapped staff—is the universal symbol of medicine. Used by the American Medical Association, World Health Organization, and medical schools worldwide. Christians wear this on their white coats and hospital badges without objection, yet similar mythological imagery in Greek organizations is condemned.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "The serpent in medicine represents healing and renewal (shedding skin symbolizes rebirth). Moses lifted a bronze serpent for healing (Numbers 21:8-9), which Jesus referenced as a symbol of His own salvific work (John 3:14-15). Medical professionals bearing this symbol participate in God's healing ministry.",
+    biblicalParallels: [
+      "Bronze serpent brought healing to Israel (Numbers 21:8-9)",
+      "Jesus compared Himself to the lifted serpent (John 3:14-15)",
+      "Gifts of healing given by the Spirit (1 Corinthians 12:9)",
+      "Jesus healed all who came to Him (Matthew 4:23-24)"
+    ],
+    scriptureReferences: ["Numbers 21:8-9", "John 3:14-15", "1 Corinthians 12:9", "James 5:14-16"],
+    cautionLevel: "low"
   },
   {
-    id: "hypnos-deity",
-    name: "Hypnos (Somnus)",
+    id: "athena-deity",
+    name: "Athena/Minerva (Goddess of Wisdom)",
     category: "deity",
-    description: "Greek god of sleep. Twin brother of Thanatos (death). Roman equivalent: Somnus.",
-    christianPerspective: "Sleep is God's gift to His beloved (Psalm 127:2). Rest is a biblical principle established at creation. The concept of peaceful rest under God's protection is thoroughly scriptural.",
-    cautionLevel: "low",
-    scripturalContext: "Psalm 4:8 - 'In peace I will lie down and sleep, for you alone, LORD, make me dwell in safety.'"
+    organizationType: "Multiple Organizations",
+    description: "Athena/Minerva represents wisdom, courage, and strategic thinking. She appears on countless university seals, state seals (California, Virginia), military insignia, and corporate logos. Christians proudly attend schools and serve states displaying Minerva, yet condemn her presence in Greek organizations.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Wisdom is extolled throughout Scripture as a divine gift to be pursued. James tells us to ask God for wisdom (James 1:5). Athena's association with strategic thinking parallels biblical wisdom that guides our decisions. The pursuit of wisdom honors God who is the source of all wisdom.",
+    biblicalParallels: [
+      "Wisdom is more precious than rubies (Proverbs 8:11)",
+      "Ask God for wisdom and He will give it (James 1:5)",
+      "Christ is the wisdom of God (1 Corinthians 1:24)",
+      "Wisdom from above is pure and peaceable (James 3:17)"
+    ],
+    scriptureReferences: ["Proverbs 4:7", "James 1:5", "1 Corinthians 1:24", "Proverbs 8:11"],
+    cautionLevel: "low"
   },
   {
-    id: "thanatos-deity",
-    name: "Thanatos (Mors)",
+    id: "el-deity",
+    name: "El (Canaanite Supreme God)",
     category: "deity",
-    description: "Greek personification of death. Roman equivalent: Mors.",
-    christianPerspective: "Death is an enemy that Christ has conquered. Paul asks, 'O death, where is your sting?' Understanding mortality leads to wisdom and points to the need for resurrection hope.",
-    cautionLevel: "medium",
-    cautionNote: "Death imagery should point to Christ's victory, not glorify death itself.",
-    scripturalContext: "1 Corinthians 15:55 - 'Where, O death, is your victory? Where, O death, is your sting?'"
+    organizationType: "Biblical/Religious",
+    description: "El was the supreme deity of Canaanite religion, meaning \"God\" or \"Mighty One.\" The Hebrew word for God—Elohim, El Shaddai, El Elyon—derives directly from this Canaanite term. Christians use \"El\" names for God constantly: Emmanuel, Israel, Daniel, Michael, Gabriel. The very name we use for God has Canaanite linguistic roots.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "God revealed Himself using cultural language people understood. The Hebrew patriarchs used \"El\" terminology to describe the One True God. This demonstrates that God redeems language and symbols rather than requiring entirely new vocabulary. Names like \"Israel\" (wrestles with El/God) show God working within cultural contexts.",
+    biblicalParallels: [
+      "God revealed as El Shaddai to Abraham (Genesis 17:1)",
+      "El Elyon - God Most High (Genesis 14:18-20)",
+      "Emmanuel - God with us (Isaiah 7:14, Matthew 1:23)",
+      "Israel means \"struggles with God/El\" (Genesis 32:28)"
+    ],
+    scriptureReferences: ["Genesis 17:1", "Genesis 14:18-20", "Isaiah 7:14", "Psalm 91:1"],
+    cautionLevel: "low"
   },
   {
-    id: "prometheus-deity",
-    name: "Prometheus",
+    id: "hermes-deity",
+    name: "Hermes/Mercury (Messenger God)",
     category: "deity",
-    description: "Greek titan who brought fire to humanity and was punished by Zeus. Symbol of human progress and sacrifice.",
-    christianPerspective: "Prometheus's sacrifice for humanity echoes, however imperfectly, Christ's sacrifice. The theme of suffering for others' benefit is deeply Christian. Fire represents enlightenment and the Spirit.",
-    cautionLevel: "low",
-    scripturalContext: "Acts 2:3 - Tongues of fire at Pentecost; Matthew 5:14 - 'You are the light of the world.'"
+    organizationType: "Business & Commerce",
+    description: "Hermes/Mercury—the winged messenger—appears on the FTD florist logo, medical caduceus (incorrectly), postal services, and countless business logos. His winged sandals and staff are ubiquitous in commerce. Christians engage in business under these symbols without hesitation.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Messengers carry vital communications—angels are God's messengers (the word \"angel\" means messenger). Commerce and trade are biblical (Proverbs 31 woman was a merchant). The speed and reliability symbolized by Hermes parallel the swift delivery of the Gospel message to all nations.",
+    biblicalParallels: [
+      "Angels are ministering spirits/messengers (Hebrews 1:14)",
+      "Beautiful feet of those who bring good news (Romans 10:15)",
+      "The Proverbs 31 woman engaged in trade (Proverbs 31:18)",
+      "Go into all the world with the message (Mark 16:15)"
+    ],
+    scriptureReferences: ["Hebrews 1:14", "Romans 10:15", "Proverbs 31:18", "Mark 16:15"],
+    cautionLevel: "low"
   },
   {
-    id: "the-muses",
-    name: "The Nine Muses",
+    id: "horus-eye-deity",
+    name: "Horus/Eye of Horus",
     category: "deity",
-    description: "Greek goddesses of arts and sciences—Calliope, Clio, Euterpe, Thalia, Melpomene, Terpsichore, Erato, Polyhymnia, Urania.",
-    christianPerspective: "Creativity and the arts are gifts from God. 'Music' comes from the Muses. Christians throughout history have excelled in arts for God's glory. The creative impulse reflects the Creator.",
-    cautionLevel: "low",
-    scripturalContext: "Exodus 35:31-35 - God filling craftsmen with skill, ability, and knowledge in all kinds of crafts."
+    organizationType: "Multiple Organizations",
+    description: "The Eye of Horus appears on the U.S. one-dollar bill (Eye of Providence), pharmaceutical prescriptions (Rx symbol), and corporate logos. Christians use currency with this symbol daily and take prescriptions marked \"Rx\" (derived from the Eye of Horus) without moral objection.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "The \"All-Seeing Eye\" on currency was adopted to represent God's providence watching over America. Christians redeemed this ancient symbol to point to the One True God who sees all. Similarly, Greek organizations can use ancient symbols while giving them new, Christ-honoring meaning.",
+    biblicalParallels: [
+      "The eyes of the Lord are everywhere (Proverbs 15:3)",
+      "God watches over the righteous (Psalm 34:15)",
+      "Nothing is hidden from God's sight (Hebrews 4:13)",
+      "God's providence guides nations (Proverbs 21:1)"
+    ],
+    scriptureReferences: ["Proverbs 15:3", "Psalm 34:15", "Hebrews 4:13", "Daniel 2:21"],
+    cautionLevel: "low"
   },
   {
-    id: "the-fates",
-    name: "The Fates (Moirai/Parcae)",
+    id: "hygieia-deity",
+    name: "Hygieia (Bowl of Hygieia)",
     category: "deity",
-    description: "Three goddesses who controlled human destiny—Clotho, Lachesis, Atropos. Roman equivalent: Parcae.",
-    christianPerspective: "Christians believe in God's sovereignty, not fate. However, the concept of life having purpose and meaning is biblical. Our times are in God's hands, not random chance.",
-    cautionLevel: "medium",
-    cautionNote: "Redirect from fatalism to God's sovereign care and plan.",
-    scripturalContext: "Psalm 31:15 - 'My times are in your hands.'"
-  },
-  // Additional Egyptian Deities
-  {
-    id: "nephthys-deity",
-    name: "Nephthys",
-    category: "deity",
-    description: "Egyptian goddess of mourning, night, and service. Sister of Isis and Osiris. Protector of the dead.",
-    christianPerspective: "Mourning is biblical—Jesus wept. Nephthys as a comforter of the bereaved echoes the Holy Spirit as Comforter. Caring for the grieving is a Christian calling.",
-    cautionLevel: "low",
-    scripturalContext: "Matthew 5:4 - 'Blessed are those who mourn, for they will be comforted.'"
+    organizationType: "Pharmacy/Medical",
+    description: "The Bowl of Hygieia—a serpent drinking from a chalice—is the international symbol of pharmacy. Displayed in every pharmacy, on pharmacist licenses, and pharmaceutical company logos. Christians who condemn Greek mythology freely accept prescriptions marked with this goddess imagery.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Hygieia represents preventive care and wellness—values Christians embrace. The cup/chalice is also a powerful Christian symbol (communion cup). Prevention of disease honors our bodies as temples of the Holy Spirit. Pharmacists participating in healing continue Christ's ministry of restoration.",
+    biblicalParallels: [
+      "Our bodies are temples of the Holy Spirit (1 Corinthians 6:19-20)",
+      "The cup of communion represents Christ's blood (Matthew 26:27-28)",
+      "Divine wisdom includes health principles (Proverbs 3:7-8)",
+      "Caring for the sick is ministry to Christ (Matthew 25:36)"
+    ],
+    scriptureReferences: ["1 Corinthians 6:19-20", "Proverbs 3:7-8", "Matthew 25:36", "3 John 1:2"],
+    cautionLevel: "low"
   },
   {
-    id: "sobek-deity",
-    name: "Sobek",
+    id: "ishtar-gate",
+    name: "Ishtar Gate (Babylonian)",
     category: "deity",
-    description: "Egyptian crocodile god associated with the Nile, fertility, and military prowess. Symbol of pharaonic power.",
-    christianPerspective: "Sobek represented the life-giving Nile. Water as life is deeply biblical—Jesus is living water. Strength and protection themes echo God as our fortress.",
-    cautionLevel: "low",
-    scripturalContext: "John 4:14 - 'The water I give them will become in them a spring of water welling up to eternal life.'"
+    organizationType: "Art/Architecture",
+    description: "The Ishtar Gate—dedicated to the Babylonian goddess of love and war—is displayed in the Pergamon Museum and reproduced worldwide. Its iconic blue-glazed bricks and dragon/bull imagery influence modern architecture. Christians visit museums displaying this goddess's temple entrance without religious objection.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Beauty in architecture glorifies the Creator who gave humans artistic ability. Christians can appreciate ancient craftsmanship while worshipping the true God. Daniel served in Babylon without compromising his faith—engaging culture while maintaining devotion. We can learn from ancient wisdom without worshipping ancient gods.",
+    biblicalParallels: [
+      "Daniel excelled in Babylon while maintaining faith (Daniel 6:3)",
+      "Skilled craftsmen given by God (Exodus 31:1-6)",
+      "Whatever is beautiful, think on these things (Philippians 4:8)",
+      "The earth is the Lord's and everything in it (Psalm 24:1)"
+    ],
+    scriptureReferences: ["Daniel 6:3", "Exodus 31:1-6", "Philippians 4:8", "Psalm 24:1"],
+    cautionLevel: "low"
   },
   {
-    id: "hathor-deity",
-    name: "Hathor",
+    id: "isis-deity",
+    name: "Isis (Egyptian Goddess)",
     category: "deity",
-    description: "Egyptian goddess of love, beauty, music, and motherhood. Often depicted with cow horns holding a sun disk.",
-    christianPerspective: "Hathor represented joy, music, and maternal care—all biblical themes. Music in worship is extensively biblical. God's motherly care is expressed in Scripture.",
-    cautionLevel: "low",
-    scripturalContext: "Isaiah 66:13 - 'As a mother comforts her child, so will I comfort you.'"
+    organizationType: "Cultural/Religious",
+    description: "Isis—goddess of motherhood, magic, and healing—influenced early Christian iconography. Some scholars note parallels between Isis nursing Horus and Madonna and Child imagery. Her name appears in pharmaceutical terms (Isidis). Christians unknowingly encounter Isis's cultural legacy in religious art and medical terminology.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Motherhood and nurturing are blessed by God. The image of mother and child is universal and beautiful. God chose to enter the world through Mary—a human mother. Rather than fearing cultural parallels, Christians can recognize God's truth echoing across cultures, pointing to ultimate fulfillment in Christ.",
+    biblicalParallels: [
+      "A mother comforts her child, so God comforts us (Isaiah 66:13)",
+      "Mary treasured these things in her heart (Luke 2:19)",
+      "Honor your mother (Exodus 20:12)",
+      "The church as nurturing mother (Galatians 4:26)"
+    ],
+    scriptureReferences: ["Isaiah 66:13", "Luke 2:19", "Galatians 4:26", "Proverbs 31:28"],
+    cautionLevel: "low"
   },
   {
-    id: "khnum-deity",
-    name: "Khnum",
+    id: "lady-justice-deity",
+    name: "Lady Justice (Themis/Justitia)",
     category: "deity",
-    description: "Egyptian creator god depicted as a ram, believed to create humans on a potter's wheel.",
-    christianPerspective: "The potter and clay imagery is thoroughly biblical. God as potter forming humanity appears in Genesis and throughout Scripture. This imagery points to the true Creator.",
-    cautionLevel: "low",
-    scripturalContext: "Isaiah 64:8 - 'We are the clay, you are the potter; we are all the work of your hand.'"
+    organizationType: "Legal Societies",
+    description: "Themis/Lady Justice—blindfolded, holding scales and sword—stands atop courthouses across America. Every lawyer, judge, and court officer works under her image. Christians serve as attorneys, judges, and jurors beneath this goddess imagery without moral objection, yet criticize similar symbols in Greek organizations.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Justice is a divine attribute that humans are called to pursue. The blindfold represents impartiality (no favoritism), scales represent fair judgment, and the sword represents authority to execute justice. These align perfectly with biblical principles of righteousness and fairness.",
+    biblicalParallels: [
+      "God loves justice and righteousness (Psalm 33:5)",
+      "Do not show partiality in judgment (Deuteronomy 1:17)",
+      "The Lord weighs the heart (Proverbs 21:2)",
+      "Rulers bear the sword for justice (Romans 13:4)"
+    ],
+    scriptureReferences: ["Micah 6:8", "Deuteronomy 1:17", "Proverbs 21:2", "Romans 13:1-4"],
+    cautionLevel: "low"
   },
   {
-    id: "ptah-deity",
-    name: "Ptah",
+    id: "lamp-knowledge-deity",
+    name: "Lamp of Knowledge",
     category: "deity",
-    description: "Egyptian god of craftsmen, architects, and creation. Patron of builders and artisans.",
-    christianPerspective: "Craftsmanship as divine calling is biblical. Bezalel was Spirit-filled for building the tabernacle. Work and creativity honor God when done with excellence.",
-    cautionLevel: "low",
-    scripturalContext: "Colossians 3:23 - 'Whatever you do, work at it with all your heart, as working for the Lord.'"
+    organizationType: "Academic Societies",
+    description: "The Lamp of Knowledge—often depicted as an oil lamp with eternal flame—represents education, enlightenment, and the pursuit of truth. It appears on school logos, library emblems, and academic honor societies. This ancient symbol bridges Greek philosophy and Christian tradition seamlessly.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Jesus declared Himself the Light of the World (John 8:12). Christians are called to be lights (Matthew 5:14-16). The parable of the wise virgins (Matthew 25) emphasizes keeping our lamps lit with oil (the Holy Spirit). Education and knowledge pursued rightly glorify God who is the source of all truth.",
+    biblicalParallels: [
+      "Your word is a lamp to my feet (Psalm 119:105)",
+      "Let your light shine before others (Matthew 5:14-16)",
+      "Wise virgins kept oil in their lamps (Matthew 25:1-13)",
+      "The Spirit leads us into all truth (John 16:13)"
+    ],
+    scriptureReferences: ["Psalm 119:105", "Matthew 5:14-16", "John 8:12", "Proverbs 4:18"],
+    cautionLevel: "low"
   },
   {
-    id: "nut-deity",
-    name: "Nut",
+    id: "maat-deity",
+    name: "Maat (Egyptian Goddess of Truth)",
     category: "deity",
-    description: "Egyptian sky goddess often depicted arching over the earth. Mother of Osiris, Isis, Set, and Nephthys.",
-    christianPerspective: "The heavens declare God's glory. Sky imagery representing divine covering and protection is biblical. God stretches out the heavens like a tent.",
-    cautionLevel: "low",
-    scripturalContext: "Psalm 19:1 - 'The heavens declare the glory of God; the skies proclaim the work of his hands.'"
+    organizationType: "Legal/Justice Systems",
+    description: "Maat—representing truth, justice, and cosmic order—appears in courtroom imagery worldwide. The scales of justice derive from Maat weighing hearts against her feather. Lady Justice's scales directly descend from Maat iconography. Christians serve on juries and in courts decorated with this Egyptian goddess's symbolism.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Truth and justice are divine attributes God calls His people to uphold. The concept of cosmic order (Maat) parallels biblical understanding of God's created order. Christians pursuing justice participate in God's character regardless of the symbol's ancient origins. The heart being weighed echoes Proverbs 21:2.",
+    biblicalParallels: [
+      "The Lord weighs the heart (Proverbs 21:2)",
+      "Justice and righteousness are God's throne foundation (Psalm 89:14)",
+      "Do justice, love mercy (Micah 6:8)",
+      "Speak truth to one another (Zechariah 8:16)"
+    ],
+    scriptureReferences: ["Proverbs 21:2", "Psalm 89:14", "Micah 6:8", "Proverbs 16:11"],
+    cautionLevel: "low"
   },
   {
-    id: "geb-deity",
-    name: "Geb",
+    id: "marduk-deity",
+    name: "Marduk (Babylonian Chief God)",
     category: "deity",
-    description: "Egyptian god of the earth, vegetation, and fertility. Depicted with green skin.",
-    christianPerspective: "Earth and its fertility are God's creation and gift. The concept of the earth producing abundantly for humanity is thoroughly biblical.",
-    cautionLevel: "low",
-    scripturalContext: "Genesis 1:11 - 'Let the land produce vegetation: seed-bearing plants and trees.'"
+    organizationType: "Academic/Theology",
+    description: "Marduk—Babylon's chief deity—represented order triumphing over chaos. His symbol, the spade/hoe, represented civilization and agriculture. Babylonian creation mythology influenced how scholars understand Genesis. Christians studying ancient Near Eastern literature encounter Marduk's narratives regularly in biblical studies programs.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Genesis presents the true account of creation, but God used literary forms familiar to ancient audiences. Understanding Babylonian myths helps us see how Genesis corrects and transcends them. The Bible doesn't fear engagement with other narratives—it presents the truth that fulfills and corrects cultural stories.",
+    biblicalParallels: [
+      "In the beginning God created (Genesis 1:1)",
+      "By the word of the Lord the heavens were made (Psalm 33:6)",
+      "God brings order from chaos (Genesis 1:2)",
+      "Christ holds all things together (Colossians 1:17)"
+    ],
+    scriptureReferences: ["Genesis 1:1-2", "Psalm 33:6", "Isaiah 45:18", "Colossians 1:17"],
+    cautionLevel: "low"
   },
   {
-    id: "set-deity",
-    name: "Set (Seth)",
+    id: "mithra-deity",
+    name: "Mithra (Persian God)",
     category: "deity",
-    description: "Egyptian god of chaos, storms, and the desert. Complex figure representing both destruction and protection.",
-    christianPerspective: "Storms and chaos are under God's control. Jesus calmed the storm. God uses even chaos for His purposes. Order from chaos is the creation narrative.",
-    cautionLevel: "medium",
-    cautionNote: "Emphasize God's sovereignty over chaos rather than celebrating disorder.",
-    scripturalContext: "Mark 4:39 - 'He got up, rebuked the wind and said to the waves, \"Quiet! Be still!\"'"
+    organizationType: "Religious/Cultural",
+    description: "Mithra—god of light, contracts, and friendship—was widely worshipped in the Roman Empire. December 25th was Mithra's birthday before becoming Christmas. Mithraic temples existed beneath Christian churches in Rome. Christians celebrate Christmas on a date originally honoring Mithra without considering it pagan compromise.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "The early church intentionally replaced pagan festivals with Christian ones—redeeming time rather than abandoning it. Christmas celebrates Christ's incarnation regardless of date origins. This demonstrates how Christians have always transformed cultural practices rather than fleeing them. Greek organizations can similarly redeem symbols.",
+    biblicalParallels: [
+      "The light shines in the darkness (John 1:5)",
+      "To us a child is born (Isaiah 9:6)",
+      "The Word became flesh (John 1:14)",
+      "Redeeming the time (Ephesians 5:16)"
+    ],
+    scriptureReferences: ["John 1:5", "Isaiah 9:6", "John 1:14", "Colossians 2:16-17"],
+    cautionLevel: "low"
   },
   {
-    id: "bes-deity",
-    name: "Bes",
+    id: "omega-symbol-deity",
+    name: "Omega Symbol (Ω)",
     category: "deity",
-    description: "Egyptian dwarf god protector of households, children, and mothers. Associated with joy and music.",
-    christianPerspective: "Protection of the vulnerable—especially children and mothers—is deeply biblical. Joy and celebration in the home honor God. Domestic protection is a godly concern.",
-    cautionLevel: "low",
-    scripturalContext: "Psalm 127:3 - 'Children are a heritage from the LORD, offspring a reward from him.'"
+    organizationType: "Omega Psi Phi",
+    description: "Omega—the final letter of the Greek alphabet—represents completion, finality, and ultimate achievement. It appears in physics (Ohm's law), watchmaker Omega, and numerous scientific contexts. Omega Psi Phi Fraternity prominently features this symbol. Christians use \"Alpha and Omega\" to describe Christ Himself.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Jesus declared, \"I am the Alpha and the Omega\" (Revelation 22:13)—the beginning and the end. Christians who object to Greek letters in fraternity names freely quote this verse using the same Greek letters! The Omega symbol points directly to Christ's eternal nature and ultimate authority.",
+    biblicalParallels: [
+      "Jesus is the Alpha and Omega (Revelation 22:13)",
+      "He is the First and the Last (Isaiah 44:6)",
+      "In Him all things hold together (Colossians 1:17)",
+      "Jesus is the same yesterday, today, and forever (Hebrews 13:8)"
+    ],
+    scriptureReferences: ["Revelation 22:13", "Isaiah 44:6", "Colossians 1:17", "Hebrews 13:8"],
+    cautionLevel: "low"
   },
   {
-    id: "atum-deity",
-    name: "Atum",
+    id: "phoenix-deity",
+    name: "Phoenix (Rising from Ashes)",
     category: "deity",
-    description: "Egyptian creator god of Heliopolis. Self-created and father of the gods. Associated with the setting sun.",
-    christianPerspective: "Atum as self-existent creator echoes, imperfectly, the true Creator who is self-existent and eternal. 'I AM WHO I AM' declares God's self-existence.",
-    cautionLevel: "medium",
-    cautionNote: "Use as a conversation starter about the true eternal Creator.",
-    scripturalContext: "Exodus 3:14 - 'God said to Moses, \"I AM WHO I AM.\"'"
-  },
-  // Roman Additions (distinct from Greek equivalents)
-  {
-    id: "janus-deity",
-    name: "Janus",
-    category: "deity",
-    description: "Roman god of beginnings, transitions, doorways, and endings. Two-faced, looking forward and backward. January is named for him.",
-    christianPerspective: "January, our calendar month, comes from Janus. Christians use this calendar without issue. Transitions and new beginnings are celebrated throughout Scripture.",
-    cautionLevel: "low",
-    scripturalContext: "Lamentations 3:22-23 - 'His mercies are new every morning.'"
+    organizationType: "Multiple Organizations",
+    description: "The Phoenix—rising from flames—symbolizes rebirth and resurrection. It appears on city seals (Atlanta, Phoenix AZ), university logos, insurance companies, and sports teams. Christians cheer for the Phoenix Suns and live in Phoenix without religious objection to this resurrection symbol.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "The Phoenix powerfully prefigures Christ's resurrection! Rising from death to new life is the central Christian message. Early church fathers used the Phoenix as a symbol of resurrection. This imagery reinforces rather than contradicts the Gospel message of new life in Christ.",
+    biblicalParallels: [
+      "Christ rose from the dead on the third day (1 Corinthians 15:4)",
+      "We are raised to new life in Christ (Romans 6:4)",
+      "Old things pass away, all things become new (2 Corinthians 5:17)",
+      "We will be resurrected (1 Thessalonians 4:16-17)"
+    ],
+    scriptureReferences: ["1 Corinthians 15:4", "Romans 6:4", "2 Corinthians 5:17", "Job 29:18"],
+    cautionLevel: "low"
   },
   {
-    id: "vesta-deity",
-    name: "Vesta",
+    id: "ra-deity",
+    name: "Ra/Amon-Ra (Egyptian Sun God)",
     category: "deity",
-    description: "Roman goddess of hearth, home, and family. The Vestal Virgins kept her eternal flame.",
-    christianPerspective: "Hearth and home are central to biblical family values. The concept of an eternal flame was adopted by Christians (sanctuary lamps). Home as sanctuary is deeply biblical.",
-    cautionLevel: "low",
-    scripturalContext: "Deuteronomy 6:6-7 - Teaching faith in the home."
+    organizationType: "Religious/Cultural",
+    description: "Ra—the sun god and king of Egyptian deities—influenced sun symbolism worldwide. Halos in Christian art derive from solar imagery. The sun rising represents resurrection and hope. Christians use sunrise service at Easter without concern for solar worship origins. \"Son/Sun of Righteousness\" wordplay appears in Malachi 4:2.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "God created the sun and rules over it (Genesis 1:16). Christ is called the \"Sun of Righteousness\" with healing in His wings (Malachi 4:2). Light symbolism permeates Scripture. Christians can appreciate solar imagery pointing to Christ the Light without worshipping creation. Easter sunrise services celebrate resurrection, not Ra.",
+    biblicalParallels: [
+      "The Sun of Righteousness shall arise with healing (Malachi 4:2)",
+      "God made the greater light to rule the day (Genesis 1:16)",
+      "The Lord God is a sun and shield (Psalm 84:11)",
+      "His face was like the sun shining (Revelation 1:16)"
+    ],
+    scriptureReferences: ["Malachi 4:2", "Genesis 1:16", "Psalm 84:11", "Revelation 1:16"],
+    cautionLevel: "low"
   },
   {
-    id: "fortuna-deity",
-    name: "Fortuna",
+    id: "scarab-deity",
+    name: "Scarab (Egyptian Sacred Beetle)",
     category: "deity",
-    description: "Roman goddess of fortune and luck. Often depicted with a wheel and cornucopia.",
-    christianPerspective: "While Christians don't believe in luck but in God's providence, the concept of blessing and provision is biblical. Fortune imagery often represents success and blessing.",
-    cautionLevel: "medium",
-    cautionNote: "Redirect discussions of 'luck' to God's providence and blessing.",
-    scripturalContext: "Jeremiah 29:11 - 'Plans to prosper you and not to harm you.'"
+    organizationType: "Art/Jewelry",
+    description: "The scarab beetle—symbol of Ra and resurrection—appears in jewelry, museum pieces, and decorative arts worldwide. Its rolling of dung balls symbolized the sun's daily rebirth. Christians wear scarab jewelry and decorate with Egyptian motifs without religious objection, yet similar rebirth symbolism in Greek organizations is criticized.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Resurrection and rebirth are central Christian themes. The scarab's symbolism of new life each day echoes Lamentations 3:22-23—God's mercies are new every morning. Christians need not fear symbols of rebirth; rather, we can see them pointing to the ultimate resurrection in Christ.",
+    biblicalParallels: [
+      "His mercies are new every morning (Lamentations 3:22-23)",
+      "We are raised to walk in newness of life (Romans 6:4)",
+      "Behold, I make all things new (Revelation 21:5)",
+      "The dead in Christ shall rise (1 Thessalonians 4:16)"
+    ],
+    scriptureReferences: ["Lamentations 3:22-23", "Romans 6:4", "Revelation 21:5", "2 Corinthians 5:17"],
+    cautionLevel: "low"
   },
   {
-    id: "victoria-deity",
-    name: "Victoria (Nike)",
+    id: "shamash-deity",
+    name: "Shamash (Babylonian Sun God)",
     category: "deity",
-    description: "Roman goddess of victory. Greek equivalent: Nike. The Nike swoosh comes from her wing.",
-    christianPerspective: "Victory is a major biblical theme. 'In all these things we are more than conquerors.' Christians wear Nike shoes without spiritual concern. Victory imagery points to Christ's triumph.",
-    cautionLevel: "low",
-    scripturalContext: "Romans 8:37 - 'We are more than conquerors through him who loved us.'"
+    organizationType: "Legal/Government",
+    description: "Shamash—the sun god of justice—is depicted giving the law code to Hammurabi on the famous stele. This image of divine lawgiving influenced all Western legal tradition. Law schools teach Hammurabi's Code as foundational. Christians studying law encounter this Babylonian deity's legacy without moral concern.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "God is the ultimate Lawgiver (James 4:12). The concept of divinely-ordained law is biblical. Moses received the Law from God on Sinai. That other cultures understood law as divinely given demonstrates common grace—God's truth echoing in human conscience. Legal systems pursuing justice reflect God's character.",
+    biblicalParallels: [
+      "There is one Lawgiver (James 4:12)",
+      "Moses received the Law from God (Exodus 31:18)",
+      "The law is written on hearts (Romans 2:15)",
+      "By Me kings reign and rulers decree justice (Proverbs 8:15)"
+    ],
+    scriptureReferences: ["James 4:12", "Exodus 31:18", "Romans 2:15", "Proverbs 8:15"],
+    cautionLevel: "low"
+  },
+  {
+    id: "sphinx-deity",
+    name: "Sphinx (Guardian Symbol)",
+    category: "deity",
+    organizationType: "Multiple Organizations",
+    description: "The Sphinx—lion-bodied with a human head—guards many fraternity and sorority rituals as a symbol of mystery and wisdom. It also guards the entrance to Egyptian exhibits in major museums, appears on Masonic lodges, and adorns government buildings. Christians visit these spaces without concern.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "The Sphinx represents the guarding of sacred knowledge—a concept present in Scripture. Jesus spoke in parables to reveal truth to seekers while concealing it from the dismissive. Cherubim (hybrid creatures) guarded Eden's entrance. The protective symbolism parallels God's guarding of sacred things.",
+    biblicalParallels: [
+      "Cherubim guarded the way to the Tree of Life (Genesis 3:24)",
+      "Parables revealed and concealed truth (Matthew 13:10-17)",
+      "Mysteries revealed to believers (1 Corinthians 2:7)",
+      "Guardians of sacred space in the Temple (Exodus 25:18-22)"
+    ],
+    scriptureReferences: ["Genesis 3:24", "Matthew 13:10-17", "Exodus 25:18-22", "1 Corinthians 2:7"],
+    cautionLevel: "low"
+  },
+  {
+    id: "thoth-deity",
+    name: "Thoth (Egyptian God of Wisdom)",
+    category: "deity",
+    organizationType: "Academic/Libraries",
+    description: "Thoth—ibis-headed god of wisdom, writing, and knowledge—is the patron of scribes and scholars. His imagery influences library and university symbolism. The concept of divine wisdom being recorded in books echoes throughout academic institutions. Christians who pursue higher education engage with Thoth's legacy in scholarship.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "God values wisdom, knowledge, and the written word. Scripture itself is God's written revelation. The pursuit of learning and literacy honors God who gave humans the ability to read and write. Academic institutions preserving and transmitting knowledge continue a tradition God ordained when He commanded Moses to write.",
+    biblicalParallels: [
+      "Write these words (Exodus 34:27)",
+      "Wisdom cries out in the streets (Proverbs 1:20)",
+      "The fear of the Lord is the beginning of wisdom (Proverbs 9:10)",
+      "Study to show yourself approved (2 Timothy 2:15)"
+    ],
+    scriptureReferences: ["Exodus 34:27", "Proverbs 9:10", "2 Timothy 2:15", "Ecclesiastes 12:12"],
+    cautionLevel: "low"
+  },
+  {
+    id: "zeus-deity",
+    name: "Zeus/Jupiter (King of the Gods)",
+    category: "deity",
+    organizationType: "Government/Academia",
+    description: "Zeus—king of the Greek gods, god of sky, thunder, and justice—appears on government buildings, university seals, and civic imagery worldwide. Jupiter gives us Thursday (Jove's day). Christians work in buildings adorned with Zeus imagery and use Jupiter-derived day names without spiritual concern.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "The Apostle Paul engaged with Greek religious culture at the Areopagus without condemning all Greek imagery (Acts 17). Zeus imagery in civic contexts represents justice and authority—values that reflect God's character. Cultural imagery can be understood symbolically without worship.",
+    biblicalParallels: [
+      "Paul engaged Greek thought at the Areopagus (Acts 17:22-28)",
+      "The Lord is a God of justice (Isaiah 30:18)",
+      "Every authority has been established by God (Romans 13:1)",
+      "God thunders marvelously with His voice (Job 37:5)"
+    ],
+    scriptureReferences: ["Acts 17:22-28", "Isaiah 30:18", "Romans 13:1", "Job 37:5"],
+    cautionLevel: "low"
+  },
+  {
+    id: "poseidon-deity",
+    name: "Poseidon/Neptune (God of the Sea)",
+    category: "deity",
+    organizationType: "Naval/Maritime",
+    description: "Poseidon/Neptune—god of the sea—appears in coastal cities, naval traditions, and maritime organizations. His trident is iconic in oceanographic institutions. Christians serve in the Navy and engage with maritime culture that is saturated with Neptune imagery without moral objection.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "God Himself rules over the sea (Psalm 89:9). Jesus calmed the storm and walked on water. Maritime imagery of mastery over the deep reflects creation's grandeur and God's sovereignty over all elements. Coastal communities rightfully celebrate their connection to the sea.",
+    biblicalParallels: [
+      "God rules over the surging sea (Psalm 89:9)",
+      "Jesus calmed the wind and waves (Mark 4:39)",
+      "The sea is His, for He made it (Psalm 95:5)",
+      "Jesus walked on water (Matthew 14:25)"
+    ],
+    scriptureReferences: ["Psalm 89:9", "Mark 4:39", "Psalm 95:5", "Matthew 14:25"],
+    cautionLevel: "low"
+  },
+  {
+    id: "demeter-deity",
+    name: "Demeter/Ceres (Goddess of Harvest)",
+    category: "deity",
+    organizationType: "Agricultural",
+    description: "Demeter/Ceres—goddess of harvest and agriculture—gives us the word \"cereal.\" Her imagery appears on agricultural seals, farming organizations, and food company logos. Christians thank God for the harvest while using terminology and imagery derived from Demeter/Ceres without objection.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Harvest imagery is deeply biblical. God provides the harvest, and thanksgiving for abundance is thoroughly scriptural. Agricultural symbolism represents God's provision, not pagan worship. Farmers and agricultural workers participate in God's creative order.",
+    biblicalParallels: [
+      "God crowns the year with bounty (Psalm 65:11)",
+      "While the earth remains, seedtime and harvest shall not cease (Genesis 8:22)",
+      "The land yields its harvest (Psalm 67:6)",
+      "The harvest is plentiful (Matthew 9:37)"
+    ],
+    scriptureReferences: ["Psalm 65:9-13", "Genesis 8:22", "Psalm 67:6", "Matthew 9:37"],
+    cautionLevel: "low"
+  },
+  {
+    id: "hera-deity",
+    name: "Hera/Juno (Queen of the Gods)",
+    category: "deity",
+    organizationType: "Marriage/Family",
+    description: "Hera/Juno—queen of the gods, goddess of marriage and family—gives us June, the most popular wedding month. Christians get married in June without considering it pagan. The very word for wedding month honors this goddess, yet this is accepted while Greek organization symbolism is criticized.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Marriage and family are celebrated throughout Scripture. The month June remains the most popular for Christian weddings. The imagery represents commitment and family values—core biblical themes. Language and calendar conventions carry ancient roots without requiring worship.",
+    biblicalParallels: [
+      "Marriage is honorable in all (Hebrews 13:4)",
+      "The two shall become one flesh (Genesis 2:24)",
+      "Love your wife as Christ loved the church (Ephesians 5:25)",
+      "Marriage as sacred covenant (Ephesians 5:31-32)"
+    ],
+    scriptureReferences: ["Hebrews 13:4", "Genesis 2:24", "Ephesians 5:25", "Ephesians 5:31-32"],
+    cautionLevel: "low"
   },
   // Norse Deities
   {
     id: "odin-deity",
-    name: "Odin (Woden)",
+    name: "Odin/Woden (Norse King of Gods)",
     category: "deity",
-    description: "Norse king of the gods, god of wisdom, poetry, death, and war. Wednesday is named for him (Woden's day).",
-    christianPerspective: "Our 'Wednesday' comes from Odin (Woden). Christians use this calendar without issue. Odin's pursuit of wisdom through sacrifice echoes, imperfectly, divine wisdom. The day name is cultural, not worship.",
-    cautionLevel: "low",
-    scripturalContext: "Proverbs 2:6 - 'For the LORD gives wisdom; from his mouth come knowledge and understanding.'"
+    organizationType: "Days of the Week",
+    description: "Odin—Norse king of the gods, god of wisdom, poetry, and war—gives us Wednesday (Woden's day). Christians use this day name without spiritual concern. Odin's pursuit of wisdom through sacrifice echoes, imperfectly, divine wisdom themes.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Our calendar days come from Norse gods—Wednesday (Odin), Thursday (Thor), Friday (Freya), Tuesday (Tyr). Christians use these names daily without worship. The day name is cultural linguistic heritage, not religious observance. This demonstrates how we already live with ancient deity references.",
+    biblicalParallels: [
+      "The Lord gives wisdom (Proverbs 2:6)",
+      "Wisdom is more precious than rubies (Proverbs 8:11)",
+      "The fear of the Lord is the beginning of wisdom (Proverbs 9:10)",
+      "If any lacks wisdom, let him ask God (James 1:5)"
+    ],
+    scriptureReferences: ["Proverbs 2:6", "Proverbs 8:11", "Proverbs 9:10", "James 1:5"],
+    cautionLevel: "low"
   },
   {
     id: "thor-deity",
-    name: "Thor",
+    name: "Thor (Norse God of Thunder)",
     category: "deity",
-    description: "Norse god of thunder, storms, and protection. Thursday is named for him (Thor's day). Wielded the hammer Mjolnir.",
-    christianPerspective: "Thursday comes from Thor. The hammer represents protection and power against chaos. God controls the storms and thunder (Psalm 29). Thor's protective role echoes God as our shield.",
-    cautionLevel: "low",
-    scripturalContext: "Psalm 29:3 - 'The voice of the LORD is over the waters; the God of glory thunders.'"
+    organizationType: "Days of the Week",
+    description: "Thor—Norse god of thunder and protection—gives us Thursday (Thor's day). His hammer Mjolnir represents protection against chaos. Christians use Thursday without spiritual concern and enjoy Thor movies without considering it worship.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "God controls thunder and storms (Psalm 29). The concept of divine protection against chaos is biblical. Thursday is simply a day name derived from cultural history, not an act of worship. Christians engage with Thor in entertainment without spiritual compromise.",
+    biblicalParallels: [
+      "The voice of the Lord is over the waters; the God of glory thunders (Psalm 29:3)",
+      "God thunders marvelously with His voice (Job 37:5)",
+      "He makes lightning for the rain (Psalm 135:7)",
+      "The Lord is my shield and fortress (Psalm 18:2)"
+    ],
+    scriptureReferences: ["Psalm 29:3", "Job 37:5", "Psalm 135:7", "Psalm 18:2"],
+    cautionLevel: "low"
   },
   {
     id: "freya-deity",
-    name: "Freya (Frigg)",
+    name: "Freya (Norse Goddess of Love)",
     category: "deity",
-    description: "Norse goddess of love, beauty, fertility, and war. Friday is named for her (Freya's day).",
-    christianPerspective: "Friday comes from Freya. Love and beauty are God's gifts celebrated in Scripture. Christians use 'Friday' without spiritual concern. The day name is linguistic heritage, not worship.",
-    cautionLevel: "low",
-    scripturalContext: "1 John 4:8 - 'God is love.'"
+    organizationType: "Days of the Week",
+    description: "Freya—Norse goddess of love, beauty, and fertility—gives us Friday (Freya's day). Christians observe Good Friday—the most sacred day in Christianity—using a name derived from this goddess without concern.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Good Friday commemorates Christ's crucifixion using a day name from Norse tradition. Love and beauty are God's gifts celebrated in Scripture. The day name is linguistic heritage, not worship. Christians observe the holiest day of the year on \"Freya's day\" without spiritual compromise.",
+    biblicalParallels: [
+      "God is love (1 John 4:8)",
+      "Greater love has no one than this (John 15:13)",
+      "The beauty of the Lord our God be upon us (Psalm 90:17)",
+      "Christ died for us while we were still sinners (Romans 5:8)"
+    ],
+    scriptureReferences: ["1 John 4:8", "John 15:13", "Psalm 90:17", "Romans 5:8"],
+    cautionLevel: "low"
+  },
+  // =====================================================
+  // SEALS - Federal, State, and College
+  // =====================================================
+  {
+    id: "great-seal-us",
+    name: "Great Seal of the United States",
+    category: "seals",
+    organizationType: "Federal",
+    description: "The Great Seal features an eagle (Jupiter's bird in Roman mythology), an unfinished pyramid with the Eye of Providence, and Latin mottos. The design incorporates classical imagery from Rome and Egypt. It appears on every U.S. dollar bill, passport, and official government document.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Christians use money and carry passports bearing this seal daily without spiritual concern. The Eye of Providence was adopted to represent God's watchful care over the nation. Americans, including devout Christians, use symbols with ancient pagan connections without worshipping those deities.",
+    biblicalParallels: [
+      "The eyes of the Lord are everywhere (Proverbs 15:3)",
+      "God watches over the nations (Psalm 33:13-14)",
+      "In God we trust (Psalm 56:11)",
+      "Blessed is the nation whose God is the Lord (Psalm 33:12)"
+    ],
+    scriptureReferences: ["Proverbs 15:3", "Psalm 33:13-14", "Psalm 56:11", "Psalm 33:12"],
+    cautionLevel: "low"
   },
   {
-    id: "tyr-deity",
-    name: "Tyr",
-    category: "deity",
-    description: "Norse god of war, justice, and sacrifice. Tuesday is named for him (Tyr's day). Known for sacrificing his hand to bind the wolf Fenrir.",
-    christianPerspective: "Tuesday comes from Tyr. His sacrifice for justice echoes the greater sacrifice of Christ. Justice is a thoroughly biblical theme. Day names are cultural artifacts.",
-    cautionLevel: "low",
-    scripturalContext: "Micah 6:8 - 'Act justly and love mercy and walk humbly with your God.'"
+    id: "statue-of-freedom",
+    name: "Statue of Freedom (U.S. Capitol)",
+    category: "seals",
+    organizationType: "Federal",
+    description: "The bronze statue atop the Capitol dome resembles classical depictions of Roman goddesses like Libertas (Liberty) and Minerva (wisdom/war). It crowns the center of American democracy.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Tourists, including Christians, visit and photograph this statue regularly. The statue represents freedom and democracy—values compatible with biblical human dignity. Classical Roman imagery in government buildings doesn't constitute worship or spiritual danger.",
+    biblicalParallels: [
+      "Where the Spirit of the Lord is, there is freedom (2 Corinthians 3:17)",
+      "You shall know the truth and the truth shall make you free (John 8:32)",
+      "Stand fast in the liberty wherewith Christ has made us free (Galatians 5:1)",
+      "Proclaim liberty throughout the land (Leviticus 25:10)"
+    ],
+    scriptureReferences: ["2 Corinthians 3:17", "John 8:32", "Galatians 5:1", "Leviticus 25:10"],
+    cautionLevel: "low"
   },
   {
-    id: "loki-deity",
-    name: "Loki",
-    category: "deity",
-    description: "Norse trickster god associated with mischief, deception, and eventual chaos. Complex figure in Norse mythology.",
-    christianPerspective: "Loki represents deception, which Scripture condemns. However, understanding trickster figures helps identify deception. Satan is the 'father of lies.' Awareness of evil patterns aids discernment.",
-    cautionLevel: "medium",
-    cautionNote: "Use as a teaching point about deception and the contrast with God's truth.",
-    scripturalContext: "John 8:44 - 'He [Satan] is a liar and the father of lies.'"
+    id: "supreme-court-frieze",
+    name: "Supreme Court Building Frieze",
+    category: "seals",
+    organizationType: "Federal",
+    description: "The eastern pediment features classical figures including 'Liberty Enthroned' flanked by 'Order' and 'Authority.' Interior friezes depict Moses alongside Hammurabi, Confucius, and other lawgivers from various traditions.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "The highest court in the land operates under these images. Christian justices have served without objection to the imagery. Symbols can represent virtues and history without requiring worship. Moses appears prominently among the lawgivers, acknowledging biblical influence on Western law.",
+    biblicalParallels: [
+      "Justice and righteousness are the foundation of God's throne (Psalm 89:14)",
+      "Moses received the Law from God (Exodus 31:18)",
+      "The authorities that exist have been established by God (Romans 13:1)",
+      "Act justly, love mercy, walk humbly (Micah 6:8)"
+    ],
+    scriptureReferences: ["Psalm 89:14", "Exodus 31:18", "Romans 13:1", "Micah 6:8"],
+    cautionLevel: "low"
   },
   {
-    id: "baldur-deity",
-    name: "Baldur",
-    category: "deity",
-    description: "Norse god of light, purity, and beauty. His death and promised return was central to Norse mythology.",
-    christianPerspective: "Baldur's death and promised return echoes resurrection themes. Light overcoming darkness is deeply biblical. Christ is the true light of the world who conquered death.",
-    cautionLevel: "low",
-    scripturalContext: "John 1:5 - 'The light shines in the darkness, and the darkness has not overcome it.'"
+    id: "library-congress-minerva",
+    name: "Library of Congress - Minerva Mosaic",
+    category: "seals",
+    organizationType: "Federal",
+    description: "A large mosaic of Minerva (Roman goddess of wisdom) dominates the Great Hall entrance of the Library of Congress, representing wisdom and learning. This is the nation's primary library and research center.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Scholars, legislators, and visitors of all faiths use this library. A Roman goddess image in a learning institution doesn't compromise one's faith when using the library. The pursuit of wisdom and knowledge honors God who is the source of all truth.",
+    biblicalParallels: [
+      "Wisdom is the principal thing; therefore get wisdom (Proverbs 4:7)",
+      "The Lord gives wisdom (Proverbs 2:6)",
+      "Study to show yourself approved (2 Timothy 2:15)",
+      "Whatever is true, noble, right, pure, lovely—think on these things (Philippians 4:8)"
+    ],
+    scriptureReferences: ["Proverbs 4:7", "Proverbs 2:6", "2 Timothy 2:15", "Philippians 4:8"],
+    cautionLevel: "low"
   },
   {
-    id: "heimdall-deity",
-    name: "Heimdall",
-    category: "deity",
-    description: "Norse guardian of Bifrost (the rainbow bridge), possessing incredible sight and hearing. Watchman of the gods.",
-    christianPerspective: "Watchfulness is a biblical theme. God never slumbers or sleeps. Christians are called to be watchful. The rainbow itself is a biblical covenant sign.",
-    cautionLevel: "low",
-    scripturalContext: "Psalm 121:4 - 'He who watches over Israel will neither slumber nor sleep.'"
+    id: "virginia-seal",
+    name: "Great Seal of Virginia",
+    category: "seals",
+    organizationType: "State",
+    description: "Features Virtus (Roman goddess of virtue/bravery) standing over a defeated tyrant. Virtus wears the dress of an Amazon warrior and holds a spear. The motto 'Sic Semper Tyrannis' (Thus Always to Tyrants) accompanies the image.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Virginia—home to many Christians and historic churches—proudly displays this Roman goddess on its official seal. The imagery represents virtue triumphing over tyranny—a concept compatible with biblical justice. Virginians identify with this seal without worshipping Virtus.",
+    biblicalParallels: [
+      "Righteousness exalts a nation (Proverbs 14:34)",
+      "Let justice roll down like waters (Amos 5:24)",
+      "Resist the devil and he will flee (James 4:7)",
+      "Overcome evil with good (Romans 12:21)"
+    ],
+    scriptureReferences: ["Proverbs 14:34", "Amos 5:24", "James 4:7", "Romans 12:21"],
+    cautionLevel: "low"
   },
   {
-    id: "valkyries-deity",
-    name: "Valkyries",
-    category: "deity",
-    description: "Norse female warrior spirits who chose the slain for Valhalla. Represent honor in battle and service to Odin.",
-    christianPerspective: "Angels in Scripture are warriors serving God. The concept of spiritual warriors is biblical. Michael leads heavenly armies. The imagery of honorable service resonates with Christian calling.",
-    cautionLevel: "low",
-    scripturalContext: "Revelation 12:7 - 'Michael and his angels fought against the dragon.'"
+    id: "california-seal",
+    name: "Great Seal of California",
+    category: "seals",
+    organizationType: "State",
+    description: "Features Minerva (Roman goddess of wisdom) fully armored, representing California's admission to statehood without going through territorial status. She was 'born fully grown' like the state itself.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "California—with the largest Christian population of any U.S. state—uses Minerva on its official seal. Christians in California identify with this state symbol without spiritual compromise. The goddess represents wisdom and the state's unique history, not religious worship.",
+    biblicalParallels: [
+      "If any of you lacks wisdom, let him ask God (James 1:5)",
+      "The wise are mightier than the strong (Proverbs 24:5)",
+      "Wisdom is better than weapons of war (Ecclesiastes 9:18)",
+      "Wisdom builds her house (Proverbs 9:1)"
+    ],
+    scriptureReferences: ["James 1:5", "Proverbs 24:5", "Ecclesiastes 9:18", "Proverbs 9:1"],
+    cautionLevel: "low"
   },
   {
-    id: "norns-deity",
-    name: "The Norns",
-    category: "deity",
-    description: "Three Norse female beings who control destiny—Urd (past), Verdandi (present), and Skuld (future). Similar to the Fates.",
-    christianPerspective: "Christians believe in God's sovereignty, not fate. Yet the concept of life having meaning and direction is biblical. Our times are in God's hands. Redirect from fatalism to providence.",
-    cautionLevel: "medium",
-    cautionNote: "Use to discuss God's sovereign care versus impersonal fate.",
-    scripturalContext: "Psalm 139:16 - 'All the days ordained for me were written in your book.'"
-  },
-  // Celtic Deities
-  {
-    id: "brigid-deity",
-    name: "Brigid",
-    category: "deity",
-    description: "Celtic goddess of fire, poetry, healing, and smithcraft. Later syncretized with St. Brigid of Kildare in Irish Christianity.",
-    christianPerspective: "Brigid's association with healing, fire, and creativity was Christianized—St. Brigid became Ireland's patron saint. This shows how cultural imagery can be redeemed and redirected to Christ.",
-    cautionLevel: "low",
-    scripturalContext: "Acts 2:3 - Tongues of fire at Pentecost; creativity as God's gift."
+    id: "new-york-seal",
+    name: "Great Seal of New York",
+    category: "seals",
+    organizationType: "State",
+    description: "Features Liberty and Justice as female figures flanking the state shield. Liberty tramples a crown (rejecting monarchy) while Justice holds scales and sword. These classical personifications appear on official New York State documents.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "New York—with thousands of churches and one of America's largest Christian populations—uses classical goddess imagery on its seal. Liberty and Justice represent values compatible with biblical teaching. New Yorkers engage with this imagery without worship.",
+    biblicalParallels: [
+      "Where the Spirit of the Lord is, there is liberty (2 Corinthians 3:17)",
+      "Do justice, love mercy (Micah 6:8)",
+      "Justice and righteousness uphold God's throne (Psalm 97:2)",
+      "The Lord loves righteousness and justice (Psalm 33:5)"
+    ],
+    scriptureReferences: ["2 Corinthians 3:17", "Micah 6:8", "Psalm 97:2", "Psalm 33:5"],
+    cautionLevel: "low"
   },
   {
-    id: "dagda-deity",
-    name: "The Dagda",
-    category: "deity",
-    description: "Celtic father god with a magic cauldron of plenty and a club. Represented abundance, fertility, and protection.",
-    christianPerspective: "God is our Father who provides abundantly. The cauldron of plenty echoes God's provision—loaves and fishes, manna from heaven. Protection and provision are thoroughly biblical themes.",
-    cautionLevel: "low",
-    scripturalContext: "Philippians 4:19 - 'My God will meet all your needs according to the riches of his glory.'"
+    id: "columbia-university-seal",
+    name: "Columbia University Seal",
+    category: "seals",
+    organizationType: "College",
+    description: "Features Alma Mater seated on a throne, holding a scepter. Originally King's College (founded by Anglicans), Columbia uses classical imagery of a goddess-like figure representing knowledge and nurturing of students.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Columbia was founded as a Christian institution. Its classical imagery represents learning and intellectual nurturing—values compatible with faith. Christian students and faculty serve at Columbia without spiritual compromise from the seal's imagery.",
+    biblicalParallels: [
+      "As a mother comforts her child, so will I comfort you (Isaiah 66:13)",
+      "Wisdom calls aloud in the public square (Proverbs 1:20)",
+      "The Lord gives wisdom; from His mouth come knowledge and understanding (Proverbs 2:6)",
+      "Train up a child in the way he should go (Proverbs 22:6)"
+    ],
+    scriptureReferences: ["Isaiah 66:13", "Proverbs 1:20", "Proverbs 2:6", "Proverbs 22:6"],
+    cautionLevel: "low"
   },
   {
-    id: "cernunnos-deity",
-    name: "Cernunnos",
-    category: "deity",
-    description: "Celtic horned god of nature, animals, and fertility. Often depicted with antlers and surrounded by animals.",
-    christianPerspective: "God gave humanity dominion over animals and nature. Stewardship of creation is biblical. Nature reveals God's glory. The imagery of harmony with creation reflects Eden.",
-    cautionLevel: "medium",
-    cautionNote: "Some occult groups have adopted this imagery. Focus on biblical creation stewardship.",
-    scripturalContext: "Genesis 1:28 - 'Rule over the fish in the sea and the birds in the sky.'"
+    id: "yale-university-seal",
+    name: "Yale University Seal",
+    category: "seals",
+    organizationType: "College",
+    description: "Features Hebrew text 'Urim and Thummim' (Light and Truth) and the Latin motto 'Lux et Veritas.' Founded by Congregationalist ministers, Yale combines biblical Hebrew with classical Latin traditions.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Yale was founded explicitly as a Christian institution. Its seal uses biblical Hebrew (Urim and Thummim from the high priest's breastplate). This demonstrates how Christian institutions have always blended biblical and classical traditions without spiritual compromise.",
+    biblicalParallels: [
+      "Urim and Thummim on the high priest's breastplate (Exodus 28:30)",
+      "Your word is a lamp to my feet and a light to my path (Psalm 119:105)",
+      "You shall know the truth and the truth shall make you free (John 8:32)",
+      "Jesus is the light of the world (John 8:12)"
+    ],
+    scriptureReferences: ["Exodus 28:30", "Psalm 119:105", "John 8:32", "John 8:12"],
+    cautionLevel: "low"
   },
   {
-    id: "morrigan-deity",
-    name: "The Morrigan",
-    category: "deity",
-    description: "Celtic goddess of war, fate, and death. Often appeared as a crow. Triple goddess figure.",
-    christianPerspective: "War and death are realities Scripture addresses. God is Lord of both life and death. Victory over death through Christ is the ultimate triumph. Mortality points to resurrection hope.",
-    cautionLevel: "medium",
-    cautionNote: "Death imagery should point to Christ's victory, not glorify death.",
-    scripturalContext: "1 Corinthians 15:54 - 'Death has been swallowed up in victory.'"
+    id: "princeton-university-seal",
+    name: "Princeton University Seal",
+    category: "seals",
+    organizationType: "College",
+    description: "Features an open Bible with the motto 'Dei Sub Numine Viget' (Under God's Power She Flourishes). Founded by Presbyterians, Princeton's seal combines classical Latin with explicit Christian imagery.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Princeton was founded by Presbyterian ministers to train clergy. Its seal explicitly acknowledges God's sovereignty. The use of Latin—the classical language—alongside Christian imagery demonstrates the compatibility of classical education with Christian faith.",
+    biblicalParallels: [
+      "Unless the Lord builds the house, the builders labor in vain (Psalm 127:1)",
+      "In Him we live and move and have our being (Acts 17:28)",
+      "The fear of the Lord is the beginning of wisdom (Proverbs 9:10)",
+      "Blessed is the nation whose God is the Lord (Psalm 33:12)"
+    ],
+    scriptureReferences: ["Psalm 127:1", "Acts 17:28", "Proverbs 9:10", "Psalm 33:12"],
+    cautionLevel: "low"
   },
   {
-    id: "lugh-deity",
-    name: "Lugh",
-    category: "deity",
-    description: "Celtic god of many skills—war, craftsmanship, poetry, and kingship. Master of all arts.",
-    christianPerspective: "Skill in many areas is a gift. Bezalel was filled with the Spirit for craftsmanship. Excellence in multiple domains glorifies the Creator who gives all gifts.",
-    cautionLevel: "low",
-    scripturalContext: "Exodus 35:31 - 'Filled him with the Spirit of God, with wisdom, understanding, and knowledge in all kinds of crafts.'"
+    id: "harvard-university-seal",
+    name: "Harvard University Seal",
+    category: "seals",
+    organizationType: "College",
+    description: "Features the Latin motto 'Veritas' (Truth) on three open books. Founded by Puritans to train ministers, Harvard's shield uses classical Latin to express Christian educational values.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Harvard was founded explicitly 'for Christ and the Church.' The use of Latin—the language of classical learning—demonstrates how Christian education has always engaged with classical traditions. Truth-seeking in education honors God who is Truth itself.",
+    biblicalParallels: [
+      "You shall know the truth and the truth shall make you free (John 8:32)",
+      "Jesus is the way, the truth, and the life (John 14:6)",
+      "Guide me in Your truth and teach me (Psalm 25:5)",
+      "The sum of Your word is truth (Psalm 119:160)"
+    ],
+    scriptureReferences: ["John 8:32", "John 14:6", "Psalm 25:5", "Psalm 119:160"],
+    cautionLevel: "low"
   },
   {
-    id: "danu-deity",
-    name: "Danu",
-    category: "deity",
-    description: "Celtic mother goddess and ancestor of the Tuatha Dé Danann. Associated with rivers and the earth.",
-    christianPerspective: "Rivers and earth are God's creation. Water as life-giving is thoroughly biblical. God's motherly care is expressed in Scripture. Creation care is a Christian calling.",
-    cautionLevel: "low",
-    scripturalContext: "Isaiah 66:13 - 'As a mother comforts her child, so will I comfort you.'"
+    id: "howard-university-seal",
+    name: "Howard University Seal",
+    category: "seals",
+    organizationType: "College (HBCU)",
+    description: "Features the motto 'Veritas et Utilitas' (Truth and Service) with an open Bible and torch. Founded to educate freed slaves after the Civil War, Howard combines Christian values with classical educational traditions.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Howard was founded by Christians committed to racial justice and education. Its seal combines biblical imagery (open Bible) with classical elements (Latin motto, torch). HBCU seals demonstrate how Black Christian institutions embraced classical education while maintaining biblical faith.",
+    biblicalParallels: [
+      "You shall know the truth and the truth shall make you free (John 8:32)",
+      "Faith without works is dead (James 2:17)",
+      "Let your light shine before others (Matthew 5:16)",
+      "Whatever you do, do it heartily as to the Lord (Colossians 3:23)"
+    ],
+    scriptureReferences: ["John 8:32", "James 2:17", "Matthew 5:16", "Colossians 3:23"],
+    cautionLevel: "low"
   },
   {
-    id: "cuchulain-deity",
-    name: "Cú Chulainn",
-    category: "deity",
-    description: "Celtic hero-demigod of Ulster, known for incredible feats of strength and his battle frenzy. Ireland's greatest warrior.",
-    christianPerspective: "Heroes who fight for justice appear throughout Scripture—Samson, David, Joshua. Strength and courage in righteous causes are celebrated. The warrior motif points to spiritual warfare.",
-    cautionLevel: "low",
-    scripturalContext: "Ephesians 6:10 - 'Be strong in the Lord and in his mighty power.'"
+    id: "spelman-college-seal",
+    name: "Spelman College Seal",
+    category: "seals",
+    organizationType: "College (HBCU)",
+    description: "Features Gaines Hall with the torch of learning and the motto 'Our Whole School for Christ.' Founded by Baptist missionaries, Spelman explicitly combines Christian mission with classical educational imagery.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Spelman's motto is explicitly Christian: 'Our Whole School for Christ.' Yet it uses the classical torch of learning without contradiction. This HBCU demonstrates that Black Christian institutions have always integrated faith with classical educational traditions.",
+    biblicalParallels: [
+      "Whatever you do, do all to the glory of God (1 Corinthians 10:31)",
+      "Your word is a lamp to my feet (Psalm 119:105)",
+      "Train up a child in the way she should go (Proverbs 22:6)",
+      "Seek first the kingdom of God (Matthew 6:33)"
+    ],
+    scriptureReferences: ["1 Corinthians 10:31", "Psalm 119:105", "Proverbs 22:6", "Matthew 6:33"],
+    cautionLevel: "low"
   },
   {
-    id: "epona-deity",
-    name: "Epona",
-    category: "deity",
-    description: "Celtic goddess of horses, fertility, and protection. Adopted even by Roman cavalry.",
-    christianPerspective: "Horses in Scripture represent strength and provision for battle. God created animals for human partnership. Cavalry and equestrian imagery appears throughout biblical warfare narratives.",
-    cautionLevel: "low",
-    scripturalContext: "Psalm 20:7 - 'Some trust in chariots and some in horses, but we trust in the name of the LORD our God.'"
-  },
-  {
-    id: "ogma-deity",
-    name: "Ogma",
-    category: "deity",
-    description: "Celtic god of eloquence and language. Credited with inventing the Ogham script. Champion of the gods.",
-    christianPerspective: "Language is God's gift enabling relationship and revelation. Scripture is God's written Word. Eloquence in service of truth glorifies God. Words have power (Proverbs 18:21).",
-    cautionLevel: "low",
-    scripturalContext: "Proverbs 25:11 - 'A word fitly spoken is like apples of gold in a setting of silver.'"
+    id: "morehouse-college-seal",
+    name: "Morehouse College Seal",
+    category: "seals",
+    organizationType: "College (HBCU)",
+    description: "Features a torch and the motto 'Et Facta Est Lux' (And There Was Light). Founded by Baptist minister William Jefferson White, Morehouse's seal uses Genesis 1:3 in classical Latin.",
+    doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
+    christianPerspective: "Morehouse's Latin motto directly quotes Scripture: 'And there was light' (Genesis 1:3). This HBCU demonstrates how classical language enhances rather than undermines biblical truth. Martin Luther King Jr. graduated from Morehouse, showing how faith and classical learning produce transformative leaders.",
+    biblicalParallels: [
+      "And God said, Let there be light: and there was light (Genesis 1:3)",
+      "Jesus is the light of the world (John 8:12)",
+      "Arise, shine; for your light has come (Isaiah 60:1)",
+      "The people who walked in darkness have seen a great light (Isaiah 9:2)"
+    ],
+    scriptureReferences: ["Genesis 1:3", "John 8:12", "Isaiah 60:1", "Isaiah 9:2"],
+    cautionLevel: "low"
   },
   // Published Ritual Elements
   {
