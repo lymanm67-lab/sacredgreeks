@@ -3147,5 +3147,96 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
     ancientConnection: "The original Greek oath invoked Apollo, Asclepius, Hygieia, and Panacea as witnesses.",
     modernUsage: "Modern medical oaths have been revised, and most no longer call on Greek gods, but the tradition keeps the Hippocratic name.",
     appUsage: "Shows how a practice with explicit Greek deity language has been adapted, while BGLOs are often denied that same possibility."
+  },
+  // Halloween and Thanksgiving
+  {
+    id: "halloween",
+    category: "death",
+    symbol: "Halloween",
+    ancientConnection: "Rooted in the Celtic festival Samhain, when the veil between the living and dead was believed thinnest. Romans merged it with Feralia (honoring the dead) and Pomona (harvest goddess). The Catholic Church layered All Hallows' Eve over it.",
+    modernUsage: "Churches host 'trunk or treat' events, harvest festivals, and costume parties. Many Christians participate in trick-or-treating.",
+    appUsage: "If Christians can redeem a holiday with explicit pagan and spirit-world origins, why single out Greek letters as irredeemable?"
+  },
+  {
+    id: "thanksgiving",
+    category: "death",
+    symbol: "Thanksgiving",
+    ancientConnection: "Parallels ancient harvest festivals: Greek Thesmophoria honoring Demeter, Roman Cerelia for Ceres, and various Indigenous harvest traditions. The Pilgrims combined Protestant thanksgiving days with harvest celebration customs.",
+    modernUsage: "A national holiday centered on gratitude, family, and feasting—embraced by churches across America.",
+    appUsage: "Shows how a tradition with roots in goddess-honoring harvest festivals became a beloved Christian practice."
+  },
+  // Death Rituals - Expanded
+  {
+    id: "wake-services",
+    category: "death",
+    symbol: "Wake Services and Viewings",
+    ancientConnection: "From the medieval practice of 'watching' or 'waking' the dead, rooted in fears that spirits might steal the body or that the person might not truly be dead. Celtic and Germanic traditions involved staying awake to guard against evil spirits.",
+    modernUsage: "Churches and funeral homes host wakes as times for family to gather, view the deceased, and share memories before burial.",
+    appUsage: "Christians transformed a superstition-based practice into meaningful ministry and community care."
+  },
+  {
+    id: "funeral-processions",
+    category: "death",
+    symbol: "Funeral Processions",
+    ancientConnection: "Roman funerals featured elaborate processions with musicians, mourners, and ancestral masks. Greek funerals included processions with the body displayed. Processions were meant to honor the dead and ward off spirits.",
+    modernUsage: "Christian funerals include processions to gravesites, often led by clergy, with family following the hearse.",
+    appUsage: "A practice with clear pagan ceremonial roots now serves Christian burial traditions without concern."
+  },
+  // Egyptian Beauty Traditions
+  {
+    id: "eyeliner-kohl",
+    category: "beauty",
+    symbol: "Eyeliner (Kohl)",
+    ancientConnection: "Ancient Egyptians applied kohl around their eyes to honor the gods Ra and Horus. The distinctive 'cat eye' was believed to invoke the Eye of Horus for protection and was associated with Isis and Hathor. Both men and women wore it in religious ceremonies.",
+    modernUsage: "Eyeliner is a basic cosmetic used in church choirs, professional settings, and daily life. Winged eyeliner remains popular.",
+    appUsage: "If kohl—originally applied to invoke Egyptian deities—is acceptable, why are Greek letters uniquely problematic?"
+  },
+  {
+    id: "eye-shadow-expanded",
+    category: "beauty",
+    symbol: "Eye Shadow and Face Paint",
+    ancientConnection: "Egyptians used malachite (green) and galena (black) eye paints in religious rituals honoring Isis, Osiris, and other deities. Priestesses painted their faces for temple worship. Blue eye shadow honored Amun-Ra.",
+    modernUsage: "Eye shadow and makeup are worn in worship services, on praise teams, and in Christian media without spiritual concern.",
+    appUsage: "Cosmetics with explicit deity-worship origins are universally accepted while Greek organizational symbols are questioned."
+  },
+  {
+    id: "hoop-earrings",
+    category: "beauty",
+    symbol: "Hoop Earrings",
+    ancientConnection: "Originated in ancient Sumeria around 2500 BCE and became prominent in Egypt, where they symbolized status and were associated with goddess worship. Egyptian depictions show Isis and Hathor wearing large gold hoops. In some cultures, hoops were believed to ward off evil spirits.",
+    modernUsage: "Hoop earrings are standard fashion worn in churches, including by pastors, worship leaders, and first ladies.",
+    appUsage: "Jewelry with goddess-worship and spirit-protection origins is worn without question in sacred spaces."
+  },
+  {
+    id: "braids-locs",
+    category: "beauty",
+    symbol: "Braids, Locs, and Protective Styles",
+    ancientConnection: "Egyptian royalty and priestesses wore intricate braids to honor deities. Specific braid patterns were associated with Isis worship and indicated social/spiritual status. Locs have ancient African spiritual significance. Cornrows were used in African spiritual ceremonies.",
+    modernUsage: "Braids, locs, twists, and protective styles are celebrated in Black churches and worn by clergy, choirs, and congregations.",
+    appUsage: "Hairstyles with deep spiritual and deity-worship origins are embraced in Christian culture without theological debate."
+  },
+  {
+    id: "wigs-expanded",
+    category: "beauty",
+    symbol: "Wigs and Hair Pieces",
+    ancientConnection: "Egyptian priests shaved their heads and wore wigs as part of ritual purity. Pharaohs wore ceremonial wigs to embody divine authority. Wigs were offerings to the gods and worn in temple worship. Greek and Roman elites adopted the practice for status.",
+    modernUsage: "Wigs are worn by pastors, first ladies, choir members, and everyday Christians without spiritual concern.",
+    appUsage: "If wigs—originally worn in temple worship to embody divine authority—are acceptable, the inconsistency becomes clear."
+  },
+  {
+    id: "perfume-incense",
+    category: "beauty",
+    symbol: "Perfume and Fragrant Oils",
+    ancientConnection: "Egyptians created perfumes as offerings to Isis, Osiris, and Ra. Kyphi was a sacred incense burned in temples. Anointing oils were used in mummification and deity worship. The word 'perfume' comes from Latin 'per fumum' (through smoke)—referring to burning offerings to gods.",
+    modernUsage: "Christians wear perfume, use anointing oil, and burn incense (in liturgical traditions) as part of worship.",
+    appUsage: "Fragrance practices originating in deity worship are fully integrated into Christian practice and commerce."
+  },
+  {
+    id: "nail-polish",
+    category: "beauty",
+    symbol: "Nail Polish and Manicures",
+    ancientConnection: "Ancient Babylonians and Egyptians painted nails to indicate class and invoke divine favor. In Egypt, red nails were reserved for royalty and associated with Isis. Chinese dynasties used nail color in religious ceremonies.",
+    modernUsage: "Nail polish is worn in churches, by worship leaders, and in Christian professional settings.",
+    appUsage: "Another beauty practice with deity-worship origins that is universally accepted in Christian culture."
   }
 ];
