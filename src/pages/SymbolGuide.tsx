@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, ExternalLink, Share2, FileDown, Scale, History, Sparkles, Printer, Crown, Building, GraduationCap, Landmark, Users, Heart, Scroll, BookOpen, LayoutGrid, List } from 'lucide-react';
 import { symbolGuideContent, ritualGuideContent, symbolCategories, culturalComparisons, culturalComparisonCategories, SymbolEntry, RitualEntry, CulturalComparisonEntry } from '@/data/symbolGuideContent';
 import { getSymbolImageUrl } from '@/data/symbolImageUrls';
@@ -51,6 +52,77 @@ const categoryIcons: Record<string, React.ReactNode> = {
   symbols: <Badge variant="outline" className="gap-1"><Sparkles className="w-3 h-3" /> Symbols</Badge>,
   oaths: <Badge variant="outline" className="gap-1"><Scroll className="w-3 h-3" /> Oaths</Badge>,
 };
+
+type OathTone = 'amber' | 'blue' | 'emerald' | 'muted';
+
+function OathSection({
+  title,
+  content,
+  tone,
+  defaultOpen,
+}: {
+  title: string;
+  content: string;
+  tone: OathTone;
+  defaultOpen?: boolean;
+}) {
+  const [open, setOpen] = useState(!!defaultOpen);
+
+  const toneClasses: Record<OathTone, { summary: string; icon: React.ReactNode; label?: string }> = {
+    amber: {
+      summary: 'bg-amber-500/20 hover:bg-amber-500/30 border-amber-500/40',
+      icon: <History className="w-4 h-4" />,
+    },
+    blue: {
+      summary: 'bg-blue-500/20 hover:bg-blue-500/30 border-blue-500/40',
+      icon: <BookOpen className="w-4 h-4" />,
+      label: 'English Translation',
+    },
+    emerald: {
+      summary: 'bg-emerald-500/20 hover:bg-emerald-500/30 border-emerald-500/40',
+      icon: <Scroll className="w-4 h-4" />,
+    },
+    muted: {
+      summary: 'bg-muted/50 hover:bg-muted border-border',
+      icon: <Scroll className="w-4 h-4" />,
+    },
+  };
+
+  const toneDef = toneClasses[tone];
+
+  return (
+    <div className="space-y-0">
+      <button
+        type="button"
+        onClick={() => setOpen(v => !v)}
+        className={cn(
+          'w-full p-3 rounded-lg border cursor-pointer transition-colors flex items-center justify-between',
+          toneDef.summary,
+        )}
+        aria-expanded={open}
+      >
+        <h5 className="font-semibold text-sm flex items-center gap-2 text-left">
+          {toneDef.icon}
+          {toneDef.label ?? title}
+        </h5>
+        <ChevronDown className={cn('w-4 h-4 transition-transform', open ? 'rotate-180' : '')} />
+      </button>
+
+      {open && (
+        <div className="bg-muted/40 p-3 rounded-b-lg border border-t-0">
+          <p
+            className={cn(
+              'text-sm text-foreground whitespace-pre-wrap',
+              title.startsWith('ORIGINAL') ? 'italic font-serif' : '',
+            )}
+          >
+            {content}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
 
 const SymbolGuide = () => {
   const { user } = useAuth();
@@ -434,61 +506,37 @@ const SymbolGuide = () => {
           {symbol.cautionNote && (
             symbol.category === 'oaths' ? (
               <div className="space-y-2">
-                {symbol.cautionNote.split('\n\n').map((section, index) => {
-                  const trimmedSection = section.trim();
-                  if (trimmedSection.startsWith('ORIGINAL GREEK TEXT') || trimmedSection.startsWith('ORIGINAL LATIN')) {
-                    const title = trimmedSection.split(':')[0];
-                    const content = trimmedSection.split('\n').slice(1).join('\n').replace(/^'|'$/g, '');
-                      return (
-                        <details key={index} className="group">
-                          <summary className="list-none w-full bg-amber-500/20 hover:bg-amber-500/30 p-3 rounded-lg border border-amber-500/40 cursor-pointer transition-colors flex items-center justify-between">
-                            <h5 className="font-semibold text-amber-700 dark:text-amber-400 text-sm flex items-center gap-2">
-                              <History className="w-4 h-4" />
-                              {title}
-                            </h5>
-                            <ChevronDown className="w-4 h-4 text-amber-600 dark:text-amber-400 transition-transform group-open:rotate-180" />
-                          </summary>
-                          <div className="bg-muted/40 p-3 rounded-b-lg border border-t-0">
-                            <p className="text-sm text-foreground italic font-serif whitespace-pre-wrap">{content}</p>
-                          </div>
-                        </details>
-                      );
-                  } else if (trimmedSection.startsWith('ORIGINAL ENGLISH TRANSLATION')) {
-                    const content = trimmedSection.split('\n').slice(1).join('\n').replace(/^'|'$/g, '');
+                {(() => {
+                  const note = symbol.cautionNote;
+
+                  const headerRegex = /(ORIGINAL GREEK TEXT[^:]*:|ORIGINAL LATIN[^:]*:|ORIGINAL ENGLISH TRANSLATION:|MODERN[^:]*:|DECLARATION OF GENEVA[^:]*:|CONSTITUTIONAL TEXT[^:]*:|TRADITIONAL ADDITION[^:]*:|AFFIRMATION OPTION[^:]*:)/g;
+                  const headers = Array.from(note.matchAll(headerRegex));
+                  if (headers.length === 0) return null;
+
+                  return headers.map((h, i) => {
+                    const title = h[0].replace(/:$/, "");
+                    const start = (h.index ?? 0) + h[0].length;
+                    const end = i + 1 < headers.length ? (headers[i + 1].index ?? note.length) : note.length;
+                    const rawContent = note.slice(start, end).trim();
+                    const content = rawContent.replace(/^'+|'+$/g, "");
+
+                    const isOriginal = title.startsWith('ORIGINAL GREEK TEXT') || title.startsWith('ORIGINAL LATIN');
+                    const isEnglish = title.startsWith('ORIGINAL ENGLISH TRANSLATION');
+                    const isModern = title.startsWith('MODERN') || title.startsWith('DECLARATION OF GENEVA') || title.startsWith('CONSTITUTIONAL TEXT') || title.startsWith('TRADITIONAL ADDITION') || title.startsWith('AFFIRMATION OPTION');
+
+                    const tone: OathTone = isOriginal ? 'amber' : isEnglish ? 'blue' : isModern ? 'emerald' : 'muted';
+
                     return (
-                      <details key={index} className="group">
-                        <summary className="list-none w-full bg-blue-500/20 hover:bg-blue-500/30 p-3 rounded-lg border border-blue-500/40 cursor-pointer transition-colors flex items-center justify-between">
-                          <h5 className="font-semibold text-blue-700 dark:text-blue-400 text-sm flex items-center gap-2">
-                            <BookOpen className="w-4 h-4" />
-                            English Translation
-                          </h5>
-                          <ChevronDown className="w-4 h-4 text-blue-600 dark:text-blue-400 transition-transform group-open:rotate-180" />
-                        </summary>
-                        <div className="bg-muted/40 p-3 rounded-b-lg border border-t-0">
-                          <p className="text-sm text-foreground whitespace-pre-wrap">{content}</p>
-                        </div>
-                      </details>
+                      <OathSection
+                        key={`${symbol.id}-oath-${i}`}
+                        title={title}
+                        content={content}
+                        tone={tone}
+                        defaultOpen={isModern}
+                      />
                     );
-                  } else if (trimmedSection.startsWith('MODERN') || trimmedSection.startsWith('DECLARATION OF GENEVA') || trimmedSection.startsWith('CONSTITUTIONAL TEXT') || trimmedSection.startsWith('TRADITIONAL ADDITION') || trimmedSection.startsWith('AFFIRMATION OPTION')) {
-                    const title = trimmedSection.split(':')[0];
-                    const content = trimmedSection.split('\n').slice(1).join('\n').replace(/^'|'$/g, '');
-                    return (
-                      <details key={index} className="group" open>
-                        <summary className="list-none w-full bg-emerald-500/20 hover:bg-emerald-500/30 p-3 rounded-lg border border-emerald-500/40 cursor-pointer transition-colors flex items-center justify-between">
-                          <h5 className="font-semibold text-emerald-700 dark:text-emerald-400 text-sm flex items-center gap-2">
-                            <Scroll className="w-4 h-4" />
-                            {title}
-                          </h5>
-                          <ChevronDown className="w-4 h-4 text-emerald-600 dark:text-emerald-400 transition-transform group-open:rotate-180" />
-                        </summary>
-                        <div className="bg-muted/40 p-3 rounded-b-lg border border-t-0">
-                          <p className="text-sm text-foreground whitespace-pre-wrap">{content}</p>
-                        </div>
-                      </details>
-                    );
-                  }
-                  return null;
-                })}
+                  });
+                })()}
               </div>
             ) : (
               <div className="bg-badge-warning/10 p-3 rounded-lg border border-badge-warning/20">
