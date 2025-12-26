@@ -6,8 +6,9 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
-import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, ExternalLink, Share2, FileDown, Scale, History, Sparkles, Printer, Crown, Building, GraduationCap, Landmark, Users, Heart, Scroll, BookOpen, LayoutGrid, List } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, ExternalLink, Share2, FileDown, Scale, History, Sparkles, Printer, Crown, Building, GraduationCap, Landmark, Users, Heart, Scroll, BookOpen, LayoutGrid, List, Filter } from 'lucide-react';
 import { symbolGuideContent, ritualGuideContent, symbolCategories, customsSubcategories, culturalComparisons, culturalComparisonCategories, SymbolEntry, RitualEntry, CulturalComparisonEntry } from '@/data/symbolGuideContent';
 import { getSymbolImageUrl } from '@/data/symbolImageUrls';
 import { ListenButton } from '@/components/ListenButton';
@@ -1070,46 +1071,101 @@ const SymbolGuide = () => {
           </TabsList>
 
           <TabsContent value="symbols" className="space-y-4">
-            {/* Category Filter */}
-            <div className="flex flex-wrap gap-2 mb-4">
-              {symbolCategories.map(cat => (
-                <Button
-                  key={cat.id}
-                  variant={symbolCategory === cat.id ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => {
-                    setSymbolCategory(cat.id);
-                    if (cat.id !== 'customs') {
+            {/* Enhanced Filter Bar with Dropdowns */}
+            <Card className="p-4 bg-gradient-to-r from-muted/50 to-background border">
+              <div className="flex flex-wrap items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <Filter className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-sm font-medium">Filter:</span>
+                </div>
+                
+                {/* Main Category Dropdown */}
+                <Select 
+                  value={symbolCategory} 
+                  onValueChange={(value) => {
+                    setSymbolCategory(value);
+                    if (value !== 'customs') {
                       setCustomsSubcategory('all');
                     }
                   }}
-                  className={symbolCategory === cat.id ? 'bg-sacred hover:bg-sacred/90' : ''}
                 >
-                  {cat.label}
-                </Button>
-              ))}
-            </div>
+                  <SelectTrigger className="w-[180px] bg-background">
+                    <SelectValue placeholder="Select category" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background border shadow-lg z-50">
+                    {symbolCategories.map(cat => (
+                      <SelectItem key={cat.id} value={cat.id}>
+                        {cat.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
 
-            {/* Customs Subcategory Filter - Only shown when Customs is selected */}
-            {symbolCategory === 'customs' && (
-              <div className="flex flex-wrap gap-2 mb-4 p-3 bg-muted/50 rounded-lg border">
-                <span className="text-sm text-muted-foreground mr-2 self-center">Filter by type:</span>
-                {customsSubcategories.map(sub => (
-                  <Button
-                    key={sub.id}
-                    variant={customsSubcategory === sub.id ? 'default' : 'ghost'}
-                    size="sm"
-                    onClick={() => setCustomsSubcategory(sub.id)}
-                    className={cn(
-                      "h-7 text-xs",
-                      customsSubcategory === sub.id ? 'bg-amber-600 hover:bg-amber-700' : ''
-                    )}
-                  >
-                    {sub.label}
-                  </Button>
-                ))}
+                {/* Subcategory Dropdown - Only for Customs */}
+                {symbolCategory === 'customs' && (
+                  <Select value={customsSubcategory} onValueChange={setCustomsSubcategory}>
+                    <SelectTrigger className="w-[180px] bg-background border-amber-500/50">
+                      <SelectValue placeholder="Select subcategory" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border shadow-lg z-50">
+                      {customsSubcategories.map(sub => (
+                        <SelectItem key={sub.id} value={sub.id}>
+                          {sub.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+
+                {/* Results Count */}
+                <div className="ml-auto flex items-center gap-2">
+                  <Badge variant="secondary" className="bg-sacred/10 text-sacred">
+                    {filteredSymbols.length} results
+                  </Badge>
+                  {(symbolCategory !== 'all' || customsSubcategory !== 'all') && (
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={() => {
+                        setSymbolCategory('all');
+                        setCustomsSubcategory('all');
+                      }}
+                      className="text-xs h-7"
+                    >
+                      Clear filters
+                    </Button>
+                  )}
+                </div>
               </div>
-            )}
+
+              {/* Active Filters Display */}
+              {(symbolCategory !== 'all' || customsSubcategory !== 'all') && (
+                <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t">
+                  <span className="text-xs text-muted-foreground">Active:</span>
+                  {symbolCategory !== 'all' && (
+                    <Badge 
+                      variant="outline" 
+                      className="text-xs cursor-pointer hover:bg-destructive/10"
+                      onClick={() => {
+                        setSymbolCategory('all');
+                        setCustomsSubcategory('all');
+                      }}
+                    >
+                      {symbolCategories.find(c => c.id === symbolCategory)?.label} ×
+                    </Badge>
+                  )}
+                  {symbolCategory === 'customs' && customsSubcategory !== 'all' && (
+                    <Badge 
+                      variant="outline" 
+                      className="text-xs cursor-pointer hover:bg-destructive/10 border-amber-500/50"
+                      onClick={() => setCustomsSubcategory('all')}
+                    >
+                      {customsSubcategories.find(c => c.id === customsSubcategory)?.label} ×
+                    </Badge>
+                  )}
+                </div>
+              )}
+            </Card>
 
             {filteredSymbols.length === 0 && (
               <Card className="p-8 text-center">
@@ -1159,18 +1215,26 @@ const SymbolGuide = () => {
               </CardContent>
             </Card>
             
-            <div className="flex flex-wrap gap-2 mb-4">
-              {culturalComparisonCategories.map(cat => (
-                <Button
-                  key={cat.id}
-                  variant={comparisonCategory === cat.id ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setComparisonCategory(cat.id)}
-                  className={comparisonCategory === cat.id ? 'bg-sacred hover:bg-sacred/90' : ''}
-                >
-                  {cat.label}
-                </Button>
-              ))}
+            <div className="flex items-center gap-4 mb-4">
+              <div className="flex items-center gap-2">
+                <Filter className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm font-medium">Category:</span>
+              </div>
+              <Select value={comparisonCategory} onValueChange={setComparisonCategory}>
+                <SelectTrigger className="w-[200px] bg-background">
+                  <SelectValue placeholder="Select category" />
+                </SelectTrigger>
+                <SelectContent className="bg-background border shadow-lg z-50">
+                  {culturalComparisonCategories.map(cat => (
+                    <SelectItem key={cat.id} value={cat.id}>
+                      {cat.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Badge variant="secondary" className="bg-sacred/10 text-sacred">
+                {filteredComparisons.length} results
+              </Badge>
             </div>
             
             {filteredComparisons.length === 0 && (
