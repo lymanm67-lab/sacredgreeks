@@ -11,6 +11,7 @@ export interface SymbolEntry {
   cautionLevel: "low" | "medium" | "high";
   cautionNote?: string;
   scripturalContext?: string;
+  imageUrl?: string; // AI-generated image for visual reference
 }
 
 export interface RitualEntry {
@@ -326,6 +327,7 @@ export const symbolGuideContent: SymbolEntry[] = [
     name: "Ahura Mazda (Persian Supreme God)",
     category: "deity",
     organizationType: "Religious/Historical",
+    imageUrl: "/src/assets/symbols/ahura-mazda.jpg",
     description: "Ahura Mazda—\"Lord of Wisdom\"—was Persia's supreme deity representing light, truth, and righteousness. His winged symbol (Faravahar) appears on Iranian architecture and influenced angelology. Zoroastrian concepts of heaven, hell, angels, and final judgment entered Jewish thought during the Persian period and influenced Christian theology.",
     doubleStandard: "Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection.",
     christianPerspective: "God used the Persian period to develop Jewish understanding of angels, resurrection, and apocalyptic hope. Cyrus the Great, who worshipped Ahura Mazda, is called God's \"anointed\" (Isaiah 45:1). God works through various cultures to accomplish His purposes. Truth about light overcoming darkness transcends any single culture.",
