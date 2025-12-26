@@ -9,7 +9,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, ExternalLink, Share2, FileDown, Scale, History, Sparkles, Printer, Crown, Building, GraduationCap, Landmark, Users, Heart, Scroll, BookOpen, LayoutGrid, List, Filter } from 'lucide-react';
-import { symbolGuideContent, ritualGuideContent, symbolCategories, customsSubcategories, culturalComparisons, culturalComparisonCategories, SymbolEntry, RitualEntry, CulturalComparisonEntry } from '@/data/symbolGuideContent';
+import { symbolGuideContent, ritualGuideContent, symbolCategories, customsSubcategories, culturalSubcategories, culturalComparisons, culturalComparisonCategories, SymbolEntry, RitualEntry, CulturalComparisonEntry } from '@/data/symbolGuideContent';
 import { getSymbolImageUrl } from '@/data/symbolImageUrls';
 import { ListenButton } from '@/components/ListenButton';
 import { useAuth } from '@/contexts/AuthContext';
@@ -129,6 +129,7 @@ const SymbolGuide = () => {
   const queryClient = useQueryClient();
   const [symbolCategory, setSymbolCategory] = useState('all');
   const [customsSubcategory, setCustomsSubcategory] = useState('all');
+  const [culturalSubcategory, setCulturalSubcategory] = useState('all');
   const [comparisonCategory, setComparisonCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [bookmarksOpen, setBookmarksOpen] = useState(false);
@@ -327,16 +328,20 @@ const SymbolGuide = () => {
     return symbolGuideContent.filter(s => {
       const matchesCategory = symbolCategory === 'all' || s.category === symbolCategory;
       // Apply subcategory filter when customs is selected
-      const matchesSubcategory = symbolCategory !== 'customs' || 
+      const matchesCustomsSubcategory = symbolCategory !== 'customs' || 
         customsSubcategory === 'all' || 
         s.organizationType === customsSubcategory;
+      // Apply subcategory filter when cultural is selected
+      const matchesCulturalSubcategory = symbolCategory !== 'cultural' || 
+        culturalSubcategory === 'all' || 
+        s.organizationType === culturalSubcategory;
       const matchesSearch = searchQuery === '' || 
         s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         s.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         s.christianPerspective.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesCategory && matchesSubcategory && matchesSearch;
+      return matchesCategory && matchesCustomsSubcategory && matchesCulturalSubcategory && matchesSearch;
     });
-  }, [symbolCategory, customsSubcategory, searchQuery]);
+  }, [symbolCategory, customsSubcategory, culturalSubcategory, searchQuery]);
 
   const filteredRituals = useMemo(() => {
     return ritualGuideContent.filter(r => {
@@ -1118,18 +1123,35 @@ const SymbolGuide = () => {
                   </Select>
                 )}
 
+                {/* Subcategory Dropdown - Only for Cultural */}
+                {symbolCategory === 'cultural' && (
+                  <Select value={culturalSubcategory} onValueChange={setCulturalSubcategory}>
+                    <SelectTrigger className="w-[180px] bg-background border-sacred/50">
+                      <SelectValue placeholder="Select subcategory" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border shadow-lg z-50">
+                      {culturalSubcategories.map(sub => (
+                        <SelectItem key={sub.id} value={sub.id}>
+                          {sub.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+
                 {/* Results Count */}
                 <div className="ml-auto flex items-center gap-2">
                   <Badge variant="secondary" className="bg-sacred/10 text-sacred">
                     {filteredSymbols.length} results
                   </Badge>
-                  {(symbolCategory !== 'all' || customsSubcategory !== 'all') && (
+                  {(symbolCategory !== 'all' || customsSubcategory !== 'all' || culturalSubcategory !== 'all') && (
                     <Button 
                       variant="ghost" 
                       size="sm" 
                       onClick={() => {
                         setSymbolCategory('all');
                         setCustomsSubcategory('all');
+                        setCulturalSubcategory('all');
                       }}
                       className="text-xs h-7"
                     >
@@ -1140,7 +1162,7 @@ const SymbolGuide = () => {
               </div>
 
               {/* Active Filters Display */}
-              {(symbolCategory !== 'all' || customsSubcategory !== 'all') && (
+              {(symbolCategory !== 'all' || customsSubcategory !== 'all' || culturalSubcategory !== 'all') && (
                 <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t">
                   <span className="text-xs text-muted-foreground">Active:</span>
                   {symbolCategory !== 'all' && (
@@ -1150,6 +1172,7 @@ const SymbolGuide = () => {
                       onClick={() => {
                         setSymbolCategory('all');
                         setCustomsSubcategory('all');
+                        setCulturalSubcategory('all');
                       }}
                     >
                       {symbolCategories.find(c => c.id === symbolCategory)?.label} ×
@@ -1162,6 +1185,15 @@ const SymbolGuide = () => {
                       onClick={() => setCustomsSubcategory('all')}
                     >
                       {customsSubcategories.find(c => c.id === customsSubcategory)?.label} ×
+                    </Badge>
+                  )}
+                  {symbolCategory === 'cultural' && culturalSubcategory !== 'all' && (
+                    <Badge 
+                      variant="outline" 
+                      className="text-xs cursor-pointer hover:bg-destructive/10 border-sacred/50"
+                      onClick={() => setCulturalSubcategory('all')}
+                    >
+                      {culturalSubcategories.find(c => c.id === culturalSubcategory)?.label} ×
                     </Badge>
                   )}
                 </div>
