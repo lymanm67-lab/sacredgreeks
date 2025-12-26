@@ -2279,6 +2279,125 @@ export const symbolGuideContent: SymbolEntry[] = [
     ],
     scriptureReferences: ["2 Corinthians 5:17", "Luke 6:38", "Exodus 28:31", "Proverbs 2:6-7"],
     cautionLevel: "low"
+  },
+  {
+    id: "custom-easter",
+    name: "Easter Traditions",
+    category: "customs",
+    organizationType: "Religious Holiday",
+    description: "Easter incorporates symbols from Germanic goddess Eostre (or Ostara), celebrating spring fertility. Easter eggs derive from ancient Persian, Egyptian, and Roman spring festivals symbolizing new life and rebirth. The Easter bunny comes from Germanic fertility symbols associated with Eostre. Even the timing follows the pagan lunar calendar (first Sunday after the first full moon after the spring equinox).",
+    doubleStandard: "Christians celebrate Easter with eggs from pagan fertility rites, bunnies from Germanic goddess worship, and timing based on pagan lunar calculations—all while condemning Greek organizations for far less pagan-connected practices.",
+    christianPerspective: "The Church brilliantly transformed pagan spring festivals into celebration of Christs resurrection—the ultimate new life and rebirth. Eggs and symbols of new life now point to the empty tomb. This is perhaps the greatest example of Christian cultural redemption.",
+    biblicalParallels: [
+      "Christ has been raised from the dead (1 Corinthians 15:20)",
+      "I am the resurrection and the life (John 11:25)",
+      "If anyone is in Christ, new creation (2 Corinthians 5:17)",
+      "He is not here; he has risen (Matthew 28:6)"
+    ],
+    scriptureReferences: ["1 Corinthians 15:20", "John 11:25", "2 Corinthians 5:17", "Matthew 28:6"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-church-steeple",
+    name: "Church Steeples",
+    category: "customs",
+    organizationType: "Church Architecture",
+    description: "Church steeples evolved from ancient Egyptian obelisks (symbols of the sun god Ra), Babylonian ziggurats, and Roman temple spires. Early Christians adopted tall spires to point toward heaven, but the architectural form derives directly from pagan temple architecture. Many European cathedrals were built on former pagan temple sites.",
+    doubleStandard: "Christians worship in buildings with steeples derived from Egyptian sun worship and Babylonian temple architecture without any spiritual concern. Yet Greek organizations using symbolic architecture face accusations of paganism.",
+    christianPerspective: "Church steeples have been completely transformed into symbols pointing toward heaven and Gods transcendence. The architectural form has been redeemed to serve Christian worship. No one worships Ra when entering a steepled church.",
+    biblicalParallels: [
+      "I lift up my eyes to the mountains (Psalm 121:1)",
+      "The heavens declare the glory of God (Psalm 19:1)",
+      "Build a house for my Name (1 Kings 8:17)",
+      "Where two or three gather, I am there (Matthew 18:20)"
+    ],
+    scriptureReferences: ["Psalm 121:1", "Psalm 19:1", "1 Kings 8:17-20", "Matthew 18:20"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-church-dome",
+    name: "Church Domes",
+    category: "customs",
+    organizationType: "Church Architecture",
+    description: "Church domes derive from Roman Pantheon architecture (a temple to all gods) and Byzantine adaptations of Roman imperial architecture. The dome represented the vault of heaven in Roman temples. St. Peters Basilica, Hagia Sophia, and countless churches feature this pagan architectural element.",
+    doubleStandard: "Christians worship under domes copied from the Roman Pantheon—literally a temple to all pagan gods—without spiritual hesitation. Yet Greek organizations using any Roman architectural elements face condemnation.",
+    christianPerspective: "The Church conquered the Roman Empire and converted its architecture to Christian worship. Domes that once honored Jupiter now glorify Christ. This architectural redemption demonstrates Christianitys transformative power over pagan culture.",
+    biblicalParallels: [
+      "The heavens are telling of the glory of God (Psalm 19:1)",
+      "Heaven is my throne (Isaiah 66:1)",
+      "I saw heaven opened (Revelation 19:11)",
+      "Gods temple in heaven was opened (Revelation 11:19)"
+    ],
+    scriptureReferences: ["Psalm 19:1", "Isaiah 66:1", "Revelation 19:11", "Revelation 11:19"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-pulpit",
+    name: "Pulpit & Lectern",
+    category: "customs",
+    organizationType: "Church Architecture",
+    description: "The raised pulpit derives from the Greek bema (judgment seat) and Roman rostra (speaking platforms). Roman orators addressed crowds from elevated platforms in forums. Early Christians adopted this pagan civic architecture for preaching, placing the speaker in a position of authority borrowed from Roman courts.",
+    doubleStandard: "Preachers speak from pulpits—Roman judgment seats and Greek civic platforms—every Sunday without concern. Yet Greek organizations using elevated positions or platforms face criticism for pagan influence.",
+    christianPerspective: "The pulpit has been transformed into a place for proclaiming Gods Word. What was once used for Roman imperial pronouncements now serves the King of Kings. The form serves Christian proclamation, regardless of its origin.",
+    biblicalParallels: [
+      "Ezra read from a wooden platform (Nehemiah 8:4)",
+      "Preach the word in season and out (2 Timothy 4:2)",
+      "How can they hear without a preacher (Romans 10:14)",
+      "He went up on a mountainside and taught (Matthew 5:1)"
+    ],
+    scriptureReferences: ["Nehemiah 8:4", "2 Timothy 4:2", "Romans 10:14", "Matthew 5:1-2"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-basilica-layout",
+    name: "Basilica Floor Plan",
+    category: "customs",
+    organizationType: "Church Architecture",
+    description: "The basilica church layout—central nave, side aisles, raised apse—comes directly from Roman basilicas, which were civic buildings for law courts and commerce, not religious structures. Romans named them after the Greek word basileus (king). Early Christians simply converted these pagan civic buildings into churches.",
+    doubleStandard: "Every traditional church follows the floor plan of Roman pagan civic buildings. Christians worship in architectural forms designed for Roman law courts without any concern. Greek organizations using Roman-influenced gathering spaces face different standards.",
+    christianPerspective: "Constantine gave Christians basilicas, and the Church transformed secular Roman architecture into sacred space. The form that once served emperors now serves the King of Kings. This demonstrates how any space can be consecrated to God.",
+    biblicalParallels: [
+      "The temple was built with dressed stone (1 Kings 6:7)",
+      "My house shall be called a house of prayer (Isaiah 56:7)",
+      "Do not forsake assembling together (Hebrews 10:25)",
+      "The church that meets at their house (Romans 16:5)"
+    ],
+    scriptureReferences: ["1 Kings 6:7", "Isaiah 56:7", "Hebrews 10:25", "Romans 16:5"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-altar",
+    name: "Church Altar",
+    category: "customs",
+    organizationType: "Church Architecture",
+    description: "Church altars derive from pagan sacrificial altars used in Greek, Roman, and ancient Near Eastern temples. The raised table for offerings was central to pagan worship. Early Christians adapted this form for the Eucharist, transforming the sacrifice table into the Lords Table.",
+    doubleStandard: "Christians receive communion at altars—structures borrowed from pagan sacrificial worship—every week without concern. Greek organizations using any altar-like structures face accusations of pagan sacrifice.",
+    christianPerspective: "Christ is the final sacrifice, and the Christian altar commemorates rather than repeats sacrifice. The Lords Table transforms the pagan altar into a place of remembrance and thanksgiving. The form serves the gospel.",
+    biblicalParallels: [
+      "This is my body given for you (Luke 22:19)",
+      "We have an altar (Hebrews 13:10)",
+      "Present your bodies as living sacrifices (Romans 12:1)",
+      "Do this in remembrance of me (1 Corinthians 11:24)"
+    ],
+    scriptureReferences: ["Luke 22:19", "Hebrews 13:10", "Romans 12:1", "1 Corinthians 11:24-25"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-columns-porticos",
+    name: "Columns & Porticos",
+    category: "customs",
+    organizationType: "Church Architecture",
+    description: "The grand columns and porticos of churches—Corinthian, Ionic, Doric—come directly from Greek temple architecture. These styles were developed for temples to Zeus, Athena, and Apollo. The columned entrance became standard for Christian churches, government buildings, and banks worldwide.",
+    doubleStandard: "Christians enter churches through Greek temple porticos designed for Zeus and Athena without spiritual concern. Government buildings, universities, and banks use identical pagan temple architecture. Greek organizations face different standards.",
+    christianPerspective: "Classical architecture represents humanitys best efforts at beauty and grandeur. Christians appropriated these forms to glorify God rather than pagan deities. The columns that once framed idols now frame the Cross.",
+    biblicalParallels: [
+      "The pillars Jachin and Boaz in Solomons temple (1 Kings 7:21)",
+      "Him who overcomes I will make a pillar (Revelation 3:12)",
+      "The pillar and foundation of truth (1 Timothy 3:15)",
+      "Beautiful for situation, the joy of the whole earth (Psalm 48:2)"
+    ],
+    scriptureReferences: ["1 Kings 7:21", "Revelation 3:12", "1 Timothy 3:15", "Psalm 48:2"],
+    cautionLevel: "low"
   }
 ];
 
@@ -2693,10 +2812,7 @@ export const ritualGuideContent: RitualEntry[] = [
 export const symbolCategories = [
   { id: "all", label: "All" },
   { id: "organizational", label: "Organizational" },
-  { id: "cultural", label: "Cultural" },
   { id: "ritual", label: "Ritual" },
-  { id: "fraternities", label: "Fraternities" },
-  { id: "sororities", label: "Sororities" },
   { id: "symbols", label: "Symbols" },
   { id: "oaths", label: "Oaths" },
   { id: "customs", label: "Customs" },
