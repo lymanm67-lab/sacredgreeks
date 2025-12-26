@@ -2525,7 +2525,7 @@ export const symbolGuideContent: SymbolEntry[] = [
   {
     id: "custom-cornrows",
     name: "Cornrows & Braided Hairstyles",
-    category: "customs",
+    category: "cultural",
     organizationType: "African Heritage",
     description: "Cornrows and braided hairstyles carry deep spiritual and cultural significance from West Africa. The intricate patterns often represented rivers, with the cornrow paths symbolizing the life-giving waterways that sustained communities. In some traditions, the braids specifically represented the Nile River—the source of Egyptian civilization and spiritual symbolism. Braiding patterns also served practical purposes: they could encode maps for escape routes during slavery, indicate tribal affiliation, marital status, wealth, or spiritual power. The act of braiding itself was a communal, sacred practice where stories and wisdom were passed down from elder to younger.",
     doubleStandard: "Cornrows are worn proudly in churches today as cultural expression. Yet for decades, these same hairstyles were deemed 'unprofessional' or 'worldly' by some churches—policing the very African heritage that churches now celebrate. Meanwhile, Greek organizational symbols face ongoing scrutiny while African hair traditions are embraced.",
@@ -2543,7 +2543,7 @@ export const symbolGuideContent: SymbolEntry[] = [
   {
     id: "custom-locs",
     name: "Locs (Dreadlocks)",
-    category: "customs",
+    category: "cultural",
     organizationType: "African Heritage",
     description: "Locs have ancient spiritual significance across African cultures. In many West and East African traditions, locs represented a spiritual vow, wisdom, and connection to the divine. Ethiopian Orthodox Christians wore locs as a sign of devotion. The Maasai and other East African peoples wore them as marks of warrior status. Rastafarian culture drew from these African roots, connecting locs to the Nazarite vow in the Bible. The style represents patience (the years of growth), spiritual journey, and rejection of Western beauty standards that attempted to erase African identity.",
     doubleStandard: "Locs are now celebrated in many churches as natural African beauty, yet were once banned from pulpits and deemed 'unkempt' or 'worldly.' The same churches that embrace locs today often question organizational symbols with far less spiritual significance in their origins.",
@@ -2560,7 +2560,7 @@ export const symbolGuideContent: SymbolEntry[] = [
   {
     id: "custom-bantu-knots",
     name: "Bantu Knots",
-    category: "customs",
+    category: "cultural",
     organizationType: "African Heritage",
     description: "Bantu knots originated with the Zulu and other Bantu-speaking peoples of southern Africa, with a history spanning over 100 years. The coiled knots held spiritual significance—the circular shape represented unity, the cosmos, and the cyclical nature of life. Different knot patterns could indicate marital status, age, tribe, or spiritual role. During the African diaspora, Bantu knots became a symbol of resistance and cultural pride, maintaining African identity against forced assimilation.",
     doubleStandard: "Bantu knots are now featured in church fashion shows and worn by worship leaders, yet African Americans who wore them decades ago faced discrimination in Christian spaces for looking 'too African.' Meanwhile, church members critique Greek symbols while celebrating these African-originated styles.",
@@ -2577,7 +2577,7 @@ export const symbolGuideContent: SymbolEntry[] = [
   {
     id: "custom-headwraps",
     name: "Headwraps (Gele, Dhuku, Tignon)",
-    category: "customs",
+    category: "cultural",
     organizationType: "African Heritage",
     description: "Headwraps have deep spiritual and cultural roots across Africa. In West Africa, the gele (Nigeria) and other wraps indicated social status, religion, and occasion. In many African traditions, covering the head showed respect for ancestors and the divine. During slavery and the colonial era, laws like the Louisiana Tignon Laws (1786) forced Black women to cover their hair—intended as suppression, it was transformed into art and resistance. Today, headwraps represent African pride, spiritual covering, and the triumph of culture over oppression.",
     doubleStandard: "Church mothers and first ladies are honored when wearing elaborate headwraps rooted in African spiritual traditions. Yet the same congregations may question Greek organizational practices that have far less spiritual content in their origins.",
@@ -2594,7 +2594,7 @@ export const symbolGuideContent: SymbolEntry[] = [
   {
     id: "custom-afro-natural-hair",
     name: "Afro & Natural Hair Movement",
-    category: "customs",
+    category: "cultural",
     organizationType: "African Heritage",
     description: "The Afro hairstyle emerged as a powerful symbol during the Black Power movement of the 1960s and 70s. Rejecting European beauty standards that deemed African hair 'unacceptable,' activists embraced their natural texture as a statement of self-love, resistance, and African identity. Angela Davis, Kathleen Cleaver, and the Black Panther Party made the Afro iconic. The natural hair movement of the 2000s-present revived this ethos, with Black women and men rejecting chemical straighteners ('creamy crack') to embrace their God-given texture. 'Black is Beautiful' became both a political statement and a spiritual declaration that the Creator's design needs no alteration.",
     doubleStandard: "The Afro is now celebrated in churches as beautiful and natural, yet for decades many Black churches enforced European beauty standards, requiring 'neat' (meaning straightened) hair for choir members, ushers, and leadership. The same communities that once policed natural hair now celebrate it while still scrutinizing organizational symbols.",
@@ -3057,8 +3057,14 @@ export const customsSubcategories = [
   { id: "Birthday Tradition", label: "Birthday" },
   { id: "Religious Holiday", label: "Religious Holidays" },
   { id: "Cultural Holiday", label: "Cultural Holidays" },
-  { id: "Beauty Tradition", label: "Beauty & Fashion" },
   { id: "Architecture", label: "Church Architecture" }
+];
+
+// Subcategories for Cultural - filter by organizationType
+export const culturalSubcategories = [
+  { id: "all", label: "All Cultural" },
+  { id: "African Heritage", label: "African Heritage" },
+  { id: "Greek Life", label: "Greek Life Traditions" }
 ];
 
 export interface CulturalComparisonEntry {
