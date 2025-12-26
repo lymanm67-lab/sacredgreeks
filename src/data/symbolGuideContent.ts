@@ -2419,6 +2419,40 @@ export const symbolGuideContent: SymbolEntry[] = [
     cautionNote: "Participation depends on specific content. Honoring ancestors' memory is appropriate; praying to them is not. Understand the specific ceremony before participating."
   },
   {
+    id: "ritual-wake-services",
+    name: "Wake Services & Viewings",
+    category: "ritual",
+    organizationType: "African Heritage",
+    description: "Wake services—gathering to 'watch' or 'wake' the dead before burial—have roots in medieval European practices combined with West African traditions of communal vigil. In Celtic and Germanic cultures, families stayed awake with the body to guard against evil spirits or ensure the person was truly deceased. West African traditions involved similar communal watching, singing, and storytelling through the night. In African American culture, wakes became sacred gatherings where the community gathered to share memories, sing spirituals, and support the grieving family.",
+    doubleStandard: "Churches and funeral homes host wakes as meaningful ministry, though the practice originated in superstitious beliefs about protecting the body from spirits. The same communities embrace wakes while questioning other practices with similar spiritual origins.",
+    christianPerspective: "The disciples gathered after Jesus' death. Early Christians held vigils for the deceased. Watching with the grieving is a ministry of presence—'mourn with those who mourn' (Romans 12:15). The wake has been transformed into Christian ministry and community care.",
+    biblicalParallels: [
+      "Mourn with those who mourn (Romans 12:15)",
+      "Jesus wept at Lazarus' death (John 11:35)",
+      "Precious in the sight of the Lord is the death of his faithful servants (Psalm 116:15)",
+      "Comfort one another (1 Thessalonians 4:18)"
+    ],
+    scriptureReferences: ["Romans 12:15", "John 11:35", "Psalm 116:15", "1 Thessalonians 4:18"],
+    cautionLevel: "low"
+  },
+  {
+    id: "ritual-funeral-procession",
+    name: "Funeral Processions",
+    category: "ritual",
+    organizationType: "African Heritage",
+    description: "Funeral processions—ceremonially carrying the deceased to their final resting place—appear in virtually every ancient culture. Roman funerals featured elaborate processions with musicians, hired mourners, and ancestral masks. Greek funerals included processions with the body displayed on a bier. West African traditions involved processions with drumming, dancing, and celebration of the deceased's journey to the ancestors. These practices merged in African American culture, particularly visible in New Orleans jazz funerals where mourning transforms into celebration.",
+    doubleStandard: "Christian funerals universally include processions—from church to graveside, led by clergy, with family following the hearse. This practice with clear pagan ceremonial roots now serves Christian burial without any concern, while other ceremonial practices face stricter scrutiny.",
+    christianPerspective: "Jacob's funeral procession to Canaan was elaborate and honored (Genesis 50:7-14). Jesus was carried to His tomb. The early Church adopted funeral processions as acts of honor and witness. The procession represents the Christian's journey home to God.",
+    biblicalParallels: [
+      "Joseph took his father's body to Canaan with a great procession (Genesis 50:7-14)",
+      "They carried Jesus to the tomb (John 19:40-42)",
+      "A great company of the heavenly host (Luke 2:13)",
+      "We who are still alive will be caught up together (1 Thessalonians 4:17)"
+    ],
+    scriptureReferences: ["Genesis 50:7-14", "John 19:40-42", "Luke 2:13", "1 Thessalonians 4:17"],
+    cautionLevel: "low"
+  },
+  {
     id: "custom-naming-ceremony",
     name: "Naming Ceremonies (Outdooring)",
     category: "customs",
