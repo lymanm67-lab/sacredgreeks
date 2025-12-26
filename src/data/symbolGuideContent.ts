@@ -1592,6 +1592,78 @@ export const symbolGuideContent: SymbolEntry[] = [
     cautionLevel: "low",
     cautionNote: "DECLARATION OF GENEVA (2017 revision):\n\n'As a member of the medical profession:\n\nI SOLEMNLY PLEDGE to dedicate my life to the service of humanity;\nThe health and well-being of my patient will be my first consideration;\nI WILL RESPECT the autonomy and dignity of my patient;\nI WILL MAINTAIN the utmost respect for human life;\nI WILL NOT PERMIT considerations of age, disease or disability, creed, ethnic origin, gender, nationality, political affiliation, race, sexual orientation, social standing, or any other factor to intervene between my duty and my patient;\nI WILL RESPECT the secrets that are confided in me;\nI WILL PRACTICE my profession with conscience and dignity;\nI WILL MAKE the health of my patient my first consideration;\nI MAKE THESE PROMISES solemnly, freely, and upon my honour.'"
   },
+  {
+    id: "oath-fraternity-sorority",
+    name: "Fraternity & Sorority Oaths",
+    category: "oaths",
+    organizationType: "Greek Letter Organizations",
+    description: "Greek letter organizations maintain oath traditions that mirror professional oaths in structure and purpose. Like medical, legal, and military oaths, fraternity and sorority pledges create binding commitments to ethical conduct, mutual support, and organizational values. These oaths trace to ancient Greek and Roman traditions of sworn brotherhood.",
+    doubleStandard: "Professional oaths with identical structures—binding members to secrecy, mutual aid, and organizational loyalty—are celebrated in medicine, law, and military. Yet Greek organizational oaths using the same format are labeled 'demonic covenants.'",
+    christianPerspective: "The structure of fraternal oaths mirrors biblical covenants of friendship (Jonathan and David, 1 Samuel 18:3) and Christian vows of mutual support. What matters is the content—whether the oath contradicts Scripture—not the form. Most Greek oaths emphasize virtues Scripture celebrates.",
+    biblicalParallels: [
+      "Jonathan and David made a covenant of friendship (1 Samuel 18:3)",
+      "Bear one another's burdens (Galatians 6:2)",
+      "A friend loves at all times (Proverbs 17:17)",
+      "Iron sharpens iron (Proverbs 27:17)"
+    ],
+    scriptureReferences: ["1 Samuel 18:3", "Galatians 6:2", "Proverbs 17:17", "Proverbs 27:17"],
+    cautionLevel: "low",
+    cautionNote: "EXAMPLE FRATERNITY OATH STRUCTURE (generalized):\n\n'I solemnly pledge to uphold the principles and ideals of [Organization], to support my brothers/sisters in times of need, to pursue excellence in scholarship and character, to serve my community, and to maintain the honor of our bond throughout my life.'\n\nCOMPARISON TO PROFESSIONAL OATHS:\n\n• Medical Oath: 'I will apply...all measures required for the benefit of the sick' → Fraternal: 'I will support my brothers in times of need'\n• Legal Oath: 'I will maintain client confidentiality' → Fraternal: 'I will protect the sacred bonds of our brotherhood'\n• Military Oath: 'I will bear true faith and allegiance' → Fraternal: 'I pledge my loyalty to this organization'\n\nThe structural parallels are unmistakable. The key question for Christians is whether specific content contradicts Scripture, not whether the oath form resembles ancient traditions."
+  },
+  {
+    id: "oath-marriage-ancient",
+    name: "Ancient Marriage Oaths",
+    category: "oaths",
+    organizationType: "Marriage/Family",
+    description: "Marriage vows are among humanity's oldest oaths. Ancient Roman, Greek, Hebrew, and Egyptian cultures all formalized marriage through sacred oaths invoking divine witnesses. Modern wedding vows descend directly from these ancient traditions, demonstrating how oath-taking transcends any single religious tradition.",
+    doubleStandard: "Christian wedding vows follow structures identical to ancient Roman confarreatio ceremonies, yet no one demands couples 'renounce' this pagan heritage. Meanwhile, Greek organizations using similar oath structures face condemnation.",
+    christianPerspective: "God instituted marriage before any culture or religion existed (Genesis 2:24). Wedding vows, regardless of their cultural evolution, reflect the divine pattern of covenant faithfulness. The solemnity of 'till death do us part' echoes the permanence God intended.",
+    biblicalParallels: [
+      "A man shall leave his father and mother and hold fast to his wife (Genesis 2:24)",
+      "What God has joined together, let no man separate (Matthew 19:6)",
+      "Love your wife as Christ loved the church (Ephesians 5:25)",
+      "Husbands and wives submit to one another (Ephesians 5:21)"
+    ],
+    scriptureReferences: ["Genesis 2:24", "Matthew 19:6", "Ephesians 5:25-33", "Malachi 2:14"],
+    cautionLevel: "low",
+    cautionNote: "ANCIENT ROMAN MARRIAGE VOW (Confarreatio, c. 200 BCE):\n\n'Quando tu Gaius, ego Gaia. Ubi tu Gaius, ibi ego Gaia.'\n\nORIGINAL ENGLISH TRANSLATION:\n\n'Where you are Gaius, I am Gaia. Wherever you are, there I will be.' This formula bound husband and wife as one, invoking Jupiter and Juno as witnesses.\n\nANCIENT HEBREW MARRIAGE BLESSING:\n\n'Harei at mekudeshet li, b'taba'at zo, k'dat Moshe v'Yisrael.'\n\n'Behold, you are consecrated to me with this ring, according to the laws of Moses and Israel.'\n\nMODERN CHRISTIAN WEDDING VOWS:\n\n'I, [name], take you, [name], to be my lawfully wedded [spouse], to have and to hold, from this day forward, for better, for worse, for richer, for poorer, in sickness and in health, to love and to cherish, till death do us part, according to God's holy ordinance; and thereto I pledge you my faith.'\n\nThe structure—solemn promise before divine witness—remains unchanged across millennia."
+  },
+  {
+    id: "oath-new-year-resolution",
+    name: "New Year's Resolutions & Vows",
+    category: "oaths",
+    organizationType: "Cultural/Personal",
+    description: "New Year's resolutions trace to ancient Babylonian and Roman traditions. Babylonians made promises to their gods at the start of each year, while Romans made vows to Janus (god of beginnings). This tradition continued through Christian history as 'watchnight' covenant renewals.",
+    doubleStandard: "Millions of Christians make New Year's resolutions—a practice rooted in Babylonian and Roman pagan traditions—without spiritual concern. Yet other cultural practices with similar origins face harsh criticism.",
+    christianPerspective: "The impulse to mark new beginnings with renewed commitment reflects humanity's God-given desire for transformation. John Wesley's Methodist watchnight services Christianized this tradition, demonstrating how the Church redeems cultural practices.",
+    biblicalParallels: [
+      "Behold, I am doing a new thing (Isaiah 43:19)",
+      "If anyone is in Christ, he is a new creation (2 Corinthians 5:17)",
+      "Forgetting what lies behind, I press on (Philippians 3:13-14)",
+      "Today, if you hear his voice, do not harden your hearts (Hebrews 3:15)"
+    ],
+    scriptureReferences: ["Isaiah 43:19", "2 Corinthians 5:17", "Philippians 3:13-14", "Lamentations 3:22-23"],
+    cautionLevel: "low",
+    cautionNote: "ANCIENT BABYLONIAN NEW YEAR VOW (Akitu Festival, c. 2000 BCE):\n\n'Before Marduk, I vow to repay my debts, return borrowed goods, and renew my loyalty to the king in the coming year.'\n\nANCIENT ROMAN VOW TO JANUS (c. 100 BCE):\n\n'Iane pater, te hoc ture ommovendo bonas preces precor, uti sies volens propitius...'\n\n'Father Janus, with this incense I beseech you with good prayers, that you may be willing and propitious to me, my home, and my household...'\n\nMETHODIST WATCHNIGHT COVENANT (John Wesley, 1755):\n\n'I am no longer my own, but thine. Put me to what thou wilt, rank me with whom thou wilt. Put me to doing, put me to suffering. Let me be employed for thee or laid aside for thee... I freely and heartily yield all things to thy pleasure and disposal.'\n\nCONTEMPORARY NEW YEAR'S RESOLUTION:\n\n'In the coming year, I resolve to [goal], trusting in God's strength to help me grow in [virtue].'\n\nThe tradition of marking new beginnings with renewed commitments spans all cultures and has been embraced by the Church."
+  },
+  {
+    id: "oath-norse-sacred-objects",
+    name: "Norse Ring Oath & Sacred Object Swearing",
+    category: "oaths",
+    organizationType: "Historical/Legal",
+    description: "Germanic and Norse cultures swore oaths upon sacred rings, swords, and later Bibles. The practice of swearing on the Bible, still used in courtrooms today, evolved directly from Norse/Germanic traditions of swearing on sacred arm-rings dedicated to Thor or Freyr.",
+    doubleStandard: "Swearing on the Bible—a practice derived from Norse pagan oath-rings—is considered sacred and Christian. Yet Greek organizational practices with less direct pagan connections face condemnation.",
+    christianPerspective: "The Church transformed pagan oath-ring traditions by substituting the Bible or relics of saints. This demonstrates Christianity's power to redeem cultural practices. Swearing on sacred objects acknowledges that our words are witnessed by a higher power.",
+    biblicalParallels: [
+      "The Lord is witness between you and me (1 Samuel 20:42)",
+      "I call God as my witness (2 Corinthians 1:23)",
+      "Abraham swore by the Lord (Genesis 24:3)",
+      "Jacob took an oath by the Fear of his father Isaac (Genesis 31:53)"
+    ],
+    scriptureReferences: ["Genesis 24:3", "Genesis 31:53", "1 Samuel 20:42", "Hebrews 6:16"],
+    cautionLevel: "low",
+    cautionNote: "NORSE RING OATH (Landnámabók, c. 900 CE):\n\n'Ek sver eið at baugi, at ek skal vera þér trúr ok hollr, ok halda allt þat, er ek hef nú heitit, svá hjálpi mér Freyr ok Njǫrðr ok inn almáttki áss.'\n\nORIGINAL ENGLISH TRANSLATION:\n\n'I swear an oath upon the ring, that I shall be faithful and loyal to you, and keep all that I have now promised, so help me Freyr and Njord and the almighty god [Thor/Odin].'\n\nNorse law required oath-rings of at least two ounces of silver, reddened with sacrificial blood, kept in temples. Oath-breakers faced exile or death.\n\nCHRISTIANIZED BIBLE OATH (English Common Law, c. 1200 CE):\n\n'I do swear by Almighty God that the evidence I shall give shall be the truth, the whole truth, and nothing but the truth.'\n\nThe structure is identical—swearing on a sacred object before divine witness. The Church simply substituted the Bible for the oath-ring.\n\nMODERN COURTROOM OATH:\n\n'Do you swear to tell the truth, the whole truth, and nothing but the truth, so help you God?' [Hand placed on Bible]\n\nThis practice—completely accepted by Christians—derives directly from Norse pagan traditions of swearing upon sacred objects. The transformation demonstrates Christianity's redemptive approach to culture."
+  },
   // =====================================================
   // FRATERNITIES - NPHC, IFC Organizations
   // =====================================================
