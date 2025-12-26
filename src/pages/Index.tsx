@@ -84,6 +84,7 @@ const Index = () => {
       id: 'home',
       title: 'Home',
       icon: Home,
+      iconColor: 'text-blue-500',
       to: '/',
       items: []
     },
@@ -91,6 +92,7 @@ const Index = () => {
       id: 'dr-lyman',
       title: 'Meet Dr. Lyman',
       icon: User,
+      iconColor: 'text-purple-500',
       items: [
         { to: '/meet-dr-lyman', label: 'Overview' },
         { to: '/about', label: 'About Dr. Montgomery' },
@@ -104,6 +106,7 @@ const Index = () => {
       id: 'challenge',
       title: 'The Challenge',
       icon: Award,
+      iconColor: 'text-amber-500',
       items: [
         { to: '/the-challenge', label: 'Overview' },
         { to: '/guide', label: 'P.R.O.O.F. Assessment' },
@@ -114,6 +117,7 @@ const Index = () => {
       id: 'biblical',
       title: 'Biblical Guide',
       icon: BookOpen,
+      iconColor: 'text-emerald-500',
       items: [
         { to: '/biblical-guides', label: 'Overview' },
         { to: '/symbol-guide', label: 'Symbol Guide' },
@@ -125,6 +129,7 @@ const Index = () => {
       id: 'book',
       title: 'The Book',
       icon: FileText,
+      iconColor: 'text-rose-500',
       to: '/the-book',
       items: []
     },
@@ -132,6 +137,7 @@ const Index = () => {
       id: 'podcast',
       title: 'Podcast',
       icon: Mic,
+      iconColor: 'text-orange-500',
       to: '/podcast',
       items: []
     },
@@ -139,6 +145,7 @@ const Index = () => {
       id: 'tools',
       title: 'Tools & Resources',
       icon: Video,
+      iconColor: 'text-cyan-500',
       items: [
         { to: '/tools-resources', label: 'Overview' },
         { to: '/resources', label: 'Resources Library' },
@@ -150,6 +157,7 @@ const Index = () => {
       id: 'greek-life',
       title: 'Greek Life',
       icon: Shield,
+      iconColor: 'text-indigo-500',
       items: [
         { to: '/greek-life', label: 'Overview' },
         { to: '/symbol-guide', label: 'Organizations Guide' },
@@ -161,6 +169,7 @@ const Index = () => {
       id: 'community',
       title: 'Community',
       icon: Users,
+      iconColor: 'text-pink-500',
       items: [
         { to: '/forum', label: 'Forum' },
         { to: '/prayer-wall', label: 'Prayer Wall' },
@@ -171,6 +180,7 @@ const Index = () => {
       id: 'contact',
       title: 'Contact',
       icon: Phone,
+      iconColor: 'text-teal-500',
       to: '/contact',
       items: []
     },
@@ -206,7 +216,7 @@ const Index = () => {
                     to={section.to}
                     className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted rounded-lg transition-colors"
                   >
-                    <Icon className="w-4 h-4 text-muted-foreground" />
+                    <Icon className={cn("w-4 h-4", section.iconColor)} />
                     {section.title}
                   </Link>
                 );
@@ -219,7 +229,7 @@ const Index = () => {
                     className="flex items-center justify-between w-full px-3 py-2.5 text-sm font-medium text-foreground hover:bg-muted rounded-lg transition-colors"
                   >
                     <span className="flex items-center gap-3">
-                      <Icon className="w-4 h-4 text-muted-foreground" />
+                      <Icon className={cn("w-4 h-4", section.iconColor)} />
                       {section.title}
                     </span>
                     <ChevronRight className={cn(
