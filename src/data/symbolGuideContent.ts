@@ -1545,6 +1545,120 @@ export const symbolGuideContent: SymbolEntry[] = [
     ],
     scriptureReferences: ["Revelation 5:5", "Joshua 1:9", "1 Peter 1:7", "Proverbs 31:10"],
     cautionLevel: "low"
+  },
+
+  // =====================================================
+  // SYMBOLS - Common Symbols with Christian Parallels
+  // =====================================================
+  {
+    id: "alpha-omega-symbol",
+    name: "Alpha and Omega (Α Ω)",
+    category: "symbols",
+    description: "The first and last letters of the Greek alphabet, used universally in Christian tradition to represent Christ as the beginning and end. These Greek letters appear in churches, religious art, and Christian jewelry worldwide.",
+    christianPerspective: "These Greek letters are explicitly biblical—Christ calls Himself 'the Alpha and the Omega' in Revelation. Christians use Greek letters to express their deepest theological truths. The same alphabet used in Greek organizations is used to describe our Lord.",
+    cautionLevel: "low",
+    scriptureReferences: ["Revelation 1:8", "Revelation 21:6", "Revelation 22:13"],
+    doubleStandard: "Christians proudly display Alpha and Omega in churches and on jewelry, yet condemn other Greek letters used by organizations. If Greek letters were inherently pagan, Alpha and Omega would be problematic."
+  },
+  {
+    id: "chi-rho-symbol",
+    name: "Chi Rho (☧)",
+    category: "symbols",
+    description: "An ancient Christian symbol combining the Greek letters Chi (Χ) and Rho (Ρ), the first two letters of 'Christ' (Χριστός) in Greek. Used by Emperor Constantine and throughout church history.",
+    christianPerspective: "This symbol represents Christ Himself using Greek letters. It has been used by Christians for nearly 2,000 years and appears on vestments, altars, and religious art. Greek letters have a sacred history in Christianity.",
+    cautionLevel: "low",
+    scriptureReferences: ["Colossians 3:17", "Philippians 2:10-11"],
+    doubleStandard: "The Chi Rho uses the same Greek alphabet as fraternities and sororities. If Greek letters were 'of the devil,' this sacred Christian symbol would be too."
+  },
+  {
+    id: "ichthys-fish-symbol",
+    name: "ΙΧΘΥΣ (Ichthys Fish)",
+    category: "symbols",
+    description: "The fish symbol spelled with Greek letters: Ι (Iota), Χ (Chi), Θ (Theta), Υ (Upsilon), Σ (Sigma) - an acronym for 'Jesus Christ, Son of God, Savior.' Used by early Christians as a secret identifier.",
+    christianPerspective: "Early persecuted Christians used this Greek acronym to identify one another. The Greek language and its letters were essential to spreading the Gospel and preserving Scripture.",
+    cautionLevel: "low",
+    scriptureReferences: ["Matthew 4:19", "Luke 5:10", "John 21:6"],
+    doubleStandard: "Christians display the fish symbol with Greek letters on their cars, but object to Greek letters on a blazer. This inconsistency reveals bias, not biblical conviction."
+  },
+  {
+    id: "delta-triangle-symbol",
+    name: "Delta/Triangle (Δ)",
+    category: "symbols",
+    description: "The Greek letter Delta, shaped like a triangle, represents change and transformation in mathematics and science. In Christianity, the triangle often represents the Trinity.",
+    christianPerspective: "The triangle has represented the Father, Son, and Holy Spirit for centuries in Christian iconography. Delta Sigma Theta's use of the triangle no more invokes paganism than a church using triangular Trinity symbols.",
+    cautionLevel: "low",
+    scriptureReferences: ["Matthew 28:19", "2 Corinthians 13:14"],
+    doubleStandard: "Trinitarian triangles adorn churches worldwide. Criticizing Greek organizations for using triangles while accepting them in church architecture is inconsistent."
+  },
+  {
+    id: "torch-flame-symbol",
+    name: "Torch/Flame",
+    category: "symbols",
+    description: "Torches and flames appear in countless organizational logos, including the Statue of Liberty, universities, and Greek organizations. They universally represent enlightenment, knowledge, and guidance.",
+    christianPerspective: "Scripture uses fire and light extensively as positive symbols: the pillar of fire guiding Israel, tongues of fire at Pentecost, and Christ as the 'light of the world.' Fire represents God's presence and guidance.",
+    cautionLevel: "low",
+    scriptureReferences: ["Exodus 13:21", "Acts 2:3", "John 8:12", "Matthew 5:14-16"],
+    doubleStandard: "The Olympic torch, Statue of Liberty's torch, and countless Christian symbols use flames. Condemning a Greek organization's torch while accepting these is arbitrary."
+  },
+  {
+    id: "pyramid-symbol",
+    name: "Pyramid/Step Pyramid",
+    category: "symbols",
+    description: "Pyramids appear in architecture, corporate logos, and organizational imagery worldwide. They represent stability, achievement, and reaching toward higher goals.",
+    christianPerspective: "While pyramids are associated with Egypt, Joseph served as second-in-command over Egypt. God used Egyptian civilization to preserve His people. The shape itself has no inherent spiritual meaning.",
+    cautionLevel: "low",
+    scriptureReferences: ["Genesis 41:41-43", "Genesis 50:26"],
+    doubleStandard: "The U.S. dollar bill features a pyramid. Christians use this currency daily without objection, yet criticize the same imagery in Greek organizations."
+  },
+  {
+    id: "sphinx-symbol",
+    name: "Sphinx",
+    category: "symbols",
+    description: "The sphinx—a mythological creature with a human head and lion's body—appears in Alpha Phi Alpha and other organizations. It represents wisdom, mystery, and guardianship.",
+    christianPerspective: "Cherubim in Scripture are composite creatures combining human and animal features (Ezekiel 1:10). God chose to represent heavenly beings with similar imagery. The sphinx represents noble qualities of wisdom and strength.",
+    cautionLevel: "low",
+    scriptureReferences: ["Ezekiel 1:10", "Ezekiel 10:14", "Revelation 4:7"],
+    doubleStandard: "Christians accept cherubim (lion-faced, human-faced creatures) in Scripture but condemn the sphinx. Both are composite creatures representing virtuous qualities."
+  },
+  {
+    id: "laurel-wreath-symbol",
+    name: "Laurel Wreath",
+    category: "symbols",
+    description: "The laurel wreath symbolizes victory, achievement, and honor. Used in Greek and Roman culture, it now appears in military insignia, university seals, and organizational logos worldwide.",
+    christianPerspective: "Paul uses the victor's wreath as a metaphor for Christian perseverance: 'an incorruptible crown.' Olympic athletes, scholars, and soldiers receive wreaths—Christians included. Scripture redeems this symbol.",
+    cautionLevel: "low",
+    scriptureReferences: ["1 Corinthians 9:25", "2 Timothy 4:8", "James 1:12", "1 Peter 5:4"],
+    doubleStandard: "Military officers wear laurel wreaths on their caps. Universities award laurels. Christians participate without objection, yet criticize the same symbol on Greek paraphernalia."
+  },
+  {
+    id: "handshake-grip-symbol",
+    name: "Handshake/Grip",
+    category: "symbols",
+    description: "Secret handshakes and grips are used by Greek organizations, Masonic lodges, and countless other fraternal groups. They signify belonging, trust, and brotherhood.",
+    christianPerspective: "The early church had signs of recognition. Paul speaks of the 'right hand of fellowship' (Galatians 2:9). Handshakes as symbols of covenant and trust are biblical—consider Jacob and Laban's covenant or business agreements sealed with a handshake.",
+    cautionLevel: "low",
+    scriptureReferences: ["Galatians 2:9", "Genesis 31:44-54", "Proverbs 6:1"],
+    doubleStandard: "Business deals, peace treaties, and church covenants are sealed with handshakes. A fraternity's handshake is no different in principle."
+  },
+  {
+    id: "dove-symbol",
+    name: "Dove",
+    category: "symbols",
+    description: "The dove represents peace, purity, and the Holy Spirit. Used by religious organizations, peace movements, and Greek organizations alike.",
+    christianPerspective: "The dove is deeply biblical—appearing at Jesus's baptism, after Noah's flood, and throughout Scripture as a symbol of God's Spirit and peace. Organizations using the dove align with Christian imagery.",
+    cautionLevel: "low",
+    scriptureReferences: ["Matthew 3:16", "Genesis 8:11", "Song of Solomon 2:14"],
+    doubleStandard: "Some sororities use dove imagery. Rather than criticism, this should be seen as alignment with Christian symbolism."
+  },
+  {
+    id: "lamp-light-symbol",
+    name: "Lamp/Lantern",
+    category: "symbols",
+    description: "Lamps and lanterns represent knowledge, guidance, and enlightenment. They appear in educational institutions, libraries, and Greek organizations as symbols of learning.",
+    christianPerspective: "Scripture repeatedly uses lamp imagery: 'Your word is a lamp to my feet' (Psalm 119:105). The parable of the ten virgins features lamps. Light versus darkness is a central biblical theme. Organizations promoting knowledge through lamp imagery echo Scripture.",
+    cautionLevel: "low",
+    scriptureReferences: ["Psalm 119:105", "Matthew 25:1-13", "Proverbs 6:23", "Matthew 5:15"],
+    doubleStandard: "Churches display lamps and candles. Universities use lamp imagery. Greek organizations doing the same are criticized—inconsistently."
   }
 ];
 
@@ -1965,7 +2079,7 @@ export const symbolCategories = [
   { id: "sororities", label: "Sororities" },
   { id: "symbols", label: "Symbols" },
   { id: "oaths", label: "Oaths" },
-  { id: "deities", label: "Deities" },
+  { id: "deity", label: "Deities" },
   { id: "seals", label: "Seals" }
 ];
 
