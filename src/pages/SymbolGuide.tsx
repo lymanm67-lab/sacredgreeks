@@ -19,12 +19,6 @@ import BookmarkNotesDialog from '@/components/symbol-guide/BookmarkNotesDialog';
 import ShareBookmarksDialog from '@/components/symbol-guide/ShareBookmarksDialog';
 import PrintComparisonGuideDialog from '@/components/symbol-guide/PrintComparisonGuideDialog';
 
-const cautionLevels = [
-  { id: 'all', label: 'All Levels', icon: null },
-  { id: 'low', label: 'Low Concern', icon: CheckCircle, color: 'text-badge-success' },
-  { id: 'medium', label: 'Use Discernment', icon: AlertCircle, color: 'text-badge-warning' },
-  { id: 'high', label: 'Caution Needed', icon: AlertTriangle, color: 'text-badge-danger' },
-];
 
 const CautionBadge = ({ level }: { level: string }) => {
   if (level === 'low') return <Badge className="bg-badge-success/30 text-badge-success-foreground border-badge-success/50"><CheckCircle className="w-3 h-3 mr-1" /> Low Concern</Badge>;
@@ -62,7 +56,6 @@ const SymbolGuide = () => {
   const queryClient = useQueryClient();
   const [symbolCategory, setSymbolCategory] = useState('all');
   const [comparisonCategory, setComparisonCategory] = useState('all');
-  const [cautionLevel, setCautionLevel] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [bookmarksOpen, setBookmarksOpen] = useState(false);
   const [notesDialog, setNotesDialog] = useState<{
@@ -256,25 +249,23 @@ const SymbolGuide = () => {
   const filteredSymbols = useMemo(() => {
     return symbolGuideContent.filter(s => {
       const matchesCategory = symbolCategory === 'all' || s.category === symbolCategory;
-      const matchesCaution = cautionLevel === 'all' || s.cautionLevel === cautionLevel;
       const matchesSearch = searchQuery === '' || 
         s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         s.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         s.christianPerspective.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesCategory && matchesCaution && matchesSearch;
+      return matchesCategory && matchesSearch;
     });
-  }, [symbolCategory, cautionLevel, searchQuery]);
+  }, [symbolCategory, searchQuery]);
 
   const filteredRituals = useMemo(() => {
     return ritualGuideContent.filter(r => {
-      const matchesCaution = cautionLevel === 'all' || r.cautionLevel === cautionLevel;
       const matchesSearch = searchQuery === '' ||
         r.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         r.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         r.christianApproach.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesCaution && matchesSearch;
+      return matchesSearch;
     });
-  }, [cautionLevel, searchQuery]);
+  }, [searchQuery]);
 
   const filteredComparisons = useMemo(() => {
     return culturalComparisons.filter(c => {
@@ -825,22 +816,6 @@ const SymbolGuide = () => {
                 </Button>
               ))}
             </div>
-            
-            {/* Caution Level Filter */}
-            <div className="flex flex-wrap gap-2 mb-4">
-              {cautionLevels.map(level => (
-                <Button
-                  key={level.id}
-                  variant={cautionLevel === level.id ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setCautionLevel(level.id)}
-                  className={`${cautionLevel === level.id ? 'bg-muted-foreground/80' : ''}`}
-                >
-                  {level.icon && <level.icon className={`w-3 h-3 mr-1 ${level.color}`} />}
-                  {level.label}
-                </Button>
-              ))}
-            </div>
 
             {filteredSymbols.length === 0 && (
               <Card className="p-8 text-center">
@@ -853,22 +828,6 @@ const SymbolGuide = () => {
           </TabsContent>
 
           <TabsContent value="rituals" className="space-y-4">
-            {/* Caution Level Filter */}
-            <div className="flex flex-wrap gap-2 mb-4">
-              {cautionLevels.map(level => (
-                <Button
-                  key={level.id}
-                  variant={cautionLevel === level.id ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setCautionLevel(level.id)}
-                  className={`${cautionLevel === level.id ? 'bg-muted-foreground/80' : ''}`}
-                >
-                  {level.icon && <level.icon className={`w-3 h-3 mr-1 ${level.color}`} />}
-                  {level.label}
-                </Button>
-              ))}
-            </div>
-
             {filteredRituals.length === 0 && (
               <Card className="p-8 text-center">
                 <p className="text-muted-foreground">No rituals found matching your filters</p>
