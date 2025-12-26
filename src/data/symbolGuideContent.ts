@@ -1138,6 +1138,135 @@ export const symbolGuideContent: SymbolEntry[] = [
     christianPerspective: "Jesus instituted the Lord's Supper as a ceremonial meal. Jewish Passover is a ritual meal. Formal meals with tradition are deeply biblical.",
     cautionLevel: "low",
     scripturalContext: "Luke 22:19-20 - 'Do this in remembrance of me.'"
+  },
+  // =====================================================
+  // OATHS - Ancient Origins and Modern Translations
+  // =====================================================
+  {
+    id: "hippocratic-oath",
+    name: "Hippocratic Oath",
+    category: "oaths",
+    organizationType: "Medical Profession",
+    description: "The foundational oath of medical ethics, originating in ancient Greece around 400 BCE. Originally invoked Greek gods Apollo, Asclepius, Hygieia, and Panacea as divine witnesses. Modern versions have been adapted to remove pagan religious references while preserving ethical principles.",
+    doubleStandard: "Medical professionals take oaths with Greek deity origins without condemnation, yet similar cultural connections in Greek organizations are labeled as demonic.",
+    christianPerspective: "The Church has historically adapted and Christianized professional oaths. The ethical principles of the Hippocratic Oath—do no harm, maintain confidentiality, respect life—align beautifully with Christian values. Christians take modern versions of this oath without moral conflict.",
+    biblicalParallels: [
+      "Do unto others as you would have them do unto you (Luke 6:31)",
+      "Love your neighbor as yourself (Mark 12:31)",
+      "Heal the sick (Matthew 10:8)",
+      "Let your yes be yes (Matthew 5:37)"
+    ],
+    scriptureReferences: ["Matthew 5:37", "Luke 6:31", "Mark 12:31", "James 5:14-16"],
+    cautionLevel: "low",
+    cautionNote: "ORIGINAL GREEK TEXT (c. 400 BCE):\n\n'Ὄμνυμι Ἀπόλλωνα ἰητρὸν καὶ Ἀσκληπιὸν καὶ Ὑγείαν καὶ Πανάκειαν καὶ θεοὺς πάντας τε καὶ πάσας, ἵστορας ποιεύμενος, ἐπιτελέα ποιήσειν κατὰ δύναμιν καὶ κρίσιν ἐμὴν ὅρκον τόνδε καὶ συγγραφὴν τήνδε...'\n\nORIGINAL ENGLISH TRANSLATION:\n\n'I swear by Apollo Physician, by Asclepius, by Hygieia, by Panacea, and by all the gods and goddesses, making them my witnesses, that I will carry out, according to my ability and judgment, this oath and this indenture...'\n\nI will use those dietary regimens which will benefit my patients according to my greatest ability and judgment, and I will do no harm or injustice to them. I will not give a lethal drug to anyone if I am asked, nor will I advise such a plan... Into whatever homes I go, I will enter them for the benefit of the sick, avoiding any voluntary act of impropriety or corruption.\n\nMODERN VERSION (Declaration of Geneva, 1948):\n\n'I solemnly pledge to dedicate my life to the service of humanity... The health of my patient will be my first consideration... I will maintain the utmost respect for human life... I will not permit considerations of age, disease or disability, creed, ethnic origin, gender, nationality, political affiliation, race, sexual orientation, social standing, or any other factor to intervene between my duty and my patient.'"
+  },
+  {
+    id: "military-oath-roman",
+    name: "Roman Military Oath (Sacramentum)",
+    category: "oaths",
+    organizationType: "Military Service",
+    description: "The Roman sacramentum militare was a sacred oath taken by soldiers, binding them to their commander and the Roman state. It invoked Jupiter and Mars as divine witnesses and included promises of loyalty unto death. This oath tradition directly influenced modern military oaths worldwide.",
+    doubleStandard: "Military personnel take oaths descended from Roman traditions invoking pagan gods, yet are not required to renounce this heritage. Similar Greek organizational connections are condemned.",
+    christianPerspective: "Early Christians served in the Roman military while maintaining faith in Christ. The concept of binding commitment to service is honored in Scripture. Modern military oaths have been adapted to invoke God or simply affirm allegiance, demonstrating how oaths can be redeemed.",
+    biblicalParallels: [
+      "The centurion's great faith (Matthew 8:5-13)",
+      "Cornelius the devout centurion (Acts 10)",
+      "Soldiers who believed (Luke 3:14)",
+      "No greater love than laying down one's life (John 15:13)"
+    ],
+    scriptureReferences: ["Matthew 8:10", "Acts 10:1-2", "Romans 13:1-7", "John 15:13"],
+    cautionLevel: "low",
+    cautionNote: "ORIGINAL LATIN (c. 100 BCE):\n\n'Iuro per Iovem Optimum Maximum et genium imperatoris et Lares et Penates et Martem Patrem et Quirinum, me fidelem futurum Romae et imperatori, neque mortem fugiturum neque quicquam praepositorum ordinum imperatori...'\n\nORIGINAL ENGLISH TRANSLATION:\n\n'I swear by Jupiter the Best and Greatest, and by the genius of the Emperor, by the household gods, by Mars the Father and Quirinus, that I will be faithful to Rome and to the Emperor, that I will not flee from death nor put anything before the Emperor's commands...'\n\nMODERN U.S. MILITARY OATH OF ENLISTMENT:\n\n'I, (name), do solemnly swear that I will support and defend the Constitution of the United States against all enemies, foreign and domestic; that I will bear true faith and allegiance to the same; and that I will obey the orders of the President of the United States and the orders of the officers appointed over me, according to regulations and the Uniform Code of Military Justice. So help me God.'"
+  },
+  {
+    id: "judicial-oath-roman",
+    name: "Roman Judicial Oath",
+    category: "oaths",
+    organizationType: "Legal/Judicial System",
+    description: "Roman judicial oaths (iusiurandum) invoked Jupiter, Dius Fidius (god of oaths), and other deities to witness truthful testimony and fair judgment. These oaths formed the foundation of Western legal traditions, including modern courtroom oaths.",
+    doubleStandard: "Every witness and juror in American courts takes oaths descended from Roman traditions, yet no one demands they renounce this classical heritage. Greek organizations face different standards.",
+    christianPerspective: "Christians are called to speak truth and pursue justice. The solemnity of oath-taking reflects the seriousness of our words before God. Modern judicial oaths have been adapted to invoke God or allow affirmations, showing how traditions can be Christianized.",
+    biblicalParallels: [
+      "Speak truth to one another (Zechariah 8:16)",
+      "Do not bear false witness (Exodus 20:16)",
+      "The Lord hates a lying tongue (Proverbs 6:16-17)",
+      "Let your yes be yes (Matthew 5:37)"
+    ],
+    scriptureReferences: ["Exodus 20:16", "Zechariah 8:16", "Proverbs 12:17", "Matthew 5:33-37"],
+    cautionLevel: "low",
+    cautionNote: "ORIGINAL LATIN (c. 200 BCE):\n\n'Iuro per Iovem lapidem, per Dium Fidium, per genios maiorum, me verum dicturum esse et nihil celatorum, ita me Iuppiter iuvet...'\n\nORIGINAL ENGLISH TRANSLATION:\n\n'I swear by Jupiter's stone, by Dius Fidius, by the spirits of my ancestors, that I will speak the truth and conceal nothing, so help me Jupiter...'\n\nMODERN COURTROOM OATH:\n\n'Do you solemnly swear that you will tell the truth, the whole truth, and nothing but the truth, so help you God?'\n\nAFFIRMATION OPTION (for those with religious objections):\n\n'Do you solemnly, sincerely, and truly declare and affirm that the evidence you shall give will be the truth, the whole truth, and nothing but the truth?'"
+  },
+  {
+    id: "senator-oath-roman",
+    name: "Roman Senate Oath",
+    category: "oaths",
+    organizationType: "Government/Legislative",
+    description: "Roman senators took sacred oaths upon entering office, invoking Jupiter Capitolinus and the Penates (household gods) to witness their commitment to the Republic. These oaths bound senators to uphold Roman law, protect the state, and serve with integrity.",
+    doubleStandard: "U.S. Senators take oaths with clear lineage to Roman senatorial traditions, yet this classical heritage is celebrated rather than condemned. Greek organizations are held to different standards.",
+    christianPerspective: "Christians are called to pray for those in authority (1 Timothy 2:1-2) and respect governing institutions (Romans 13). The concept of sacred commitment to public service aligns with biblical principles of stewardship and accountability before God.",
+    biblicalParallels: [
+      "Pray for those in authority (1 Timothy 2:1-2)",
+      "Submit to governing authorities (Romans 13:1)",
+      "Seek the welfare of the city (Jeremiah 29:7)",
+      "Do justice, love mercy (Micah 6:8)"
+    ],
+    scriptureReferences: ["1 Timothy 2:1-2", "Romans 13:1-7", "Jeremiah 29:7", "Micah 6:8"],
+    cautionLevel: "low",
+    cautionNote: "ORIGINAL LATIN (c. 100 BCE):\n\n'Iuro per Iovem Capitolinum et Penates publicos populi Romani, me rem publicam fideliter gesturum, neque pecunia neque gratia neque metu neque spe neque studio partium ductum iri, sed quod e re publica esse censebo, id semper acturum...'\n\nORIGINAL ENGLISH TRANSLATION:\n\n'I swear by Jupiter of the Capitol and by the public Penates of the Roman people, that I will faithfully conduct public affairs, that I will not be led by money, favor, fear, hope, or partisan zeal, but that I will always do what I judge to be in the public interest...'\n\nMODERN U.S. SENATE OATH:\n\n'I do solemnly swear (or affirm) that I will support and defend the Constitution of the United States against all enemies, foreign and domestic; that I will bear true faith and allegiance to the same; that I take this obligation freely, without any mental reservation or purpose of evasion; and that I will well and faithfully discharge the duties of the office on which I am about to enter: So help me God.'"
+  },
+  {
+    id: "oath-presidential",
+    name: "Presidential Oath of Office",
+    category: "oaths",
+    organizationType: "Executive Government",
+    description: "The U.S. Presidential Oath, prescribed by the Constitution, follows traditions of executive oaths dating to ancient Rome. While not invoking pagan deities, the structure and solemnity echo Roman inaugurations where new leaders swore before Jupiter Optimus Maximus.",
+    doubleStandard: "The most powerful oath in America has classical roots, yet is considered sacred. Greek organizational oaths with similar heritage are labeled as spiritually dangerous.",
+    christianPerspective: "Presidential oaths invoke God's help, demonstrating how ancient oath traditions have been Christianized. Leaders throughout Scripture took binding commitments. The oath represents accountability before God and nation.",
+    biblicalParallels: [
+      "Let your yes be yes (Matthew 5:37)",
+      "Pray for leaders (1 Timothy 2:1-2)",
+      "By faith Moses refused Pharaoh's palace (Hebrews 11:24-26)",
+      "Render to Caesar what is Caesar's (Matthew 22:21)"
+    ],
+    scriptureReferences: ["Matthew 5:37", "1 Timothy 2:1-2", "Romans 13:1", "Proverbs 29:2"],
+    cautionLevel: "low",
+    cautionNote: "CONSTITUTIONAL TEXT (Article II, Section 1):\n\n'I do solemnly swear (or affirm) that I will faithfully execute the Office of President of the United States, and will to the best of my Ability, preserve, protect and defend the Constitution of the United States.'\n\nTRADITIONAL ADDITION:\n\n'So help me God' (added by George Washington, continued by tradition)"
+  },
+  {
+    id: "oath-attorney",
+    name: "Attorney's Oath",
+    category: "oaths",
+    organizationType: "Legal Profession",
+    description: "Attorney oaths trace to Roman advocatus traditions where legal representatives swore before the gods to serve justice. The modern oath binds lawyers to uphold the Constitution, maintain client confidentiality, and pursue justice.",
+    doubleStandard: "Every practicing attorney takes an oath with Roman legal heritage without condemnation. Greek organizations face stricter scrutiny for similar cultural connections.",
+    christianPerspective: "Christians are called to defend the defenseless (Proverbs 31:8-9) and pursue justice. Legal advocacy can be a ministry of reconciliation and protection. The ethical commitments in attorney oaths align with biblical values.",
+    biblicalParallels: [
+      "Defend the rights of the poor (Proverbs 31:8-9)",
+      "Do justice and righteousness (Jeremiah 22:3)",
+      "The Lord loves justice (Psalm 37:28)",
+      "Act justly, love mercy (Micah 6:8)"
+    ],
+    scriptureReferences: ["Proverbs 31:8-9", "Micah 6:8", "Isaiah 1:17", "Amos 5:24"],
+    cautionLevel: "low",
+    cautionNote: "MODERN ATTORNEY OATH (varies by state):\n\n'I do solemnly swear that I will support the Constitution of the United States and the Constitution of this State; that I will maintain the respect due to courts of justice and judicial officers; that I will not counsel or maintain any suit or proceeding which shall appear to me to be unjust, nor any defense except such as I believe to be honestly debatable under the law; that I will employ such means only as are consistent with truth and honor; and that I will never seek to mislead the judge or jury by any artifice or false statement of fact or law. So help me God.'"
+  },
+  {
+    id: "oath-physician-modern",
+    name: "Declaration of Geneva",
+    category: "oaths",
+    organizationType: "Medical Profession",
+    description: "Adopted by the World Medical Association in 1948 as a modern reformation of the Hippocratic Oath. It removes all references to Greek deities while preserving ethical medical principles, demonstrating how ancient oaths can be successfully adapted.",
+    doubleStandard: "The medical profession successfully adapted an oath that originally invoked Apollo and Asclepius. This proves cultural traditions can be reformed—a courtesy often denied to Greek organizations.",
+    christianPerspective: "The Declaration of Geneva exemplifies redemption of cultural practices. Just as this oath was purified of pagan elements while preserving its ethical core, Greek organizations can maintain traditions while centering them on Christ.",
+    biblicalParallels: [
+      "First do no harm aligns with love your neighbor (Mark 12:31)",
+      "Confidentiality reflects trustworthiness (Proverbs 11:13)",
+      "Respecting life honors God's creation (Genesis 1:27)",
+      "Service to humanity reflects Christ's example (Mark 10:45)"
+    ],
+    scriptureReferences: ["Mark 12:31", "Proverbs 11:13", "Genesis 1:27", "Philippians 2:3-4"],
+    cautionLevel: "low",
+    cautionNote: "DECLARATION OF GENEVA (2017 revision):\n\n'As a member of the medical profession:\n\nI SOLEMNLY PLEDGE to dedicate my life to the service of humanity;\nThe health and well-being of my patient will be my first consideration;\nI WILL RESPECT the autonomy and dignity of my patient;\nI WILL MAINTAIN the utmost respect for human life;\nI WILL NOT PERMIT considerations of age, disease or disability, creed, ethnic origin, gender, nationality, political affiliation, race, sexual orientation, social standing, or any other factor to intervene between my duty and my patient;\nI WILL RESPECT the secrets that are confided in me;\nI WILL PRACTICE my profession with conscience and dignity;\nI WILL MAKE the health of my patient my first consideration;\nI MAKE THESE PROMISES solemnly, freely, and upon my honour.'"
   }
 ];
 
@@ -1554,6 +1683,10 @@ export const symbolCategories = [
   { id: "organizational", label: "Organizational" },
   { id: "cultural", label: "Cultural" },
   { id: "ritual", label: "Ritual" },
+  { id: "fraternities", label: "Fraternities" },
+  { id: "sororities", label: "Sororities" },
+  { id: "symbols", label: "Symbols" },
+  { id: "oaths", label: "Oaths" },
   { id: "deities", label: "Deities" },
   { id: "seals", label: "Seals" }
 ];

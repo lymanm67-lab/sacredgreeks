@@ -6,8 +6,9 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, ExternalLink, Share2, FileDown, Scale, History, Sparkles, Printer, Crown, Building, GraduationCap, Landmark } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, ExternalLink, Share2, FileDown, Scale, History, Sparkles, Printer, Crown, Building, GraduationCap, Landmark, Users, Heart, Scroll, BookOpen } from 'lucide-react';
 import { symbolGuideContent, ritualGuideContent, symbolCategories, culturalComparisons, culturalComparisonCategories, SymbolEntry, RitualEntry, CulturalComparisonEntry } from '@/data/symbolGuideContent';
+import { getSymbolImageUrl } from '@/data/symbolImageUrls';
 import { ListenButton } from '@/components/ListenButton';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -50,6 +51,10 @@ const categoryIcons: Record<string, React.ReactNode> = {
   ritual: <Badge variant="outline" className="gap-1"><History className="w-3 h-3" /> Ritual</Badge>,
   deity: <Badge variant="outline" className="gap-1"><Crown className="w-3 h-3" /> Deity</Badge>,
   seals: <Badge variant="outline" className="gap-1"><Landmark className="w-3 h-3" /> Seals</Badge>,
+  fraternities: <Badge variant="outline" className="gap-1"><Users className="w-3 h-3" /> Fraternities</Badge>,
+  sororities: <Badge variant="outline" className="gap-1"><Heart className="w-3 h-3" /> Sororities</Badge>,
+  symbols: <Badge variant="outline" className="gap-1"><Sparkles className="w-3 h-3" /> Symbols</Badge>,
+  oaths: <Badge variant="outline" className="gap-1"><Scroll className="w-3 h-3" /> Oaths</Badge>,
 };
 
 const SymbolGuide = () => {
@@ -333,14 +338,15 @@ const SymbolGuide = () => {
   const renderSymbolCard = (symbol: SymbolEntry) => {
     const bookmark = getBookmark(symbol.id, 'symbol');
     const CategoryBadge = categoryIcons[symbol.category] || <Badge variant="outline" className="capitalize">{symbol.category}</Badge>;
+    const imageUrl = getSymbolImageUrl(symbol.id) || symbol.imageUrl;
     
     return (
       <Card key={symbol.id} className="overflow-hidden">
         {/* Symbol Image */}
-        {symbol.imageUrl && (
+        {imageUrl && (
           <div className="relative h-48 w-full overflow-hidden bg-gradient-to-br from-sacred/5 to-muted">
             <img 
-              src={symbol.imageUrl} 
+              src={imageUrl} 
               alt={symbol.name}
               className="w-full h-full object-cover"
             />
