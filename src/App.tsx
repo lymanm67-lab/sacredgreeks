@@ -179,6 +179,7 @@ const App = () => (
                     <Route path="/" element={<Index />} />
                     <Route path="/index" element={<Navigate to="/" replace />} />
                     <Route path="/auth" element={<Auth />} />
+                    <Route path="/au" element={<Navigate to="/auth" replace />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
                     <Route path="/faq" element={<FAQ />} />
                     <Route path="/privacy" element={<Privacy />} />
