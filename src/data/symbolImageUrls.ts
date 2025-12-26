@@ -69,6 +69,26 @@ import handshakeGripSymbol from '@/assets/symbols/handshake-grip-symbol.jpg';
 import doveSymbol from '@/assets/symbols/dove-symbol.jpg';
 import lampLightSymbol from '@/assets/symbols/lamp-light-symbol.jpg';
 
+// Fraternity crest images
+import alphaPhiAlphaCrest from '@/assets/symbols/alpha-phi-alpha-crest.jpg';
+import kappaAlphaPsiCrest from '@/assets/symbols/kappa-alpha-psi-crest.jpg';
+import omegaPsiPhiCrest from '@/assets/symbols/omega-psi-phi-crest.jpg';
+import phiBetaSigmaCrest from '@/assets/symbols/phi-beta-sigma-crest.jpg';
+import iotaPhiThetaCrest from '@/assets/symbols/iota-phi-theta-crest.jpg';
+import sigmaPhiEpsilonCrest from '@/assets/symbols/sigma-phi-epsilon-crest.jpg';
+import kappaSigmaCrest from '@/assets/symbols/kappa-sigma-crest.jpg';
+import phiGammaDeltaCrest from '@/assets/symbols/phi-gamma-delta-crest.jpg';
+
+// Sorority crest images
+import alphaKappaAlphaCrest from '@/assets/symbols/alpha-kappa-alpha-crest.jpg';
+import deltaSigmaThetaCrest from '@/assets/symbols/delta-sigma-theta-crest.jpg';
+import zetaPhiBetaCrest from '@/assets/symbols/zeta-phi-beta-crest.jpg';
+import sigmaGammaRhoCrest from '@/assets/symbols/sigma-gamma-rho-crest.jpg';
+import chiOmegaCrest from '@/assets/symbols/chi-omega-crest.jpg';
+import kappaKappaGammaCrest from '@/assets/symbols/kappa-kappa-gamma-crest.jpg';
+import deltaDeltaDeltaCrest from '@/assets/symbols/delta-delta-delta-crest.jpg';
+import alphaDeltaPiCrest from '@/assets/symbols/alpha-delta-pi-crest.jpg';
+
 export const symbolImageUrls: Record<string, string> = {
   // Deities
   "ahura-mazda": ahuraMazda,
@@ -139,6 +159,26 @@ export const symbolImageUrls: Record<string, string> = {
   "handshake-grip-symbol": handshakeGripSymbol,
   "dove-symbol": doveSymbol,
   "lamp-light-symbol": lampLightSymbol,
+  
+  // Fraternity crests
+  "alpha-phi-alpha": alphaPhiAlphaCrest,
+  "kappa-alpha-psi": kappaAlphaPsiCrest,
+  "omega-psi-phi": omegaPsiPhiCrest,
+  "phi-beta-sigma": phiBetaSigmaCrest,
+  "iota-phi-theta": iotaPhiThetaCrest,
+  "sigma-phi-epsilon": sigmaPhiEpsilonCrest,
+  "kappa-sigma": kappaSigmaCrest,
+  "phi-gamma-delta": phiGammaDeltaCrest,
+  
+  // Sorority crests
+  "alpha-kappa-alpha": alphaKappaAlphaCrest,
+  "delta-sigma-theta": deltaSigmaThetaCrest,
+  "zeta-phi-beta": zetaPhiBetaCrest,
+  "sigma-gamma-rho": sigmaGammaRhoCrest,
+  "chi-omega": chiOmegaCrest,
+  "kappa-kappa-gamma": kappaKappaGammaCrest,
+  "delta-delta-delta": deltaDeltaDeltaCrest,
+  "alpha-delta-pi": alphaDeltaPiCrest,
 };
 
 export const getSymbolImageUrl = (id: string): string | undefined => {
