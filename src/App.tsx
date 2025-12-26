@@ -177,6 +177,7 @@ const App = () => (
                     <Routes>
                     {/* Public routes - no sidebar */}
                     <Route path="/" element={<Index />} />
+                    <Route path="/index" element={<Navigate to="/" replace />} />
                     <Route path="/auth" element={<Auth />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
                     <Route path="/faq" element={<FAQ />} />
