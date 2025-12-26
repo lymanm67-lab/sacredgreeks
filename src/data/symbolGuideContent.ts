@@ -151,33 +151,6 @@ export const symbolGuideContent: SymbolEntry[] = [
   },
   // Fraternity-Specific Symbols
   {
-    id: "sphinx-symbol",
-    name: "Sphinx",
-    category: "organizational",
-    description: "A mythological creature with a lion's body and human head, used by Alpha Phi Alpha and Sigma Pi Phi (The Boulé)",
-    christianPerspective: "The sphinx represents wisdom and strength in organizational context—qualities celebrated in Proverbs. Churches in Egypt used sphinx imagery for centuries. The symbol represents virtue, not worship.",
-    cautionLevel: "low",
-    scripturalContext: "Proverbs 24:5 - 'The wise prevail through great power, and those who have knowledge muster their strength.'"
-  },
-  {
-    id: "pyramid-symbol",
-    name: "Pyramid",
-    category: "organizational",
-    description: "Ancient architectural form used by Delta Sigma Theta and other organizations to represent strength and endurance",
-    christianPerspective: "Pyramids represent lasting foundations and progressive building. Scripture celebrates building on solid foundations. The Israelites themselves worked on Egyptian structures before the Exodus.",
-    cautionLevel: "low",
-    scripturalContext: "Matthew 7:24-25 - Building on rock so the structure withstands storms."
-  },
-  {
-    id: "dove-symbol",
-    name: "Dove",
-    category: "organizational",
-    description: "Symbol of peace and purity used by Phi Beta Sigma, Zeta Phi Beta, and other organizations",
-    christianPerspective: "The dove is deeply biblical—representing the Holy Spirit at Jesus' baptism and Noah's hope after the flood. This is perhaps the most biblically affirmed symbol in Greek life.",
-    cautionLevel: "low",
-    scripturalContext: "Matthew 3:16 - 'The Spirit of God descending like a dove and alighting on him.'"
-  },
-  {
     id: "lamp-symbol",
     name: "Lamp/Torch",
     category: "organizational",
