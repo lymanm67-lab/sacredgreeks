@@ -49,6 +49,15 @@ import howardUniversitySeal from '@/assets/symbols/howard-university-seal.jpg';
 import spelmanCollegeSeal from '@/assets/symbols/spelman-college-seal.jpg';
 import morehouseCollegeSeal from '@/assets/symbols/morehouse-college-seal.jpg';
 
+// Oath images
+import hippocraticoath from '@/assets/symbols/hippocratic-oath.jpg';
+import militaryOathRoman from '@/assets/symbols/military-oath-roman.jpg';
+import judicialOathRoman from '@/assets/symbols/judicial-oath-roman.jpg';
+import senatorOathRoman from '@/assets/symbols/senator-oath-roman.jpg';
+import oathPresidential from '@/assets/symbols/oath-presidential.jpg';
+import oathAttorney from '@/assets/symbols/oath-attorney.jpg';
+import oathPhysicianModern from '@/assets/symbols/oath-physician-modern.jpg';
+
 export const symbolImageUrls: Record<string, string> = {
   // Deities
   "ahura-mazda": ahuraMazda,
@@ -97,6 +106,15 @@ export const symbolImageUrls: Record<string, string> = {
   "howard-university-seal": howardUniversitySeal,
   "spelman-college-seal": spelmanCollegeSeal,
   "morehouse-college-seal": morehouseCollegeSeal,
+  
+  // Oaths
+  "hippocratic-oath": hippocraticoath,
+  "military-oath-roman": militaryOathRoman,
+  "judicial-oath-roman": judicialOathRoman,
+  "senator-oath-roman": senatorOathRoman,
+  "oath-presidential": oathPresidential,
+  "oath-attorney": oathAttorney,
+  "oath-physician-modern": oathPhysicianModern,
 };
 
 export const getSymbolImageUrl = (id: string): string | undefined => {

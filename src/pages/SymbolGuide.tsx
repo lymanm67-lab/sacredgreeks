@@ -437,11 +437,57 @@ const SymbolGuide = () => {
             </div>
           )}
           
-          {/* Caution Note */}
+          {/* Caution Note - with special formatting for oaths */}
           {symbol.cautionNote && (
-            <div className="bg-badge-warning/10 p-3 rounded-lg border border-badge-warning/20">
-              <p className="text-sm text-badge-warning-foreground"><AlertCircle className="w-4 h-4 inline mr-1" /> {symbol.cautionNote}</p>
-            </div>
+            symbol.category === 'oaths' ? (
+              <div className="space-y-3">
+                {symbol.cautionNote.split('\n\n').map((section, index) => {
+                  const trimmedSection = section.trim();
+                  if (trimmedSection.startsWith('ORIGINAL GREEK TEXT') || trimmedSection.startsWith('ORIGINAL LATIN')) {
+                    return (
+                      <div key={index} className="bg-amber-500/10 p-3 rounded-lg border border-amber-500/30">
+                        <h5 className="font-semibold text-amber-700 dark:text-amber-400 text-sm mb-2 flex items-center gap-2">
+                          <History className="w-4 h-4" />
+                          {trimmedSection.split(':')[0]}
+                        </h5>
+                        <p className="text-sm text-amber-900 dark:text-amber-200 italic font-serif">
+                          {trimmedSection.split('\n').slice(1).join('\n').replace(/^'|'$/g, '')}
+                        </p>
+                      </div>
+                    );
+                  } else if (trimmedSection.startsWith('ORIGINAL ENGLISH TRANSLATION')) {
+                    return (
+                      <div key={index} className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/30">
+                        <h5 className="font-semibold text-blue-700 dark:text-blue-400 text-sm mb-2 flex items-center gap-2">
+                          <BookOpen className="w-4 h-4" />
+                          English Translation
+                        </h5>
+                        <p className="text-sm text-blue-900 dark:text-blue-200">
+                          {trimmedSection.split('\n').slice(1).join('\n').replace(/^'|'$/g, '')}
+                        </p>
+                      </div>
+                    );
+                  } else if (trimmedSection.startsWith('MODERN') || trimmedSection.startsWith('DECLARATION OF GENEVA') || trimmedSection.startsWith('CONSTITUTIONAL TEXT') || trimmedSection.startsWith('TRADITIONAL ADDITION') || trimmedSection.startsWith('AFFIRMATION OPTION')) {
+                    return (
+                      <div key={index} className="bg-emerald-500/10 p-3 rounded-lg border border-emerald-500/30">
+                        <h5 className="font-semibold text-emerald-700 dark:text-emerald-400 text-sm mb-2 flex items-center gap-2">
+                          <Scroll className="w-4 h-4" />
+                          {trimmedSection.split(':')[0]}
+                        </h5>
+                        <p className="text-sm text-emerald-900 dark:text-emerald-200">
+                          {trimmedSection.split('\n').slice(1).join('\n').replace(/^'|'$/g, '')}
+                        </p>
+                      </div>
+                    );
+                  }
+                  return null;
+                })}
+              </div>
+            ) : (
+              <div className="bg-badge-warning/10 p-3 rounded-lg border border-badge-warning/20">
+                <p className="text-sm text-badge-warning-foreground"><AlertCircle className="w-4 h-4 inline mr-1" /> {symbol.cautionNote}</p>
+              </div>
+            )
           )}
           
           {symbol.cautionLevel === 'medium' && (
