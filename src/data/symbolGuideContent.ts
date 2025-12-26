@@ -2592,6 +2592,24 @@ export const symbolGuideContent: SymbolEntry[] = [
     cautionLevel: "low"
   },
   {
+    id: "custom-afro-natural-hair",
+    name: "Afro & Natural Hair Movement",
+    category: "customs",
+    organizationType: "African Heritage",
+    description: "The Afro hairstyle emerged as a powerful symbol during the Black Power movement of the 1960s and 70s. Rejecting European beauty standards that deemed African hair 'unacceptable,' activists embraced their natural texture as a statement of self-love, resistance, and African identity. Angela Davis, Kathleen Cleaver, and the Black Panther Party made the Afro iconic. The natural hair movement of the 2000s-present revived this ethos, with Black women and men rejecting chemical straighteners ('creamy crack') to embrace their God-given texture. 'Black is Beautiful' became both a political statement and a spiritual declaration that the Creator's design needs no alteration.",
+    doubleStandard: "The Afro is now celebrated in churches as beautiful and natural, yet for decades many Black churches enforced European beauty standards, requiring 'neat' (meaning straightened) hair for choir members, ushers, and leadership. The same communities that once policed natural hair now celebrate it while still scrutinizing organizational symbols.",
+    christianPerspective: "God designed the unique texture, coil pattern, and growth of African hair with intention. The natural hair movement aligns with Scripture's teaching that we are 'fearfully and wonderfully made.' Rejecting the lie that God's design is inferior, embracing natural hair is an act of faith—trusting that the Creator knew what He was doing.",
+    biblicalParallels: [
+      "I praise you because I am fearfully and wonderfully made (Psalm 139:14)",
+      "God saw all that he had made, and it was very good (Genesis 1:31)",
+      "You are altogether beautiful, my darling; there is no flaw in you (Song of Solomon 4:7)",
+      "Do not conform to the pattern of this world (Romans 12:2)",
+      "The Lord does not look at the things people look at... the Lord looks at the heart (1 Samuel 16:7)"
+    ],
+    scriptureReferences: ["Psalm 139:14", "Genesis 1:31", "Song of Solomon 4:7", "Romans 12:2", "1 Samuel 16:7"],
+    cautionLevel: "low"
+  },
+  {
     id: "custom-jumping-broom",
     name: "Jumping the Broom",
     category: "customs",
