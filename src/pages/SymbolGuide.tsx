@@ -326,11 +326,10 @@ const SymbolGuide = () => {
 
   const filteredSymbols = useMemo(() => {
     return symbolGuideContent.filter(s => {
+      // Exclude seals and customs as they have their own tabs
+      if (s.category === 'seals' || s.category === 'customs') return false;
+      
       const matchesCategory = symbolCategory === 'all' || s.category === symbolCategory;
-      // Apply subcategory filter when customs is selected
-      const matchesCustomsSubcategory = symbolCategory !== 'customs' || 
-        customsSubcategory === 'all' || 
-        s.organizationType === customsSubcategory;
       // Apply subcategory filter when cultural is selected
       const matchesCulturalSubcategory = symbolCategory !== 'cultural' || 
         culturalSubcategory === 'all' || 
@@ -339,9 +338,35 @@ const SymbolGuide = () => {
         s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         s.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         s.christianPerspective.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesCategory && matchesCustomsSubcategory && matchesCulturalSubcategory && matchesSearch;
+      return matchesCategory && matchesCulturalSubcategory && matchesSearch;
     });
-  }, [symbolCategory, customsSubcategory, culturalSubcategory, searchQuery]);
+  }, [symbolCategory, culturalSubcategory, searchQuery]);
+
+  // Filtered Seals (separate tab)
+  const filteredSeals = useMemo(() => {
+    return symbolGuideContent.filter(s => {
+      const matchesCategory = s.category === 'seals';
+      const matchesSearch = searchQuery === '' || 
+        s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        s.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        s.christianPerspective.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+  }, [searchQuery]);
+
+  // Filtered Customs (separate tab)
+  const filteredCustoms = useMemo(() => {
+    return symbolGuideContent.filter(s => {
+      const matchesCategory = s.category === 'customs';
+      const matchesSubcategory = customsSubcategory === 'all' || 
+        s.organizationType === customsSubcategory;
+      const matchesSearch = searchQuery === '' || 
+        s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        s.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        s.christianPerspective.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesSubcategory && matchesSearch;
+    });
+  }, [customsSubcategory, searchQuery]);
 
   const filteredRituals = useMemo(() => {
     return ritualGuideContent.filter(r => {
@@ -1070,10 +1095,12 @@ const SymbolGuide = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="symbols">Reference Guide ({filteredSymbols.length})</TabsTrigger>
-            <TabsTrigger value="rituals">Practical Guidance ({filteredRituals.length})</TabsTrigger>
-            <TabsTrigger value="comparisons">Double Standards ({filteredComparisons.length})</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-5">
+            <TabsTrigger value="symbols" className="text-xs sm:text-sm">Symbols ({filteredSymbols.length})</TabsTrigger>
+            <TabsTrigger value="rituals" className="text-xs sm:text-sm">Rituals ({filteredRituals.length})</TabsTrigger>
+            <TabsTrigger value="seals" className="text-xs sm:text-sm">Seals ({filteredSeals.length})</TabsTrigger>
+            <TabsTrigger value="customs" className="text-xs sm:text-sm">Customs ({filteredCustoms.length})</TabsTrigger>
+            <TabsTrigger value="comparisons" className="text-xs sm:text-sm">Double Standards ({filteredComparisons.length})</TabsTrigger>
           </TabsList>
 
           <TabsContent value="symbols" className="space-y-4">
@@ -1085,43 +1112,26 @@ const SymbolGuide = () => {
                   <span className="text-sm font-medium">Filter:</span>
                 </div>
                 
-                {/* Main Category Dropdown */}
+                {/* Main Category Dropdown - exclude seals and customs as they have their own tabs */}
                 <Select 
                   value={symbolCategory} 
                   onValueChange={(value) => {
                     setSymbolCategory(value);
-                    if (value !== 'customs') {
-                      setCustomsSubcategory('all');
-                    }
                   }}
                 >
                   <SelectTrigger className="w-[180px] bg-background">
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
                   <SelectContent className="bg-background border shadow-lg z-50">
-                    {symbolCategories.map(cat => (
-                      <SelectItem key={cat.id} value={cat.id}>
-                        {cat.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                {/* Subcategory Dropdown - Only for Customs */}
-                {symbolCategory === 'customs' && (
-                  <Select value={customsSubcategory} onValueChange={setCustomsSubcategory}>
-                    <SelectTrigger className="w-[180px] bg-background border-amber-500/50">
-                      <SelectValue placeholder="Select subcategory" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-background border shadow-lg z-50">
-                      {customsSubcategories.map(sub => (
-                        <SelectItem key={sub.id} value={sub.id}>
-                          {sub.label}
+                    {symbolCategories
+                      .filter(cat => cat.id !== 'seals' && cat.id !== 'customs')
+                      .map(cat => (
+                        <SelectItem key={cat.id} value={cat.id}>
+                          {cat.label}
                         </SelectItem>
                       ))}
-                    </SelectContent>
-                  </Select>
-                )}
+                  </SelectContent>
+                </Select>
 
                 {/* Subcategory Dropdown - Only for Cultural */}
                 {symbolCategory === 'cultural' && (
@@ -1144,13 +1154,12 @@ const SymbolGuide = () => {
                   <Badge variant="secondary" className="bg-sacred/10 text-sacred">
                     {filteredSymbols.length} results
                   </Badge>
-                  {(symbolCategory !== 'all' || customsSubcategory !== 'all' || culturalSubcategory !== 'all') && (
+                  {(symbolCategory !== 'all' || culturalSubcategory !== 'all') && (
                     <Button 
                       variant="ghost" 
                       size="sm" 
                       onClick={() => {
                         setSymbolCategory('all');
-                        setCustomsSubcategory('all');
                         setCulturalSubcategory('all');
                       }}
                       className="text-xs h-7"
@@ -1162,7 +1171,7 @@ const SymbolGuide = () => {
               </div>
 
               {/* Active Filters Display */}
-              {(symbolCategory !== 'all' || customsSubcategory !== 'all' || culturalSubcategory !== 'all') && (
+              {(symbolCategory !== 'all' || culturalSubcategory !== 'all') && (
                 <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t">
                   <span className="text-xs text-muted-foreground">Active:</span>
                   {symbolCategory !== 'all' && (
@@ -1171,20 +1180,10 @@ const SymbolGuide = () => {
                       className="text-xs cursor-pointer hover:bg-destructive/10"
                       onClick={() => {
                         setSymbolCategory('all');
-                        setCustomsSubcategory('all');
                         setCulturalSubcategory('all');
                       }}
                     >
                       {symbolCategories.find(c => c.id === symbolCategory)?.label} ×
-                    </Badge>
-                  )}
-                  {symbolCategory === 'customs' && customsSubcategory !== 'all' && (
-                    <Badge 
-                      variant="outline" 
-                      className="text-xs cursor-pointer hover:bg-destructive/10 border-amber-500/50"
-                      onClick={() => setCustomsSubcategory('all')}
-                    >
-                      {customsSubcategories.find(c => c.id === customsSubcategory)?.label} ×
                     </Badge>
                   )}
                   {symbolCategory === 'cultural' && culturalSubcategory !== 'all' && (
@@ -1218,6 +1217,78 @@ const SymbolGuide = () => {
             )}
             <div className={viewMode === 'list' ? 'space-y-2' : 'space-y-4'}>
               {filteredRituals.map(viewMode === 'list' ? renderRitualListItem : renderRitualCard)}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="seals" className="space-y-4">
+            <Card className="mb-4 bg-gradient-to-r from-blue-500/10 to-sacred/10 border-sacred/20">
+              <CardContent className="pt-6">
+                <div className="flex-1">
+                  <h3 className="font-semibold mb-2 flex items-center gap-2">
+                    <Landmark className="w-5 h-5 text-sacred" />
+                    Government & Institutional Seals
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    Explore how federal, state, and university seals incorporate classical Greek and Roman imagery—from goddesses to Latin mottos—demonstrating that ancient symbolism permeates respected American institutions.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+            
+            {filteredSeals.length === 0 && (
+              <Card className="p-8 text-center">
+                <p className="text-muted-foreground">No seals found matching your search</p>
+              </Card>
+            )}
+            <div className={viewMode === 'list' ? 'space-y-2' : 'space-y-4'}>
+              {filteredSeals.map(viewMode === 'list' ? renderSymbolListItem : renderSymbolCard)}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="customs" className="space-y-4">
+            <Card className="mb-4 bg-gradient-to-r from-amber-500/10 to-sacred/10 border-sacred/20">
+              <CardContent className="pt-6">
+                <div className="flex-1">
+                  <h3 className="font-semibold mb-2 flex items-center gap-2">
+                    <Heart className="w-5 h-5 text-amber-600" />
+                    Cultural Customs & Traditions
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    Many beloved traditions—from birthday candles to wedding veils—have pre-Christian or pagan origins. Understanding these roots helps us apply consistent standards when evaluating cultural practices.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <div className="flex items-center gap-4 mb-4">
+              <div className="flex items-center gap-2">
+                <Filter className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm font-medium">Filter:</span>
+              </div>
+              <Select value={customsSubcategory} onValueChange={setCustomsSubcategory}>
+                <SelectTrigger className="w-[200px] bg-background border-amber-500/50">
+                  <SelectValue placeholder="Select subcategory" />
+                </SelectTrigger>
+                <SelectContent className="bg-background border shadow-lg z-50">
+                  {customsSubcategories.map(sub => (
+                    <SelectItem key={sub.id} value={sub.id}>
+                      {sub.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Badge variant="secondary" className="bg-amber-500/10 text-amber-700 dark:text-amber-400">
+                {filteredCustoms.length} results
+              </Badge>
+            </div>
+            
+            {filteredCustoms.length === 0 && (
+              <Card className="p-8 text-center">
+                <p className="text-muted-foreground">No customs found matching your filters</p>
+              </Card>
+            )}
+            <div className={viewMode === 'list' ? 'space-y-2' : 'space-y-4'}>
+              {filteredCustoms.map(viewMode === 'list' ? renderSymbolListItem : renderSymbolCard)}
             </div>
           </TabsContent>
 
