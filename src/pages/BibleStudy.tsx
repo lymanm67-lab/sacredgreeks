@@ -27,6 +27,7 @@ import { StudyGuideDialog, StudyGuide } from '@/components/bible-study/StudyGuid
 import { studyGuides, getStudiesByCategory, categories } from '@/data/bibleStudyGuides';
 import { ScriptureFlashcards } from '@/components/ScriptureFlashcards';
 import { BibleStudyGenerator } from '@/components/BibleStudyGenerator';
+import { ApologeticsQuickReference } from '@/components/ApologeticsQuickReference';
 
 // Demo data for Bible Study
 const DEMO_DAILY_VERSE = {
@@ -931,6 +932,9 @@ const BibleStudy = () => {
 
         {/* P.R.O.O.F. Bible Study Generator */}
         <BibleStudyGenerator />
+
+        {/* Apologetics Quick Reference */}
+        <ApologeticsQuickReference />
 
         {/* Scripture Flashcards - Gamified */}
         <ScriptureFlashcards />
