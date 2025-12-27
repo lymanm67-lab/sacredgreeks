@@ -2786,89 +2786,108 @@ const GreekLife = () => {
             ))}
           </Tabs>
 
-          {/* Related Resources - After Councils */}
-          <Card className="border-muted">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Compass className="w-5 h-5 text-sacred" />
-                Related Resources
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="grid sm:grid-cols-2 gap-3">
+          {/* Greek Life Resources - Combined with colorful design */}
+          <div className="space-y-4">
+            <h3 className="text-xl font-semibold text-center flex items-center justify-center gap-2">
+              <Compass className="w-5 h-5 text-sacred" />
+              Greek Life Resources
+            </h3>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
               <Link 
                 to="/bible-study" 
-                className="flex items-center gap-3 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 hover:bg-emerald-500/20 transition-colors group"
+                className="flex items-center gap-3 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 hover:bg-emerald-500/20 hover:shadow-md transition-all group"
               >
-                <BookOpen className="w-5 h-5 text-emerald-600" />
-                <div className="flex-1">
-                  <span className="font-medium text-sm">Bible Study & Apologetics</span>
-                  <p className="text-xs text-muted-foreground">Scripture flashcards, P.R.O.O.F. curriculum</p>
+                <BookOpen className="w-5 h-5 text-emerald-600 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <span className="font-medium text-sm block">Bible Study & Apologetics</span>
+                  <p className="text-xs text-muted-foreground truncate">Scripture flashcards, P.R.O.O.F. curriculum</p>
                 </div>
-                <ArrowRight className="w-4 h-4 text-emerald-600 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 text-emerald-600 group-hover:translate-x-1 transition-transform shrink-0" />
               </Link>
               
               <Link 
                 to="/symbols" 
-                className="flex items-center gap-3 p-3 rounded-lg bg-purple-500/10 border border-purple-500/30 hover:bg-purple-500/20 transition-colors group"
+                className="flex items-center gap-3 p-3 rounded-lg bg-purple-500/10 border border-purple-500/30 hover:bg-purple-500/20 hover:shadow-md transition-all group"
               >
-                <Shield className="w-5 h-5 text-purple-600" />
-                <div className="flex-1">
-                  <span className="font-medium text-sm">Symbols & Rituals Guide</span>
-                  <p className="text-xs text-muted-foreground">Disciplina Arcani, cultural analysis</p>
+                <Shield className="w-5 h-5 text-purple-600 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <span className="font-medium text-sm block">Symbols & Rituals Guide</span>
+                  <p className="text-xs text-muted-foreground truncate">Disciplina Arcani, cultural analysis</p>
                 </div>
-                <ArrowRight className="w-4 h-4 text-purple-600 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 text-purple-600 group-hover:translate-x-1 transition-transform shrink-0" />
               </Link>
               
               <Link 
                 to="/anti-hazing" 
-                className="flex items-center gap-3 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 transition-colors group"
+                className="flex items-center gap-3 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 hover:shadow-md transition-all group"
               >
-                <AlertTriangle className="w-5 h-5 text-amber-600" />
-                <div className="flex-1">
-                  <span className="font-medium text-sm">Anti-Hazing Hub</span>
-                  <p className="text-xs text-muted-foreground">Prevention resources, support for those who renounced</p>
+                <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <span className="font-medium text-sm block">Anti-Hazing Hub</span>
+                  <p className="text-xs text-muted-foreground truncate">Prevention resources, support</p>
                 </div>
-                <ArrowRight className="w-4 h-4 text-amber-600 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 text-amber-600 group-hover:translate-x-1 transition-transform shrink-0" />
               </Link>
               
               <Link 
                 to="/the-book" 
-                className="flex items-center gap-3 p-3 rounded-lg bg-sacred/10 border border-sacred/30 hover:bg-sacred/20 transition-colors group"
+                className="flex items-center gap-3 p-3 rounded-lg bg-sacred/10 border border-sacred/30 hover:bg-sacred/20 hover:shadow-md transition-all group"
               >
-                <BookOpen className="w-5 h-5 text-sacred" />
-                <div className="flex-1">
-                  <span className="font-medium text-sm">Sacred, Not Sinful Book</span>
-                  <p className="text-xs text-muted-foreground">Full book with audiobook narration</p>
+                <BookOpen className="w-5 h-5 text-sacred shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <span className="font-medium text-sm block">Sacred, Not Sinful Book</span>
+                  <p className="text-xs text-muted-foreground truncate">Full book with audiobook</p>
                 </div>
-                <ArrowRight className="w-4 h-4 text-sacred group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 text-sacred group-hover:translate-x-1 transition-transform shrink-0" />
               </Link>
-            </CardContent>
-          </Card>
-
-          {/* Resources */}
-          <div className="space-y-4">
-            <h3 className="text-xl font-semibold text-center">Greek Life Resources</h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {resources.map((resource, index) => (
-                <Card key={index} className="hover:shadow-md transition-shadow">
-                  <CardContent className="pt-6">
-                    <div className="flex flex-col items-center text-center gap-3">
-                      <div className="p-3 rounded-lg bg-sacred/10">
-                        <resource.icon className="w-6 h-6 text-sacred" />
-                      </div>
-                      <div className="space-y-1">
-                        <h4 className="font-medium">{resource.title}</h4>
-                        <p className="text-sm text-muted-foreground">{resource.description}</p>
-                      </div>
-                      <Button asChild variant="ghost" size="sm" className="text-sacred">
-                        <Link to={resource.link}>
-                          Explore <ArrowRight className="w-3 h-3 ml-1" />
-                        </Link>
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+              
+              <Link 
+                to="/symbol-guide" 
+                className="flex items-center gap-3 p-3 rounded-lg bg-blue-500/10 border border-blue-500/30 hover:bg-blue-500/20 hover:shadow-md transition-all group"
+              >
+                <BookOpen className="w-5 h-5 text-blue-600 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <span className="font-medium text-sm block">Symbol & Ritual Guide</span>
+                  <p className="text-xs text-muted-foreground truncate">Biblical analysis of Greek symbols</p>
+                </div>
+                <ArrowRight className="w-4 h-4 text-blue-600 group-hover:translate-x-1 transition-transform shrink-0" />
+              </Link>
+              
+              <Link 
+                to="/symbol-guide?tab=seals" 
+                className="flex items-center gap-3 p-3 rounded-lg bg-indigo-500/10 border border-indigo-500/30 hover:bg-indigo-500/20 hover:shadow-md transition-all group"
+              >
+                <Compass className="w-5 h-5 text-indigo-600 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <span className="font-medium text-sm block">Seals & Imagery Guide</span>
+                  <p className="text-xs text-muted-foreground truncate">Deities on government seals</p>
+                </div>
+                <ArrowRight className="w-4 h-4 text-indigo-600 group-hover:translate-x-1 transition-transform shrink-0" />
+              </Link>
+              
+              <Link 
+                to="/myth-buster" 
+                className="flex items-center gap-3 p-3 rounded-lg bg-rose-500/10 border border-rose-500/30 hover:bg-rose-500/20 hover:shadow-md transition-all group"
+              >
+                <Heart className="w-5 h-5 text-rose-600 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <span className="font-medium text-sm block">Myth Buster</span>
+                  <p className="text-xs text-muted-foreground truncate">Common misconceptions addressed</p>
+                </div>
+                <ArrowRight className="w-4 h-4 text-rose-600 group-hover:translate-x-1 transition-transform shrink-0" />
+              </Link>
+              
+              <Link 
+                to="/healing-resources" 
+                className="flex items-center gap-3 p-3 rounded-lg bg-teal-500/10 border border-teal-500/30 hover:bg-teal-500/20 hover:shadow-md transition-all group"
+              >
+                <Heart className="w-5 h-5 text-teal-600 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <span className="font-medium text-sm block">Healing Resources</span>
+                  <p className="text-xs text-muted-foreground truncate">Support for difficult experiences</p>
+                </div>
+                <ArrowRight className="w-4 h-4 text-teal-600 group-hover:translate-x-1 transition-transform shrink-0" />
+              </Link>
             </div>
           </div>
 
