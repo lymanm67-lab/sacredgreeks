@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Heart, Search, Book, BookOpen, Calendar, ArrowLeft, ExternalLink, Loader2, Sparkles, Bookmark, BookmarkCheck, FlaskConical, Eye, FileText, MessageSquare, Shield, ChevronDown } from 'lucide-react';
+import { Heart, Search, Book, BookOpen, Calendar, ArrowLeft, ExternalLink, Loader2, Sparkles, Bookmark, BookmarkCheck, FlaskConical, Eye, FileText, MessageSquare, Shield, ChevronDown, ChevronsUpDown, ChevronsDownUp } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { ExternalContentModal } from '@/components/ui/ExternalContentModal';
 import { useExternalLinks } from '@/hooks/use-external-links';
@@ -119,6 +119,21 @@ const BibleStudy = () => {
   const [selectedStudy, setSelectedStudy] = useState<StudyGuide | null>(null);
   const [studyDialogOpen, setStudyDialogOpen] = useState(false);
   const { savedSearches, loading: savedLoading, saveSearch, deleteSearch, isSearchSaved } = useSavedBibleSearches();
+  
+  // Accordion state with localStorage persistence
+  const ALL_ACCORDION_VALUES = ['proof-study', 'apologetics', 'flashcards'];
+  const [accordionValues, setAccordionValues] = useState<string[]>(() => {
+    const saved = localStorage.getItem('bible-study-accordion-state');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // Persist accordion state
+  useEffect(() => {
+    localStorage.setItem('bible-study-accordion-state', JSON.stringify(accordionValues));
+  }, [accordionValues]);
+
+  const expandAll = () => setAccordionValues(ALL_ACCORDION_VALUES);
+  const collapseAll = () => setAccordionValues([]);
 
   // Get studies based on selected category
   const filteredStudies = getStudiesByCategory(selectedTopic);
@@ -931,8 +946,30 @@ const BibleStudy = () => {
             </TabsContent>
         </Tabs>
 
-        {/* Collapsible Sections for PROOF Bible Study and Apologetics */}
-        <Accordion type="multiple" defaultValue={[]} className="space-y-4">
+        {/* Expand/Collapse Controls */}
+        <div className="flex items-center justify-end gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={expandAll}
+            className="text-xs"
+          >
+            <ChevronsDownUp className="w-4 h-4 mr-1" />
+            Expand All
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={collapseAll}
+            className="text-xs"
+          >
+            <ChevronsUpDown className="w-4 h-4 mr-1" />
+            Collapse All
+          </Button>
+        </div>
+
+        {/* Collapsible Sections for PROOF Bible Study, Apologetics, and Flashcards */}
+        <Accordion type="multiple" value={accordionValues} onValueChange={setAccordionValues} className="space-y-4">
           {/* P.R.O.O.F. Bible Study Generator */}
           <AccordionItem value="proof-study" className="border rounded-lg overflow-hidden">
             <AccordionTrigger className="px-4 py-3 hover:no-underline bg-gradient-to-r from-emerald-500/10 to-background hover:from-emerald-500/15">
@@ -968,10 +1005,25 @@ const BibleStudy = () => {
               <ApologeticsQuickReference />
             </AccordionContent>
           </AccordionItem>
-        </Accordion>
 
-        {/* Scripture Flashcards - Gamified */}
-        <ScriptureFlashcards />
+          {/* Scripture Flashcards */}
+          <AccordionItem value="flashcards" className="border rounded-lg overflow-hidden">
+            <AccordionTrigger className="px-4 py-3 hover:no-underline bg-gradient-to-r from-sacred/10 to-background hover:from-sacred/15">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-sacred/10">
+                  <BookOpen className="w-6 h-6 text-sacred" />
+                </div>
+                <div className="text-left">
+                  <h3 className="font-semibold text-foreground">Scripture Flashcards</h3>
+                  <p className="text-xs text-muted-foreground">Master key apologetics verses with spaced repetition</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-0 pb-0">
+              <ScriptureFlashcards />
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
         </div>
       </main>
 

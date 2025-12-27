@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -245,169 +244,153 @@ export const ScriptureFlashcards = () => {
   };
 
   return (
-    <Card className="border-sacred/30 bg-gradient-to-br from-sacred/5 to-background">
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-sacred/10">
-              <BookOpen className="w-6 h-6 text-sacred" />
+    <div className="bg-gradient-to-br from-sacred/5 to-background p-4 space-y-4">
+      {/* Stats Header */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <div className="text-center">
+            <div className="flex items-center gap-1 text-amber-600">
+              <Trophy className="w-4 h-4" />
+              <span className="font-bold">{score}</span>
             </div>
-            <div>
-              <CardTitle>Scripture Flashcards</CardTitle>
-              <CardDescription>
-                Master key apologetics verses with spaced repetition
-              </CardDescription>
-            </div>
+            <span className="text-xs text-muted-foreground">Points</span>
           </div>
-          
-          {/* Stats */}
-          <div className="flex items-center gap-4">
-            <div className="text-center">
-              <div className="flex items-center gap-1 text-amber-600">
-                <Trophy className="w-4 h-4" />
-                <span className="font-bold">{score}</span>
-              </div>
-              <span className="text-xs text-muted-foreground">Points</span>
+          <div className="text-center">
+            <div className="flex items-center gap-1 text-orange-500">
+              <Flame className="w-4 h-4" />
+              <span className="font-bold">{streak}</span>
             </div>
-            <div className="text-center">
-              <div className="flex items-center gap-1 text-orange-500">
-                <Flame className="w-4 h-4" />
-                <span className="font-bold">{streak}</span>
-              </div>
-              <span className="text-xs text-muted-foreground">Streak</span>
-            </div>
+            <span className="text-xs text-muted-foreground">Streak</span>
           </div>
         </div>
+      </div>
         
-        {/* Progress Bars */}
-        <div className="space-y-2 mt-4">
-          <div className="flex items-center justify-between text-xs">
-            <span>Cards Studied</span>
-            <span>{cardsStudied.size}/{flashcards.length}</span>
-          </div>
-          <Progress value={progress} className="h-2" />
-          
-          <div className="flex items-center justify-between text-xs mt-2">
-            <span className="flex items-center gap-1">
-              <Star className="w-3 h-3 text-amber-500" />
-              Mastered
-            </span>
-            <span>{masteredCards.size}/{flashcards.length}</span>
-          </div>
-          <Progress value={masteryProgress} className="h-2 bg-amber-100 dark:bg-amber-900/20" />
+      {/* Progress Bars */}
+      <div className="space-y-2">
+        <div className="flex items-center justify-between text-xs">
+          <span>Cards Studied</span>
+          <span>{cardsStudied.size}/{flashcards.length}</span>
         </div>
-      </CardHeader>
+        <Progress value={progress} className="h-2" />
+        
+        <div className="flex items-center justify-between text-xs mt-2">
+          <span className="flex items-center gap-1">
+            <Star className="w-3 h-3 text-amber-500" />
+            Mastered
+          </span>
+          <span>{masteredCards.size}/{flashcards.length}</span>
+        </div>
+        <Progress value={masteryProgress} className="h-2 bg-amber-100 dark:bg-amber-900/20" />
+      </div>
       
-      <CardContent className="space-y-4">
-        {/* Flashcard */}
+      {/* Flashcard */}
+      <div 
+        className="relative h-72 cursor-pointer perspective-1000"
+        onClick={handleFlip}
+      >
         <div 
-          className="relative h-72 cursor-pointer perspective-1000"
-          onClick={handleFlip}
+          className={`absolute inset-0 transition-transform duration-500 transform-style-3d ${
+            isFlipped ? "rotate-y-180" : ""
+          }`}
         >
-          <div 
-            className={`absolute inset-0 transition-transform duration-500 transform-style-3d ${
-              isFlipped ? "rotate-y-180" : ""
-            }`}
-          >
-            {/* Front */}
-            <div className={`absolute inset-0 backface-hidden rounded-xl p-6 flex flex-col ${
-              isFlipped ? "invisible" : ""
-            } bg-gradient-to-br from-card to-muted/50 border-2 border-sacred/20`}>
-              <div className="flex items-center justify-between mb-4">
-                <Badge variant="outline" className="text-xs">
-                  {currentCard.category}
-                </Badge>
-                <Badge className={getDifficultyColor(currentCard.difficulty)}>
-                  {currentCard.difficulty} • {currentCard.points}pts
-                </Badge>
-              </div>
-              
-              <div className="flex-1 flex items-center justify-center">
-                <p className="text-lg font-medium text-center">
-                  {currentCard.question}
-                </p>
-              </div>
-              
-              <p className="text-xs text-center text-muted-foreground mt-4">
-                Tap to reveal answer
+          {/* Front */}
+          <div className={`absolute inset-0 backface-hidden rounded-xl p-6 flex flex-col ${
+            isFlipped ? "invisible" : ""
+          } bg-gradient-to-br from-card to-muted/50 border-2 border-sacred/20`}>
+            <div className="flex items-center justify-between mb-4">
+              <Badge variant="outline" className="text-xs">
+                {currentCard.category}
+              </Badge>
+              <Badge className={getDifficultyColor(currentCard.difficulty)}>
+                {currentCard.difficulty} • {currentCard.points}pts
+              </Badge>
+            </div>
+            
+            <div className="flex-1 flex items-center justify-center">
+              <p className="text-lg font-medium text-center">
+                {currentCard.question}
               </p>
             </div>
             
-            {/* Back */}
-            <div className={`absolute inset-0 backface-hidden rounded-xl p-6 flex flex-col rotate-y-180 ${
-              !isFlipped ? "invisible" : ""
-            } bg-gradient-to-br from-sacred/10 to-card border-2 border-sacred/30`}>
-              <div className="flex-1 flex flex-col items-center justify-center gap-4">
-                <p className="text-lg font-bold text-center text-sacred">
-                  {currentCard.answer}
-                </p>
-                
-                <div className="p-3 rounded-lg bg-muted/50 border border-border w-full">
-                  <p className="text-sm font-semibold mb-1">{currentCard.scripture}</p>
-                  <p className="text-sm text-muted-foreground italic">
-                    "{currentCard.scriptureText}"
-                  </p>
-                </div>
-              </div>
+            <p className="text-xs text-center text-muted-foreground mt-4">
+              Tap to reveal answer
+            </p>
+          </div>
+          
+          {/* Back */}
+          <div className={`absolute inset-0 backface-hidden rounded-xl p-6 flex flex-col rotate-y-180 ${
+            !isFlipped ? "invisible" : ""
+          } bg-gradient-to-br from-sacred/10 to-card border-2 border-sacred/30`}>
+            <div className="flex-1 flex flex-col items-center justify-center gap-4">
+              <p className="text-lg font-bold text-center text-sacred">
+                {currentCard.answer}
+              </p>
               
-              {/* Knew It / Didn't Know Buttons */}
-              <div className="flex gap-3 mt-4">
-                <Button
-                  variant="outline"
-                  className="flex-1 border-red-500/30 hover:bg-red-500/10"
-                  onClick={(e) => { e.stopPropagation(); handleDidntKnow(); }}
-                >
-                  <X className="w-4 h-4 mr-2" />
-                  Study Again
-                </Button>
-                <Button
-                  className="flex-1 bg-green-600 hover:bg-green-700"
-                  onClick={(e) => { e.stopPropagation(); handleKnewIt(); }}
-                >
-                  <Check className="w-4 h-4 mr-2" />
-                  Got It!
-                </Button>
+              <div className="p-3 rounded-lg bg-muted/50 border border-border w-full">
+                <p className="text-sm font-semibold mb-1">{currentCard.scripture}</p>
+                <p className="text-sm text-muted-foreground italic">
+                  "{currentCard.scriptureText}"
+                </p>
               </div>
+            </div>
+            
+            {/* Knew It / Didn't Know Buttons */}
+            <div className="flex gap-3 mt-4">
+              <Button
+                variant="outline"
+                className="flex-1 border-red-500/30 hover:bg-red-500/10"
+                onClick={(e) => { e.stopPropagation(); handleDidntKnow(); }}
+              >
+                <X className="w-4 h-4 mr-2" />
+                Study Again
+              </Button>
+              <Button
+                className="flex-1 bg-green-600 hover:bg-green-700"
+                onClick={(e) => { e.stopPropagation(); handleKnewIt(); }}
+              >
+                <Check className="w-4 h-4 mr-2" />
+                Got It!
+              </Button>
             </div>
           </div>
         </div>
+      </div>
+      
+      {/* Navigation */}
+      <div className="flex items-center justify-between">
+        <Button variant="outline" size="icon" onClick={handlePrevious}>
+          <ChevronLeft className="w-4 h-4" />
+        </Button>
         
-        {/* Navigation */}
-        <div className="flex items-center justify-between">
-          <Button variant="outline" size="icon" onClick={handlePrevious}>
-            <ChevronLeft className="w-4 h-4" />
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-muted-foreground">
+            {currentIndex + 1} / {shuffledCards.length}
+          </span>
+          
+          <Button variant="ghost" size="icon" onClick={shuffleCards}>
+            <Shuffle className="w-4 h-4" />
           </Button>
           
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">
-              {currentIndex + 1} / {shuffledCards.length}
-            </span>
-            
-            <Button variant="ghost" size="icon" onClick={shuffleCards}>
-              <Shuffle className="w-4 h-4" />
-            </Button>
-            
-            <Button variant="ghost" size="icon" onClick={resetProgress}>
-              <RefreshCw className="w-4 h-4" />
-            </Button>
-          </div>
-          
-          <Button variant="outline" size="icon" onClick={handleNext}>
-            <ChevronRight className="w-4 h-4" />
+          <Button variant="ghost" size="icon" onClick={resetProgress}>
+            <RefreshCw className="w-4 h-4" />
           </Button>
         </div>
         
-        {/* Achievement */}
-        {masteredCards.size === flashcards.length && (
-          <div className="p-4 rounded-lg bg-gradient-to-r from-amber-500/20 to-sacred/20 border border-amber-500/30 text-center">
-            <Trophy className="w-8 h-8 text-amber-500 mx-auto mb-2" />
-            <p className="font-bold text-amber-600">🎉 All Cards Mastered!</p>
-            <p className="text-sm text-muted-foreground">
-              Final Score: {score} points
-            </p>
-          </div>
-        )}
-      </CardContent>
+        <Button variant="outline" size="icon" onClick={handleNext}>
+          <ChevronRight className="w-4 h-4" />
+        </Button>
+      </div>
+      
+      {/* Achievement */}
+      {masteredCards.size === flashcards.length && (
+        <div className="p-4 rounded-lg bg-gradient-to-r from-amber-500/20 to-sacred/20 border border-amber-500/30 text-center">
+          <Trophy className="w-8 h-8 text-amber-500 mx-auto mb-2" />
+          <p className="font-bold text-amber-600">🎉 All Cards Mastered!</p>
+          <p className="text-sm text-muted-foreground">
+            Final Score: {score} points
+          </p>
+        </div>
+      )}
       
       <style>{`
         .perspective-1000 {
@@ -423,6 +406,6 @@ export const ScriptureFlashcards = () => {
           transform: rotateY(180deg);
         }
       `}</style>
-    </Card>
+    </div>
   );
 };
