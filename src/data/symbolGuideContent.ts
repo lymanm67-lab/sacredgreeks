@@ -222,6 +222,51 @@ export const symbolGuideContent: SymbolEntry[] = [
     cautionLevel: "low",
     scripturalContext: "Luke 12:7 - 'Indeed, the very hairs of your head are all numbered.' Acts 1:26 - 'He was added to the eleven apostles.'"
   },
+  {
+    id: "spec-special-interest",
+    name: "Spec / Special Interest",
+    category: "cultural",
+    description: "A 'Spec' or special interest is someone being considered for membership in a Divine Nine organization. Before the formal intake process begins, current members identify individuals who embody the organization's values and would be good candidates. Specs are observed and mentored before being invited to pursue membership.",
+    christianPerspective: "The practice of identifying and observing potential members mirrors how Jesus called His disciples after observing them. He watched the fishermen at work before inviting them to follow. 1 Timothy 3:10 instructs that leaders 'must first be tested' before serving. The spec process, when done ethically, reflects biblical wisdom in evaluating character before commitment.",
+    cautionLevel: "low",
+    scripturalContext: "1 Timothy 3:10 - 'They must first be tested; and then if there is nothing against them, let them serve.' Luke 6:12-13 - 'Jesus spent the night praying... called his disciples to him and chose twelve.'"
+  },
+  {
+    id: "paper-member",
+    name: "Paper Member vs. Traditional Member",
+    category: "cultural",
+    description: "'Paper' refers to members who joined through graduate or alumni chapters without the traditional undergraduate intake experience. Some view paper membership differently from those who 'crossed' through the traditional undergraduate process. This distinction reflects different pathways to the same organizational membership.",
+    christianPerspective: "The body of Christ includes believers who came to faith through different journeys—dramatic conversions like Paul, gradual understanding like Timothy raised in faith, or later-life decisions like the thief on the cross. Galatians 3:28 reminds us that in Christ 'there is neither... slave nor free' - all pathways lead to equal standing. What matters is the commitment, not the pathway.",
+    cautionLevel: "low",
+    scripturalContext: "Galatians 3:28 - 'There is neither Jew nor Gentile, neither slave nor free... for you are all one in Christ Jesus.' Romans 10:12 - 'There is no difference between Jew and Gentile—the same Lord is Lord of all.'"
+  },
+  {
+    id: "bruh-soror-honorifics",
+    name: "Bruh / Soror (Honorifics)",
+    category: "cultural",
+    description: "'Bruh' (short for Brother) and 'Soror' (Latin for Sister) are honorific titles used in Divine Nine organizations. Members address each other with these titles as a sign of respect and familial bond. The titles acknowledge the fraternal/sororal relationship that transcends typical friendship.",
+    christianPerspective: "Using familial titles for fellow members reflects the early church practice. Romans 16 is filled with Paul greeting believers as 'brother' and 'sister.' 1 Timothy 5:1-2 instructs treating fellow believers 'as brothers' and 'as sisters.' The church has always used familial language to describe spiritual bonds. Greek organizations using Bruh/Soror follow this ancient tradition of honoring relationships with family terminology.",
+    cautionLevel: "low",
+    scripturalContext: "Romans 16:1 - 'I commend to you our sister Phoebe.' 1 Timothy 5:1-2 - 'Treat younger men as brothers, older women as mothers, and younger women as sisters.'"
+  },
+  {
+    id: "ship-number",
+    name: "Ship Number",
+    category: "cultural",
+    description: "A ship number indicates when an individual's chapter was chartered in relation to other chapters nationally. For example, 'Ship 15' means that chapter was the 15th chartered in the organization. Members take pride in their ship number as part of their organizational heritage.",
+    christianPerspective: "Ship numbers reflect heritage and lineage—concepts deeply valued in Scripture. The Bible carefully records genealogies and the order of events. Numbers 1-2 meticulously counts and orders the tribes of Israel. Understanding where you fit in organizational history mirrors the biblical value of knowing your spiritual heritage and those who came before you.",
+    cautionLevel: "low",
+    scripturalContext: "Matthew 1:1-17 - The genealogy of Jesus Christ. Hebrews 11 - The 'Hall of Faith' honoring those who came before."
+  },
+  {
+    id: "big-little-sister-brother",
+    name: "Big Brother / Big Sister (Big/Little)",
+    category: "cultural",
+    description: "In Greek organizations, a 'Big' is an initiated member who mentors a new member (their 'Little'). This mentoring relationship creates a family tree within the organization, with Bigs, Littles, Grand-Bigs, and extended Greek family connections that last a lifetime.",
+    christianPerspective: "The Big/Little relationship directly mirrors biblical discipleship. Paul was a spiritual 'Big' to Timothy, whom he called 'my true son in the faith' (1 Timothy 1:2). Titus 2 instructs older believers to mentor younger ones. Jesus Himself discipled the twelve, who then made disciples of others. The Big/Little model is discipleship in action—one generation investing in the next.",
+    cautionLevel: "low",
+    scripturalContext: "1 Timothy 1:2 - 'To Timothy my true son in the faith.' 2 Timothy 2:2 - 'The things you have heard me say... entrust to reliable people who will also be qualified to teach others.'"
+  },
   // Fraternity-Specific Symbols
   {
     id: "lamp-symbol",
