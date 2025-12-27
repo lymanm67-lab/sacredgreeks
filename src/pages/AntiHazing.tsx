@@ -36,6 +36,7 @@ import { ListenButton } from "@/components/ListenButton";
 
 const RESOURCES_ACCORDION_STORAGE_KEY = 'antihazing-resources-accordion-state';
 const ALTERNATIVES_ACCORDION_STORAGE_KEY = 'antihazing-alternatives-accordion-state';
+const PREVENTION_ACCORDION_STORAGE_KEY = 'antihazing-prevention-accordion-state';
 
 const AntiHazing = () => {
   const [selectedState, setSelectedState] = useState<string | null>(null);
@@ -53,6 +54,13 @@ const AntiHazing = () => {
     }
     return [];
   });
+  const [preventionAccordionValues, setPreventionAccordionValues] = useState<string[]>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem(PREVENTION_ACCORDION_STORAGE_KEY);
+      return saved ? JSON.parse(saved) : [];
+    }
+    return [];
+  });
 
   useEffect(() => {
     localStorage.setItem(RESOURCES_ACCORDION_STORAGE_KEY, JSON.stringify(resourcesAccordionValues));
@@ -61,6 +69,10 @@ const AntiHazing = () => {
   useEffect(() => {
     localStorage.setItem(ALTERNATIVES_ACCORDION_STORAGE_KEY, JSON.stringify(alternativesAccordionValues));
   }, [alternativesAccordionValues]);
+
+  useEffect(() => {
+    localStorage.setItem(PREVENTION_ACCORDION_STORAGE_KEY, JSON.stringify(preventionAccordionValues));
+  }, [preventionAccordionValues]);
 
   const handleDownloadPDF = async () => {
     toast.info("Generating PDF...");
@@ -501,8 +513,8 @@ const AntiHazing = () => {
       icon: BookOpen,
       title: "Education & Awareness",
       description: "Implement comprehensive hazing prevention education programs",
-      color: "bg-primary",
-      bgColor: "bg-primary/10",
+      color: "bg-muted",
+      bgColor: "bg-muted/50",
       items: [
         "Mandatory anti-hazing training for all members",
         "New member education on their rights",
@@ -515,8 +527,8 @@ const AntiHazing = () => {
       icon: Scale,
       title: "Clear Policies & Accountability",
       description: "Establish and enforce zero-tolerance hazing policies",
-      color: "bg-secondary",
-      bgColor: "bg-secondary/50",
+      color: "bg-muted",
+      bgColor: "bg-muted/50",
       items: [
         "Written anti-hazing policies in bylaws",
         "Clear reporting procedures",
@@ -529,8 +541,8 @@ const AntiHazing = () => {
       icon: Users,
       title: "Leadership Development",
       description: "Train leaders to create positive organizational cultures",
-      color: "bg-accent",
-      bgColor: "bg-accent/50",
+      color: "bg-muted",
+      bgColor: "bg-muted/50",
       items: [
         "Leadership ethics training",
         "Mentorship programs for officers",
@@ -557,8 +569,8 @@ const AntiHazing = () => {
       icon: Heart,
       title: "Positive Alternatives",
       description: "Replace hazing traditions with meaningful experiences",
-      color: "bg-pink-500",
-      bgColor: "bg-pink-500/10",
+      color: "bg-muted",
+      bgColor: "bg-muted/50",
       items: [
         "Community service projects",
         "Academic support programs",
@@ -571,8 +583,8 @@ const AntiHazing = () => {
       icon: LifeBuoy,
       title: "Support Systems",
       description: "Create resources for those affected by hazing",
-      color: "bg-cyan-500",
-      bgColor: "bg-cyan-500/10",
+      color: "bg-muted",
+      bgColor: "bg-muted/50",
       items: [
         "Counseling services access",
         "Peer support groups",
@@ -1900,32 +1912,67 @@ const AntiHazing = () => {
           </TabsList>
 
           <TabsContent value="prevention">
-            <div className="grid md:grid-cols-2 gap-6">
-              {preventionStrategies.map((strategy, index) => (
-                <Card key={index} className={`border-l-4 ${strategy.color} overflow-hidden`}>
-                  <CardHeader className={strategy.bgColor}>
-                    <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 rounded-lg ${strategy.bgColor} flex items-center justify-center`}>
-                        <strategy.icon className={`w-5 h-5 ${strategy.color.replace('bg-', 'text-')}`} />
+            <div className="space-y-4">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <h3 className="text-lg font-semibold text-foreground">Prevention Strategies</h3>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setPreventionAccordionValues(preventionStrategies.map((_, i) => `prevention-${i}`))}
+                    className="text-xs"
+                  >
+                    <ChevronsDownUp className="w-4 h-4 mr-1" />
+                    Expand All
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setPreventionAccordionValues([])}
+                    className="text-xs"
+                  >
+                    <ChevronsUpDown className="w-4 h-4 mr-1" />
+                    Collapse All
+                  </Button>
+                </div>
+              </div>
+              
+              <Accordion 
+                type="multiple" 
+                value={preventionAccordionValues}
+                onValueChange={setPreventionAccordionValues}
+                className="space-y-3"
+              >
+                {preventionStrategies.map((strategy, index) => (
+                  <AccordionItem 
+                    key={index} 
+                    value={`prevention-${index}`}
+                    className="border rounded-lg bg-muted/50 overflow-hidden"
+                  >
+                    <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-muted/70">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
+                          <strategy.icon className="w-5 h-5 text-muted-foreground" />
+                        </div>
+                        <div className="text-left">
+                          <h4 className="font-medium text-foreground">{strategy.title}</h4>
+                          <p className="text-sm text-muted-foreground">{strategy.description}</p>
+                        </div>
                       </div>
-                      <div>
-                        <CardTitle className="text-lg">{strategy.title}</CardTitle>
-                        <CardDescription>{strategy.description}</CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="pt-4">
-                    <ul className="space-y-2">
-                      {strategy.items.map((item, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm">
-                          <span className={`w-1.5 h-1.5 rounded-full ${strategy.color} mt-2 flex-shrink-0`} />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              ))}
+                    </AccordionTrigger>
+                    <AccordionContent className="px-4 pb-4">
+                      <ul className="space-y-2 pt-2">
+                        {strategy.items.map((item, i) => (
+                          <li key={i} className="flex items-start gap-2 text-sm">
+                            <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground mt-2 flex-shrink-0" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
             </div>
           </TabsContent>
 
