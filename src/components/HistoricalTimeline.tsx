@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Building2, Church, Users, GraduationCap, Crown, BookOpen } from "lucide-react";
+import { Building2, Church, Users, GraduationCap, Crown, BookOpen, X } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 interface TimelineEvent {
   year: string;
@@ -157,86 +159,119 @@ const categoryLabels = {
 };
 
 export const HistoricalTimeline = () => {
+  const [selectedEvent, setSelectedEvent] = useState<TimelineEvent | null>(null);
+
   return (
-    <Card className="border-sacred/30 bg-gradient-to-br from-muted/30 to-background">
-      <CardHeader>
-        <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-sacred/10">
-            <BookOpen className="w-6 h-6 text-sacred" />
-          </div>
-          <div>
-            <CardTitle>Historical Timeline: From Ancient Guilds to Modern Greeks</CardTitle>
-            <CardDescription>
-              Tracing the fraternal tradition through 4,000 years of history
-            </CardDescription>
-          </div>
-        </div>
-        
-        {/* Legend */}
-        <div className="flex flex-wrap gap-2 mt-4">
-          {Object.entries(categoryLabels).map(([key, label]) => (
-            <Badge
-              key={key}
-              variant="outline"
-              className={`bg-gradient-to-r ${categoryColors[key as keyof typeof categoryColors]}`}
-            >
-              {label}
-            </Badge>
-          ))}
-        </div>
-      </CardHeader>
-      
-      <CardContent>
-        <ScrollArea className="w-full">
-          <div className="relative pb-4">
-            {/* Timeline Events */}
-            <div className="flex gap-4 pb-2" style={{ minWidth: `${timelineEvents.length * 200}px` }}>
-              {timelineEvents.map((event, index) => {
-                const Icon = event.icon;
-                return (
-                  <div
-                    key={index}
-                    className="flex flex-col items-center"
-                    style={{ width: "180px" }}
-                  >
-                    {/* Year Badge - Above the line */}
-                    <Badge variant="outline" className="mb-2 text-xs font-bold z-10 bg-background">
-                      {event.year}
-                    </Badge>
-                    
-                    {/* Connector Dot - On the line */}
-                    <div className={`w-4 h-4 rounded-full bg-gradient-to-r ${categoryColors[event.category]} border-2 z-10 relative`}>
-                      {/* Timeline Line Segment */}
-                      {index < timelineEvents.length - 1 && (
-                        <div className="absolute top-1/2 left-full w-[164px] h-1 -translate-y-1/2 bg-gradient-to-r from-amber-500 via-purple-500 to-sacred opacity-30" />
-                      )}
-                    </div>
-                    
-                    {/* Event Card - Below the line */}
-                    <div className={`p-3 rounded-lg bg-gradient-to-br ${categoryColors[event.category]} border h-full mt-2`}>
-                      <div className="flex items-center gap-2 mb-2">
-                        <Icon className="w-4 h-4 shrink-0" />
-                        <h4 className="text-xs font-bold line-clamp-2">{event.title}</h4>
-                      </div>
-                      <p className="text-xs text-muted-foreground line-clamp-4">
-                        {event.description}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
+    <>
+      <Card className="border-sacred/30 bg-gradient-to-br from-muted/30 to-background">
+        <CardHeader>
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-sacred/10">
+              <BookOpen className="w-6 h-6 text-sacred" />
+            </div>
+            <div>
+              <CardTitle className="text-base sm:text-lg">Historical Timeline: From Ancient Guilds to Modern Greeks</CardTitle>
+              <CardDescription className="text-xs sm:text-sm">
+                Tracing the fraternal tradition through 4,000 years of history
+              </CardDescription>
             </div>
           </div>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
+          
+          {/* Legend - Scrollable on mobile */}
+          <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-4">
+            {Object.entries(categoryLabels).map(([key, label]) => (
+              <Badge
+                key={key}
+                variant="outline"
+                className={`bg-gradient-to-r ${categoryColors[key as keyof typeof categoryColors]} text-xs`}
+              >
+                {label}
+              </Badge>
+            ))}
+          </div>
+        </CardHeader>
         
-        {/* Summary */}
-        <div className="mt-4 p-4 rounded-lg bg-sacred/5 border border-sacred/20">
-          <p className="text-sm text-muted-foreground">
-            <strong className="text-foreground">Key Insight:</strong> The fraternal tradition flows unbroken from ancient craft guilds through early church practices to modern Greek organizations. Secret initiations, membership bonds, service, and mutual aid are not inventions of Greek life—they are continuations of practices with deep historical and biblical roots.
+        <CardContent className="px-2 sm:px-6">
+          <ScrollArea className="w-full">
+            <div className="relative pb-4">
+              {/* Timeline Events */}
+              <div className="flex gap-2 sm:gap-4 pb-2" style={{ minWidth: `${timelineEvents.length * 140}px` }}>
+                {timelineEvents.map((event, index) => {
+                  const Icon = event.icon;
+                  return (
+                    <div
+                      key={index}
+                      className="flex flex-col items-center cursor-pointer group"
+                      style={{ width: "120px" }}
+                      onClick={() => setSelectedEvent(event)}
+                    >
+                      {/* Year Badge - Above the line */}
+                      <Badge variant="outline" className="mb-1.5 text-[10px] sm:text-xs font-bold z-10 bg-background group-hover:bg-sacred/10 transition-colors">
+                        {event.year}
+                      </Badge>
+                      
+                      {/* Connector Dot - On the line */}
+                      <div className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-gradient-to-r ${categoryColors[event.category]} border-2 z-10 relative group-hover:scale-125 transition-transform`}>
+                        {/* Timeline Line Segment */}
+                        {index < timelineEvents.length - 1 && (
+                          <div className="absolute top-1/2 left-full w-[108px] sm:w-[104px] h-0.5 sm:h-1 -translate-y-1/2 bg-gradient-to-r from-amber-500 via-purple-500 to-sacred opacity-30" />
+                        )}
+                      </div>
+                      
+                      {/* Event Card - Below the line */}
+                      <div className={`p-2 sm:p-3 rounded-lg bg-gradient-to-br ${categoryColors[event.category]} border h-full mt-1.5 sm:mt-2 group-hover:shadow-lg group-hover:scale-[1.02] transition-all`}>
+                        <div className="flex items-center gap-1.5 sm:gap-2 mb-1 sm:mb-2">
+                          <Icon className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
+                          <h4 className="text-[10px] sm:text-xs font-bold line-clamp-2">{event.title}</h4>
+                        </div>
+                        <p className="text-[9px] sm:text-xs text-muted-foreground line-clamp-3 sm:line-clamp-4">
+                          {event.description}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
+          
+          {/* Tap hint for mobile */}
+          <p className="text-[10px] text-muted-foreground text-center mt-2 sm:hidden">
+            Tap any event for details
           </p>
-        </div>
-      </CardContent>
-    </Card>
+          
+          {/* Summary */}
+          <div className="mt-3 sm:mt-4 p-3 sm:p-4 rounded-lg bg-sacred/5 border border-sacred/20">
+            <p className="text-xs sm:text-sm text-muted-foreground">
+              <strong className="text-foreground">Key Insight:</strong> The fraternal tradition flows unbroken from ancient craft guilds through early church practices to modern Greek organizations. Secret initiations, membership bonds, service, and mutual aid are not inventions of Greek life—they are continuations of practices with deep historical and biblical roots.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Event Detail Dialog */}
+      <Dialog open={!!selectedEvent} onOpenChange={() => setSelectedEvent(null)}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <div className="flex items-center gap-2">
+              {selectedEvent && <selectedEvent.icon className="w-5 h-5 text-sacred" />}
+              <DialogTitle className="text-lg">{selectedEvent?.title}</DialogTitle>
+            </div>
+            <Badge variant="outline" className="w-fit mt-1">
+              {selectedEvent?.year}
+            </Badge>
+          </DialogHeader>
+          <DialogDescription className="text-sm text-foreground">
+            {selectedEvent?.description}
+          </DialogDescription>
+          <div className="mt-2">
+            <Badge className={`bg-gradient-to-r ${selectedEvent ? categoryColors[selectedEvent.category] : ''}`}>
+              {selectedEvent ? categoryLabels[selectedEvent.category] : ''}
+            </Badge>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };

@@ -2700,65 +2700,6 @@ const GreekLife = () => {
           {/* Historical Timeline - Priority: keep visible */}
           <HistoricalTimeline />
 
-          {/* Quick Links to Related Resources */}
-          <Card className="border-muted">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Compass className="w-5 h-5 text-sacred" />
-                Related Resources
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="grid sm:grid-cols-2 gap-3">
-              <Link 
-                to="/bible-study" 
-                className="flex items-center gap-3 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 hover:bg-emerald-500/20 transition-colors group"
-              >
-                <BookOpen className="w-5 h-5 text-emerald-600" />
-                <div className="flex-1">
-                  <span className="font-medium text-sm">Bible Study & Apologetics</span>
-                  <p className="text-xs text-muted-foreground">Scripture flashcards, P.R.O.O.F. curriculum</p>
-                </div>
-                <ArrowRight className="w-4 h-4 text-emerald-600 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              
-              <Link 
-                to="/symbols" 
-                className="flex items-center gap-3 p-3 rounded-lg bg-purple-500/10 border border-purple-500/30 hover:bg-purple-500/20 transition-colors group"
-              >
-                <Shield className="w-5 h-5 text-purple-600" />
-                <div className="flex-1">
-                  <span className="font-medium text-sm">Symbols & Rituals Guide</span>
-                  <p className="text-xs text-muted-foreground">Disciplina Arcani, cultural analysis</p>
-                </div>
-                <ArrowRight className="w-4 h-4 text-purple-600 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              
-              <Link 
-                to="/anti-hazing" 
-                className="flex items-center gap-3 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 transition-colors group"
-              >
-                <AlertTriangle className="w-5 h-5 text-amber-600" />
-                <div className="flex-1">
-                  <span className="font-medium text-sm">Anti-Hazing Hub</span>
-                  <p className="text-xs text-muted-foreground">Prevention resources, support for those who renounced</p>
-                </div>
-                <ArrowRight className="w-4 h-4 text-amber-600 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              
-              <Link 
-                to="/the-book" 
-                className="flex items-center gap-3 p-3 rounded-lg bg-sacred/10 border border-sacred/30 hover:bg-sacred/20 transition-colors group"
-              >
-                <BookOpen className="w-5 h-5 text-sacred" />
-                <div className="flex-1">
-                  <span className="font-medium text-sm">Sacred, Not Sinful Book</span>
-                  <p className="text-xs text-muted-foreground">Full book with audiobook narration</p>
-                </div>
-                <ArrowRight className="w-4 h-4 text-sacred group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </CardContent>
-          </Card>
-
           {/* Councils Tabs */}
           <Tabs defaultValue="nphc" className="space-y-6">
             <TabsList className="flex flex-wrap justify-center gap-1">
@@ -2844,6 +2785,65 @@ const GreekLife = () => {
               </TabsContent>
             ))}
           </Tabs>
+
+          {/* Related Resources - After Councils */}
+          <Card className="border-muted">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Compass className="w-5 h-5 text-sacred" />
+                Related Resources
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="grid sm:grid-cols-2 gap-3">
+              <Link 
+                to="/bible-study" 
+                className="flex items-center gap-3 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 hover:bg-emerald-500/20 transition-colors group"
+              >
+                <BookOpen className="w-5 h-5 text-emerald-600" />
+                <div className="flex-1">
+                  <span className="font-medium text-sm">Bible Study & Apologetics</span>
+                  <p className="text-xs text-muted-foreground">Scripture flashcards, P.R.O.O.F. curriculum</p>
+                </div>
+                <ArrowRight className="w-4 h-4 text-emerald-600 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              
+              <Link 
+                to="/symbols" 
+                className="flex items-center gap-3 p-3 rounded-lg bg-purple-500/10 border border-purple-500/30 hover:bg-purple-500/20 transition-colors group"
+              >
+                <Shield className="w-5 h-5 text-purple-600" />
+                <div className="flex-1">
+                  <span className="font-medium text-sm">Symbols & Rituals Guide</span>
+                  <p className="text-xs text-muted-foreground">Disciplina Arcani, cultural analysis</p>
+                </div>
+                <ArrowRight className="w-4 h-4 text-purple-600 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              
+              <Link 
+                to="/anti-hazing" 
+                className="flex items-center gap-3 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 transition-colors group"
+              >
+                <AlertTriangle className="w-5 h-5 text-amber-600" />
+                <div className="flex-1">
+                  <span className="font-medium text-sm">Anti-Hazing Hub</span>
+                  <p className="text-xs text-muted-foreground">Prevention resources, support for those who renounced</p>
+                </div>
+                <ArrowRight className="w-4 h-4 text-amber-600 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              
+              <Link 
+                to="/the-book" 
+                className="flex items-center gap-3 p-3 rounded-lg bg-sacred/10 border border-sacred/30 hover:bg-sacred/20 transition-colors group"
+              >
+                <BookOpen className="w-5 h-5 text-sacred" />
+                <div className="flex-1">
+                  <span className="font-medium text-sm">Sacred, Not Sinful Book</span>
+                  <p className="text-xs text-muted-foreground">Full book with audiobook narration</p>
+                </div>
+                <ArrowRight className="w-4 h-4 text-sacred group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </CardContent>
+          </Card>
 
           {/* Resources */}
           <div className="space-y-4">
