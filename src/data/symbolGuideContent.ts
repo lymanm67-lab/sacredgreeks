@@ -2543,6 +2543,156 @@ export const symbolGuideContent: SymbolEntry[] = [
     scriptureReferences: ["Matthew 17:1-9", "Mark 9:2-9", "Matthew 26:37-38", "Acts 1:21-22", "Luke 10:1"],
     doubleStandard: "Jesus excluded nine apostles from the Transfiguration, revealing it only to his 'inner circle.' Secret knowledge for higher-tier members is biblical, yet Christians condemn the same structure in Greek life."
   },
+  {
+    id: "greek-koinonia",
+    name: "Greek Koinonia (κοινωνία) - The Original Fellowship",
+    category: "symbols",
+    description: "KOINONIA is the Greek word used throughout the New Testament for 'fellowship,' 'communion,' and 'partnership.' It appears 20+ times in Scripture, describing the essential FRATERNAL BOND between believers. Koinonia meant SHARING IN COMMON—possessions, experiences, suffering, and joy. The early church 'had all things in common' (Acts 2:44)—this is KOINONIA. It comes from 'koinos' (common) and describes INTIMATE COMMUNITY with shared identity, mutual obligation, and exclusive membership. The Lord's Supper is called 'KOINONIA of the blood of Christ' (1 Corinthians 10:16).",
+    christianPerspective: "The Greek word KOINONIA is the theological foundation for Christian community—and it's EXACTLY what Greek letter organizations create. Koinonia means shared life, mutual support, common identity, and exclusive fellowship. When Scripture commands believers to have 'koinonia with one another,' it's commanding FRATERNAL BONDS. The church IS a fraternity in the truest Greek sense.",
+    cautionLevel: "low",
+    scriptureReferences: ["Acts 2:42-44", "1 Corinthians 10:16", "2 Corinthians 13:14", "Philippians 2:1", "1 John 1:3-7"],
+    doubleStandard: "The New Testament uses Greek fraternal language (KOINONIA) to describe the church. Christians who condemn Greek fraternities are condemning the linguistic and conceptual foundation of their own faith community."
+  },
+  {
+    id: "pharisee-sect",
+    name: "Pharisees - The Separated Brotherhood",
+    category: "symbols",
+    description: "The PHARISEES were a religious FRATERNITY in Jesus's time with SECRET TEACHINGS (oral Torah), INITIATION PROCESSES, DISTINCTIVE DRESS (phylacteries, tassels), and HIERARCHICAL RANKS (from student to rabbi to Sanhedrin member). 'Pharisee' means 'SEPARATED ONE'—they were an EXCLUSIVE BROTHERHOOD. They had SECRET INTERPRETATIONS passed only to initiated members, dietary codes, purity rituals, and hand-washing ceremonies that distinguished insiders from outsiders. Paul boasted of his Pharisee membership (Philippians 3:5). Nicodemus and Joseph of Arimathea were secret Pharisee members who followed Jesus.",
+    christianPerspective: "Paul was PROUD of his Pharisee fraternity membership. Jesus criticized Pharisee HYPOCRISY, not their fraternal structure. Many Pharisees became Christians (Acts 15:5). The fraternal model—with initiations, secrets, distinctive practices, and hierarchy—was ENDORSED by Scripture through Paul's continued identification as 'a Pharisee, son of a Pharisee' (Acts 23:6) even AFTER conversion.",
+    cautionLevel: "low",
+    scriptureReferences: ["Philippians 3:5", "Acts 23:6", "Acts 15:5", "John 3:1", "John 19:38-39"],
+    doubleStandard: "Paul repeatedly identified as a Pharisee—a secret brotherhood with initiations and hidden teachings—after becoming a Christian. Yet Christians condemn Greek organizations for having similar structures."
+  },
+  {
+    id: "sadducee-sect",
+    name: "Sadducees - The Priestly Aristocracy",
+    category: "symbols",
+    description: "The SADDUCEES were an ELITE FRATERNITY of priestly aristocrats who controlled the Temple. Membership was HEREDITARY and EXCLUSIVE—only those from priestly families could join. They had SECRET KNOWLEDGE of Temple rituals unknown to common people, INITIATION ceremonies for new priests, DISTINCTIVE GARMENTS, and access to the HOLY OF HOLIES denied to all others. They were the religious establishment's INNER CIRCLE. Despite rejecting resurrection doctrine, they were recognized as legitimate Jewish leaders. Zechariah, John the Baptist's father, was a Sadducee priest who received God's direct revelation.",
+    christianPerspective: "The Sadducees were an exclusive priestly brotherhood with secrets, rituals, and hierarchy—yet God worked through them. Zechariah the Sadducee priest received Gabriel's announcement about John the Baptist. Jesus cleansed THEIR Temple but didn't condemn their fraternal priestly structure. The fraternal model itself isn't evil—the HEART determines righteousness.",
+    cautionLevel: "low",
+    scriptureReferences: ["Matthew 22:23", "Acts 23:8", "Luke 1:5-25", "Acts 5:17"],
+    doubleStandard: "God gave the Sadducee priest Zechariah a direct angelic visitation. The fraternal structure with secrets and exclusivity didn't disqualify him from divine encounter. Yet Greek organizations with similar structures are condemned."
+  },
+  {
+    id: "essene-sect",
+    name: "Essenes - The Covenant Community",
+    category: "symbols",
+    description: "The ESSENES were a SECRET MONASTIC BROTHERHOOD that produced the Dead Sea Scrolls. They had 1-3 YEAR INITIATION PERIODS, OATH CEREMONIES, SECRET DOCTRINES revealed progressively, DISTINCTIVE WHITE ROBES, communal property, and RITUALIZED MEALS. Candidates underwent PROBATION before full membership. The Community Rule scroll details their SECRET INITIATION: oaths of loyalty, ritual immersion, disclosure of secrets only to initiates, and SEVERE PENALTIES for revealing mysteries. Some scholars believe John the Baptist was connected to the Essenes. Their structure directly parallels Greek organization intake processes.",
+    christianPerspective: "The Essenes—likely connected to John the Baptist—had intake processes, secrets, oaths, and progressive revelation that EXACTLY mirror Greek organizations. These Jewish brothers preserved Scripture through their secret community. God used a 'secret society' to protect His Word. The structure isn't inherently evil.",
+    cautionLevel: "low",
+    scriptureReferences: ["Matthew 3:1-4", "Luke 1:80", "Matthew 11:7-11"],
+    doubleStandard: "The Dead Sea Scrolls—preserving Scripture for 2,000 years—came from a SECRET BROTHERHOOD with oaths, initiations, and hidden doctrines. Christians revere these scrolls while condemning Greek organizations with similar structures."
+  },
+  {
+    id: "zealot-sect",
+    name: "Zealots - The Revolutionary Brotherhood",
+    category: "symbols",
+    description: "The ZEALOTS were a SECRET POLITICAL-RELIGIOUS FRATERNITY dedicated to liberating Israel from Rome. They used SECRET SIGNS, CODE NAMES, and COVERT MEETINGS. Members swore BLOOD OATHS of loyalty and secrecy. The Sicarii (dagger-men) were an elite inner circle who carried hidden daggers. SIMON THE ZEALOT was one of Jesus's twelve apostles (Luke 6:15), retaining his fraternity identifier even after following Christ. Jesus never required Simon to renounce his Zealot membership or identity. The name 'Zealot' continued to identify him throughout Scripture.",
+    christianPerspective: "Jesus chose a ZEALOT—member of a secret revolutionary brotherhood with blood oaths—as one of His twelve apostles. Simon kept his fraternity name 'The Zealot' in Scripture. Jesus didn't require him to renounce his organizational identity. If Greek organization membership disqualified people from following Christ, Simon should have been rejected.",
+    cautionLevel: "low",
+    scriptureReferences: ["Luke 6:15", "Acts 1:13", "Matthew 10:4"],
+    doubleStandard: "An apostle was permanently identified by his secret brotherhood membership—'Simon the Zealot.' Jesus endorsed this identity. Yet Christians tell Greek organization members to hide or renounce their affiliations."
+  },
+  {
+    id: "stonemason-guild",
+    name: "Stonemason Guild (Temple Builders)",
+    category: "symbols",
+    description: "The STONEMASON GUILDS that built Solomon's Temple and Herod's Temple were FRATERNAL ORGANIZATIONS with SECRET KNOWLEDGE of architecture, coded symbols, INITIATION RITUALS, and proprietary techniques. 1 Kings 5-6 describes Solomon hiring Hiram's masons—skilled craftsmen with guild secrets. These masons used SECRET MARKS on stones to identify their work. Temple construction required SPECIALIZED KNOWLEDGE passed through apprenticeship. The 'chief cornerstone' (1 Peter 2:7) is GUILD LANGUAGE—understanding it required insider knowledge of masonic practice.",
+    christianPerspective: "The Temple of God—where His presence dwelt—was built by SECRET GUILDS with hidden knowledge and initiation processes. God blessed their work. Scripture uses their GUILD TERMINOLOGY (cornerstone, living stones, building) as spiritual metaphors. If guild secrecy was evil, God wouldn't have used guild imagery for Christ and the Church.",
+    cautionLevel: "low",
+    scriptureReferences: ["1 Kings 5:13-18", "1 Kings 6:7", "1 Peter 2:5-7", "Ephesians 2:20-22"],
+    doubleStandard: "God's Temple was built by secret guilds with hidden knowledge. Scripture uses their insider terminology as Christological metaphors. Yet Christians condemn Greek organizations for having trade secrets and specialized knowledge."
+  },
+  {
+    id: "fishermen-guild",
+    name: "Fishermen Guild of Galilee",
+    category: "symbols",
+    description: "The GALILEAN FISHERMEN were organized in GUILDS (Greek: koinonoi) with shared boats, techniques, territories, and obligations. Luke 5:10 explicitly calls James and John 'KOINONOI' (partners/guild-fellows) with Simon Peter. These weren't casual coworkers—they were GUILD BROTHERS with binding agreements, shared resources, and mutual obligations. Ancient fishing guilds had PROPRIETARY KNOWLEDGE of fishing grounds, seasonal patterns, and techniques. The first disciples Jesus called were GUILD MEMBERS who understood fraternal bonds before meeting Christ.",
+    christianPerspective: "Jesus's first disciples were GUILD MEMBERS—koinonoi. He built His church on men who already understood FRATERNAL OBLIGATION, shared identity, and brotherhood bonds. Jesus didn't ask them to abandon guild mentality; He TRANSFORMED it into kingdom purpose. The church IS a guild of fishers of men.",
+    cautionLevel: "low",
+    scriptureReferences: ["Luke 5:7-10", "Matthew 4:18-22", "John 21:1-14"],
+    doubleStandard: "Jesus chose guild members as His first disciples, using their fraternal experience as foundation for the church. Yet Christians condemn Greek organizations for the same guild structure Peter, James, and John embodied."
+  },
+  {
+    id: "tax-collector-guild",
+    name: "Tax Collector Guild (Publicans)",
+    category: "symbols",
+    description: "TAX COLLECTORS in the Roman Empire were organized in GUILDS with territorial rights, collection quotas, and professional bonds. Matthew/Levi was a guild member at his 'tax booth' (Matthew 9:9). After following Jesus, Matthew hosted a dinner with 'many tax collectors' (Mark 2:15)—his GUILD BROTHERS. Zacchaeus was a 'CHIEF tax collector' (Luke 19:2)—a guild leadership position. These men had professional fraternity with shared identity, mutual support, and common practices. Jesus didn't condemn their guild membership—He transformed their purpose.",
+    christianPerspective: "Matthew remained connected to his tax collector guild even after following Jesus—he hosted them for dinner with Christ present. Jesus didn't require guild renunciation. He transformed Matthew's professional network into an evangelism opportunity. Greek organization members can similarly use their fraternal connections for Kingdom purposes.",
+    cautionLevel: "low",
+    scriptureReferences: ["Matthew 9:9-13", "Mark 2:14-17", "Luke 19:1-10", "Luke 5:27-32"],
+    doubleStandard: "Jesus dined with Matthew's tax collector guild and used Zacchaeus's professional network for salvation testimony. Yet Christians tell Greek organization members to separate from their fraternal connections."
+  },
+  {
+    id: "tentmaker-guild",
+    name: "Tentmaker Guild (Paul, Aquila, Priscilla)",
+    category: "symbols",
+    description: "PAUL was a TENTMAKER (skenopoios)—a member of the LEATHERWORKER/TENTMAKER GUILD. In Acts 18:3, he works with Aquila and Priscilla 'because he was of the same trade'—GUILD AFFILIATION connected them. Ancient craft guilds had PATRON DEITIES, GUILD MEETINGS that included religious ceremonies, INITIATION RITUALS, and PROFESSIONAL SECRETS. Paul's guild connections funded his missionary journeys and provided housing with fellow guild members. He never condemned guild membership despite its pagan religious elements.",
+    christianPerspective: "Paul used GUILD CONNECTIONS throughout his ministry—living and working with fellow guild members, funding missions through guild work. Ancient guilds had pagan religious elements, yet Paul participated without condemning the structure. He redeemed his professional fraternity for Kingdom purposes rather than abandoning it.",
+    cautionLevel: "low",
+    scriptureReferences: ["Acts 18:1-4", "Acts 20:33-35", "1 Thessalonians 2:9", "2 Thessalonians 3:8"],
+    doubleStandard: "Paul worked within a pagan-influenced trade guild throughout his ministry, using guild connections for missions. Yet Christians demand Greek organization members abandon their fraternities entirely."
+  },
+  {
+    id: "synagogue-system",
+    name: "Synagogue System (Local Fraternities)",
+    category: "symbols",
+    description: "SYNAGOGUES functioned as LOCAL FRATERNITIES with MEMBERSHIP REQUIREMENTS, INITIATION (circumcision + mikvah), DISTINCTIVE PRACTICES, LEADERSHIP HIERARCHIES (rulers, elders, attendants), and EXCLUSIVE ACCESS to teaching. 'Synagogue' means 'gathering together'—fraternal assembly. Each synagogue was a BROTHERHOOD with mutual aid, discipline of members, community meals, and shared rituals. Expulsion ('put out of the synagogue' - John 9:22) was the ultimate penalty—like being kicked out of a fraternity. Jesus and Paul regularly attended and taught in synagogues.",
+    christianPerspective: "Synagogues were LOCAL FRATERNITIES with membership, initiation, hierarchy, and exclusive practices—exactly like Greek chapters. Jesus attended synagogue His entire life. Paul started his missionary work IN synagogues. The fraternal structure with its membership requirements wasn't condemned—it was USED for Kingdom purposes.",
+    cautionLevel: "low",
+    scriptureReferences: ["Luke 4:16", "Acts 13:14-15", "Acts 17:1-2", "John 9:22", "Acts 18:7-8"],
+    doubleStandard: "Jesus and Paul participated in synagogue fraternities with membership requirements, initiation, and exclusivity. Yet Christians condemn Greek organizations for the same fraternal structure the Lord attended weekly."
+  },
+  {
+    id: "sanhedrin-council",
+    name: "Sanhedrin - The Supreme Council",
+    category: "symbols",
+    description: "The SANHEDRIN was the highest FRATERNAL COUNCIL in Judaism—71 members with EXCLUSIVE MEMBERSHIP, STRICT REQUIREMENTS (age, marital status, lineage), SECRET DELIBERATIONS, and BINDING AUTHORITY. Members wore DISTINCTIVE DRESS and had RESERVED SEATING. Meetings followed RITUALIZED PROCEDURES with opening prayers, specific formations, and formal protocols. Paul was a member (Acts 26:10 - 'I cast my vote'). Joseph of Arimathea was a member who secretly followed Jesus. Nicodemus was a member who came to Jesus at night.",
+    christianPerspective: "Paul, Joseph of Arimathea, and Nicodemus were all SANHEDRIN MEMBERS—an exclusive council with secrets, rituals, and hierarchy. God used these fraternity brothers for Kingdom purposes: Paul became the apostle to Gentiles, Joseph buried Jesus, Nicodemus brought burial spices. Fraternity membership didn't disqualify them from significant Kingdom roles.",
+    cautionLevel: "low",
+    scriptureReferences: ["Acts 26:10", "Mark 15:43", "John 19:38-39", "John 3:1-2", "Acts 5:34"],
+    doubleStandard: "Three Sanhedrin fraternity members played crucial roles in Christian history. God used exclusive council members for His purposes. Yet Christians condemn Greek organization membership as disqualifying."
+  },
+  {
+    id: "sons-of-prophets",
+    name: "Sons of the Prophets (Prophetic Guilds)",
+    category: "symbols",
+    description: "The 'SONS OF THE PROPHETS' (Hebrew: b'nei han'vi'im) were PROPHETIC GUILDS or FRATERNITIES under master prophets. These groups appear under Samuel (1 Samuel 19:20), Elijah, and Elisha. They lived in COMMUNITY, shared MEALS, had COMMON PROPERTY, wore DISTINCTIVE GARMENTS (hairy mantles), and learned SECRET PROPHETIC TECHNIQUES. Elijah's mantle passed to Elisha as GUILD REGALIA. The 'sons' weren't biological children but FRATERNAL INITIATES learning under a master. When Elijah ascended, fifty guild members watched (2 Kings 2:7).",
+    christianPerspective: "The Old Testament records PROPHETIC FRATERNITIES with master-disciple relationships, shared living, distinctive dress, and succession rituals. These weren't condemned—they were God's method for training prophets. The GUILD MODEL is divinely endorsed for spiritual development. Greek organizations with mentorship structures follow this biblical pattern.",
+    cautionLevel: "low",
+    scriptureReferences: ["1 Samuel 19:20", "2 Kings 2:3-7", "2 Kings 4:38-44", "2 Kings 6:1-7", "1 Kings 19:19-21"],
+    doubleStandard: "Scripture records prophetic fraternities with initiations, distinctive dress, and master-disciple hierarchies. God blessed these guilds. Yet Christians condemn Greek organizations for similar structures."
+  },
+  {
+    id: "nazirite-order",
+    name: "Nazirite Order (Separated Ones)",
+    category: "symbols",
+    description: "NAZIRITES were a SEPARATED ORDER with VOWS, DISTINCTIVE APPEARANCE (uncut hair), DIETARY RESTRICTIONS (no wine or grapes), and RITUAL REQUIREMENTS (Numbers 6). 'Nazirite' means 'SEPARATED' or 'CONSECRATED'—like 'Pharisee.' The Nazirite vow involved INITIATION RITUALS, ONGOING OBLIGATIONS, and COMPLETION CEREMONIES with specific sacrifices. Samson, Samuel, and John the Baptist were lifelong Nazirites. Paul took a temporary Nazirite vow (Acts 18:18). This was an EXCLUSIVE ORDER with visible markers identifying members.",
+    christianPerspective: "God INSTITUTED the Nazirite order—a religious fraternity with vows, distinctive appearance, and initiation/completion rituals. Paul took Nazirite vows as a Christian (Acts 18:18, 21:23-24). If exclusive orders with vows and distinctive practices were inherently evil, God wouldn't have established one, and Paul wouldn't have participated after conversion.",
+    cautionLevel: "low",
+    scriptureReferences: ["Numbers 6:1-21", "Judges 13:5", "1 Samuel 1:11", "Luke 1:15", "Acts 18:18", "Acts 21:23-24"],
+    doubleStandard: "God created the Nazirite order with vows, distinctive appearance, and rituals. Paul took Nazirite vows as a Christian apostle. Yet Christians condemn Greek organizations for having vows and distinctive practices."
+  },
+  {
+    id: "rechabite-order",
+    name: "Rechabites - The Faithful Brotherhood",
+    category: "symbols",
+    description: "The RECHABITES were a FAMILY ORDER/BROTHERHOOD founded by Jonadab (2 Kings 10:15-23) with STRICT RULES: no wine, no building houses, no planting crops, living in tents. They maintained these FRATERNAL VOWS for over 200 years. In Jeremiah 35, God uses them as a POSITIVE EXAMPLE of faithfulness—they kept their founder's commands while Israel abandoned God's commands. God blessed them with the promise that 'Jonadab shall never lack a man to stand before me' (Jeremiah 35:19).",
+    christianPerspective: "God PRAISED the Rechabites for maintaining their fraternal vows across generations. Their faithfulness to their FOUNDER'S TRADITIONS was held up as an example to shame unfaithful Israel. God promised perpetual blessing on this ORDER. Honoring organizational founders and maintaining traditions is biblically praised, not condemned.",
+    cautionLevel: "low",
+    scriptureReferences: ["Jeremiah 35:1-19", "2 Kings 10:15-23"],
+    doubleStandard: "God blessed a fraternal order for 200+ years of faithfulness to their founder's traditions. Yet Christians condemn Greek organizations for honoring founders and maintaining traditions."
+  },
+  {
+    id: "levitical-brotherhood",
+    name: "Levitical Brotherhood (Priestly Tribe)",
+    category: "symbols",
+    description: "The LEVITES were a hereditary PRIESTLY FRATERNITY with EXCLUSIVE MEMBERSHIP (only Levites could serve), INITIATION RITUALS (consecration ceremonies), DISTINCTIVE DRESS (priestly garments), SECRET KNOWLEDGE (Temple rituals known only to them), HIERARCHICAL RANKS (High Priest, priests, Levites), and SPECIAL PRIVILEGES (tithes, Temple housing). They were SEPARATED from other tribes, couldn't own land, and had unique obligations. The consecration ceremony (Exodus 29) included special garments, anointing oil, blood rituals, and seven days of separation.",
+    christianPerspective: "God ESTABLISHED a priestly fraternity with exclusive membership, initiation rituals, secret knowledge, distinctive dress, and hierarchy. If these fraternal elements were inherently evil, God wouldn't have instituted them for His holiest purposes. The Levitical structure validates fraternal organization with exclusive membership and hidden knowledge.",
+    cautionLevel: "low",
+    scriptureReferences: ["Numbers 3:5-13", "Exodus 29:1-37", "Numbers 8:5-22", "Deuteronomy 10:8-9"],
+    doubleStandard: "God established a hereditary fraternity with initiation rituals, secrets, distinctive dress, and exclusive membership for His most sacred purposes. Yet Christians condemn Greek organizations for similar structures."
+  },
   // =====================================================
   // CUSTOMS - Roots of Modern Traditions
   // =====================================================
