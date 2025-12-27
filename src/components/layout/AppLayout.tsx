@@ -2,11 +2,11 @@ import { ReactNode } from "react";
 import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
 import { MobileNav } from "./MobileNav";
+import { MobileBottomNav } from "./MobileBottomNav";
 import { PageTitle } from "./PageTitle";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useSidebarPreferences } from "@/hooks/use-sidebar-preferences";
 import { useDemoMode } from "@/contexts/DemoModeContext";
-import { DemoModeControl } from "@/components/GlobalDemoIndicator";
 import { cn } from "@/lib/utils";
 
 interface AppLayoutProps {
@@ -39,11 +39,16 @@ export function AppLayout({ children }: AppLayoutProps) {
               {/* Demo and Upgrade buttons are now in sidebar header */}
             </div>
           </header>
-          <main className="flex-1 overflow-auto">
+          <main className={cn(
+            "flex-1 overflow-auto",
+            isMobile && "pb-20" // Add padding for bottom nav
+          )}>
             {children}
           </main>
         </SidebarInset>
       </div>
+      {/* Mobile bottom navigation */}
+      {isMobile && <MobileBottomNav />}
     </SidebarProvider>
   );
 }
