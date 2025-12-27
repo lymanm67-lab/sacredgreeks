@@ -11,6 +11,10 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useState, useRef } from "react";
 import { toast } from "sonner";
 import { ApologeticsCard } from "@/components/ApologeticsCard";
+import { AudiobookPlayer } from "@/components/AudiobookPlayer";
+import { HistoricalTimeline } from "@/components/HistoricalTimeline";
+import { ScriptureFlashcards } from "@/components/ScriptureFlashcards";
+import { RenouncedSupportSection } from "@/components/RenouncedSupportSection";
 
 interface Organization {
   name: string;
@@ -2696,6 +2700,18 @@ const GreekLife = () => {
               </Accordion>
             </CardContent>
           </Card>
+
+          {/* Audiobook Player */}
+          <AudiobookPlayer />
+
+          {/* Historical Timeline */}
+          <HistoricalTimeline />
+
+          {/* Scripture Flashcards - Gamified */}
+          <ScriptureFlashcards />
+
+          {/* Supporting Renounced Members */}
+          <RenouncedSupportSection />
 
           {/* Apologetics Quick Reference Card */}
           <ApologeticsCard />
