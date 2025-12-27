@@ -4043,54 +4043,102 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
     modernUsage: "Nail polish is worn in churches, by worship leaders, and in Christian professional settings.",
     appUsage: "Nail coloring sacred to Isis and reserved for those claiming divine authority is universally accepted in Christian culture."
   },
+  {
+    id: "mirrors",
+    category: "beauty",
+    symbol: "Mirrors and Reflective Surfaces",
+    ancientConnection: "In ancient Egypt, mirrors were sacred objects tied directly to the goddess Hathor, called 'The Golden One.' Bronze mirrors were shaped like the ankh symbol and featured Hathor's face on the handle—reflecting her image back at the user. Mirrors were used in temple rituals to capture and direct the sun god Ra's divine light. Priestesses of Hathor used mirrors in ceremonies to commune with the goddess. Mirrors were placed in tombs as essential tools for the soul to recognize itself in the afterlife and commune with the gods.",
+    modernUsage: "Mirrors are in every church bathroom, dressing room, and home. Christians use mirrors daily without spiritual concern.",
+    appUsage: "Objects sacred to Hathor and used in Ra worship are essential to modern Christian life, yet Greek letters face scrutiny."
+  },
+  {
+    id: "gold-jewelry",
+    category: "beauty",
+    symbol: "Gold Jewelry and Adornments",
+    ancientConnection: "Gold was the flesh of Ra, the sun god—the most sacred material in Egyptian religion. Gold jewelry was worn exclusively by pharaohs and priests to embody divine authority. Collars, bracelets, and rings were offerings to Isis, Hathor, and Osiris. The 'Gold of Honor' was a religious award given in temple ceremonies. Temple statues of gods were overlaid with gold, and wearing gold was believed to connect the wearer to the solar deity. Gold scarabs invoked Khepri, the god of rebirth.",
+    modernUsage: "Gold wedding rings, crosses, necklaces, and watches are worn by Christians in worship. Gold is the preferred metal for religious jewelry.",
+    appUsage: "Metal literally called 'the flesh of Ra' and used in Isis worship adorns Christians during worship while Greek letters are questioned."
+  },
+  {
+    id: "body-oils",
+    category: "beauty",
+    symbol: "Body Oils and Lotions",
+    ancientConnection: "Body oils were central to Egyptian temple worship and divine ritual. Priests applied sacred oils before entering the inner sanctum to serve the gods. Moringa oil was sacred to Isis and used in her temple rites. Castor oil was used in mummification rituals for Osiris. Sesame oil was offered to Ra. 'The Seven Sacred Oils' were applied to statues of gods daily and used in royal coronation rituals. Body oils were believed to make the skin glow with divine light, connecting the wearer to the solar deities.",
+    modernUsage: "Body oils, lotions, and moisturizers are standard self-care. Churches use anointing oil in healing services.",
+    appUsage: "Oils created for Isis temple rituals and Osiris mummification rites are embraced in Christian practice while Greek letters are debated."
+  },
+  {
+    id: "lipstick-rouge",
+    category: "beauty",
+    symbol: "Lipstick and Red Pigments",
+    ancientConnection: "Red lip color in ancient Egypt was sacred to Isis and represented her life-giving blood. The red ochre used for lips was the same pigment used in resurrection rituals and tomb paintings invoking rebirth. Cleopatra wore red lips as a symbol of her divine right to rule. Red pigment was associated with the 'Eye of Ra' and his protective daughter goddesses. Priestesses applied red color before rituals to channel feminine divine power.",
+    modernUsage: "Lipstick is worn in churches, by praise team members, worship leaders, and Christian women in professional settings.",
+    appUsage: "Lip color sacred to Isis and used in resurrection rituals is worn during Christian worship while Greek letters face condemnation."
+  },
+  {
+    id: "anklets-foot-jewelry",
+    category: "beauty",
+    symbol: "Anklets and Foot Jewelry",
+    ancientConnection: "Anklets were sacred adornments in ancient Egypt, worn by dancers in temple ceremonies honoring Hathor, goddess of music and dance. Gold anklets with bells were used in rituals to invoke the goddess's presence through rhythmic sound. Isis was depicted wearing anklets as symbols of divine femininity. Anklets marked temple dancers dedicated to goddess worship and were offerings placed on divine statues.",
+    modernUsage: "Anklets are fashionable jewelry worn casually and to church events without spiritual concern.",
+    appUsage: "Jewelry worn in Hathor temple dances and sacred to Isis is fashion-forward while Greek symbols are theologically suspect."
+  },
+  {
+    id: "headwraps-scarves",
+    category: "beauty",
+    symbol: "Head Wraps and Scarves",
+    ancientConnection: "Head coverings in ancient Egypt were symbols of divine authority and sacred status. The nemes headdress of pharaohs represented their embodiment of Horus and Ra. Priestesses of Isis wore distinctive head wraps during temple rituals. The vulture crown represented Nekhbet, goddess of Upper Egypt. Linen head coverings were worn during sacred ceremonies as signs of ritual purity before the gods.",
+    modernUsage: "Head wraps and scarves are worn in Black churches and celebrated as beautiful expressions of faith and culture.",
+    appUsage: "Head coverings with origins in Isis priestess traditions and pharaonic divine embodiment are celebrated while Greek letters are questioned."
+  },
   // Fashion Brand Logos with Ancient/Pagan Origins
   {
     id: "nike-logo",
     category: "fashion",
     symbol: "Nike Swoosh & Brand",
-    ancientConnection: "Nike is the Greek goddess of victory, daughter of the Titan Pallas and the goddess Styx. She was worshipped extensively in ancient Greece, depicted with wings, and had temples dedicated to her on the Acropolis. The famous 'swoosh' represents her wing.",
-    modernUsage: "Christians wear Nike apparel to church, during worship, and in daily life. The brand is ubiquitous in Christian sports ministries and church athletic programs.",
-    appUsage: "If wearing a brand literally named after a Greek goddess with her wing as a logo is acceptable, Greek organizational letters cannot be uniquely condemned."
+    ancientConnection: "Nike was a powerful Greek goddess, daughter of the Titan Pallas and the river goddess Styx. She was worshipped extensively throughout ancient Greece with temples on the Athenian Acropolis. Nike stood beside Zeus during the war against the Titans and was his personal charioteer. She was depicted with golden wings, carrying a palm branch and wreath to crown victors. Athletes made sacrifices to Nike before competitions. The famous 'swoosh' logo directly represents her divine wing. Greek and Roman soldiers invoked her before battle, and her image adorned shields, temples, and victory monuments.",
+    modernUsage: "Christians wear Nike to church, youth group, and mission trips. Christian athletic ministries use Nike products. The brand sponsors Christian athletes.",
+    appUsage: "If wearing a brand literally named after a Greek goddess, displaying her wing as a logo, with temples dedicated to her worship, is acceptable—Greek organizational letters cannot be uniquely condemned."
   },
   {
     id: "starbucks-logo",
     category: "fashion",
     symbol: "Starbucks Siren Logo",
-    ancientConnection: "The Starbucks logo is a two-tailed siren (mermaid), derived from Greek mythology. Sirens were dangerous sea creatures who lured sailors to destruction with enchanting music. The image is based on a 16th-century Norse woodcut of a melusine, connected to pagan sea goddess traditions.",
+    ancientConnection: "The Starbucks logo is a two-tailed siren (melusine), derived from ancient Greek and European mythology. Greek sirens were divine creatures—part bird, part woman—daughters of the river god Achelous or the sea god Phorcys. They served Persephone, queen of the underworld, and lured sailors to death with supernatural music. The melusine was a water spirit in medieval legend with pagan Celtic and Norse origins, connected to goddess worship and water magic. The original Starbucks logo showed bare-breasted imagery from a 16th-century Norse woodcut of this pagan creature.",
     modernUsage: "Churches host Bible studies at Starbucks. Pastors drink Starbucks during sermons. Church staff bring Starbucks to meetings. The brand sponsors Christian conferences.",
-    appUsage: "A logo depicting a pagan mythological creature is accepted in sacred spaces while Greek letters are questioned."
+    appUsage: "A logo depicting a pagan mythological siren—divine creature of death connected to underworld worship—is embraced in sacred spaces while Greek letters are questioned."
   },
   {
     id: "versace-logo",
     category: "fashion",
     symbol: "Versace Medusa Logo",
-    ancientConnection: "Versace's logo is Medusa, the Gorgon from Greek mythology whose gaze turned people to stone. Medusa was a monster in Greek religion, and her image was used as a protective amulet (gorgoneion) to ward off evil in ancient Greek temples and armor.",
+    ancientConnection: "Versace's logo is Medusa, one of the three Gorgon sisters in Greek religion. Originally a beautiful priestess of Athena, she was transformed into a monster as divine punishment. Her image (gorgoneion) was a sacred protective symbol placed on Greek temples, including the Temple of Artemis at Corfu. Alexander the Great wore Medusa on his breastplate as divine protection. The gorgoneion was carved on shields, doors, and amulets as apotropaic magic to ward off evil. In Greek religion, Medusa's blood was used by Athena and Asclepius—one drop could kill, another could resurrect.",
     modernUsage: "Versace apparel is worn by celebrities, athletes, and Christians. The Medusa logo appears on clothing, accessories, and fragrance worn to church and Christian events.",
-    appUsage: "Wearing a literal Greek monster-goddess on your clothing receives no theological scrutiny, yet Greek letters do."
+    appUsage: "Wearing a Greek monster-goddess whose image was carved on temples and used in protective magic receives no theological scrutiny, yet Greek letters do."
   },
   {
     id: "hermes-logo",
     category: "fashion",
     symbol: "Hermès Brand",
-    ancientConnection: "Hermès is named directly after the Greek god Hermes—messenger of the gods, guide of souls to the underworld, and god of commerce and thieves. The brand's logo features a horse and carriage, and the entire company honors this deity's name.",
-    modernUsage: "Hermès scarves, bags, and accessories are worn by Christian women in churches, at Christian conferences, and in ministry settings.",
-    appUsage: "A brand literally named after a Greek god is worn without concern while Greek organizational names face scrutiny."
+    ancientConnection: "Hermès is named directly after Hermes, one of the twelve Olympian gods. Hermes was the messenger of Zeus, guide of souls (psychopomp) to the underworld, god of commerce, thieves, travelers, and magic. He invented the lyre and was worshipped at herms (stone pillars) throughout Greece. Hermes conducted the souls of the dead to Hades and was invoked in necromancy and mystery religions. The caduceus (his staff with entwined serpents) was a sacred symbol of divine authority. He was the father of Pan and associated with fertility rites.",
+    modernUsage: "Hermès scarves, bags, and accessories are worn by Christian women in churches, at Christian conferences, and in ministry settings. An Hermès Birkin bag is a status symbol in Christian circles.",
+    appUsage: "A brand literally named after the Greek god of death-guidance, magic, and thieves is worn without concern while Greek organizational names face scrutiny."
   },
   {
     id: "pandora-logo",
     category: "fashion",
     symbol: "Pandora Jewelry",
-    ancientConnection: "Pandora was the first human woman in Greek mythology, created by the gods to punish humanity. Zeus gave her a jar (mistranslated as 'box') containing all the world's evils. The name means 'all-gifted' and she was central to Greek religious explanation of suffering.",
-    modernUsage: "Pandora bracelets and charms are popular gifts among Christian women, worn in churches, and given at Christian celebrations.",
-    appUsage: "Jewelry named after a central figure in Greek religious mythology is embraced while Greek organizational symbols face rejection."
+    ancientConnection: "Pandora was the first human woman in Greek religion, crafted by Hephaestus on Zeus's orders specifically to punish humanity for receiving fire from Prometheus. Each god contributed to her creation—Athena dressed her, Aphrodite gave her beauty, Hermes gave her speech and deceit. Zeus gave her a pithos (jar) containing all evils and death. Opening it released suffering into the world. Her name means 'all-gifted' (by the gods). Pandora was central to Greek religious explanation of death, disease, and human suffering—a divine instrument of punishment.",
+    modernUsage: "Pandora bracelets and charms are popular gifts among Christian women, worn in churches, and given at Christian celebrations like baptisms and confirmations.",
+    appUsage: "Jewelry named after the woman Greek gods created to punish humanity with death and suffering is embraced while Greek organizational symbols face rejection."
   },
   {
     id: "amazon-logo",
     category: "fashion",
     symbol: "Amazon Brand",
-    ancientConnection: "Amazon is named after the Amazons—a tribe of warrior women in Greek mythology who worshipped Artemis (goddess of the hunt) and Ares (god of war). They were enemies of the Greeks and featured prominently in Greek religious stories and temple art.",
-    modernUsage: "Christians order Bibles, worship materials, and ministry supplies from Amazon. Churches have Amazon accounts. The brand is integral to modern Christian commerce.",
-    appUsage: "A company named after Greek mythological worshippers of pagan deities is central to Christian life, yet Greek letters are suspect."
+    ancientConnection: "Amazon is named after the Amazons, a legendary tribe of warrior women in Greek religion who removed one breast to better draw their bows. They worshipped Artemis (virgin goddess of the hunt) and Ares (god of war) and fought against Greek heroes like Heracles and Theseus. The Amazons built temples to Artemis at Ephesus (one of the Seven Wonders). They were enemies of civilization in Greek religious worldview, representing the chaos that Greek gods and heroes must overcome. Amazon queens like Hippolyta possessed divine gifts from the gods.",
+    modernUsage: "Christians order Bibles, devotionals, and ministry supplies from Amazon. Churches have Amazon accounts for operations. Amazon Prime is essential to Christian household commerce.",
+    appUsage: "A company named after Greek mythological goddess-worshippers who built temples to Artemis is central to Christian life, yet Greek letters are suspect."
   },
   {
     id: "nike-goddess-directly",
@@ -4152,9 +4200,9 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
     id: "venus-razors",
     category: "fashion",
     symbol: "Venus Razors (Gillette)",
-    ancientConnection: "Venus was the Roman goddess of love, beauty, and fertility, equivalent to Greek Aphrodite. She was worshipped in temples throughout the Roman Empire, and her cult involved sacred prostitution and religious festivals.",
-    modernUsage: "Christian women use Venus razors without theological concern. The product is marketed using goddess-of-beauty imagery.",
-    appUsage: "A product named after a pagan goddess of love and beauty, whose worship included sexual rituals, is used by Christians while Greek letters are questioned."
+    ancientConnection: "Venus was the Roman goddess of love, beauty, fertility, and desire—equivalent to Greek Aphrodite. She was born from the severed genitals of Uranus cast into the sea. Venus had major temples throughout Rome, and her worship included sacred prostitution at the Temple of Venus Erycina. The Veneralia festival celebrated her annually. Julius Caesar claimed descent from Venus through Aeneas. The planet Venus was her sacred symbol. Venus's cult influenced Roman sexuality, marriage, and religious practice for centuries.",
+    modernUsage: "Christian women use Venus razors without theological concern. The product is marketed using goddess-of-beauty imagery and divine association.",
+    appUsage: "A product named after a goddess of love whose worship included sacred prostitution is used by Christians while Greek letters are questioned."
   },
   {
     id: "atlas-brand",
