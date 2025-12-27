@@ -10,15 +10,15 @@ const corsHeaders = {
 
 const MAX_TEXT_LENGTH = 5000;
 
-// ElevenLabs voice IDs - using high-quality voices
+// ElevenLabs voice IDs - using American male voices
 const ELEVENLABS_VOICES: Record<string, string> = {
-  // Default mapping from old OpenAI voice names to ElevenLabs
-  alloy: "JBFqnCBsd6RMkjVDRZzb", // George - warm, engaging
-  echo: "TX3LPaxmHKxFdv7VOQHJ", // Liam - confident
-  fable: "XrExE9yKIg1WjnnlVkGX", // Matilda - warm, gentle
-  nova: "EXAVITQu4vr4xnSDxMaL", // Sarah - soft, welcoming
-  onyx: "onwK4e9ZLuTAKqWW03F9", // Daniel - deep, authoritative
-  shimmer: "pFZP5JQG7iQjIQuC4Bku", // Lily - soft, expressive
+  // American male voices
+  alloy: "iP95p4xoKVk53GoZ742B", // Chris - clear American male
+  echo: "TX3LPaxmHKxFdv7VOQHJ", // Liam - confident American male
+  fable: "nPczCjzI2devNBz1zQrb", // Brian - deep American male
+  nova: "cjVigY5qzO86Huf0OWal", // Eric - friendly American male
+  onyx: "iP95p4xoKVk53GoZ742B", // Chris - clear American male (default)
+  shimmer: "onwK4e9ZLuTAKqWW03F9", // Daniel - authoritative American male
 };
 
 serve(async (req) => {
