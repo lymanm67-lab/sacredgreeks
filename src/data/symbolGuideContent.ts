@@ -3863,12 +3863,52 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
     appUsage: "Perfect example when people say, 'Anything named after a Greek god is automatically demonic.'"
   },
   {
-    id: "car-brands",
+    id: "mercedes-benz",
     category: "brands",
-    symbol: "Mercedes-Benz, Volkswagen, Volvo, Adidas",
-    ancientConnection: "Logos draw on symbols like stars, circles, shields, and stylized initials. Some have historic links to industry, nobility, or mythic ideas of power and safety.",
-    modernUsage: "Many believers drive these cars, wear these clothes, and never think of them as spiritual covenants.",
-    appUsage: "Show that nobody demands public repentance videos for driving a car with a star, but some require them for Greek letters."
+    symbol: "Mercedes-Benz Three-Pointed Star",
+    ancientConnection: "The Mercedes-Benz three-pointed star represents dominion over land, sea, and air—a concept rooted in ancient trinitarian symbolism and cosmic rulership. The three-pointed star mirrors ancient symbols of divine authority over the three realms, found in Babylonian, Egyptian, and Greek cosmology. Triple-pointed stars were sacred symbols representing the threefold nature of deity—similar to the trident of Poseidon and the triple goddess imagery. The encircled star creates a sacred geometry pattern used in ancient mystical traditions to represent totality and divine protection.",
+    modernUsage: "Christians drive Mercedes-Benz vehicles to church, displaying this symbol of cosmic dominion on their cars. The brand represents prestige in Christian communities.",
+    appUsage: "A symbol representing rule over land, sea, and air—ancient concepts of divine authority—adorns Christian vehicles while Greek letters face scrutiny."
+  },
+  {
+    id: "volkswagen-logo",
+    category: "brands",
+    symbol: "Volkswagen Logo",
+    ancientConnection: "The Volkswagen logo's circular design with interlocking V and W creates a pattern resembling ancient sun wheel and solar disc symbolism. The logo was designed during the Third Reich era, drawing on Germanic runic and solar mysticism. Circular logos with central emblems mirror ancient sun disc worship found in Egyptian (Ra's solar disc), Norse (sun wheel), and Celtic traditions. The symmetrical design echoes the sacred geometry of mandala patterns used in ancient spiritual practices to represent cosmic order and divine totality.",
+    modernUsage: "Christians drive Volkswagen vehicles without spiritual concern. VW Beetles, Jettas, and SUVs are common in church parking lots across America.",
+    appUsage: "A logo with sun wheel symbolism and historical mystical connections is driven by Christians while Greek organizational letters are questioned."
+  },
+  {
+    id: "volvo-logo",
+    category: "brands",
+    symbol: "Volvo Iron Symbol (Mars/Male Symbol)",
+    ancientConnection: "The Volvo logo features the ancient alchemical and astrological symbol for iron—a circle with an arrow pointing outward. This is the same symbol used for the planet Mars and the male gender, derived from Mars, the Roman god of war. In alchemy, this symbol represented iron and the martial, aggressive qualities associated with Mars. The Swedish company chose it because Sweden was historically known for iron quality, but the symbol's origins are in Roman deity worship and occult alchemy.",
+    modernUsage: "Christians drive Volvo vehicles, trusting the brand's safety reputation. The Mars/iron symbol is displayed on church-going family vehicles.",
+    appUsage: "The symbol of Mars, Roman god of war, used in alchemical practice, marks Christian family vehicles while Greek letters face theological objection."
+  },
+  {
+    id: "adidas-logo",
+    category: "brands",
+    symbol: "Adidas Three Stripes & Trefoil",
+    ancientConnection: "The Adidas trefoil logo (used 1971-1997, still on Originals) features a three-leaf design resembling the ancient trefoil symbol found in Celtic, Norse, and Egyptian sacred art. Trefoils represented the triple goddess, the three realms, and sacred trinities in pagan traditions. The three stripes themselves echo ancient symbolism of threefold power. The current mountain logo represents ascension—a concept central to ancient mystery religions where initiates 'ascended' through spiritual levels. Athletic competition itself derives from Greek religious festivals honoring Zeus and other gods.",
+    modernUsage: "Christians wear Adidas to church, youth group, and Christian athletic events. The brand is ubiquitous in Christian sports ministry.",
+    appUsage: "A brand with trefoil symbolism rooted in pagan triple-goddess imagery is worn during Christian worship while Greek letters are suspect."
+  },
+  {
+    id: "bmw-logo",
+    category: "brands",
+    symbol: "BMW Roundel (Propeller/Bavarian Flag)",
+    ancientConnection: "The BMW roundel's blue and white quadrants, while officially representing Bavarian flag colors and spinning propellers, create a quartered circle—an ancient symbol found across cultures representing the four elements, four directions, and cosmic order. Quartered circles were sacred in Celtic, Native American, and ancient European traditions as medicine wheels and solar symbols. The spinning interpretation connects to ancient wheel of fortune and cosmic wheel symbolism representing fate and divine order.",
+    modernUsage: "BMW vehicles are status symbols driven by Christians to church services and ministry events. The logo is displayed proudly without spiritual concern.",
+    appUsage: "An ancient quartered circle symbol representing cosmic order adorns Christian vehicles while Greek organizational letters are theologically questioned."
+  },
+  {
+    id: "audi-logo",
+    category: "brands",
+    symbol: "Audi Four Rings",
+    ancientConnection: "The Audi four interlocking rings, while representing four merged companies, create an ancient symbol of interconnected circles found in sacred geometry worldwide. Interlocking rings appear in Celtic knots, Borromean rings (used in Christian Trinity symbolism but predating it in pagan use), and ancient symbols of eternal connection. Four circles also represent the four elements of ancient Greek philosophy (earth, water, fire, air) and the four cardinal directions in numerous pagan traditions.",
+    modernUsage: "Christians drive Audi vehicles without considering the ancient symbolism of interlocking circles. The brand represents German engineering excellence.",
+    appUsage: "Interlocking circles—ancient sacred geometry—mark Christian vehicles while Greek letters representing brotherhood are questioned."
   },
   {
     id: "starbucks",
