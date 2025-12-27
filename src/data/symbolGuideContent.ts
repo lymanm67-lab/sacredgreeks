@@ -5402,5 +5402,225 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
     ancientConnection: "The phoenix was a sacred bird in Egyptian religion—associated with Ra, Osiris, and the sun temple at Heliopolis. It died in flames and was reborn, representing resurrection and eternal cycles. Greeks adopted the phoenix, connecting it to Apollo and solar worship. The phoenix was worshipped as a divine symbol of immortality. Phoenix appears in countless brands, the city of Phoenix, and cultural references.",
     modernUsage: "Christians reference the phoenix, visit Phoenix, and use phoenix-branded products. Some Christian art uses phoenix imagery for resurrection themes.",
     appUsage: "A sacred bird from Egyptian Ra worship and Greek Apollo temples is embraced in Christian culture while Greek letters face scrutiny."
+  },
+  // Medical & Pharmaceutical Symbols
+  {
+    id: "caduceus-medicine",
+    category: "brands",
+    symbol: "Caduceus (Medical Symbol)",
+    ancientConnection: "The Caduceus—two serpents entwined around a winged staff—was the symbol of Hermes (Greek) and Mercury (Roman), gods of commerce, thieves, and messages. The Rod of Asclepius (single serpent, no wings) belonged to Asclepius, the Greek god of medicine and healing, son of Apollo. Hospitals were temples to Asclepius where people slept hoping for divine healing visions. Both symbols derive from pagan deity worship.",
+    modernUsage: "Christians work in hospitals using the Caduceus symbol. Medical uniforms, ambulances, pharmacies, and healthcare facilities display these pagan god symbols. Christian doctors take oaths referencing Apollo and Asclepius ('First, do no harm' from the Hippocratic Oath invoking Greek gods).",
+    appUsage: "Symbols of Greek healing gods adorn Christian hospitals and medical badges while Greek organizational letters face spiritual scrutiny."
+  },
+  {
+    id: "rod-of-asclepius",
+    category: "brands",
+    symbol: "Rod of Asclepius",
+    ancientConnection: "Asclepius was the Greek god of medicine, worshipped at healing temples throughout the ancient world. His rod with a single serpent became the symbol of healing. The Asclepion temples were centers of pagan worship where sick pilgrims sought divine intervention through dreams and rituals. The World Health Organization uses this symbol. Snakes were sacred to Asclepius and kept in his temples.",
+    modernUsage: "The WHO symbol appears on global health initiatives. Medical associations worldwide use the Rod of Asclepius. Christians working in medicine encounter this pagan symbol daily.",
+    appUsage: "A snake symbol from Greek temple worship represents global Christian healthcare while Greek letters are theologically questioned."
+  },
+  {
+    id: "rx-symbol",
+    category: "brands",
+    symbol: "℞ (Prescription Symbol)",
+    ancientConnection: "The ℞ symbol derives from the Eye of Horus (Egyptian) or from 'Recipe' invoking Jupiter/Zeus (the 'R' with a stroke was an abbreviation for the Latin invocation 'Recipe' meaning 'take thou' under the protection of Jupiter). Some scholars trace it to the astrological sign for Jupiter, chief of the Roman gods. Pharmacies were originally temples mixing mystical remedies.",
+    modernUsage: "Every prescription a Christian fills bears this symbol. Pharmacy signs display ℞ prominently. Christians handle medications with pagan deity symbolism daily.",
+    appUsage: "A symbol potentially invoking Jupiter/Zeus appears on every Christian's medicine while Greek organizational letters are spiritually examined."
+  },
+  {
+    id: "pharmacy-bowl-serpent",
+    category: "brands",
+    symbol: "Bowl of Hygieia (Pharmacy Symbol)",
+    ancientConnection: "Hygieia was the Greek goddess of health, cleanliness, and sanitation—daughter of Asclepius. Her symbol, a serpent drinking from a bowl, represents pharmacy worldwide. The bowl contains the elixir of life; the serpent represents healing wisdom. Temples to Hygieia existed throughout ancient Greece. The word 'hygiene' derives from this goddess's name.",
+    modernUsage: "Pharmacies worldwide display this goddess symbol. Christians shop at pharmacies bearing Hygieia's image. The word 'hygiene' is used in Christian health teachings.",
+    appUsage: "A Greek goddess's symbol marks where Christians buy medicine, and her name describes Christian cleanliness practices, while Greek letters face scrutiny."
+  },
+  // Calendar Days of the Week
+  {
+    id: "sunday",
+    category: "brands",
+    symbol: "Sunday (Day of the Week)",
+    ancientConnection: "Sunday is named after the Sun—worshipped as the god Sol Invictus (Unconquered Sun) in Rome and Helios in Greece. Sun worship was central to Roman religion; Emperor Constantine was a Sol Invictus devotee before converting to Christianity. The sun was considered divine in virtually every ancient civilization. Early Christians chose Sunday partly because of its sun-god association to ease pagan conversion.",
+    modernUsage: "Christians call their worship day 'Sunday'—literally 'Sun's Day.' Church services honor Christ on a day named for pagan sun worship. Christians say 'Sunday' without theological hesitation.",
+    appUsage: "Christians worship on a day named for the pagan sun god while Greek organizational letters are spiritually scrutinized."
+  },
+  {
+    id: "monday",
+    category: "brands",
+    symbol: "Monday (Day of the Week)",
+    ancientConnection: "Monday is named after the Moon—Luna in Roman religion, Selene in Greek. The Moon was worshipped as a deity in ancient Rome with temples and festivals. Luna was associated with Juno and Diana. Moon worship included monthly rituals and was connected to fertility and feminine divine power. The word 'lunar' and 'lunatic' (moon-madness) derive from this goddess.",
+    modernUsage: "Christians use 'Monday' constantly. Lunar calendars influence Easter dating. Christians say 'moon' and 'lunar' without theological concern.",
+    appUsage: "A day named for the moon goddess begins Christians' work weeks while Greek letters require theological defense."
+  },
+  {
+    id: "tuesday",
+    category: "brands",
+    symbol: "Tuesday (Day of the Week)",
+    ancientConnection: "Tuesday is named after Tiw (Tyr)—the Norse god of war, single combat, victory, and heroic glory. Tyr was among the most prominent gods in Germanic paganism, equivalent to Roman Mars. He sacrificed his hand to bind the wolf Fenrir. Tuesday was 'Tyr's Day' in Old English (Tiwesdæg). Mars/Ares worship included animal and sometimes human sacrifice in ancient Rome.",
+    modernUsage: "Christians schedule meetings on Tuesday—Tyr's Day. 'Taco Tuesday' and other cultural references honor this war god's name without Christian objection.",
+    appUsage: "A Norse war god's day structures Christian schedules while Greek organizational letters face spiritual examination."
+  },
+  {
+    id: "wednesday",
+    category: "brands",
+    symbol: "Wednesday (Day of the Week)",
+    ancientConnection: "Wednesday is named after Woden (Odin)—the chief Norse god of wisdom, death, magic, poetry, and war. Odin was worshipped with human sacrifices (especially hanging). He traded his eye for cosmic wisdom. Wednesday comes from 'Woden's Day' (Old English Wōdnesdæg). Odin was considered the Allfather, ruler of Asgard, connected to ravens, wolves, and the dead.",
+    modernUsage: "Christians call midweek 'Wednesday'—literally Odin's Day. 'Hump Day Wednesday' celebrates a pagan chief god. Church activities happen on Woden's Day.",
+    appUsage: "The chief Norse god who accepted human sacrifice names the day of Christian midweek services while Greek letters are questioned."
+  },
+  {
+    id: "thursday",
+    category: "brands",
+    symbol: "Thursday (Day of the Week)",
+    ancientConnection: "Thursday is named after Thor—the Norse god of thunder, lightning, storms, strength, and fertility. Thor was worshipped across Scandinavia with temples and blood sacrifices. His hammer Mjolnir was sacred. Thursday means 'Thor's Day' (Old Norse Þōrsdagr). Thor worship continued well into the Christian era in Nordic countries.",
+    modernUsage: "Christians use 'Thursday' constantly. 'Throwback Thursday' on social media honors Thor. Marvel's Thor makes the Norse god a cultural hero for Christian children.",
+    appUsage: "Thor, the thunder god worshipped with blood sacrifice, names a day Christians use freely while Greek letters face theological scrutiny."
+  },
+  {
+    id: "friday",
+    category: "brands",
+    symbol: "Friday (Day of the Week)",
+    ancientConnection: "Friday is named after Frigg (or Freya)—the Norse goddess of love, beauty, fertility, and marriage. Frigg was Odin's wife and queen of Asgard. Freya was associated with love, sexuality, war, and death. Friday means 'Frigg's Day' (Old English Frīgedæg). The goddess was invoked for fertility, love magic, and blessings on marriages.",
+    modernUsage: "Christians celebrate 'TGIF' (Thank God It's Friday)—invoking God while naming a Norse goddess's day. Good Friday is named for Frigg. Wedding Fridays honor a fertility goddess.",
+    appUsage: "Christians thank God on a goddess's day and mark Christ's crucifixion with a fertility deity's name while Greek letters require defense."
+  },
+  {
+    id: "saturday",
+    category: "brands",
+    symbol: "Saturday (Day of the Week)",
+    ancientConnection: "Saturday is named after Saturn—the Roman god of agriculture, time, wealth, and liberation. Saturnalia was one of Rome's largest pagan festivals featuring gift-giving, feasting, and role-reversals. Saturn temples received sacrifices. In mythology, Saturn devoured his own children. Saturday means 'Saturn's Day' (Latin Sāturnī diēs).",
+    modernUsage: "Christians rest and recreate on Saturday—Saturn's Day. Seventh-day denominations keep Sabbath on a pagan god's day. 'Saturday' appears in Christian calendars without concern.",
+    appUsage: "A child-devouring Roman god names Christians' day of rest while Greek organizational letters are spiritually examined."
+  },
+  // Months of the Year
+  {
+    id: "january",
+    category: "brands",
+    symbol: "January (Month)",
+    ancientConnection: "January is named after Janus—the Roman god of beginnings, gates, transitions, and doorways. Janus had two faces looking forward and backward. He was invoked at the start of every ritual. The month began the Roman year with sacrifices to Janus. His temple doors were open during war, closed during peace. Janus protected Rome's gates.",
+    modernUsage: "Christians make 'New Year's resolutions' in a month named for Janus. 'January' begins Christian calendars. Churches hold 'new year' services honoring beginnings—Janus's domain.",
+    appUsage: "A two-faced Roman gate god names the month when Christians resolve to grow spiritually while Greek letters face scrutiny."
+  },
+  {
+    id: "february",
+    category: "brands",
+    symbol: "February (Month)",
+    ancientConnection: "February is named after Februa—Roman purification rituals and the festival Lupercalia. Lupercalia honored Lupercus (identified with Faunus/Pan) and involved animal sacrifice, with priests running through streets striking women with bloody goat-hide strips for fertility. Februus was a god of purification. The month was for ritual cleansing before spring.",
+    modernUsage: "Christians celebrate Valentine's Day (with pagan Lupercalia roots) in February. Lent often begins in this purification month. Christian calendars display 'February' without concern.",
+    appUsage: "A month named for bloody fertility rituals hosts Christian romance while Greek organizational letters are questioned."
+  },
+  {
+    id: "march",
+    category: "brands",
+    symbol: "March (Month)",
+    ancientConnection: "March is named after Mars—the Roman god of war, second only to Jupiter. Mars was worshipped with festivals featuring horse racing and military parades. He was the father of Romulus and Remus. March began the Roman military campaign season. The Campus Martius (Field of Mars) was central to Roman military and political life. Human and animal sacrifices honored Mars.",
+    modernUsage: "Christians observe Lent and approach Easter in March—named for the war god. 'March' appears on church bulletins. 'Marching' and 'martial' derive from Mars.",
+    appUsage: "The Roman war god who received blood sacrifice names the month of Christian repentance while Greek letters face theological defense."
+  },
+  {
+    id: "april",
+    category: "brands",
+    symbol: "April (Month)",
+    ancientConnection: "April may derive from Aphrodite (Greek goddess of love/Venus in Roman) or from 'aperire' (to open). The month was sacred to Venus in Rome with multiple festivals. Veneralia (April 1) and other Venus festivals included ritual bathing and offerings. Venus was worshipped for love, beauty, desire, sex, fertility, and victory.",
+    modernUsage: "Christians celebrate Easter in April—a month potentially named for the goddess of sexual love. Spring break in April carries fertility associations. April appears on Christian calendars.",
+    appUsage: "Christ's resurrection is celebrated in a month named for the sex goddess while Greek organizational letters require spiritual defense."
+  },
+  {
+    id: "may",
+    category: "brands",
+    symbol: "May (Month)",
+    ancientConnection: "May is named after Maia—the Roman goddess of fertility and spring growth, equivalent to Greek Maia (mother of Hermes by Zeus). May Day (May 1) was celebrated with maypole dancing (phallic fertility symbol) and flower offerings. The month honored Maia with sacrifices. Bona Dea festivals for women occurred in May.",
+    modernUsage: "Christians celebrate Mother's Day in May—named for a fertility goddess. May crownings of Mary adapt Maia worship. Christian weddings in May honor a pagan fertility month.",
+    appUsage: "A fertility goddess names the month Christians honor mothers and marry while Greek letters face spiritual examination."
+  },
+  {
+    id: "june",
+    category: "brands",
+    symbol: "June (Month)",
+    ancientConnection: "June is named after Juno—the Roman queen of the gods, goddess of marriage, childbirth, and women. Juno was Jupiter's wife. June was considered the luckiest month to marry, blessed by Juno. Temples to Juno received sacrifices. The Matronalia festival (originally March, but Juno worship continued) honored married women.",
+    modernUsage: "Christians prefer June weddings—honoring Juno. 'June bride' is a Christian cultural ideal. Churches are decorated for weddings in the goddess of marriage's month.",
+    appUsage: "Christian brides marry in a month named for a pagan goddess of marriage while Greek organizational letters are spiritually scrutinized."
+  },
+  {
+    id: "july",
+    category: "brands",
+    symbol: "July (Month)",
+    ancientConnection: "July is named after Julius Caesar, who was deified as 'Divus Iulius' (Divine Julius) after his assassination. Roman emperors were worshipped as gods. Caesar's temple received sacrifices. The month was renamed from Quintilis to honor the god-emperor. Emperor worship was central to Roman religion and a major conflict with early Christians.",
+    modernUsage: "Christians celebrate Independence Day in July—named for a deified emperor. 'July' appears on church calendars. Christians use the month name without theological concern.",
+    appUsage: "A month named for a man worshipped as a god hosts Christian patriotic celebrations while Greek letters face spiritual defense."
+  },
+  {
+    id: "august",
+    category: "brands",
+    symbol: "August (Month)",
+    ancientConnection: "August is named after Augustus Caesar, the first Roman emperor who was worshipped as a god during and after his life. 'Augustus' meant 'revered one' with divine connotations. Temples to Augustus existed throughout the empire. Emperor worship required burning incense to the emperor's image—early Christians died refusing this.",
+    modernUsage: "Christians vacation in August—a month named for a god-emperor. 'August' describes something majestic. Church activities occur in a divine emperor's month.",
+    appUsage: "Early Christians were martyred for refusing to worship Augustus; now Christians casually name their month after him while Greek letters are questioned."
+  },
+  // Additional Everyday Symbols
+  {
+    id: "cereal-ceres",
+    category: "brands",
+    symbol: "Cereal (From Ceres)",
+    ancientConnection: "The word 'cereal' comes from Ceres—the Roman goddess of agriculture, grain, fertility, and motherly love. Ceres was worshipped with harvest festivals and sacrifices. The Cerealia festival included games and offerings. The Eleusinian Mysteries (Greek Demeter = Roman Ceres) were among antiquity's most sacred rites, promising initiates blessed afterlife.",
+    modernUsage: "Christians eat 'cereal' for breakfast—named for a grain goddess. Cereal brands fill Christian pantries. Children's cereals invoke Ceres at Christian breakfast tables.",
+    appUsage: "A fertility goddess's name describes what Christians feed their children each morning while Greek organizational letters face scrutiny."
+  },
+  {
+    id: "volcano-vulcan",
+    category: "brands",
+    symbol: "Volcano (From Vulcan)",
+    ancientConnection: "The word 'volcano' comes from Vulcan—the Roman god of fire, metalworking, and the forge. Vulcan was worshipped with the Vulcanalia festival involving animal sacrifices and bonfires. His temples were outside city walls due to fire danger. Vulcan was married to Venus. The word 'volcanic' and related terms derive from this fire god.",
+    modernUsage: "Christians teach about 'volcanoes' in science. Volcano documentaries air in Christian homes. 'Volcanic' describes intensity without pagan concern.",
+    appUsage: "A Roman fire god's name describes natural phenomena Christians study while Greek organizational letters require theological defense."
+  },
+  {
+    id: "ocean-oceanus",
+    category: "brands",
+    symbol: "Ocean (From Oceanus)",
+    ancientConnection: "The word 'ocean' derives from Oceanus—the Greek Titan god of the great world-encircling river. Oceanus was personified as a divine being, father of all rivers and sea-nymphs. The Oceanids were his 3,000 daughters. Oceanus was worshipped as one of the primordial deities predating the Olympians.",
+    modernUsage: "Christians swim in 'oceans,' study 'oceanography,' and sing about God's creation using this Titan god's name. 'Ocean' appears in worship songs without theological concern.",
+    appUsage: "A primordial Titan god's name describes the seas Christians praise God for creating while Greek letters face spiritual examination."
+  },
+  {
+    id: "music-muses",
+    category: "brands",
+    symbol: "Music (From the Muses)",
+    ancientConnection: "The word 'music' derives from the Muses—nine Greek goddesses of arts and inspiration, daughters of Zeus and Mnemosyne. Musicians invoked Muses before performing. 'Museum' means 'shrine of the Muses.' Epic poems opened with Muse invocations. The Muses were worshipped at temples and received sacrifices.",
+    modernUsage: "Churches have 'music' ministries. Christian 'musicians' lead worship. 'Museums' are visited by Christian families. These words honor pagan inspiration goddesses.",
+    appUsage: "Christian worship involves 'music'—named for pagan goddesses of inspiration—while Greek organizational letters are theologically questioned."
+  },
+  {
+    id: "atlas",
+    category: "brands",
+    symbol: "Atlas (Maps & Strength)",
+    ancientConnection: "Atlas was a Greek Titan condemned by Zeus to hold up the sky for eternity. He was worshipped in ancient Libya and associated with astronomy and the pillars of heaven. The Atlas Mountains were believed to be his petrified form. Atlases (map books) are named after him. 'Atlantic' Ocean means 'Sea of Atlas.'",
+    modernUsage: "Christians use 'atlases' in schools. 'Atlantic' describes the ocean. 'Atlas' describes strong people. Christian geography education invokes this Titan.",
+    appUsage: "A Titan god's name describes Christian map books and oceans while Greek organizational letters face spiritual scrutiny."
+  },
+  {
+    id: "morphine-morpheus",
+    category: "brands",
+    symbol: "Morphine (From Morpheus)",
+    ancientConnection: "Morphine is named after Morpheus—the Greek god of dreams. Morpheus was one of the Oneiroi, sons of Hypnos (Sleep). He appeared in human form in dreams. The drug morphine was named for its dream-inducing properties. 'Morphing' derives from this god who could take any form.",
+    modernUsage: "Christian hospitals administer morphine. 'Morpheus' appears in The Matrix (watched by Christians). 'Morph' describes transformation in Christian contexts.",
+    appUsage: "A Greek dream god's name is administered to Christians in hospitals while Greek organizational letters are spiritually questioned."
+  },
+  {
+    id: "psyche-psychology",
+    category: "brands",
+    symbol: "Psychology (From Psyche)",
+    ancientConnection: "Psychology derives from Psyche—a mortal woman in Greek mythology who became the goddess of the soul after trials set by Aphrodite. 'Psyche' means soul/mind in Greek. The myth of Eros and Psyche was widely venerated. Psyche was worshipped as the personification of the human soul.",
+    modernUsage: "Christian counselors practice 'psychology.' Churches offer 'psychological' support. 'Psyche' describes the human mind in Christian discourse.",
+    appUsage: "A Greek goddess of the soul names the Christian counseling field while Greek organizational letters face theological examination."
+  },
+  {
+    id: "fortune-fortuna",
+    category: "brands",
+    symbol: "Fortune (From Fortuna)",
+    ancientConnection: "Fortune comes from Fortuna—the Roman goddess of luck, fate, and fortune. Fortuna was widely worshipped with temples throughout Rome. Her wheel (Wheel of Fortune) determined human fate. Fortuna influenced success, failure, and destiny. Offerings were made seeking her favor. 'Fortunate' and 'misfortune' derive from this goddess.",
+    modernUsage: "Christians seek 'fortune' and feel 'fortunate.' 'Fortune cookies' are eaten. 'Wheel of Fortune' is watched. Lottery winners are 'fortunate.' These words invoke a fate goddess.",
+    appUsage: "Christians describe God's blessings using a fate goddess's name while Greek organizational letters are spiritually examined."
   }
 ];

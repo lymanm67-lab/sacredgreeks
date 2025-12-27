@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { 
@@ -25,13 +26,28 @@ import {
   Headphones,
   Flame,
   FileText,
-  Download
+  Download,
+  ChevronsDownUp,
+  ChevronsUpDown
 } from "lucide-react";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, LineChart, Line, AreaChart, Area, ReferenceLine } from "recharts";
 import { RenouncedSupportSection } from "@/components/RenouncedSupportSection";
 
+const RESOURCES_ACCORDION_STORAGE_KEY = 'antihazing-resources-accordion-state';
+
 const AntiHazing = () => {
   const [selectedState, setSelectedState] = useState<string | null>(null);
+  const [resourcesAccordionValues, setResourcesAccordionValues] = useState<string[]>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem(RESOURCES_ACCORDION_STORAGE_KEY);
+      return saved ? JSON.parse(saved) : [];
+    }
+    return [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem(RESOURCES_ACCORDION_STORAGE_KEY, JSON.stringify(resourcesAccordionValues));
+  }, [resourcesAccordionValues]);
 
   const handleDownloadPDF = async () => {
     toast.info("Generating PDF...");
@@ -2596,35 +2612,96 @@ const AntiHazing = () => {
           </TabsContent>
         </Tabs>
 
-        {/* Supporting Those Who Have Renounced */}
-        <RenouncedSupportSection />
-
-        {/* Resources Section */}
-        <section>
-          <h2 className="text-2xl font-serif font-medium text-center mb-8">
-            Hazing Prevention Resources
-          </h2>
-          <div className="grid md:grid-cols-3 gap-4">
-            {resources.map((resource, index) => (
-              <Card key={index} className="hover:shadow-md transition-shadow">
-                <CardContent className="p-6">
-                  <resource.icon className="w-8 h-8 text-primary mb-4" />
-                  <h3 className="font-semibold mb-2">{resource.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-4">{resource.description}</p>
-                  {resource.link && (
-                    <a 
-                      href={resource.link} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-sm text-primary hover:underline"
-                    >
-                      {resource.link.startsWith('tel:') ? 'Call Now →' : 'Visit Website →'}
-                    </a>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
+        {/* Additional Resources - Accordion Style */}
+        <section className="space-y-6">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <h2 className="text-2xl font-serif font-medium">
+              Additional Resources
+            </h2>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setResourcesAccordionValues(['renounced-support', 'prevention-resources'])}
+                className="text-xs"
+              >
+                <ChevronsDownUp className="w-4 h-4 mr-1" />
+                Expand All
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setResourcesAccordionValues([])}
+                className="text-xs"
+              >
+                <ChevronsUpDown className="w-4 h-4 mr-1" />
+                Collapse All
+              </Button>
+            </div>
           </div>
+
+          <Accordion 
+            type="multiple" 
+            value={resourcesAccordionValues} 
+            onValueChange={setResourcesAccordionValues}
+            className="space-y-4"
+          >
+            {/* Supporting Those Who Have Renounced */}
+            <AccordionItem value="renounced-support" className="border rounded-lg overflow-hidden">
+              <AccordionTrigger className="px-4 py-3 hover:no-underline bg-gradient-to-r from-sacred/5 to-background hover:from-sacred/10">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-sacred/10">
+                    <Users className="w-5 h-5 text-sacred" />
+                  </div>
+                  <div className="text-left">
+                    <h3 className="font-semibold text-foreground">Supporting Those Who Have Renounced</h3>
+                    <p className="text-xs text-muted-foreground">Resources for those who have left Greek organizations</p>
+                  </div>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-4">
+                <RenouncedSupportSection embedded />
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* Hazing Prevention Resources */}
+            <AccordionItem value="prevention-resources" className="border rounded-lg overflow-hidden">
+              <AccordionTrigger className="px-4 py-3 hover:no-underline bg-gradient-to-r from-primary/5 to-background hover:from-primary/10">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-primary/10">
+                    <Shield className="w-5 h-5 text-primary" />
+                  </div>
+                  <div className="text-left">
+                    <h3 className="font-semibold text-foreground">Hazing Prevention Resources</h3>
+                    <p className="text-xs text-muted-foreground">{resources.length} external resources & hotlines</p>
+                  </div>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-4">
+                <div className="grid md:grid-cols-3 gap-4 pt-4">
+                  {resources.map((resource, index) => (
+                    <Card key={index} className="hover:shadow-md transition-shadow">
+                      <CardContent className="p-6">
+                        <resource.icon className="w-8 h-8 text-primary mb-4" />
+                        <h3 className="font-semibold mb-2">{resource.title}</h3>
+                        <p className="text-sm text-muted-foreground mb-4">{resource.description}</p>
+                        {resource.link && (
+                          <a 
+                            href={resource.link} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-sm text-primary hover:underline"
+                          >
+                            {resource.link.startsWith('tel:') ? 'Call Now →' : 'Visit Website →'}
+                          </a>
+                        )}
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </section>
       </main>
     </div>
