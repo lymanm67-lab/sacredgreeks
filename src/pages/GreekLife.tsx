@@ -4,12 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Home, Users, Shield, BookOpen, Compass, Heart, Award, ArrowRight, AlertTriangle, Calendar, Building2, GraduationCap, Star, Volume2, VolumeX, Loader2, FileDown } from "lucide-react";
+import { Home, Users, Shield, BookOpen, Compass, Heart, Award, ArrowRight, AlertTriangle, Calendar, Building2, GraduationCap, Star, Volume2, VolumeX, Loader2, FileDown, Mic } from "lucide-react";
 import { SEOHead } from "@/components/SEOHead";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useAuth } from "@/contexts/AuthContext";
 import { useState, useRef } from "react";
 import { toast } from "sonner";
+import { ApologeticsCard } from "@/components/ApologeticsCard";
 
 interface Organization {
   name: string;
@@ -58,7 +59,7 @@ const GreekLife = () => {
   };
 
   // Handle TTS for a specific section
-  const handleSectionTTS = (sectionKey: string, text: string) => {
+  const handleSectionTTS = (sectionKey: string, text: string, voice: string = "onyx") => {
     if (currentlyPlayingSection === sectionKey && isPlaying) {
       stop();
       setCurrentlyPlayingSection(null);
@@ -67,8 +68,42 @@ const GreekLife = () => {
       if (isPlaying) stop();
       setCurrentlyPlayingSection(sectionKey);
       setIsSequentialPlaying(false);
-      speak(text);
+      speak(text, voice);
     }
+  };
+
+  // TTS Button Component - now with voice support
+  const TTSButton = ({ sectionKey, text, voice = "onyx", isDramatic = false }: { sectionKey: string; text: string; voice?: string; isDramatic?: boolean }) => {
+    if (!user) return null;
+    
+    const isCurrentSection = currentlyPlayingSection === sectionKey;
+    
+    return (
+      <Button
+        variant={isCurrentSection && isPlaying ? "destructive" : isDramatic ? "default" : "outline"}
+        size="sm"
+        onClick={() => handleSectionTTS(sectionKey, text, voice)}
+        disabled={isLoading && !isCurrentSection}
+        className={`gap-2 ${isDramatic ? "bg-gradient-to-r from-amber-600 to-sacred hover:from-amber-700 hover:to-sacred/90" : ""}`}
+      >
+        {isCurrentSection && isPlaying ? (
+          <>
+            <VolumeX className="w-4 h-4" />
+            <span className="hidden sm:inline">Stop</span>
+          </>
+        ) : isLoading && isCurrentSection ? (
+          <>
+            <Loader2 className="w-4 h-4 animate-spin" />
+            <span className="hidden sm:inline">Loading...</span>
+          </>
+        ) : (
+          <>
+            {isDramatic ? <Mic className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+            <span className="hidden sm:inline">{isDramatic ? "Dramatic Narration" : "Listen"}</span>
+          </>
+        )}
+      </Button>
+    );
   };
 
   // Sequential TTS - Read All Sections
@@ -282,33 +317,6 @@ const GreekLife = () => {
       toast.error("Failed to generate PDF");
     }
   };
-
-  // TTS button component
-  const TTSButton = ({ sectionKey, text }: { sectionKey: string; text: string }) => {
-    if (!user) return null;
-    const isSectionPlaying = currentlyPlayingSection === sectionKey && isPlaying;
-    const isSectionLoading = currentlyPlayingSection === sectionKey && isLoading;
-    
-    return (
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => handleSectionTTS(sectionKey, text)}
-        disabled={isLoading && currentlyPlayingSection !== sectionKey}
-        className="gap-2"
-      >
-        {isSectionLoading ? (
-          <Loader2 className="w-4 h-4 animate-spin" />
-        ) : isSectionPlaying ? (
-          <VolumeX className="w-4 h-4" />
-        ) : (
-          <Volume2 className="w-4 h-4" />
-        )}
-        {isSectionLoading ? "Loading..." : isSectionPlaying ? "Stop" : "Listen"}
-      </Button>
-    );
-  };
-
   const divineNine: Organization[] = [
     {
       name: "Alpha Phi Alpha Fraternity, Inc.",
@@ -2354,8 +2362,9 @@ const GreekLife = () => {
                     </span>
                   </AccordionTrigger>
                   <AccordionContent className="text-sm text-muted-foreground space-y-4">
-                    <div className="flex justify-end">
+                    <div className="flex justify-end gap-2">
                       <TTSButton sectionKey="carpenterInitiation" text={ttsContent.carpenterInitiation} />
+                      <TTSButton sectionKey="carpenterInitiation-dramatic" text={ttsContent.carpenterInitiation} voice="dramatic" isDramatic={true} />
                     </div>
                     
                     <div className="p-4 rounded-lg bg-gradient-to-br from-amber-500/10 to-background border border-amber-500/20">
@@ -2539,21 +2548,133 @@ const GreekLife = () => {
                   <AccordionTrigger className="text-sm font-medium hover:no-underline">
                     Early Church Secret Practices
                   </AccordionTrigger>
-                  <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                  <AccordionContent className="text-sm text-muted-foreground space-y-4">
                     <div className="flex justify-end">
                       <TTSButton sectionKey="earlyChurch" text={ttsContent.earlyChurch} />
                     </div>
-                    <p>The early church itself functioned as a secret society during persecution:</p>
-                    <ul className="space-y-2 ml-4 list-disc">
-                      <li><strong>Secret Handshakes:</strong> The "tickle palm grip" traced half an ichthys fish; if the other person completed it, they were confirmed believers</li>
-                      <li><strong>Secret Password:</strong> "MARANATHA" (1 Cor 16:22) was an insider term—Paul didn't translate it, assuming readers knew</li>
-                      <li><strong>Secret Symbol:</strong> The ICHTHYS fish with hidden acronym meaning (Jesus Christ, God's Son, Savior)</li>
-                      <li><strong>Holy Kiss:</strong> A ritual greeting commanded 5 times in Scripture (Romans 16:16, etc.)</li>
-                      <li><strong>Initiation Rites:</strong> Catechumens underwent 1-3 years of preparation, fasting, exorcism, disrobing, anointing, new names, and white robes</li>
-                    </ul>
-                    <p className="mt-2 text-xs italic border-t pt-2 border-border">
-                      Biblical precedent: Judges 12:5-6 records God's people using "SHIBBOLETH" as a secret password—42,000 died for not knowing it. Secret identification practices are explicitly recorded in Scripture.
-                    </p>
+                    <p>The early church itself functioned as a <strong>secret society</strong> during persecution, employing many practices that mirror modern fraternal organizations:</p>
+                    
+                    {/* Disciplina Arcani */}
+                    <div className="p-3 rounded-lg bg-gradient-to-r from-sacred/10 to-purple-500/10 border border-sacred/20">
+                      <h5 className="font-bold text-foreground mb-2">📜 Disciplina Arcani (The Discipline of the Secret)</h5>
+                      <p className="text-xs mb-2">The early church's official policy of secrecy, documented by Church Fathers including Tertullian, Cyril of Jerusalem, and Origen:</p>
+                      <ul className="text-xs space-y-1 list-disc ml-4">
+                        <li>Sacred mysteries (Eucharist, baptism, creeds) were <strong>hidden from non-initiates</strong></li>
+                        <li>New converts underwent <strong>progressive revelation</strong> of doctrines</li>
+                        <li>Catechumens were dismissed before the Eucharistic liturgy</li>
+                        <li>This practice continued until the <strong>5th-6th centuries</strong></li>
+                      </ul>
+                      <p className="text-xs mt-2 italic">Source: Tertullian, Apology 7 & 39; Cyril of Jerusalem, Catechetical Lectures; Origin, Contra Celsum</p>
+                    </div>
+                    
+                    {/* Secret Signs & Symbols */}
+                    <div className="grid gap-3 md:grid-cols-2">
+                      <div className="p-3 rounded-lg bg-muted/50 border-l-4 border-sacred">
+                        <h6 className="font-bold text-foreground mb-2">🐟 ICHTHYS Fish Symbol</h6>
+                        <ul className="text-xs space-y-1 list-disc ml-4">
+                          <li><strong>Hidden acronym:</strong> Ἰησοῦς Χριστός, Θεοῦ Υἱός, Σωτήρ (Jesus Christ, God's Son, Savior)</li>
+                          <li>Drawn in sand to secretly identify fellow believers</li>
+                          <li>One person drew an arc; if the other completed the fish, they were confirmed Christians</li>
+                          <li>Found in Roman catacombs, homes, and tombs</li>
+                        </ul>
+                        <p className="text-xs mt-2 italic">Source: Dölger, F.J. ΙΧΘΥΣ: Das Fischsymbol (1922); Ferguson, Backgrounds of Early Christianity (2003)</p>
+                      </div>
+                      
+                      <div className="p-3 rounded-lg bg-muted/50 border-l-4 border-amber-600">
+                        <h6 className="font-bold text-foreground mb-2">🤝 Secret Handshakes & Greetings</h6>
+                        <ul className="text-xs space-y-1 list-disc ml-4">
+                          <li><strong>"Tickle palm grip"</strong>: Traced half an ichthys fish in the palm</li>
+                          <li><strong>Holy Kiss</strong>: Commanded 5 times (Rom 16:16, 1 Cor 16:20, 2 Cor 13:12, 1 Thess 5:26, 1 Pet 5:14)</li>
+                          <li><strong>Right hand of fellowship</strong>: Gal 2:9 describes exclusive recognition</li>
+                          <li>These were <strong>identity markers</strong> for the persecuted community</li>
+                        </ul>
+                      </div>
+                      
+                      <div className="p-3 rounded-lg bg-muted/50 border-l-4 border-purple-600">
+                        <h6 className="font-bold text-foreground mb-2">🔐 Secret Passwords & Phrases</h6>
+                        <ul className="text-xs space-y-1 list-disc ml-4">
+                          <li><strong>MARANATHA</strong> (1 Cor 16:22): Paul left untranslated—insiders knew it meant "Our Lord, come!"</li>
+                          <li><strong>ABBA</strong>: Intimate Aramaic term for Father, used as insider language</li>
+                          <li><strong>Chi-Rho (☧)</strong>: Constantine's secret symbol revealed in vision</li>
+                          <li><strong>SATOR ROTAS Square</strong>: Cryptic palindrome with hidden Christian meaning</li>
+                        </ul>
+                        <p className="text-xs mt-2 italic">Source: 1 Cor 16:22; Gal 4:6; Rom 8:15; archaeological evidence from Pompeii</p>
+                      </div>
+                      
+                      <div className="p-3 rounded-lg bg-muted/50 border-l-4 border-green-600">
+                        <h6 className="font-bold text-foreground mb-2">⛪ Secret Meeting Places</h6>
+                        <ul className="text-xs space-y-1 list-disc ml-4">
+                          <li><strong>Roman catacombs</strong>: Underground burial tunnels for secret worship</li>
+                          <li><strong>House churches</strong>: Private homes with concealed entrances</li>
+                          <li><strong>Night meetings</strong>: Gatherings held before dawn to avoid detection</li>
+                          <li>Watchmen posted to warn of approaching authorities</li>
+                        </ul>
+                        <p className="text-xs mt-2 italic">Source: Acts 12:12-17; Pliny the Younger, Letters to Trajan (c. 112 AD)</p>
+                      </div>
+                    </div>
+                    
+                    {/* Catechumenate Initiation */}
+                    <div className="p-3 rounded-lg bg-gradient-to-br from-amber-500/10 to-sacred/10 border border-amber-500/20">
+                      <h5 className="font-bold text-foreground mb-2">✝️ Catechumenate: The Christian Initiation Process (1-3 Years)</h5>
+                      <p className="text-xs mb-3">Documented in Hippolytus's Apostolic Tradition (c. 215 AD) and early church writings:</p>
+                      <div className="grid gap-2 md:grid-cols-2">
+                        <div className="text-xs">
+                          <strong>Phase 1: Inquiry (Weeks-Months)</strong>
+                          <ul className="list-disc ml-4 mt-1">
+                            <li>Sponsors vouch for candidate's character</li>
+                            <li>Investigation of occupation (some banned)</li>
+                            <li>Teaching basic Christian lifestyle</li>
+                          </ul>
+                        </div>
+                        <div className="text-xs">
+                          <strong>Phase 2: Catechumenate (1-3 Years)</strong>
+                          <ul className="list-disc ml-4 mt-1">
+                            <li>Instruction in Scripture and doctrine</li>
+                            <li>Dismissal before Eucharist ("catechumens depart")</li>
+                            <li>Progressive revelation of mysteries</li>
+                          </ul>
+                        </div>
+                        <div className="text-xs">
+                          <strong>Phase 3: Intense Preparation (Lent)</strong>
+                          <ul className="list-disc ml-4 mt-1">
+                            <li>Daily exorcisms and prayers</li>
+                            <li>Fasting and vigils</li>
+                            <li>Scrutinies (public examinations)</li>
+                          </ul>
+                        </div>
+                        <div className="text-xs">
+                          <strong>Phase 4: Initiation (Easter Vigil)</strong>
+                          <ul className="list-disc ml-4 mt-1">
+                            <li><strong>Renunciation of Satan</strong> facing west</li>
+                            <li><strong>Disrobing</strong>: Removing old garments</li>
+                            <li><strong>Full immersion baptism</strong> (often nude)</li>
+                            <li><strong>Anointing with oil</strong> (chrismation)</li>
+                            <li><strong>New white robes</strong> given</li>
+                            <li><strong>New name</strong> sometimes assigned</li>
+                            <li>First participation in <strong>Eucharist</strong></li>
+                          </ul>
+                        </div>
+                      </div>
+                      <p className="text-xs mt-3 italic">Source: Hippolytus, Apostolic Tradition (c. 215 AD); Cyril of Jerusalem, Mystagogical Catecheses; Ambrose, De Mysteriis</p>
+                    </div>
+                    
+                    {/* Biblical Precedent */}
+                    <div className="p-3 rounded-lg bg-sacred/10 border border-sacred/20">
+                      <h5 className="font-bold text-foreground mb-2">📖 Biblical Precedent: SHIBBOLETH (Judges 12:5-6)</h5>
+                      <p className="text-xs">God's people used a <strong>secret password</strong> to identify true members of their group. The Gileadites asked fleeing Ephraimites to say "Shibboleth"—those who couldn't pronounce it correctly were identified as enemies. <strong>42,000 people died</strong> for not knowing the secret word. This demonstrates that secret identification practices are explicitly recorded and approved in Scripture.</p>
+                    </div>
+                    
+                    {/* Citations */}
+                    <div className="mt-4 p-3 rounded-lg bg-muted/30 border border-border text-xs space-y-1">
+                      <h5 className="font-semibold text-foreground mb-2">📚 Complete Scholarly Citations:</h5>
+                      <p><strong>PRIMARY:</strong> Montgomery, Dr. Lyman A. <em>Sacred Not Sinful</em>. Chapter on "Early Church Practices."</p>
+                      <p><strong>Hippolytus:</strong> <em>Apostolic Tradition</em> (c. 215 AD) — Most detailed ancient source on Christian initiation</p>
+                      <p><strong>Tertullian:</strong> <em>Apology</em> 7, 39 (c. 197 AD) — Defense of Christian secrecy</p>
+                      <p><strong>Cyril of Jerusalem:</strong> <em>Catechetical Lectures</em> & <em>Mystagogical Catecheses</em> (c. 350 AD)</p>
+                      <p><strong>Pliny the Younger:</strong> <em>Letters to Trajan</em> (c. 112 AD) — Roman official's account of Christian practices</p>
+                      <p><strong>Dölger, Franz Joseph:</strong> <em>ΙΧΘΥΣ: Das Fischsymbol in frühchristlicher Zeit</em>. Aschendorff, 1922.</p>
+                      <p><strong>Ferguson, Everett:</strong> <em>Backgrounds of Early Christianity</em>. 3rd ed. Eerdmans, 2003.</p>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
 
@@ -2575,6 +2696,9 @@ const GreekLife = () => {
               </Accordion>
             </CardContent>
           </Card>
+
+          {/* Apologetics Quick Reference Card */}
+          <ApologeticsCard />
 
           {/* Anti-Hazing Alert */}
           <Link 
