@@ -25,6 +25,8 @@ import { PremiumGate } from '@/components/PremiumGate';
 import { useDemoMode } from '@/contexts/DemoModeContext';
 import { StudyGuideDialog, StudyGuide } from '@/components/bible-study/StudyGuideDialog';
 import { studyGuides, getStudiesByCategory, categories } from '@/data/bibleStudyGuides';
+import { ScriptureFlashcards } from '@/components/ScriptureFlashcards';
+import { BibleStudyGenerator } from '@/components/BibleStudyGenerator';
 
 // Demo data for Bible Study
 const DEMO_DAILY_VERSE = {
@@ -926,6 +928,12 @@ const BibleStudy = () => {
               </Card>
             </TabsContent>
         </Tabs>
+
+        {/* P.R.O.O.F. Bible Study Generator */}
+        <BibleStudyGenerator />
+
+        {/* Scripture Flashcards - Gamified */}
+        <ScriptureFlashcards />
         </div>
       </main>
 

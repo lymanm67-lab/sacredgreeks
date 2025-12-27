@@ -17,12 +17,17 @@ interface Chapter {
   title: string;
   content: string;
   duration?: string;
+  voice: string; // Different voice for each chapter
+  voiceDescription: string;
 }
 
+// Voice rotation for dynamic audiobook experience
 const bookChapters: Chapter[] = [
   {
     id: "preface",
     title: "Preface: Reclaiming the Narrative",
+    voice: "narrator1", // Eric - warm, engaging
+    voiceDescription: "Narrator: Eric",
     content: `The phrase "Reclaiming the Narrative" captures the heart of this work: to offer a balanced, biblically informed perspective on the cultural significance of Black Greek Letter Organizations while challenging the assumptions that often fuel denouncement rhetoric. Too often, cultural expressions and historical legacies are misinterpreted through a narrow theological lens, without adequate consideration of their social context or redemptive possibilities.
 
 The Divine Nine organizations were created during a time when Black people were denied access to societal advancement and affirmation. They filled a vital void by offering community, scholarship, service, and leadership cultivation. Reclaiming this narrative means acknowledging that these groups have helped shape generations of Black excellence, and that their rituals and codes should be interpreted through the same discerning lens we apply to other sacred traditions.`,
@@ -31,6 +36,8 @@ The Divine Nine organizations were created during a time when Black people were 
   {
     id: "introduction",
     title: "Introduction",
+    voice: "narrator2", // George - deep, authoritative
+    voiceDescription: "Narrator: George",
     content: `In recent years, a growing number of Christians have publicly renounced their affiliation with Black Greek Letter Organizations, often citing personal convictions shaped by prayer, Scripture, and discipleship. Their testimonies deserve thoughtful consideration, yet they have mainly emerged in a vacuum, one marked by the striking and persistent silence of the clergy.
 
 This silence raises necessary questions: Are pastors hesitant to address the issue for fear of alienating congregants? Do they lack the theological or historical grounding to speak to it responsibly? Is the matter simply not worthy of pulpit discourse in light of seemingly larger ecclesial priorities?
@@ -41,6 +48,8 @@ As both a student of theological research and an ordained elder, and as a proud 
   {
     id: "chapter1",
     title: "Chapter 1: Reclaiming Biblical Clarity",
+    voice: "narrator3", // Will - friendly, conversational
+    voiceDescription: "Narrator: Will",
     content: `Before we can evaluate the spiritual implications of our affiliations, we must first understand the language that undergirds them. To engage responsibly, we begin with clarity. What do terms like "divine," "oath," "ritual," and "sacrifice" actually mean in both biblical and cultural usage?
 
 The term "divine" refers to anything about a deity, God, or a supernatural being. In Christian theology, it is most often reserved for attributes or actions that are uniquely God's. However, in broader cultural use, particularly in African American religious and social traditions, divine can signify excellence, transcendence, or elevated status without implying literal godhood.
@@ -51,6 +60,8 @@ In the context of the Divine Nine, the term "divine" is used metaphorically to d
   {
     id: "chapter2",
     title: "Chapter 2: Comparison to Modern Fraternities",
+    voice: "narrator4", // Brian - deep, resonant
+    voiceDescription: "Narrator: Brian",
     content: `Did Jesus promote secrecy? This is a question that often surfaces in discussions about Greek Letter Organizations. Critics argue that secrecy is inherently unchristian, yet Scripture reveals a more nuanced picture.
 
 Jesus often instructed those He healed to "tell no one" about their miracles. He taught His disciples privately and explained parables only to the inner circle. The Transfiguration was witnessed by only three disciples who were commanded to keep it secret until after the Resurrection.
@@ -61,6 +72,8 @@ These examples demonstrate that strategic confidentiality served divine purposes
   {
     id: "chapter3",
     title: "Chapter 3: Freemasonry & D9 Legacy",
+    voice: "narrator5", // Daniel - powerful, commanding
+    voiceDescription: "Narrator: Daniel",
     content: `The relationship between Freemasonry and Black Greek Letter Organizations is often cited by critics. While there are historical connections, particularly in organizational structure and symbolism, it's important to examine these connections fairly.
 
 Prince Hall Freemasonry, established in 1775, was the first Black fraternal organization in America. Many founders of the Divine Nine were Prince Hall Masons, and this influenced early BGLO structures. However, influence does not equal identity. The missions, purposes, and practices of BGLOs are distinct from Masonic lodges.
@@ -71,6 +84,8 @@ The hypocrisy of selective condemnation must be addressed: many who condemn Gree
   {
     id: "chapter4",
     title: "Chapter 4: Institutions of Resistance",
+    voice: "narrator1", // Eric - warm, engaging
+    voiceDescription: "Narrator: Eric",
     content: `Black Greek Letter Organizations emerged as institutions of resistance and resilience during a time of systemic oppression. Their symbols, which some view with suspicion, were often chosen to represent strength, wisdom, and cultural pride.
 
 The Biblical position on symbols and imagery is nuanced. The serpent appears both as a symbol of evil and as the bronze serpent Moses lifted for healing. Context determines meaning. Similarly, Greek symbols used by BGLOs carry meaning determined by their users and context, not by ancient pagan associations.
@@ -81,6 +96,8 @@ Modern rites of passage serve important developmental functions. Anthropologists
   {
     id: "chapter5",
     title: "Chapter 5: Renounce or Redeem?",
+    voice: "narrator2", // George - deep, authoritative
+    voiceDescription: "Narrator: George",
     content: `The rise of the Anti-BGLO movement has created division within the Black church community. While respecting individual convictions, we must ask: What fruit has this movement produced? Has it led to greater unity or greater division?
 
 The pledge process has evolved significantly. What once included harmful hazing practices has been reformed across most organizations. Intake processes now emphasize education, service, and character development. We must evaluate organizations based on their current practices, not historical abuses.
@@ -91,6 +108,8 @@ Rather than wholesale renunciation, redemption offers a more biblical path. Dani
   {
     id: "chapter6",
     title: "Chapter 6: Theology, Tradition, & Culture",
+    voice: "narrator3", // Will - friendly, conversational
+    voiceDescription: "Narrator: Will",
     content: `Wedding ceremonies contain numerous elements with pagan origins: rings, veils, bridesmaids, even the wedding cake. Yet Christians celebrate weddings without concern. Disney films feature pagan mythology openly, yet Christian children watch them freely. Sports teams bear names of pagan deities without objection.
 
 This inconsistency reveals a troubling double standard. Why are BGLOs held to stricter scrutiny than other cultural institutions? Could unconscious bias play a role?
@@ -101,6 +120,8 @@ The early church itself adopted and transformed cultural practices. Church archi
   {
     id: "chapter7",
     title: "Chapter 7: The P.R.O.O.F. Framework",
+    voice: "narrator4", // Brian - deep, resonant
+    voiceDescription: "Narrator: Brian",
     content: `The P.R.O.O.F. Framework provides a biblical model to help believers evaluate their participation in Greek Life with wisdom and clarity.
 
 P is for Pledge Process: When pledging centers on discipline, mentorship, and service rather than humiliation, it mirrors biblical discipleship.
@@ -117,6 +138,8 @@ F is for Founding: God redeems culture rather than discards it. Believers can re
   {
     id: "chapter8",
     title: "Chapter 8: Scripture Guide for Greeks",
+    voice: "narrator5", // Daniel - powerful, commanding
+    voiceDescription: "Narrator: Daniel",
     content: `This chapter provides a comprehensive Scripture guide organized by theme for Greek organization members seeking to live faithfully.
 
 Section 1 addresses Christian Identity and Calling. You are called to be salt and light in every environment, including your Greek organization.
@@ -133,6 +156,8 @@ Section 5 addresses Evangelism and Witness. Your Greek affiliation provides a un
   {
     id: "chapter9",
     title: "Chapter 9: Bridging the Divide",
+    voice: "narrator1", // Eric - warm, engaging
+    voiceDescription: "Narrator: Eric",
     content: `Omega Chapter memorial ceremonies, funeral rituals, and post-burial traditions are often cited as concerning. Yet these practices parallel similar rituals in churches, civic organizations, and military units.
 
 How do we discern cultural practices as Christians? First, examine the current function and meaning. Second, assess alignment with Scripture. Third, consider the fruit produced. Fourth, maintain Christian conscience and conviction.
@@ -143,6 +168,8 @@ A grace-filled approach to leaving a BGLO, for those who feel convicted to do so
   {
     id: "chapter10",
     title: "Chapter 10: Looking Forward",
+    voice: "narrator2", // George - deep, authoritative
+    voiceDescription: "Narrator: George",
     content: `Looking back to move forward requires honest assessment. The hypocrisy of abandoned mission fields occurs when Christians withdraw from institutions rather than transforming them.
 
 Navigating faithfulness within BGLOs requires theological truths that cannot be ignored: God is sovereign, culture can be redeemed, and Christians are called to be light in darkness.
@@ -202,7 +229,7 @@ export const AudiobookPlayer = () => {
           },
           body: JSON.stringify({ 
             text: chapter.content, 
-            voice: "dramatic" // Use dramatic voice for audiobook
+            voice: chapter.voice // Use chapter-specific voice for dynamic narration
           }),
         }
       );
@@ -316,9 +343,14 @@ export const AudiobookPlayer = () => {
             <span className="text-xs text-muted-foreground">
               Chapter {currentChapter + 1} of {bookChapters.length}
             </span>
-            <span className="text-xs text-muted-foreground">{chapter.duration}</span>
+            <Badge variant="outline" className="text-xs bg-amber-500/10 text-amber-700 border-amber-500/30">
+              {chapter.voiceDescription}
+            </Badge>
           </div>
           <h4 className="font-semibold text-foreground mb-2">{chapter.title}</h4>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-xs text-muted-foreground">{chapter.duration}</span>
+          </div>
           <p className="text-sm text-muted-foreground line-clamp-3">
             {chapter.content.substring(0, 200)}...
           </p>

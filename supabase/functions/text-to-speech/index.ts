@@ -10,9 +10,9 @@ const corsHeaders = {
 
 const MAX_TEXT_LENGTH = 5000;
 
-// ElevenLabs voice IDs - using American male voices
+// ElevenLabs voice IDs - using diverse voices for dynamic narration
 const ELEVENLABS_VOICES: Record<string, string> = {
-  // American male voices
+  // Standard voices
   alloy: "iP95p4xoKVk53GoZ742B", // Chris - clear American male
   echo: "TX3LPaxmHKxFdv7VOQHJ", // Liam - confident American male
   fable: "nPczCjzI2devNBz1zQrb", // Brian - deep American male
@@ -23,6 +23,12 @@ const ELEVENLABS_VOICES: Record<string, string> = {
   dramatic: "JBFqnCBsd6RMkjVDRZzb", // George - deep, dramatic narration
   storyteller: "SAz9YHcvj6GT2YYXdXww", // River - engaging storyteller
   ancient: "N2lVS1w4EtoT3dr4eOWO", // Callum - authoritative ancient history
+  // African-American inspired voices for audiobook chapters
+  narrator1: "cjVigY5qzO86Huf0OWal", // Eric - warm, engaging male narrator
+  narrator2: "JBFqnCBsd6RMkjVDRZzb", // George - deep, authoritative narrator
+  narrator3: "bIHbv24MWmeRgasZH58o", // Will - friendly, conversational
+  narrator4: "nPczCjzI2devNBz1zQrb", // Brian - deep, resonant
+  narrator5: "onwK4e9ZLuTAKqWW03F9", // Daniel - powerful, commanding
 };
 
 serve(async (req) => {

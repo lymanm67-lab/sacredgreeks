@@ -12,10 +12,8 @@ import { useState, useRef } from "react";
 import { toast } from "sonner";
 import { ApologeticsCard } from "@/components/ApologeticsCard";
 import { HistoricalTimeline } from "@/components/HistoricalTimeline";
-import { ScriptureFlashcards } from "@/components/ScriptureFlashcards";
 import { RenouncedSupportSection } from "@/components/RenouncedSupportSection";
 import { ApologeticsQuickReference } from "@/components/ApologeticsQuickReference";
-import { BibleStudyGenerator } from "@/components/BibleStudyGenerator";
 import { DisciplinaArcaniSection } from "@/components/DisciplinaArcaniSection";
 
 interface Organization {
@@ -2703,25 +2701,41 @@ const GreekLife = () => {
             </CardContent>
           </Card>
 
-          {/* Disciplina Arcani Explanation */}
-          <DisciplinaArcaniSection />
-
-          {/* Historical Timeline */}
+          {/* Historical Timeline - Priority: keep visible */}
           <HistoricalTimeline />
 
-          {/* Scripture Flashcards - Gamified */}
-          <ScriptureFlashcards />
-
-          {/* Bible Study Generator */}
-          <BibleStudyGenerator />
-
-          {/* Apologetics Quick Reference Accordion */}
+          {/* Apologetics Quick Reference Accordion - Collapsed by default */}
           <ApologeticsQuickReference />
 
-          {/* Supporting Renounced Members */}
+          {/* Disciplina Arcani Explanation - Collapsed in the component itself */}
+          <DisciplinaArcaniSection />
+
+          {/* Supporting Renounced Members - Collapsed by default */}
           <RenouncedSupportSection />
 
-          {/* Apologetics Quick Reference Card */}
+          {/* Bible Study Generator - Move to dedicated page link */}
+          <Card className="border-emerald-500/30 bg-gradient-to-br from-emerald-500/5 to-background">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-emerald-500/10">
+                    <BookOpen className="w-6 h-6 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground">P.R.O.O.F. Bible Study & Scripture Flashcards</h3>
+                    <p className="text-sm text-muted-foreground">5-week curriculum and gamified Scripture memory</p>
+                  </div>
+                </div>
+                <Button asChild>
+                  <Link to="/bible-study">
+                    Open Bible Study <ArrowRight className="w-4 h-4 ml-2" />
+                  </Link>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Apologetics PDF Generator - Collapsed */}
           <ApologeticsCard />
 
           {/* Anti-Hazing Alert */}
