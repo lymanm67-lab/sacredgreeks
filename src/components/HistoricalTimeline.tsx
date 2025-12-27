@@ -95,24 +95,6 @@ const timelineEvents: TimelineEvent[] = [
     category: "greek",
     icon: GraduationCap
   },
-  {
-    year: "1851",
-    title: "Alpha Delta Pi (ΑΔΠ)",
-    description: "First secret society for women, founded at Wesleyan Female College in Macon, Georgia.",
-    category: "org",
-    icon: Users,
-    colors: "from-sky-400/30 to-white/20 border-sky-400/40",
-    orgColors: "Azure Blue and White"
-  },
-  {
-    year: "1867",
-    title: "Pi Beta Phi (ΠΒΦ)",
-    description: "First national secret college society of women, founded at Monmouth College.",
-    category: "org",
-    icon: Users,
-    colors: "from-red-500/30 to-sky-400/30 border-red-500/40",
-    orgColors: "Wine and Silver Blue"
-  },
   // Divine Nine - Individual Organizations
   {
     year: "1906",
@@ -185,91 +167,6 @@ const timelineEvents: TimelineEvent[] = [
     icon: Users,
     colors: "from-blue-400/40 to-yellow-400/30 border-blue-400/50",
     orgColors: "Royal Blue and Gold"
-  },
-  // NPC Sororities
-  {
-    year: "1870",
-    title: "Kappa Alpha Theta (ΚΑΘ)",
-    description: "First Greek-letter fraternity for women, founded at DePauw University.",
-    category: "org",
-    icon: Users,
-    colors: "from-black/30 to-yellow-500/30 border-yellow-500/40",
-    orgColors: "Black and Gold"
-  },
-  {
-    year: "1874",
-    title: "Gamma Phi Beta (ΓΦΒ)",
-    description: "First organization to be called a 'sorority,' founded at Syracuse University.",
-    category: "org",
-    icon: Users,
-    colors: "from-pink-300/40 to-amber-700/30 border-pink-300/50",
-    orgColors: "Light Brown and Mode"
-  },
-  // IFC Fraternities
-  {
-    year: "1848",
-    title: "Phi Delta Theta (ΦΔΘ)",
-    description: "Founded at Miami University as part of the 'Miami Triad.' One of the largest fraternities.",
-    category: "org",
-    icon: Users,
-    colors: "from-blue-500/40 to-white/20 border-blue-500/50",
-    orgColors: "Azure and Argent"
-  },
-  {
-    year: "1869",
-    title: "Sigma Chi (ΣΧ)",
-    description: "Founded at Miami University. Known for the Derby Days philanthropy event.",
-    category: "org",
-    icon: Users,
-    colors: "from-blue-600/40 to-yellow-400/30 border-blue-600/50",
-    orgColors: "Blue and Old Gold"
-  },
-  // NPHC Established
-  {
-    year: "1930",
-    title: "NPHC Established",
-    description: "National Pan-Hellenic Council formed to coordinate the historically Black Greek organizations.",
-    category: "greek",
-    icon: Users
-  },
-  // Final Divine Nine
-  {
-    year: "1963",
-    title: "Iota Phi Theta (ΙΦΘ)",
-    description: "Founded at Morgan State University. Youngest member of the Divine Nine. 'Building a Tradition, Not Resting Upon One.'",
-    category: "org",
-    icon: Users,
-    colors: "from-amber-700/40 to-yellow-500/30 border-amber-700/50",
-    orgColors: "Charcoal Brown and Gilded Gold"
-  },
-  // Latino Greeks
-  {
-    year: "1975",
-    title: "Lambda Theta Alpha (ΛΘΑ)",
-    description: "First Latina sorority in the United States, founded at Kean University.",
-    category: "org",
-    icon: Users,
-    colors: "from-pink-500/40 to-amber-700/30 border-pink-500/50",
-    orgColors: "Burgundy and Gray"
-  },
-  {
-    year: "1986",
-    title: "Lambda Theta Phi (ΛΘΦ)",
-    description: "First Latino fraternity established in the U.S., founded at Kean College.",
-    category: "org",
-    icon: Users,
-    colors: "from-amber-700/40 to-white/20 border-amber-700/50",
-    orgColors: "Brown and White"
-  },
-  // Asian Greeks
-  {
-    year: "1990",
-    title: "Lambda Phi Epsilon (ΛΦΕ)",
-    description: "Largest Asian American interest fraternity, founded at UCLA.",
-    category: "org",
-    icon: Users,
-    colors: "from-blue-500/40 to-yellow-400/30 border-blue-500/50",
-    orgColors: "Royal Blue and White"
   },
   {
     year: "Present",
