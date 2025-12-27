@@ -2416,16 +2416,176 @@ const GreekLife = () => {
                           Jesus: Master Craftsman & Guild Member
                         </span>
                       </AccordionTrigger>
-                      <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                      <AccordionContent className="text-sm text-muted-foreground space-y-4">
                         <div className="flex justify-end">
-                          <TTSButton sectionKey="jesusGuild" text={ttsContent.jesusGuild} />
+                          <TTSButton sectionKey="jesusGuild" text={ttsContent.jesusGuild} isDramatic />
                         </div>
+                        
                         <p>
                           Jesus was a <strong>TEKTON</strong> (τέκτων)—translated "carpenter" but more accurately "master builder" or "craftsman." Ancient craft guilds were <strong>FRATERNAL ORGANIZATIONS</strong> with secret initiations, coded language, oaths of loyalty, strategic importance, and special recognition grips.
                         </p>
-                        <p className="italic border-t pt-2 border-border">
-                          Joseph trained Jesus in this guild system for approximately 18 years. If guild membership with its secret elements was acceptable for the Son of God, it cannot be inherently sinful for Greek organization members.
-                        </p>
+
+                        {/* Guild Process Diagram */}
+                        <div className="my-4 p-4 rounded-xl bg-gradient-to-br from-amber-500/10 to-sacred/10 border border-amber-500/30">
+                          <h5 className="font-semibold text-foreground text-center mb-4">Ancient Guild Membership Journey</h5>
+                          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-1 text-xs">
+                            <div className="flex flex-col items-center text-center p-2 rounded-lg bg-background/50 min-w-[80px]">
+                              <div className="w-10 h-10 rounded-full bg-amber-500/30 flex items-center justify-center mb-1">
+                                <span className="text-amber-600 font-bold">1</span>
+                              </div>
+                              <span className="font-semibold">Selection</span>
+                              <span className="text-muted-foreground text-[10px]">Age 12-13</span>
+                            </div>
+                            <ArrowRight className="w-4 h-4 text-amber-500 hidden sm:block" />
+                            <div className="sm:hidden h-4 w-px bg-amber-500/50" />
+                            <div className="flex flex-col items-center text-center p-2 rounded-lg bg-background/50 min-w-[80px]">
+                              <div className="w-10 h-10 rounded-full bg-amber-500/40 flex items-center justify-center mb-1">
+                                <span className="text-amber-600 font-bold">2</span>
+                              </div>
+                              <span className="font-semibold">Testing</span>
+                              <span className="text-muted-foreground text-[10px]">1-3 Years</span>
+                            </div>
+                            <ArrowRight className="w-4 h-4 text-amber-500 hidden sm:block" />
+                            <div className="sm:hidden h-4 w-px bg-amber-500/50" />
+                            <div className="flex flex-col items-center text-center p-2 rounded-lg bg-background/50 min-w-[80px]">
+                              <div className="w-10 h-10 rounded-full bg-sacred/30 flex items-center justify-center mb-1">
+                                <span className="text-sacred font-bold">3</span>
+                              </div>
+                              <span className="font-semibold">Initiation</span>
+                              <span className="text-muted-foreground text-[10px]">Sacred Rites</span>
+                            </div>
+                            <ArrowRight className="w-4 h-4 text-sacred hidden sm:block" />
+                            <div className="sm:hidden h-4 w-px bg-sacred/50" />
+                            <div className="flex flex-col items-center text-center p-2 rounded-lg bg-background/50 min-w-[80px]">
+                              <div className="w-10 h-10 rounded-full bg-sacred/40 flex items-center justify-center mb-1">
+                                <span className="text-sacred font-bold">4</span>
+                              </div>
+                              <span className="font-semibold">Journeyman</span>
+                              <span className="text-muted-foreground text-[10px]">5-7 Years</span>
+                            </div>
+                            <ArrowRight className="w-4 h-4 text-sacred hidden sm:block" />
+                            <div className="sm:hidden h-4 w-px bg-sacred/50" />
+                            <div className="flex flex-col items-center text-center p-2 rounded-lg bg-gradient-to-br from-amber-500/20 to-sacred/20 min-w-[80px]">
+                              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-sacred flex items-center justify-center mb-1">
+                                <Star className="w-5 h-5 text-white" />
+                              </div>
+                              <span className="font-semibold">Master</span>
+                              <span className="text-muted-foreground text-[10px]">Age 30+</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Selection Numbers */}
+                        <div className="space-y-2">
+                          <h5 className="font-semibold text-foreground flex items-center gap-2">
+                            <Users className="w-4 h-4 text-amber-600" />
+                            Selection: How Many Were Chosen?
+                          </h5>
+                          <p className="pl-6">
+                            Guild masters were <strong>highly selective</strong>—typically accepting only <strong>1-3 apprentices</strong> at a time. Selection criteria included:
+                          </p>
+                          <ul className="pl-6 space-y-1 list-disc list-inside text-xs">
+                            <li><strong>Family lineage</strong>—sons of guild members received priority (Joseph to Jesus)</li>
+                            <li><strong>Physical aptitude</strong>—strength, dexterity, and spatial reasoning</li>
+                            <li><strong>Moral character</strong>—honesty, discretion, and ability to keep secrets</li>
+                            <li><strong>Recommendation</strong>—a current guild member had to sponsor the candidate</li>
+                          </ul>
+                        </div>
+
+                        {/* Living Arrangements */}
+                        <div className="space-y-2">
+                          <h5 className="font-semibold text-foreground flex items-center gap-2">
+                            <Home className="w-4 h-4 text-sacred" />
+                            Living Together: The Guild Household
+                          </h5>
+                          <p className="pl-6">
+                            <strong>Yes, apprentices lived with the master.</strong> This was called <em>in contubernio</em> (Latin: "sharing the same tent"). The arrangement served multiple purposes:
+                          </p>
+                          <ul className="pl-6 space-y-1 list-disc list-inside text-xs">
+                            <li><strong>Total immersion</strong>—learning happened from dawn to dusk</li>
+                            <li><strong>Character observation</strong>—masters assessed trustworthiness over time</li>
+                            <li><strong>Secret protection</strong>—trade secrets stayed within controlled environment</li>
+                            <li><strong>Brotherhood formation</strong>—fellow apprentices became lifelong brothers</li>
+                          </ul>
+                          <p className="pl-6 italic text-xs mt-2">
+                            Jesus likely lived in Joseph's workshop complex with other apprentices, forming deep fraternal bonds.
+                          </p>
+                        </div>
+
+                        {/* Testing Ceremonies */}
+                        <div className="space-y-2">
+                          <h5 className="font-semibold text-foreground flex items-center gap-2">
+                            <Shield className="w-4 h-4 text-amber-600" />
+                            Testing Ceremonies & Trials
+                          </h5>
+                          <p className="pl-6">
+                            Apprentices faced <strong>progressive testing ceremonies</strong> to prove worthiness:
+                          </p>
+                          <div className="pl-6 grid gap-2 text-xs">
+                            <div className="p-2 rounded bg-muted/30 border-l-2 border-amber-500">
+                              <strong>The Silence Trial:</strong> Candidates observed work for weeks without speaking or asking questions—testing patience and observation skills.
+                            </div>
+                            <div className="p-2 rounded bg-muted/30 border-l-2 border-amber-500">
+                              <strong>The Menial Service:</strong> Months of carrying water, sweeping, mixing materials—testing humility before receiving knowledge.
+                            </div>
+                            <div className="p-2 rounded bg-muted/30 border-l-2 border-sacred">
+                              <strong>The Night Watch:</strong> Guarding tools and materials overnight—testing reliability and vigilance.
+                            </div>
+                            <div className="p-2 rounded bg-muted/30 border-l-2 border-sacred">
+                              <strong>The Masterpiece Test:</strong> Creating a work demonstrating mastery—evaluated by guild elders in secret ceremony.
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Secret Handgrips & Words */}
+                        <div className="space-y-2">
+                          <h5 className="font-semibold text-foreground flex items-center gap-2">
+                            <Award className="w-4 h-4 text-sacred" />
+                            Secret Handgrips & Recognition Words
+                          </h5>
+                          <p className="pl-6">
+                            Guild members used <strong>secret recognition systems</strong> to identify fellow craftsmen—essential when traveling to other cities for work:
+                          </p>
+                          <div className="pl-6 space-y-2 text-xs">
+                            <div className="p-3 rounded-lg bg-gradient-to-r from-amber-500/10 to-transparent border border-amber-500/20">
+                              <h6 className="font-semibold text-foreground mb-1">🤝 The Guild Grip</h6>
+                              <p>A distinctive handshake with specific finger positions—pressure on particular knuckles or fingers that only initiated members would recognize. Different ranks had different grips.</p>
+                            </div>
+                            <div className="p-3 rounded-lg bg-gradient-to-r from-sacred/10 to-transparent border border-sacred/20">
+                              <h6 className="font-semibold text-foreground mb-1">🗣️ Password Phrases</h6>
+                              <p>Coded greetings with expected responses. A stranger might ask about "the strength of the beam" and the correct response referenced specific proportions known only to guild members.</p>
+                            </div>
+                            <div className="p-3 rounded-lg bg-gradient-to-r from-amber-500/10 to-transparent border border-amber-500/20">
+                              <h6 className="font-semibold text-foreground mb-1">✋ The Sign of the Square</h6>
+                              <p>Subtle hand gestures forming right angles—referencing the carpenter's square, the most sacred tool of the trade. Could be worked into normal gestures imperceptibly.</p>
+                            </div>
+                            <div className="p-3 rounded-lg bg-gradient-to-r from-sacred/10 to-transparent border border-sacred/20">
+                              <h6 className="font-semibold text-foreground mb-1">👁️ Tool Markings</h6>
+                              <p>Personal tools bore distinctive marks—symbols that communicated guild affiliation, rank, and home region. These marks also authenticated a craftsman's work.</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Jesus's 18 Years */}
+                        <div className="p-4 rounded-lg bg-gradient-to-br from-sacred/10 to-amber-500/10 border border-sacred/30">
+                          <h5 className="font-semibold text-sacred mb-2 flex items-center gap-2">
+                            <Church className="w-4 h-4" />
+                            Jesus: 18 Years of Guild Formation
+                          </h5>
+                          <p className="text-xs mb-2">
+                            From approximately <strong>age 12 to 30</strong>, Jesus underwent complete guild training under Joseph:
+                          </p>
+                          <ul className="text-xs space-y-1 list-disc list-inside">
+                            <li>Learned secret initiation rites and sacred oaths</li>
+                            <li>Mastered coded language and recognition grips</li>
+                            <li>Lived in fraternal community with fellow apprentices</li>
+                            <li>Passed through progressive testing ceremonies</li>
+                            <li>Achieved master craftsman status by age 30 (Luke 3:23)</li>
+                          </ul>
+                          <p className="text-xs mt-3 italic border-t border-sacred/20 pt-2">
+                            <strong>If secret initiations, oaths, handgrips, and exclusive brotherhood were sinful, Jesus could not have participated for 18 years.</strong> His guild membership establishes clear biblical precedent for fraternal organizations.
+                          </p>
+                        </div>
                       </AccordionContent>
                     </AccordionItem>
 
