@@ -1,5 +1,4 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { BookOpen, Shield, Cross, Users, Scale, Heart, Gavel, Scroll } from "lucide-react";
 
@@ -90,22 +89,8 @@ const apologeticsItems: ApologeticsItem[] = [
 
 export const ApologeticsQuickReference = () => {
   return (
-    <Card className="border-sacred/30 bg-gradient-to-br from-sacred/5 to-background">
-      <CardHeader>
-        <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-sacred/10">
-            <Shield className="w-6 h-6 text-sacred" />
-          </div>
-          <div>
-            <CardTitle className="text-xl">Apologetics Quick Reference</CardTitle>
-            <p className="text-sm text-muted-foreground mt-1">
-              Biblical defenses for common objections to Greek life
-            </p>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <Accordion type="single" collapsible className="space-y-2">
+    <div className="p-4 bg-gradient-to-br from-sacred/5 to-background">
+      <Accordion type="single" collapsible className="space-y-2">
           {apologeticsItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -145,7 +130,6 @@ export const ApologeticsQuickReference = () => {
             );
           })}
         </Accordion>
-      </CardContent>
-    </Card>
+    </div>
   );
 };
