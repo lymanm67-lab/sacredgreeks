@@ -189,11 +189,8 @@ export const HistoricalTimeline = () => {
       <CardContent>
         <ScrollArea className="w-full">
           <div className="relative pb-4">
-            {/* Timeline Line */}
-            <div className="absolute top-8 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 via-purple-500 to-sacred" />
-            
             {/* Timeline Events */}
-            <div className="flex gap-4 pt-0 pb-2" style={{ minWidth: `${timelineEvents.length * 200}px` }}>
+            <div className="flex gap-4 pb-2" style={{ minWidth: `${timelineEvents.length * 200}px` }}>
               {timelineEvents.map((event, index) => {
                 const Icon = event.icon;
                 return (
@@ -202,16 +199,21 @@ export const HistoricalTimeline = () => {
                     className="flex flex-col items-center"
                     style={{ width: "180px" }}
                   >
-                    {/* Connector Dot */}
-                    <div className={`w-4 h-4 rounded-full bg-gradient-to-r ${categoryColors[event.category]} border-2 mb-2 z-10`} />
-                    
-                    {/* Year Badge */}
-                    <Badge variant="outline" className="mb-2 text-xs font-bold">
+                    {/* Year Badge - Above the line */}
+                    <Badge variant="outline" className="mb-2 text-xs font-bold z-10 bg-background">
                       {event.year}
                     </Badge>
                     
-                    {/* Event Card */}
-                    <div className={`p-3 rounded-lg bg-gradient-to-br ${categoryColors[event.category]} border h-full`}>
+                    {/* Connector Dot - On the line */}
+                    <div className={`w-4 h-4 rounded-full bg-gradient-to-r ${categoryColors[event.category]} border-2 z-10 relative`}>
+                      {/* Timeline Line Segment */}
+                      {index < timelineEvents.length - 1 && (
+                        <div className="absolute top-1/2 left-full w-[164px] h-1 -translate-y-1/2 bg-gradient-to-r from-amber-500 via-purple-500 to-sacred opacity-30" />
+                      )}
+                    </div>
+                    
+                    {/* Event Card - Below the line */}
+                    <div className={`p-3 rounded-lg bg-gradient-to-br ${categoryColors[event.category]} border h-full mt-2`}>
                       <div className="flex items-center gap-2 mb-2">
                         <Icon className="w-4 h-4 shrink-0" />
                         <h4 className="text-xs font-bold line-clamp-2">{event.title}</h4>
