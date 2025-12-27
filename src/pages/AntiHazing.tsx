@@ -39,6 +39,9 @@ const ALTERNATIVES_ACCORDION_STORAGE_KEY = 'antihazing-alternatives-accordion-st
 
 const AntiHazing = () => {
   const [selectedState, setSelectedState] = useState<string | null>(null);
+  const [memorialOrgFilter, setMemorialOrgFilter] = useState<string>("all");
+  const [memorialDecadeFilter, setMemorialDecadeFilter] = useState<string>("all");
+  const [successStoriesAccordionValues, setSuccessStoriesAccordionValues] = useState<string[]>([]);
   const [resourcesAccordionValues, setResourcesAccordionValues] = useState<string[]>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem(RESOURCES_ACCORDION_STORAGE_KEY);
@@ -2059,12 +2062,12 @@ const AntiHazing = () => {
                 </Accordion>
               </div>
 
-              {/* Success Stories */}
+              {/* Success Stories - Accordion Style */}
               <Card className="border-t-4 border-emerald-500">
                 <CardHeader className="text-center bg-gradient-to-b from-emerald-500/10 to-transparent">
                   <CardTitle className="text-xl">Divine Nine Success Stories</CardTitle>
                   <CardDescription>Real chapters making positive change across all NPHC organizations</CardDescription>
-                  <div className="mt-4">
+                  <div className="mt-4 flex items-center justify-center gap-3 flex-wrap">
                     <ListenButton
                       text={successStories.map(s => `${s.organization}. ${s.initiative}. ${s.description}`).join('. ')}
                       itemId="success-stories-tts"
@@ -2072,22 +2075,67 @@ const AntiHazing = () => {
                       voice="jessica"
                       showLabel={true}
                     />
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setSuccessStoriesAccordionValues(successStories.map((_, i) => `success-${i}`))}
+                        className="text-xs"
+                      >
+                        <ChevronsDownUp className="w-4 h-4 mr-1" />
+                        Expand All
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setSuccessStoriesAccordionValues([])}
+                        className="text-xs"
+                      >
+                        <ChevronsUpDown className="w-4 h-4 mr-1" />
+                        Collapse All
+                      </Button>
+                    </div>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid md:grid-cols-3 gap-4">
+                  <Accordion 
+                    type="multiple" 
+                    value={successStoriesAccordionValues} 
+                    onValueChange={setSuccessStoriesAccordionValues}
+                    className="space-y-3"
+                  >
                     {successStories.map((story, index) => (
-                      <div key={index} className={`p-4 rounded-lg border ${story.color}`}>
-                        <div className="flex items-start justify-between mb-2">
-                          <h4 className="font-semibold text-foreground text-sm">{story.initiative}</h4>
-                          <Badge variant="outline" className="text-xs shrink-0">{story.year}</Badge>
-                        </div>
-                        <p className="text-xs font-medium text-primary mb-2">{story.organization}</p>
-                        <p className="text-xs text-muted-foreground mb-1">{story.school}</p>
-                        <p className="text-sm text-muted-foreground mt-2">{story.description}</p>
-                      </div>
+                      <AccordionItem key={index} value={`success-${index}`} className={`border rounded-lg overflow-hidden ${story.color}`}>
+                        <AccordionTrigger className="px-4 py-3 hover:no-underline">
+                          <div className="flex items-center gap-3 flex-1">
+                            <div className={`w-2 h-10 rounded-full ${story.color.replace('/10', '/60').replace('/30', '/80')}`} />
+                            <div className="text-left flex-1">
+                              <div className="flex items-center justify-between gap-2 flex-wrap">
+                                <h4 className="font-semibold text-foreground text-sm">{story.initiative}</h4>
+                                <Badge variant="outline" className="text-xs shrink-0">{story.year}</Badge>
+                              </div>
+                              <p className="text-xs font-medium text-primary">{story.organization}</p>
+                            </div>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="px-4 pb-4">
+                          <div className="pl-5 border-l-2 border-current/20 ml-1">
+                            <p className="text-xs text-muted-foreground mb-2">{story.school}</p>
+                            <p className="text-sm text-muted-foreground">{story.description}</p>
+                            <div className="mt-3">
+                              <ListenButton
+                                text={`${story.organization}. ${story.initiative}. ${story.description}`}
+                                itemId={`success-story-${index}`}
+                                title={story.organization}
+                                voice="jessica"
+                                showLabel={true}
+                              />
+                            </div>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
                     ))}
-                  </div>
+                  </Accordion>
                 </CardContent>
               </Card>
 
@@ -2713,7 +2761,7 @@ const AntiHazing = () => {
                 </div>
               </div>
 
-              {/* Timeline of Deaths - Earliest to Most Recent */}
+              {/* Timeline of Deaths - Earliest to Most Recent with Filters */}
               <Card className="border-amber-500/30">
                 <CardHeader className="bg-gradient-to-r from-amber-500/10 to-orange-500/5">
                   <div className="flex items-center gap-3">
@@ -2725,47 +2773,148 @@ const AntiHazing = () => {
                       <CardDescription>From 1838 to present - Each name represents a preventable tragedy</CardDescription>
                     </div>
                   </div>
-                </CardHeader>
-                <CardContent className="pt-6">
-                  <div className="relative">
-                    {/* Timeline line */}
-                    <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-amber-500 via-orange-500 to-red-500" />
-                    
-                    <div className="space-y-4">
-                      {[...memorialVictims].sort((a, b) => a.year - b.year).map((victim, index) => (
-                        <div key={index} className="relative flex items-start gap-4 ml-4">
-                          {/* Timeline dot */}
-                          <div className="absolute -left-4 w-3 h-3 rounded-full bg-amber-500 border-2 border-background mt-1.5" />
-                          
-                          <div className="flex-1 pl-4 pb-4 border-b border-border/50 last:border-0">
-                            <div className="flex items-start justify-between gap-2 flex-wrap">
-                              <div>
-                                <Badge variant="outline" className="text-xs mb-1 border-amber-500/50 text-amber-600">
-                                  {victim.year}
-                                </Badge>
-                                <h4 className="font-semibold text-foreground">{victim.name}</h4>
-                                <p className="text-xs text-muted-foreground">Age {victim.age}</p>
-                              </div>
-                              <Badge variant="outline" className="text-xs shrink-0">
-                                {victim.organization.includes("NPHC") || victim.organization.includes("Alpha Kappa Alpha") || 
-                                 victim.organization.includes("Kappa Alpha Psi") || victim.organization.includes("Omega Psi Phi") ? 
-                                 "NPHC" : victim.organization.includes("IFC") ? "IFC" : "Other"}
-                              </Badge>
-                            </div>
-                            <p className="text-sm text-muted-foreground mt-1">{victim.organization}</p>
-                            <p className="text-xs text-muted-foreground">{victim.school}</p>
-                            <p className="text-xs text-destructive/80 mt-1">{victim.cause}</p>
-                            {victim.legislation && (
-                              <div className="mt-2 flex items-center gap-1.5 text-xs text-primary">
-                                <Scale className="w-3 h-3" />
-                                <span>{victim.legislation}</span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      ))}
+                  
+                  {/* Filter Controls */}
+                  <div className="mt-4 flex flex-wrap gap-3 items-center">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-muted-foreground">Organization:</span>
+                      <div className="flex flex-wrap gap-1">
+                        {["all", "NPHC", "IFC", "NAPA", "Other"].map((type) => (
+                          <Button
+                            key={type}
+                            variant={memorialOrgFilter === type ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => setMemorialOrgFilter(type)}
+                            className={`text-xs h-7 px-2 ${
+                              type === "NPHC" ? "data-[state=active]:bg-purple-500" : 
+                              type === "IFC" ? "data-[state=active]:bg-blue-500" : 
+                              type === "NAPA" ? "data-[state=active]:bg-green-500" : ""
+                            }`}
+                          >
+                            {type === "all" ? "All" : type}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-muted-foreground">Decade:</span>
+                      <div className="flex flex-wrap gap-1">
+                        {["all", "1800s", "1900s", "2000s", "2010s", "2020s"].map((decade) => (
+                          <Button
+                            key={decade}
+                            variant={memorialDecadeFilter === decade ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => setMemorialDecadeFilter(decade)}
+                            className="text-xs h-7 px-2"
+                          >
+                            {decade === "all" ? "All" : decade}
+                          </Button>
+                        ))}
+                      </div>
                     </div>
                   </div>
+                </CardHeader>
+                <CardContent className="pt-6">
+                  {(() => {
+                    const getOrgType = (org: string) => {
+                      if (org.includes("NPHC") || org.includes("Alpha Kappa Alpha") || 
+                          org.includes("Alpha Phi Alpha") || org.includes("Kappa Alpha Psi") || 
+                          org.includes("Omega Psi Phi") || org.includes("Delta Sigma Theta") ||
+                          org.includes("Phi Beta Sigma") || org.includes("Zeta Phi Beta") ||
+                          org.includes("Sigma Gamma Rho") || org.includes("Iota Phi Theta")) {
+                        return "NPHC";
+                      }
+                      if (org.includes("NAPA") || org.includes("Pi Delta Psi") || org.includes("Lambda Phi Epsilon")) {
+                        return "NAPA";
+                      }
+                      if (org.includes("IFC")) {
+                        return "IFC";
+                      }
+                      return "Other";
+                    };
+
+                    const getDecade = (year: number) => {
+                      if (year < 1900) return "1800s";
+                      if (year < 2000) return "1900s";
+                      if (year < 2010) return "2000s";
+                      if (year < 2020) return "2010s";
+                      return "2020s";
+                    };
+
+                    const filteredVictims = [...memorialVictims]
+                      .sort((a, b) => a.year - b.year)
+                      .filter(v => memorialOrgFilter === "all" || getOrgType(v.organization) === memorialOrgFilter)
+                      .filter(v => memorialDecadeFilter === "all" || getDecade(v.year) === memorialDecadeFilter);
+
+                    if (filteredVictims.length === 0) {
+                      return (
+                        <div className="text-center py-8 text-muted-foreground">
+                          <p>No victims match the selected filters.</p>
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="mt-2"
+                            onClick={() => { setMemorialOrgFilter("all"); setMemorialDecadeFilter("all"); }}
+                          >
+                            Clear Filters
+                          </Button>
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <div className="relative">
+                        <div className="mb-4 text-xs text-muted-foreground">
+                          Showing {filteredVictims.length} of {memorialVictims.length} victims
+                        </div>
+                        {/* Timeline line */}
+                        <div className="absolute left-4 top-6 bottom-0 w-0.5 bg-gradient-to-b from-amber-500 via-orange-500 to-red-500" />
+                        
+                        <div className="space-y-4">
+                          {filteredVictims.map((victim, index) => {
+                            const orgType = getOrgType(victim.organization);
+                            const orgColor = orgType === "NPHC" ? "bg-purple-500" : 
+                                           orgType === "IFC" ? "bg-blue-500" : 
+                                           orgType === "NAPA" ? "bg-green-500" : "bg-amber-500";
+                            const orgBorderColor = orgType === "NPHC" ? "border-purple-500/50 text-purple-600" : 
+                                                  orgType === "IFC" ? "border-blue-500/50 text-blue-600" : 
+                                                  orgType === "NAPA" ? "border-green-500/50 text-green-600" : "border-amber-500/50 text-amber-600";
+                            
+                            return (
+                              <div key={index} className="relative flex items-start gap-4 ml-4">
+                                {/* Timeline dot with org-specific color */}
+                                <div className={`absolute -left-4 w-3 h-3 rounded-full ${orgColor} border-2 border-background mt-1.5`} />
+                                
+                                <div className="flex-1 pl-4 pb-4 border-b border-border/50 last:border-0">
+                                  <div className="flex items-start justify-between gap-2 flex-wrap">
+                                    <div>
+                                      <Badge variant="outline" className={`text-xs mb-1 ${orgBorderColor}`}>
+                                        {victim.year}
+                                      </Badge>
+                                      <h4 className="font-semibold text-foreground">{victim.name}</h4>
+                                      <p className="text-xs text-muted-foreground">Age {victim.age}</p>
+                                    </div>
+                                    <Badge variant="outline" className={`text-xs shrink-0 ${orgBorderColor}`}>
+                                      {orgType}
+                                    </Badge>
+                                  </div>
+                                  <p className="text-sm text-muted-foreground mt-1">{victim.organization}</p>
+                                  <p className="text-xs text-muted-foreground">{victim.school}</p>
+                                  <p className="text-xs text-destructive/80 mt-1">{victim.cause}</p>
+                                  {victim.legislation && (
+                                    <div className="mt-2 flex items-center gap-1.5 text-xs text-primary">
+                                      <Scale className="w-3 h-3" />
+                                      <span>{victim.legislation}</span>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    );
+                  })()}
                 </CardContent>
               </Card>
 
