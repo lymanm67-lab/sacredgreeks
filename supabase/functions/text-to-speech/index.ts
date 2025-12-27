@@ -19,6 +19,10 @@ const ELEVENLABS_VOICES: Record<string, string> = {
   nova: "cjVigY5qzO86Huf0OWal", // Eric - friendly American male
   onyx: "iP95p4xoKVk53GoZ742B", // Chris - clear American male (default)
   shimmer: "onwK4e9ZLuTAKqWW03F9", // Daniel - authoritative American male
+  // Dramatic voices for special content
+  dramatic: "JBFqnCBsd6RMkjVDRZzb", // George - deep, dramatic narration
+  storyteller: "SAz9YHcvj6GT2YYXdXww", // River - engaging storyteller
+  ancient: "N2lVS1w4EtoT3dr4eOWO", // Callum - authoritative ancient history
 };
 
 serve(async (req) => {
@@ -84,10 +88,11 @@ serve(async (req) => {
           model_id: "eleven_multilingual_v2",
           output_format: "mp3_44100_128",
           voice_settings: {
-            stability: 0.5,
+            stability: voice === "dramatic" || voice === "ancient" ? 0.4 : 0.5,
             similarity_boost: 0.75,
-            style: 0.5,
+            style: voice === "dramatic" || voice === "ancient" ? 0.7 : 0.5,
             use_speaker_boost: true,
+            speed: voice === "dramatic" || voice === "ancient" ? 0.9 : 1.0,
           },
         }),
       }

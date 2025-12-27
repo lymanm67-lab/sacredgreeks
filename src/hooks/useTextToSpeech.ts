@@ -16,7 +16,7 @@ export function useTextToSpeech() {
     setIsPlaying(false);
   }, []);
 
-  const speak = useCallback(async (text: string) => {
+  const speak = useCallback(async (text: string, voice: string = "onyx") => {
     if (isLoading) return;
 
     // If already playing, stop
@@ -45,7 +45,7 @@ export function useTextToSpeech() {
             apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
             Authorization: `Bearer ${session.access_token}`,
           },
-          body: JSON.stringify({ text }),
+          body: JSON.stringify({ text, voice }),
         }
       );
 
