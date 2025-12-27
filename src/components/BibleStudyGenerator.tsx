@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -197,32 +196,50 @@ export const BibleStudyGenerator = () => {
   };
 
   return (
-    <Card className="border-emerald-500/30 bg-gradient-to-br from-emerald-500/5 to-background">
-      <CardHeader>
-        <div className="flex items-center justify-between flex-wrap gap-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-emerald-500/10">
-              <BookOpen className="w-6 h-6 text-emerald-600" />
-            </div>
-            <div>
-              <CardTitle className="text-xl">P.R.O.O.F. Bible Study Generator</CardTitle>
-              <CardDescription>5-week curriculum based on Sacred, Not Sinful</CardDescription>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" onClick={handlePrint}>
-              <Printer className="w-4 h-4 mr-2" />
-              Print
-            </Button>
-            <Button variant="outline" size="sm" onClick={handleDownload}>
-              <Download className="w-4 h-4 mr-2" />
-              Download PDF
-            </Button>
-          </div>
+    <div className="p-4 space-y-6 bg-gradient-to-br from-emerald-500/5 to-background">
+      {/* Controls */}
+      <div className="flex flex-wrap gap-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-muted-foreground">Select Week</label>
+          <Select value={selectedWeek} onValueChange={setSelectedWeek}>
+            <SelectTrigger className="w-48">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {studyPlans.map(plan => (
+                <SelectItem key={plan.week} value={plan.week.toString()}>
+                  Week {plan.week}: {plan.proofLetter} - {plan.title.split(':')[0]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        {/* Controls */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-muted-foreground">Format</label>
+          <Tabs value={format} onValueChange={(v) => setFormat(v as "individual" | "group")}>
+            <TabsList>
+              <TabsTrigger value="group" className="gap-2">
+                <Users className="w-4 h-4" />
+                Group Study
+              </TabsTrigger>
+              <TabsTrigger value="individual" className="gap-2">
+                <BookOpen className="w-4 h-4" />
+                Personal
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
+        <div className="flex items-end gap-2 ml-auto">
+          <Button variant="outline" size="sm" onClick={handlePrint}>
+            <Printer className="w-4 h-4 mr-2" />
+            Print
+          </Button>
+          <Button variant="outline" size="sm" onClick={handleDownload}>
+            <Download className="w-4 h-4 mr-2" />
+            PDF
+          </Button>
+        </div>
+      </div>
         <div className="flex flex-wrap gap-4">
           <div className="space-y-2">
             <label className="text-sm font-medium text-muted-foreground">Select Week</label>
@@ -363,7 +380,6 @@ export const BibleStudyGenerator = () => {
             </div>
           </div>
         </ScrollArea>
-      </CardContent>
-    </Card>
+    </div>
   );
 };

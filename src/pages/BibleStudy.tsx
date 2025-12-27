@@ -5,9 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Heart, Search, Book, BookOpen, Calendar, ArrowLeft, ExternalLink, Loader2, Sparkles, Bookmark, BookmarkCheck, FlaskConical, Eye, FileText, MessageSquare } from 'lucide-react';
+import { Heart, Search, Book, BookOpen, Calendar, ArrowLeft, ExternalLink, Loader2, Sparkles, Bookmark, BookmarkCheck, FlaskConical, Eye, FileText, MessageSquare, Shield, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { ExternalContentModal } from '@/components/ui/ExternalContentModal';
 import { useExternalLinks } from '@/hooks/use-external-links';
@@ -930,11 +931,44 @@ const BibleStudy = () => {
             </TabsContent>
         </Tabs>
 
-        {/* P.R.O.O.F. Bible Study Generator */}
-        <BibleStudyGenerator />
+        {/* Collapsible Sections for PROOF Bible Study and Apologetics */}
+        <Accordion type="multiple" defaultValue={[]} className="space-y-4">
+          {/* P.R.O.O.F. Bible Study Generator */}
+          <AccordionItem value="proof-study" className="border rounded-lg overflow-hidden">
+            <AccordionTrigger className="px-4 py-3 hover:no-underline bg-gradient-to-r from-emerald-500/10 to-background hover:from-emerald-500/15">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-emerald-500/10">
+                  <BookOpen className="w-5 h-5 text-emerald-600" />
+                </div>
+                <div className="text-left">
+                  <h3 className="font-semibold text-foreground">P.R.O.O.F. Bible Study Generator</h3>
+                  <p className="text-xs text-muted-foreground">5-week curriculum based on Sacred, Not Sinful</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-0 pb-0">
+              <BibleStudyGenerator />
+            </AccordionContent>
+          </AccordionItem>
 
-        {/* Apologetics Quick Reference */}
-        <ApologeticsQuickReference />
+          {/* Apologetics Quick Reference */}
+          <AccordionItem value="apologetics" className="border rounded-lg overflow-hidden">
+            <AccordionTrigger className="px-4 py-3 hover:no-underline bg-gradient-to-r from-sacred/10 to-background hover:from-sacred/15">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-sacred/10">
+                  <Shield className="w-5 h-5 text-sacred" />
+                </div>
+                <div className="text-left">
+                  <h3 className="font-semibold text-foreground">Apologetics Quick Reference</h3>
+                  <p className="text-xs text-muted-foreground">Biblical defenses for common objections to Greek life</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-0 pb-0">
+              <ApologeticsQuickReference />
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
 
         {/* Scripture Flashcards - Gamified */}
         <ScriptureFlashcards />
