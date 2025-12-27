@@ -173,7 +173,7 @@ const DiscernmentGuidanceDialog = ({ trigger, itemName }: DiscernmentGuidanceDia
         <p><strong>Remember:</strong> Your goal isn't to win an argument or prove you're right. It's to honor God with your choices while honoring others with your words. Sometimes people won't understand, and that's okay. Your job is to be faithful and loving—the rest is between them and God.</p>
         
         <div class="footer">
-          Sacred Greeks - Symbol & Ritual Guide<br/>
+          Sacred Greeks - Symbols and Rituals Guide<br/>
           Exported ${new Date().toLocaleDateString()}
         </div>
       </body>

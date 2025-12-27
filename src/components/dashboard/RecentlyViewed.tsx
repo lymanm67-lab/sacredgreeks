@@ -22,7 +22,7 @@ const DEMO_RECENTLY_VIEWED = [
   },
   {
     url: '/symbol-guide',
-    title: 'Symbol & Ritual Guide',
+    title: 'Symbols and Rituals Guide',
     category: 'Greek Symbolism',
     viewedAt: subHours(new Date(), 12).toISOString(),
   },

@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useMemo, useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -139,7 +139,17 @@ const SymbolGuide = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [bookmarksOpen, setBookmarksOpen] = useState(false);
   const [viewMode, setViewMode] = useState<'cards' | 'list'>('cards');
-  const [activeTab, setActiveTab] = useState('symbols');
+  const [searchParams] = useSearchParams();
+  const initialTab = searchParams.get('tab') || 'symbols';
+  const [activeTab, setActiveTab] = useState(initialTab);
+  
+  // Update tab when URL changes
+  useEffect(() => {
+    const tabFromUrl = searchParams.get('tab');
+    if (tabFromUrl && ['symbols', 'rituals', 'seals', 'customs', 'comparisons'].includes(tabFromUrl)) {
+      setActiveTab(tabFromUrl);
+    }
+  }, [searchParams]);
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const [comparisonSort, setComparisonSort] = useState<ComparisonSortOption>('category');
   const [notesDialog, setNotesDialog] = useState<{
