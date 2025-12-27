@@ -60,6 +60,12 @@ verify_jwt = false
 [functions.daily-devotional-reminder]
 verify_jwt = false
 
+[functions.firecrawl-scrape]
+verify_jwt = false
+
+[functions.firecrawl-search]
+verify_jwt = false
+
 [functions.generate-achievement-badge]
 verify_jwt = false
 
@@ -72,6 +78,18 @@ verify_jwt = false
 [functions.journey-reminder]
 verify_jwt = false
 
+[functions.notify-coaching-waitlist]
+verify_jwt = false
+
+[functions.notify-healing-story]
+verify_jwt = false
+
+[functions.notify-story-approved]
+verify_jwt = false
+
+[functions.notify-video-suggestion]
+verify_jwt = false
+
 [functions.prayer-journal-reminder]
 verify_jwt = false
 
@@ -79,6 +97,9 @@ verify_jwt = false
 verify_jwt = false
 
 [functions.recommend-resources]
+verify_jwt = false
+
+[functions.recommend-video]
 verify_jwt = false
 
 [functions.response-coach]
@@ -90,7 +111,13 @@ verify_jwt = false
 [functions.send-push-notification]
 verify_jwt = false
 
+[functions.send-qa-answer-notification]
+verify_jwt = false
+
 [functions.send-results-email]
+verify_jwt = false
+
+[functions.send-targeted-notification]
 verify_jwt = false
 
 [functions.study-recommendations]
@@ -105,26 +132,5 @@ verify_jwt = false
 [functions.text-to-speech]
 verify_jwt = false
 
-[functions.send-qa-answer-notification]
-verify_jwt = false
-
-[functions.notify-video-suggestion]
-verify_jwt = false
-
-[functions.notify-healing-story]
-verify_jwt = false
-
-[functions.notify-story-approved]
-verify_jwt = false
-
-[functions.recommend-video]
-verify_jwt = false
-
-[functions.send-targeted-notification]
-verify_jwt = false
-
 [functions.text-to-speech-article]
-verify_jwt = false
-
-[functions.notify-coaching-waitlist]
 verify_jwt = false
