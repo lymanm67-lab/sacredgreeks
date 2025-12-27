@@ -2472,91 +2472,127 @@ const GreekLife = () => {
             </AccordionItem>
           </Accordion>
 
-          {/* Councils Tabs */}
-          <Tabs defaultValue="nphc" className="space-y-6">
-            <TabsList className="flex flex-wrap justify-center gap-1">
-              <TabsTrigger value="nphc" className="text-xs px-2 py-1">NPHC</TabsTrigger>
-              <TabsTrigger value="npc" className="text-xs px-2 py-1">NPC</TabsTrigger>
-              <TabsTrigger value="ifc" className="text-xs px-2 py-1">IFC</TabsTrigger>
-              <TabsTrigger value="nalfo" className="text-xs px-2 py-1">NALFO</TabsTrigger>
-              <TabsTrigger value="napa" className="text-xs px-2 py-1">NAPA</TabsTrigger>
-              <TabsTrigger value="cbo" className="text-xs px-2 py-1">Other CBOs</TabsTrigger>
-              <TabsTrigger value="hbcu" className="text-xs px-2 py-1">HBCU Greeks</TabsTrigger>
-              <TabsTrigger value="professional" className="text-xs px-2 py-1">Professional</TabsTrigger>
-              <TabsTrigger value="honor" className="text-xs px-2 py-1">Leadership</TabsTrigger>
-              <TabsTrigger value="jewish" className="text-xs px-2 py-1">Jewish</TabsTrigger>
-              <TabsTrigger value="social" className="text-xs px-2 py-1">Social</TabsTrigger>
-              <TabsTrigger value="masonic" className="text-xs px-2 py-1">Masonic</TabsTrigger>
-              <TabsTrigger value="christian" className="text-xs px-2 py-1">Christian</TabsTrigger>
-              <TabsTrigger value="lgbtq" className="text-xs px-2 py-1">LGBTQ+</TabsTrigger>
-              <TabsTrigger value="military" className="text-xs px-2 py-1">Military</TabsTrigger>
-            </TabsList>
+          {/* Greek Councils Directory - Collapsed Accordion */}
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="councils-directory" className="border border-sacred/30 rounded-lg bg-gradient-to-br from-sacred/5 to-background overflow-hidden">
+              <AccordionTrigger className="px-4 py-4 hover:no-underline group [&[data-state=open]>div>.expand-hint]:opacity-0">
+                <div className="flex items-center gap-3 flex-1">
+                  <div className="p-2 rounded-lg bg-sacred/10 group-hover:bg-sacred/20 transition-colors">
+                    <Users className="w-6 h-6 text-sacred" />
+                  </div>
+                  <div className="text-left flex-1">
+                    <h3 className="text-lg font-semibold text-sacred">Greek Councils & Organizations Directory</h3>
+                    <p className="text-sm text-muted-foreground">Browse NPHC, NPC, IFC, and 12+ other councils with 200+ organizations</p>
+                  </div>
+                  {/* Expand hint with pulse animation */}
+                  <div className="expand-hint hidden sm:flex items-center gap-2 text-xs text-sacred transition-opacity">
+                    <span className="animate-pulse">Click to explore</span>
+                    <ArrowRight className="w-4 h-4 animate-[pulse_2s_ease-in-out_infinite]" />
+                  </div>
+                </div>
+              </AccordionTrigger>
+              
+              {/* Quick Stats - Always visible */}
+              <div className="px-4 pb-3 -mt-2">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  <div className="flex items-center gap-2 p-2 rounded-md bg-sacred/10 border border-sacred/20">
+                    <GraduationCap className="w-4 h-4 text-sacred shrink-0" />
+                    <span className="text-xs font-medium">15 Councils</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-2 rounded-md bg-purple-500/10 border border-purple-500/20">
+                    <Users className="w-4 h-4 text-purple-600 shrink-0" />
+                    <span className="text-xs font-medium">Divine Nine (NPHC)</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-2 rounded-md bg-blue-500/10 border border-blue-500/20">
+                    <Shield className="w-4 h-4 text-blue-600 shrink-0" />
+                    <span className="text-xs font-medium">NPC & IFC</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-2 rounded-md bg-amber-500/10 border border-amber-500/20">
+                    <Heart className="w-4 h-4 text-amber-600 shrink-0" />
+                    <span className="text-xs font-medium">Cultural & Faith-Based</span>
+                  </div>
+                </div>
+              </div>
+              
+              <AccordionContent className="px-4 pb-4 animate-fade-in">
+                <Tabs defaultValue="nphc" className="space-y-6">
+                  <TabsList className="flex flex-wrap justify-center gap-1">
+                    <TabsTrigger value="nphc" className="text-xs px-2 py-1">NPHC</TabsTrigger>
+                    <TabsTrigger value="npc" className="text-xs px-2 py-1">NPC</TabsTrigger>
+                    <TabsTrigger value="ifc" className="text-xs px-2 py-1">IFC</TabsTrigger>
+                    <TabsTrigger value="nalfo" className="text-xs px-2 py-1">NALFO</TabsTrigger>
+                    <TabsTrigger value="napa" className="text-xs px-2 py-1">NAPA</TabsTrigger>
+                    <TabsTrigger value="cbo" className="text-xs px-2 py-1">Other CBOs</TabsTrigger>
+                    <TabsTrigger value="hbcu" className="text-xs px-2 py-1">HBCU</TabsTrigger>
+                    <TabsTrigger value="professional" className="text-xs px-2 py-1">Professional</TabsTrigger>
+                    <TabsTrigger value="honor" className="text-xs px-2 py-1">Honor</TabsTrigger>
+                    <TabsTrigger value="jewish" className="text-xs px-2 py-1">Jewish</TabsTrigger>
+                    <TabsTrigger value="social" className="text-xs px-2 py-1">Social</TabsTrigger>
+                    <TabsTrigger value="masonic" className="text-xs px-2 py-1">Masonic</TabsTrigger>
+                    <TabsTrigger value="christian" className="text-xs px-2 py-1">Christian</TabsTrigger>
+                    <TabsTrigger value="lgbtq" className="text-xs px-2 py-1">LGBTQ+</TabsTrigger>
+                    <TabsTrigger value="military" className="text-xs px-2 py-1">Military</TabsTrigger>
+                  </TabsList>
 
-            {councils.map((council) => (
-              <TabsContent key={council.id} value={council.id} className="space-y-6">
-                <Card className="border-sacred/30 bg-gradient-to-br from-sacred/5 to-background">
-                  <CardHeader>
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-lg bg-sacred/10">
-                        <Award className="w-6 h-6 text-sacred" />
-                      </div>
-                      <div>
-                        <CardTitle>{council.fullName}</CardTitle>
-                        <CardDescription>{council.description}</CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-                      <Calendar className="w-4 h-4" />
-                      <span>Founded: {council.founded}</span>
-                    </div>
-                    
-                    {council.id === "nphc" && (
-                      <div className="mb-4 p-4 rounded-lg bg-muted/50 space-y-3">
-                        <p className="text-sm text-muted-foreground">
-                          The Divine Nine organizations emerged during a time when African Americans faced significant barriers to education and social advancement. These organizations have shaped African American history through their commitment to scholarship, service, sisterhood, and brotherhood, providing safe spaces for intellectual discourse, leadership development, and community service.
-                        </p>
-                        <p className="text-sm text-muted-foreground italic border-t border-border pt-3">
-                          <strong>Note:</strong> Some condemn this Greek symbolism, yet similar imagery appears on state seals and college crests worn without objection. Many universities, government institutions, and civic organizations display Greek and Roman mythology openly—from Athena on university seals to Apollo on government buildings. Consistency in critique matters.
-                        </p>
-                      </div>
-                    )}
-
-                    {council.id === "christian" && (
-                      <div className="mb-4 p-4 rounded-lg bg-sacred/10 border border-sacred/20">
-                        <p className="text-sm text-muted-foreground">
-                          Christian Greek organizations provide fellowship opportunities for students who want their faith to be central to their Greek experience. These organizations integrate Bible study, worship, and Christian service into traditional Greek life structure.
-                        </p>
-                      </div>
-                    )}
-
-                    {council.id === "lgbtq" && (
-                      <div className="mb-4 p-4 rounded-lg bg-muted/50 border border-border">
-                        <div className="flex items-start gap-3">
-                          <Heart className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
-                          <div className="space-y-2">
-                            <p className="text-sm text-muted-foreground">
-                              While perspectives on these organizations may vary, we recognize that all people deserve to be treated with dignity and respect. Every individual has the right to exist peacefully, free from harassment or harm.
-                            </p>
-                            <p className="text-sm text-muted-foreground italic">
-                              "So in everything, do to others what you would have them do to you." — Matthew 7:12
-                            </p>
+                  {councils.map((council) => (
+                    <TabsContent key={council.id} value={council.id}>
+                      <Card>
+                        <CardHeader>
+                          <div className="flex items-center gap-2">
+                            <Badge variant="outline" className="bg-sacred/10 text-sacred border-sacred/20">
+                              {council.name}
+                            </Badge>
+                            <span className="text-sm text-muted-foreground">Est. {council.founded}</span>
                           </div>
-                        </div>
-                      </div>
-                    )}
-                    
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {council.organizations.map((org, index) => (
-                        <OrganizationCard key={index} org={org} />
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            ))}
-          </Tabs>
+                          <CardTitle className="text-xl">{council.fullName}</CardTitle>
+                          <CardDescription>{council.description}</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          {council.id === "nphc" && (
+                            <div className="mb-4 p-4 rounded-lg bg-sacred/10 border border-sacred/20">
+                              <p className="text-sm text-muted-foreground">
+                                The <strong className="text-foreground">Divine Nine</strong> organizations have served as pillars of African American leadership, scholarship, and community service for over a century. Each organization brings unique traditions while sharing common bonds of brotherhood and sisterhood.
+                              </p>
+                            </div>
+                          )}
+
+                          {council.id === "christian" && (
+                            <div className="mb-4 p-4 rounded-lg bg-sacred/10 border border-sacred/20">
+                              <p className="text-sm text-muted-foreground">
+                                Christian Greek organizations provide fellowship opportunities for students who want their faith to be central to their Greek experience. These organizations integrate Bible study, worship, and Christian service into traditional Greek life structure.
+                              </p>
+                            </div>
+                          )}
+
+                          {council.id === "lgbtq" && (
+                            <div className="mb-4 p-4 rounded-lg bg-muted/50 border border-border">
+                              <div className="flex items-start gap-3">
+                                <Heart className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+                                <div className="space-y-2">
+                                  <p className="text-sm text-muted-foreground">
+                                    While perspectives on these organizations may vary, we recognize that all people deserve to be treated with dignity and respect. Every individual has the right to exist peacefully, free from harassment or harm.
+                                  </p>
+                                  <p className="text-sm text-muted-foreground italic">
+                                    "So in everything, do to others what you would have them do to you." — Matthew 7:12
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                          
+                          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {council.organizations.map((org, index) => (
+                              <OrganizationCard key={index} org={org} />
+                            ))}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+                  ))}
+                </Tabs>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
 
           {/* Greek Life Resources - Combined with colorful design */}
           <div className="space-y-4">
