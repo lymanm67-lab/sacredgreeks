@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Home, Users, Shield, BookOpen, Compass, Heart, Award, ArrowRight, AlertTriangle, Calendar, Building2, GraduationCap, Star, Volume2, VolumeX, Loader2, FileDown, Mic, Church, Clock } from "lucide-react";
+import { Home, Users, Shield, BookOpen, Compass, Heart, Award, ArrowRight, AlertTriangle, Calendar, Building2, GraduationCap, Star, Volume2, VolumeX, Loader2, FileDown, Mic, Church, Clock, Printer } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
 import { SEOHead } from "@/components/SEOHead";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useAuth } from "@/contexts/AuthContext";
@@ -35,6 +36,159 @@ const GreekLife = () => {
   const [isSequentialPlaying, setIsSequentialPlaying] = useState(false);
   const [currentSequentialSection, setCurrentSequentialSection] = useState<number>(0);
   const sequentialSections = ['introduction', 'jesusGuild', 'carpenterInitiation', 'religiousSects', 'ancientGuilds', 'romanGreek', 'earlyChurch'];
+  const sectionLabels: Record<string, string> = {
+    introduction: 'Introduction',
+    jesusGuild: 'Jesus: Master Craftsman',
+    carpenterInitiation: 'Carpenter Guild Initiation',
+    religiousSects: 'Jewish Religious Fraternities',
+    ancientGuilds: 'Biblical Professional Guilds',
+    romanGreek: 'Roman & Greek Structures',
+    earlyChurch: 'Early Church as Secret Society'
+  };
+
+  // Print Ancient Fraternities content
+  const handlePrintContent = () => {
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      toast.error('Please allow popups to print');
+      return;
+    }
+    
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Ancient Fraternities: A Biblical Foundation - Sacred Greeks</title>
+        <style>
+          body { font-family: Georgia, serif; max-width: 800px; margin: 40px auto; padding: 20px; line-height: 1.6; color: #333; }
+          h1 { text-align: center; color: #8B4513; border-bottom: 2px solid #D4AF37; padding-bottom: 10px; }
+          h2 { color: #8B4513; margin-top: 30px; border-left: 4px solid #D4AF37; padding-left: 12px; }
+          h3 { color: #666; margin-top: 20px; }
+          .section { margin-bottom: 30px; page-break-inside: avoid; }
+          .quote { background: #f9f6f0; padding: 15px; border-left: 3px solid #D4AF37; margin: 15px 0; font-style: italic; }
+          .reference { font-size: 0.9em; color: #666; background: #f5f5f5; padding: 10px; margin-top: 10px; }
+          ul { margin-left: 20px; }
+          li { margin-bottom: 8px; }
+          .footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc; font-size: 0.9em; color: #666; }
+          @media print { body { margin: 20px; } }
+        </style>
+      </head>
+      <body>
+        <h1>Ancient Fraternities: A Biblical Foundation</h1>
+        <p style="text-align: center; color: #666;">Sacred Greeks Ministry</p>
+        
+        <div class="section">
+          <h2>Introduction: Fraternities in Scripture</h2>
+          <p>Fraternities are not a modern invention. The concept of <em>koinonia</em> (κοινωνία)—Greek for "fellowship," "partnership," or "communion"—appears over 20 times in the New Testament and describes the essential fraternal bond between believers.</p>
+          <div class="quote">"They devoted themselves to the apostles' teaching and to koinonia" — Acts 2:42</div>
+        </div>
+        
+        <div class="section">
+          <h2>Jesus: Master Craftsman & Guild Member</h2>
+          <p>Jesus was a <strong>TEKTON</strong> (τέκτων)—translated "carpenter" but more accurately "master builder" or "craftsman." Ancient craft guilds were <strong>fraternal organizations</strong> with secret initiations, coded language, oaths of loyalty, and special recognition grips.</p>
+          
+          <h3>Selection Process</h3>
+          <p>Guild masters were highly selective—typically accepting only 1-3 apprentices at a time. Selection criteria included:</p>
+          <ul>
+            <li><strong>Family lineage</strong>—sons of guild members received priority (Joseph to Jesus)</li>
+            <li><strong>Physical aptitude</strong>—strength, dexterity, and spatial reasoning</li>
+            <li><strong>Moral character</strong>—honesty, discretion, and ability to keep secrets</li>
+            <li><strong>Recommendation</strong>—a current guild member had to sponsor the candidate</li>
+          </ul>
+          
+          <h3>Living Together: The Guild Household</h3>
+          <p>Apprentices lived with the master in a practice called <em>in contubernio</em> (Latin: "sharing the same tent"). This total immersion allowed learning from dawn to dusk, character observation over time, protection of trade secrets, and the formation of brotherhood bonds.</p>
+          
+          <h3>Testing Ceremonies & Trials</h3>
+          <ul>
+            <li><strong>The Silence Trial:</strong> Candidates observed work for weeks without speaking—testing patience and observation</li>
+            <li><strong>The Menial Service:</strong> Months of carrying water, sweeping, mixing materials—testing humility</li>
+            <li><strong>The Night Watch:</strong> Guarding tools and materials overnight—testing reliability</li>
+            <li><strong>The Masterpiece Test:</strong> Creating a work demonstrating mastery—evaluated by guild elders</li>
+          </ul>
+          
+          <h3>Secret Handgrips & Recognition Words</h3>
+          <ul>
+            <li><strong>The Guild Grip:</strong> A distinctive handshake with specific finger positions</li>
+            <li><strong>Password Phrases:</strong> Coded greetings with expected responses</li>
+            <li><strong>The Sign of the Square:</strong> Subtle hand gestures forming right angles</li>
+            <li><strong>Tool Markings:</strong> Personal tools bore distinctive guild marks</li>
+          </ul>
+        </div>
+        
+        <div class="section">
+          <h2>Ancient Carpenter Guild Initiation</h2>
+          <p>Ancient carpenter guilds followed structured initiation processes including:</p>
+          <ul>
+            <li><strong>Ritual purification</strong> through washing, often in a mikvah or river</li>
+            <li><strong>Sacred oaths</strong> never to reveal trade secrets on penalty of divine curse</li>
+            <li><strong>Symbolic death and rebirth</strong>—stripping of old garments and donning guild clothing</li>
+            <li><strong>Secret handgrip</strong>—the master would grip the initiate's hand in the guild's secret manner</li>
+            <li><strong>Guild mark</strong>—a distinctive sign often carved into their personal tools</li>
+          </ul>
+          <div class="reference">
+            <strong>Sources:</strong> Josephus, Jewish Antiquities 15.390-402; Mishnah Tractate Kiddushin; Archaeological evidence from Sepphoris and Nazareth
+          </div>
+        </div>
+        
+        <div class="section">
+          <h2>Jewish Religious Fraternities</h2>
+          <ul>
+            <li><strong>Pharisees:</strong> Secret teachings (oral Torah), initiation processes, distinctive dress, hierarchical ranks</li>
+            <li><strong>Sadducees:</strong> Elite priestly brotherhood with hereditary membership and secret Temple rituals</li>
+            <li><strong>Essenes:</strong> Secret monastic brotherhood with 1-3 year initiation periods and distinctive white robes</li>
+            <li><strong>Zealots:</strong> Secret political-religious fraternity with blood oaths and code names</li>
+          </ul>
+        </div>
+        
+        <div class="section">
+          <h2>Biblical Professional Guilds</h2>
+          <ul>
+            <li><strong>Stonemasons:</strong> Built Solomon's Temple with secret marks (1 Kings 5-6)</li>
+            <li><strong>Fishermen:</strong> Peter, James, and John were guild partners (<em>koinonoi</em>, Luke 5:10)</li>
+            <li><strong>Tax Collectors:</strong> Matthew hosted his guild brothers for dinner with Jesus</li>
+            <li><strong>Tentmakers:</strong> Paul worked through guild connections with Aquila and Priscilla</li>
+            <li><strong>Prophetic Guilds:</strong> "Sons of the Prophets" under Samuel, Elijah, and Elisha</li>
+          </ul>
+        </div>
+        
+        <div class="section">
+          <h2>Roman & Greek Fraternal Structures</h2>
+          <ul>
+            <li><strong>Roman Collegia:</strong> Professional associations with patron deities, initiation rituals, common meals</li>
+            <li><strong>Greek Thiasoi:</strong> Voluntary religious associations with initiation rites and sacred meals</li>
+            <li><strong>Synagogues:</strong> Brotherhoods with membership requirements and initiation through circumcision</li>
+          </ul>
+        </div>
+        
+        <div class="section">
+          <h2>Early Church as Secret Society</h2>
+          <p>The early church functioned as a secret society during persecution:</p>
+          <ul>
+            <li><strong>Secret Handshakes:</strong> The tickle palm grip traced half an ichthys fish</li>
+            <li><strong>Password:</strong> MARANATHA—Paul didn't translate, assuming readers knew it</li>
+            <li><strong>Hidden Symbol:</strong> ICHTHYS fish contained acronym meaning "Jesus Christ, God's Son, Savior"</li>
+            <li><strong>Holy Kiss:</strong> Ritual greeting commanded 5 times in Scripture</li>
+            <li><strong>Catechumenate:</strong> 1-3 years of initiation with fasting, exorcism, and new names</li>
+          </ul>
+          <div class="quote">"Shibboleth" — God's people using secret passwords (Judges 12:5-6)</div>
+        </div>
+        
+        <div class="section">
+          <h2>Conclusion: Biblical Precedent</h2>
+          <p><strong>Greek letter organizations continue traditions with deep roots in Scripture and ancient culture.</strong> The question isn't whether fraternal bonds, initiations, or exclusive fellowship are biblical—they clearly are. The question is whether specific practices within any organization honor God and align with Christian conscience.</p>
+        </div>
+        
+        <div class="footer">
+          <p>Sacred Greeks Ministry — sacredgreeks.org</p>
+          <p>Printed from Ancient Fraternities: A Biblical Foundation</p>
+        </div>
+      </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
+  };
 
   // State for controlled Ancient Fraternities accordion
   const [openAncientSection, setOpenAncientSection] = useState<string | undefined>(undefined);
@@ -2386,8 +2540,18 @@ const GreekLife = () => {
                       className="gap-2"
                     >
                       <FileDown className="w-4 h-4" />
-                      <span className="hidden sm:inline">Download Citations PDF</span>
+                      <span className="hidden sm:inline">Citations PDF</span>
                       <span className="sm:hidden">PDF</span>
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handlePrintContent}
+                      className="gap-2"
+                    >
+                      <Printer className="w-4 h-4" />
+                      <span className="hidden sm:inline">Print Version</span>
+                      <span className="sm:hidden">Print</span>
                     </Button>
                     {user && (
                       <Button
@@ -2413,6 +2577,44 @@ const GreekLife = () => {
                       </Button>
                     )}
                   </div>
+
+                  {/* Audio Progress Indicator */}
+                  {isSequentialPlaying && (
+                    <div className="p-3 rounded-lg bg-gradient-to-r from-sacred/10 to-amber-500/10 border border-sacred/30 animate-fade-in">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-sacred animate-pulse" />
+                          <span className="text-xs font-medium text-foreground">Now Playing:</span>
+                        </div>
+                        <span className="text-xs text-muted-foreground">
+                          {currentSequentialSection + 1} of {sequentialSections.length}
+                        </span>
+                      </div>
+                      <p className="text-sm font-semibold text-sacred mb-2">
+                        {sectionLabels[sequentialSections[currentSequentialSection]] || sequentialSections[currentSequentialSection]}
+                      </p>
+                      <Progress 
+                        value={((currentSequentialSection + 1) / sequentialSections.length) * 100} 
+                        className="h-1.5"
+                      />
+                      <div className="flex flex-wrap gap-1 mt-3">
+                        {sequentialSections.map((section, index) => (
+                          <div
+                            key={section}
+                            className={`px-2 py-0.5 rounded text-[10px] transition-all ${
+                              index === currentSequentialSection
+                                ? 'bg-sacred text-white font-semibold'
+                                : index < currentSequentialSection
+                                ? 'bg-sacred/20 text-sacred'
+                                : 'bg-muted text-muted-foreground'
+                            }`}
+                          >
+                            {index + 1}. {sectionLabels[section]?.split(':')[0] || section}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
                   {/* Nested content accordions */}
                   <Accordion 
