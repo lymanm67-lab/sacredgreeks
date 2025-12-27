@@ -2461,6 +2461,89 @@ export const symbolGuideContent: SymbolEntry[] = [
     doubleStandard: "Churches display lamps and candles. Universities use lamp imagery. Greek organizations doing the same are criticized—inconsistently."
   },
   // =====================================================
+  // BIBLICAL FRATERNAL PRACTICES - Early Church & Scripture
+  // =====================================================
+  {
+    id: "early-church-secret-grips",
+    name: "Early Church Secret Handshakes & Grips",
+    category: "symbols",
+    description: "The early church used SECRET RECOGNITION GRIPS to identify fellow believers during persecution. The 'TICKLE PALM GRIP' was a subtle signal where one Christian would trace a curved line (half of the ichthys fish) in another's palm during a handshake. If the other person completed the fish shape, they were confirmed as a believer. Church fathers documented various tactile signals used in the catacombs and secret meetings. These grips determined who could be trusted with the location of hidden gatherings, sacred texts, and the identities of church leaders.",
+    christianPerspective: "The early church was a SECRET SOCIETY by necessity. Believers used coded recognition systems to survive Roman persecution. Paul speaks of the 'right hand of fellowship' (Galatians 2:9)—a special grip signifying acceptance into the covenant community. Greek organizations using recognition grips follow early church precedent.",
+    cautionLevel: "low",
+    scriptureReferences: ["Galatians 2:9", "Acts 2:44-46", "Hebrews 10:25"],
+    doubleStandard: "The early church literally used secret handshakes to identify members during persecution. Christians criticizing Greek organization grips ignore their own history of the same practice."
+  },
+  {
+    id: "maranatha-secret-word",
+    name: "Maranatha - The Secret Password",
+    category: "symbols",
+    description: "MARANATHA (Aramaic: 'Our Lord, Come!') functioned as a SECRET PASSWORD in the early church. Paul uses it without translation in 1 Corinthians 16:22, assuming his readers know this insider term. The Didache (early church manual, c. 70-100 AD) records Maranatha being used as a liturgical password at communion—only those who knew the word could participate. Early Christians used Aramaic phrases as SECRET CODES because Roman authorities wouldn't understand them. Other coded phrases included 'Abba Father,' specific psalm verses, and doctrinal formulas that identified orthodox believers from heretics.",
+    christianPerspective: "The early church had SECRET WORDS for identification and liturgy. Paul's use of untranslated Aramaic indicates insider knowledge required for full participation. This is EXACTLY what Greek organizations do with chapter mottoes, Greek phrases, and secret words. Scripture endorses the practice.",
+    cautionLevel: "low",
+    scriptureReferences: ["1 Corinthians 16:22", "Revelation 22:20", "Romans 8:15", "Galatians 4:6"],
+    doubleStandard: "Paul used Maranatha as insider language without explaining it. The Didache required it for communion access. Churches criticizing Greek 'secret words' ignore that Christianity itself was built on them."
+  },
+  {
+    id: "shibboleth-judges12",
+    name: "Shibboleth - Biblical Secret Word (Judges 12)",
+    category: "symbols",
+    description: "In JUDGES 12:5-6, the Gileadites used 'SHIBBOLETH' as a SECRET PASSWORD to protect their city. Ephraimites couldn't pronounce the 'sh' sound correctly, saying 'SIBBOLETH' instead. This pronunciation test identified enemies, and 42,000 Ephraimites were killed when they failed. God's people LITERALLY USED A SECRET WORD to determine who could enter their community. This biblical precedent establishes that secret passwords for group protection and identification are not merely permitted—they're divinely recorded without condemnation.",
+    christianPerspective: "The Bible itself contains an example of God's people using a SECRET PASSWORD for identification and protection. If secret words were inherently evil, Scripture would condemn this practice. Instead, it's presented as legitimate wartime security. Greek organizations using secret words for member identification follow BIBLICAL PRECEDENT.",
+    cautionLevel: "low",
+    scriptureReferences: ["Judges 12:5-6", "Nehemiah 4:19-20", "Matthew 26:73"],
+    doubleStandard: "Scripture records God's people using a secret password—and 42,000 died for not knowing it. Yet Christians condemn Greek organizations for having secret words, ignoring this explicit biblical precedent."
+  },
+  {
+    id: "ichthys-secret-symbol",
+    name: "ΙΧΘΥΣ Fish - The Original Secret Symbol",
+    category: "symbols",
+    description: "The ICHTHYS (fish) was the early church's SECRET SYMBOL, functioning exactly like Greek organization symbols today. Christians would draw one curved line in the sand; if the other person completed the fish shape, both knew they were believers. The Greek acronym (Ἰησοῦς Χριστός, Θεοῦ Υἱός, Σωτήρ = Jesus Christ, God's Son, Savior) was HIDDEN MEANING known only to initiates. Romans saw a simple fish; Christians saw a coded confession of faith. This SECRET SYMBOLISM with HIDDEN MEANING is precisely what critics attack in Greek organizations.",
+    christianPerspective: "The fish symbol represents EXACTLY what Greek organizations do: a visible symbol with hidden meaning known only to members. Early Christians used it to identify one another, mark meeting places, and signal safety—all while outsiders remained ignorant. Christianity itself was spread through SECRET SYMBOL use.",
+    cautionLevel: "low",
+    scriptureReferences: ["Matthew 4:19", "John 21:6", "Luke 5:10"],
+    doubleStandard: "Christians proudly display the fish symbol—which was originally a SECRET CODE with hidden meaning—while condemning Greek organization symbols for being 'secretive' with 'hidden meanings.'"
+  },
+  {
+    id: "holy-kiss-ritual",
+    name: "Holy Kiss - The Secret Greeting Ritual",
+    category: "symbols",
+    description: "The HOLY KISS was a SECRET RITUAL GREETING in the early church—a kiss on the cheek exchanged between believers. Paul commands it FIVE times (Romans 16:16, 1 Corinthians 16:20, 2 Corinthians 13:12, 1 Thessalonians 5:26, and 1 Peter 5:14 calls it the 'kiss of love'). This wasn't casual—it was a LITURGICAL RITUAL with specific meaning, identifying believers and sealing fellowship. The Apostolic Constitutions regulated who could exchange the kiss (men with men, women with women) and when (during worship). It was a SECRET INSIDER PRACTICE that confused and scandalized Roman observers.",
+    christianPerspective: "The Apostles commanded a SECRET GREETING RITUAL that identified believers, confused outsiders, and was regulated by church rules. This is EXACTLY what Greek organizations do with their greetings, calls, and physical recognition signs. The Bible doesn't just permit this—it COMMANDS it five times.",
+    cautionLevel: "low",
+    scriptureReferences: ["Romans 16:16", "1 Corinthians 16:20", "2 Corinthians 13:12", "1 Thessalonians 5:26", "1 Peter 5:14"],
+    doubleStandard: "Paul commanded believers to greet each other with a 'holy kiss'—a ritual greeting that identified insiders. Churches have abandoned this command but criticize Greek organizations for having special greetings."
+  },
+  {
+    id: "jesus-carpenter-guild",
+    name: "Jesus in the Carpenter's Guild (Tekton)",
+    category: "symbols",
+    description: "Jesus was a TEKTON (τέκτων)—translated 'carpenter' but more accurately 'craftsman' or 'builder.' Ancient craft guilds were FRATERNAL ORGANIZATIONS with SECRET INITIATIONS, proprietary techniques, coded language, and rituals. The Greek tekton guilds had mystery-religion elements borrowed from the cult of Hephaestus (god of craftsmen). Guild members swore OATHS, learned SECRET KNOWLEDGE passed from master to apprentice, and used special GRIPS to identify fellow craftsmen. Joseph trained Jesus in this guild system. Jesus's parables reveal INSIDER GUILD KNOWLEDGE: building on rock vs sand, a house divided, the cornerstone rejected by builders.",
+    christianPerspective: "Jesus Himself was trained in a CRAFT GUILD with secret knowledge, initiation processes, and fraternal bonds. His carpentry training would have included guild oaths, master-apprentice rituals, and trade secrets. If guild membership with its secret elements was acceptable for the Son of God, it cannot be inherently sinful for Greek organization members.",
+    cautionLevel: "low",
+    scriptureReferences: ["Mark 6:3", "Matthew 13:55", "Matthew 7:24-27", "Matthew 21:42", "1 Peter 2:7"],
+    doubleStandard: "Jesus spent 18+ years in a carpenter's guild with secrets, initiations, and fraternal structure. Christians who claim all fraternal secrets are evil must explain why Jesus participated in them."
+  },
+  {
+    id: "early-church-initiation",
+    name: "Early Church Initiation Rites",
+    category: "symbols",
+    description: "The early church had ELABORATE INITIATION RITUALS that rivals any Greek organization. Catechumens (candidates) underwent 1-3 YEARS of preparation. The final initiation included: FASTING (sometimes 40 days), EXORCISM rituals, REMOVAL OF CLOTHING (stripping naked), ANOINTING with oil, THREE-FOLD IMMERSION in water, receiving a NEW NAME (in some traditions), being given a WHITE ROBE, and learning SECRET PASSWORDS and creeds. The Apostolic Tradition (c. 215 AD) details these rituals. Initiates were kept from knowing certain prayers and creeds until AFTER baptism—they had to be 'initiated' first.",
+    christianPerspective: "Christian baptism WAS an initiation ritual with secret elements, physical trials, symbolic death/rebirth, and restricted knowledge revealed only after completion. The early church structure mirrors Greek organization initiation processes. What critics attack in BGLOs, the church fathers practiced.",
+    cautionLevel: "low",
+    scriptureReferences: ["Romans 6:3-4", "Colossians 2:12", "Galatians 3:27", "Acts 8:36-38"],
+    doubleStandard: "Early church initiation included fasting, stripping, oil anointing, new names, special robes, and withheld knowledge—yet Greek organization initiation with fewer elements is condemned as 'occult.'"
+  },
+  {
+    id: "apostles-inner-circle",
+    name: "Jesus's Inner Circle (Peter, James, John)",
+    category: "symbols",
+    description: "Jesus Himself maintained an INNER CIRCLE of three disciples—Peter, James, and John—who received EXCLUSIVE ACCESS to experiences denied to others. Only they witnessed the Transfiguration (Matthew 17:1-2). Only they were invited deeper into Gethsemane (Matthew 26:37). They received SECRET TEACHINGS others didn't hear. The twelve apostles themselves were an EXCLUSIVE GROUP with requirements for membership (Acts 1:21-22). Beyond them were the seventy-two, then broader disciples. Jesus created HIERARCHICAL TIERS of access and knowledge—exactly what critics attack in Greek organizations.",
+    christianPerspective: "Jesus created LEVELS OF MEMBERSHIP with varying access to secret knowledge and experiences. His inner three saw things hidden from the twelve, who knew things hidden from the seventy-two. This tiered, exclusive structure with hidden knowledge at higher levels is EXACTLY the pattern of Greek organizations. Jesus established the precedent.",
+    cautionLevel: "low",
+    scriptureReferences: ["Matthew 17:1-9", "Mark 9:2-9", "Matthew 26:37-38", "Acts 1:21-22", "Luke 10:1"],
+    doubleStandard: "Jesus excluded nine apostles from the Transfiguration, revealing it only to his 'inner circle.' Secret knowledge for higher-tier members is biblical, yet Christians condemn the same structure in Greek life."
+  },
+  // =====================================================
   // CUSTOMS - Roots of Modern Traditions
   // =====================================================
   {
@@ -4246,6 +4329,135 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
     ancientConnection: "ROSS invokes ROSE symbolism—the rose was sacred to Aphrodite/Venus, appears in Rosicrucian mysticism (Rose Cross), and represents secrets ('sub rosa' means confidential). The rose is also Mary's symbol in Catholic tradition, with roots in goddess worship. 'DRESS FOR LESS' promises transformation (through clothing) at reduced cost—ACCESSIBLE MYSTERY. The act of trying on clothes is a form of IDENTITY transformation, temporarily becoming someone else. Department store dressing rooms function as LIMINAL SPACES—thresholds between identities. The off-price model creates INSIDER KNOWLEDGE—knowing where deals are, like mystery religion secrets. The chaotic store organization requires SEEKING, a spiritual discipline.",
     modernUsage: "Budget-conscious Christians shop at Ross regularly. Churches with limited budgets rely on discount retailers.",
     appUsage: "A brand with rose/Rosicrucian symbolism, identity transformation themes, and mystery-knowledge structure—serves Christian shoppers while Greek organizational symbolism is questioned."
+  },
+  // Entertainment Brand Symbols
+  {
+    id: "disney-occult",
+    category: "brands",
+    symbol: "Disney (Magic Kingdom Occultism)",
+    ancientConnection: "Disney is built on MAGIC—the 'Magic Kingdom,' 'Disney Magic,' and Tinker Bell's wand spreading pixie dust. In occult tradition, magic is the manipulation of supernatural forces. WALT DISNEY was reportedly a 33rd degree Freemason (debated by historians but widely believed). The iconic DISNEY CASTLE resembles Neuschwanstein Castle, built by 'Mad King' Ludwig II who was obsessed with occult Wagner operas. Mickey Mouse's circular ear design creates HIDDEN MICKEYS—a form of sigil magic where symbols are embedded everywhere. The company's use of SUBLIMINAL MESSAGING has been documented and admitted. Disney films consistently feature witches, sorcerers, and magic as positive forces. Club 33, Disney's exclusive club, uses Masonic-style numerology.",
+    modernUsage: "Christian families visit Disney World, watch Disney movies, and buy Disney merchandise constantly. Churches hold Disney-themed events. Christian kids dress as Disney princesses and wizards.",
+    appUsage: "A company built on magic, hidden symbolism, alleged Masonic connections, and positive portrayals of witchcraft—is Christians' favorite family entertainment while Greek letters are questioned."
+  },
+  {
+    id: "warner-bros-shield",
+    category: "brands",
+    symbol: "Warner Bros Shield Logo",
+    ancientConnection: "The Warner Bros SHIELD is a heraldic symbol with roots in medieval occult heraldry. Shields represented PROTECTION MAGIC and family bloodline power. The WB letters create an interplay of shapes echoing sacred geometry. The four Warner BROTHERS themselves represent a FRATERNAL bond—brothers united in covenant, exactly what BGLOs represent. The studio's properties include HARRY POTTER (positive witchcraft), DC Comics (godlike superheroes), and countless occult-themed films. The recent 'WB' logo simplification into an abstract shield removes obvious letters, creating a more SIGIL-like appearance reminiscent of ceremonial magic symbols.",
+    modernUsage: "Christians consume Warner Bros content constantly. Harry Potter is in Christian homes despite depicting witchcraft school. DC superheroes are everywhere in Christian youth culture.",
+    appUsage: "A fraternal company producing positive witchcraft content, with occult heraldic symbolism—is mainstream Christian entertainment while Greek fraternal bonds are questioned."
+  },
+  {
+    id: "paramount-mountain",
+    category: "brands",
+    symbol: "Paramount Mountain Logo",
+    ancientConnection: "The Paramount MOUNTAIN represents the SACRED MOUNTAIN—a concept in virtually every pagan religion. Mount Olympus housed the Greek gods, Mount Meru is the cosmic center in Hindu-Buddhist cosmology, Mount Sinai was where Moses encountered the divine, and HIGH PLACES were sites of Canaanite worship condemned in Scripture. The 22 STARS around the mountain (originally representing 22 founding stars, now 22 for visual design) connect to the 22 letters of the Hebrew alphabet, the 22 Major Arcana of TAROT, and the 22 paths on the Kabbalistic Tree of Life. The mountain as PYRAMID shape connects to Egyptian mystery religion. Ascending the mountain is the journey of spiritual initiation in mystery traditions.",
+    modernUsage: "Christians watch Paramount films and TV without concern. The studio produces content consumed in Christian homes.",
+    appUsage: "A logo featuring sacred mountain/high place imagery with potential Kabbalistic numerology—is on content in Christian homes while Greek organization symbolism is scrutinized."
+  },
+  {
+    id: "universal-globe",
+    category: "brands",
+    symbol: "Universal Globe Logo",
+    ancientConnection: "The Universal spinning GLOBE represents the COSMIC EGG of creation mythology found across ancient religions. In Egyptian cosmology, Ra emerged from the cosmic egg. Orphic Greek mysteries taught creation from the World Egg. Hindu Brahmanda is the cosmic egg containing all reality. The globe spinning on its axis represents the AXIS MUNDI—the world pillar connecting heaven, earth, and underworld in shamanic and pagan traditions. The word 'UNIVERSAL' claims cosmic scope—a divine attribute. The rotating motion echoes the eternal cycles of pagan wheel symbolism. The studio's monster movies (Frankenstein, Dracula, Mummy) explicitly engage with occult and supernatural themes.",
+    modernUsage: "Christians visit Universal Studios theme parks and watch Universal films regularly. The brand is a major family entertainment destination.",
+    appUsage: "A logo representing the cosmic egg of pagan creation myths, claiming universal/divine scope, producing occult monster content—entertains Christian families while Greek symbols are questioned."
+  },
+  {
+    id: "netflix-n",
+    category: "brands",
+    symbol: "Netflix N Logo",
+    ancientConnection: "The Netflix 'N' is formed by a RED RIBBON that evokes the SERPENT—a universal symbol of wisdom, temptation, and hidden knowledge in mythology. The red color connects to Mars, blood, and vital energy in occult tradition. The ribbon/snake wrapping creates a DOUBLE HELIX reminiscent of the caduceus (Hermes's serpent staff) and DNA's spiral—as above, so below. The 'TA-DUM' sound signature uses specific frequencies that create an almost hypnotic 'tuning' effect. Netflix's content strategy of BINGE WATCHING creates altered states through prolonged passive consumption—similar to mystery religion vision quests. The algorithm functions as an ORACLE, predicting and shaping viewer desires.",
+    modernUsage: "Christians subscribe to Netflix and binge-watch regularly. The platform is standard in Christian homes. Churches discuss Netflix shows.",
+    appUsage: "A platform using serpentine imagery, hypnotic sound design, oracle-like prediction, and altered-state binging—is in most Christian homes while Greek organization symbols face scrutiny."
+  },
+  {
+    id: "hbo-static",
+    category: "brands",
+    symbol: "HBO (Home Box Office)",
+    ancientConnection: "The HBO intro with its STATIC NOISE and emerging signal represents moving from CHAOS to ORDER—the fundamental process of creation in ancient cosmology. The famous HBO 'AHHH' sound is a sustained tone similar to the 'OM' of Hindu meditation or the 'AMEN' of Hebrew affirmation. 'Home Box OFFICE' uses 'office' in its original Latin sense of divine service or duty. The static represents the PRIMA MATERIA of alchemy—undifferentiated chaos before transformation. HBO's prestige content often features explicit occult themes (Game of Thrones, True Blood, Westworld) normalizing magic, alternate religions, and supernatural powers. The brand positions itself as ELEVATED content—ascending above regular television.",
+    modernUsage: "Christians subscribe to HBO for prestige dramas. Game of Thrones was widely watched in Christian circles despite extensive magic and pagan religion themes.",
+    appUsage: "A brand using chaos-to-order cosmological imagery, producing content saturated with magic and alternate religions—is 'prestige' viewing for Christians while Greek organizations are condemned."
+  },
+  {
+    id: "hulu-green",
+    category: "brands",
+    symbol: "Hulu (Green Goddess)",
+    ancientConnection: "HULU is a Mandarin Chinese word meaning 'gourd' (húlu 葫芦), but also 'interactive recording' (hùlù 互录). The GOURD was sacred in Chinese Taoist tradition—gods and immortals kept elixirs of life in gourds. The GREEN color represents nature spirits, fertility goddesses, and vegetation deities (Osiris, Green Man, Demeter). Green is the color of Islam, of the heart chakra, and of fairy/nature spirit realms in Celtic tradition. The name sounds like 'WHO LU'—evoking Lü Dongbin, one of the Eight Immortals of Taoist tradition who carries a magic sword and gourd. Streaming content represents an endless flow—like the river of life in Eastern mysticism.",
+    modernUsage: "Christians subscribe to Hulu without concern. The platform is a normal part of Christian household entertainment.",
+    appUsage: "A platform named after Taoist sacred objects, using goddess-green colors, evoking Chinese immortal spirits—is in Christian homes while Greek letters are questioned."
+  },
+  {
+    id: "amazon-prime-video",
+    category: "brands",
+    symbol: "Amazon Prime Video (Play Arrow)",
+    ancientConnection: "The Amazon Prime Video PLAY BUTTON arrow points RIGHT—the direction of PROGRESSION in occult symbolism (left is regressive/past). The arrow evokes APOLLO's divine arrows and SAGITTARIUS, the centaur archer. 'PRIME' means first, chief, the best—titles applied to deities across cultures. Prime membership creates INITIATED vs UNINITIATED classes—the mystery religion structure of those with secret access versus outsiders. The arrow pierces through content, suggesting PENETRATING WISDOM or the arrow of Eros/Cupid piercing hearts. Amazon's recommendation algorithm is an ORACLE, knowing viewer preferences before they do. The smile/arrow from the main Amazon logo suggests the CHESHIRE CAT—hidden knowledge and trickster energy.",
+    modernUsage: "Christian families are Prime members using Prime Video. Churches benefit from Amazon Prime shipping. The service is ubiquitous in Christian life.",
+    appUsage: "A platform using divine archer imagery, initiatory membership tiers, oracle predictions, and trickster symbolism—serves Christians while Greek initiation is condemned."
+  },
+  {
+    id: "youtube-play",
+    category: "brands",
+    symbol: "YouTube Play Button",
+    ancientConnection: "The YouTube PLAY TRIANGLE is a symbol found across ancient traditions. In sacred geometry, the triangle represents FIRE, ASCENSION, and the masculine divine. The upward-pointing triangle is the alchemical symbol for fire and the Masonic symbol for deity. The white triangle on red background creates a blood/fire contrast common in sacrificial imagery. 'TUBE' originally meant television but also suggests a PORTAL or passage—birth canal, wormhole, passage between worlds. YouTube creators are 'CONTENT CREATORS'—a divine title (God is the Creator). The platform makes humans into broadcasting gods with global reach. Subscriber counts create CULT FOLLOWINGS.",
+    modernUsage: "Christians use YouTube constantly for worship music, sermons, and ministry. Christian influencers build audiences on the platform. Churches stream on YouTube.",
+    appUsage: "A platform using fire/ascension triangle symbolism, portal imagery, and creating god-like 'content creators'—is central to Christian ministry while Greek symbols are questioned."
+  },
+  {
+    id: "spotify-waves",
+    category: "brands",
+    symbol: "Spotify Sound Waves",
+    ancientConnection: "The Spotify logo features THREE CURVED LINES representing SOUND WAVES—but echoing ancient symbolism of EMANATION and VIBRATION. In Hermetic tradition, 'as above, so below' operates through vibrational correspondence. The Hindu 'OM' is represented by sound waves. The three waves suggest the TRISKELION—Celtic and Greek symbol of cycles, triads, and movement. Sound itself was considered DIVINE in ancient traditions—the 'music of the spheres' was cosmic harmony, mantras were sacred sounds with power. SPOTIFY suggests 'spot' (location magic, ley lines) + 'ify' (to make/transform through). The green color connects to nature spirits and heart-chakra healing sound therapy.",
+    modernUsage: "Christians use Spotify for worship music and podcasts. Christian artists release on Spotify. Churches create Spotify playlists.",
+    appUsage: "A platform using sacred sound-wave imagery, divine vibration concepts, and triskelion echoes—is Christians' music source while Greek organization sounds (calls, chants) are criticized."
+  },
+  {
+    id: "apple-tv-plus",
+    category: "brands",
+    symbol: "Apple TV+ (Streaming Forbidden Knowledge)",
+    ancientConnection: "Apple TV+ combines the FORBIDDEN FRUIT imagery of Apple (discussed above) with television—the modern ORACLE and SEER. Television literally means 'seeing from afar'—a function of prophets, seers, and oracle priests. The '+' symbol is the CROSS in its oldest form—predating Christianity as a solar symbol and crossroads sign (sacred to Hecate, goddess of magic). The television as 'eye' in the home connects to the all-seeing eye of surveillance and divine omniscience. Streaming means continuous FLOW—the river of consciousness in Eastern mysticism. Apple's content often explores themes of consciousness, alternate realities, and transcendence (Severance, For All Mankind).",
+    modernUsage: "Christians subscribe to Apple TV+ for quality content. The platform produces thought-provoking shows discussed in Christian circles.",
+    appUsage: "A platform combining forbidden fruit with seeing-from-afar oracle function, using ancient cross symbolism, exploring consciousness themes—is in Christian homes while Greek symbols are condemned."
+  },
+  {
+    id: "peacock-nbc",
+    category: "brands",
+    symbol: "Peacock/NBC (Sacred Bird)",
+    ancientConnection: "The PEACOCK is a deeply sacred symbol across ancient religions. In Greek mythology, the peacock was sacred to HERA, queen of the gods—its 'eyes' came from Argus, the hundred-eyed giant. In Hindu tradition, the peacock is the mount of KARTIKEYA (war god) and associated with SARASWATI (goddess of knowledge). Early Christians adopted the peacock as a symbol of RESURRECTION because its flesh was believed incorruptible. The peacock's 'eyes' represent OMNISCIENCE—the all-seeing. NBC's original six-feathered peacock represented RCA's color broadcasting divisions. The bird's display is a form of MESMERISM, designed to captivate viewers.",
+    modernUsage: "Christians watch NBC and Peacock content regularly. The network has been in Christian homes for 75+ years.",
+    appUsage: "A logo depicting a bird sacred to Hera, representing divine omniscience, with mesmerizing display—has been in Christian living rooms for decades while Greek letters are questioned."
+  },
+  {
+    id: "fox-cunning",
+    category: "brands",
+    symbol: "FOX (Trickster Symbolism)",
+    ancientConnection: "The FOX is a TRICKSTER figure across world mythology. In Japanese Shinto, KITSUNE are fox spirits with magical powers. In European folklore, Reynard the Fox was a cunning trickster. In Native American traditions, fox is a teacher through deception and cleverness. The fox represents VULPES—the Latin root giving us 'vulpine' cunning. FOX as a media company embodies the trickster archetype—entertaining while potentially deceiving. The FOX logo's searchlight represents the all-seeing EYE scanning across content. News media as 'fourth estate' exercises quasi-governmental (godlike) power. The fox's RED color connects to Mars, aggression, and vital energy.",
+    modernUsage: "Many Christians watch FOX News and FOX entertainment. The network is considered friendly to Christian values by some. Churches discuss FOX content.",
+    appUsage: "A company named after a trickster spirit known for deception across mythologies—is trusted Christian viewing while Greek organization integrity is questioned."
+  },
+  {
+    id: "cbs-eye",
+    category: "brands",
+    symbol: "CBS Eye Logo",
+    ancientConnection: "The CBS EYE is one of the most explicitly occult corporate logos in existence. The ALL-SEEING EYE appears on the Great Seal of the United States, in Masonic imagery, Egyptian Eye of Horus, and Illuminati symbolism. It represents DIVINE SURVEILLANCE, omniscience, and hidden watchers. The eye in the sky is the eye of providence/God in religious tradition, but also the controlling surveillance of secret powers. CBS founder William Paley chose the eye deliberately. The network WATCHES you as you watch it—the two-way mirror of modern media. The eye inside a circle suggests the EYE OF RA, Egyptian sun-god. Television literally ILLUMINATES rooms—light-bringer (Lucifer means light-bearer).",
+    modernUsage: "Christians have watched CBS for decades. Church services and Christian events have been broadcast on CBS. The eye logo is normalized through familiarity.",
+    appUsage: "A logo depicting the all-seeing eye—explicitly occult symbolism connected to Illuminati, Masonic, and Egyptian mysteries—has been in Christian homes for 70+ years while Greek organization symbols are condemned as occult."
+  },
+  {
+    id: "abc-circle",
+    category: "brands",
+    symbol: "ABC Circle Logo",
+    ancientConnection: "The ABC logo places lowercase 'abc' inside a CIRCLE—the most sacred shape in ancient geometry representing ETERNITY, PERFECTION, and DEITY. The circle is the symbol of the sun in virtually every culture. The lowercase letters inside the circle suggest CONTAINMENT—divine order encircling knowledge. 'ABC' represents the ALPHABET—itself derived from Hebrew ALEPH-BETH or Greek ALPHA-BETA. Letters were considered SACRED in ancient traditions; the Hebrew alphabet was used in Kabbalistic magic, Greek letters in Gnostic and mystery traditions. The alphabet as LOGOS/word connects to John 1:1—'In the beginning was the Word.' ABC presents itself as containing all language/knowledge.",
+    modernUsage: "Christians watch ABC programming regularly. The network broadcasts Christian content including Christmas specials. The logo is ubiquitous in American life.",
+    appUsage: "A logo encircling sacred letters (alphabet) within the eternal circle—echoes Kabbalistic and mystery religion symbolism—but is normalized while Greek letters are questioned."
+  },
+  {
+    id: "mgm-lion",
+    category: "brands",
+    symbol: "MGM Lion (Leo the Lion)",
+    ancientConnection: "The MGM LION is a direct invocation of the LION as king of beasts—sacred across ancient religions. In Egyptian tradition, SEKHMET (lion goddess) was warrior and healer. Greek NEMEAN LION was a divine monster slain by Hercules. The lion represented ISHTAR in Mesopotamian religion. LEO is a zodiacal sign connected to astrological religion. The roaring lion in a ring of film represents divine proclamation—the lion's roar as cosmic announcement. Lions flanked the thrones of kings claiming divine right. 'LEO' as the lion's name connects to zodiacal and astrological symbolism. The motto 'ARS GRATIA ARTIS' (art for art's sake) elevates art to a religious calling.",
+    modernUsage: "Christians have watched MGM films since the studio began. The roaring lion is iconic American cinema. Classic family films came from MGM.",
+    appUsage: "A roaring lion—sacred to multiple pagan goddesses, zodiacal symbolism, announcing films with Latin 'art as religion' motto—is classic entertainment while Greek organization lions are questioned."
   },
   // Civic and Legal Symbols
   {
