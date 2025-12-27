@@ -3990,6 +3990,110 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
     modernUsage: "Christians consume Rockstar Energy at events and gatherings. The brand is sold without concern in Christian circles. Youth drink it at church activities.",
     appUsage: "A brand featuring occult star symbolism, named after a lifestyle many Christians condemned as demonic, with sacred stone references—is consumed by Christians while Greek letters are scrutinized."
   },
+  {
+    id: "mcdonalds-arches",
+    category: "brands",
+    symbol: "McDonald's Golden Arches",
+    ancientConnection: "The McDonald's 'M' logo—the Golden Arches—has been connected by researchers to ancient occult symbolism. The letter 'M' in occult tradition represents the 13th letter of the alphabet (1+3=4, the number of material world domination). Some researchers connect the arches to MASONIC symbolism and the twin pillars of Jachin and Boaz. The GOLDEN color represents solar worship and alchemical gold—the philosopher's stone. Arches themselves were sacred in ancient architecture, representing portals between worlds; Roman triumphal arches honored gods and emperors as divine. The parabolic arch shape echoes the OMEGA symbol (Ω), connecting to Greek mysticism. The founding brothers created a brand that uses 'billions served' language echoing religious claims of universal reach. The color scheme of red and gold matches Chinese imperial/divine colors and Roman military standards.",
+    modernUsage: "Churches hold meetings at McDonald's. Youth groups stop there on trips. The brand sponsors community events. Christians eat under the golden arches without spiritual concern.",
+    appUsage: "A logo with potential occult numerology, Masonic parallels, and solar worship colors is embraced by Christians—while Greek letters for academic organizations face scrutiny."
+  },
+  {
+    id: "burger-king-crown",
+    category: "brands",
+    symbol: "Burger King Crown",
+    ancientConnection: "The Burger King crown invokes DIVINE KINGSHIP—the ancient belief that rulers were gods or god-appointed. Egyptian pharaohs wore the double crown representing divine authority over upper and lower Egypt. Mesopotamian kings claimed mandate from Anu, Enlil, and Marduk. The burger is placed between two bun 'halves' representing earth and heaven with the 'KING' as mediator—a role in pagan religion held by priest-kings. The slogan 'Have It Your Way' echoes the serpent's promise in Eden: 'you will be like God.' The flame-grilled emphasis connects to ancient fire worship—Zoroastrian sacred fires, Greek Hestia, Roman Vesta. Crowns throughout history represented divine right, with spikes representing sun rays connecting the wearer to solar deities. The brand literally encourages customers to 'become king'—a position of divine authority in ancient understanding.",
+    modernUsage: "Christian families eat at Burger King. Churches host events there. Youth wear the paper crowns during birthday parties and church outings.",
+    appUsage: "A brand centered on claiming divine kingship, with fire worship imagery and Eden-echoing slogans, receives no theological scrutiny—while Greek letters do."
+  },
+  {
+    id: "wendys-occult",
+    category: "brands",
+    symbol: "Wendy's Logo (Hidden Message Claims)",
+    ancientConnection: "Internet researchers have claimed the Wendy's collar spells 'MOM'—invoking mother goddess worship found in virtually every ancient religion: Isis (Egypt), Ishtar (Babylon), Cybele (Rome), Demeter (Greece), and the 'Queen of Heaven' condemned in Jeremiah. The pigtails form shapes some connect to occult imagery. The red hair connects to ancient beliefs about red-haired individuals having supernatural powers—Celtic legends of red-haired fairies and witches, and Biblical Esau's red hair marking him as the rejected. The name WENDY was popularized by J.M. Barrie's Peter Pan—a story about a boy-god who never ages, living in 'Neverland' (the spirit realm) with fairies (ancient nature spirits). The square burger represents the material world (four elements, four directions), in contrast to the circular spiritual realm.",
+    modernUsage: "Christians eat at Wendy's without concern. Church groups meet there. The brand is considered family-friendly.",
+    appUsage: "Whether the 'MOM' collar claim is valid or not, the brand operates in a space where goddess imagery and occult connections would be immediately condemned if found in Greek organizations."
+  },
+  {
+    id: "chick-fil-a-symbolism",
+    category: "brands",
+    symbol: "Chick-fil-A (Chicken Symbolism)",
+    ancientConnection: "While Chick-fil-A is known for Christian ownership, CHICKEN symbolism has deep pagan roots. Roosters were sacred to multiple Greek gods: APOLLO (heralding the sun), ATHENA (vigilance), and HERMES (messenger function). The rooster's crow was considered prophetic—Socrates' dying words referenced owing a rooster to Asclepius, god of healing. In Roman religion, chickens were used for AUGURY—sacred divination where priests read the future from how chickens ate grain. The 'sacred chickens' of Rome could determine whether wars should be fought. Cockfighting had religious significance in Greek, Roman, and Asian traditions as sacrifice and divination. The stylized 'C' forming a chicken head uses VISUAL TRICKERY—a technique used in occult symbolism where hidden images convey secondary meanings.",
+    modernUsage: "Chick-fil-A is the preferred fast food of many Christians due to the company's faith stance and Sunday closures.",
+    appUsage: "Even a 'Christian' fast food brand uses imagery rooted in Greek divination and pagan sacred animals—showing that ancient symbolism pervades our culture and cannot be selectively condemned."
+  },
+  {
+    id: "taco-bell-occult",
+    category: "brands",
+    symbol: "Taco Bell (Bell Symbolism)",
+    ancientConnection: "BELLS have profound religious significance across pagan traditions. In ancient religions, bells were used to summon spirits, ward off demons, and call devotees to worship. Hindu temple bells (ghanta) invoke deities and drive away evil spirits. Buddhist bells represent the voice of Buddha and enlightenment. In European folk magic, bells protected against witches and fairies. Church bells themselves derive from pagan precedents—the Catholic Church 'baptized' bell customs that originated in pre-Christian European religion. The bell shape represents the FEMININE DIVINE—the sacred vessel or womb of the goddess. Celtic and Norse traditions used bells in shamanic practices. The Taco Bell logo's mission-style bell specifically references Spanish Catholic bells, which themselves incorporated pre-Christian Iberian traditions.",
+    modernUsage: "Christians eat at Taco Bell without spiritual concern. Youth groups frequent the chain. The brand sponsors community events.",
+    appUsage: "Bells used in pagan spirit summoning, goddess symbolism, and shamanic practice are now corporate branding—while Greek organizational symbols face scrutiny."
+  },
+  {
+    id: "subway-arrow",
+    category: "brands",
+    symbol: "Subway Arrows",
+    ancientConnection: "The Subway logo features prominent ARROWS on the S and Y. Arrows were sacred symbols across ancient religions—APOLLO's arrows brought plague and sudden death, ARTEMIS's arrows were instruments of divine vengeance, CUPID/EROS's arrows controlled human love and desire. Native American traditions view arrows as sacred hunting medicine. In Norse mythology, arrows killed the beloved god BALDR, leading to Ragnarok. The arrow as direction/guidance connects to divination practices where arrows or sticks were cast to determine divine will (belomancy). Arrows pointing in opposite directions on the logo could represent DUALITY—the balance of opposites in Eastern and occult philosophy. The green and yellow colors connect to nature worship and solar symbolism respectively.",
+    modernUsage: "Christians eat at Subway during work lunches, after church, and on road trips. The brand is considered a healthier fast-food option.",
+    appUsage: "Arrows—symbols of Apollo's divine wrath and pagan divination practices—mark a restaurant chain without theological concern while Greek letters are questioned."
+  },
+  {
+    id: "pizza-hut-roof",
+    category: "brands",
+    symbol: "Pizza Hut Red Roof",
+    ancientConnection: "The Pizza Hut logo's distinctive RED ROOF has symbolic resonance. RED was the color of MARS and war in Roman religion, of SET (god of chaos) in Egyptian tradition, and of FIRE in alchemical symbolism. The HUT shape echoes ancient tabernacles and temples—sacred spaces where people gathered for ritual meals. In many cultures, communal eating was a religious act, with foods offered to gods before consumption. The pizza itself is a CIRCULAR SOLAR DISC—the shape sacred to sun gods Ra, Helios, Sol Invictus, and others. The triangular slice represents the pyramid or trinity in sacred geometry. Italian pizza origins include Roman sacred flatbreads offered to gods. The 'hut' terminology connects to primitive temples and shrine structures across pagan cultures.",
+    modernUsage: "Church pizza parties, youth group events, and fellowship meals frequently feature Pizza Hut. The brand caters church functions.",
+    appUsage: "A brand using sacred hut/temple imagery, solar disc shapes, and the color of Mars—serves Christian gatherings without concern."
+  },
+  {
+    id: "dominos-dice",
+    category: "brands",
+    symbol: "Domino's Dice Logo",
+    ancientConnection: "The Domino's logo is a DOMINO TILE—directly connected to games of CHANCE and DIVINATION. Dice and lots were used throughout ancient religions for casting sacred lots and determining divine will. Roman soldiers cast lots for Jesus's garments. Greek oracles used lot-casting (kleromancy) to receive divine messages. In African and Caribbean traditions, domino-like objects are used in divination practices. The THREE DOTS on the Domino's tile form a TRIANGLE—sacred geometry representing deity, fire, and masculine energy in occult tradition. The red, white, and blue colors are alchemical: red (sulfur/fire), white (salt/purification), blue (mercury/spirit). The original plan was to add a dot for each new store, potentially creating occult numerical patterns. Games of chance were condemned by many church traditions as invitations to gambling and fortune-telling spirits.",
+    modernUsage: "Churches order Domino's for events, youth groups, and fellowship meals. The brand delivers to church functions.",
+    appUsage: "A logo depicting tools of ancient divination and sacred lot-casting, with triangular occult geometry—delivers to church events without spiritual concern."
+  },
+  {
+    id: "kfc-colonel",
+    category: "brands",
+    symbol: "KFC Colonel Sanders",
+    ancientConnection: "KFC's logo features Colonel Harland Sanders as a PATRIARCHAL ICON—connecting to ancestor veneration and the cult of personality found across ancient religions. Using a human face as a brand symbol mirrors the ancient practice of APOTHEOSIS—elevating humans to divine or semi-divine status. Roman emperors were worshipped after death; Greek heroes received cult worship. The 'Colonel' military title invokes MARTIAL AUTHORITY—colonels led legions that enforced pagan Rome's will. The white suit represents priestly garments—purity, authority, and sacred status. The bow tie is the KNOT—a powerful symbol in Egyptian magic (Isis's knot), Celtic spirituality (endless knots), and binding rituals across traditions. The 'secret recipe' of 11 herbs and spices echoes ALCHEMICAL formulas and occult 'secrets' passed through initiatic traditions.",
+    modernUsage: "Churches serve KFC at events. Christian families eat there after Sunday services. The brand is associated with Southern hospitality.",
+    appUsage: "A brand built on personality cult, secret occult-style recipes, and priestly imagery—is welcomed at church functions while Greek organizational symbolism is questioned."
+  },
+  {
+    id: "arbys-hat",
+    category: "brands",
+    symbol: "Arby's Cowboy Hat",
+    ancientConnection: "The Arby's logo features a COWBOY HAT—a symbol with connections to the American mythological figure of the COWBOY as lone hero and lawgiver. This archetype parallels ancient semi-divine heroes: Hercules, Gilgamesh, and other wandering champions. The hat's shape resembles the CROWN OF HORNS found in pagan imagery—Mesopotamian divine horned crowns, Celtic horned gods like Cernunnos, and lunar crescent symbolism. The name 'ARBY'S' comes from 'R.B.' (Raffel Brothers), but 'Arby' sounds like HERBY (connected to herbs/magic) or ARBOR (trees, sacred in pagan traditions). The red color represents Mars/war and vital life force. Cattle themselves were sacred in Egyptian religion (Apis bull, Hathor as celestial cow) and feature prominently in Mediterranean sacrifice traditions. Beef consumption was once a form of participating in the sacred animal's power.",
+    modernUsage: "Christians eat at Arby's during work lunches and road trips. The brand operates without any theological concern.",
+    appUsage: "Horned crown symbolism, sacred cattle connections, and mythological hero archetypes—appear in fast food branding without scrutiny."
+  },
+  {
+    id: "sonic-speed",
+    category: "brands",
+    symbol: "Sonic Drive-In",
+    ancientConnection: "SONIC references supernatural SPEED—the ability to move faster than normal human capacity. In Greek religion, HERMES was the god of speed, wearing winged sandals. The concept of 'sonic' (sound-speed) connects to the ancient belief that SOUND was divine—the 'music of the spheres,' the creative word (Logos), and mantras that invoke divine power. The drive-in concept of eating IN YOUR CAR creates a mobile temple—ancient peoples created portable shrines for worship on journeys. The red, yellow, and blue color scheme represents alchemical elements and primary forces. The 1950s aesthetic invokes a nostalgic 'golden age'—a concept found across mythology (Greek Golden Age, Eden, Satya Yuga).",
+    modernUsage: "Christians frequent Sonic for its nostalgic American experience. Church groups make Sonic runs. The brand is a youth group favorite.",
+    appUsage: "A brand invoking supernatural speed (Hermes's domain), divine sound, and golden age mythology—operates in Christian communities without concern."
+  },
+  {
+    id: "five-guys",
+    category: "brands",
+    symbol: "Five Guys Burgers",
+    ancientConnection: "The number FIVE holds profound significance in occult and pagan traditions. The PENTAGRAM (five-pointed star) is the primary symbol in Wicca and ceremonial magic. Pythagoras and Greek mystery schools considered 5 sacred—representing the five elements (earth, water, fire, air, spirit). There are FIVE wounds of Christ, potentially connecting to older five-fold symbolism. The five 'Guys' represents a patriarchal grouping echoing mythological bands of brothers (Greek Dioscuri, Norse gods). Red and white checkered pattern is a chess/game board motif connected to Masonic symbolism and the dualistic interplay of forces. The emphasis on 'hand-formed' patties invokes craft and handwork—sacred labor in guild and mystery traditions.",
+    modernUsage: "Five Guys is a preferred restaurant for many Christians seeking 'quality' fast food. Church groups eat there after services.",
+    appUsage: "A brand built on the number 5—central to pentagram symbolism—with guild-craft language and dualistic checker patterns, serves Christians without theological discussion."
+  },
+  {
+    id: "in-n-out-christian",
+    category: "brands",
+    symbol: "In-N-Out (Biblical References)",
+    ancientConnection: "While In-N-Out is known for printing Bible verses on cups and wrappers, examining the brand through the same lens applied to Greek organizations reveals interesting patterns. The CROSSED PALM TREES in the logo connect to ancient Near Eastern sacred grove worship and the Asherah poles condemned in Scripture. Palm branches were waved for pagan kings before Jesus's triumphal entry appropriated the symbol. The name 'IN-N-OUT' emphasizes LIMINALITY—the threshold state between in and out, sacred in mystery religions as the boundary between profane and divine. The secret menu creates INITIATED KNOWLEDGE—those 'in the know' versus outsiders, paralleling mystery religion structure. The crossed arrows shape is an ancient symbol appearing in Native American and European traditions.",
+    modernUsage: "In-N-Out is celebrated by Christians for its ownership's faith. The Bible verses are seen as bold Christian witness.",
+    appUsage: "Even a 'Christian' brand uses palm tree imagery with pagan roots and mystery-religion-style 'secret' knowledge—showing how thorough examination of ANY brand reveals ancient connections."
+  },
   // Civic and Legal Symbols
   {
     id: "lady-justice",
@@ -4077,7 +4181,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "thanksgiving",
-    category: "death",
+    category: "Cultural Holiday",
     symbol: "Thanksgiving",
     ancientConnection: "Parallels ancient harvest festivals: Greek Thesmophoria honoring Demeter, Roman Cerelia for Ceres, and various Indigenous harvest traditions. The Pilgrims combined Protestant thanksgiving days with harvest celebration customs.",
     modernUsage: "A national holiday centered on gratitude, family, and feasting—embraced by churches across America.",
@@ -4295,16 +4399,8 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
     appUsage: "A direct symbol of a Greek god adorns Christian vehicles while Greek organizational symbols face theological objection."
   },
   {
-    id: "adidas-logo",
-    category: "fashion",
-    symbol: "Adidas Three Stripes",
-    ancientConnection: "While Adidas itself was named after founder Adi Dassler, the three-stripe mountain logo has been connected to mystical symbolism. The athletic brand competes directly with Nike (goddess-named) and sponsors athletes who are revered with near-religious devotion.",
-    modernUsage: "Adidas is worn by Christians in churches, youth groups, and Christian athletic programs without theological concern.",
-    appUsage: "Athletic brands operating in the same space as goddess-named competitors are accepted while Greek letters face scrutiny."
-  },
-  {
     id: "midas-auto",
-    category: "fashion",
+    category: "brands",
     symbol: "Midas Auto Service",
     ancientConnection: "King Midas was a figure in Greek mythology granted the power by Dionysus to turn everything he touched to gold. The Midas myth was part of Greek religious teaching about the dangers of greed and the power of the gods.",
     modernUsage: "Christians take their cars to Midas without considering the mythological connection. The 'Midas touch' phrase is used positively in Christian business contexts.",
