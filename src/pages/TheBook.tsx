@@ -5,8 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Home, BookOpen, Star, ShoppingCart, ExternalLink, Quote, CheckCircle, Eye, ChevronRight, X } from "lucide-react";
+import { Home, BookOpen, Star, ShoppingCart, ExternalLink, Quote, CheckCircle, Eye, ChevronRight, X, Headphones } from "lucide-react";
 import bookCover from "@/assets/sacred-not-sinful-cover.jpg";
+import { AudiobookPlayer } from "@/components/AudiobookPlayer";
 
 const TheBook = () => {
   const [sampleOpen, setSampleOpen] = useState(false);
@@ -218,6 +219,27 @@ These biblical precedents challenge simplistic interpretations that condemn all 
             </ScrollArea>
           </DialogContent>
         </Dialog>
+
+        {/* Audiobook Player */}
+        <Card className="border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-background overflow-hidden">
+          <CardHeader>
+            <div className="flex items-center gap-3">
+              <Headphones className="w-8 h-8 text-amber-600" />
+              <div>
+                <Badge className="mb-1 bg-amber-500/10 text-amber-600 border-amber-500/20">
+                  Audio Experience
+                </Badge>
+                <CardTitle className="text-xl">Listen to the Audiobook</CardTitle>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Hear the full book with dramatic narration by chapter
+                </p>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <AudiobookPlayer />
+          </CardContent>
+        </Card>
 
         {/* What's Inside */}
         <Card>

@@ -11,10 +11,12 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useState, useRef } from "react";
 import { toast } from "sonner";
 import { ApologeticsCard } from "@/components/ApologeticsCard";
-import { AudiobookPlayer } from "@/components/AudiobookPlayer";
 import { HistoricalTimeline } from "@/components/HistoricalTimeline";
 import { ScriptureFlashcards } from "@/components/ScriptureFlashcards";
 import { RenouncedSupportSection } from "@/components/RenouncedSupportSection";
+import { ApologeticsQuickReference } from "@/components/ApologeticsQuickReference";
+import { BibleStudyGenerator } from "@/components/BibleStudyGenerator";
+import { DisciplinaArcaniSection } from "@/components/DisciplinaArcaniSection";
 
 interface Organization {
   name: string;
@@ -2701,14 +2703,20 @@ const GreekLife = () => {
             </CardContent>
           </Card>
 
-          {/* Audiobook Player */}
-          <AudiobookPlayer />
+          {/* Disciplina Arcani Explanation */}
+          <DisciplinaArcaniSection />
 
           {/* Historical Timeline */}
           <HistoricalTimeline />
 
           {/* Scripture Flashcards - Gamified */}
           <ScriptureFlashcards />
+
+          {/* Bible Study Generator */}
+          <BibleStudyGenerator />
+
+          {/* Apologetics Quick Reference Accordion */}
+          <ApologeticsQuickReference />
 
           {/* Supporting Renounced Members */}
           <RenouncedSupportSection />
