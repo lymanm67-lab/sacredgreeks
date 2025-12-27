@@ -2399,6 +2399,125 @@ export const symbolGuideContent: SymbolEntry[] = [
     scriptureReferences: ["1 Kings 7:21", "Revelation 3:12", "1 Timothy 3:15", "Psalm 48:2"],
     cautionLevel: "low"
   },
+  {
+    id: "custom-stained-glass",
+    name: "Stained Glass Windows",
+    category: "customs",
+    organizationType: "Church Architecture",
+    description: "Stained glass windows originated in ancient Rome and Egypt, where colored glass was used in temples and wealthy homes. Medieval Christians adopted this craft from Islamic artisans who preserved Roman glassmaking techniques. The earliest Christian stained glass borrowed heavily from Byzantine and Islamic geometric patterns, which themselves drew from pre-Christian traditions.",
+    doubleStandard: "Christians worship surrounded by an art form developed in pagan temples and perfected by Islamic craftsmen without any spiritual concern. Yet Greek organizations using colored symbols or decorative elements face accusations of hidden meanings.",
+    christianPerspective: "Stained glass became a powerful tool for teaching Scripture to illiterate congregations. The 'poor man's Bible' transformed pagan artistry into Gospel proclamation. Light filtering through colored glass became a metaphor for divine illumination.",
+    biblicalParallels: [
+      "Let your light shine before others (Matthew 5:16)",
+      "God is light; in Him there is no darkness (1 John 1:5)",
+      "The city does not need the sun, for the glory of God gives it light (Revelation 21:23)",
+      "Whatever is true, noble, right, pure, lovely—think on these things (Philippians 4:8)"
+    ],
+    scriptureReferences: ["Matthew 5:16", "1 John 1:5", "Revelation 21:23", "Philippians 4:8"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-baptismal-font",
+    name: "Baptismal Fonts",
+    category: "customs",
+    organizationType: "Church Architecture",
+    description: "Baptismal fonts derive from Roman public baths (thermae) and Greek lustral basins used for ritual purification before entering temples. The octagonal shape common in baptistries represents the 'eighth day'—resurrection—but the form itself comes from Roman bath architecture. Many early baptistries were converted Roman bathhouses.",
+    doubleStandard: "Christians are baptized in fonts designed after Roman public baths and Greek temple purification basins without concern for pagan origins. Yet Greek organizations using water rituals or symbolic cleansing face scrutiny.",
+    christianPerspective: "Jesus transformed ritual washing—common in Jewish and pagan practice—into a sacrament of new life. The physical form matters less than the spiritual reality it represents. Christians redeem cultural forms for Kingdom purposes.",
+    biblicalParallels: [
+      "We were buried with Him through baptism into death (Romans 6:4)",
+      "One Lord, one faith, one baptism (Ephesians 4:5)",
+      "Baptism now saves you—the pledge of a clear conscience (1 Peter 3:21)",
+      "Wash and be clean (2 Kings 5:10)"
+    ],
+    scriptureReferences: ["Romans 6:4", "Ephesians 4:5", "1 Peter 3:21", "2 Kings 5:10"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-bell-towers",
+    name: "Bell Towers & Church Bells",
+    category: "customs",
+    organizationType: "Church Architecture",
+    description: "Church bells and bell towers trace to ancient Chinese, Hindu, and Buddhist traditions where bells summoned worshippers and drove away evil spirits. Romans used bells (tintinnabulum) in pagan rituals and to ward off evil. Medieval Christians adopted bells believing they could dispel demons, bless weather, and sanctify the air—practices borrowed directly from pagan superstition.",
+    doubleStandard: "Christians ring bells that were originally used in pagan rituals to summon spirits and ward off demons. Church bell traditions came from Buddhist and Hindu practices via Rome. Yet Greek organizations using any symbolic sounds or calls face different standards.",
+    christianPerspective: "Church bells became the voice of the Christian community, calling the faithful to worship, marking life events, and measuring time. The pagan superstitions attached to bells were discarded while the practical and symbolic functions were retained.",
+    biblicalParallels: [
+      "Blow the trumpet in Zion; sound the alarm (Joel 2:1)",
+      "Make a joyful noise unto the Lord (Psalm 100:1)",
+      "The bells of the horses shall say HOLINESS UNTO THE LORD (Zechariah 14:20)",
+      "With trumpets and the sound of the horn shout joyfully (Psalm 98:6)"
+    ],
+    scriptureReferences: ["Joel 2:1", "Psalm 100:1", "Zechariah 14:20", "Psalm 98:6"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-church-vestments",
+    name: "Clergy Vestments & Robes",
+    category: "customs",
+    organizationType: "Church Architecture",
+    description: "Clergy robes derive from Roman imperial court dress and pagan priestly garments. The chasuble, stole, and alb evolved from everyday Roman clothing that became 'frozen' as sacred dress when fashion changed. The miter (bishop's hat) resembles the headgear of Roman officials and Mithraic priests. Purple, traditionally reserved for royalty and pagan priests, became episcopal color.",
+    doubleStandard: "Pastors and priests wear vestments derived from Roman imperial and pagan priestly dress every Sunday without concern. Yet Greek organizations wearing ceremonial attire or regalia face accusations of hidden ritualistic meanings.",
+    christianPerspective: "Vestments set apart sacred time and sacred roles. Like the priestly garments God prescribed for Aaron, special clothing reminds us we are entering God's presence. The origin matters less than the current meaning and purpose.",
+    biblicalParallels: [
+      "Make sacred garments for your brother Aaron (Exodus 28:2)",
+      "Clothe your priests with righteousness (Psalm 132:9)",
+      "He has clothed me with garments of salvation (Isaiah 61:10)",
+      "Fine linen, bright and clean, was given to the bride (Revelation 19:8)"
+    ],
+    scriptureReferences: ["Exodus 28:2", "Psalm 132:9", "Isaiah 61:10", "Revelation 19:8"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-church-candles",
+    name: "Altar Candles & Vigil Lights",
+    category: "customs",
+    organizationType: "Church Architecture",
+    description: "Altar candles and vigil lights come from Roman household shrines (lararia) where eternal flames honored household gods and ancestors. Greeks kept perpetual flames in temples. Romans lit candles for the dead during Parentalia. Early Christians adopted these practices, lighting candles for saints, the deceased, and during worship—directly continuing pagan flame traditions.",
+    doubleStandard: "Christians light candles in church—a practice borrowed from Roman ancestor worship and temple flames—without any spiritual concern. Yet Greek organizations using candles or flames in ceremonies face accusations of occult practice.",
+    christianPerspective: "Christ is the Light of the World. Candles remind us of His presence and our call to be light-bearers. What pagans used to honor false gods, Christians use to honor the true God. The symbol is redeemed, not rejected.",
+    biblicalParallels: [
+      "I am the light of the world (John 8:12)",
+      "You are the light of the world (Matthew 5:14)",
+      "Your word is a lamp to my feet (Psalm 119:105)",
+      "The seven lampstands are the seven churches (Revelation 1:20)"
+    ],
+    scriptureReferences: ["John 8:12", "Matthew 5:14", "Psalm 119:105", "Revelation 1:20"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-rose-window",
+    name: "Rose Windows",
+    category: "customs",
+    organizationType: "Church Architecture",
+    description: "The rose window—circular stained glass windows in Gothic cathedrals—derives from the Roman oculus (circular opening) and ancient sun wheel symbols. The wheel shape represented the sun in pagan traditions and the cycle of seasons. Medieval architects adapted these cosmic symbols, reinterpreting the wheel as representing eternity and divine perfection.",
+    doubleStandard: "Christians worship beneath rose windows derived from pagan sun wheels and Roman temple openings without concern. These cosmic symbols appear in nearly every major cathedral. Yet Greek organizations using circular symbols or celestial imagery face different scrutiny.",
+    christianPerspective: "The rose window's circular form represents God's eternity—without beginning or end. What pagans associated with sun worship, Christians associate with the eternal Son. The pattern radiating from center reflects Christ as the source of all light and truth.",
+    biblicalParallels: [
+      "The Sun of Righteousness will rise with healing in its wings (Malachi 4:2)",
+      "From everlasting to everlasting, you are God (Psalm 90:2)",
+      "Jesus Christ is the same yesterday, today, and forever (Hebrews 13:8)",
+      "His radiance is like the sunlight (Habakkuk 3:4)"
+    ],
+    scriptureReferences: ["Malachi 4:2", "Psalm 90:2", "Hebrews 13:8", "Habakkuk 3:4"],
+    cautionLevel: "low"
+  },
+  {
+    id: "custom-church-organ",
+    name: "Pipe Organs",
+    category: "customs",
+    organizationType: "Church Architecture",
+    description: "The pipe organ originated as the hydraulis in ancient Greece, invented for entertainment in theaters and Roman arenas—including gladiatorial games. For centuries, organs were associated with pagan spectacle and secular entertainment. The Catholic Church initially banned organs as too worldly. Only later did organs become acceptable in worship.",
+    doubleStandard: "Christians worship with organs—instruments invented for pagan entertainment and Roman blood sports—without any concern. The organ was once banned from churches as too worldly. Yet Greek organizations using drums or other instruments face accusations of invoking spirits.",
+    christianPerspective: "Musical instruments are tools for worship, not inherently sacred or profane. The organ's origins in entertainment don't prevent it from glorifying God today. What matters is how we use instruments, not their historical associations.",
+    biblicalParallels: [
+      "Praise Him with the sound of the trumpet; praise Him with the harp (Psalm 150:3-5)",
+      "Sing to the Lord a new song; play skillfully with a loud noise (Psalm 33:3)",
+      "Speaking to one another with psalms, hymns, and spiritual songs (Ephesians 5:19)",
+      "David and all Israel were celebrating before God with all their might (1 Chronicles 13:8)"
+    ],
+    scriptureReferences: ["Psalm 150:3-5", "Psalm 33:3", "Ephesians 5:19", "1 Chronicles 13:8"],
+    cautionLevel: "low"
+  },
   // West African Heritage Traditions
   {
     id: "custom-libation",
