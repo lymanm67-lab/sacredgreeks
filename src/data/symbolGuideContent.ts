@@ -267,6 +267,36 @@ export const symbolGuideContent: SymbolEntry[] = [
     cautionLevel: "low",
     scripturalContext: "1 Timothy 1:2 - 'To Timothy my true son in the faith.' 2 Timothy 2:2 - 'The things you have heard me say... entrust to reliable people who will also be qualified to teach others.'"
   },
+  {
+    id: "wood-paddle-hazing",
+    name: "Wood / Paddle (Hazing Term)",
+    category: "cultural",
+    description: "'Wood' refers to a paddle used in hazing rituals. This term and practice is EXPLICITLY PROHIBITED by all Divine Nine organizations, violates anti-hazing laws in all 50 states, and has resulted in criminal prosecutions, expulsions, chapter closures, and tragically, deaths. No legitimate Greek organization sanctions this practice.",
+    christianPerspective: "Scripture is unambiguous: harming others violates the command to love your neighbor (Matthew 22:39). Romans 13:10 states 'Love does no harm to a neighbor.' Galatians 5:19-21 lists 'fits of rage' and 'dissensions' as works of the flesh. Any Christian participating in or allowing physical abuse betrays both their faith and their organization's principles. The biblical response is to report, refuse, and protect others.",
+    cautionLevel: "high",
+    cautionNote: "WARNING: This practice is illegal, explicitly banned by all Divine Nine organizations, and has resulted in deaths. Christians must refuse participation and report hazing. If you witness this, contact campus authorities, national headquarters, and if needed, law enforcement.",
+    scripturalContext: "Matthew 22:39 - 'Love your neighbor as yourself.' 1 John 3:15 - 'Anyone who hates a brother or sister is a murderer.' Proverbs 24:11 - 'Rescue those being led away to death.'"
+  },
+  {
+    id: "in-the-cut-hazing",
+    name: "In the Cut (Hazing Term)",
+    category: "cultural",
+    description: "'In the cut' refers to being in position to receive physical hazing, often paddling. This terminology exists in underground hazing culture but represents practices that are EXPLICITLY PROHIBITED by every Divine Nine organization, violate federal and state anti-hazing laws, and contradict the founding principles of brotherhood, sisterhood, scholarship, and service.",
+    christianPerspective: "Being 'in the cut' places a person in a position of degradation and physical harm—the opposite of how Christ calls us to treat one another. Ephesians 4:32 commands us to 'be kind and compassionate to one another.' No organizational bond is worth physical or psychological abuse. Christians called to leadership must actively work to eliminate these practices and create intake processes that build up rather than tear down.",
+    cautionLevel: "high",
+    cautionNote: "WARNING: Participation in hazing—whether giving or receiving—is illegal and grounds for expulsion. These practices have caused permanent injuries and deaths. Christians must break cycles of abuse, not perpetuate them. Report hazing to national headquarters and authorities.",
+    scripturalContext: "Ephesians 4:29 - 'Do not let any unwholesome talk come out of your mouths, but only what is helpful for building others up.' 1 Thessalonians 5:11 - 'Encourage one another and build each other up.'"
+  },
+  {
+    id: "underground-hazing-culture",
+    name: "Underground Hazing Practices",
+    category: "cultural",
+    description: "Despite being banned by all Divine Nine organizations, anti-hazing laws, and university policies, underground hazing persists in some chapters. Terms like 'wood,' 'in the cut,' 'on line' abuse, sleep deprivation, and physical exercises are used. These practices have resulted in over 40 deaths since 2000 and countless injuries. They represent a betrayal of organizational founding principles.",
+    christianPerspective: "James 4:17 states 'If anyone knows the good they ought to do and doesn't do it, it is sin for them.' Christians in Greek life have a moral obligation to be part of the solution—reporting abuse, mentoring ethically, and demonstrating that meaningful bonds form through shared purpose, not shared trauma. The early church grew through love, service, and sacrifice FOR one another—not inflicting suffering ON one another.",
+    cautionLevel: "high",
+    cautionNote: "If you or someone you know is being hazed, contact: StopHazing.org, your organization's national headquarters, campus authorities, or local law enforcement. Breaking silence saves lives.",
+    scripturalContext: "Ezekiel 34:4 - 'You have not strengthened the weak or healed the sick or bound up the injured.' Luke 17:2 - 'It would be better to be thrown into the sea with a millstone tied around your neck than to cause one of these little ones to stumble.'"
+  },
   // Fraternity-Specific Symbols
   {
     id: "lamp-symbol",
