@@ -2272,11 +2272,8 @@ const GreekLife = () => {
             </p>
           </div>
 
-          {/* Historical Timeline - At top of page */}
-          <HistoricalTimeline />
-
           {/* Ancient Fraternities Introduction - Single Collapsed Accordion */}
-          <Accordion 
+          <Accordion
             type="single" 
             collapsible 
             className="w-full"
@@ -2530,8 +2527,11 @@ const GreekLife = () => {
             </AccordionItem>
           </Accordion>
 
+          {/* Historical Timeline */}
+          <HistoricalTimeline />
+
           {/* Greek Councils Directory - Collapsed Accordion */}
-          <Accordion 
+          <Accordion
             type="single" 
             collapsible 
             className="w-full"
