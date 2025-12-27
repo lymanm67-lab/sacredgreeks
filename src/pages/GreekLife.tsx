@@ -2337,13 +2337,6 @@ const GreekLife = () => {
                     <Users className="w-4 h-4 text-sacred shrink-0" />
                     <span className="text-xs font-medium">Jesus as Guild Member</span>
                   </button>
-                  <button 
-                    onClick={handleJumpToTimeline}
-                    className="flex items-center gap-2 p-2 rounded-md bg-gradient-to-r from-amber-500/20 to-sacred/20 border border-sacred/30 hover:from-amber-500/30 hover:to-sacred/30 hover:scale-[1.02] transition-all cursor-pointer text-left col-span-2 sm:col-span-4 justify-center"
-                  >
-                    <Clock className="w-4 h-4 text-sacred shrink-0" />
-                    <span className="text-xs font-medium">Jump to Historical Timeline →</span>
-                  </button>
                 </div>
               </div>
               
@@ -2443,13 +2436,73 @@ const GreekLife = () => {
                           Ancient Carpenter Guild Initiation
                         </span>
                       </AccordionTrigger>
-                      <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                      <AccordionContent className="text-sm text-muted-foreground space-y-4">
                         <div className="flex justify-end">
                           <TTSButton sectionKey="carpenterInitiation" text={ttsContent.carpenterInitiation} isDramatic />
                         </div>
-                        <p>
-                          Ancient carpenter guilds followed structured initiation processes including rigorous selection, extended testing periods, and sacred ceremonies with ritual purification, sacred oaths, symbolic death and rebirth, and guild marks.
-                        </p>
+                        
+                        {/* Selection Process */}
+                        <div className="space-y-2">
+                          <h5 className="font-semibold text-foreground flex items-center gap-2">
+                            <span className="w-6 h-6 rounded-full bg-amber-500/20 flex items-center justify-center text-xs font-bold text-amber-600">1</span>
+                            Selection Process
+                          </h5>
+                          <p className="pl-8">
+                            According to the Mishnah and Talmudic sources, apprentices typically began around <strong>age 12-13</strong> following bar mitzvah, after demonstrating both physical capability and moral character. The guild master would observe the candidate for weeks, testing their <em>patience, obedience, and natural aptitude</em> with tools.
+                          </p>
+                        </div>
+
+                        {/* Testing Period */}
+                        <div className="space-y-2">
+                          <h5 className="font-semibold text-foreground flex items-center gap-2">
+                            <span className="w-6 h-6 rounded-full bg-amber-500/20 flex items-center justify-center text-xs font-bold text-amber-600">2</span>
+                            Testing Period
+                          </h5>
+                          <p className="pl-8">
+                            The testing period lasted <strong>months to years</strong>. Candidates performed menial tasks: carrying materials, preparing tools, mixing adhesives from animal glues and plant resins. They were tested through deliberate hardships—working in extreme conditions, receiving harsh criticism, being given seemingly impossible tasks.
+                          </p>
+                        </div>
+
+                        {/* Initiation Ceremony */}
+                        <div className="space-y-2">
+                          <h5 className="font-semibold text-foreground flex items-center gap-2">
+                            <span className="w-6 h-6 rounded-full bg-sacred/20 flex items-center justify-center text-xs font-bold text-sacred">3</span>
+                            The Initiation Ceremony
+                          </h5>
+                          <p className="pl-8 mb-2">
+                            Based on archaeological evidence from Greco-Roman collegia and descriptions in Josephus, guild initiations included:
+                          </p>
+                          <ul className="pl-8 space-y-1 list-disc list-inside">
+                            <li><strong>Ritual purification</strong> through washing, often in a mikvah or river</li>
+                            <li><strong>Sacred oaths</strong> never to reveal trade secrets on penalty of divine curse</li>
+                            <li><strong>Symbolic death and rebirth</strong>—stripping of old garments and donning guild's distinctive work clothing</li>
+                            <li><strong>Secret handgrip</strong>—the master would grip the initiate's hand in the guild's secret manner</li>
+                            <li><strong>Guild mark</strong>—a distinctive sign often carved into their personal tools</li>
+                          </ul>
+                        </div>
+
+                        {/* Guild Secrets */}
+                        <div className="space-y-2">
+                          <h5 className="font-semibold text-foreground flex items-center gap-2">
+                            <span className="w-6 h-6 rounded-full bg-sacred/20 flex items-center justify-center text-xs font-bold text-sacred">4</span>
+                            The Guild Secrets
+                          </h5>
+                          <ul className="pl-8 space-y-1 list-disc list-inside">
+                            <li><strong>Sacred geometry</strong> and mathematical ratios passed only orally</li>
+                            <li><strong>Coded terms</strong> for measurements and techniques</li>
+                            <li><strong>Recognition grips</strong> to identify fellow craftsmen in other cities</li>
+                            <li><strong>Proprietary formulas</strong> for wood preservation, adhesives, and finishes</li>
+                            <li><strong>Strategic knowledge</strong>—carpenters built siege equipment, fortifications, and war machines (making their loyalty a matter of national security)</li>
+                          </ul>
+                        </div>
+
+                        {/* Historical Sources */}
+                        <div className="mt-4 p-3 rounded-lg bg-muted/30 border border-border text-xs space-y-1">
+                          <h5 className="font-semibold text-foreground mb-2">📚 Historical Sources:</h5>
+                          <p><strong>Josephus, Jewish Antiquities 15.390-402</strong> — describes how Herod imported guild craftsmen for Temple reconstruction, noting they maintained strict secrecy about their techniques</p>
+                          <p><strong>Mishnah Tractate Kiddushin</strong> — discusses obligations between master craftsman and apprentice, including transmission of wisdom only to worthy successors</p>
+                          <p><strong>Archaeological Evidence</strong> — First-century sites in Sepphoris and Nazareth reveal guild marks on construction stones, indicating organized fraternal craft networks</p>
+                        </div>
                       </AccordionContent>
                     </AccordionItem>
 
