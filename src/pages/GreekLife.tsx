@@ -15,6 +15,9 @@ import { toast } from "sonner";
 import { HistoricalTimeline, HistoricalTimelineRef } from "@/components/HistoricalTimeline";
 import ancientCarpenterWorkshop from "@/assets/ancient-carpenter-workshop.jpg";
 import guildInitiationCeremony from "@/assets/guild-initiation-ceremony.jpg";
+import romanMasonMarks from "@/assets/roman-mason-marks.jpg";
+import guildCraftsmenMarks from "@/assets/guild-craftsmen-marks.jpg";
+import { downloadGuildRecognitionPDF } from "@/lib/guild-recognition-pdf";
 
 interface Organization {
   name: string;
@@ -2585,6 +2588,16 @@ const GreekLife = () => {
                     <Button
                       variant="outline"
                       size="sm"
+                      onClick={downloadGuildRecognitionPDF}
+                      className="gap-2"
+                    >
+                      <FileDown className="w-4 h-4" />
+                      <span className="hidden sm:inline">Guild Recognition PDF</span>
+                      <span className="sm:hidden">Guild</span>
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
                       onClick={handlePrintContent}
                       className="gap-2"
                     >
@@ -2969,6 +2982,31 @@ const GreekLife = () => {
                               <p className="text-xs text-muted-foreground mb-2">
                                 Unlike passwords, <strong>tool and work markings have survived</strong> in archaeological sites across the Roman Empire. These marks served multiple fraternal purposes:
                               </p>
+                              
+                              {/* Archaeological Images */}
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-3">
+                                <div className="rounded-lg overflow-hidden border border-amber-500/20">
+                                  <img 
+                                    src={romanMasonMarks} 
+                                    alt="Ancient Roman stonemason marks carved into stone blocks from archaeological sites like Porta Nigra" 
+                                    className="w-full h-32 object-cover"
+                                  />
+                                  <div className="p-2 bg-amber-500/10">
+                                    <p className="text-[10px] text-muted-foreground text-center">Roman-era mason marks showing guild identification symbols</p>
+                                  </div>
+                                </div>
+                                <div className="rounded-lg overflow-hidden border border-sacred/20">
+                                  <img 
+                                    src={guildCraftsmenMarks} 
+                                    alt="Collection of ancient craftsmen guild marks and symbols from Roman era archaeological discoveries" 
+                                    className="w-full h-32 object-cover"
+                                  />
+                                  <div className="p-2 bg-sacred/10">
+                                    <p className="text-[10px] text-muted-foreground text-center">Various craftsmen marks: banker, assembly, and guild affiliation symbols</p>
+                                  </div>
+                                </div>
+                              </div>
+                              
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
                                 <div className="p-2 rounded bg-background/50">
                                   <h6 className="font-semibold text-[11px] text-foreground">Banker Marks</h6>
