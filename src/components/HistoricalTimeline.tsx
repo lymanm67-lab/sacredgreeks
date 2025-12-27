@@ -146,8 +146,28 @@ const categoryColors = {
   ancient: "from-amber-500/20 to-amber-600/20 border-amber-500/30",
   guild: "from-blue-500/20 to-blue-600/20 border-blue-500/30",
   church: "from-purple-500/20 to-purple-600/20 border-purple-500/30",
-  masonic: "from-gray-500/20 to-gray-600/20 border-gray-500/30",
+  masonic: "from-slate-500/20 to-slate-600/20 border-slate-500/30",
   greek: "from-sacred/20 to-sacred/30 border-sacred/30"
+};
+
+// More specific colors for Greek era events to add variety after 1776
+const greekEraColors: Record<string, string> = {
+  "1776": "from-indigo-500/20 to-indigo-600/20 border-indigo-500/30",
+  "1825-1850": "from-cyan-500/20 to-cyan-600/20 border-cyan-500/30",
+  "1906": "from-rose-500/20 to-rose-600/20 border-rose-500/30",
+  "1908": "from-pink-500/20 to-pink-600/20 border-pink-500/30",
+  "1911-1920": "from-orange-500/20 to-orange-600/20 border-orange-500/30",
+  "1922": "from-teal-500/20 to-teal-600/20 border-teal-500/30",
+  "1930": "from-violet-500/20 to-violet-600/20 border-violet-500/30",
+  "1963": "from-emerald-500/20 to-emerald-600/20 border-emerald-500/30",
+  "Present": "from-sacred/30 to-sacred/40 border-sacred/40"
+};
+
+const getEventColor = (event: TimelineEvent) => {
+  if (event.category === "greek" && greekEraColors[event.year]) {
+    return greekEraColors[event.year];
+  }
+  return categoryColors[event.category];
 };
 
 const categoryLabels = {
@@ -211,7 +231,7 @@ export const HistoricalTimeline = () => {
                       </Badge>
                       
                       {/* Connector Dot - On the line */}
-                      <div className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-gradient-to-r ${categoryColors[event.category]} border-2 z-10 relative group-hover:scale-125 transition-transform`}>
+                      <div className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-gradient-to-r ${getEventColor(event)} border-2 z-10 relative group-hover:scale-125 transition-transform`}>
                         {/* Timeline Line Segment */}
                         {index < timelineEvents.length - 1 && (
                           <div className="absolute top-1/2 left-full w-[108px] sm:w-[104px] h-0.5 sm:h-1 -translate-y-1/2 bg-gradient-to-r from-amber-500 via-purple-500 to-sacred opacity-30" />
@@ -219,7 +239,7 @@ export const HistoricalTimeline = () => {
                       </div>
                       
                       {/* Event Card - Below the line */}
-                      <div className={`p-2 sm:p-3 rounded-lg bg-gradient-to-br ${categoryColors[event.category]} border h-full mt-1.5 sm:mt-2 group-hover:shadow-lg group-hover:scale-[1.02] transition-all`}>
+                      <div className={`p-2 sm:p-3 rounded-lg bg-gradient-to-br ${getEventColor(event)} border h-full mt-1.5 sm:mt-2 group-hover:shadow-lg group-hover:scale-[1.02] transition-all`}>
                         <div className="flex items-center gap-1.5 sm:gap-2 mb-1 sm:mb-2">
                           <Icon className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
                           <h4 className="text-[10px] sm:text-xs font-bold line-clamp-2">{event.title}</h4>

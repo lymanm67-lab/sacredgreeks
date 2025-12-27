@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Home, Users, Shield, BookOpen, Compass, Heart, Award, ArrowRight, AlertTriangle, Calendar, Building2, GraduationCap, Star, Volume2, VolumeX, Loader2, FileDown, Mic } from "lucide-react";
+import { Home, Users, Shield, BookOpen, Compass, Heart, Award, ArrowRight, AlertTriangle, Calendar, Building2, GraduationCap, Star, Volume2, VolumeX, Loader2, FileDown, Mic, Church } from "lucide-react";
 import { SEOHead } from "@/components/SEOHead";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useAuth } from "@/contexts/AuthContext";
@@ -2243,19 +2243,47 @@ const GreekLife = () => {
 
           {/* Ancient Fraternities Introduction - Single Collapsed Accordion */}
           <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="ancient-fraternities" className="border border-amber-500/30 rounded-lg bg-gradient-to-br from-amber-500/5 to-background">
-              <AccordionTrigger className="px-4 py-4 hover:no-underline [&[data-state=open]>div>.arrow]:rotate-180">
+            <AccordionItem value="ancient-fraternities" className="border border-amber-500/30 rounded-lg bg-gradient-to-br from-amber-500/5 to-background overflow-hidden">
+              <AccordionTrigger className="px-4 py-4 hover:no-underline group [&[data-state=open]>div>.expand-hint]:opacity-0">
                 <div className="flex items-center gap-3 flex-1">
-                  <div className="p-2 rounded-lg bg-amber-500/10">
+                  <div className="p-2 rounded-lg bg-amber-500/10 group-hover:bg-amber-500/20 transition-colors">
                     <BookOpen className="w-6 h-6 text-amber-600 dark:text-amber-400" />
                   </div>
-                  <div className="text-left">
+                  <div className="text-left flex-1">
                     <h3 className="text-lg font-semibold text-amber-700 dark:text-amber-300">Ancient Fraternities: A Biblical Foundation</h3>
                     <p className="text-sm text-muted-foreground">Discover the deep roots of fraternal organizations in Scripture and ancient culture</p>
                   </div>
+                  {/* Expand hint with pulse animation */}
+                  <div className="expand-hint hidden sm:flex items-center gap-2 text-xs text-amber-600 dark:text-amber-400 transition-opacity">
+                    <span className="animate-pulse">Click to explore</span>
+                    <ArrowRight className="w-4 h-4 animate-[pulse_2s_ease-in-out_infinite]" />
+                  </div>
                 </div>
               </AccordionTrigger>
-              <AccordionContent className="px-4 pb-4">
+              
+              {/* Quick Facts - Always visible */}
+              <div className="px-4 pb-3 -mt-2">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  <div className="flex items-center gap-2 p-2 rounded-md bg-amber-500/10 border border-amber-500/20">
+                    <BookOpen className="w-4 h-4 text-amber-600 shrink-0" />
+                    <span className="text-xs font-medium">20+ Biblical References</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-2 rounded-md bg-purple-500/10 border border-purple-500/20">
+                    <Church className="w-4 h-4 text-purple-600 shrink-0" />
+                    <span className="text-xs font-medium">Early Church Secrets</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-2 rounded-md bg-blue-500/10 border border-blue-500/20">
+                    <Building2 className="w-4 h-4 text-blue-600 shrink-0" />
+                    <span className="text-xs font-medium">Ancient Guild Systems</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-2 rounded-md bg-sacred/10 border border-sacred/20">
+                    <Users className="w-4 h-4 text-sacred shrink-0" />
+                    <span className="text-xs font-medium">Jesus as Guild Member</span>
+                  </div>
+                </div>
+              </div>
+              
+              <AccordionContent className="px-4 pb-4 animate-fade-in">
                 <div className="space-y-4">
                   {/* Action buttons */}
                   <div className="flex flex-wrap gap-2 justify-end border-b border-amber-500/20 pb-4">
