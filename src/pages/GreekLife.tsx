@@ -2875,6 +2875,136 @@ const GreekLife = () => {
                           </div>
                         </div>
 
+                        {/* Ancient Guild vs Modern Greek Pledging Comparison */}
+                        <div className="p-4 rounded-xl bg-gradient-to-br from-amber-500/5 via-sacred/5 to-amber-500/5 border border-amber-500/30">
+                          <h5 className="font-semibold text-foreground mb-3 flex items-center gap-2 text-sm">
+                            <GraduationCap className="w-5 h-5 text-sacred" />
+                            Ancient Guild Process = Modern Pledging (Non-Hazing)
+                          </h5>
+                          <p className="text-xs text-muted-foreground mb-4">
+                            The structured development process of ancient craft guilds mirrors legitimate membership intake in modern Greek organizations—proving these practices have sacred, biblical roots:
+                          </p>
+                          
+                          <div className="space-y-3">
+                            {/* Social Silence */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                              <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <VolumeX className="w-4 h-4 text-amber-600" />
+                                  <span className="font-semibold text-xs text-foreground">Ancient: The Silence Trial</span>
+                                </div>
+                                <p className="text-[11px] text-muted-foreground">
+                                  Apprentices observed work for <strong>weeks without speaking</strong> or asking questions. They learned through watching, not interrupting—developing patience, humility, and keen observation.
+                                </p>
+                              </div>
+                              <div className="p-3 rounded-lg bg-sacred/10 border border-sacred/20">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <Users className="w-4 h-4 text-sacred" />
+                                  <span className="font-semibold text-xs text-foreground">Modern: Social Silence Period</span>
+                                </div>
+                                <p className="text-[11px] text-muted-foreground">
+                                  New members focus on learning chapter history and bonding with their line, limiting outside distractions. Teaches <strong>discretion, focus, and respect</strong> for the process.
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Living Together */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                              <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <Home className="w-4 h-4 text-amber-600" />
+                                  <span className="font-semibold text-xs text-foreground">Ancient: In Contubernio</span>
+                                </div>
+                                <p className="text-[11px] text-muted-foreground">
+                                  Apprentices <strong>lived with the master</strong> and fellow apprentices. Total immersion created deep bonds, allowed character assessment, and protected trade secrets within the guild household.
+                                </p>
+                              </div>
+                              <div className="p-3 rounded-lg bg-sacred/10 border border-sacred/20">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <Building2 className="w-4 h-4 text-sacred" />
+                                  <span className="font-semibold text-xs text-foreground">Modern: Chapter House Life</span>
+                                </div>
+                                <p className="text-[11px] text-muted-foreground">
+                                  New members spend significant time at the chapter house, bonding with brothers/sisters. <strong>Shared living builds lifelong bonds</strong> and allows members to demonstrate character.
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Physical Testing */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                              <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <Shield className="w-4 h-4 text-amber-600" />
+                                  <span className="font-semibold text-xs text-foreground">Ancient: Physical Trials</span>
+                                </div>
+                                <p className="text-[11px] text-muted-foreground">
+                                  Carrying materials, working in extreme conditions, performing demanding labor. <strong>Not punishment—preparation</strong> for the physical demands of the craft and proving dedication.
+                                </p>
+                              </div>
+                              <div className="p-3 rounded-lg bg-sacred/10 border border-sacred/20">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <Heart className="w-4 h-4 text-sacred" />
+                                  <span className="font-semibold text-xs text-foreground">Modern: Community Service</span>
+                                </div>
+                                <p className="text-[11px] text-muted-foreground">
+                                  Service projects, campus involvement, and chapter work. <strong>Physical effort with purpose</strong>—building character through meaningful contribution, never degradation.
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Mental Testing */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                              <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <BookOpen className="w-4 h-4 text-amber-600" />
+                                  <span className="font-semibold text-xs text-foreground">Ancient: Knowledge Mastery</span>
+                                </div>
+                                <p className="text-[11px] text-muted-foreground">
+                                  Memorizing sacred geometry, mathematical ratios, guild history, and trade techniques. <strong>Mental rigor</strong> ensured only the committed and capable received guild secrets.
+                                </p>
+                              </div>
+                              <div className="p-3 rounded-lg bg-sacred/10 border border-sacred/20">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <GraduationCap className="w-4 h-4 text-sacred" />
+                                  <span className="font-semibold text-xs text-foreground">Modern: History & Standards</span>
+                                </div>
+                                <p className="text-[11px] text-muted-foreground">
+                                  Learning founders, chapter history, Greek alphabet, organizational values. <strong>Academic requirements</strong> maintain standards and ensure members understand their heritage.
+                                </p>
+                              </div>
+                            </div>
+
+                            {/* Ceremonial Initiation */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                              <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <Award className="w-4 h-4 text-amber-600" />
+                                  <span className="font-semibold text-xs text-foreground">Ancient: Sacred Initiation</span>
+                                </div>
+                                <p className="text-[11px] text-muted-foreground">
+                                  Ritual purification, sacred oaths, symbolic death and rebirth, receiving new garments and guild marks. A <strong>transformative ceremony</strong> marking passage into brotherhood.
+                                </p>
+                              </div>
+                              <div className="p-3 rounded-lg bg-sacred/10 border border-sacred/20">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <Star className="w-4 h-4 text-sacred" />
+                                  <span className="font-semibold text-xs text-foreground">Modern: Initiation Ritual</span>
+                                </div>
+                                <p className="text-[11px] text-muted-foreground">
+                                  Formal ceremony with oaths, symbols, and the conferring of membership. <strong>Sacred, meaningful transition</strong> into full brotherhood/sisterhood—never humiliation.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="mt-4 p-3 rounded-lg bg-sacred/20 border border-sacred/40">
+                            <p className="text-xs text-center">
+                              <strong className="text-sacred">The Key Distinction:</strong> Ancient guilds and legitimate Greek organizations use <strong>challenge with purpose</strong>—developing character, testing commitment, and building bonds. 
+                              <span className="block mt-1 text-muted-foreground">Hazing degrades and harms. Biblical formation elevates and transforms.</span>
+                            </p>
+                          </div>
+                        </div>
+
                         {/* Jesus's 18 Years */}
                         <div className="p-4 rounded-lg bg-gradient-to-br from-sacred/10 to-amber-500/10 border border-sacred/30">
                           <h5 className="font-semibold text-sacred mb-2 flex items-center gap-2">
