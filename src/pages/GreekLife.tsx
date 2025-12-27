@@ -37,12 +37,33 @@ const GreekLife = () => {
   const [openAncientSection, setOpenAncientSection] = useState<string | undefined>(undefined);
   const [openNestedSection, setOpenNestedSection] = useState<string | undefined>(undefined);
 
-  // Handle quick fact click - expands accordion and opens the relevant nested section
+  // State for controlled Councils accordion
+  const [openCouncilsSection, setOpenCouncilsSection] = useState<string | undefined>(undefined);
+  const [activeCouncilTab, setActiveCouncilTab] = useState<string>("nphc");
+
+  // Handle quick fact click - expands accordion and opens the relevant nested section with scroll
   const handleQuickFactClick = (sectionId: string) => {
     setOpenAncientSection("ancient-fraternities");
-    // Small delay to allow parent accordion to open first
     setTimeout(() => {
       setOpenNestedSection(sectionId);
+      // Scroll to the section after it opens
+      setTimeout(() => {
+        const element = document.querySelector(`[data-state="open"][data-value="${sectionId}"]`);
+        element?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 150);
+    }, 100);
+  };
+
+  // Handle council tag click - expands accordion and switches to the relevant tab with scroll
+  const handleCouncilTagClick = (councilId: string) => {
+    setOpenCouncilsSection("councils-directory");
+    setTimeout(() => {
+      setActiveCouncilTab(councilId);
+      // Scroll to the councils section after it opens
+      setTimeout(() => {
+        const element = document.getElementById("councils-content");
+        element?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 150);
     }, 100);
   };
 
@@ -2272,8 +2293,8 @@ const GreekLife = () => {
                     <h3 className="text-lg font-semibold text-amber-700 dark:text-amber-300">Ancient Fraternities: A Biblical Foundation</h3>
                     <p className="text-sm text-muted-foreground">Discover the deep roots of fraternal organizations in Scripture and ancient culture</p>
                   </div>
-                  {/* Expand hint with pulse animation */}
-                  <div className="expand-hint hidden sm:flex items-center gap-2 text-xs text-amber-600 dark:text-amber-400 transition-opacity">
+                  {/* Expand hint - more visible */}
+                  <div className="expand-hint flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-xs text-amber-700 dark:text-amber-300 font-medium transition-opacity">
                     <span className="animate-pulse">Click to explore</span>
                     <ArrowRight className="w-4 h-4 animate-[pulse_2s_ease-in-out_infinite]" />
                   </div>
@@ -2510,7 +2531,13 @@ const GreekLife = () => {
           </Accordion>
 
           {/* Greek Councils Directory - Collapsed Accordion */}
-          <Accordion type="single" collapsible className="w-full">
+          <Accordion 
+            type="single" 
+            collapsible 
+            className="w-full"
+            value={openCouncilsSection}
+            onValueChange={setOpenCouncilsSection}
+          >
             <AccordionItem value="councils-directory" className="border border-sacred/30 rounded-lg bg-gradient-to-br from-sacred/5 to-background overflow-hidden">
               <AccordionTrigger className="px-4 py-4 hover:no-underline group [&[data-state=open]>div>.expand-hint]:opacity-0">
                 <div className="flex items-center gap-3 flex-1">
@@ -2521,38 +2548,51 @@ const GreekLife = () => {
                     <h3 className="text-lg font-semibold text-sacred">Greek Councils & Organizations Directory</h3>
                     <p className="text-sm text-muted-foreground">Browse NPHC, NPC, IFC, and 12+ other councils with 200+ organizations</p>
                   </div>
-                  {/* Expand hint with pulse animation */}
-                  <div className="expand-hint hidden sm:flex items-center gap-2 text-xs text-sacred transition-opacity">
+                  {/* Expand hint - more visible */}
+                  <div className="expand-hint flex items-center gap-2 px-3 py-1.5 rounded-full bg-sacred/20 border border-sacred/30 text-xs text-sacred font-medium transition-opacity">
                     <span className="animate-pulse">Click to explore</span>
                     <ArrowRight className="w-4 h-4 animate-[pulse_2s_ease-in-out_infinite]" />
                   </div>
                 </div>
               </AccordionTrigger>
               
-              {/* Quick Stats - Always visible */}
+              {/* Quick Stats - Always visible & Clickable */}
               <div className="px-4 pb-3 -mt-2">
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                  <div className="flex items-center gap-2 p-2 rounded-md bg-sacred/10 border border-sacred/20">
-                    <GraduationCap className="w-4 h-4 text-sacred shrink-0" />
-                    <span className="text-xs font-medium">15 Councils</span>
-                  </div>
-                  <div className="flex items-center gap-2 p-2 rounded-md bg-purple-500/10 border border-purple-500/20">
-                    <Users className="w-4 h-4 text-purple-600 shrink-0" />
+                  <button 
+                    onClick={() => handleCouncilTagClick("nphc")}
+                    className="flex items-center gap-2 p-2 rounded-md bg-sacred/10 border border-sacred/20 hover:bg-sacred/20 hover:scale-[1.02] transition-all cursor-pointer text-left"
+                  >
+                    <Users className="w-4 h-4 text-sacred shrink-0" />
                     <span className="text-xs font-medium">Divine Nine (NPHC)</span>
-                  </div>
-                  <div className="flex items-center gap-2 p-2 rounded-md bg-blue-500/10 border border-blue-500/20">
+                  </button>
+                  <button 
+                    onClick={() => handleCouncilTagClick("npc")}
+                    className="flex items-center gap-2 p-2 rounded-md bg-purple-500/10 border border-purple-500/20 hover:bg-purple-500/20 hover:scale-[1.02] transition-all cursor-pointer text-left"
+                  >
+                    <GraduationCap className="w-4 h-4 text-purple-600 shrink-0" />
+                    <span className="text-xs font-medium">NPC Sororities</span>
+                  </button>
+                  <button 
+                    onClick={() => handleCouncilTagClick("ifc")}
+                    className="flex items-center gap-2 p-2 rounded-md bg-blue-500/10 border border-blue-500/20 hover:bg-blue-500/20 hover:scale-[1.02] transition-all cursor-pointer text-left"
+                  >
                     <Shield className="w-4 h-4 text-blue-600 shrink-0" />
-                    <span className="text-xs font-medium">NPC & IFC</span>
-                  </div>
-                  <div className="flex items-center gap-2 p-2 rounded-md bg-amber-500/10 border border-amber-500/20">
+                    <span className="text-xs font-medium">IFC Fraternities</span>
+                  </button>
+                  <button 
+                    onClick={() => handleCouncilTagClick("christian")}
+                    className="flex items-center gap-2 p-2 rounded-md bg-amber-500/10 border border-amber-500/20 hover:bg-amber-500/20 hover:scale-[1.02] transition-all cursor-pointer text-left"
+                  >
                     <Heart className="w-4 h-4 text-amber-600 shrink-0" />
-                    <span className="text-xs font-medium">Cultural & Faith-Based</span>
-                  </div>
+                    <span className="text-xs font-medium">Christian Greeks</span>
+                  </button>
                 </div>
               </div>
               
               <AccordionContent className="px-4 pb-4 animate-fade-in">
-                <Tabs defaultValue="nphc" className="space-y-6">
+                <div id="councils-content">
+                  <Tabs value={activeCouncilTab} onValueChange={setActiveCouncilTab} className="space-y-6">
                   <TabsList className="flex flex-wrap justify-center gap-1">
                     <TabsTrigger value="nphc" className="text-xs px-2 py-1">NPHC</TabsTrigger>
                     <TabsTrigger value="npc" className="text-xs px-2 py-1">NPC</TabsTrigger>
@@ -2627,6 +2667,7 @@ const GreekLife = () => {
                     </TabsContent>
                   ))}
                 </Tabs>
+                </div>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
