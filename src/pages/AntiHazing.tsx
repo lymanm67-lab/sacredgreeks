@@ -32,6 +32,7 @@ import {
 } from "lucide-react";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, LineChart, Line, AreaChart, Area, ReferenceLine } from "recharts";
 import { RenouncedSupportSection } from "@/components/RenouncedSupportSection";
+import { ListenButton } from "@/components/ListenButton";
 
 const RESOURCES_ACCORDION_STORAGE_KEY = 'antihazing-resources-accordion-state';
 const ALTERNATIVES_ACCORDION_STORAGE_KEY = 'antihazing-alternatives-accordion-state';
@@ -1939,14 +1940,25 @@ const AntiHazing = () => {
                         </div>
                       </AccordionTrigger>
                       <AccordionContent className="px-4 pb-4">
-                        <div className="space-y-4 pt-2">
-                          {category.activities.map((activity, i) => (
-                            <div key={i} className="border-l-2 border-primary/30 pl-4 py-2">
-                              <h5 className="font-medium text-foreground">{activity.name}</h5>
-                              <p className="text-sm text-muted-foreground mt-1">{activity.detail}</p>
-                              <p className="text-xs text-primary mt-2 italic">Example: {activity.example}</p>
-                            </div>
-                          ))}
+                        <div className="pt-2">
+                          <div className="mb-4">
+                            <ListenButton
+                              text={`${category.category}. ${category.description}. ${category.activities.map(a => `${a.name}. ${a.detail}. Example: ${a.example}`).join('. ')}`}
+                              itemId={`alt-activities-${index}`}
+                              title={category.category}
+                              voice="jessica"
+                              showLabel={true}
+                            />
+                          </div>
+                          <div className="space-y-4">
+                            {category.activities.map((activity, i) => (
+                              <div key={i} className="border-l-2 border-primary/30 pl-4 py-2">
+                                <h5 className="font-medium text-foreground">{activity.name}</h5>
+                                <p className="text-sm text-muted-foreground mt-1">{activity.detail}</p>
+                                <p className="text-xs text-primary mt-2 italic">Example: {activity.example}</p>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       </AccordionContent>
                     </AccordionItem>
