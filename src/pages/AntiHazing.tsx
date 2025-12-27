@@ -34,6 +34,7 @@ import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveCo
 import { RenouncedSupportSection } from "@/components/RenouncedSupportSection";
 
 const RESOURCES_ACCORDION_STORAGE_KEY = 'antihazing-resources-accordion-state';
+const ALTERNATIVES_ACCORDION_STORAGE_KEY = 'antihazing-alternatives-accordion-state';
 
 const AntiHazing = () => {
   const [selectedState, setSelectedState] = useState<string | null>(null);
@@ -44,10 +45,21 @@ const AntiHazing = () => {
     }
     return [];
   });
+  const [alternativesAccordionValues, setAlternativesAccordionValues] = useState<string[]>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem(ALTERNATIVES_ACCORDION_STORAGE_KEY);
+      return saved ? JSON.parse(saved) : [];
+    }
+    return [];
+  });
 
   useEffect(() => {
     localStorage.setItem(RESOURCES_ACCORDION_STORAGE_KEY, JSON.stringify(resourcesAccordionValues));
   }, [resourcesAccordionValues]);
+
+  useEffect(() => {
+    localStorage.setItem(ALTERNATIVES_ACCORDION_STORAGE_KEY, JSON.stringify(alternativesAccordionValues));
+  }, [alternativesAccordionValues]);
 
   const handleDownloadPDF = async () => {
     toast.info("Generating PDF...");
@@ -1881,34 +1893,65 @@ const AntiHazing = () => {
                 </CardContent>
               </Card>
 
-              {/* Alternative Activities Grid */}
-              <div className="space-y-6">
-                {alternativeActivities.map((category, index) => (
-                  <Card key={index}>
-                    <CardHeader>
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                          <category.icon className="w-5 h-5 text-primary" />
-                        </div>
-                        <div>
-                          <CardTitle className="text-lg">{category.category}</CardTitle>
-                          <CardDescription>{category.description}</CardDescription>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-4">
-                        {category.activities.map((activity, i) => (
-                          <div key={i} className="border-l-2 border-primary/30 pl-4 py-2">
-                            <h4 className="font-medium text-foreground">{activity.name}</h4>
-                            <p className="text-sm text-muted-foreground mt-1">{activity.detail}</p>
-                            <p className="text-xs text-primary mt-2 italic">Example: {activity.example}</p>
+              {/* Alternative Activities Accordion */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <h3 className="text-lg font-semibold text-foreground">Alternative Activities by Category</h3>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setAlternativesAccordionValues(alternativeActivities.map((_, i) => `alt-${i}`))}
+                      className="text-xs"
+                    >
+                      <ChevronsDownUp className="w-4 h-4 mr-1" />
+                      Expand All
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setAlternativesAccordionValues([])}
+                      className="text-xs"
+                    >
+                      <ChevronsUpDown className="w-4 h-4 mr-1" />
+                      Collapse All
+                    </Button>
+                  </div>
+                </div>
+
+                <Accordion 
+                  type="multiple" 
+                  value={alternativesAccordionValues} 
+                  onValueChange={setAlternativesAccordionValues}
+                  className="space-y-3"
+                >
+                  {alternativeActivities.map((category, index) => (
+                    <AccordionItem key={index} value={`alt-${index}`} className="border rounded-lg overflow-hidden">
+                      <AccordionTrigger className="px-4 py-3 hover:no-underline bg-gradient-to-r from-primary/5 to-background hover:from-primary/10">
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-lg bg-primary/10">
+                            <category.icon className="w-5 h-5 text-primary" />
                           </div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+                          <div className="text-left">
+                            <h4 className="font-semibold text-foreground">{category.category}</h4>
+                            <p className="text-xs text-muted-foreground">{category.description}</p>
+                          </div>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent className="px-4 pb-4">
+                        <div className="space-y-4 pt-2">
+                          {category.activities.map((activity, i) => (
+                            <div key={i} className="border-l-2 border-primary/30 pl-4 py-2">
+                              <h5 className="font-medium text-foreground">{activity.name}</h5>
+                              <p className="text-sm text-muted-foreground mt-1">{activity.detail}</p>
+                              <p className="text-xs text-primary mt-2 italic">Example: {activity.example}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
               </div>
 
               {/* Success Stories */}
