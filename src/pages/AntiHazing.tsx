@@ -1900,32 +1900,58 @@ const AntiHazing = () => {
           </TabsList>
 
           <TabsContent value="prevention">
-            <div className="grid md:grid-cols-2 gap-6">
-              {preventionStrategies.map((strategy, index) => (
-                <Card key={index} className={`border-l-4 ${strategy.color} overflow-hidden`}>
-                  <CardHeader className={strategy.bgColor}>
+            <div className="space-y-6">
+              {/* TTS for Prevention Section */}
+              <Card className="bg-gradient-to-r from-blue-500/10 via-purple-500/5 to-emerald-500/5 border-blue-500/20">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between flex-wrap gap-4">
                     <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 rounded-lg ${strategy.bgColor} flex items-center justify-center`}>
-                        <strategy.icon className={`w-5 h-5 ${strategy.color.replace('bg-', 'text-')}`} />
+                      <div className="p-2 rounded-lg bg-blue-500/10">
+                        <Shield className="w-5 h-5 text-blue-500" />
                       </div>
                       <div>
-                        <CardTitle className="text-lg">{strategy.title}</CardTitle>
-                        <CardDescription>{strategy.description}</CardDescription>
+                        <h3 className="font-semibold text-foreground">Prevention Strategies</h3>
+                        <p className="text-xs text-muted-foreground">6 comprehensive approaches to ending hazing</p>
                       </div>
                     </div>
-                  </CardHeader>
-                  <CardContent className="pt-4">
-                    <ul className="space-y-2">
-                      {strategy.items.map((item, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm">
-                          <span className={`w-1.5 h-1.5 rounded-full ${strategy.color} mt-2 flex-shrink-0`} />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              ))}
+                    <ListenButton
+                      text={preventionStrategies.map(s => `${s.title}. ${s.description}. Key strategies include: ${s.items.join('. ')}`).join('. ')}
+                      itemId="prevention-strategies-tts"
+                      title="Prevention Strategies"
+                      voice="jessica"
+                      showLabel={true}
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                {preventionStrategies.map((strategy, index) => (
+                  <Card key={index} className={`border-l-4 ${strategy.color} overflow-hidden`}>
+                    <CardHeader className={strategy.bgColor}>
+                      <div className="flex items-center gap-3">
+                        <div className={`w-10 h-10 rounded-lg ${strategy.bgColor} flex items-center justify-center`}>
+                          <strategy.icon className={`w-5 h-5 ${strategy.color.replace('bg-', 'text-')}`} />
+                        </div>
+                        <div>
+                          <CardTitle className="text-lg">{strategy.title}</CardTitle>
+                          <CardDescription>{strategy.description}</CardDescription>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="pt-4">
+                      <ul className="space-y-2">
+                        {strategy.items.map((item, i) => (
+                          <li key={i} className="flex items-start gap-2 text-sm">
+                            <span className={`w-1.5 h-1.5 rounded-full ${strategy.color} mt-2 flex-shrink-0`} />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
             </div>
           </TabsContent>
 
@@ -2676,8 +2702,75 @@ const AntiHazing = () => {
                   Honoring those who lost their lives to hazing. Their stories remind us why we must continue 
                   fighting for change. Every name represents a family forever changed.
                 </p>
+                <div className="mt-4">
+                  <ListenButton
+                    text={`In Memoriam. Honoring those who lost their lives to hazing. ${[...memorialVictims].sort((a, b) => a.year - b.year).map(v => `${v.name}, age ${v.age}, died in ${v.year} at ${v.school} while pledging ${v.organization}. Cause: ${v.cause}. ${v.legislation ? `This tragedy led to ${v.legislation}.` : ''}`).join(' ')}`}
+                    itemId="memorial-tts"
+                    title="Memorial - In Memoriam"
+                    voice="jessica"
+                    showLabel={true}
+                  />
+                </div>
               </div>
 
+              {/* Timeline of Deaths - Earliest to Most Recent */}
+              <Card className="border-amber-500/30">
+                <CardHeader className="bg-gradient-to-r from-amber-500/10 to-orange-500/5">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-amber-500/10">
+                      <Calendar className="w-5 h-5 text-amber-500" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-lg">Timeline of Hazing Deaths</CardTitle>
+                      <CardDescription>From 1838 to present - Each name represents a preventable tragedy</CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-6">
+                  <div className="relative">
+                    {/* Timeline line */}
+                    <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-amber-500 via-orange-500 to-red-500" />
+                    
+                    <div className="space-y-4">
+                      {[...memorialVictims].sort((a, b) => a.year - b.year).map((victim, index) => (
+                        <div key={index} className="relative flex items-start gap-4 ml-4">
+                          {/* Timeline dot */}
+                          <div className="absolute -left-4 w-3 h-3 rounded-full bg-amber-500 border-2 border-background mt-1.5" />
+                          
+                          <div className="flex-1 pl-4 pb-4 border-b border-border/50 last:border-0">
+                            <div className="flex items-start justify-between gap-2 flex-wrap">
+                              <div>
+                                <Badge variant="outline" className="text-xs mb-1 border-amber-500/50 text-amber-600">
+                                  {victim.year}
+                                </Badge>
+                                <h4 className="font-semibold text-foreground">{victim.name}</h4>
+                                <p className="text-xs text-muted-foreground">Age {victim.age}</p>
+                              </div>
+                              <Badge variant="outline" className="text-xs shrink-0">
+                                {victim.organization.includes("NPHC") || victim.organization.includes("Alpha Kappa Alpha") || 
+                                 victim.organization.includes("Kappa Alpha Psi") || victim.organization.includes("Omega Psi Phi") ? 
+                                 "NPHC" : victim.organization.includes("IFC") ? "IFC" : "Other"}
+                              </Badge>
+                            </div>
+                            <p className="text-sm text-muted-foreground mt-1">{victim.organization}</p>
+                            <p className="text-xs text-muted-foreground">{victim.school}</p>
+                            <p className="text-xs text-destructive/80 mt-1">{victim.cause}</p>
+                            {victim.legislation && (
+                              <div className="mt-2 flex items-center gap-1.5 text-xs text-primary">
+                                <Scale className="w-3 h-3" />
+                                <span>{victim.legislation}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Individual Memorial Cards */}
+              <h4 className="text-lg font-semibold text-foreground">Detailed Memorials</h4>
               <div className="grid gap-4">
                 {memorialVictims.map((victim, index) => (
                   <Card key={index} className="overflow-hidden border-l-4 border-amber-500/50 bg-gradient-to-r from-amber-500/5 to-transparent">
