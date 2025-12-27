@@ -3918,6 +3918,78 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
     modernUsage: "Churches host Bible studies at Starbucks. Pastors drink Starbucks during sermons and post photos on social media. Church staff meetings happen at Starbucks. Youth groups meet there. Christian conferences are sponsored by Starbucks. The logo appears on every cup, apron, and storefront—a pagan water goddess of death displayed openly.",
     appUsage: "A bare-breasted pagan siren-goddess who served the Queen of the Underworld, lured men to death, and whose image derives from occult woodcuts—is embraced in sacred Christian spaces without controversy, while Greek letters representing brotherhood are condemned."
   },
+  {
+    id: "monster-energy-666",
+    category: "brands",
+    symbol: "Monster Energy 666 Logo",
+    ancientConnection: "The Monster Energy logo consists of three claw marks that closely resemble the Hebrew letter VAV (ו), which has a numerical value of 6. Three vavs together form 666—the 'Number of the Beast' from Revelation 13:18. Hebrew numerology (gematria) was used in Jewish mysticism and Kabbalistic occult practices for centuries. The phrase 'Unleash the Beast' directly references the Antichrist figure. The letter 'O' in 'Monster' contains a cross symbol that, when the can is tilted to drink, inverts the cross—a classic Satanic symbol. The company's slogan and imagery consistently use beast/demonic terminology. Some have noted the logo's resemblance to occult sigils. The green color on black mirrors traditional witch/occult color schemes associated with poison and dark magic.",
+    modernUsage: "Christians drink Monster Energy at church events, youth groups, and Bible studies. Christian athletes sponsor and consume Monster. The brand is sold at Christian bookstores and conferences. Parents buy it for their children without concern.",
+    appUsage: "A logo potentially encoding 666 in Hebrew, with slogans about 'unleashing the beast' and imagery inverting the cross, is consumed by Christians—while Greek letters representing academic and service values are condemned as occult."
+  },
+  {
+    id: "dunkin-sun",
+    category: "brands",
+    symbol: "Dunkin' (Sun Symbolism)",
+    ancientConnection: "The Dunkin' logo features a stylized coffee cup with steam rising in curved lines, set against orange and magenta colors representing SUNRISE—direct sun worship symbolism. Sun worship was central to virtually every pagan religion: Egyptian RA, Roman SOL INVICTUS, Persian MITHRAS, Aztec TONATIUH, and Babylonian SHAMASH. The act of 'dunking' donuts in coffee mirrors ancient libation rituals where offerings were dipped or poured to honor solar deities. The circular donut shape itself represents the solar disc—a universal symbol of sun gods. The brand's emphasis on MORNING rituals directly connects to dawn worship practices honoring the rising sun. Orange is the sacred color of the sun in Hindu tradition (saffron robes), and in Roman religion, priests of Sol Invictus wore orange. The name change from 'Dunkin' Donuts' to just 'Dunkin'' emphasizes the ritual ACTION over the offering.",
+    modernUsage: "Churches serve Dunkin' at Sunday services. Pastors stop at Dunkin' before preaching. Church staff meetings include Dunkin' coffee. The brand sponsors community events at churches.",
+    appUsage: "A brand built on sun worship colors, circular solar symbols, and morning ritual language is normalized in Christian spaces—while Greek letters face accusations of pagan connections."
+  },
+  {
+    id: "java-mysticism",
+    category: "brands",
+    symbol: "Java (Coffee Terminology)",
+    ancientConnection: "The term 'JAVA' for coffee comes from the Indonesian island of Java, which has deep connections to Hindu-Buddhist mysticism and Javanese KEJAWEN spiritual practices. Java was home to the great Hindu-Buddhist kingdom of MAJAPAHIT, whose temples like Borobudur and Prambanan were centers of tantric worship and mystical practices. Javanese mysticism (Kejawen) blends animism, ancestor worship, Hindu-Buddhist tantra, and Islamic Sufism into occult practices including meditation on supernatural powers, communication with spirits, and magical healing. The island's name derives from Sanskrit 'YAVA' (barley), connecting to Vedic grain offerings to Hindu gods. When Christians say 'I need my java,' they're invoking a place synonymous with Eastern mysticism and syncretic occult practices. Coffee itself was initially banned by some Islamic authorities as an intoxicant used in Sufi mystical ceremonies.",
+    modernUsage: "Christians casually use 'java' to refer to coffee. Church coffee bars are called 'Java stations.' The term appears in Christian coffee shop names and church café ministries.",
+    appUsage: "Terminology derived from a center of Hindu-Buddhist mysticism and occult practices is used daily by Christians—while Greek letters are scrutinized for distant mythological connections."
+  },
+  {
+    id: "red-bull-mythology",
+    category: "brands",
+    symbol: "Red Bull (Sacred Bull Symbolism)",
+    ancientConnection: "The Red Bull logo depicts two CHARGING BULLS—one of the most powerful symbols in ancient pagan religion. BULL WORSHIP was central to: Egyptian APIS cult (the sacred Apis bull was worshipped as a god), Minoan Crete (bull-leaping rituals and the Minotaur), Mesopotamian MOLOCH (to whom children were sacrificed), Canaanite BAAL (often depicted as a bull), Hindu NANDI (Shiva's sacred bull), and the Golden Calf of Exodus. The red color represents BLOOD SACRIFICE—bulls were the premier sacrificial animal in Greek, Roman, and Near Eastern religions. The CHARGING/FIGHTING pose mirrors the ritual combat of bulls in Mithraic mysteries and Spanish bullfighting (which has religious origins). The slogan 'Red Bull gives you wings' references the WINGED BULL of Assyrian religion (lamassu)—a divine protective deity. The yellow sun/circle behind the bulls is a solar disc, connecting to bull-sun god associations in Mithraism.",
+    modernUsage: "Christians drink Red Bull at church events, mission trips, and youth activities. Christian athletes are sponsored by Red Bull. The brand is sold without controversy at Christian venues.",
+    appUsage: "Imagery of sacred pagan bulls, blood sacrifice symbolism, and references to winged deities—is consumed by Christians while Greek letters for academic organizations face condemnation."
+  },
+  {
+    id: "coca-cola-origins",
+    category: "brands",
+    symbol: "Coca-Cola (Occult Ingredient Origins)",
+    ancientConnection: "Coca-Cola's original 1886 formula contained COCA LEAF extract (source of cocaine) and KOLA NUT—both used in indigenous shamanic and occult practices. Coca leaves were sacred to the Incan religion, used by priests for divination, communication with spirits, and religious ceremonies honoring the gods. The coca plant was personified as MAMA COCA, a goddess figure. Kola nuts were central to West African religious ceremonies, used in ancestor worship, divination rituals, and as offerings to spirits and deities. Nigerian Yoruba religion uses kola nuts in Ifá divination and Ogun worship. The name 'Coca-Cola' literally combines two substances used in pagan spiritual practices. The original formula was sold as a 'brain tonic' with quasi-mystical healing claims. The iconic cursive script resembles alchemical and occult manuscript styles. The red color is associated with blood, sacrifice, and life force across multiple traditions.",
+    modernUsage: "Coca-Cola is served at every church event, potluck, and fellowship. The brand sponsors Christian events. Churches use Coca-Cola products without any theological concern.",
+    appUsage: "A beverage named after two shamanic ritual substances, used in ancestor worship and spirit communication, is ubiquitous in Christian spaces—while Greek letters are condemned for mythological associations."
+  },
+  {
+    id: "pepsi-yin-yang",
+    category: "brands",
+    symbol: "Pepsi Logo (Yin-Yang Symbolism)",
+    ancientConnection: "The Pepsi globe logo bears striking resemblance to the TAOIST YIN-YANG symbol—an ancient Chinese religious symbol representing cosmic duality, balance of opposites, and Taoist philosophy. The red, white, and blue swirl creates a similar visual dynamic to the interlocking teardrops of yin-yang. Taoism is a Chinese religious and philosophical tradition involving deity worship, ancestor veneration, and occult practices including alchemy, astrology, and feng shui. The 2008 Pepsi logo redesign document reportedly referenced the 'golden ratio,' sacred geometry, feng shui, and Eastern mystical concepts. The circular 'globe' shape represents wholeness and cosmic unity—concepts from Eastern mysticism. Some conspiracy researchers have noted potential connections to occult symbolism in the logo's proportions and the company's marketing imagery.",
+    modernUsage: "Pepsi is served at church events, Christian conferences, and fellowship meals. Youth groups consume Pepsi products. The logo appears throughout Christian spaces without concern.",
+    appUsage: "A logo resembling Taoist religious symbolism, with design philosophy reportedly influenced by Eastern mysticism, is normalized—while Greek letters for academic organizations are scrutinized."
+  },
+  {
+    id: "starbucks-reserve",
+    category: "brands",
+    symbol: "Starbucks Reserve (Star Symbolism)",
+    ancientConnection: "Starbucks Reserve locations feature a prominent STAR symbol—the five-pointed star (pentagram) has been used in occult practices for millennia. In Wicca and ceremonial magic, the pentagram is a primary ritual symbol. The name 'STARBUCKS' itself references the celestial—star worship was central to Babylonian, Egyptian, and Greco-Roman religions. ASTROLOGY (star divination) was practiced by Babylonian priests, condemned in Scripture, yet embedded in this brand's very name. The 'Reserve' concept evokes exclusivity and hidden knowledge—hallmarks of occult mystery religions. The star combined with the siren creates layered pagan symbolism: celestial worship meets underworld goddess. Buck/stag imagery in other contexts connects to the Celtic CERNUNNOS (horned god) and Diana/Artemis hunting traditions.",
+    modernUsage: "Starbucks Reserve locations are visited by Christians seeking premium coffee experiences. Pastors and church leaders frequent these locations. The enhanced pagan symbolism draws no additional scrutiny.",
+    appUsage: "A brand combining star worship, the siren goddess of death, and occult exclusivity language—is embraced by Christians while Greek letters face condemnation."
+  },
+  {
+    id: "mountain-dew-paganism",
+    category: "brands",
+    symbol: "Mountain Dew (Nature Spirit Symbolism)",
+    ancientConnection: "The term 'MOUNTAIN DEW' was originally Scots-Irish slang for MOONSHINE whiskey—illegal alcohol connected to rebellious, lawless behavior. Mountains in pagan traditions were sacred dwelling places of gods: Greek gods lived on Mount Olympus, Hindu deities on Mount Meru, and 'high places' were sites of Canaanite Baal worship condemned in Scripture. DEW in Celtic religion was considered magical—fairy drink, the tears of the goddess, or the sweat of supernatural beings. Morning dew was collected for use in folk magic, love spells, and healing rituals. The color GREEN (Mountain Dew's signature) is associated with nature spirits, fairies, and the 'Green Man' of Celtic paganism. The original logo featured a hillbilly character—connecting to Appalachian folk magic traditions. The brand's extreme sports marketing invokes supernatural feats and transcendence.",
+    modernUsage: "Mountain Dew is consumed at youth groups, church lock-ins, and Christian gaming events. The brand sponsors Christian extreme sports athletes. Churches serve it without concern.",
+    appUsage: "A brand named after moonshine slang, with colors and imagery connecting to nature spirits, fairy magic, and pagan 'high places'—is served in Christian youth ministry while Greek letters are condemned."
+  },
+  {
+    id: "rockstar-energy-occult",
+    category: "brands",
+    symbol: "Rockstar Energy (Star & Rock Symbolism)",
+    ancientConnection: "The Rockstar Energy logo features a prominent STAR—used across occult traditions from Babylonian Ishtar (whose symbol was the eight-pointed star) to modern Wiccan pentagrams. 'ROCK STAR' invokes the rebellious, hedonistic lifestyle associated with rock music, which many Christians have historically condemned as satanic or demonic in origin. The term 'ROCK' in ancient religion refers to sacred stones and pillars—Jacob's Bethel stone, standing stones of Celtic religion, and the Kaaba stone of Islam all represent divine presence in stone. Greek god Hermes was worshipped through stone pillars (herms). The gold and black color scheme mirrors the colors of Egyptian religion and alchemy. The star's design resembles sigils from ceremonial magic traditions. Energy drink marketing consistently uses supernatural and transcendent imagery.",
+    modernUsage: "Christians consume Rockstar Energy at events and gatherings. The brand is sold without concern in Christian circles. Youth drink it at church activities.",
+    appUsage: "A brand featuring occult star symbolism, named after a lifestyle many Christians condemned as demonic, with sacred stone references—is consumed by Christians while Greek letters are scrutinized."
+  },
   // Civic and Legal Symbols
   {
     id: "lady-justice",
