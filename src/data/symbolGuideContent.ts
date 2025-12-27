@@ -4953,7 +4953,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   // Fashion Brand Logos with Ancient/Pagan Origins
   {
     id: "nike-logo",
-    category: "fashion",
+    category: "brands",
     symbol: "Nike Swoosh & Brand",
     ancientConnection: "Nike was a powerful Greek goddess, daughter of the Titan Pallas and the river goddess Styx. She was worshipped extensively throughout ancient Greece with temples on the Athenian Acropolis. Nike stood beside Zeus during the war against the Titans and was his personal charioteer. She was depicted with golden wings, carrying a palm branch and wreath to crown victors. Athletes made sacrifices to Nike before competitions. The famous 'swoosh' logo directly represents her divine wing. Greek and Roman soldiers invoked her before battle, and her image adorned shields, temples, and victory monuments.",
     modernUsage: "Christians wear Nike to church, youth group, and mission trips. Christian athletic ministries use Nike products. The brand sponsors Christian athletes.",
@@ -4961,7 +4961,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "starbucks-logo",
-    category: "fashion",
+    category: "brands",
     symbol: "Starbucks Siren Logo - Deep History",
     ancientConnection: "COMPLETE PAGAN GENEALOGY: The Starbucks siren represents a fusion of three ancient supernatural traditions. (1) GREEK SIRENS: Originally bird-women hybrids, daughters of river god Achelous and Muse Melpomene (or Terpsichore). They were handmaidens of PERSEPHONE before she was taken to the underworld—making them literally servants of the Queen of Death. After failing to prevent Persephone's abduction, they were cursed or chose to transform. Their island was littered with the bones of men they killed. (2) MELUSINE: A French/Celtic water spirit whose legend dates to the 14th century but draws on ancient Celtic goddess worship of sacred springs and wells. She was a SHAPESHIFTER who revealed her serpent/fish form on Saturdays (Saturn's day—pagan). The House of Lusignan claimed descent from her—royal bloodlines from a demon. In heraldry, she appears exactly as Starbucks depicts: two tails spread apart. (3) NORSE MARMENNILL: The 16th-century Norse woodcut that Starbucks directly copied showed the twin-tailed sea creature from Scandinavian folklore—connected to Thor's domain over seas and pagan maritime worship. The OCCULT CONNECTION: In medieval demonology, mermaids and sirens were classified as SUCCUBI—female demons who seduced men. The Church explicitly condemned siren worship. Alchemical texts used the melusine as a symbol of the PRIMA MATERIA and transformation. The spread-tail pose is explicitly fertility symbolism from goddess worship traditions.",
     modernUsage: "The Starbucks logo appears in church lobbies, pastor's studies, and youth group rooms. Christians wear Starbucks merchandise. The brand partners with Christian conferences and events. Pastors are photographed holding Starbucks cups during worship. Church small groups meet under this symbol weekly.",
@@ -4993,7 +4993,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "amazon-logo",
-    category: "fashion",
+    category: "brands",
     symbol: "Amazon Brand",
     ancientConnection: "Amazon is named after the Amazons, a legendary tribe of warrior women in Greek religion who removed one breast to better draw their bows. They worshipped Artemis (virgin goddess of the hunt) and Ares (god of war) and fought against Greek heroes like Heracles and Theseus. The Amazons built temples to Artemis at Ephesus (one of the Seven Wonders). They were enemies of civilization in Greek religious worldview, representing the chaos that Greek gods and heroes must overcome. Amazon queens like Hippolyta possessed divine gifts from the gods.",
     modernUsage: "Christians order Bibles, devotionals, and ministry supplies from Amazon. Churches have Amazon accounts for operations. Amazon Prime is essential to Christian household commerce.",
@@ -5001,7 +5001,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "nike-goddess-directly",
-    category: "fashion",
+    category: "brands",
     symbol: "Goddess Victoria/Nike in Culture",
     ancientConnection: "The Romans adopted Nike as Victoria, goddess of victory. Her image appears on the Victoria Cross, the Academy Award Oscar statue, the Rolls-Royce Spirit of Ecstasy, and countless war memorials. She represents pagan divine intervention in human affairs.",
     modernUsage: "Christians display Victoria imagery, accept Academy Awards, and drive luxury cars with goddess figures without theological concern.",
@@ -5009,7 +5009,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "mars-candy",
-    category: "fashion",
+    category: "brands",
     symbol: "Mars, Incorporated",
     ancientConnection: "Mars is the Roman god of war, equivalent to Greek Ares. Mars candy (M&Ms, Snickers, Milky Way) is named after this deity. The Roman month of March is also named for Mars, and he was considered the father of Romulus and Remus in Roman religion.",
     modernUsage: "Christians eat Mars candy products, use them in church events, and give them as gifts. Churches serve M&Ms at fellowship events.",
@@ -5017,7 +5017,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "ajax-cleaner",
-    category: "fashion",
+    category: "brands",
     symbol: "Ajax Brand",
     ancientConnection: "Ajax was a Greek hero and warrior who fought in the Trojan War, worshipped as a cult figure in parts of ancient Greece. He was the subject of religious veneration and had shrines dedicated to him.",
     modernUsage: "Christians clean their homes and churches with Ajax products without considering the mythological origin.",
@@ -5025,7 +5025,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "trident-gum",
-    category: "fashion",
+    category: "brands",
     symbol: "Trident Gum",
     ancientConnection: "The trident is the three-pronged spear of Poseidon/Neptune, Greek/Roman god of the sea. The trident was a sacred symbol in ancient religion, used in temple worship and as a symbol of divine power over the oceans.",
     modernUsage: "Christians chew Trident gum without theological concern. The trident symbol appears on buildings, logos, and jewelry worn by Christians.",
@@ -5033,7 +5033,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "goodyear-tires",
-    category: "fashion",
+    category: "brands",
     symbol: "Goodyear Winged Foot Logo",
     ancientConnection: "The Goodyear logo features the winged sandal of Hermes (Mercury), the Greek messenger god. The winged foot was a sacred symbol representing divine speed and the god's role as guide of souls to the underworld.",
     modernUsage: "Christians drive on Goodyear tires, displaying this pagan symbol on their vehicles, including when driving to church.",
@@ -5049,7 +5049,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "venus-razors",
-    category: "fashion",
+    category: "brands",
     symbol: "Venus Razors (Gillette)",
     ancientConnection: "Venus was the Roman goddess of love, beauty, fertility, and desire—equivalent to Greek Aphrodite. She was born from the severed genitals of Uranus cast into the sea. Venus had major temples throughout Rome, and her worship included sacred prostitution at the Temple of Venus Erycina. The Veneralia festival celebrated her annually. Julius Caesar claimed descent from Venus through Aeneas. The planet Venus was her sacred symbol. Venus's cult influenced Roman sexuality, marriage, and religious practice for centuries.",
     modernUsage: "Christian women use Venus razors without theological concern. The product is marketed using goddess-of-beauty imagery and divine association.",
@@ -5057,7 +5057,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "atlas-brand",
-    category: "fashion",
+    category: "brands",
     symbol: "Atlas in Branding",
     ancientConnection: "Atlas was a Titan in Greek mythology—one of the primordial gods who ruled before Zeus and the Olympians. He led the Titans in war against Zeus and was condemned to hold up the celestial spheres for eternity. Atlas was worshipped in North Africa and associated with astronomy and cosmic knowledge. The Atlas Mountains were believed to be his petrified form. He was the father of the Pleiades and Hyades star clusters, making him central to Greek religious cosmology.",
     modernUsage: "Atlas is used in maps, moving companies, fitness brands, and corporate logos encountered daily by Christians. Atlas statues adorn buildings worldwide.",
@@ -5065,7 +5065,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "oracle-brand",
-    category: "fashion",
+    category: "brands",
     symbol: "Oracle Corporation",
     ancientConnection: "Oracle is named after the sacred practice of consulting Greek gods for divine guidance. The Oracle at Delphi was the most sacred site in ancient Greece, where the Pythia priestess channeled Apollo to deliver prophecies. Greeks made pilgrimages, offered sacrifices, and based major decisions on oracular pronouncements. The Delphic Oracle influenced wars, colonies, and religious practices. Other oracles existed at Dodona (Zeus) and Didyma (Apollo). Consulting oracles was fundamental to Greek religious life.",
     modernUsage: "Oracle database software powers church management systems, Christian nonprofit organizations, and seminary databases. The technology is fundamental to modern ministry infrastructure.",
@@ -5073,7 +5073,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "athena-brands",
-    category: "fashion",
+    category: "brands",
     symbol: "Athena in Branding",
     ancientConnection: "Athena was one of the twelve Olympian gods—virgin goddess of wisdom, warfare, and crafts. She sprang fully formed from Zeus's head and was patron deity of Athens. The Parthenon was her temple, housing a massive gold and ivory statue. Athenians sacrificed to her annually at the Panathenaea festival. Athena gave humanity the olive tree and taught weaving. She carried the aegis (divine shield) and the gorgoneion (Medusa's head). Athena was invoked before battles and intellectual pursuits.",
     modernUsage: "Athena appears in education brands, consulting firms, publishing companies, and technology startups used by Christians. Universities display Athena imagery.",
@@ -5081,7 +5081,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "apollo-brands",
-    category: "fashion",
+    category: "brands",
     symbol: "Apollo in Branding",
     ancientConnection: "Apollo was one of the most important Olympian gods—god of the sun, music, poetry, healing, plague, prophecy, and truth. He was worshipped at major temples including Delphi, where he spoke through the Oracle. Apollo slew the Python serpent and established his cult. The Pythian Games were held in his honor. He drove the sun chariot across the sky daily. Apollo was twin to Artemis and son of Zeus. Romans adopted him without changing his name—rare among Greek gods.",
     modernUsage: "Apollo Theater hosts Christian artists. Apollo hospitals serve Christian patients. Apollo Global Management handles church investments. NASA's Apollo program is celebrated in Christian schools.",
@@ -5089,7 +5089,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "olympus-brands",
-    category: "fashion",
+    category: "brands",
     symbol: "Olympus Corporation & Mount Olympus",
     ancientConnection: "Mount Olympus was the sacred home of the Greek gods—the divine realm where Zeus held court with the twelve Olympians. It was the most sacred place in Greek religion, believed to be where gods feasted on ambrosia and nectar. Olympus represented divine perfection and immortality. The Olympic Games were religious festivals honoring Zeus. Ascending Olympus was forbidden to mortals. The mountain was the axis connecting heaven and earth in Greek cosmology.",
     modernUsage: "Olympus cameras are used by Christian photographers and churches. The Olympics are celebrated worldwide including in Christian communities. Olympus medical equipment is used in Christian hospitals.",
@@ -5097,7 +5097,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "titan-brands",
-    category: "fashion",
+    category: "brands",
     symbol: "Titan in Branding",
     ancientConnection: "The Titans were the elder gods of Greek religion—primordial deities who ruled before the Olympians. They included Cronus (who ate his children), Rhea, Hyperion, and others. The Titans warred against Zeus in the Titanomachy and were imprisoned in Tartarus. Titan worship predated the Olympians and represented raw cosmic power. Prometheus, a Titan, gave fire to humanity against Zeus's will.",
     modernUsage: "Titan watches, Titan industries, and the Tennessee Titans are part of everyday Christian life. Titan is used for strength and power imagery.",
@@ -5105,7 +5105,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "mercury-brands",
-    category: "fashion",
+    category: "brands",
     symbol: "Mercury in Branding",
     ancientConnection: "Mercury was the Roman equivalent of Hermes—messenger god, guide of souls to the underworld, god of commerce, thieves, and travelers. Mercury was worshipped at the Temple of Mercury on the Aventine Hill. His festival (Mercuralia) was celebrated by merchants. Mercury's caduceus (staff with entwined serpents) was a sacred symbol. He conducted souls of the dead to Hades and was associated with magic and alchemy.",
     modernUsage: "Mercury Marine engines power church boats. Mercury Insurance protects Christian families. The Mercury dime was U.S. currency. Mercury appears in countless brand names.",
@@ -5187,7 +5187,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   // Asian Auto Brands with Mythological/Spiritual Origins
   {
     id: "toyota-logo",
-    category: "fashion",
+    category: "brands",
     symbol: "Toyota Logo (Three Overlapping Ovals)",
     ancientConnection: "The Toyota logo's three overlapping ovals create a design rooted in Eastern sacred geometry and Shinto symbolism. The interlocking ellipses represent the unification of customer hearts and company heart, but the design echoes the ancient Japanese tomoe symbol—a Shinto sacred emblem representing the interaction of cosmic forces. The oval form connects to the ensō (Zen circle) representing enlightenment, the universe, and mu (the void). Japanese automakers often incorporate Shinto shrine aesthetics in their corporate identity.",
     modernUsage: "Toyota is the most popular car brand worldwide. Christians drive Toyotas to church, on mission trips, and in daily life. Church vans are often Toyotas.",
@@ -5195,7 +5195,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "honda-logo",
-    category: "fashion",
+    category: "brands",
     symbol: "Honda Wing Logo",
     ancientConnection: "The Honda motorcycle wing logo represents the Greek goddess Nike's wing—the same deity whose wing forms the Nike swoosh. Honda's founder was inspired by Nike, goddess of victory, when creating the motorcycle brand's identity. Wings in Japanese culture also connect to tengu (supernatural beings) and the divine wind (kamikaze). The 'H' logo's precise geometry reflects Eastern concepts of balance and harmony rooted in Taoist and Buddhist principles.",
     modernUsage: "Christians drive Honda cars, ride Honda motorcycles, and use Honda power equipment without theological concern. Honda Accords and Civics fill church parking lots.",
@@ -5203,7 +5203,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "mazda-logo",
-    category: "fashion",
+    category: "brands",
     symbol: "Mazda (Named After Ahura Mazda)",
     ancientConnection: "Mazda is named after Ahura Mazda, the supreme deity of Zoroastrianism—one of the world's oldest monotheistic religions. Ahura Mazda was the god of light, wisdom, and truth, worshipped in ancient Persia. The religion featured fire temples, sacred flames, and cosmic dualism between good and evil. Zoroastrian priests (Magi) appear in the Christian nativity story. The winged 'M' logo evokes the Faravahar, the winged symbol of Ahura Mazda found on ancient Persian temples.",
     modernUsage: "Christians drive Mazda vehicles without knowing they're driving a car literally named after a Persian god. Mazda 3s and CX-5s are common in church parking lots.",
@@ -5211,7 +5211,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "mitsubishi-logo",
-    category: "fashion",
+    category: "brands",
     symbol: "Mitsubishi Three-Diamond Logo",
     ancientConnection: "The Mitsubishi three-diamond logo represents three water chestnuts (hishi) but creates a pattern found in Japanese mon (family crests) with Shinto religious significance. The triangular arrangement echoes the mitsu-domoe—a triple tomoe symbol representing the threefold nature of existence in Shinto (heaven, earth, humanity). Triple symbols in Japanese culture connect to Buddhist and Shinto trinities. The diamond shape appears in sacred geometry across Asian spiritual traditions.",
     modernUsage: "Christians drive Mitsubishi vehicles, use Mitsubishi electronics, and work for Mitsubishi-affiliated companies without theological concern.",
@@ -5219,7 +5219,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "subaru-logo",
-    category: "fashion",
+    category: "brands",
     symbol: "Subaru (Pleiades Star Cluster)",
     ancientConnection: "Subaru is the Japanese name for the Pleiades star cluster—the 'Seven Sisters' in Greek mythology. The Pleiades were seven divine nymphs, daughters of Atlas and Pleione, who were placed among the stars by Zeus. Greeks built temples aligned to the Pleiades and timed religious festivals by their rising. In Japanese Shinto tradition, the Pleiades (Subaru) held spiritual significance for agricultural rituals. The logo's six stars represent this mythologically significant constellation.",
     modernUsage: "Christians drive Subaru vehicles without considering the Greek mythological nymphs represented in the logo. Subaru Outbacks are popular among Christian outdoor enthusiasts.",
@@ -5227,7 +5227,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "infiniti-logo",
-    category: "fashion",
+    category: "brands",
     symbol: "Infiniti Logo (Endless Road/Infinity)",
     ancientConnection: "The Infiniti logo represents a road stretching to infinity, but the infinity concept itself derives from ancient mystical and mathematical traditions. The ouroboros (serpent eating its tail) represented infinity in ancient Egyptian, Greek, and Norse traditions. Infinity was a divine attribute—only gods were infinite. The logo's triangular shape pointing upward echoes pyramids and sacred mountain symbolism representing ascension to the divine.",
     modernUsage: "Christians drive Infiniti luxury vehicles without considering the ancient mystical origins of infinity symbolism.",
@@ -5235,7 +5235,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "lexus-logo",
-    category: "fashion",
+    category: "brands",
     symbol: "Lexus L Oval Logo",
     ancientConnection: "The Lexus logo's precise elliptical 'L' embodies Japanese concepts of mathematical perfection rooted in Zen Buddhism and Shinto principles of harmony. The oval shape connects to the ensō—the Zen Buddhist circle of enlightenment representing the universe, strength, and the void. Japanese design philosophy stems from spiritual concepts of wabi-sabi and the pursuit of perfection as a spiritual practice. The pristine geometry reflects religious aesthetics from Japanese temple architecture.",
     modernUsage: "Christians drive Lexus vehicles as symbols of achievement and refinement. The brand is popular among successful Christian professionals and ministry leaders.",
@@ -5243,7 +5243,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "acura-logo",
-    category: "fashion",
+    category: "brands",
     symbol: "Acura Caliper Logo",
     ancientConnection: "The Acura logo resembles a caliper or compass—tools associated with Freemasonry and ancient mystery schools. Compasses and calipers appear in sacred geometry traditions representing divine creation and cosmic order. The 'A' shape also mirrors the mountains sacred in Shinto tradition (like Mount Fuji) and Buddhist concepts of ascension. Precision and measurement were considered sacred arts in ancient cultures, connecting humanity to divine order.",
     modernUsage: "Christians drive Acura vehicles without considering connections to sacred geometry and mystery tradition symbolism. The brand represents Japanese precision engineering.",
@@ -5252,7 +5252,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   // Technology Brands with Mythological/Pagan Symbolism
   {
     id: "apple-logo",
-    category: "fashion",
+    category: "brands",
     symbol: "Apple Logo (Bitten Apple)",
     ancientConnection: "The apple holds profound mythological significance across cultures. In Greek mythology, golden apples were sacred to Hera and caused the Trojan War. In Norse mythology, Iðunn's golden apples gave the gods immortality. Apples were sacred to Aphrodite and used in divination. The bitten apple evokes Eden's forbidden fruit—the symbol of humanity's fall through forbidden knowledge. Apple represents the pursuit of knowledge, originally a divine prerogative. The rainbow-striped original logo connected to Greek goddess Iris (rainbow messenger).",
     modernUsage: "Christians use iPhones, MacBooks, and Apple products for ministry, worship slides, and church communication. Apple products are fundamental to modern Christian life and ministry.",
@@ -5260,7 +5260,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "amazon-arrow",
-    category: "fashion",
+    category: "brands",
     symbol: "Amazon A-to-Z Smile Arrow",
     ancientConnection: "Beyond the Amazons naming (addressed separately), the arrow in the Amazon logo connects to ancient arrow symbolism. Arrows were sacred to Apollo, Artemis, and Eros in Greek religion. Artemis the huntress (whom the Amazons worshipped) was depicted with arrows. In Norse tradition, arrows were connected to Ullr, god of archery. The arrow pointing from A to Z mirrors the rainbow bridge (Bifrost) in Norse mythology connecting realms—Amazon connecting all products to consumers.",
     modernUsage: "Christians order everything from Amazon. The arrow logo appears on packages delivered to churches and Christian homes daily.",
@@ -5268,7 +5268,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "google-colors",
-    category: "fashion",
+    category: "brands",
     symbol: "Google Logo (Primary Colors)",
     ancientConnection: "Google's primary color scheme (blue, red, yellow, green) echoes the four elements of Greek philosophy (water, fire, air, earth) and the four directions sacred in numerous pagan traditions. The letter 'G' rotates to form a continuous path suggesting the ouroboros or eternal cycle. Google's 'Don't Be Evil' motto echoed ancient Greek philosophical principles. The parent company 'Alphabet' references the Greek letters Alpha and Beta—the very symbols some criticize in Greek organizations.",
     modernUsage: "Christians Google Bible verses, search for churches, and use Google services for ministry. Google is fundamental to Christian information access.",
@@ -5276,7 +5276,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "meta-infinity",
-    category: "fashion",
+    category: "brands",
     symbol: "Meta Infinity Logo",
     ancientConnection: "The Meta logo is a stylized infinity symbol (lemniscate)—derived from the ouroboros, the ancient serpent eating its tail found in Egyptian, Greek, and Norse mythology. The infinity symbol represented eternal cycles, divine timelessness, and the cosmic serpent in ancient traditions. 'Meta' itself is Greek, meaning 'beyond' or 'transcendent'—language of Greek philosophy and mystery religions describing divine realms beyond the physical.",
     modernUsage: "Christians use Facebook, Instagram, and WhatsApp daily for ministry, church groups, and faith sharing. Meta platforms are fundamental to modern Christian community.",
@@ -5284,7 +5284,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "twitter-x-bird",
-    category: "fashion",
+    category: "brands",
     symbol: "Twitter Bird / X Logo",
     ancientConnection: "The Twitter bird evoked ancient bird symbolism—birds were messengers of the gods in Greek, Roman, and Norse traditions. Zeus's eagle, Odin's ravens (Huginn and Muninn), and Athena's owl all served as divine communicators. The new 'X' logo connects to ancient 'X' symbolism found in Greek (Chi, first letter of Christ but predating Christianity), Norse runes (Gebo, meaning gift/partnership), and Egyptian hieroglyphics. X marked sacred crossroads in ancient traditions.",
     modernUsage: "Christians use X/Twitter for ministry, faith discussions, and church announcements. Christian influencers build followings on the platform.",
@@ -5292,7 +5292,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "spotify-waves",
-    category: "fashion",
+    category: "brands",
     symbol: "Spotify Sound Waves",
     ancientConnection: "Spotify's three curved lines representing sound waves echo ancient symbolism of divine emanation and the music of the spheres. Greek Pythagoreans believed the universe produced divine music from planetary movements. The Muses (Greek goddesses) ruled music and inspired all artistic creation. Sound and vibration were considered divine forces in ancient traditions—Om in Hinduism, the Logos (Word) in Greek philosophy. Green was sacred to Osiris and nature deities.",
     modernUsage: "Christians listen to worship music, Christian podcasts, and sermons on Spotify. The platform is fundamental to modern Christian audio consumption.",
@@ -5300,7 +5300,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "netflix-n",
-    category: "fashion",
+    category: "brands",
     symbol: "Netflix Ribbon N",
     ancientConnection: "The Netflix logo's flowing ribbon 'N' evokes ancient ribbon and thread symbolism—the Fates (Moirai) in Greek mythology who spun, measured, and cut the threads of human destiny. Ribbons represented divine connection in numerous ancient traditions. The red color connects to Mars/Ares (war, passion) and to the sacred red of Egyptian Isis. Streaming itself echoes the Greek river Lethe and the Norse Well of Urd—sources of story and memory.",
     modernUsage: "Christians watch content on Netflix. Churches discuss Netflix shows. The Chosen and other Christian content streams on the platform.",
@@ -5309,7 +5309,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   // Norse Deity Brands and References
   {
     id: "thor-brand",
-    category: "fashion",
+    category: "brands",
     symbol: "Thor in Branding (Marvel, Tools, etc.)",
     ancientConnection: "Thor was the Norse god of thunder, storms, oak trees, strength, and protection. He was one of the most worshipped gods in the Viking age, with temples throughout Scandinavia. Thor's hammer Mjolnir was a sacred symbol worn as protection amulets. Thursday (Thor's Day) is named after him. Thor protected humanity against giants and chaos. His worship involved animal sacrifices and sacred rituals.",
     modernUsage: "Christians watch Thor movies, wear Thor merchandise, and reference Thor casually. Thursday is spoken without theological concern. Thor: Love and Thunder grossed millions from Christian audiences.",
@@ -5317,7 +5317,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "odin-references",
-    category: "fashion",
+    category: "brands",
     symbol: "Odin/Wednesday References",
     ancientConnection: "Odin (Woden) was the chief Norse god—god of wisdom, war, death, poetry, and magic. He sacrificed his eye for wisdom and hung on Yggdrasil for nine days to learn the runes. Odin presided over Valhalla where warriors feasted after death. He was associated with human sacrifice, seiðr magic, and necromancy. Wednesday (Woden's Day) is named after him. Odin's ravens and wolves were sacred companions.",
     modernUsage: "Christians say 'Wednesday' without theological concern. Odin appears in popular media consumed by Christians. Norse mythology is taught in Christian schools.",
@@ -5325,7 +5325,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "frigga-friday",
-    category: "fashion",
+    category: "brands",
     symbol: "Frigg/Freya (Friday)",
     ancientConnection: "Friday is named after Frigg or Freya—Norse goddesses of love, fertility, marriage, and magic. Freya was associated with seiðr sorcery, death (she received half of slain warriors), and sexuality. Frigg was Odin's wife and queen of Asgard. Both were worshipped with offerings and rituals. Freya's sacred animals were cats, and she wore the Brísingamen necklace obtained through sleeping with dwarves.",
     modernUsage: "Christians say 'Friday,' celebrate 'Good Friday,' and reference the day without theological concern. TGIF is common Christian vernacular.",
@@ -5333,7 +5333,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "bluetooth-runes",
-    category: "fashion",
+    category: "brands",
     symbol: "Bluetooth Symbol (Viking Runes)",
     ancientConnection: "The Bluetooth logo combines two Viking runes: Hagall (ᚼ) and Bjarkan (ᛒ), the initials of Harald Bluetooth, a 10th-century Danish king. These are actual Norse runes from the Elder Futhark—sacred symbols used in Viking religion for magic, divination, and communication with the gods. Runes were carved on amulets for protection and power. The runic tradition was central to Norse pagan practice and mythology.",
     modernUsage: "Christians use Bluetooth daily on phones, headphones, cars, and computers. The runic symbol appears on every Bluetooth device used in Christian life and ministry.",
@@ -5341,7 +5341,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "valkyrie-brands",
-    category: "fashion",
+    category: "brands",
     symbol: "Valkyrie in Branding",
     ancientConnection: "Valkyries were Norse divine female warriors who served Odin, choosing which soldiers died in battle and carrying them to Valhalla. They were worshipped as divine beings with power over life and death. Valkyrie imagery appears in countless brands, games, and media. Their role in death-selection made them central to Norse religious beliefs about the afterlife and warrior cult.",
     modernUsage: "Christians watch Valkyrie in movies and games. Valkyrie is a popular brand name and character. The imagery appears in media consumed by Christian families.",
@@ -5349,7 +5349,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "egyptian-brands",
-    category: "fashion",
+    category: "brands",
     symbol: "Egyptian Imagery in Modern Brands",
     ancientConnection: "Egyptian religious imagery permeates modern branding: pyramids (tombs for pharaohs' journey to Osiris), the Eye of Horus (divine protection), scarabs (Khepri, god of rebirth), ankhs (eternal life from the gods), and lotus flowers (sacred to Isis and rebirth). Obelisks represented Ra's petrified rays. The Washington Monument is an Egyptian obelisk. Sphinx imagery evokes the guardian creature.",
     modernUsage: "Christians visit the Washington Monument, use products with pyramid imagery, and encounter Egyptian symbols daily in currency, architecture, and branding.",
@@ -5357,7 +5357,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "celtic-brands",
-    category: "fashion",
+    category: "brands",
     symbol: "Celtic Knots and Symbols in Branding",
     ancientConnection: "Celtic knots were sacred symbols of the ancient Druids and Celtic pagans, representing eternal cycles, the interconnection of all things, and the Celtic otherworld. Triskeles represented the triple goddess. Shamrocks connected to the goddess Brigid before Christian adoption. Celtic crosses merged pagan sun wheels with Christian crosses. The tree of life was sacred in Druidic worship.",
     modernUsage: "Christians wear Celtic jewelry, display Celtic crosses, and embrace Celtic aesthetics. Irish Christians celebrate Celtic heritage including knotwork designs.",
@@ -5365,7 +5365,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "eos-brand",
-    category: "fashion",
+    category: "brands",
     symbol: "Eos (Canon Camera / Lip Balm)",
     ancientConnection: "Eos was the Greek goddess of the dawn—sister of Helios (sun) and Selene (moon). She was worshipped throughout ancient Greece, associated with new beginnings and the daily renewal of light. Eos pursued mortal lovers and was central to Greek cosmological religion. Canon's EOS camera system and the popular EOS lip balm brand both reference this dawn goddess.",
     modernUsage: "Christians use Canon EOS cameras for church photography. EOS lip balm is sold in Christian bookstores. The goddess name is spoken casually in Christian contexts.",
@@ -5373,7 +5373,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "aurora-brands",
-    category: "fashion",
+    category: "brands",
     symbol: "Aurora in Branding",
     ancientConnection: "Aurora was the Roman goddess of dawn (equivalent to Greek Eos). She drove her chariot across the sky to announce the sun. Aurora borealis (northern lights) is named after her. The goddess was worshipped with morning rituals and associated with renewal and beauty. Disney's Sleeping Beauty (Princess Aurora) references this pagan goddess.",
     modernUsage: "Christians name children Aurora. Aurora appears in Disney princess merchandise embraced by Christian families. The aurora borealis is celebrated in Christian nature appreciation.",
@@ -5381,7 +5381,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "echo-alexa",
-    category: "fashion",
+    category: "brands",
     symbol: "Amazon Echo/Alexa (Greek Mythology)",
     ancientConnection: "Echo was a Greek nymph cursed by Hera to only repeat others' words. She pined away for Narcissus until only her voice remained. Amazon's Echo device and Alexa assistant reference this tragic mythological figure. Alexa derives from Alexandra—containing 'Alex' meaning 'defender' with connections to Alexander the Great who claimed divine descent.",
     modernUsage: "Christians use Amazon Echo and Alexa in homes for convenience, music, and information. Christian families talk to 'Alexa' daily.",
@@ -5389,7 +5389,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "iris-brands",
-    category: "fashion",
+    category: "brands",
     symbol: "Iris in Branding and Language",
     ancientConnection: "Iris was the Greek goddess of the rainbow and messenger between gods and humanity. She served Hera and connected Olympus to the mortal world. The iris flower is named after her. The iris of the eye is named after her. Iris scanning technology references this goddess. Rainbow symbolism derives from her divine domain.",
     modernUsage: "Christians use iris scans, photograph irises, and plant iris flowers. The word 'iris' is spoken in Christian medical and casual contexts.",
@@ -5397,7 +5397,7 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
   },
   {
     id: "phoenix-brands",
-    category: "fashion",
+    category: "brands",
     symbol: "Phoenix in Branding",
     ancientConnection: "The phoenix was a sacred bird in Egyptian religion—associated with Ra, Osiris, and the sun temple at Heliopolis. It died in flames and was reborn, representing resurrection and eternal cycles. Greeks adopted the phoenix, connecting it to Apollo and solar worship. The phoenix was worshipped as a divine symbol of immortality. Phoenix appears in countless brands, the city of Phoenix, and cultural references.",
     modernUsage: "Christians reference the phoenix, visit Phoenix, and use phoenix-branded products. Some Christian art uses phoenix imagery for resurrection themes.",
