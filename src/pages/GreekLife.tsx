@@ -2241,464 +2241,208 @@ const GreekLife = () => {
           {/* Historical Timeline - At top of page */}
           <HistoricalTimeline />
 
-          {/* Ancient Fraternities Introduction - Accordion Style */}
-          <Card className="border-amber-500/30 bg-gradient-to-br from-amber-500/5 to-background">
-            <CardHeader className="pb-2">
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
+          {/* Ancient Fraternities Introduction - Single Collapsed Accordion */}
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="ancient-fraternities" className="border border-amber-500/30 rounded-lg bg-gradient-to-br from-amber-500/5 to-background">
+              <AccordionTrigger className="px-4 py-4 hover:no-underline [&[data-state=open]>div>.arrow]:rotate-180">
+                <div className="flex items-center gap-3 flex-1">
                   <div className="p-2 rounded-lg bg-amber-500/10">
                     <BookOpen className="w-6 h-6 text-amber-600 dark:text-amber-400" />
                   </div>
-                  <div>
-                    <CardTitle className="text-amber-700 dark:text-amber-300">Ancient Fraternities: A Biblical Foundation</CardTitle>
-                    <CardDescription>Understanding the deep roots of fraternal organizations in Scripture and ancient culture</CardDescription>
+                  <div className="text-left">
+                    <h3 className="text-lg font-semibold text-amber-700 dark:text-amber-300">Ancient Fraternities: A Biblical Foundation</h3>
+                    <p className="text-sm text-muted-foreground">Discover the deep roots of fraternal organizations in Scripture and ancient culture</p>
                   </div>
                 </div>
-                <div className="flex gap-2 shrink-0">
-                  {user && (
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-4">
+                <div className="space-y-4">
+                  {/* Action buttons */}
+                  <div className="flex flex-wrap gap-2 justify-end border-b border-amber-500/20 pb-4">
+                    {user && (
+                      <Button
+                        variant={isSequentialPlaying ? "destructive" : "default"}
+                        size="sm"
+                        onClick={handleReadAll}
+                        disabled={isLoading && !isSequentialPlaying}
+                        className="gap-2"
+                      >
+                        {isSequentialPlaying ? (
+                          <>
+                            <VolumeX className="w-4 h-4" />
+                            <span className="hidden sm:inline">Stop Reading</span>
+                          </>
+                        ) : (
+                          <>
+                            <Volume2 className="w-4 h-4" />
+                            <span className="hidden sm:inline">Read All Sections</span>
+                            <span className="sm:hidden">Read All</span>
+                          </>
+                        )}
+                      </Button>
+                    )}
                     <Button
-                      variant={isSequentialPlaying ? "destructive" : "default"}
+                      variant="outline"
                       size="sm"
-                      onClick={handleReadAll}
-                      disabled={isLoading && !isSequentialPlaying}
+                      onClick={generateCitationsPDF}
                       className="gap-2"
                     >
-                      {isSequentialPlaying ? (
-                        <>
-                          <VolumeX className="w-4 h-4" />
-                          <span className="hidden sm:inline">Stop Reading</span>
-                        </>
-                      ) : (
-                        <>
-                          <Volume2 className="w-4 h-4" />
-                          <span className="hidden sm:inline">Read All Sections</span>
-                          <span className="sm:hidden">Read All</span>
-                        </>
-                      )}
+                      <FileDown className="w-4 h-4" />
+                      <span className="hidden sm:inline">Download Citations PDF</span>
+                      <span className="sm:hidden">PDF</span>
                     </Button>
-                  )}
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={generateCitationsPDF}
-                    className="gap-2"
-                  >
-                    <FileDown className="w-4 h-4" />
-                    <span className="hidden sm:inline">Download Citations PDF</span>
-                    <span className="sm:hidden">PDF</span>
-                  </Button>
+                  </div>
+
+                  {/* Nested content accordions */}
+                  <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="introduction" className="border-amber-500/20">
+                      <AccordionTrigger className="text-sm font-medium hover:no-underline">
+                        <span className="flex items-center gap-2">
+                          <BookOpen className="w-4 h-4 text-amber-600" />
+                          Introduction: Fraternities in Scripture
+                        </span>
+                      </AccordionTrigger>
+                      <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                        <div className="flex justify-end">
+                          <TTSButton sectionKey="introduction" text={ttsContent.introduction} />
+                        </div>
+                        <p className="leading-relaxed">
+                          <strong className="text-foreground">Fraternities are not a modern invention.</strong> The concept of <em>koinonia</em> (κοινωνία)—Greek for "fellowship," "partnership," or "communion"—appears over 20 times in the New Testament and describes the essential fraternal bond between believers. When Scripture commands believers to have "koinonia with one another," it's commanding exactly what Greek letter organizations create: shared life, mutual support, common identity, and exclusive fellowship.
+                        </p>
+                        <div className="mt-3 p-3 rounded-lg bg-muted/30 border border-border text-xs space-y-1">
+                          <h5 className="font-semibold text-foreground mb-2">📚 Key Reference:</h5>
+                          <p><strong>Montgomery, Dr. Lyman A.</strong> <em>Sacred Not Sinful: A Biblical Response to the Black Greek Letter Organizations Debate</em>. Sacred Greeks Ministry Publications. — Comprehensive theological examination of BGLOs through Scripture, church history, and African-American heritage.</p>
+                          <p><strong>Acts 2:42</strong> — "They devoted themselves to the apostles' teaching and to koinonia"</p>
+                          <p><strong>Banks, Robert J.</strong> <em>Paul's Idea of Community</em>. Hendrickson, 1994. Ch. 4: "The Meaning of Koinonia."</p>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="jesus-guild" className="border-amber-500/20">
+                      <AccordionTrigger className="text-sm font-medium hover:no-underline">
+                        <span className="flex items-center gap-2">
+                          <Users className="w-4 h-4 text-sacred" />
+                          Jesus: Master Craftsman & Guild Member
+                        </span>
+                      </AccordionTrigger>
+                      <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                        <div className="flex justify-end">
+                          <TTSButton sectionKey="jesusGuild" text={ttsContent.jesusGuild} />
+                        </div>
+                        <p>
+                          Jesus was a <strong>TEKTON</strong> (τέκτων)—translated "carpenter" but more accurately "master builder" or "craftsman." Ancient craft guilds were <strong>FRATERNAL ORGANIZATIONS</strong> with secret initiations, coded language, oaths of loyalty, strategic importance, and special recognition grips.
+                        </p>
+                        <p className="italic border-t pt-2 border-border">
+                          Joseph trained Jesus in this guild system for approximately 18 years. If guild membership with its secret elements was acceptable for the Son of God, it cannot be inherently sinful for Greek organization members.
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="carpenter-initiation" className="border-amber-500/20">
+                      <AccordionTrigger className="text-sm font-medium hover:no-underline">
+                        <span className="flex items-center gap-2">
+                          <Award className="w-4 h-4 text-amber-600" />
+                          Ancient Carpenter Guild Initiation
+                        </span>
+                      </AccordionTrigger>
+                      <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                        <div className="flex justify-end">
+                          <TTSButton sectionKey="carpenterInitiation" text={ttsContent.carpenterInitiation} isDramatic />
+                        </div>
+                        <p>
+                          Ancient carpenter guilds followed structured initiation processes including rigorous selection, extended testing periods, and sacred ceremonies with ritual purification, sacred oaths, symbolic death and rebirth, and guild marks.
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="religious-sects" className="border-amber-500/20">
+                      <AccordionTrigger className="text-sm font-medium hover:no-underline">
+                        <span className="flex items-center gap-2">
+                          <Shield className="w-4 h-4 text-sacred" />
+                          Jewish Religious Fraternities
+                        </span>
+                      </AccordionTrigger>
+                      <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                        <div className="flex justify-end">
+                          <TTSButton sectionKey="religiousSects" text={ttsContent.religiousSects} />
+                        </div>
+                        <p>
+                          The Pharisees, Sadducees, Essenes, and Zealots were all religious fraternities with secret teachings, initiation processes, distinctive dress, and hierarchical ranks. Paul boasted of his Pharisee membership even after conversion.
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="ancient-guilds" className="border-amber-500/20">
+                      <AccordionTrigger className="text-sm font-medium hover:no-underline">
+                        <span className="flex items-center gap-2">
+                          <Compass className="w-4 h-4 text-amber-600" />
+                          Biblical Professional Guilds
+                        </span>
+                      </AccordionTrigger>
+                      <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                        <div className="flex justify-end">
+                          <TTSButton sectionKey="ancientGuilds" text={ttsContent.ancientGuilds} />
+                        </div>
+                        <p>
+                          The Bible records numerous professional guilds: stonemasons building Solomon's Temple, fishermen guild partners (Peter, James, John), tax collector guilds, tentmaker guilds, metalworkers, and prophetic guilds under Samuel, Elijah, and Elisha.
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="roman-greek" className="border-amber-500/20">
+                      <AccordionTrigger className="text-sm font-medium hover:no-underline">
+                        <span className="flex items-center gap-2">
+                          <Building2 className="w-4 h-4 text-sacred" />
+                          Roman & Greek Fraternal Structures
+                        </span>
+                      </AccordionTrigger>
+                      <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                        <div className="flex justify-end">
+                          <TTSButton sectionKey="romanGreek" text={ttsContent.romanGreek} />
+                        </div>
+                        <p>
+                          The early church emerged within existing fraternal structures: Roman Collegia (professional associations), Greek Thiasoi (religious associations), and Synagogues (brotherhoods with membership requirements and initiation).
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="early-church" className="border-amber-500/20">
+                      <AccordionTrigger className="text-sm font-medium hover:no-underline">
+                        <span className="flex items-center gap-2">
+                          <Heart className="w-4 h-4 text-sacred" />
+                          Early Church as Secret Society
+                        </span>
+                      </AccordionTrigger>
+                      <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                        <div className="flex justify-end">
+                          <TTSButton sectionKey="earlyChurch" text={ttsContent.earlyChurch} />
+                        </div>
+                        <p>
+                          The early church functioned as a secret society during persecution with secret handshakes (ichthys fish), passwords (MARANATHA), the Holy Kiss ritual, and 1-3 year catechumenate initiations including preparation, fasting, exorcism, and new names.
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+
+                    <AccordionItem value="conclusion" className="border-sacred/30">
+                      <AccordionTrigger className="text-sm font-medium hover:no-underline">
+                        <span className="flex items-center gap-2">
+                          <Star className="w-4 h-4 text-sacred" />
+                          Conclusion: Biblical Precedent
+                        </span>
+                      </AccordionTrigger>
+                      <AccordionContent className="text-sm">
+                        <div className="p-3 rounded-lg bg-sacred/5 border border-sacred/20">
+                          <p className="text-muted-foreground">
+                            <strong className="text-sacred">Greek letter organizations continue traditions with deep roots in Scripture and ancient culture.</strong> The question isn't whether fraternal bonds, initiations, or exclusive fellowship are biblical—they clearly are. The question is whether specific practices within any organization honor God and align with Christian conscience.
+                          </p>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
                 </div>
-              </div>
-            </CardHeader>
-            <CardContent className="pt-2">
-              <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="introduction" className="border-amber-500/20">
-                  <AccordionTrigger className="text-sm font-medium hover:no-underline">
-                    <span className="flex items-center gap-2">
-                      <BookOpen className="w-4 h-4 text-amber-600" />
-                      Introduction: Fraternities in Scripture
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="text-sm text-muted-foreground space-y-3">
-                    <div className="flex justify-end">
-                      <TTSButton sectionKey="introduction" text={ttsContent.introduction} />
-                    </div>
-                    <p className="leading-relaxed">
-                      <strong className="text-foreground">Fraternities are not a modern invention.</strong> The concept of <em>koinonia</em> (κοινωνία)—Greek for "fellowship," "partnership," or "communion"—appears over 20 times in the New Testament and describes the essential fraternal bond between believers. When Scripture commands believers to have "koinonia with one another," it's commanding exactly what Greek letter organizations create: shared life, mutual support, common identity, and exclusive fellowship.
-                    </p>
-                    <div className="mt-3 p-3 rounded-lg bg-muted/30 border border-border text-xs space-y-1">
-                      <h5 className="font-semibold text-foreground mb-2">📚 Key Reference:</h5>
-                      <p><strong>Montgomery, Dr. Lyman A.</strong> <em>Sacred Not Sinful: A Biblical Response to the Black Greek Letter Organizations Debate</em>. Sacred Greeks Ministry Publications. — Comprehensive theological examination of BGLOs through Scripture, church history, and African-American heritage.</p>
-                      <p><strong>Acts 2:42</strong> — "They devoted themselves to the apostles' teaching and to koinonia"</p>
-                      <p><strong>Banks, Robert J.</strong> <em>Paul's Idea of Community</em>. Hendrickson, 1994. Ch. 4: "The Meaning of Koinonia."</p>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="jesus-guild" className="border-amber-500/20">
-                  <AccordionTrigger className="text-sm font-medium hover:no-underline">
-                    <span className="flex items-center gap-2">
-                      <Users className="w-4 h-4 text-sacred" />
-                      Jesus: Master Craftsman & Guild Member
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="text-sm text-muted-foreground space-y-3">
-                    {/* TTS Button */}
-                    <div className="flex justify-end">
-                      <TTSButton sectionKey="jesusGuild" text={ttsContent.jesusGuild} />
-                    </div>
-                    
-                    <p>
-                      Jesus was a <strong>TEKTON</strong> (τέκτων)—translated "carpenter" but more accurately "master builder" or "craftsman."<sup className="text-sacred">[1]</sup> Ancient craft guilds were <strong>FRATERNAL ORGANIZATIONS</strong> with:
-                    </p>
-                    <ul className="space-y-1 ml-4 list-disc">
-                      <li><strong>Secret initiations</strong> and proprietary techniques passed from master to apprentice<sup className="text-sacred">[2]</sup></li>
-                      <li><strong>Coded language</strong> and guild terminology (Jesus's parables reveal insider knowledge: "building on rock vs sand," "cornerstone rejected by builders")<sup className="text-sacred">[3]</sup></li>
-                      <li><strong>Oaths of loyalty</strong> and trade secrets sworn to protect<sup className="text-sacred">[4]</sup></li>
-                      <li><strong>Strategic importance</strong>: Carpenters/builders were essential for city defense, constructing walls, gates, siege equipment, and fortifications<sup className="text-sacred">[5]</sup></li>
-                      <li><strong>Special recognition grips</strong> to identify fellow guild craftsmen<sup className="text-sacred">[6]</sup></li>
-                    </ul>
-                    <p className="italic border-t pt-2 border-border">
-                      Joseph trained Jesus in this guild system for approximately 18 years.<sup className="text-sacred">[7]</sup> If guild membership with its secret elements was acceptable for the Son of God, it cannot be inherently sinful for Greek organization members.
-                    </p>
-                    
-                    {/* Citations */}
-                    <div className="mt-4 p-3 rounded-lg bg-muted/30 border border-border text-xs space-y-1">
-                      <h5 className="font-semibold text-foreground mb-2">📚 Citations & References:</h5>
-                      <p><strong>[1]</strong> Mark 6:3, Matthew 13:55 — Greek "τέκτων" (tekton). See: Campbell, Ken M. "What Was Jesus' Occupation?" <em>Journal of the Evangelical Theological Society</em> 48.3 (2005): 501-519. Also: Batey, Richard A. "Is Not This the Carpenter?" <em>New Testament Studies</em> 30.2 (1984): 249-258.</p>
-                      <p><strong>[2]</strong> Kloppenborg, John S. "Collegia and Thiasoi: Issues in Function, Taxonomy and Membership." In <em>Voluntary Associations in the Graeco-Roman World</em> (1996), 16-30.</p>
-                      <p><strong>[3]</strong> Snyder, Graydon F. <em>Ante Pacem: Archaeological Evidence of Church Life Before Constantine</em>. Mercer University Press, 2003. Also: Myers, Ched. <em>Binding the Strong Man</em>. Orbis Books, 1988.</p>
-                      <p><strong>[4]</strong> Harland, Philip A. <em>Associations, Synagogues, and Congregations</em>. Fortress Press, 2003. Pp. 28-53. Also: MacMullen, Ramsay. <em>Roman Social Relations</em>. Yale University Press, 1974.</p>
-                      <p><strong>[5]</strong> Josephus, <em>Jewish War</em> 3.7.21 & 2.18.9 — Describes builders' role in fortifications and siege equipment. Also: Tabor, James D. <em>The Jesus Dynasty</em>. Simon & Schuster, 2006.</p>
-                      <p><strong>[6]</strong> Wilson, Robert McL. <em>The Gnostic Problem</em>. A.R. Mowbray, 1958. Also: Goodenough, Erwin R. <em>Jewish Symbols in the Greco-Roman Period</em>. 13 vols. Princeton, 1953-68.</p>
-                      <p><strong>[7]</strong> Luke 3:23 — "about thirty years old" at ministry start. Safrai, S. & Stern, M. <em>The Jewish People in the First Century</em>. Van Gorcum, 1976.</p>
-                      <p className="pt-2 border-t border-border/50"><strong>See also:</strong> Montgomery, Dr. Lyman A. <em>Sacred Not Sinful</em>. Chapter on "Jesus the Tekton."</p>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="carpenter-initiation" className="border-amber-500/20">
-                  <AccordionTrigger className="text-sm font-medium hover:no-underline">
-                    <span className="flex items-center gap-2">
-                      <Shield className="w-4 h-4 text-amber-700" />
-                      Ancient Carpenter Initiation Rites (First Century)
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="text-sm text-muted-foreground space-y-4">
-                    <div className="flex justify-end gap-2">
-                      <TTSButton sectionKey="carpenterInitiation" text={ttsContent.carpenterInitiation} />
-                      <TTSButton sectionKey="carpenterInitiation-dramatic" text={ttsContent.carpenterInitiation} voice="dramatic" isDramatic={true} />
-                    </div>
-                    
-                    <div className="p-4 rounded-lg bg-gradient-to-br from-amber-500/10 to-background border border-amber-500/20">
-                      <h5 className="font-bold text-foreground text-base mb-3">🔨 How Carpenters Were Selected, Tested, and Initiated in Jesus's Day</h5>
-                      <p className="text-xs italic text-muted-foreground mb-3">Based on Mishnaic, Talmudic, and Josephan sources, as well as archaeological evidence from Greco-Roman collegia</p>
-                    </div>
-
-                    {/* Stage 1: Selection */}
-                    <div className="p-3 rounded-lg bg-muted/50 border-l-4 border-amber-600">
-                      <h6 className="font-bold text-foreground mb-2">1️⃣ SELECTION: The Choosing of Candidates</h6>
-                      <ul className="text-xs space-y-1 list-disc ml-4">
-                        <li>Apprentices typically began around <strong>age 12-13</strong> following bar mitzvah (Mishnah Avot 5:21)</li>
-                        <li>Candidates demonstrated both <strong>physical capability</strong> and <strong>moral character</strong></li>
-                        <li>The guild master would <strong>observe the candidate for weeks</strong>, testing patience, obedience, and natural aptitude</li>
-                        <li>Family connections mattered: sons of guild members had priority (like Joseph training Jesus)</li>
-                        <li>Character references from community elders were required</li>
-                      </ul>
-                      <p className="text-xs mt-2 italic">Source: Mishnah Kiddushin 4:14; Babylonian Talmud Kiddushin 29a</p>
-                    </div>
-
-                    {/* Stage 2: Testing */}
-                    <div className="p-3 rounded-lg bg-muted/50 border-l-4 border-amber-500">
-                      <h6 className="font-bold text-foreground mb-2">2️⃣ TESTING: The Proving Period (Months to Years)</h6>
-                      <ul className="text-xs space-y-1 list-disc ml-4">
-                        <li><strong>Menial tasks</strong>: Carrying materials, preparing tools, cleaning the workshop</li>
-                        <li><strong>Mixing adhesives</strong> from animal glues and plant resins (secret formulas)</li>
-                        <li><strong>Deliberate hardships</strong>: Working in extreme conditions, harsh criticism, impossible tasks</li>
-                        <li><strong>Tests of loyalty</strong>: Could the candidate keep secrets under pressure?</li>
-                        <li><strong>Progressive skill development</strong>: Only those who persevered advanced</li>
-                        <li>Masters tested candidates' response to <strong>intentional misdirection</strong> to see if they would correct errors</li>
-                      </ul>
-                      <p className="text-xs mt-2 italic">Source: Jeremias, Joachim. "Jerusalem in the Time of Jesus" (1969), pp. 3-27</p>
-                    </div>
-
-                    {/* Stage 3: Initiation */}
-                    <div className="p-3 rounded-lg bg-muted/50 border-l-4 border-sacred">
-                      <h6 className="font-bold text-foreground mb-2">3️⃣ INITIATION: The Sacred Ceremony</h6>
-                      <p className="text-xs mb-2">Based on archaeological evidence from Greco-Roman collegia and descriptions in Josephus, guild initiations included:</p>
-                      <ul className="text-xs space-y-1 list-disc ml-4">
-                        <li><strong>Ritual Purification</strong>: Washing, often in a mikvah or river (similar to baptism symbolism)</li>
-                        <li><strong>Sacred Oaths</strong>: Reciting vows never to reveal trade secrets—on penalty of divine curse</li>
-                        <li><strong>Symbolic Death & Rebirth</strong>: Stripping of old garments, donning the guild's distinctive work clothing</li>
-                        <li><strong>Secret Handgrip</strong>: The master gripped the initiate's hand in the guild's distinctive manner</li>
-                        <li><strong>Guild Mark</strong>: A distinctive sign often carved into the initiate's personal tools</li>
-                        <li><strong>Patron Deity Invocation</strong>: (In pagan guilds) or blessing prayers (in Jewish contexts)</li>
-                        <li><strong>Sacred Meal</strong>: Fellowship meal with all guild members to seal the bond</li>
-                      </ul>
-                      <p className="text-xs mt-2 italic">Source: Josephus, Jewish Antiquities 15.390-402; Harland, "Associations, Synagogues, and Congregations" (2003)</p>
-                    </div>
-
-                    {/* Stage 4: Secrets */}
-                    <div className="p-3 rounded-lg bg-muted/50 border-l-4 border-purple-600">
-                      <h6 className="font-bold text-foreground mb-2">4️⃣ THE GUILD SECRETS: What Was Protected</h6>
-                      <ul className="text-xs space-y-1 list-disc ml-4">
-                        <li><strong>Sacred geometry</strong> and mathematical ratios passed only orally (never written)</li>
-                        <li><strong>Coded terms</strong> for measurements and techniques (Jesus's parables show this insider knowledge)</li>
-                        <li><strong>Recognition grips</strong> to identify fellow craftsmen when traveling to other cities</li>
-                        <li><strong>Proprietary formulas</strong> for wood preservation, waterproofing, adhesives, and finishes</li>
-                        <li><strong>Strategic knowledge</strong>: Carpenters built siege towers, battering rams, fortification gates, and war machines—making their loyalty a matter of <strong>NATIONAL SECURITY</strong></li>
-                        <li><strong>Guild passwords</strong>: To gain entry to guild meetings in other towns</li>
-                      </ul>
-                      <p className="text-xs mt-2 italic">Source: Vitruvius, "De Architectura" (c. 15 BC); Josephus, Jewish War 2.18.9; Reed, "Archaeology and the Galilean Jesus" (2000)</p>
-                    </div>
-
-                    {/* Archaeological Evidence */}
-                    <div className="p-3 rounded-lg bg-gradient-to-r from-amber-500/10 to-sacred/10 border border-border">
-                      <h6 className="font-bold text-foreground mb-2">🏛️ Archaeological Evidence</h6>
-                      <ul className="text-xs space-y-1 list-disc ml-4">
-                        <li><strong>Sepphoris excavations</strong> (4 miles from Nazareth): Guild marks found on construction stones</li>
-                        <li><strong>Nazareth excavations</strong>: Evidence of organized craft networks in Jesus's hometown</li>
-                        <li><strong>Temple Mount stones</strong>: Identical guild marks indicating coordinated construction crews</li>
-                        <li><strong>Roman collegia inscriptions</strong>: Document parallel initiation practices throughout the Empire</li>
-                      </ul>
-                      <p className="text-xs mt-2 italic">Source: Avigad, "Excavations in the Jewish Quarter" (1975); Reich, "Excavations at the City of David" Vol. 1</p>
-                    </div>
-
-                    {/* Full Citations */}
-                    <div className="mt-4 p-3 rounded-lg bg-muted/30 border border-border text-xs space-y-1">
-                      <h5 className="font-semibold text-foreground mb-2">📚 Complete Scholarly Citations:</h5>
-                      <p><strong>PRIMARY:</strong> Montgomery, Dr. Lyman A. <em>Sacred Not Sinful: A Biblical Response to the Black Greek Letter Organizations Debate</em>. Sacred Greeks Ministry Publications.</p>
-                      <p><strong>Josephus:</strong> <em>Jewish Antiquities</em> 15.390-402 (Temple craftsmen's guild secrecy); <em>Jewish War</em> 2.18.9, 3.7.21 (builders and fortifications)</p>
-                      <p><strong>Mishnah:</strong> Kiddushin 4:14 (master-apprentice obligations); Avot 5:21 (age stages for learning)</p>
-                      <p><strong>Talmud:</strong> Babylonian Talmud, Kiddushin 29a (father's duty to teach son a trade)</p>
-                      <p><strong>Vitruvius:</strong> <em>De Architectura</em> (c. 15 BC) — Roman building guild practices and training</p>
-                      <p><strong>Avigad, Nahman:</strong> "Excavations in the Jewish Quarter." <em>Israel Exploration Journal</em> 25 (1975) — Guild marks evidence</p>
-                      <p><strong>Reed, Jonathan L.:</strong> <em>Archaeology and the Galilean Jesus</em>. Trinity Press, 2000. Ch. 3: "Village Life and Crafts"</p>
-                      <p><strong>Jeremias, Joachim:</strong> <em>Jerusalem in the Time of Jesus</em>. Fortress Press, 1969. Pp. 3-27: Economic conditions and guild life</p>
-                      <p><strong>Harland, Philip A.:</strong> <em>Associations, Synagogues, and Congregations</em>. Fortress Press, 2003. Pp. 28-53</p>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="religious-sects" className="border-amber-500/20">
-                  <AccordionTrigger className="text-sm font-medium hover:no-underline">
-                    Religious Sects & Fraternities of Jesus's Time
-                  </AccordionTrigger>
-                  <AccordionContent className="text-sm text-muted-foreground space-y-3">
-                    <div className="flex justify-end">
-                      <TTSButton sectionKey="religiousSects" text={ttsContent.religiousSects} />
-                    </div>
-                    <div className="grid gap-3 md:grid-cols-2">
-                      <div className="p-3 rounded-lg bg-muted/50">
-                        <h5 className="font-semibold text-foreground">Pharisees</h5>
-                        <p className="text-xs">A religious <strong>FRATERNITY</strong> with secret teachings (oral Torah), initiation processes, distinctive dress, and hierarchical ranks. Paul boasted of his Pharisee membership even after conversion (Acts 23:6).</p>
-                      </div>
-                      <div className="p-3 rounded-lg bg-muted/50">
-                        <h5 className="font-semibold text-foreground">Sadducees</h5>
-                        <p className="text-xs">An <strong>ELITE PRIESTLY BROTHERHOOD</strong> with hereditary membership, secret Temple rituals, and exclusive access to the Holy of Holies. Zechariah received Gabriel's announcement as a Sadducee priest.</p>
-                      </div>
-                      <div className="p-3 rounded-lg bg-muted/50">
-                        <h5 className="font-semibold text-foreground">Essenes</h5>
-                        <p className="text-xs">A <strong>SECRET MONASTIC BROTHERHOOD</strong> with 1-3 year initiation periods, oath ceremonies, progressive secret doctrines, distinctive white robes, and communal property. They produced the Dead Sea Scrolls.</p>
-                      </div>
-                      <div className="p-3 rounded-lg bg-muted/50">
-                        <h5 className="font-semibold text-foreground">Zealots</h5>
-                        <p className="text-xs">A <strong>SECRET POLITICAL-RELIGIOUS FRATERNITY</strong> with blood oaths, code names, and covert meetings. <strong>Simon the Zealot</strong> was one of Jesus's twelve apostles, keeping his fraternity identifier (Luke 6:15).</p>
-                      </div>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="ancient-guilds" className="border-amber-500/20">
-                  <AccordionTrigger className="text-sm font-medium hover:no-underline">
-                    Ancient Professional Guilds in Scripture
-                  </AccordionTrigger>
-                  <AccordionContent className="text-sm text-muted-foreground space-y-3">
-                    <div className="flex justify-end">
-                      <TTSButton sectionKey="ancientGuilds" text={ttsContent.ancientGuilds} />
-                    </div>
-                    <p>The Bible records numerous professional guilds with fraternal structures:</p>
-                    <div className="grid gap-2 md:grid-cols-3">
-                      <div className="p-2 rounded bg-muted/30 text-xs">
-                        <strong>Stonemasons</strong> - Built Solomon's Temple with secret marks and guild techniques (1 Kings 5-6)
-                      </div>
-                      <div className="p-2 rounded bg-muted/30 text-xs">
-                        <strong>Fishermen Guild</strong> - Peter, James, John were "koinonoi" (guild partners) - Luke 5:10
-                      </div>
-                      <div className="p-2 rounded bg-muted/30 text-xs">
-                        <strong>Tax Collectors</strong> - Matthew hosted his guild brothers for dinner with Jesus (Mark 2:15)
-                      </div>
-                      <div className="p-2 rounded bg-muted/30 text-xs">
-                        <strong>Tentmakers</strong> - Paul worked with Aquila/Priscilla through guild connections (Acts 18:3)
-                      </div>
-                      <div className="p-2 rounded bg-muted/30 text-xs">
-                        <strong>Metalworkers</strong> - Tubal-Cain's descendants, Bezalel for the Tabernacle (Exodus 31:1-5)
-                      </div>
-                      <div className="p-2 rounded bg-muted/30 text-xs">
-                        <strong>Prophetic Guilds</strong> - "Sons of the Prophets" under Samuel, Elijah, Elisha (2 Kings 2:3-7)
-                      </div>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="roman-greek" className="border-amber-500/20">
-                  <AccordionTrigger className="text-sm font-medium hover:no-underline">
-                    Roman Collegia & Greek Thiasoi
-                  </AccordionTrigger>
-                  <AccordionContent className="text-sm text-muted-foreground space-y-3">
-                    <div className="flex justify-end">
-                      <TTSButton sectionKey="romanGreek" text={ttsContent.romanGreek} />
-                    </div>
-                    <p>The early church emerged within and adapted existing fraternal structures:</p>
-                    <div className="space-y-2">
-                      <div className="p-3 rounded-lg bg-muted/50">
-                        <h5 className="font-semibold text-foreground">Roman Collegia (Trade Guilds)</h5>
-                        <p className="text-xs">Professional associations with patron deities, initiation rituals, common meals, burial funds, and mutual aid. The early church was often mistaken for—or structured like—a collegium. Paul's tentmaker guild would have had regular meetings, shared meals, and mutual obligations.</p>
-                      </div>
-                      <div className="p-3 rounded-lg bg-muted/50">
-                        <h5 className="font-semibold text-foreground">Greek Thiasoi (Religious Fraternities)</h5>
-                        <p className="text-xs">Voluntary religious associations devoted to a deity, with initiation rites, sacred meals, hierarchies, and fellowship. The term "ekklesia" (church) was borrowed from Greek civic assemblies. Early house churches functioned similarly to thiasoi—intimate gatherings with shared rituals and exclusive membership.</p>
-                      </div>
-                      <div className="p-3 rounded-lg bg-muted/50">
-                        <h5 className="font-semibold text-foreground">Synagogues as Local Fraternities</h5>
-                        <p className="text-xs">Each synagogue was a <strong>BROTHERHOOD</strong> with membership requirements, initiation (circumcision + mikvah), distinctive practices, leadership hierarchies, and discipline for members. Jesus attended synagogue weekly. Paul started his missionary work in synagogues.</p>
-                      </div>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="early-church" className="border-amber-500/20">
-                  <AccordionTrigger className="text-sm font-medium hover:no-underline">
-                    Early Church Secret Practices
-                  </AccordionTrigger>
-                  <AccordionContent className="text-sm text-muted-foreground space-y-4">
-                    <div className="flex justify-end">
-                      <TTSButton sectionKey="earlyChurch" text={ttsContent.earlyChurch} />
-                    </div>
-                    <p>The early church itself functioned as a <strong>secret society</strong> during persecution, employing many practices that mirror modern fraternal organizations:</p>
-                    
-                    {/* Disciplina Arcani */}
-                    <div className="p-3 rounded-lg bg-gradient-to-r from-sacred/10 to-purple-500/10 border border-sacred/20">
-                      <h5 className="font-bold text-foreground mb-2">📜 Disciplina Arcani (The Discipline of the Secret)</h5>
-                      <p className="text-xs mb-2">The early church's official policy of secrecy, documented by Church Fathers including Tertullian, Cyril of Jerusalem, and Origen:</p>
-                      <ul className="text-xs space-y-1 list-disc ml-4">
-                        <li>Sacred mysteries (Eucharist, baptism, creeds) were <strong>hidden from non-initiates</strong></li>
-                        <li>New converts underwent <strong>progressive revelation</strong> of doctrines</li>
-                        <li>Catechumens were dismissed before the Eucharistic liturgy</li>
-                        <li>This practice continued until the <strong>5th-6th centuries</strong></li>
-                      </ul>
-                      <p className="text-xs mt-2 italic">Source: Tertullian, Apology 7 & 39; Cyril of Jerusalem, Catechetical Lectures; Origin, Contra Celsum</p>
-                    </div>
-                    
-                    {/* Secret Signs & Symbols */}
-                    <div className="grid gap-3 md:grid-cols-2">
-                      <div className="p-3 rounded-lg bg-muted/50 border-l-4 border-sacred">
-                        <h6 className="font-bold text-foreground mb-2">🐟 ICHTHYS Fish Symbol</h6>
-                        <ul className="text-xs space-y-1 list-disc ml-4">
-                          <li><strong>Hidden acronym:</strong> Ἰησοῦς Χριστός, Θεοῦ Υἱός, Σωτήρ (Jesus Christ, God's Son, Savior)</li>
-                          <li>Drawn in sand to secretly identify fellow believers</li>
-                          <li>One person drew an arc; if the other completed the fish, they were confirmed Christians</li>
-                          <li>Found in Roman catacombs, homes, and tombs</li>
-                        </ul>
-                        <p className="text-xs mt-2 italic">Source: Dölger, F.J. ΙΧΘΥΣ: Das Fischsymbol (1922); Ferguson, Backgrounds of Early Christianity (2003)</p>
-                      </div>
-                      
-                      <div className="p-3 rounded-lg bg-muted/50 border-l-4 border-amber-600">
-                        <h6 className="font-bold text-foreground mb-2">🤝 Secret Handshakes & Greetings</h6>
-                        <ul className="text-xs space-y-1 list-disc ml-4">
-                          <li><strong>"Tickle palm grip"</strong>: Traced half an ichthys fish in the palm</li>
-                          <li><strong>Holy Kiss</strong>: Commanded 5 times (Rom 16:16, 1 Cor 16:20, 2 Cor 13:12, 1 Thess 5:26, 1 Pet 5:14)</li>
-                          <li><strong>Right hand of fellowship</strong>: Gal 2:9 describes exclusive recognition</li>
-                          <li>These were <strong>identity markers</strong> for the persecuted community</li>
-                        </ul>
-                      </div>
-                      
-                      <div className="p-3 rounded-lg bg-muted/50 border-l-4 border-purple-600">
-                        <h6 className="font-bold text-foreground mb-2">🔐 Secret Passwords & Phrases</h6>
-                        <ul className="text-xs space-y-1 list-disc ml-4">
-                          <li><strong>MARANATHA</strong> (1 Cor 16:22): Paul left untranslated—insiders knew it meant "Our Lord, come!"</li>
-                          <li><strong>ABBA</strong>: Intimate Aramaic term for Father, used as insider language</li>
-                          <li><strong>Chi-Rho (☧)</strong>: Constantine's secret symbol revealed in vision</li>
-                          <li><strong>SATOR ROTAS Square</strong>: Cryptic palindrome with hidden Christian meaning</li>
-                        </ul>
-                        <p className="text-xs mt-2 italic">Source: 1 Cor 16:22; Gal 4:6; Rom 8:15; archaeological evidence from Pompeii</p>
-                      </div>
-                      
-                      <div className="p-3 rounded-lg bg-muted/50 border-l-4 border-green-600">
-                        <h6 className="font-bold text-foreground mb-2">⛪ Secret Meeting Places</h6>
-                        <ul className="text-xs space-y-1 list-disc ml-4">
-                          <li><strong>Roman catacombs</strong>: Underground burial tunnels for secret worship</li>
-                          <li><strong>House churches</strong>: Private homes with concealed entrances</li>
-                          <li><strong>Night meetings</strong>: Gatherings held before dawn to avoid detection</li>
-                          <li>Watchmen posted to warn of approaching authorities</li>
-                        </ul>
-                        <p className="text-xs mt-2 italic">Source: Acts 12:12-17; Pliny the Younger, Letters to Trajan (c. 112 AD)</p>
-                      </div>
-                    </div>
-                    
-                    {/* Catechumenate Initiation */}
-                    <div className="p-3 rounded-lg bg-gradient-to-br from-amber-500/10 to-sacred/10 border border-amber-500/20">
-                      <h5 className="font-bold text-foreground mb-2">✝️ Catechumenate: The Christian Initiation Process (1-3 Years)</h5>
-                      <p className="text-xs mb-3">Documented in Hippolytus's Apostolic Tradition (c. 215 AD) and early church writings:</p>
-                      <div className="grid gap-2 md:grid-cols-2">
-                        <div className="text-xs">
-                          <strong>Phase 1: Inquiry (Weeks-Months)</strong>
-                          <ul className="list-disc ml-4 mt-1">
-                            <li>Sponsors vouch for candidate's character</li>
-                            <li>Investigation of occupation (some banned)</li>
-                            <li>Teaching basic Christian lifestyle</li>
-                          </ul>
-                        </div>
-                        <div className="text-xs">
-                          <strong>Phase 2: Catechumenate (1-3 Years)</strong>
-                          <ul className="list-disc ml-4 mt-1">
-                            <li>Instruction in Scripture and doctrine</li>
-                            <li>Dismissal before Eucharist ("catechumens depart")</li>
-                            <li>Progressive revelation of mysteries</li>
-                          </ul>
-                        </div>
-                        <div className="text-xs">
-                          <strong>Phase 3: Intense Preparation (Lent)</strong>
-                          <ul className="list-disc ml-4 mt-1">
-                            <li>Daily exorcisms and prayers</li>
-                            <li>Fasting and vigils</li>
-                            <li>Scrutinies (public examinations)</li>
-                          </ul>
-                        </div>
-                        <div className="text-xs">
-                          <strong>Phase 4: Initiation (Easter Vigil)</strong>
-                          <ul className="list-disc ml-4 mt-1">
-                            <li><strong>Renunciation of Satan</strong> facing west</li>
-                            <li><strong>Disrobing</strong>: Removing old garments</li>
-                            <li><strong>Full immersion baptism</strong> (often nude)</li>
-                            <li><strong>Anointing with oil</strong> (chrismation)</li>
-                            <li><strong>New white robes</strong> given</li>
-                            <li><strong>New name</strong> sometimes assigned</li>
-                            <li>First participation in <strong>Eucharist</strong></li>
-                          </ul>
-                        </div>
-                      </div>
-                      <p className="text-xs mt-3 italic">Source: Hippolytus, Apostolic Tradition (c. 215 AD); Cyril of Jerusalem, Mystagogical Catecheses; Ambrose, De Mysteriis</p>
-                    </div>
-                    
-                    {/* Biblical Precedent */}
-                    <div className="p-3 rounded-lg bg-sacred/10 border border-sacred/20">
-                      <h5 className="font-bold text-foreground mb-2">📖 Biblical Precedent: SHIBBOLETH (Judges 12:5-6)</h5>
-                      <p className="text-xs">God's people used a <strong>secret password</strong> to identify true members of their group. The Gileadites asked fleeing Ephraimites to say "Shibboleth"—those who couldn't pronounce it correctly were identified as enemies. <strong>42,000 people died</strong> for not knowing the secret word. This demonstrates that secret identification practices are explicitly recorded and approved in Scripture.</p>
-                    </div>
-                    
-                    {/* Citations */}
-                    <div className="mt-4 p-3 rounded-lg bg-muted/30 border border-border text-xs space-y-1">
-                      <h5 className="font-semibold text-foreground mb-2">📚 Complete Scholarly Citations:</h5>
-                      <p><strong>PRIMARY:</strong> Montgomery, Dr. Lyman A. <em>Sacred Not Sinful</em>. Chapter on "Early Church Practices."</p>
-                      <p><strong>Hippolytus:</strong> <em>Apostolic Tradition</em> (c. 215 AD) — Most detailed ancient source on Christian initiation</p>
-                      <p><strong>Tertullian:</strong> <em>Apology</em> 7, 39 (c. 197 AD) — Defense of Christian secrecy</p>
-                      <p><strong>Cyril of Jerusalem:</strong> <em>Catechetical Lectures</em> & <em>Mystagogical Catecheses</em> (c. 350 AD)</p>
-                      <p><strong>Pliny the Younger:</strong> <em>Letters to Trajan</em> (c. 112 AD) — Roman official's account of Christian practices</p>
-                      <p><strong>Dölger, Franz Joseph:</strong> <em>ΙΧΘΥΣ: Das Fischsymbol in frühchristlicher Zeit</em>. Aschendorff, 1922.</p>
-                      <p><strong>Ferguson, Everett:</strong> <em>Backgrounds of Early Christianity</em>. 3rd ed. Eerdmans, 2003.</p>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="bottom-line" className="border-amber-500/20">
-                  <AccordionTrigger className="text-sm font-medium hover:no-underline">
-                    <span className="flex items-center gap-2">
-                      <BookOpen className="w-4 h-4 text-sacred" />
-                      The Bottom Line
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="text-sm">
-                    <div className="p-3 rounded-lg bg-sacred/5 border border-sacred/20">
-                      <p className="text-muted-foreground">
-                        <strong className="text-sacred">Greek letter organizations continue traditions with deep roots in Scripture and ancient culture.</strong> The question isn't whether fraternal bonds, initiations, or exclusive fellowship are biblical—they clearly are. The question is whether specific practices within any organization honor God and align with Christian conscience.
-                      </p>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </CardContent>
-          </Card>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
 
           {/* Councils Tabs */}
           <Tabs defaultValue="nphc" className="space-y-6">
