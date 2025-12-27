@@ -29,6 +29,13 @@ const ELEVENLABS_VOICES: Record<string, string> = {
   narrator3: "bIHbv24MWmeRgasZH58o", // Will - friendly, conversational
   narrator4: "nPczCjzI2devNBz1zQrb", // Brian - deep, resonant
   narrator5: "onwK4e9ZLuTAKqWW03F9", // Daniel - powerful, commanding
+  // Female voices
+  jessica: "cgSgspJ2msm6clMCkdW9", // Jessica - warm, expressive female
+  sarah: "EXAVITQu4vr4xnSDxMaL", // Sarah - clear, professional female
+  laura: "FGY2WhTYpPnrIDTdsKH5", // Laura - confident, articulate female
+  alice: "Xb7hH8MSUJpSbSDYk0k2", // Alice - friendly female
+  matilda: "XrExE9yKIg1WjnnlVkGX", // Matilda - warm, nurturing female
+  lily: "pFZP5JQG7iQjIQuC4Bku", // Lily - youthful, energetic female
 };
 
 serve(async (req) => {

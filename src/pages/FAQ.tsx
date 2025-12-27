@@ -1,8 +1,9 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Home, HelpCircle } from 'lucide-react';
+import { Home, HelpCircle, ChevronsDownUp, ChevronsUpDown } from 'lucide-react';
 
 const FAQ = () => {
   const faqs = [
@@ -101,6 +102,25 @@ const FAQ = () => {
     },
   ];
 
+  // Generate all accordion values for expand/collapse all
+  const allAccordionValues = faqs.flatMap((category, catIdx) => 
+    category.questions.map((_, qIdx) => `${catIdx}-${qIdx}`)
+  );
+
+  // Accordion state with localStorage persistence
+  const [accordionValues, setAccordionValues] = useState<string[]>(() => {
+    const saved = localStorage.getItem('faq-accordion-state');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // Persist accordion state
+  useEffect(() => {
+    localStorage.setItem('faq-accordion-state', JSON.stringify(accordionValues));
+  }, [accordionValues]);
+
+  const expandAll = () => setAccordionValues(allAccordionValues);
+  const collapseAll = () => setAccordionValues([]);
+
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-border bg-card">
@@ -129,12 +149,43 @@ const FAQ = () => {
             </p>
           </div>
 
+          {/* Expand/Collapse Controls */}
+          <div className="flex items-center justify-end gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={expandAll}
+              className="text-xs"
+            >
+              <ChevronsDownUp className="w-4 h-4 mr-1" />
+              Expand All
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={collapseAll}
+              className="text-xs"
+            >
+              <ChevronsUpDown className="w-4 h-4 mr-1" />
+              Collapse All
+            </Button>
+          </div>
+
           <Card>
             <CardContent className="pt-6">
               {faqs.map((category, categoryIndex) => (
                 <div key={categoryIndex} className="mb-8 last:mb-0">
                   <h2 className="text-2xl font-bold mb-4 text-sacred">{category.category}</h2>
-                  <Accordion type="single" collapsible className="w-full">
+                  <Accordion 
+                    type="multiple" 
+                    value={accordionValues.filter(v => v.startsWith(`${categoryIndex}-`))}
+                    onValueChange={(values) => {
+                      // Update only this category's values
+                      const otherValues = accordionValues.filter(v => !v.startsWith(`${categoryIndex}-`));
+                      setAccordionValues([...otherValues, ...values]);
+                    }}
+                    className="w-full"
+                  >
                     {category.questions.map((faq, faqIndex) => (
                       <AccordionItem key={faqIndex} value={`${categoryIndex}-${faqIndex}`}>
                         <AccordionTrigger className="text-left">

@@ -2,14 +2,41 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Heart, Users, HandHeart, MessageCircleHeart, BookOpen, Shield, ArrowRight } from "lucide-react";
+import { ListenButton } from "@/components/ListenButton";
 
 interface RenouncedSupportSectionProps {
   embedded?: boolean;
 }
 
 export const RenouncedSupportSection = ({ embedded = false }: RenouncedSupportSectionProps) => {
+  // Full text content for TTS
+  const ttsContent = `Supporting Those Who Have Renounced. A biblical framework for loving, supporting, and potentially winning back members who have left Greek life.
+
+The Sacred Greeks Position: We respect the sincere convictions of those who feel called to renounce their Greek affiliation. At the same time, we believe many renunciations stem from incomplete information, fear-based teaching, or unaddressed hurt. Our goal is not to argue but to love well—honoring their journey while keeping doors open.
+
+Understanding Their Journey: Why do people renounce? Some have sincere convictions, genuine concerns about specific rituals or oaths, or a desire to simplify spiritual commitments. Others face external pressures like fear-based teaching from spiritual leaders, social media influence, or pressure from new church communities. Some had negative experiences like hazing trauma or disappointment with chapter leadership. And some are experiencing spiritual growth and seeking radical obedience to Christ.
+
+The key insight from Romans chapter 14 verse 5: Each person should be fully convinced in their own mind. Whether they stay or leave, our calling is to support their spiritual journey, not win an argument.
+
+A Grace-Filled Response Framework: Step 1, Listen First. Before responding, truly hear their story. Step 2, Validate Their Conviction. Honor their sincerity even if you disagree. Step 3, Affirm the Friendship. Remind them your friendship isn't based on letters but on love. Step 4, Offer Resources if welcomed. Share perspectives gently when invited. Step 5, Keep the Door Open. Many who renounce later reconsider.
+
+Remember: Our ultimate goal is their spiritual health, not their organizational membership. If they're walking closely with Christ, we've succeeded regardless of their letters.`;
+
   const content = (
     <div className="space-y-4">
+      {/* Listen Button */}
+      <div className="flex items-center justify-between">
+        <ListenButton
+          text={ttsContent}
+          itemId="renounced-support-section"
+          title="Supporting Those Who Have Renounced"
+          voice="jessica"
+          showLabel={true}
+          size="sm"
+          variant="outline"
+        />
+      </div>
+
       {/* Introduction */}
       <div className="p-4 rounded-lg bg-muted/50 border border-border">
         <p className="text-sm text-muted-foreground">
