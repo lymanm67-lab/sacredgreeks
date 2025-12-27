@@ -2549,7 +2549,7 @@ const GreekLife = () => {
                     <p className="text-sm text-muted-foreground">Browse NPHC, NPC, IFC, and 12+ other councils with 200+ organizations</p>
                   </div>
                   {/* Expand hint - more visible */}
-                  <div className="expand-hint flex items-center gap-2 px-3 py-1.5 rounded-full bg-sacred/20 border border-sacred/30 text-xs text-sacred font-medium transition-opacity">
+                  <div className="expand-hint flex items-center gap-2 px-3 py-1.5 rounded-full bg-sacred border border-sacred/30 text-xs text-white font-medium transition-opacity">
                     <span className="animate-pulse">Click to explore</span>
                     <ArrowRight className="w-4 h-4 animate-[pulse_2s_ease-in-out_infinite]" />
                   </div>
