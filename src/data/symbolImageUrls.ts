@@ -64,6 +64,7 @@ import chiRhoSymbol from '@/assets/symbols/chi-rho-symbol.jpg';
 import ichthysFishSymbol from '@/assets/symbols/ichthys-fish-symbol.jpg';
 import deltaTriangleSymbol from '@/assets/symbols/delta-triangle-symbol.jpg';
 import torchFlameSymbol from '@/assets/symbols/torch-flame-symbol.jpg';
+import pyramidSymbol from '@/assets/symbols/pyramid.jpg';
 import laurelWreathSymbol from '@/assets/symbols/laurel-wreath-symbol.jpg';
 import handshakeGripSymbol from '@/assets/symbols/handshake-grip-symbol.jpg';
 import doveSymbol from '@/assets/symbols/dove-symbol.jpg';
@@ -137,7 +138,7 @@ export const symbolImageUrls: Record<string, string> = {
   "ichthys-fish-symbol": ichthysFishSymbol,
   "delta-triangle-symbol": deltaTriangleSymbol,
   "torch-flame-symbol": torchFlameSymbol,
-  "pyramid-symbol": sphinx, // Reusing sphinx image for pyramid
+  "pyramid-symbol": pyramidSymbol,
   "sphinx-symbol": sphinx,
   "laurel-wreath-symbol": laurelWreathSymbol,
   "handshake-grip-symbol": handshakeGripSymbol,
