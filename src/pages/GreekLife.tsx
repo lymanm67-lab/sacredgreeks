@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Home, Users, Shield, BookOpen, Compass, Heart, Award, ArrowRight, AlertTriangle, Calendar, Building2, GraduationCap, Star, Volume2, VolumeX, Loader2, FileDown, Mic, Church, Clock } from "lucide-react";
 import { SEOHead } from "@/components/SEOHead";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
@@ -79,7 +80,17 @@ const GreekLife = () => {
   const ttsContent = {
     introduction: `Fraternities are not a modern invention. The concept of koinonia, a Greek word meaning fellowship, partnership, or communion, appears over 20 times in the New Testament and describes the essential fraternal bond between believers. When Scripture commands believers to have koinonia with one another, it's commanding exactly what Greek letter organizations create: shared life, mutual support, common identity, and exclusive fellowship.`,
     
-    jesusGuild: `Jesus was a TEKTON, a Greek word translated as carpenter but more accurately meaning master builder or craftsman. Ancient craft guilds were fraternal organizations with secret initiations, proprietary techniques, coded language, oaths of loyalty, and special recognition grips. Carpenters and builders were essential for city defense, constructing walls, gates, and fortifications. Joseph trained Jesus in this guild system for approximately 18 years. This is documented in Mark 6:3 where Jesus is called "the tekton" and Matthew 13:55 where Joseph is called "the tekton."`,
+    jesusGuild: `Jesus was a TEKTON, a Greek word translated as carpenter but more accurately meaning master builder or craftsman. Ancient craft guilds were fraternal organizations with secret initiations, proprietary techniques, coded language, oaths of loyalty, and special recognition grips.
+    
+    Guild masters were highly selective, typically accepting only 1 to 3 apprentices at a time. Selection criteria included family lineage—sons of guild members received priority, which is how Joseph trained Jesus. Physical aptitude, moral character, and a recommendation from a current guild member were also required.
+    
+    Apprentices lived with the master in a practice called in contubernio, meaning sharing the same tent. This total immersion allowed learning from dawn to dusk, character observation over time, protection of trade secrets, and the formation of brotherhood bonds. Jesus likely lived in Joseph's workshop complex with other apprentices.
+    
+    Apprentices faced progressive testing ceremonies. The Silence Trial required candidates to observe work for weeks without speaking. The Menial Service involved months of carrying water, sweeping, and mixing materials to test humility. The Night Watch tested reliability by having candidates guard tools overnight. Finally, the Masterpiece Test required creating a work demonstrating mastery, evaluated by guild elders.
+    
+    Guild members used secret recognition systems essential when traveling to other cities. The Guild Grip was a distinctive handshake with specific finger positions—pressure on particular knuckles that only initiated members would recognize. Password phrases were coded greetings with expected responses. The Sign of the Square involved subtle hand gestures forming right angles, referencing the carpenter's square. Personal tools bore distinctive guild marks indicating affiliation, rank, and home region.
+    
+    From approximately age 12 to 30, Jesus underwent complete guild training under Joseph. He learned secret initiation rites, mastered coded language and recognition grips, lived in fraternal community with fellow apprentices, and achieved master craftsman status by age 30, as documented in Luke chapter 3 verse 23. If secret initiations, oaths, handgrips, and exclusive brotherhood were sinful, Jesus could not have participated for 18 years.`,
     
     carpenterInitiation: `Ancient carpenter guilds in the first century followed a structured initiation process documented in ancient texts. The selection process was rigorous. According to the Mishnah and Talmudic sources, apprentices typically began around age 12-13 following bar mitzvah, after demonstrating both physical capability and moral character. The guild master would observe the candidate for weeks, testing their patience, obedience, and natural aptitude with tools.
     
@@ -2429,50 +2440,91 @@ const GreekLife = () => {
                         <div className="my-4 p-4 rounded-xl bg-gradient-to-br from-amber-500/10 to-sacred/10 border border-amber-500/30">
                           <h5 className="font-semibold text-foreground text-center mb-4">Ancient Guild Membership Journey</h5>
                           <div className="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-1 text-xs">
-                            <div className="flex flex-col items-center text-center p-2 rounded-lg bg-background/50 min-w-[80px]">
-                              <div className="w-10 h-10 rounded-full bg-amber-500/30 flex items-center justify-center mb-1">
-                                <span className="text-amber-600 font-bold">1</span>
-                              </div>
-                              <span className="font-semibold">Selection</span>
-                              <span className="text-muted-foreground text-[10px]">Age 12-13</span>
-                            </div>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <div className="flex flex-col items-center text-center p-2 rounded-lg bg-background/50 min-w-[80px] cursor-pointer hover:bg-amber-500/10 transition-colors">
+                                  <div className="w-10 h-10 rounded-full bg-amber-500/30 flex items-center justify-center mb-1">
+                                    <span className="text-amber-600 font-bold">1</span>
+                                  </div>
+                                  <span className="font-semibold">Selection</span>
+                                  <span className="text-muted-foreground text-[10px]">Age 12-13</span>
+                                </div>
+                              </TooltipTrigger>
+                              <TooltipContent side="bottom" className="max-w-[200px] text-xs">
+                                <p className="font-semibold mb-1">Selection Process</p>
+                                <p>Only 1-3 apprentices accepted. Required: family lineage, physical aptitude, moral character, and a sponsor.</p>
+                              </TooltipContent>
+                            </Tooltip>
                             <ArrowRight className="w-4 h-4 text-amber-500 hidden sm:block" />
                             <div className="sm:hidden h-4 w-px bg-amber-500/50" />
-                            <div className="flex flex-col items-center text-center p-2 rounded-lg bg-background/50 min-w-[80px]">
-                              <div className="w-10 h-10 rounded-full bg-amber-500/40 flex items-center justify-center mb-1">
-                                <span className="text-amber-600 font-bold">2</span>
-                              </div>
-                              <span className="font-semibold">Testing</span>
-                              <span className="text-muted-foreground text-[10px]">1-3 Years</span>
-                            </div>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <div className="flex flex-col items-center text-center p-2 rounded-lg bg-background/50 min-w-[80px] cursor-pointer hover:bg-amber-500/10 transition-colors">
+                                  <div className="w-10 h-10 rounded-full bg-amber-500/40 flex items-center justify-center mb-1">
+                                    <span className="text-amber-600 font-bold">2</span>
+                                  </div>
+                                  <span className="font-semibold">Testing</span>
+                                  <span className="text-muted-foreground text-[10px]">1-3 Years</span>
+                                </div>
+                              </TooltipTrigger>
+                              <TooltipContent side="bottom" className="max-w-[200px] text-xs">
+                                <p className="font-semibold mb-1">Testing Ceremonies</p>
+                                <p>Silence Trial, Menial Service, Night Watch—progressively testing patience, humility, and reliability.</p>
+                              </TooltipContent>
+                            </Tooltip>
                             <ArrowRight className="w-4 h-4 text-amber-500 hidden sm:block" />
                             <div className="sm:hidden h-4 w-px bg-amber-500/50" />
-                            <div className="flex flex-col items-center text-center p-2 rounded-lg bg-background/50 min-w-[80px]">
-                              <div className="w-10 h-10 rounded-full bg-sacred/30 flex items-center justify-center mb-1">
-                                <span className="text-sacred font-bold">3</span>
-                              </div>
-                              <span className="font-semibold">Initiation</span>
-                              <span className="text-muted-foreground text-[10px]">Sacred Rites</span>
-                            </div>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <div className="flex flex-col items-center text-center p-2 rounded-lg bg-background/50 min-w-[80px] cursor-pointer hover:bg-sacred/10 transition-colors">
+                                  <div className="w-10 h-10 rounded-full bg-sacred/30 flex items-center justify-center mb-1">
+                                    <span className="text-sacred font-bold">3</span>
+                                  </div>
+                                  <span className="font-semibold">Initiation</span>
+                                  <span className="text-muted-foreground text-[10px]">Sacred Rites</span>
+                                </div>
+                              </TooltipTrigger>
+                              <TooltipContent side="bottom" className="max-w-[200px] text-xs">
+                                <p className="font-semibold mb-1">Sacred Initiation</p>
+                                <p>Ritual purification, sacred oaths, symbolic death/rebirth, secret handgrip, and receiving guild mark on tools.</p>
+                              </TooltipContent>
+                            </Tooltip>
                             <ArrowRight className="w-4 h-4 text-sacred hidden sm:block" />
                             <div className="sm:hidden h-4 w-px bg-sacred/50" />
-                            <div className="flex flex-col items-center text-center p-2 rounded-lg bg-background/50 min-w-[80px]">
-                              <div className="w-10 h-10 rounded-full bg-sacred/40 flex items-center justify-center mb-1">
-                                <span className="text-sacred font-bold">4</span>
-                              </div>
-                              <span className="font-semibold">Journeyman</span>
-                              <span className="text-muted-foreground text-[10px]">5-7 Years</span>
-                            </div>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <div className="flex flex-col items-center text-center p-2 rounded-lg bg-background/50 min-w-[80px] cursor-pointer hover:bg-sacred/10 transition-colors">
+                                  <div className="w-10 h-10 rounded-full bg-sacred/40 flex items-center justify-center mb-1">
+                                    <span className="text-sacred font-bold">4</span>
+                                  </div>
+                                  <span className="font-semibold">Journeyman</span>
+                                  <span className="text-muted-foreground text-[10px]">5-7 Years</span>
+                                </div>
+                              </TooltipTrigger>
+                              <TooltipContent side="bottom" className="max-w-[200px] text-xs">
+                                <p className="font-semibold mb-1">Journeyman Phase</p>
+                                <p>Lived with master (in contubernio). Learned sacred geometry, coded terms, and recognition grips for travel.</p>
+                              </TooltipContent>
+                            </Tooltip>
                             <ArrowRight className="w-4 h-4 text-sacred hidden sm:block" />
                             <div className="sm:hidden h-4 w-px bg-sacred/50" />
-                            <div className="flex flex-col items-center text-center p-2 rounded-lg bg-gradient-to-br from-amber-500/20 to-sacred/20 min-w-[80px]">
-                              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-sacred flex items-center justify-center mb-1">
-                                <Star className="w-5 h-5 text-white" />
-                              </div>
-                              <span className="font-semibold">Master</span>
-                              <span className="text-muted-foreground text-[10px]">Age 30+</span>
-                            </div>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <div className="flex flex-col items-center text-center p-2 rounded-lg bg-gradient-to-br from-amber-500/20 to-sacred/20 min-w-[80px] cursor-pointer hover:from-amber-500/30 hover:to-sacred/30 transition-colors">
+                                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-sacred flex items-center justify-center mb-1">
+                                    <Star className="w-5 h-5 text-white" />
+                                  </div>
+                                  <span className="font-semibold">Master</span>
+                                  <span className="text-muted-foreground text-[10px]">Age 30+</span>
+                                </div>
+                              </TooltipTrigger>
+                              <TooltipContent side="bottom" className="max-w-[200px] text-xs">
+                                <p className="font-semibold mb-1">Master Craftsman</p>
+                                <p>Created masterpiece evaluated by elders. Full access to all guild secrets. Could now train apprentices.</p>
+                              </TooltipContent>
+                            </Tooltip>
                           </div>
+                          <p className="text-[10px] text-center text-muted-foreground mt-2 italic">Tap/hover each stage for details</p>
                         </div>
 
                         {/* Selection Numbers */}
