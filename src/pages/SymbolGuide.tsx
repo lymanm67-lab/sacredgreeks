@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
-import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, ExternalLink, Share2, FileDown, Scale, History, Sparkles, Printer, Crown, Building, GraduationCap, Landmark, Users, Heart, Scroll, BookOpen, LayoutGrid, List, Filter } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, ExternalLink, Share2, FileDown, Scale, History, Sparkles, Printer, Crown, Building, GraduationCap, Landmark, Users, Heart, Scroll, BookOpen, LayoutGrid, List, Filter, Volume2, ArrowUpDown } from 'lucide-react';
 import { symbolGuideContent, ritualGuideContent, symbolCategories, customsSubcategories, culturalSubcategories, culturalComparisons, culturalComparisonCategories, SymbolEntry, RitualEntry, CulturalComparisonEntry } from '@/data/symbolGuideContent';
 import { getSymbolImageUrl } from '@/data/symbolImageUrls';
 import { ListenButton } from '@/components/ListenButton';
@@ -21,6 +21,9 @@ import BookmarkNotesDialog from '@/components/symbol-guide/BookmarkNotesDialog';
 import ShareBookmarksDialog from '@/components/symbol-guide/ShareBookmarksDialog';
 import PrintComparisonGuideDialog from '@/components/symbol-guide/PrintComparisonGuideDialog';
 import ExpandableImage from '@/components/symbol-guide/ExpandableImage';
+
+// Sorting options for Double Standards
+type ComparisonSortOption = 'category' | 'symbol-asc' | 'symbol-desc';
 
 
 const CautionBadge = ({ level }: { level: string }) => {
@@ -136,6 +139,7 @@ const SymbolGuide = () => {
   const [viewMode, setViewMode] = useState<'cards' | 'list'>('cards');
   const [activeTab, setActiveTab] = useState('symbols');
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
+  const [comparisonSort, setComparisonSort] = useState<ComparisonSortOption>('category');
   const [notesDialog, setNotesDialog] = useState<{
     open: boolean;
     itemId: string;
@@ -379,7 +383,7 @@ const SymbolGuide = () => {
   }, [searchQuery]);
 
   const filteredComparisons = useMemo(() => {
-    return culturalComparisons.filter(c => {
+    const filtered = culturalComparisons.filter(c => {
       const matchesCategory = comparisonCategory === 'all' || c.category === comparisonCategory;
       const matchesSearch = searchQuery === '' ||
         c.symbol.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -388,16 +392,34 @@ const SymbolGuide = () => {
         c.appUsage.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     });
-  }, [comparisonCategory, searchQuery]);
+    
+    // Apply sorting
+    return [...filtered].sort((a, b) => {
+      switch (comparisonSort) {
+        case 'symbol-asc':
+          return a.symbol.localeCompare(b.symbol);
+        case 'symbol-desc':
+          return b.symbol.localeCompare(a.symbol);
+        case 'category':
+        default:
+          return a.category.localeCompare(b.category);
+      }
+    });
+  }, [comparisonCategory, searchQuery, comparisonSort]);
 
   const renderComparisonCard = (comparison: CulturalComparisonEntry) => {
     const categoryLabel = culturalComparisonCategories.find(c => c.id === comparison.category)?.label || comparison.category;
+    const listenText = `${comparison.symbol}. Ancient Connection: ${comparison.ancientConnection}. How It Shows Up Today: ${comparison.modernUsage}. How This Helps You: ${comparison.appUsage}`;
+    
     return (
       <Card key={comparison.id} className="overflow-hidden">
         <CardHeader className="pb-2 bg-gradient-to-r from-sacred/5 to-warm-blue/5">
           <div className="flex items-start justify-between gap-2">
             <CardTitle className="text-lg">{comparison.symbol}</CardTitle>
-            <Badge variant="outline" className="w-fit capitalize shrink-0">{categoryLabel}</Badge>
+            <div className="flex items-center gap-2 shrink-0">
+              <ListenButton text={listenText} itemId={`comparison-${comparison.id}`} size="sm" showLabel={false} />
+              <Badge variant="outline" className="w-fit capitalize">{categoryLabel}</Badge>
+            </div>
           </div>
         </CardHeader>
         <CardContent className="space-y-4 pt-4">
@@ -954,15 +976,24 @@ const SymbolGuide = () => {
         </div>
 
         <Card className="mb-6 bg-gradient-to-r from-sacred/10 to-warm-blue/10 border-sacred/20">
-          <CardContent className="pt-6">
-            <h2 className="font-semibold mb-2">How to Use This Guide</h2>
-            <p className="text-sm text-muted-foreground">This guide provides Christian perspectives on common symbols, rituals, and cultural imagery. Each entry includes a caution level to help you think through participation. Remember: the goal is informed, prayerful decision-making—not fear or blanket condemnation.</p>
-            <div className="mt-4">
+          <CardContent className="pt-6 space-y-4">
+            <div>
+              <h2 className="font-semibold mb-2">How to Use This Guide</h2>
+              <p className="text-sm text-muted-foreground">This guide provides Christian perspectives on common symbols, rituals, and cultural imagery. Each entry includes a caution level to help you think through participation. Remember: the goal is informed, prayerful decision-making—not fear or blanket condemnation.</p>
+            </div>
+            <div className="flex flex-wrap items-center gap-3 pt-2 border-t">
+              <ListenButton 
+                text="How to Use This Guide. This guide provides Christian perspectives on common symbols, rituals, and cultural imagery. Each entry includes a caution level to help you think through participation. Remember: the goal is informed, prayerful decision-making—not fear or blanket condemnation."
+                itemId="symbol-guide-intro"
+                size="sm"
+              />
+              <span className="text-xs text-muted-foreground">Listen to guide intro</span>
+              <div className="flex-1" />
               <DiscernmentGuidanceDialog
                 trigger={
                   <Button variant="outline" size="sm" className="gap-2">
                     <Lightbulb className="w-4 h-4" />
-                    View Discernment Guidance & Response Templates
+                    View Discernment Guidance
                   </Button>
                 }
               />
@@ -1293,53 +1324,89 @@ const SymbolGuide = () => {
           </TabsContent>
 
           <TabsContent value="comparisons" className="space-y-4">
+            {/* Double Standards Introduction Card */}
             <Card className="mb-4 bg-gradient-to-r from-amber-500/10 to-sacred/10 border-sacred/20">
-              <CardContent className="pt-6">
+              <CardContent className="pt-6 space-y-4">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
                     <h3 className="font-semibold mb-2 flex items-center gap-2">
                       <Scale className="w-5 h-5 text-sacred" />
-                      Why This Matters
+                      The Double Standard Exposed
                     </h3>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      When Greek-letter organizations are criticized for using "pagan symbols," it often reveals an inconsistent standard. 
+                      Many of the same critics freely embrace other cultural elements with identical origins—from wedding traditions to corporate logos to church architecture.
+                    </p>
                     <p className="text-sm text-muted-foreground">
-                      Christians already use many symbols and practices with pre-Christian or pagan origins—from wedding rings to church architecture to brand logos. 
-                      These comparisons help expose inconsistent logic when Greek letters are singled out as "demonic" while other ancient symbols are freely embraced.
+                      This section compares common symbols and practices that Christians use daily without concern, showing their ancient origins 
+                      alongside Greek-letter imagery. The goal isn't to defend everything, but to encourage <strong>consistent, thoughtful evaluation</strong> rather than selective criticism.
                     </p>
                   </div>
-                  <PrintComparisonGuideDialog
-                    selectedCategory={comparisonCategory}
-                    trigger={
-                      <Button variant="outline" size="sm" className="gap-2 shrink-0">
-                        <Printer className="w-4 h-4" />
-                        Print Guide
-                      </Button>
-                    }
+                </div>
+                
+                {/* Listen Button for the introduction */}
+                <div className="flex items-center gap-2 pt-2 border-t">
+                  <ListenButton 
+                    text="The Double Standard Exposed. When Greek-letter organizations are criticized for using pagan symbols, it often reveals an inconsistent standard. Many of the same critics freely embrace other cultural elements with identical origins—from wedding traditions to corporate logos to church architecture. This section compares common symbols and practices that Christians use daily without concern, showing their ancient origins alongside Greek-letter imagery. The goal isn't to defend everything, but to encourage consistent, thoughtful evaluation rather than selective criticism."
+                    itemId="double-standard-intro"
+                    size="sm"
                   />
+                  <span className="text-xs text-muted-foreground">Listen to introduction</span>
                 </div>
               </CardContent>
             </Card>
             
-            <div className="flex items-center gap-4 mb-4">
-              <div className="flex items-center gap-2">
-                <Filter className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm font-medium">Category:</span>
+            {/* Filter and Sort Controls */}
+            <Card className="p-4 bg-muted/30 border">
+              <div className="flex flex-wrap items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <Filter className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-sm font-medium">Category:</span>
+                </div>
+                <Select value={comparisonCategory} onValueChange={setComparisonCategory}>
+                  <SelectTrigger className="w-[180px] bg-background">
+                    <SelectValue placeholder="Select category" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background border shadow-lg z-50">
+                    {culturalComparisonCategories.map(cat => (
+                      <SelectItem key={cat.id} value={cat.id}>
+                        {cat.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                
+                <div className="flex items-center gap-2 ml-auto sm:ml-0">
+                  <ArrowUpDown className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-sm font-medium">Sort:</span>
+                </div>
+                <Select value={comparisonSort} onValueChange={(v) => setComparisonSort(v as ComparisonSortOption)}>
+                  <SelectTrigger className="w-[160px] bg-background">
+                    <SelectValue placeholder="Sort by" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background border shadow-lg z-50">
+                    <SelectItem value="category">By Category</SelectItem>
+                    <SelectItem value="symbol-asc">A-Z (Symbol)</SelectItem>
+                    <SelectItem value="symbol-desc">Z-A (Symbol)</SelectItem>
+                  </SelectContent>
+                </Select>
+                
+                <div className="flex items-center gap-2 ml-auto">
+                  <Badge variant="secondary" className="bg-sacred/10 text-sacred">
+                    {filteredComparisons.length} results
+                  </Badge>
+                  <PrintComparisonGuideDialog
+                    selectedCategory={comparisonCategory}
+                    trigger={
+                      <Button variant="outline" size="sm" className="gap-2">
+                        <Printer className="w-4 h-4" />
+                        Print
+                      </Button>
+                    }
+                  />
+                </div>
               </div>
-              <Select value={comparisonCategory} onValueChange={setComparisonCategory}>
-                <SelectTrigger className="w-[200px] bg-background">
-                  <SelectValue placeholder="Select category" />
-                </SelectTrigger>
-                <SelectContent className="bg-background border shadow-lg z-50">
-                  {culturalComparisonCategories.map(cat => (
-                    <SelectItem key={cat.id} value={cat.id}>
-                      {cat.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Badge variant="secondary" className="bg-sacred/10 text-sacred">
-                {filteredComparisons.length} results
-              </Badge>
-            </div>
+            </Card>
             
             {filteredComparisons.length === 0 && (
               <Card className="p-8 text-center">

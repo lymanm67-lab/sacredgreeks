@@ -77,48 +77,116 @@ const REALTIME_KEYWORDS = [
   'latest news', 'recent news', 'current events', 'upcoming events',
   'national president', 'grand basileus', 'international president',
   'current grand', 'who is the president', 'current head',
-  'national convention', 'boule', 'conclave', 'centennial'
+  'national convention', 'boule', 'conclave', 'centennial',
+  'grand polemarch', 'supreme basileus', 'national director',
+  'executive director', 'board of directors', 'national board',
+  'founders day 2024', 'founders day 2025', 'conference 2024', 'conference 2025'
 ];
 
-// D9 organization search mappings
-const D9_SEARCH_TERMS: Record<string, string[]> = {
-  'alpha phi alpha': ['Alpha Phi Alpha', 'apa1906.net', 'Alphas'],
-  'alpha kappa alpha': ['Alpha Kappa Alpha', 'aka1908.com', 'AKA'],
-  'kappa alpha psi': ['Kappa Alpha Psi', 'kappaalphapsi1911.com', 'Kappas', 'Nupes'],
-  'omega psi phi': ['Omega Psi Phi', 'oppf.org', 'Ques', 'Omega'],
-  'delta sigma theta': ['Delta Sigma Theta', 'deltasigmatheta.org', 'Deltas'],
-  'phi beta sigma': ['Phi Beta Sigma', 'phibetasigma1914.org', 'Sigmas'],
-  'zeta phi beta': ['Zeta Phi Beta', 'zphib1920.org', 'Zetas'],
-  'sigma gamma rho': ['Sigma Gamma Rho', 'sgrho1922.org', 'SGRhos', 'Poodles'],
-  'iota phi theta': ['Iota Phi Theta', 'iotaphitheta.org', 'Iotas'],
-  'nphc': ['NPHC', 'nphchq.com', 'National Pan-Hellenic Council', 'Divine Nine']
+// D9 organization search mappings with official websites for scraping
+const D9_ORG_DATA: Record<string, { name: string; website: string; aliases: string[]; leadershipTitle: string }> = {
+  'alpha_phi_alpha': {
+    name: 'Alpha Phi Alpha Fraternity, Inc.',
+    website: 'https://apa1906.net',
+    aliases: ['alpha phi alpha', 'alphas', 'apa', 'alpha'],
+    leadershipTitle: 'General President'
+  },
+  'alpha_kappa_alpha': {
+    name: 'Alpha Kappa Alpha Sorority, Inc.',
+    website: 'https://aka1908.com',
+    aliases: ['alpha kappa alpha', 'akas', 'aka', 'skee-wee'],
+    leadershipTitle: 'International President'
+  },
+  'kappa_alpha_psi': {
+    name: 'Kappa Alpha Psi Fraternity, Inc.',
+    website: 'https://kappaalphapsi1911.com',
+    aliases: ['kappa alpha psi', 'kappas', 'nupes', 'kappa'],
+    leadershipTitle: 'Grand Polemarch'
+  },
+  'omega_psi_phi': {
+    name: 'Omega Psi Phi Fraternity, Inc.',
+    website: 'https://oppf.org',
+    aliases: ['omega psi phi', 'ques', 'omega', 'omegas', 'que dogs'],
+    leadershipTitle: 'Grand Basileus'
+  },
+  'delta_sigma_theta': {
+    name: 'Delta Sigma Theta Sorority, Inc.',
+    website: 'https://deltasigmatheta.org',
+    aliases: ['delta sigma theta', 'deltas', 'dst', 'delta'],
+    leadershipTitle: 'National President'
+  },
+  'phi_beta_sigma': {
+    name: 'Phi Beta Sigma Fraternity, Inc.',
+    website: 'https://phibetasigma1914.org',
+    aliases: ['phi beta sigma', 'sigmas', 'sigma', 'blue phi'],
+    leadershipTitle: 'International President'
+  },
+  'zeta_phi_beta': {
+    name: 'Zeta Phi Beta Sorority, Inc.',
+    website: 'https://zphib1920.org',
+    aliases: ['zeta phi beta', 'zetas', 'zeta', 'zpb'],
+    leadershipTitle: 'International President'
+  },
+  'sigma_gamma_rho': {
+    name: 'Sigma Gamma Rho Sorority, Inc.',
+    website: 'https://sgrho1922.org',
+    aliases: ['sigma gamma rho', 'sgrhos', 'poodles', 'sigma gamma'],
+    leadershipTitle: 'International Grand Basileus'
+  },
+  'iota_phi_theta': {
+    name: 'Iota Phi Theta Fraternity, Inc.',
+    website: 'https://iotaphitheta.org',
+    aliases: ['iota phi theta', 'iotas', 'iota'],
+    leadershipTitle: 'Grand Polaris'
+  },
+  'nphc': {
+    name: 'National Pan-Hellenic Council',
+    website: 'https://nphchq.com',
+    aliases: ['nphc', 'divine nine', 'd9', 'pan-hellenic'],
+    leadershipTitle: 'National President'
+  }
 };
 
-function detectRealtimeQuery(userMessage: string): { needsRealtime: boolean; searchQuery: string | null; orgName: string | null } {
+function detectRealtimeQuery(userMessage: string): { 
+  needsRealtime: boolean; 
+  searchQuery: string | null; 
+  orgName: string | null;
+  orgData: typeof D9_ORG_DATA[string] | null;
+  scrapeWebsite: boolean;
+} {
   const lowerMessage = userMessage.toLowerCase();
   
   // Check if message contains realtime keywords
   const hasRealtimeKeyword = REALTIME_KEYWORDS.some(keyword => lowerMessage.includes(keyword));
   
   if (!hasRealtimeKeyword) {
-    return { needsRealtime: false, searchQuery: null, orgName: null };
+    return { needsRealtime: false, searchQuery: null, orgName: null, orgData: null, scrapeWebsite: false };
   }
   
   // Find which organization is being asked about
-  for (const [key, terms] of Object.entries(D9_SEARCH_TERMS)) {
-    const isMatch = terms.some(term => lowerMessage.includes(term.toLowerCase()));
+  for (const [orgKey, orgData] of Object.entries(D9_ORG_DATA)) {
+    const isMatch = orgData.aliases.some(alias => lowerMessage.includes(alias));
     if (isMatch) {
-      const searchQuery = `${terms[0]} ${REALTIME_KEYWORDS.find(k => lowerMessage.includes(k)) || 'leadership'} 2024 2025`;
-      return { needsRealtime: true, searchQuery, orgName: terms[0] };
+      const matchedKeyword = REALTIME_KEYWORDS.find(k => lowerMessage.includes(k)) || 'leadership';
+      const searchQuery = `${orgData.name} ${matchedKeyword} 2024 2025`;
+      // If asking specifically about president/leader, try to scrape official website
+      const scrapeWebsite = lowerMessage.includes('president') || lowerMessage.includes('leader') || lowerMessage.includes('basileus') || lowerMessage.includes('polemarch');
+      return { needsRealtime: true, searchQuery, orgName: orgData.name, orgData, scrapeWebsite };
     }
   }
   
   // Generic D9/NPHC query
-  if (lowerMessage.includes('divine nine') || lowerMessage.includes('d9') || lowerMessage.includes('nphc')) {
-    return { needsRealtime: true, searchQuery: 'NPHC Divine Nine leadership news 2024 2025', orgName: 'NPHC/Divine Nine' };
+  if (lowerMessage.includes('divine nine') || lowerMessage.includes('d9')) {
+    return { 
+      needsRealtime: true, 
+      searchQuery: 'NPHC Divine Nine leadership news 2024 2025', 
+      orgName: 'NPHC/Divine Nine',
+      orgData: D9_ORG_DATA.nphc,
+      scrapeWebsite: false
+    };
   }
   
-  return { needsRealtime: false, searchQuery: null, orgName: null };
+  return { needsRealtime: false, searchQuery: null, orgName: null, orgData: null, scrapeWebsite: false };
 }
 
 async function searchNPHCInfo(query: string): Promise<string | null> {
@@ -208,14 +276,15 @@ serve(async (req) => {
     let realtimeContext = '';
     
     if (latestUserMessage) {
-      const { needsRealtime, searchQuery, orgName } = detectRealtimeQuery(latestUserMessage.content);
+      const { needsRealtime, searchQuery, orgName, orgData } = detectRealtimeQuery(latestUserMessage.content);
       
       if (needsRealtime && searchQuery) {
         console.log(`Real-time query detected for: ${orgName}`);
         const searchResults = await searchNPHCInfo(searchQuery);
         
         if (searchResults) {
-          realtimeContext = `\n\n**REAL-TIME SEARCH RESULTS (Use this for current/recent information about ${orgName}):**\n${searchResults}\n\n**Note:** The above information was retrieved from a live web search. Use it to answer questions about current leadership, recent news, or events. Always cite the source when using this information.`;
+          const leadershipHint = orgData ? `\nLeadership title for this organization: ${orgData.leadershipTitle}` : '';
+          realtimeContext = `\n\n**REAL-TIME SEARCH RESULTS (Use this for current/recent information about ${orgName}):**\n${searchResults}${leadershipHint}\n\n**Note:** The above information was retrieved from a live web search. Use it to answer questions about current leadership, recent news, or events. Always cite the source when using this information.`;
           console.log('Real-time context added to prompt');
         }
       }
