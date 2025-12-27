@@ -3847,9 +3847,9 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
     id: "cosmetics",
     category: "beauty",
     symbol: "Eye Shadow and Cosmetics",
-    ancientConnection: "Eye paints and kohl-lined eyes were ordinary in Egypt and the Mediterranean, associated with beauty, rank, and, at times, spiritual ideas.",
+    ancientConnection: "In ancient Egypt, cosmetics were sacred tools of divine connection. Malachite green eye paint honored Hathor, goddess of beauty and love, while black galena kohl invoked the Eye of Horus for protection. Priestesses applied elaborate face paint before entering temples to commune with Isis and Osiris. Red ochre lip and cheek color represented the blood of Ra and was used in resurrection rituals. Cosmetics were placed in tombs as essential items for the afterlife journey to the gods.",
     modernUsage: "Makeup is everyday for interviews, worship teams, media, and daily life.",
-    appUsage: "Invite users to ask, 'If we can use ancient cosmetic practices with wisdom, why single out Greek letters alone?'"
+    appUsage: "Invite users to ask, 'If we can use cosmetics created for Hathor worship and Horus protection rituals, why single out Greek letters alone?'"
   },
   // Brands and Logos
   {
@@ -3991,33 +3991,33 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
     id: "eyeliner-kohl",
     category: "beauty",
     symbol: "Eyeliner (Kohl)",
-    ancientConnection: "Ancient Egyptians applied kohl around their eyes to honor the gods Ra and Horus. The distinctive 'cat eye' was believed to invoke the Eye of Horus for protection and was associated with Isis and Hathor. Both men and women wore it in religious ceremonies.",
+    ancientConnection: "Kohl was one of ancient Egypt's most sacred cosmetics, deeply tied to divine worship. The distinctive almond-shaped 'Eye of Horus' liner was believed to channel the falcon god's protective power and ward off evil spirits. Egyptians believed applying kohl connected them to Ra, the sun god, and Hathor, goddess of beauty. Temple priests and priestesses applied kohl daily as part of ritual purification before serving the gods. The practice was so sacred that kohl pots were buried with the dead to ensure divine protection in the afterlife.",
     modernUsage: "Eyeliner is a basic cosmetic used in church choirs, professional settings, and daily life. Winged eyeliner remains popular.",
-    appUsage: "If kohl—originally applied to invoke Egyptian deities—is acceptable, why are Greek letters uniquely problematic?"
+    appUsage: "If kohl—originally applied to invoke the Eye of Horus and connect to Ra and Hathor—is acceptable, why are Greek letters uniquely problematic?"
   },
   {
     id: "eye-shadow-expanded",
     category: "beauty",
     symbol: "Eye Shadow and Face Paint",
-    ancientConnection: "Egyptians used malachite (green) and galena (black) eye paints in religious rituals honoring Isis, Osiris, and other deities. Priestesses painted their faces for temple worship. Blue eye shadow honored Amun-Ra.",
+    ancientConnection: "Egyptian eye paints were inseparable from temple worship. Green malachite shadow was sacred to Hathor and Isis, applied to invoke their blessings of fertility and magic. Black galena around the eyes created the 'Wedjat' or Eye of Horus, believed to grant divine sight and protection. Blue eye paint honored Amun-Ra, king of the gods, and was worn by pharaohs claiming divine right. Priestesses spent hours applying ceremonial face paint before performing rituals to Osiris in the temples. These colors represented cosmic forces—green for rebirth, black for the fertile Nile mud, blue for the heavens.",
     modernUsage: "Eye shadow and makeup are worn in worship services, on praise teams, and in Christian media without spiritual concern.",
-    appUsage: "Cosmetics with explicit deity-worship origins are universally accepted while Greek organizational symbols are questioned."
+    appUsage: "Cosmetics with explicit Isis, Hathor, and Amun-Ra worship origins are universally accepted while Greek organizational symbols are questioned."
   },
   {
     id: "hoop-earrings",
     category: "beauty",
     symbol: "Hoop Earrings",
-    ancientConnection: "Originated in ancient Sumeria around 2500 BCE and became prominent in Egypt, where they symbolized status and were associated with goddess worship. Egyptian depictions show Isis and Hathor wearing large gold hoops. In some cultures, hoops were believed to ward off evil spirits.",
+    ancientConnection: "Hoop earrings held profound sacred meaning in ancient Egypt, representing the sun disk of Ra and the eternal cycle of divine creation. Gold hoops were offerings to Hathor, goddess of beauty and love, and depictions show Isis wearing large hoops as symbols of her divine femininity and cosmic power. Egyptian queens like Nefertiti and Cleopatra wore hoops to channel goddess energy. The circular shape represented Ma'at—divine order and truth—and was believed to create a protective barrier against evil spirits. Temple priestesses wore golden hoops during rituals invoking the goddesses.",
     modernUsage: "Hoop earrings are standard fashion worn in churches, including by pastors, worship leaders, and first ladies.",
-    appUsage: "Jewelry with goddess-worship and spirit-protection origins is worn without question in sacred spaces."
+    appUsage: "Jewelry sacred to Hathor and Isis, symbolizing Ra's sun disk and divine protection, is worn without question in sacred spaces."
   },
   {
     id: "braids-locs",
     category: "beauty",
     symbol: "Braids, Locs, and Protective Styles",
-    ancientConnection: "Egyptian royalty and priestesses wore intricate braids to honor deities. Specific braid patterns were associated with Isis worship and indicated social/spiritual status. Locs have ancient African spiritual significance. Cornrows were used in African spiritual ceremonies.",
+    ancientConnection: "In ancient Egypt, hairstyles were sacred markers of divine connection. Intricate braids were worn by priestesses of Isis, with specific patterns indicating their rank in temple hierarchy and their closeness to the goddess. The 'sidelock of youth' was sacred to Horus, worn by royal children under divine protection. Queens like Nefertiti wore elaborate braided styles during religious ceremonies honoring Hathor. Nubian and Egyptian locs were associated with spiritual power and connection to ancestral spirits. Cornrow patterns in African traditions often represented cosmological concepts and were created during spiritual ceremonies.",
     modernUsage: "Braids, locs, twists, and protective styles are celebrated in Black churches and worn by clergy, choirs, and congregations.",
-    appUsage: "Hairstyles with deep spiritual and deity-worship origins are embraced in Christian culture without theological debate."
+    appUsage: "Hairstyles sacred to Isis and Horus, created in temple rituals and representing divine connection, are embraced in Christian culture without theological debate."
   },
   {
     id: "wigs-expanded",
@@ -4031,17 +4031,17 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
     id: "perfume-incense",
     category: "beauty",
     symbol: "Perfume and Fragrant Oils",
-    ancientConnection: "Egyptians created perfumes as offerings to Isis, Osiris, and Ra. Kyphi was a sacred incense burned in temples. Anointing oils were used in mummification and deity worship. The word 'perfume' comes from Latin 'per fumum' (through smoke)—referring to burning offerings to gods.",
+    ancientConnection: "Perfume was among the most sacred elements of Egyptian temple worship. Kyphi, the legendary Egyptian incense, was burned nightly in temples to honor Ra as the sun set and to invoke Isis and Osiris. Fragrant oils were anointed on statues of gods during daily temple rituals. The 'Perfume of the Gods' was a sacred blend offered exclusively to deities. Myrrh was sacred to Ra, frankincense to Amun, and lotus oil to Isis. Egyptian priests were perfumed before entering the inner sanctum, believing fragrance purified them for divine presence. The word 'perfume' derives from Latin 'per fumum' (through smoke)—referring to burning offerings to the gods.",
     modernUsage: "Christians wear perfume, use anointing oil, and burn incense (in liturgical traditions) as part of worship.",
-    appUsage: "Fragrance practices originating in deity worship are fully integrated into Christian practice and commerce."
+    appUsage: "Fragrance practices created for Ra, Isis, and Osiris worship are fully integrated into Christian practice and commerce."
   },
   {
     id: "nail-polish",
     category: "beauty",
     symbol: "Nail Polish and Manicures",
-    ancientConnection: "Ancient Babylonians and Egyptians painted nails to indicate class and invoke divine favor. In Egypt, red nails were reserved for royalty and associated with Isis. Chinese dynasties used nail color in religious ceremonies.",
+    ancientConnection: "In ancient Egypt, nail color was a sacred indicator of divine favor and royal authority. Red nails were exclusively reserved for royalty and the priesthood, representing the blood of Isis and her regenerative power. Cleopatra famously wore deep red nails as a symbol of her divine right to rule. Henna was applied to nails and hands in rituals honoring Hathor, goddess of beauty. The practice of staining nails was believed to channel goddess energy and protect against evil spirits. Lower classes were forbidden from wearing red nails—a color sacred to the gods.",
     modernUsage: "Nail polish is worn in churches, by worship leaders, and in Christian professional settings.",
-    appUsage: "Another beauty practice with deity-worship origins that is universally accepted in Christian culture."
+    appUsage: "Nail coloring sacred to Isis and reserved for those claiming divine authority is universally accepted in Christian culture."
   },
   // Fashion Brand Logos with Ancient/Pagan Origins
   {
