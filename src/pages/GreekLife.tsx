@@ -10,9 +10,7 @@ import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useAuth } from "@/contexts/AuthContext";
 import { useState, useRef } from "react";
 import { toast } from "sonner";
-import { ApologeticsCard } from "@/components/ApologeticsCard";
 import { HistoricalTimeline } from "@/components/HistoricalTimeline";
-import { DisciplinaArcaniSection } from "@/components/DisciplinaArcaniSection";
 
 interface Organization {
   name: string;
@@ -2702,53 +2700,64 @@ const GreekLife = () => {
           {/* Historical Timeline - Priority: keep visible */}
           <HistoricalTimeline />
 
-          {/* Disciplina Arcani Explanation - Collapsed in the component itself */}
-          <DisciplinaArcaniSection />
-
-
-          {/* Bible Study Generator - Move to dedicated page link */}
-          <Card className="border-emerald-500/30 bg-gradient-to-br from-emerald-500/5 to-background">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-emerald-500/10">
-                    <BookOpen className="w-6 h-6 text-emerald-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-foreground">P.R.O.O.F. Bible Study & Scripture Flashcards</h3>
-                    <p className="text-sm text-muted-foreground">5-week curriculum and gamified Scripture memory</p>
-                  </div>
+          {/* Quick Links to Related Resources */}
+          <Card className="border-muted">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Compass className="w-5 h-5 text-sacred" />
+                Related Resources
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="grid sm:grid-cols-2 gap-3">
+              <Link 
+                to="/bible-study" 
+                className="flex items-center gap-3 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 hover:bg-emerald-500/20 transition-colors group"
+              >
+                <BookOpen className="w-5 h-5 text-emerald-600" />
+                <div className="flex-1">
+                  <span className="font-medium text-sm">Bible Study & Apologetics</span>
+                  <p className="text-xs text-muted-foreground">Scripture flashcards, P.R.O.O.F. curriculum</p>
                 </div>
-                <Button asChild>
-                  <Link to="/bible-study">
-                    Open Bible Study <ArrowRight className="w-4 h-4 ml-2" />
-                  </Link>
-                </Button>
-              </div>
+                <ArrowRight className="w-4 h-4 text-emerald-600 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              
+              <Link 
+                to="/symbols" 
+                className="flex items-center gap-3 p-3 rounded-lg bg-purple-500/10 border border-purple-500/30 hover:bg-purple-500/20 transition-colors group"
+              >
+                <Shield className="w-5 h-5 text-purple-600" />
+                <div className="flex-1">
+                  <span className="font-medium text-sm">Symbols & Rituals Guide</span>
+                  <p className="text-xs text-muted-foreground">Disciplina Arcani, cultural analysis</p>
+                </div>
+                <ArrowRight className="w-4 h-4 text-purple-600 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              
+              <Link 
+                to="/anti-hazing" 
+                className="flex items-center gap-3 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 transition-colors group"
+              >
+                <AlertTriangle className="w-5 h-5 text-amber-600" />
+                <div className="flex-1">
+                  <span className="font-medium text-sm">Anti-Hazing Hub</span>
+                  <p className="text-xs text-muted-foreground">Prevention resources, support for those who renounced</p>
+                </div>
+                <ArrowRight className="w-4 h-4 text-amber-600 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              
+              <Link 
+                to="/the-book" 
+                className="flex items-center gap-3 p-3 rounded-lg bg-sacred/10 border border-sacred/30 hover:bg-sacred/20 transition-colors group"
+              >
+                <BookOpen className="w-5 h-5 text-sacred" />
+                <div className="flex-1">
+                  <span className="font-medium text-sm">Sacred, Not Sinful Book</span>
+                  <p className="text-xs text-muted-foreground">Full book with audiobook narration</p>
+                </div>
+                <ArrowRight className="w-4 h-4 text-sacred group-hover:translate-x-1 transition-transform" />
+              </Link>
             </CardContent>
           </Card>
-
-          {/* Apologetics PDF Generator - Collapsed */}
-          <ApologeticsCard />
-
-          {/* Anti-Hazing Alert */}
-          <Link 
-            to="/anti-hazing" 
-            className="flex items-center gap-3 p-4 rounded-lg bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 transition-colors group"
-          >
-            <div className="p-2 rounded-lg bg-amber-500/20">
-              <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
-            </div>
-            <div className="flex-1">
-              <span className="font-medium text-amber-700 dark:text-amber-300">
-                Anti-Hazing Resources & Prevention
-              </span>
-              <p className="text-xs text-amber-600/80 dark:text-amber-400/80">
-                Biblical guidance and practical resources for a hazing-free Greek experience
-              </p>
-            </div>
-            <ArrowRight className="w-4 h-4 text-amber-600 dark:text-amber-400 group-hover:translate-x-1 transition-transform" />
-          </Link>
 
           {/* Councils Tabs */}
           <Tabs defaultValue="nphc" className="space-y-6">
