@@ -3638,5 +3638,126 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
     ancientConnection: "Ancient Babylonians and Egyptians painted nails to indicate class and invoke divine favor. In Egypt, red nails were reserved for royalty and associated with Isis. Chinese dynasties used nail color in religious ceremonies.",
     modernUsage: "Nail polish is worn in churches, by worship leaders, and in Christian professional settings.",
     appUsage: "Another beauty practice with deity-worship origins that is universally accepted in Christian culture."
+  },
+  // Fashion Brand Logos with Ancient/Pagan Origins
+  {
+    id: "nike-logo",
+    category: "fashion",
+    symbol: "Nike Swoosh & Brand",
+    ancientConnection: "Nike is the Greek goddess of victory, daughter of the Titan Pallas and the goddess Styx. She was worshipped extensively in ancient Greece, depicted with wings, and had temples dedicated to her on the Acropolis. The famous 'swoosh' represents her wing.",
+    modernUsage: "Christians wear Nike apparel to church, during worship, and in daily life. The brand is ubiquitous in Christian sports ministries and church athletic programs.",
+    appUsage: "If wearing a brand literally named after a Greek goddess with her wing as a logo is acceptable, Greek organizational letters cannot be uniquely condemned."
+  },
+  {
+    id: "starbucks-logo",
+    category: "fashion",
+    symbol: "Starbucks Siren Logo",
+    ancientConnection: "The Starbucks logo is a two-tailed siren (mermaid), derived from Greek mythology. Sirens were dangerous sea creatures who lured sailors to destruction with enchanting music. The image is based on a 16th-century Norse woodcut of a melusine, connected to pagan sea goddess traditions.",
+    modernUsage: "Churches host Bible studies at Starbucks. Pastors drink Starbucks during sermons. Church staff bring Starbucks to meetings. The brand sponsors Christian conferences.",
+    appUsage: "A logo depicting a pagan mythological creature is accepted in sacred spaces while Greek letters are questioned."
+  },
+  {
+    id: "versace-logo",
+    category: "fashion",
+    symbol: "Versace Medusa Logo",
+    ancientConnection: "Versace's logo is Medusa, the Gorgon from Greek mythology whose gaze turned people to stone. Medusa was a monster in Greek religion, and her image was used as a protective amulet (gorgoneion) to ward off evil in ancient Greek temples and armor.",
+    modernUsage: "Versace apparel is worn by celebrities, athletes, and Christians. The Medusa logo appears on clothing, accessories, and fragrance worn to church and Christian events.",
+    appUsage: "Wearing a literal Greek monster-goddess on your clothing receives no theological scrutiny, yet Greek letters do."
+  },
+  {
+    id: "hermes-logo",
+    category: "fashion",
+    symbol: "Hermès Brand",
+    ancientConnection: "Hermès is named directly after the Greek god Hermes—messenger of the gods, guide of souls to the underworld, and god of commerce and thieves. The brand's logo features a horse and carriage, and the entire company honors this deity's name.",
+    modernUsage: "Hermès scarves, bags, and accessories are worn by Christian women in churches, at Christian conferences, and in ministry settings.",
+    appUsage: "A brand literally named after a Greek god is worn without concern while Greek organizational names face scrutiny."
+  },
+  {
+    id: "pandora-logo",
+    category: "fashion",
+    symbol: "Pandora Jewelry",
+    ancientConnection: "Pandora was the first human woman in Greek mythology, created by the gods to punish humanity. Zeus gave her a jar (mistranslated as 'box') containing all the world's evils. The name means 'all-gifted' and she was central to Greek religious explanation of suffering.",
+    modernUsage: "Pandora bracelets and charms are popular gifts among Christian women, worn in churches, and given at Christian celebrations.",
+    appUsage: "Jewelry named after a central figure in Greek religious mythology is embraced while Greek organizational symbols face rejection."
+  },
+  {
+    id: "amazon-logo",
+    category: "fashion",
+    symbol: "Amazon Brand",
+    ancientConnection: "Amazon is named after the Amazons—a tribe of warrior women in Greek mythology who worshipped Artemis (goddess of the hunt) and Ares (god of war). They were enemies of the Greeks and featured prominently in Greek religious stories and temple art.",
+    modernUsage: "Christians order Bibles, worship materials, and ministry supplies from Amazon. Churches have Amazon accounts. The brand is integral to modern Christian commerce.",
+    appUsage: "A company named after Greek mythological worshippers of pagan deities is central to Christian life, yet Greek letters are suspect."
+  },
+  {
+    id: "nike-goddess-directly",
+    category: "fashion",
+    symbol: "Goddess Victoria/Nike in Culture",
+    ancientConnection: "The Romans adopted Nike as Victoria, goddess of victory. Her image appears on the Victoria Cross, the Academy Award Oscar statue, the Rolls-Royce Spirit of Ecstasy, and countless war memorials. She represents pagan divine intervention in human affairs.",
+    modernUsage: "Christians display Victoria imagery, accept Academy Awards, and drive luxury cars with goddess figures without theological concern.",
+    appUsage: "Goddess imagery in prestigious cultural symbols is accepted while Greek organizational heritage is questioned."
+  },
+  {
+    id: "mars-candy",
+    category: "fashion",
+    symbol: "Mars, Incorporated",
+    ancientConnection: "Mars is the Roman god of war, equivalent to Greek Ares. Mars candy (M&Ms, Snickers, Milky Way) is named after this deity. The Roman month of March is also named for Mars, and he was considered the father of Romulus and Remus in Roman religion.",
+    modernUsage: "Christians eat Mars candy products, use them in church events, and give them as gifts. Churches serve M&Ms at fellowship events.",
+    appUsage: "Consuming products named after the Roman god of war receives no scrutiny while Greek organizational names are debated."
+  },
+  {
+    id: "ajax-cleaner",
+    category: "fashion",
+    symbol: "Ajax Brand",
+    ancientConnection: "Ajax was a Greek hero and warrior who fought in the Trojan War, worshipped as a cult figure in parts of ancient Greece. He was the subject of religious veneration and had shrines dedicated to him.",
+    modernUsage: "Christians clean their homes and churches with Ajax products without considering the mythological origin.",
+    appUsage: "Household products named after Greek religious figures are used in church buildings while Greek letters face scrutiny."
+  },
+  {
+    id: "trident-gum",
+    category: "fashion",
+    symbol: "Trident Gum",
+    ancientConnection: "The trident is the three-pronged spear of Poseidon/Neptune, Greek/Roman god of the sea. The trident was a sacred symbol in ancient religion, used in temple worship and as a symbol of divine power over the oceans.",
+    modernUsage: "Christians chew Trident gum without theological concern. The trident symbol appears on buildings, logos, and jewelry worn by Christians.",
+    appUsage: "A symbol of a pagan sea god's weapon is marketed and consumed by Christians while Greek organizational symbols are questioned."
+  },
+  {
+    id: "goodyear-tires",
+    category: "fashion",
+    symbol: "Goodyear Winged Foot Logo",
+    ancientConnection: "The Goodyear logo features the winged sandal of Hermes (Mercury), the Greek messenger god. The winged foot was a sacred symbol representing divine speed and the god's role as guide of souls to the underworld.",
+    modernUsage: "Christians drive on Goodyear tires, displaying this pagan symbol on their vehicles, including when driving to church.",
+    appUsage: "A direct symbol of a Greek god adorns Christian vehicles while Greek organizational symbols face theological objection."
+  },
+  {
+    id: "adidas-logo",
+    category: "fashion",
+    symbol: "Adidas Three Stripes",
+    ancientConnection: "While Adidas itself was named after founder Adi Dassler, the three-stripe mountain logo has been connected to mystical symbolism. The athletic brand competes directly with Nike (goddess-named) and sponsors athletes who are revered with near-religious devotion.",
+    modernUsage: "Adidas is worn by Christians in churches, youth groups, and Christian athletic programs without theological concern.",
+    appUsage: "Athletic brands operating in the same space as goddess-named competitors are accepted while Greek letters face scrutiny."
+  },
+  {
+    id: "midas-auto",
+    category: "fashion",
+    symbol: "Midas Auto Service",
+    ancientConnection: "King Midas was a figure in Greek mythology granted the power by Dionysus to turn everything he touched to gold. The Midas myth was part of Greek religious teaching about the dangers of greed and the power of the gods.",
+    modernUsage: "Christians take their cars to Midas without considering the mythological connection. The 'Midas touch' phrase is used positively in Christian business contexts.",
+    appUsage: "A business named after a Greek mythological figure blessed by a pagan god operates without scrutiny while Greek organizational names face questions."
+  },
+  {
+    id: "venus-razors",
+    category: "fashion",
+    symbol: "Venus Razors (Gillette)",
+    ancientConnection: "Venus was the Roman goddess of love, beauty, and fertility, equivalent to Greek Aphrodite. She was worshipped in temples throughout the Roman Empire, and her cult involved sacred prostitution and religious festivals.",
+    modernUsage: "Christian women use Venus razors without theological concern. The product is marketed using goddess-of-beauty imagery.",
+    appUsage: "A product named after a pagan goddess of love and beauty, whose worship included sexual rituals, is used by Christians while Greek letters are questioned."
+  },
+  {
+    id: "atlas-brand",
+    category: "fashion",
+    symbol: "Atlas in Branding",
+    ancientConnection: "Atlas was a Titan in Greek mythology condemned to hold up the sky. He was a pre-Olympian deity worshipped in some Greek traditions. Atlas imagery appears in countless brands, buildings, and corporate logos.",
+    modernUsage: "Atlas is used in maps, moving companies, fitness brands, and corporate logos encountered daily by Christians.",
+    appUsage: "A Titan from Greek religion appears in everyday branding that Christians use without scrutiny."
   }
 ];
