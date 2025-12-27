@@ -1940,6 +1940,153 @@ const GreekLife = () => {
             </p>
           </div>
 
+          {/* Ancient Fraternities Introduction */}
+          <Card className="border-amber-500/30 bg-gradient-to-br from-amber-500/5 to-background">
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-amber-500/10">
+                  <BookOpen className="w-6 h-6 text-amber-600 dark:text-amber-400" />
+                </div>
+                <div>
+                  <CardTitle className="text-amber-700 dark:text-amber-300">Ancient Fraternities: A Biblical Foundation</CardTitle>
+                  <CardDescription>Understanding the deep roots of fraternal organizations in Scripture and ancient culture</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="prose prose-sm dark:prose-invert max-w-none">
+                <p className="text-muted-foreground leading-relaxed">
+                  <strong className="text-foreground">Fraternities are not a modern invention.</strong> The concept of <em>koinonia</em> (κοινωνία)—Greek for "fellowship," "partnership," or "communion"—appears over 20 times in the New Testament and describes the essential fraternal bond between believers. When Scripture commands believers to have "koinonia with one another," it's commanding exactly what Greek letter organizations create: shared life, mutual support, common identity, and exclusive fellowship.
+                </p>
+                
+                <div className="my-4 p-4 rounded-lg bg-sacred/5 border border-sacred/20">
+                  <h4 className="font-semibold text-sacred mb-2 flex items-center gap-2">
+                    <Users className="w-4 h-4" />
+                    Jesus: Master Craftsman & Guild Member
+                  </h4>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Jesus was a <strong>TEKTON</strong> (τέκτων)—translated "carpenter" but more accurately "master builder" or "craftsman." Ancient craft guilds were <strong>FRATERNAL ORGANIZATIONS</strong> with:
+                  </p>
+                  <ul className="text-sm text-muted-foreground space-y-1 ml-4 list-disc">
+                    <li><strong>Secret initiations</strong> and proprietary techniques passed from master to apprentice</li>
+                    <li><strong>Coded language</strong> and guild terminology (Jesus's parables reveal insider knowledge: "building on rock vs sand," "cornerstone rejected by builders")</li>
+                    <li><strong>Oaths of loyalty</strong> and trade secrets sworn to protect</li>
+                    <li><strong>Strategic importance</strong>: Carpenters/builders were essential for city defense, constructing walls, gates, siege equipment, and fortifications</li>
+                    <li><strong>Special recognition grips</strong> to identify fellow guild craftsmen</li>
+                  </ul>
+                  <p className="text-sm text-muted-foreground mt-3 italic">
+                    Joseph trained Jesus in this guild system for approximately 18 years. If guild membership with its secret elements was acceptable for the Son of God, it cannot be inherently sinful for Greek organization members.
+                  </p>
+                </div>
+
+                <Accordion type="single" collapsible className="w-full">
+                  <AccordionItem value="religious-sects">
+                    <AccordionTrigger className="text-sm font-medium">
+                      Religious Sects & Fraternities of Jesus's Time
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                      <div className="grid gap-3 md:grid-cols-2">
+                        <div className="p-3 rounded-lg bg-muted/50">
+                          <h5 className="font-semibold text-foreground">Pharisees</h5>
+                          <p className="text-xs">A religious <strong>FRATERNITY</strong> with secret teachings (oral Torah), initiation processes, distinctive dress, and hierarchical ranks. Paul boasted of his Pharisee membership even after conversion (Acts 23:6).</p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-muted/50">
+                          <h5 className="font-semibold text-foreground">Sadducees</h5>
+                          <p className="text-xs">An <strong>ELITE PRIESTLY BROTHERHOOD</strong> with hereditary membership, secret Temple rituals, and exclusive access to the Holy of Holies. Zechariah received Gabriel's announcement as a Sadducee priest.</p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-muted/50">
+                          <h5 className="font-semibold text-foreground">Essenes</h5>
+                          <p className="text-xs">A <strong>SECRET MONASTIC BROTHERHOOD</strong> with 1-3 year initiation periods, oath ceremonies, progressive secret doctrines, distinctive white robes, and communal property. They produced the Dead Sea Scrolls.</p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-muted/50">
+                          <h5 className="font-semibold text-foreground">Zealots</h5>
+                          <p className="text-xs">A <strong>SECRET POLITICAL-RELIGIOUS FRATERNITY</strong> with blood oaths, code names, and covert meetings. <strong>Simon the Zealot</strong> was one of Jesus's twelve apostles, keeping his fraternity identifier (Luke 6:15).</p>
+                        </div>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="ancient-guilds">
+                    <AccordionTrigger className="text-sm font-medium">
+                      Ancient Professional Guilds in Scripture
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                      <p>The Bible records numerous professional guilds with fraternal structures:</p>
+                      <div className="grid gap-2 md:grid-cols-3">
+                        <div className="p-2 rounded bg-muted/30 text-xs">
+                          <strong>Stonemasons</strong> - Built Solomon's Temple with secret marks and guild techniques (1 Kings 5-6)
+                        </div>
+                        <div className="p-2 rounded bg-muted/30 text-xs">
+                          <strong>Fishermen Guild</strong> - Peter, James, John were "koinonoi" (guild partners) - Luke 5:10
+                        </div>
+                        <div className="p-2 rounded bg-muted/30 text-xs">
+                          <strong>Tax Collectors</strong> - Matthew hosted his guild brothers for dinner with Jesus (Mark 2:15)
+                        </div>
+                        <div className="p-2 rounded bg-muted/30 text-xs">
+                          <strong>Tentmakers</strong> - Paul worked with Aquila/Priscilla through guild connections (Acts 18:3)
+                        </div>
+                        <div className="p-2 rounded bg-muted/30 text-xs">
+                          <strong>Metalworkers</strong> - Tubal-Cain's descendants, Bezalel for the Tabernacle (Exodus 31:1-5)
+                        </div>
+                        <div className="p-2 rounded bg-muted/30 text-xs">
+                          <strong>Prophetic Guilds</strong> - "Sons of the Prophets" under Samuel, Elijah, Elisha (2 Kings 2:3-7)
+                        </div>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="roman-greek">
+                    <AccordionTrigger className="text-sm font-medium">
+                      Roman Collegia & Greek Thiasoi
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                      <p>The early church emerged within and adapted existing fraternal structures:</p>
+                      <div className="space-y-2">
+                        <div className="p-3 rounded-lg bg-muted/50">
+                          <h5 className="font-semibold text-foreground">Roman Collegia (Trade Guilds)</h5>
+                          <p className="text-xs">Professional associations with patron deities, initiation rituals, common meals, burial funds, and mutual aid. The early church was often mistaken for—or structured like—a collegium. Paul's tentmaker guild would have had regular meetings, shared meals, and mutual obligations.</p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-muted/50">
+                          <h5 className="font-semibold text-foreground">Greek Thiasoi (Religious Fraternities)</h5>
+                          <p className="text-xs">Voluntary religious associations devoted to a deity, with initiation rites, sacred meals, hierarchies, and fellowship. The term "ekklesia" (church) was borrowed from Greek civic assemblies. Early house churches functioned similarly to thiasoi—intimate gatherings with shared rituals and exclusive membership.</p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-muted/50">
+                          <h5 className="font-semibold text-foreground">Synagogues as Local Fraternities</h5>
+                          <p className="text-xs">Each synagogue was a <strong>BROTHERHOOD</strong> with membership requirements, initiation (circumcision + mikvah), distinctive practices, leadership hierarchies, and discipline for members. Jesus attended synagogue weekly. Paul started his missionary work in synagogues.</p>
+                        </div>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="early-church">
+                    <AccordionTrigger className="text-sm font-medium">
+                      Early Church Secret Practices
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                      <p>The early church itself functioned as a secret society during persecution:</p>
+                      <ul className="space-y-2 ml-4 list-disc">
+                        <li><strong>Secret Handshakes:</strong> The "tickle palm grip" traced half an ichthys fish; if the other person completed it, they were confirmed believers</li>
+                        <li><strong>Secret Password:</strong> "MARANATHA" (1 Cor 16:22) was an insider term—Paul didn't translate it, assuming readers knew</li>
+                        <li><strong>Secret Symbol:</strong> The ICHTHYS fish with hidden acronym meaning (Jesus Christ, God's Son, Savior)</li>
+                        <li><strong>Holy Kiss:</strong> A ritual greeting commanded 5 times in Scripture (Romans 16:16, etc.)</li>
+                        <li><strong>Initiation Rites:</strong> Catechumens underwent 1-3 years of preparation, fasting, exorcism, disrobing, anointing, new names, and white robes</li>
+                      </ul>
+                      <p className="mt-2 text-xs italic border-t pt-2 border-border">
+                        Biblical precedent: Judges 12:5-6 records God's people using "SHIBBOLETH" as a secret password—42,000 died for not knowing it. Secret identification practices are explicitly recorded in Scripture.
+                      </p>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+
+                <div className="mt-4 p-3 rounded-lg bg-sacred/5 border border-sacred/20 text-sm">
+                  <p className="text-muted-foreground">
+                    <strong className="text-sacred">The Bottom Line:</strong> Greek letter organizations continue traditions with deep roots in Scripture and ancient culture. The question isn't whether fraternal bonds, initiations, or exclusive fellowship are biblical—they clearly are. The question is whether specific practices within any organization honor God and align with Christian conscience.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Anti-Hazing Alert */}
           <Link 
             to="/anti-hazing" 

@@ -2694,6 +2694,132 @@ export const symbolGuideContent: SymbolEntry[] = [
     doubleStandard: "God established a hereditary fraternity with initiation rituals, secrets, distinctive dress, and exclusive membership for His most sacred purposes. Yet Christians condemn Greek organizations for similar structures."
   },
   // =====================================================
+  // ANCIENT PROFESSIONAL GUILDS
+  // =====================================================
+  {
+    id: "metalworker-guild",
+    name: "Metalworkers Guild (Smiths & Forgers)",
+    category: "symbols",
+    description: "METALWORKERS were organized in HEREDITARY GUILDS with SECRET TECHNIQUES passed through bloodlines. Tubal-Cain (Genesis 4:22) was the 'forger of all instruments of bronze and iron'—the FOUNDER of the metalworking guild. Bezalel and Oholiab were MASTER CRAFTSMEN chosen by God for Tabernacle work, filled with the 'Spirit of God' for their GUILD SKILLS (Exodus 31:1-5). Metalworking required PROPRIETARY KNOWLEDGE of alloys, temperatures, and techniques guarded as TRADE SECRETS. Ancient smiths were considered to have MAGICAL POWERS because they transformed rock into weapons and tools. The Kenites (descendants of Cain) were a metalworker clan who maintained guild traditions for centuries.",
+    christianPerspective: "God FILLED Bezalel with the Holy Spirit specifically for GUILD SKILLS—metalworking, craftsmanship, and teaching others the trade. The Spirit's filling was for SECRET TECHNICAL KNOWLEDGE passed to apprentices. If guild secrecy was evil, God wouldn't have empowered it with His Spirit. Greek organizations with trade knowledge and mentorship follow this divine pattern.",
+    cautionLevel: "low",
+    scriptureReferences: ["Genesis 4:22", "Exodus 31:1-11", "Exodus 35:30-35", "Judges 1:16", "1 Samuel 13:19-22"],
+    doubleStandard: "God filled craftsmen with His Spirit for guild work including secret techniques. The Holy Spirit empowered trade knowledge. Yet Christians condemn Greek organizations for having specialized knowledge."
+  },
+  {
+    id: "weaver-guild",
+    name: "Weavers & Textile Guild",
+    category: "symbols",
+    description: "WEAVERS were organized in powerful GUILDS that controlled textile production across the ancient world. The Tabernacle curtains required MASTER WEAVERS with SECRET TECHNIQUES for working with blue, purple, and scarlet thread (Exodus 26:1). Lydia was a 'seller of purple'—a member of the elite PURPLE DYE GUILD in Thyatira (Acts 16:14). Purple dye production was a CLOSELY GUARDED SECRET worth more than gold. Weavers had GUILD HALLS, INITIATION PROCESSES for apprentices, and DISTINCTIVE MARKS on their fabrics. Proverbs 31's 'virtuous woman' was essentially a GUILD MASTER who 'works with willing hands' and 'makes linen garments and sells them' (Prov 31:13, 24).",
+    christianPerspective: "Lydia—the first European convert—was a GUILD MEMBER in the purple dye trade. Paul met her at her guild's place of prayer. Her guild connections became the foundation of the Philippian church. God used a FRATERNAL TRADE NETWORK for gospel expansion. Greek organizations similarly create networks for Kingdom purposes.",
+    cautionLevel: "low",
+    scriptureReferences: ["Exodus 26:1", "Acts 16:14-15", "Proverbs 31:13-24", "Acts 18:3"],
+    doubleStandard: "The first European church was founded through a guild member's trade network. Lydia's purple dye fraternity became a gospel avenue. Yet Christians condemn Greek organization networks."
+  },
+  {
+    id: "potter-guild",
+    name: "Potters Guild (Clay Workers)",
+    category: "symbols",
+    description: "POTTERS were organized in HEREDITARY GUILDS with SECRET CLAY FORMULAS, firing techniques, and glazing methods. 1 Chronicles 4:23 records 'the potters...they lived there with the king for his work'—ROYAL GUILD POTTERS with special status. Jeremiah visited 'the potter's house' (Jeremiah 18:1-6)—likely a GUILD WORKSHOP where God taught him about divine sovereignty. Potter families passed PROPRIETARY KNOWLEDGE through generations. Each region's potters had DISTINCTIVE STYLES and MAKER'S MARKS identifying their guild. The 'Potter's Field' (Matthew 27:7) was guild property where potters extracted clay. God Himself is called 'the Potter' (Isaiah 64:8)—using GUILD LANGUAGE to describe His creative work.",
+    christianPerspective: "God uses POTTER GUILD imagery to describe Himself shaping humanity. Jeremiah received divine revelation at a GUILD WORKSHOP. Scripture borrows guild terminology for theology. If guild structures with their secrets and techniques were evil, God wouldn't use them as metaphors for His own work.",
+    cautionLevel: "low",
+    scriptureReferences: ["Jeremiah 18:1-6", "Isaiah 64:8", "Romans 9:21", "1 Chronicles 4:23", "Matthew 27:7"],
+    doubleStandard: "God identifies Himself as a POTTER—using guild imagery—and taught Jeremiah at a guild workshop. Yet Christians condemn Greek organizations for having professional structures."
+  },
+  {
+    id: "physician-guild",
+    name: "Physicians Guild (Healers)",
+    category: "symbols",
+    description: "PHYSICIANS were organized in GUILDS with SECRET MEDICAL KNOWLEDGE, initiation oaths, and proprietary treatments. The HIPPOCRATIC OATH was a GUILD INITIATION OATH invoking Apollo, Asclepius, and other healing deities—yet became foundational to Western medicine. Luke was 'the beloved physician' (Colossians 4:14)—a GUILD-TRAINED DOCTOR. Ancient physician guilds had APPRENTICESHIP SYSTEMS, EXCLUSIVE KNOWLEDGE of treatments, and ETHICAL CODES binding members. Egyptian physician guilds specialized by body part—each with SECRET TECHNIQUES. Greek healing temples (Asclepieia) functioned as MEDICAL FRATERNITIES training physicians through ritual and practice.",
+    christianPerspective: "Luke the physician wrote two New Testament books—Gospel of Luke and Acts. His GUILD TRAINING shaped his detailed, orderly approach (Luke 1:3). Paul called him 'beloved,' not 'former physician' or 'repentant guild member.' Luke's medical fraternity background was ASSET not liability for Kingdom work. Greek organizations with professional training serve similar purposes.",
+    cautionLevel: "low",
+    scriptureReferences: ["Colossians 4:14", "Luke 1:1-4", "Mark 5:26", "Jeremiah 8:22", "Matthew 9:12"],
+    doubleStandard: "Luke the physician—trained in guilds that invoked pagan healing gods—wrote Scripture. His medical fraternity background was never condemned. Yet Christians question Greek organizational membership."
+  },
+  {
+    id: "perfumer-guild",
+    name: "Perfumers & Apothecaries Guild",
+    category: "symbols",
+    description: "PERFUMERS (apothecaries) were organized in GUILDS with SECRET FORMULAS for sacred and commercial products. Exodus 30:25 commands 'a perfumer' (roqeach) to make holy anointing oil—using GUILD EXPERTISE for sacred purposes. Nehemiah 3:8 mentions 'Hananiah, one of the perfumers' working on Jerusalem's walls—identified by his GUILD MEMBERSHIP. 1 Chronicles 9:30 records priests who were 'appointed to mix the spices'—a PRIESTLY PERFUMERS GUILD. Ancient perfume formulas were worth fortunes and guarded as TRADE SECRETS for generations. Mary's expensive perfume (John 12:3) was GUILD-PRODUCED requiring specialized knowledge of nard extraction.",
+    christianPerspective: "God COMMANDED the use of guild expertise for creating the MOST SACRED OIL in Israel. Perfumers are identified by GUILD MEMBERSHIP in Scripture. The holy anointing oil—used on the Tabernacle, priests, and kings—required TRADE SECRET KNOWLEDGE to produce. God sanctified guild work for His holiest purposes.",
+    cautionLevel: "low",
+    scriptureReferences: ["Exodus 30:22-33", "Nehemiah 3:8", "1 Chronicles 9:30", "John 12:3", "Song of Songs 3:6"],
+    doubleStandard: "God commanded guild perfumers to create the holiest oil in Israel. Scripture identifies workers by guild membership. Yet Christians condemn Greek organization identification."
+  },
+  {
+    id: "dyer-guild",
+    name: "Dyers Guild (Color Workers)",
+    category: "symbols",
+    description: "DYERS were organized in SECRETIVE GUILDS because color production required PROPRIETARY CHEMICAL KNOWLEDGE worth fortunes. Lydia's PURPLE DYE GUILD in Thyatira was legendary—purple required crushing thousands of murex snails with SECRET PROCESSING TECHNIQUES. Biblical blue (tekhelet) for priestly garments required GUARDED KNOWLEDGE of the hilazon creature and dyeing process—so secret it was LOST for 1,300 years. Dyers worked in designated quarters (often smelly areas) and married within guilds to protect TRADE SECRETS. The 'scarlet thread' throughout Scripture (Rahab, Tamar, Tabernacle) came from GUILD DYE MASTERS with secret cochineal processing.",
+    christianPerspective: "The colors of the Tabernacle and priestly garments—representing God's holiness—required SECRET GUILD KNOWLEDGE to produce. Blue, purple, and scarlet weren't generic colors but PROPRIETARY PRODUCTS of specialized guilds. God's worship required trade secrets. Greek organizations with specialized knowledge continue this pattern.",
+    cautionLevel: "low",
+    scriptureReferences: ["Acts 16:14", "Exodus 25:4", "Numbers 15:38", "Joshua 2:18", "Proverbs 31:22"],
+    doubleStandard: "The most sacred colors in Israel's worship required guarded guild secrets to produce. God's Tabernacle depended on trade secrets. Yet Christians condemn Greek organizations for having specialized knowledge."
+  },
+  {
+    id: "musician-guild",
+    name: "Musicians Guild (Temple Singers)",
+    category: "symbols",
+    description: "TEMPLE MUSICIANS were organized in HEREDITARY GUILDS under Asaph, Heman, and Jeduthun (1 Chronicles 25). These were PROFESSIONAL FRATERNITIES with TRAINING SYSTEMS, SPECIALIZED KNOWLEDGE of instruments and songs, and EXCLUSIVE ACCESS to Temple worship. 'All these were under the direction of their father for the music' (1 Chron 25:6)—MASTER-APPRENTICE GUILD STRUCTURE. Musicians were 'set apart for the service' (1 Chron 25:1)—CONSECRATED GUILD MEMBERS with special status. David organized 288 SKILLED musicians plus 4,000 Levitical musicians—a massive MUSICAL FRATERNITY with hierarchies and specialized roles. Psalms 42-49 are 'of the Sons of Korah'—a MUSICIAN GUILD'S songbook.",
+    christianPerspective: "God ESTABLISHED musician guilds for Temple worship with hereditary membership, training hierarchies, and exclusive access to sacred music. The Psalms include GUILD SONGBOOKS (Sons of Korah, Sons of Asaph). If professional fraternities with training and exclusivity were evil, God wouldn't have instituted them for worship.",
+    cautionLevel: "low",
+    scriptureReferences: ["1 Chronicles 25:1-31", "1 Chronicles 6:31-47", "Psalm 42-49", "2 Chronicles 5:12-13", "Nehemiah 12:46"],
+    doubleStandard: "God established musician guilds with hereditary membership and training hierarchies for His worship. Temple music required fraternal structure. Yet Christians condemn Greek organizations for similar structures."
+  },
+  {
+    id: "scribe-guild",
+    name: "Scribes Guild (Sopherim)",
+    category: "symbols",
+    description: "SCRIBES were organized in PROFESSIONAL GUILDS (sopherim) with SECRET KNOWLEDGE of copying, interpreting, and teaching Torah. 1 Chronicles 2:55 identifies 'the families of scribes who lived at Jabez'—HEREDITARY SCRIBE GUILDS in specific locations. Ezra was 'a scribe skilled in the Law of Moses' (Ezra 7:6)—GUILD-TRAINED with specialized expertise. Scribal guilds had INITIATION PROCESSES, counting techniques (gematria), and PROPRIETARY METHODS for preserving texts. Jesus criticized scribes' HYPOCRISY, not their guild structure—'The scribes and Pharisees sit on Moses' seat' (Matt 23:2) acknowledged their LEGITIMATE AUTHORITY. Scribes counted every letter of Scripture using SECRET VERIFICATION METHODS.",
+    christianPerspective: "Jesus acknowledged scribal GUILD AUTHORITY ('sit on Moses' seat') while criticizing their hypocrisy. The distinction is crucial: the STRUCTURE was legitimate; the ABUSE was condemned. Scribal guilds preserved Scripture for millennia using secret techniques. Greek organizations' structures aren't evil—only potential misuse requires discernment.",
+    cautionLevel: "low",
+    scriptureReferences: ["1 Chronicles 2:55", "Ezra 7:6", "Matthew 23:2", "Matthew 13:52", "Jeremiah 8:8"],
+    doubleStandard: "Jesus endorsed scribal guild authority while condemning hypocrisy. The structure was legitimate; abuse was wrong. Yet Christians condemn Greek organization structures rather than addressing specific issues."
+  },
+  // =====================================================
+  // ROMAN COLLEGIA & GREEK THIASOI
+  // =====================================================
+  {
+    id: "roman-collegia",
+    name: "Roman Collegia (Trade Guilds)",
+    category: "symbols",
+    description: "ROMAN COLLEGIA were professional associations that provided the STRUCTURAL MODEL for early Christian churches. These guilds had PATRON DEITIES, INITIATION CEREMONIES, COMMON MEALS, BURIAL FUNDS, and MUTUAL AID—elements the church adapted. Paul's tentmaker guild (Acts 18:3) would have been a COLLEGIUM with regular meetings, shared meals, and fraternal obligations. The Roman government often confused early Christians with collegia because they functioned similarly. Collegia had OFFICERS (magistri), TREASURIES, MEETING HALLS, and MEMBERSHIP REQUIREMENTS. The church borrowed this organizational structure while changing the object of devotion from pagan gods to Christ.",
+    christianPerspective: "The early church ADOPTED collegium structure for Christian purposes. Meeting patterns, common meals (agape feasts), mutual aid, and organizational hierarchy came from Roman guild models. Paul used his COLLEGIUM CONNECTIONS throughout his ministry for housing, work, and mission support. The structure was redeemed, not rejected.",
+    cautionLevel: "low",
+    scriptureReferences: ["Acts 18:1-4", "Acts 20:7", "1 Corinthians 11:17-34", "Acts 2:44-47", "Romans 16:3-5"],
+    doubleStandard: "The early church adopted Roman guild structures for Christian worship and community. Collegia models shaped church organization. Yet Christians condemn Greek organizations for similar fraternal structures."
+  },
+  {
+    id: "greek-thiasoi",
+    name: "Greek Thiasoi (Religious Fraternities)",
+    category: "symbols",
+    description: "THIASOI (θίασοι) were voluntary religious associations devoted to a deity, with INITIATION RITES, SACRED MEALS, HIERARCHIES, and FELLOWSHIP. The term 'EKKLESIA' (church) was borrowed from Greek civic assemblies—the early church used existing vocabulary. House churches functioned similarly to thiasoi—intimate gatherings with shared rituals, exclusive membership, and mutual obligations. Thiasoi had 'MYSTERIES' (mysteria) revealed progressively to members—Paul uses this same language: 'stewards of the mysteries of God' (1 Cor 4:1). The Dionysian thiasoi, Orphic mysteries, and philosophical schools all influenced how early Christians organized.",
+    christianPerspective: "Christianity emerged within Greek culture and ADAPTED thiasoi structures for gospel purposes. Paul speaks of 'MYSTERIES' revealed to initiates (1 Cor 2:7, Eph 3:3-4, Col 1:26). The church used religious fraternity language and structure while transforming its content. Greek letter organizations continue this adaptation of cultural forms for community purposes.",
+    cautionLevel: "low",
+    scriptureReferences: ["1 Corinthians 4:1", "1 Corinthians 2:7", "Ephesians 3:3-4", "Colossians 1:26-27", "Romans 16:25"],
+    doubleStandard: "Paul used Greek religious fraternity language ('mysteries revealed to initiates') for Christian theology. The church adopted thiasoi structures. Yet Christians condemn Greek organizations for similar fraternal patterns."
+  },
+  {
+    id: "gymnasium-brotherhood",
+    name: "Greek Gymnasium (Athletic Fraternities)",
+    category: "symbols",
+    description: "GREEK GYMNASIUMS were FRATERNAL INSTITUTIONS combining athletics, education, and social bonding. Paul uses GYMNASIUM LANGUAGE extensively: 'I discipline my body' (1 Cor 9:27), 'run the race' (Heb 12:1), 'train yourself for godliness' (1 Tim 4:7—gymnaze is literally 'gymnasium training'). Gymnasiums had INITIATION into membership, TRAINING HIERARCHIES, DISTINCTIVE PRACTICES, and EXCLUSIVE ACCESS. Young men formed LIFELONG BONDS through gymnasium brotherhood. The gymnasium was central to Greek civic life—Jews who Hellenized often joined. Paul never condemns the gymnasium; he ADOPTS its language for spiritual training.",
+    christianPerspective: "Paul used GYMNASIUM FRATERNITY language for Christian discipleship. 'Training' (gymnaze), 'athlete,' 'race,' 'prize,' and 'discipline' all come from athletic brotherhood culture. Paul didn't reject the fraternal athletic model—he TRANSFORMED it for spiritual purposes. Greek organizations with training, discipline, and brotherhood continue this pattern.",
+    cautionLevel: "low",
+    scriptureReferences: ["1 Corinthians 9:24-27", "1 Timothy 4:7-8", "2 Timothy 2:5", "Hebrews 12:1-2", "Philippians 3:14"],
+    doubleStandard: "Paul adopted gymnasium fraternity language for Christian discipleship. Athletic brotherhood became a model for spiritual training. Yet Christians condemn Greek organizations for similar fraternal structures."
+  },
+  {
+    id: "philosophical-schools",
+    name: "Philosophical Schools (Academic Fraternities)",
+    category: "symbols",
+    description: "GREEK PHILOSOPHICAL SCHOOLS were ACADEMIC FRATERNITIES with INITIATION into membership, SECRET DOCTRINES revealed progressively, MASTER-DISCIPLE relationships, COMMON LIFE, and DISTINCTIVE PRACTICES. Plato's Academy, Aristotle's Lyceum, Epicurean Gardens, and Stoic Porches all functioned as INTELLECTUAL BROTHERHOODS. Students lived together, ate together, and formed LIFELONG BONDS. Paul debated 'Epicurean and Stoic philosophers' (Acts 17:18)—engaging academic fraternities on their own ground. The church adopted the SCHOOL MODEL for Christian education: catechetical schools, master-disciple training, and systematic doctrine.",
+    christianPerspective: "The early church ADOPTED philosophical school structures for Christian education. Catechetical schools in Alexandria, Antioch, and elsewhere followed academic fraternity models. Clement, Origen, and church fathers used philosophical training methods. Jesus Himself was called 'Rabbi' (teacher) with disciples in the master-pupil tradition. Greek organizations with educational missions continue this pattern.",
+    cautionLevel: "low",
+    scriptureReferences: ["Acts 17:18-34", "Acts 19:9-10", "Matthew 23:8", "John 1:38", "Acts 22:3"],
+    doubleStandard: "Jesus used master-disciple school models. Paul engaged philosophical fraternities. The church adopted academic brotherhood structures. Yet Christians condemn Greek organizations for similar educational patterns."
+  },
+  // =====================================================
   // CUSTOMS - Roots of Modern Traditions
   // =====================================================
   {
