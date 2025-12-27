@@ -2238,6 +2238,9 @@ const GreekLife = () => {
             </p>
           </div>
 
+          {/* Historical Timeline - At top of page */}
+          <HistoricalTimeline />
+
           {/* Ancient Fraternities Introduction - Accordion Style */}
           <Card className="border-amber-500/30 bg-gradient-to-br from-amber-500/5 to-background">
             <CardHeader className="pb-2">
@@ -2696,9 +2699,6 @@ const GreekLife = () => {
               </Accordion>
             </CardContent>
           </Card>
-
-          {/* Historical Timeline - Priority: keep visible */}
-          <HistoricalTimeline />
 
           {/* Councils Tabs */}
           <Tabs defaultValue="nphc" className="space-y-6">
