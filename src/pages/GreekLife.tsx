@@ -13,7 +13,6 @@ import { toast } from "sonner";
 import { ApologeticsCard } from "@/components/ApologeticsCard";
 import { HistoricalTimeline } from "@/components/HistoricalTimeline";
 import { RenouncedSupportSection } from "@/components/RenouncedSupportSection";
-import { ApologeticsQuickReference } from "@/components/ApologeticsQuickReference";
 import { DisciplinaArcaniSection } from "@/components/DisciplinaArcaniSection";
 
 interface Organization {
@@ -2703,9 +2702,6 @@ const GreekLife = () => {
 
           {/* Historical Timeline - Priority: keep visible */}
           <HistoricalTimeline />
-
-          {/* Apologetics Quick Reference Accordion - Collapsed by default */}
-          <ApologeticsQuickReference />
 
           {/* Disciplina Arcani Explanation - Collapsed in the component itself */}
           <DisciplinaArcaniSection />
