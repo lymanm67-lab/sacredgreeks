@@ -149,6 +149,15 @@ export const symbolGuideContent: SymbolEntry[] = [
     christianPerspective: "Unity events celebrate shared values and community. Christians can participate while maintaining their distinct witness and using these as opportunities for relationship-building and testimony.",
     cautionLevel: "low"
   },
+  {
+    id: "sands-line-brothers-sisters",
+    name: "Sands / Line Brothers & Sisters",
+    category: "cultural",
+    description: "In Divine Nine organizations, 'Sands' refers to the person or persons initiated with you—those who 'crossed the burning sands' together during the initiation process. The term signifies a lifelong bond forged through shared experience. Line brothers (fraternities) and line sisters (sororities) share this unique connection.",
+    christianPerspective: "The bond between Sands mirrors biblical concepts of covenant friendship and brothers/sisters in Christ who share formative spiritual experiences together. Just as believers who are baptized together or endure trials together often share special bonds, Sands relationships reflect the power of shared journey. David and Jonathan's covenant friendship demonstrates how deep bonds can form through shared experiences.",
+    cautionLevel: "low",
+    scripturalContext: "1 Samuel 18:1 - 'Jonathan became one in spirit with David, and he loved him as himself.' Ecclesiastes 4:9-10 - 'Two are better than one... If either of them falls down, one can help the other up.'"
+  },
   // Fraternity-Specific Symbols
   {
     id: "lamp-symbol",
