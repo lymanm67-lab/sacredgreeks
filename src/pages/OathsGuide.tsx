@@ -270,7 +270,7 @@ export default function OathsGuide() {
     <main className="container mx-auto px-4 py-8">
       <header className="mb-6">
         <div className="flex items-center gap-3">
-          <Link to="/symbol-guide" aria-label="Back to Symbol & Ritual Guide">
+          <Link to="/symbol-guide" aria-label="Back to Symbols and Rituals Guide">
             <Button variant="ghost" size="icon">
               <ArrowLeft className="w-5 h-5" />
             </Button>

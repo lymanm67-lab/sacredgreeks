@@ -2370,7 +2370,7 @@ const GreekLife = () => {
   const resources = [
     {
       icon: BookOpen,
-      title: "Symbol & Ritual Guide",
+      title: "Symbols and Rituals Guide",
       description: "Biblical analysis of common Greek symbols and rituals",
       link: "/symbol-guide"
     },
@@ -3601,7 +3601,7 @@ const GreekLife = () => {
               >
                 <BookOpen className="w-5 h-5 text-blue-600 shrink-0" />
                 <div className="flex-1 min-w-0">
-                  <span className="font-medium text-sm block">Symbol & Ritual Guide</span>
+                  <span className="font-medium text-sm block">Symbols and Rituals Guide</span>
                   <p className="text-xs text-muted-foreground truncate">Biblical analysis of Greek symbols</p>
                 </div>
                 <ArrowRight className="w-4 h-4 text-blue-600 group-hover:translate-x-1 transition-transform shrink-0" />

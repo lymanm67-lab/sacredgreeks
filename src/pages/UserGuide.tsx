@@ -189,7 +189,7 @@ const guideContent = [
   },
   {
     id: "symbol-guide",
-    title: "Symbol & Ritual Guide",
+    title: "Symbols and Rituals Guide",
     icon: Sparkles,
     screenshot: symbolGuideScreenshot,
     description: "Christian perspectives on Greek symbolism with guidance",
