@@ -15,7 +15,7 @@ interface ListenButtonProps {
   text: string;
   itemId: string;
   title?: string;
-  voice?: "alloy" | "echo" | "fable" | "nova" | "onyx" | "shimmer";
+  voice?: "alloy" | "echo" | "fable" | "nova" | "onyx" | "shimmer" | "jessica" | "sarah" | "laura" | "alice" | "matilda" | "lily";
   variant?: "default" | "outline" | "ghost" | "secondary";
   size?: "default" | "sm" | "lg" | "icon";
   className?: string;

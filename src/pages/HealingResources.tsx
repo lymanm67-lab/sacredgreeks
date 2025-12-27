@@ -1,12 +1,14 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { 
   Home, Heart, Brain, User, Users, BookOpen, Phone, MessageSquare,
-  ArrowRight, Shield, Sparkles, FileText, Cross, Search, X, Bookmark
+  ArrowRight, Shield, Sparkles, FileText, Cross, Search, X, Bookmark,
+  ChevronsDownUp, ChevronsUpDown
 } from "lucide-react";
 import { useHealingFavorites } from "@/hooks/use-healing-favorites";
 import { cn } from "@/lib/utils";
@@ -16,6 +18,7 @@ const HealingResources = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+  const [accordionValues, setAccordionValues] = useState<string[]>([]);
   
   const { favorites, toggleFavorite, isFavorite, isAuthenticated } = useHealingFavorites();
   const healingArticles = [
@@ -348,11 +351,38 @@ const HealingResources = () => {
           </Card>
         )}
 
-        {/* Healing Articles Grid */}
+        {/* Healing Articles - Accordion Style by Category */}
         <div className="space-y-6">
-          <h3 className="text-xl font-semibold">
-            {hasActiveFilters ? "Filtered Results" : "All Healing Resources"}
-          </h3>
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <h3 className="text-xl font-semibold">
+              {hasActiveFilters ? "Filtered Results" : "All Healing Resources"}
+            </h3>
+            {!hasActiveFilters && (
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    const allValues = categories.map((_, i) => `category-${i}`);
+                    setAccordionValues(allValues);
+                  }}
+                  className="text-xs"
+                >
+                  <ChevronsDownUp className="w-4 h-4 mr-1" />
+                  Expand All
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setAccordionValues([])}
+                  className="text-xs"
+                >
+                  <ChevronsUpDown className="w-4 h-4 mr-1" />
+                  Collapse All
+                </Button>
+              </div>
+            )}
+          </div>
           
           {filteredArticles.length === 0 ? (
             <Card className="p-8 text-center">
@@ -367,9 +397,10 @@ const HealingResources = () => {
                 </Button>
               </div>
             </Card>
-          ) : (
+          ) : hasActiveFilters ? (
+            // Show filtered results as grid
             <div className="grid md:grid-cols-2 gap-6">
-              {(hasActiveFilters ? filteredArticles : filteredArticles.slice(1)).map((article, index) => (
+              {filteredArticles.map((article, index) => (
                 <Card key={index} className="overflow-hidden hover:shadow-lg transition-all duration-300 group relative">
                   <div className={`h-2 bg-gradient-to-r ${article.color} to-sacred/10`} />
                   
@@ -424,6 +455,90 @@ const HealingResources = () => {
                 </Card>
               ))}
             </div>
+          ) : (
+            // Show articles grouped by category in accordion
+            <Accordion type="multiple" value={accordionValues} onValueChange={setAccordionValues} className="space-y-4">
+              {categories.map((category, categoryIndex) => {
+                const categoryArticles = healingArticles.filter(a => a.category === category);
+                return (
+                  <AccordionItem key={category} value={`category-${categoryIndex}`} className="border rounded-lg overflow-hidden">
+                    <AccordionTrigger className="px-4 py-3 hover:no-underline bg-gradient-to-r from-sacred/5 to-background hover:from-sacred/10">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-sacred/10">
+                          {categoryIndex === 0 ? <Heart className="w-5 h-5 text-sacred" /> :
+                           categoryIndex === 1 ? <User className="w-5 h-5 text-sacred" /> :
+                           categoryIndex === 2 ? <Brain className="w-5 h-5 text-sacred" /> :
+                           categoryIndex === 3 ? <Cross className="w-5 h-5 text-sacred" /> :
+                           categoryIndex === 4 ? <Users className="w-5 h-5 text-sacred" /> :
+                           categoryIndex === 5 ? <BookOpen className="w-5 h-5 text-sacred" /> :
+                           categoryIndex === 6 ? <Sparkles className="w-5 h-5 text-sacred" /> :
+                           <Shield className="w-5 h-5 text-sacred" />}
+                        </div>
+                        <div className="text-left">
+                          <h3 className="font-semibold text-foreground">{category}</h3>
+                          <p className="text-xs text-muted-foreground">{categoryArticles.length} resource{categoryArticles.length !== 1 ? 's' : ''}</p>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-4 pb-4">
+                      <div className="grid md:grid-cols-2 gap-4 pt-4">
+                        {categoryArticles.map((article, index) => (
+                          <Card key={index} className="overflow-hidden hover:shadow-lg transition-all duration-300 group relative">
+                            <div className={`h-2 bg-gradient-to-r ${article.color} to-sacred/10`} />
+                            
+                            {/* Favorite Button */}
+                            <button
+                              onClick={() => toggleFavorite({
+                                title: article.title,
+                                category: article.category,
+                                type: article.type,
+                                description: article.description,
+                              })}
+                              className={cn(
+                                "absolute top-4 right-4 p-2 rounded-full transition-all z-10",
+                                isFavorite(article.title)
+                                  ? "bg-sacred text-white"
+                                  : "bg-muted/80 text-muted-foreground hover:bg-sacred/20 hover:text-sacred"
+                              )}
+                              title={isFavorite(article.title) ? "Remove from favorites" : "Add to favorites"}
+                            >
+                              <Bookmark className={cn("w-4 h-4", isFavorite(article.title) && "fill-current")} />
+                            </button>
+
+                            <CardHeader className="pr-14">
+                              <div className="flex items-center justify-between">
+                                <Badge className="text-xs bg-muted">{article.type}</Badge>
+                                <div className={`p-2 rounded-lg bg-gradient-to-br ${article.color} to-sacred/5`}>
+                                  <article.icon className="w-5 h-5 text-sacred" />
+                                </div>
+                              </div>
+                              <CardTitle className="text-lg mt-2">{article.title}</CardTitle>
+                              <CardDescription>{article.description}</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                              <p className="text-sm text-muted-foreground line-clamp-4">
+                                {article.content}
+                              </p>
+                              <div className="flex flex-wrap gap-1.5">
+                                <span className="text-xs text-muted-foreground">Recommended for:</span>
+                                {article.tags.map((tag, tagIndex) => (
+                                  <Badge key={tagIndex} variant="secondary" className="text-xs">
+                                    {tag}
+                                  </Badge>
+                                ))}
+                              </div>
+                              <Button variant="ghost" size="sm" className="text-sacred p-0 h-auto group-hover:underline">
+                                Read More <ArrowRight className="w-3 h-3 ml-1" />
+                              </Button>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                );
+              })}
+            </Accordion>
           )}
         </div>
 
