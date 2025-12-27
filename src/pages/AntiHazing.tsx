@@ -501,6 +501,8 @@ const AntiHazing = () => {
       icon: BookOpen,
       title: "Education & Awareness",
       description: "Implement comprehensive hazing prevention education programs",
+      color: "bg-blue-500",
+      bgColor: "bg-blue-500/10",
       items: [
         "Mandatory anti-hazing training for all members",
         "New member education on their rights",
@@ -513,6 +515,8 @@ const AntiHazing = () => {
       icon: Scale,
       title: "Clear Policies & Accountability",
       description: "Establish and enforce zero-tolerance hazing policies",
+      color: "bg-purple-500",
+      bgColor: "bg-purple-500/10",
       items: [
         "Written anti-hazing policies in bylaws",
         "Clear reporting procedures",
@@ -525,6 +529,8 @@ const AntiHazing = () => {
       icon: Users,
       title: "Leadership Development",
       description: "Train leaders to create positive organizational cultures",
+      color: "bg-emerald-500",
+      bgColor: "bg-emerald-500/10",
       items: [
         "Leadership ethics training",
         "Mentorship programs for officers",
@@ -537,6 +543,8 @@ const AntiHazing = () => {
       icon: Hand,
       title: "Bystander Intervention",
       description: "Empower members to speak up and intervene",
+      color: "bg-orange-500",
+      bgColor: "bg-orange-500/10",
       items: [
         "Green Dot or Step UP! training",
         "Practice intervention scenarios",
@@ -549,6 +557,8 @@ const AntiHazing = () => {
       icon: Heart,
       title: "Positive Alternatives",
       description: "Replace hazing traditions with meaningful experiences",
+      color: "bg-pink-500",
+      bgColor: "bg-pink-500/10",
       items: [
         "Community service projects",
         "Academic support programs",
@@ -561,6 +571,8 @@ const AntiHazing = () => {
       icon: LifeBuoy,
       title: "Support Systems",
       description: "Create resources for those affected by hazing",
+      color: "bg-cyan-500",
+      bgColor: "bg-cyan-500/10",
       items: [
         "Counseling services access",
         "Peer support groups",
@@ -1705,32 +1717,76 @@ const AntiHazing = () => {
 
   const successStories = [
     {
-      organization: "Kappa Alpha Psi - Beta Chapter",
-      school: "University of Illinois",
-      initiative: "Achievement Week Program",
-      description: "Replaced traditional 'Hell Week' with 'Achievement Week' focused on academic excellence, community service, and professional development. New member GPA increased 0.5 points on average.",
-      year: "Since 2015"
+      organization: "Alpha Phi Alpha Fraternity, Inc.",
+      school: "Cornell University & Multiple Chapters",
+      initiative: "Brothers' Keepers Mentorship Program",
+      description: "Pairs new members with graduate brothers for year-long mentorship focused on academic excellence, career development, and service leadership. Has produced numerous Rhodes Scholars and community leaders.",
+      year: "Since 2008",
+      color: "bg-yellow-500/10 border-yellow-500/30"
     },
     {
-      organization: "Alpha Kappa Alpha - Gamma Chapter",
-      school: "University of Pennsylvania",
+      organization: "Alpha Kappa Alpha Sorority, Inc.",
+      school: "University of Pennsylvania & Howard University",
       initiative: "Sisterhood Development Institute",
-      description: "Six-week program combining leadership workshops, service projects, and mentorship. No hazing incidents in 10+ years while maintaining strong chapter bonds.",
-      year: "Since 2012"
+      description: "Six-week program combining leadership workshops, service projects through AKA's Five Targets, and mentorship. No hazing incidents in 10+ years while maintaining strong chapter bonds.",
+      year: "Since 2012",
+      color: "bg-pink-500/10 border-pink-500/30"
     },
     {
-      organization: "Omega Psi Phi - Various Chapters",
-      school: "Multiple Universities",
+      organization: "Kappa Alpha Psi Fraternity, Inc.",
+      school: "University of Illinois & Indiana University",
+      initiative: "Achievement Week Program",
+      description: "Replaced traditional 'Hell Week' with 'Achievement Week' focused on academic excellence, community service through Guide Right, and professional development. New member GPA increased 0.5 points on average.",
+      year: "Since 2015",
+      color: "bg-red-500/10 border-red-500/30"
+    },
+    {
+      organization: "Omega Psi Phi Fraternity, Inc.",
+      school: "Howard University & Multiple Chapters",
       initiative: "Cardinal Principles Program",
-      description: "Structured new member education focused on Manhood, Scholarship, Perseverance, and Uplift through meaningful activities rather than physical tests.",
-      year: "Ongoing"
+      description: "Structured new member education focused on Manhood, Scholarship, Perseverance, and Uplift through meaningful activities, mentorship circles, and community impact projects.",
+      year: "Ongoing",
+      color: "bg-purple-500/10 border-purple-500/30"
     },
     {
-      organization: "Delta Sigma Theta - Alpha Chapter",
+      organization: "Delta Sigma Theta Sorority, Inc.",
       school: "Howard University",
       initiative: "GEMS (Gaining Educational, Moral, and Social Skills)",
-      description: "Comprehensive intake program that builds sisterhood through service projects, academic support, and leadership development.",
-      year: "Since 2010"
+      description: "Comprehensive intake program that builds sisterhood through service projects aligned with the Five-Point Programmatic Thrust, academic support, and leadership development.",
+      year: "Since 2010",
+      color: "bg-red-600/10 border-red-600/30"
+    },
+    {
+      organization: "Phi Beta Sigma Fraternity, Inc.",
+      school: "Howard University & Morehouse College",
+      initiative: "Culture for Service Program",
+      description: "New member education emphasizing Brotherhood, Scholarship, and Service through Bigger and Better Business initiatives, Sigma Beta Club mentorship, and community partnerships.",
+      year: "Since 2014",
+      color: "bg-blue-500/10 border-blue-500/30"
+    },
+    {
+      organization: "Zeta Phi Beta Sorority, Inc.",
+      school: "Howard University & Spelman College",
+      initiative: "Finer Womanhood Initiative",
+      description: "Holistic development program focusing on Scholarship, Service, Sisterhood, and Finer Womanhood through Z-HOPE community service, youth mentoring, and professional workshops.",
+      year: "Since 2011",
+      color: "bg-blue-400/10 border-blue-400/30"
+    },
+    {
+      organization: "Sigma Gamma Rho Sorority, Inc.",
+      school: "Butler University & Indiana University",
+      initiative: "Greater Service, Greater Progress Program",
+      description: "Intake curriculum centered on education, leadership, and service through Project Reassurance, Sigma Youth Symposium, and community enrichment activities.",
+      year: "Since 2013",
+      color: "bg-yellow-400/10 border-yellow-400/30"
+    },
+    {
+      organization: "Iota Phi Theta Fraternity, Inc.",
+      school: "Morgan State University & Multiple Chapters",
+      initiative: "Building a Tradition, Not an Imitation",
+      description: "Unique approach emphasizing that newer organizations can lead in positive change. Focuses on scholarship initiatives, community service through Iota Youth Alliance, and professional development.",
+      year: "Since 2016",
+      color: "bg-amber-600/10 border-amber-600/30"
     }
   ];
 
@@ -1846,11 +1902,11 @@ const AntiHazing = () => {
           <TabsContent value="prevention">
             <div className="grid md:grid-cols-2 gap-6">
               {preventionStrategies.map((strategy, index) => (
-                <Card key={index}>
-                  <CardHeader>
+                <Card key={index} className={`border-l-4 ${strategy.color} overflow-hidden`}>
+                  <CardHeader className={strategy.bgColor}>
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <strategy.icon className="w-5 h-5 text-primary" />
+                      <div className={`w-10 h-10 rounded-lg ${strategy.bgColor} flex items-center justify-center`}>
+                        <strategy.icon className={`w-5 h-5 ${strategy.color.replace('bg-', 'text-')}`} />
                       </div>
                       <div>
                         <CardTitle className="text-lg">{strategy.title}</CardTitle>
@@ -1858,11 +1914,11 @@ const AntiHazing = () => {
                       </div>
                     </div>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="pt-4">
                     <ul className="space-y-2">
                       {strategy.items.map((item, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm">
-                          <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
+                          <span className={`w-1.5 h-1.5 rounded-full ${strategy.color} mt-2 flex-shrink-0`} />
                           {item}
                         </li>
                       ))}
@@ -1875,20 +1931,31 @@ const AntiHazing = () => {
 
           <TabsContent value="alternatives">
             <div className="space-y-8">
-              {/* Intro */}
-              <Card className="border-primary/20 bg-primary/5">
+              {/* Intro with Global Listen All */}
+              <Card className="border-primary/20 bg-gradient-to-r from-primary/10 via-purple-500/5 to-pink-500/5">
                 <CardContent className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <div className="flex flex-col md:flex-row items-start gap-4">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-purple-500/20 flex items-center justify-center flex-shrink-0">
                       <Heart className="w-6 h-6 text-primary" />
                     </div>
-                    <div>
+                    <div className="flex-1">
                       <h3 className="font-semibold text-lg mb-2">Building Brotherhood & Sisterhood Without Hazing</h3>
                       <p className="text-muted-foreground">
                         True bonds are formed through shared positive experiences, not shared trauma. 
                         These alternatives create stronger, healthier organizations while honoring the 
                         values of excellence, service, and community that Greek life was founded upon.
                       </p>
+                      <div className="mt-4 flex items-center gap-3 flex-wrap">
+                        <ListenButton
+                          text={`Building Brotherhood and Sisterhood Without Hazing. True bonds are formed through shared positive experiences, not shared trauma. These alternatives create stronger, healthier organizations while honoring the values of excellence, service, and community that Greek life was founded upon. ${alternativeActivities.map(cat => `${cat.category}. ${cat.description}. Activities include: ${cat.activities.map(a => `${a.name}. ${a.detail}`).join('. ')}`).join('. ')} ${successStories.map(s => `Success Story: ${s.organization}. ${s.initiative}. ${s.description}`).join('. ')}`}
+                          itemId="alternatives-global-tts"
+                          title="All Alternative Activities"
+                          voice="jessica"
+                          showLabel={true}
+                          className="bg-gradient-to-r from-primary to-purple-500 text-primary-foreground hover:from-primary/90 hover:to-purple-500/90 border-0"
+                        />
+                        <span className="text-xs text-muted-foreground">Listen to all alternatives content</span>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
@@ -1967,21 +2034,31 @@ const AntiHazing = () => {
               </div>
 
               {/* Success Stories */}
-              <Card>
-                <CardHeader className="text-center">
-                  <CardTitle className="text-xl">Success Stories</CardTitle>
-                  <CardDescription>Real chapters making positive change</CardDescription>
+              <Card className="border-t-4 border-emerald-500">
+                <CardHeader className="text-center bg-gradient-to-b from-emerald-500/10 to-transparent">
+                  <CardTitle className="text-xl">Divine Nine Success Stories</CardTitle>
+                  <CardDescription>Real chapters making positive change across all NPHC organizations</CardDescription>
+                  <div className="mt-4">
+                    <ListenButton
+                      text={successStories.map(s => `${s.organization}. ${s.initiative}. ${s.description}`).join('. ')}
+                      itemId="success-stories-tts"
+                      title="Divine Nine Success Stories"
+                      voice="jessica"
+                      showLabel={true}
+                    />
+                  </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid md:grid-cols-3 gap-4">
                     {successStories.map((story, index) => (
-                      <div key={index} className="p-4 rounded-lg bg-muted/50 border border-border">
+                      <div key={index} className={`p-4 rounded-lg border ${story.color}`}>
                         <div className="flex items-start justify-between mb-2">
-                          <h4 className="font-semibold text-foreground">{story.initiative}</h4>
-                          <Badge variant="outline" className="text-xs">{story.year}</Badge>
+                          <h4 className="font-semibold text-foreground text-sm">{story.initiative}</h4>
+                          <Badge variant="outline" className="text-xs shrink-0">{story.year}</Badge>
                         </div>
-                        <p className="text-xs text-primary mb-2">{story.organization} • {story.school}</p>
-                        <p className="text-sm text-muted-foreground">{story.description}</p>
+                        <p className="text-xs font-medium text-primary mb-2">{story.organization}</p>
+                        <p className="text-xs text-muted-foreground mb-1">{story.school}</p>
+                        <p className="text-sm text-muted-foreground mt-2">{story.description}</p>
                       </div>
                     ))}
                   </div>
@@ -2591,10 +2668,10 @@ const AntiHazing = () => {
           <TabsContent value="memorial">
             <div className="space-y-6">
               <div className="text-center mb-8">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
-                  <Flame className="w-8 h-8 text-primary" />
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center border border-amber-500/30">
+                  <Flame className="w-8 h-8 text-amber-500" />
                 </div>
-                <h3 className="text-2xl font-serif font-medium mb-2">In Memoriam</h3>
+                <h3 className="text-2xl font-serif font-medium mb-2 bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">In Memoriam</h3>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
                   Honoring those who lost their lives to hazing. Their stories remind us why we must continue 
                   fighting for change. Every name represents a family forever changed.
@@ -2603,7 +2680,7 @@ const AntiHazing = () => {
 
               <div className="grid gap-4">
                 {memorialVictims.map((victim, index) => (
-                  <Card key={index} className="overflow-hidden">
+                  <Card key={index} className="overflow-hidden border-l-4 border-amber-500/50 bg-gradient-to-r from-amber-500/5 to-transparent">
                     <CardContent className="p-0">
                       <div className="flex flex-col md:flex-row">
                         <div className="flex-1 p-6">
@@ -2614,7 +2691,7 @@ const AntiHazing = () => {
                                 Age {victim.age} • {victim.year}
                               </p>
                             </div>
-                            <Badge variant="outline" className="shrink-0">
+                            <Badge variant="outline" className="shrink-0 border-amber-500/50 text-amber-600">
                               {victim.organization.includes("NPHC") || victim.organization.includes("Alpha Kappa Alpha") || 
                                victim.organization.includes("Kappa Alpha Psi") || victim.organization.includes("Omega Psi Phi") ? 
                                "NPHC" : victim.organization.includes("IFC") ? "IFC" : "Other"}
