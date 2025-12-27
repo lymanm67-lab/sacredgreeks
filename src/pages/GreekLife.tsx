@@ -12,7 +12,6 @@ import { useState, useRef } from "react";
 import { toast } from "sonner";
 import { ApologeticsCard } from "@/components/ApologeticsCard";
 import { HistoricalTimeline } from "@/components/HistoricalTimeline";
-import { RenouncedSupportSection } from "@/components/RenouncedSupportSection";
 import { DisciplinaArcaniSection } from "@/components/DisciplinaArcaniSection";
 
 interface Organization {
@@ -2706,8 +2705,6 @@ const GreekLife = () => {
           {/* Disciplina Arcani Explanation - Collapsed in the component itself */}
           <DisciplinaArcaniSection />
 
-          {/* Supporting Renounced Members - Collapsed by default */}
-          <RenouncedSupportSection />
 
           {/* Bible Study Generator - Move to dedicated page link */}
           <Card className="border-emerald-500/30 bg-gradient-to-br from-emerald-500/5 to-background">

@@ -28,6 +28,7 @@ import {
   Download
 } from "lucide-react";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, LineChart, Line, AreaChart, Area, ReferenceLine } from "recharts";
+import { RenouncedSupportSection } from "@/components/RenouncedSupportSection";
 
 const AntiHazing = () => {
   const [selectedState, setSelectedState] = useState<string | null>(null);
@@ -2594,6 +2595,9 @@ const AntiHazing = () => {
             </div>
           </TabsContent>
         </Tabs>
+
+        {/* Supporting Those Who Have Renounced */}
+        <RenouncedSupportSection />
 
         {/* Resources Section */}
         <section>
