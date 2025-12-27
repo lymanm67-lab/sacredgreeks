@@ -169,6 +169,15 @@ const timelineEvents: TimelineEvent[] = [
     orgColors: "Royal Blue and Gold"
   },
   {
+    year: "1963",
+    title: "Iota Phi Theta (ΙΦΘ)",
+    description: "Founded at Morgan State University. Youngest member of the Divine Nine. 'Building a Tradition, Not Resting Upon One.'",
+    category: "org",
+    icon: Users,
+    colors: "from-amber-700/40 to-yellow-500/30 border-amber-700/50",
+    orgColors: "Charcoal Brown and Gilded Gold"
+  },
+  {
     year: "Present",
     title: "Continuing Legacy",
     description: "Greek organizations continue traditions of scholarship, service, and brotherhood/sisterhood rooted in ancient fraternal practices.",
