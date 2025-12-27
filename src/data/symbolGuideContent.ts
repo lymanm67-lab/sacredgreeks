@@ -4094,6 +4094,159 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
     modernUsage: "In-N-Out is celebrated by Christians for its ownership's faith. The Bible verses are seen as bold Christian witness.",
     appUsage: "Even a 'Christian' brand uses palm tree imagery with pagan roots and mystery-religion-style 'secret' knowledge—showing how thorough examination of ANY brand reveals ancient connections."
   },
+  // Retail Brand Symbols
+  {
+    id: "target-bullseye",
+    category: "brands",
+    symbol: "Target Bullseye Logo",
+    ancientConnection: "The Target logo is a BULLSEYE—concentric circles used across ancient mystical traditions. In occult symbolism, concentric circles represent levels of initiation, the cosmos, and spiritual realms. The THIRD EYE or 'all-seeing eye' in Eastern mysticism and Western occultism is depicted as a circular target-like symbol representing enlightenment and hidden knowledge. The red color is associated with Mars, blood sacrifice, and vital energy in magical traditions. Bullseyes and targets were used in ancient divination and archery rituals invoking Diana/Artemis, goddess of the hunt. The act of 'hitting the mark' (or 'sin' meaning 'missing the mark') has deep religious significance. In Hindu and Buddhist traditions, the bindu (dot) at center of circles represents the point of creation and divine consciousness.",
+    modernUsage: "Christians shop at Target for everyday needs. Churches purchase supplies there. The brand sponsors community events.",
+    appUsage: "A logo echoing occult concentric circles, third-eye symbolism, and connections to the hunt-goddess Artemis—is where Christians shop weekly while Greek letters are scrutinized."
+  },
+  {
+    id: "walmart-sun",
+    category: "brands",
+    symbol: "Walmart Spark/Sunburst Logo",
+    ancientConnection: "The Walmart 'spark' logo is a SUNBURST—one of the oldest and most universal symbols of pagan sun worship. Sun rays emanating from a center appeared in worship of: Egyptian RA, Roman SOL INVICTUS, Persian MITHRAS, Babylonian SHAMASH, Japanese AMATERASU, and Aztec TONATIUH. The six-pointed spark resembles the STAR OF SHAMASH (Mesopotamian sun god) and hexagram symbolism. Sunday (Sun-day) shopping at Walmart connects to the ancient practice of honoring the sun on its sacred day. The yellow/gold color represents solar divinity across cultures. Sam Walton's empire built on 'everyday low prices' echoes the ancient concept of the sun providing for all people equally. Sunburst imagery appears in Catholic monstrances, Jesuit symbols, and Masonic iconography—showing its cross-cultural sacred significance.",
+    modernUsage: "Christians shop at Walmart constantly. Rural churches depend on Walmart. The brand is America's largest retailer, ubiquitous in Christian communities.",
+    appUsage: "A sunburst logo with direct connections to Sol Invictus, Shamash, and Ra sun worship—dominates Christian retail while Greek organizational symbols face theological objection."
+  },
+  {
+    id: "amazon-arrow",
+    category: "brands",
+    symbol: "Amazon Arrow/Smile Logo",
+    ancientConnection: "The Amazon arrow pointing from A to Z forms a SMILE—connecting to ancient concepts of the all-providing deity. AMAZON itself refers to the legendary warrior women of Greek mythology, devotees of ARTEMIS who lived without men and cut off their right breasts to shoot arrows better. Amazons were enemies of Greek heroes like Hercules and Theseus, representing female divine power outside male control. The arrow is sacred to Apollo (bringing plague/death) and Artemis (goddess of the hunt). The A-to-Z concept echoes ALPHA TO OMEGA—divine completeness—a title reserved for God in Revelation. Jeff Bezos created a modern 'temple of consumption' where worshippers (customers) seek 'Prime' status—echoing initiatory mystery religion hierarchies. The smile represents the CHESHIRE CAT-like hidden knowledge, knowing something customers don't.",
+    modernUsage: "Christians order from Amazon constantly. Churches use Amazon for supplies. Amazon Smile donated to churches. Prime membership is nearly universal among American Christians.",
+    appUsage: "A company named after pagan warrior-priestesses of Artemis, using Alpha-Omega divine imagery, with initiatory 'Prime' membership—serves Christian households while Greek letters are questioned."
+  },
+  {
+    id: "apple-logo",
+    category: "brands",
+    symbol: "Apple Bitten Apple Logo",
+    ancientConnection: "The Apple logo depicts a BITTEN APPLE—with profound connections to the Fall narrative and pagan mythology. In Genesis, the forbidden fruit (traditionally depicted as an apple) was the instrument of humanity's fall when the serpent promised 'you will be like God.' The BITE taken from the apple represents partaking in forbidden knowledge—the same temptation. In Greek mythology, golden apples were sacred to APHRODITE and caused the Trojan War. The Apple of Discord belonged to ERIS, goddess of chaos. Norse goddess IÐUNN's apples granted immortality to the gods. Celtic mythology features magical apples from Avalon (Apple-land). The rainbow-striped original logo connected to IRIS, Greek goddess of rainbows. Steve Jobs named the company after visiting an 'apple farm' (orchard—sacred groves in pagan tradition). The sleek, minimalist design evokes the MONOLITH from 2001: A Space Odyssey—an alien/transcendent object of worship.",
+    modernUsage: "Christians use iPhones, iPads, and Macs for ministry. Churches use Apple products. Pastors preach holding iPhones.",
+    appUsage: "A logo depicting the forbidden fruit, representing the serpent's temptation to 'be like God,' from a company named after sacred mythological apples—is in every Christian's pocket while Greek letters are condemned."
+  },
+  {
+    id: "nike-goddess",
+    category: "brands",
+    symbol: "Nike Swoosh (Goddess of Victory)",
+    ancientConnection: "Nike is NOT just a brand—it is literally the Greek GODDESS OF VICTORY. Nike (Νίκη) was the divine personification of victory, daughter of the Titan Pallas and the river Styx. She stood at Zeus's side during the war against the Titans and drove his divine chariot. Nike had temples on the Athenian Acropolis. Athletes sacrificed to her before Olympic competitions. Roman equivalent VICTORIA received cult worship and appeared on coins. The SWOOSH logo represents Nike's divine WING—she was depicted with golden wings. 'Just Do It' echoes divine commands from gods to mortals. Athletes wearing Nike invoke the goddess's blessing for victory. Nike of Samothrace (Winged Victory) is one of the most famous ancient sculptures. The goddess's image appears on the Victoria Cross and Academy Awards.",
+    modernUsage: "Christians wear Nike to church, youth group, and Christian athletic events. Christian athletes are sponsored by Nike. The brand is ubiquitous in Christian sports ministry.",
+    appUsage: "A brand LITERALLY NAMED after a Greek goddess, displaying her divine wing as a logo, invoking her blessing for athletic victory—is standard Christian attire while Greek organizational letters face theological scrutiny."
+  },
+  {
+    id: "starbucks-expanded",
+    category: "brands",
+    symbol: "Starbucks (Expanded Occult Analysis)",
+    ancientConnection: "Beyond the siren imagery, STARBUCKS contains additional occult layers. 'STAR' references celestial worship—Babylonian Ishtar was the 'Queen of Heaven' and morning star. The name derives from STARBUCK, a character in Moby Dick named after a Nantucket whaling family—but Melville's novel is filled with pagan and occult references, with Captain Ahab representing Promethean rebellion against God. The green color represents Isis, Osiris, and fertility goddess worship. The circular logo is a MANDALA—used in Buddhist and Hindu meditation. The current two-tailed siren derives from alchemical imagery of the REBIS or divine hermaphrodite—representing occult transformation. The company's founding in SEATTLE connects to theosophical and New Age movements strong in the Pacific Northwest.",
+    modernUsage: "Starbucks is a second church for many Christians—a place of fellowship, Bible study, and pastoral meetings. The brand is synonymous with Christian gathering spaces.",
+    appUsage: "A brand layered with celestial worship, alchemical transformation symbolism, and occult literary references—is Christians' preferred meeting place while Greek letters are condemned."
+  },
+  {
+    id: "costco-logo",
+    category: "brands",
+    symbol: "Costco (Warehouse Temple)",
+    ancientConnection: "Costco's business model echoes ancient MYSTERY RELIGION structure: you must be INITIATED (pay membership) to enter the sacred space and access the mysteries (bulk goods). The warehouse layout resembles ancient TEMPLES and storehouses where offerings were kept and redistributed. The act of shopping in bulk connects to ancient SACRIFICE practices where animals were divided and shared. The $1.50 hot dog combo is a SACRED MEAL offered to initiates—an unchanging ritual. The KIRKLAND brand represents the 'house brand' of the cult—generic yet sacred to insiders. Pushing massive carts through warehouse aisles mirrors processional worship. The red and blue colors connect to alchemical symbols (fire/water, sulfur/mercury). 'COST-CO' suggests the cost of discipleship—paying to belong.",
+    modernUsage: "Christians shop at Costco in massive numbers. Churches buy supplies there. The $1.50 hot dog is celebrated on Christian social media.",
+    appUsage: "A membership-initiation retail model with sacred meals and mystery religion structure—is where Christians shop while Greek organization initiation is questioned."
+  },
+  {
+    id: "home-depot-orange",
+    category: "brands",
+    symbol: "Home Depot Orange Apron",
+    ancientConnection: "The Home Depot ORANGE connects to the sacred color of SAFFRON worn by Hindu monks and Buddhist robes—representing fire, sacrifice, and spiritual transformation. The APRON worn by employees is a Masonic symbol—the lambskin apron represents innocence and is central to Masonic ritual. Building and construction itself connects to FREEMASONRY, which emerged from stonemason guilds and uses building tools (square, compass) as sacred symbols. The 'temple' metaphor for home connects to ancient household shrines and domestic religion. The act of DIY home improvement echoes ancient craft guilds with initiatory knowledge. Orange is also associated with the Netherlands' House of ORANGE, connected to Protestant and Masonic history. The warehouse as 'big box' represents the sacred cube (Holy of Holies was cubic).",
+    modernUsage: "Christians build and repair their homes using Home Depot. Church building committees shop there. Men's ministry groups bond over Home Depot trips.",
+    appUsage: "A brand using Masonic apron imagery, craft guild traditions, and sacred color symbolism—is Christians' go-to hardware store while Greek organizational symbols are questioned."
+  },
+  {
+    id: "lowes-logo",
+    category: "brands",
+    symbol: "Lowe's Blue House Logo",
+    ancientConnection: "The Lowe's logo features a HOUSE within a house—representing the concept of sacred architecture and shelter. Blue is the color of HEAVEN, MARY (in Catholic tradition), and transcendence across cultures. In ancient Egypt, blue represented the Nile and creation. In Jewish tradition, blue (tekhelet) was sacred, used in temple garments and tzitzit. The GABLE roof shape is an ancient architectural form connected to Greek temple pediments—triangular spaces that held divine imagery. The concept of 'home improvement' connects to the ancient belief that the house is a microcosm of the universe, requiring proper ritual arrangement (feng shui, vastu shastra). Building tools were sacred in guilds from Egypt through medieval Europe. The name LOWE's sounds like 'low' suggesting humility before the divine home.",
+    modernUsage: "Christians shop at Lowe's for home projects. Churches purchase building supplies. The brand sponsors community home builds.",
+    appUsage: "A brand using sacred blue, temple-gable imagery, and cosmic home symbolism—serves Christian building projects while Greek organizational architecture references are questioned."
+  },
+  {
+    id: "best-buy-tag",
+    category: "brands",
+    symbol: "Best Buy Yellow Tag",
+    ancientConnection: "Best Buy's YELLOW TAG represents GOLD—the most sacred metal in alchemy and ancient religion. Gold was the flesh of Ra in Egypt, the metal of the sun gods, and the goal of alchemical transformation. The 'tag' or price marker connects to ancient temple commerce and money-changing. The blue background is the color of heaven and transcendence. TECHNOLOGY itself has become modern religion—devices are objects of devotion, screens are altars, and tech companies function as priesthoods with secret knowledge. 'BEST BUY' promises optimal acquisition—a consumerist salvation message. The Geek Squad in their uniforms function as tech-priests offering repair salvation. The store layout guides customers through a journey of technological options like initiates through temple chambers.",
+    modernUsage: "Christians buy electronics at Best Buy. Churches purchase tech equipment. The brand is a trusted source for ministry technology.",
+    appUsage: "A brand built on gold symbolism, temple-commerce layout, and tech-priesthood imagery—serves Christian technology needs while Greek organizational symbols face scrutiny."
+  },
+  {
+    id: "whole-foods-circle",
+    category: "brands",
+    symbol: "Whole Foods (Natural/Organic Religion)",
+    ancientConnection: "Whole Foods represents the NATURE WORSHIP tradition repackaged for modern consumers. The emphasis on 'WHOLE' and 'NATURAL' foods echoes pagan nature religion where unprocessed foods were offerings to gods. The circular logo represents wholeness, the cycle of nature, and Earth as a living entity (GAIA worship). The green color connects to vegetation deities: Osiris, Green Man, Demeter, Dionysus. 'ORGANIC' food culture parallels the purity requirements of ancient temple diets and sacred eating. The produce section resembles offerings arranged before nature deities. The prepared foods bar echoes ancient temple meals where sanctified foods were consumed by worshippers. Food labeling (vegan, non-GMO, fair trade) functions like kashrut or halal—religious food laws. The store's atmosphere is designed as a sensory temple experience.",
+    modernUsage: "Health-conscious Christians shop at Whole Foods. Churches host health ministries that recommend organic eating.",
+    appUsage: "A brand built on nature worship, Gaia symbolism, and purity-cult food requirements—is preferred by health-conscious Christians while Greek letters are deemed pagan."
+  },
+  {
+    id: "trader-joes-nautical",
+    category: "brands",
+    symbol: "Trader Joe's (Nautical Paganism)",
+    ancientConnection: "Trader Joe's Hawaiian shirt aesthetic and NAUTICAL theme connects to Pacific island religion and maritime paganism. TRADER suggests HERMES/Mercury, god of commerce and travelers. The tiki and Hawaiian imagery references Polynesian religion—worship of Pele (volcano goddess), Lono, Kane, and other deities. The SHIP BELL rung at checkout echoes maritime superstition and pagan sailor rituals to appease sea gods. Nautical rope borders reference KNOT MAGIC used across maritime cultures for weather spells and protection. 'JOE' is the common man archetype—EVERYMAN religion where anyone can participate. The quirky, irreverent brand voice mirrors TRICKSTER god traditions (Hermes, Loki, Coyote). The SPECULOOS cookies, Belgian wines, and global foods represent the MERCHANT god bringing goods from all nations.",
+    modernUsage: "Christians shop at Trader Joe's for unique products. The brand has cult-following among Christian shoppers who post about favorite items.",
+    appUsage: "A brand using Hermes/merchant god imagery, Pacific island paganism, and trickster deity energy—has devoted Christian customers while Greek letters are questioned."
+  },
+  {
+    id: "victorias-secret",
+    category: "brands",
+    symbol: "Victoria's Secret (Goddess Branding)",
+    ancientConnection: "The brand is named after Queen VICTORIA but evokes the Roman goddess VICTORIA (Nike)—goddess of victory, conquest, and triumph. 'SECRET' references MYSTERY RELIGION—hidden knowledge revealed only to initiates. The ANGEL imagery used in marketing directly appropriates divine beings for selling lingerie—wings, halos, and celestial themes. Ancient FERTILITY GODDESS traditions featured feminine beauty and sexuality as sacred. The brand's catalog and fashion show function as secular worship of feminine form. The pink and lace aesthetic connects to APHRODITE/Venus, goddess of love and beauty whose worship included sacred sexuality. The 'Fantasy Bra' worth millions represents the ultimate divine object of desire. The store environment—pink, perfumed, intimate—recreates a temple of feminine mysteries.",
+    modernUsage: "Christian women shop at Victoria's Secret. The brand is a standard for intimate apparel in Christian marriages.",
+    appUsage: "A brand literally using angel imagery to sell intimate apparel, named after a goddess of victory, with mystery-religion marketing—serves Christian women while Greek letters are condemned."
+  },
+  {
+    id: "bath-body-works",
+    category: "brands",
+    symbol: "Bath & Body Works (Aromatherapy Religion)",
+    ancientConnection: "Bath & Body Works deals in AROMATHERAPY—which has deep roots in ancient religious practice. Incense and fragrant oils were offerings to gods across cultures: Egyptian temple perfumes for Ra and Isis, Jewish tabernacle incense, Hindu puja offerings. The emphasis on BATHING connects to ritual purification in countless religions—Egyptian purification pools, Jewish mikvah, Christian baptism, Hindu sacred river bathing, Roman temple baths. Candles are votive offerings in Catholic and pagan traditions. The seasonal offerings (autumn, winter) align with PAGAN CALENDAR celebrations. 'BODY WORKS' suggests alchemical transformation of the physical form. Essential oils were used in anointing rituals by priests and kings. The store's overwhelming scent experience mirrors temple environments designed to alter consciousness.",
+    modernUsage: "Christian women frequent Bath & Body Works. Candles from the store appear in Christian homes. Church gift shops sometimes stock similar products.",
+    appUsage: "A brand built on temple aromatherapy, ritual purification practices, and votive candle traditions—is a Christian favorite while Greek organizational rituals face scrutiny."
+  },
+  {
+    id: "sephora-name",
+    category: "brands",
+    symbol: "Sephora (Hebrew/Greek Mysticism)",
+    ancientConnection: "SEPHORA derives from the Greek SEPHOS (beautiful) but evokes the Hebrew TZIPPORAH (Moses's wife) and SEPHIROT—the ten divine emanations in Jewish KABBALAH mysticism. The Kabbalistic Tree of Life with its sephirot represents the structure of creation and divine energy flow. Kabbalah was adopted into Western occult tradition and ceremonial magic. The black and white stripes echo ZEBRA symbolism—duality, balance of opposites. The store layout as an 'exploration' of beauty products mirrors initiatory journeys through occult knowledge. COSMETICS comes from COSMOS—the ordered universe—making makeup application a cosmic act. Ancient Egyptian and Mesopotamian cosmetics were explicitly religious—kohl for divine protection, lip color to invoke goddess presence.",
+    modernUsage: "Christian women shop at Sephora for cosmetics. The brand is a standard for beauty products among Christians.",
+    appUsage: "A brand with Kabbalistic mystical name origins, rooted in Jewish occult tradition and cosmic beauty concepts—serves Christian women while Greek letters are questioned."
+  },
+  {
+    id: "ulta-beauty",
+    category: "brands",
+    symbol: "Ulta Beauty (Ultimate Transformation)",
+    ancientConnection: "ULTA suggests ULTIMATE—the highest, most divine level achievable. In religious terms, this is APOTHEOSIS—becoming like gods. The beauty industry promises TRANSFORMATION—changing from one state to another, the goal of alchemy and spiritual practice. The salon services offered represent RITUAL TRANSFORMATION of appearance. Hair cutting and styling have ancient religious significance—Samson's strength in hair, Nazirite vows, Buddhist head shaving. The orange in the logo connects to FIRE, transformation, and Hindu sacred color. 'Beauty' itself was personified as goddesses: Aphrodite, Venus, Hathor, Lakshmi. The store combines COMMERCE (Mercury's domain) with BEAUTY (Venus's domain), uniting two Olympian spheres.",
+    modernUsage: "Christian women shop at Ulta for beauty products and salon services. The brand serves Christian weddings and events.",
+    appUsage: "A brand built on divine transformation, alchemical change, and apotheosis concepts—is standard for Christian beauty shopping while Greek letters are scrutinized."
+  },
+  {
+    id: "dollar-tree",
+    category: "brands",
+    symbol: "Dollar Tree (Sacred Tree Symbolism)",
+    ancientConnection: "The TREE is one of the most sacred symbols across world religion. The TREE OF LIFE appears in Genesis, Norse YGGDRASIL connected all nine worlds, Buddhist BODHI TREE brought enlightenment, Celtic DRUIDS worshipped in sacred groves, and the CHRISTMAS TREE is a Christianized pagan tradition. The DOLLAR sign ($) evolved from the Spanish piece of eight, but resembles the CADUCEUS (Hermes's staff with serpents)—the symbol of commerce and trickster gods. The GREEN color represents growth, fertility, and nature deities. 'DISCOUNT' shopping connects to MERCURY/Hermes as god of merchants, thieves, and bargains. The phrase 'EVERYTHING'S $1.25' (or any price) echoes the religious concept of universal accessibility and egalitarian worship.",
+    modernUsage: "Churches shop at Dollar Tree for event supplies. Christian families stretch budgets there. The brand is ubiquitous in Christian communities.",
+    appUsage: "A brand combining World Tree cosmic symbolism with Mercury's commercial domain—supplies church events while Greek organizational trees (as symbols) might be questioned."
+  },
+  {
+    id: "tj-maxx",
+    category: "brands",
+    symbol: "TJ Maxx (Maximizing/Abundance Cult)",
+    ancientConnection: "The 'MAXX' spelling with double X has occult significance—X represents the unknown, crossed paths, and in numerology connects to transformation. Double letters indicate doubling of power in magical traditions. The red color represents Mars, blood, vital energy. 'TJ' as initials creates mystery—who is TJ? This anonymity mirrors mystery religions where founder identity was hidden. The TREASURE HUNT shopping experience mirrors initiatory journeys where seekers search for hidden wisdom. Finding designer brands at discount prices is presented as quasi-miraculous—MANIFESTATION and abundance spirituality. The store's chaotic layout requires SEEKING and FINDING—biblical concepts repackaged for retail. The off-price model suggests access to elite goods (GNOSIS) available to those who know where to look.",
+    modernUsage: "Christian women frequently shop at TJ Maxx for discounted goods. The 'treasure hunt' experience is celebrated in Christian shopping communities.",
+    appUsage: "A brand using occult doubled letters, mystery-founder anonymity, and initiatory treasure-seeking—is a Christian shopping favorite while Greek organization secrets are condemned."
+  },
+  {
+    id: "ross-dress-less",
+    category: "brands",
+    symbol: "Ross Dress for Less",
+    ancientConnection: "ROSS invokes ROSE symbolism—the rose was sacred to Aphrodite/Venus, appears in Rosicrucian mysticism (Rose Cross), and represents secrets ('sub rosa' means confidential). The rose is also Mary's symbol in Catholic tradition, with roots in goddess worship. 'DRESS FOR LESS' promises transformation (through clothing) at reduced cost—ACCESSIBLE MYSTERY. The act of trying on clothes is a form of IDENTITY transformation, temporarily becoming someone else. Department store dressing rooms function as LIMINAL SPACES—thresholds between identities. The off-price model creates INSIDER KNOWLEDGE—knowing where deals are, like mystery religion secrets. The chaotic store organization requires SEEKING, a spiritual discipline.",
+    modernUsage: "Budget-conscious Christians shop at Ross regularly. Churches with limited budgets rely on discount retailers.",
+    appUsage: "A brand with rose/Rosicrucian symbolism, identity transformation themes, and mystery-knowledge structure—serves Christian shoppers while Greek organizational symbolism is questioned."
+  },
   // Civic and Legal Symbols
   {
     id: "lady-justice",
