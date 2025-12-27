@@ -497,12 +497,12 @@ const AntiHazing = () => {
   ];
 
   const preventionStrategies = [
-    {
+  {
       icon: BookOpen,
       title: "Education & Awareness",
       description: "Implement comprehensive hazing prevention education programs",
-      color: "bg-blue-500",
-      bgColor: "bg-blue-500/10",
+      color: "bg-primary",
+      bgColor: "bg-primary/10",
       items: [
         "Mandatory anti-hazing training for all members",
         "New member education on their rights",
@@ -515,8 +515,8 @@ const AntiHazing = () => {
       icon: Scale,
       title: "Clear Policies & Accountability",
       description: "Establish and enforce zero-tolerance hazing policies",
-      color: "bg-purple-500",
-      bgColor: "bg-purple-500/10",
+      color: "bg-secondary",
+      bgColor: "bg-secondary/50",
       items: [
         "Written anti-hazing policies in bylaws",
         "Clear reporting procedures",
@@ -529,8 +529,8 @@ const AntiHazing = () => {
       icon: Users,
       title: "Leadership Development",
       description: "Train leaders to create positive organizational cultures",
-      color: "bg-emerald-500",
-      bgColor: "bg-emerald-500/10",
+      color: "bg-accent",
+      bgColor: "bg-accent/50",
       items: [
         "Leadership ethics training",
         "Mentorship programs for officers",
@@ -543,8 +543,8 @@ const AntiHazing = () => {
       icon: Hand,
       title: "Bystander Intervention",
       description: "Empower members to speak up and intervene",
-      color: "bg-orange-500",
-      bgColor: "bg-orange-500/10",
+      color: "bg-muted",
+      bgColor: "bg-muted/50",
       items: [
         "Green Dot or Step UP! training",
         "Practice intervention scenarios",
