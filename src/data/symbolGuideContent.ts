@@ -297,6 +297,262 @@ export const symbolGuideContent: SymbolEntry[] = [
     cautionNote: "If you or someone you know is being hazed, contact: StopHazing.org, your organization's national headquarters, campus authorities, or local law enforcement. Breaking silence saves lives.",
     scripturalContext: "Ezekiel 34:4 - 'You have not strengthened the weak or healed the sick or bound up the injured.' Luke 17:2 - 'It would be better to be thrown into the sea with a millstone tied around your neck than to cause one of these little ones to stumble.'"
   },
+  // =====================================================
+  // DIVINE NINE TERMINOLOGY - Comprehensive Guide
+  // =====================================================
+  {
+    id: "stroll",
+    name: "Stroll / Strolling",
+    category: "cultural",
+    description: "A synchronized walking dance performed by Divine Nine members, typically in a line formation. Each organization has signature stroll moves and songs. Strolling showcases unity, precision, and organizational pride. It evolved from African American cultural traditions and is performed at parties, yard shows, and Greek events.",
+    christianPerspective: "Strolling represents unity and coordination—values celebrated in Scripture. Amos 3:3 asks 'Do two walk together unless they have agreed to do so?' The synchronized movement reflects the harmony described in 1 Corinthians 12 where many parts work as one body. Like worship through dance (Psalm 149:3), strolling can be an expression of joy and community.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 149:3 - 'Let them praise his name with dancing.' 1 Corinthians 12:12 - 'Just as a body, though one, has many parts... so it is with Christ.'"
+  },
+  {
+    id: "step-stepping",
+    name: "Step / Stepping",
+    category: "cultural",
+    description: "A percussive dance form using the body as an instrument through clapping, stomping, and spoken word. Stepping has roots in African dance traditions and military drill. Divine Nine organizations perform steps at competitions, shows, and events. Each organization has signature steps passed down through generations.",
+    christianPerspective: "Stepping combines rhythm, coordination, and storytelling—elements found in worship throughout Scripture. Psalm 47:1 calls us to 'clap your hands, all you nations.' The discipline and practice required for stepping reflects Colossians 3:23: 'Whatever you do, work at it with all your heart.' Stepping celebrates heritage and excellence.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 47:1 - 'Clap your hands, all you nations; shout to God with cries of joy.' Psalm 150:4 - 'Praise him with timbrel and dancing.'"
+  },
+  {
+    id: "call-greeting",
+    name: "Call / Greeting",
+    category: "cultural",
+    description: "A distinctive vocal sound or phrase used by members of a Greek organization to identify and greet one another. Each Divine Nine organization has unique calls (barks, hoots, skee-wees, etc.) that serve as audio signatures. Calls express organizational pride and create instant recognition among members.",
+    christianPerspective: "Distinctive greetings existed in the early church—'Grace and peace to you' was uniquely Christian. Romans 16 shows Paul greeting believers by name with specific acknowledgments. Calls function as expressions of belonging and identity. While Christians find ultimate identity in Christ, organizational greetings celebrate the bonds of membership.",
+    cautionLevel: "low",
+    scripturalContext: "Romans 16:16 - 'Greet one another with a holy kiss.' 3 John 1:14 - 'Greet the friends there by name.'"
+  },
+  {
+    id: "yard",
+    name: "The Yard",
+    category: "cultural",
+    description: "The central campus area where Greek organizations gather, socialize, and showcase their presence. Historically significant at HBCUs, 'the yard' is where Greeks 'hit the yard' by strolling, stepping, or simply being visible in organizational paraphernalia. The yard represents public Greek identity and pride.",
+    christianPerspective: "The yard functions like the city gate in biblical times—a gathering place for community, commerce, and visibility (Ruth 4:1, Proverbs 31:23). Being present 'on the yard' is about witness and representation. Christians are called to be visible witnesses (Matthew 5:14-16), and Greeks on the yard represent their organizations. Both require integrity.",
+    cautionLevel: "low",
+    scripturalContext: "Matthew 5:14-16 - 'You are the light of the world. A town built on a hill cannot be hidden.' Proverbs 31:23 - 'Her husband is respected at the city gate.'"
+  },
+  {
+    id: "plot",
+    name: "Plot",
+    category: "cultural",
+    description: "A designated area on campus where a specific Greek organization gathers. Some campuses have physical plots with organizational markers, benches, or monuments. The plot serves as home base for organizational visibility and gathering. 'Meeting at the plot' is common for casual fellowship.",
+    christianPerspective: "Having a designated gathering place reflects the human need for sacred spaces and community anchors. The early church met in specific homes (Romans 16:5, Colossians 4:15). Israel had designated places for tribes to camp (Numbers 2). A plot provides identity and belonging—needs that are ultimately fulfilled in Christ but healthily expressed in community.",
+    cautionLevel: "low",
+    scripturalContext: "Romans 16:5 - 'Greet also the church that meets at their house.' Numbers 2:2 - 'The Israelites are to camp around the tent of meeting... each of them under their standard.'"
+  },
+  {
+    id: "paraphernalia",
+    name: "Paraphernalia / Para",
+    category: "cultural",
+    description: "Items displaying Greek letters, colors, and symbols—including clothing, jewelry, bags, and accessories. 'Rocking para' or 'wearing letters' publicly identifies members. Paraphernalia is a source of pride and can be expensive. Some items are 'exclusive' to initiated members only.",
+    christianPerspective: "Wearing identifying symbols has biblical precedent. God commanded Israel to wear tassels as reminders (Numbers 15:38-40). Priests wore distinctive garments (Exodus 28). Paraphernalia functions similarly—as visible identity and reminder of values. The key is that outward symbols reflect inward commitment, not empty display (Matthew 23:5).",
+    cautionLevel: "low",
+    scripturalContext: "Numbers 15:38-40 - 'Make tassels on the corners of your garments... you will remember all the commands of the LORD.' Exodus 28:2 - 'Make sacred garments for your brother Aaron to give him dignity and honor.'"
+  },
+  {
+    id: "probate-show",
+    name: "Probate / New Member Presentation",
+    category: "cultural",
+    description: "A public ceremony where newly initiated members are revealed to the campus community. Probates typically feature stepping, strolling, the disclosure of line names and numbers, and celebration. This 'coming out' show marks the transition from candidate to full member and is often highly anticipated.",
+    christianPerspective: "Public declarations of new identity have strong biblical roots. Baptism publicly declares new life in Christ. The Levites were publicly presented for service (Numbers 8:10). A probate celebrates transformation and new belonging. Christians can participate joyfully while remembering that their ultimate 'new identity' presentation happens when we meet Christ (1 John 3:2).",
+    cautionLevel: "low",
+    scripturalContext: "Romans 10:9-10 - 'If you declare with your mouth... you will be saved.' Numbers 8:10 - 'Bring the Levites before the LORD, and the Israelites are to lay their hands on them.'"
+  },
+  {
+    id: "intake-mip",
+    name: "Intake / MIP (Membership Intake Process)",
+    category: "cultural",
+    description: "The official, sanctioned process by which new members join Divine Nine organizations. MIP replaced older pledge processes and is designed to be educational, developmental, and hazing-free. Intake includes learning organizational history, values, and traditions through structured programming.",
+    christianPerspective: "Structured processes for joining communities are biblical. Jesus took time teaching disciples before commissioning them. The early church had processes for receiving new members (Acts 2:41-42). Intake, done properly, mirrors discipleship—teaching, mentoring, and preparing people for service. The key is that the process builds up rather than tears down.",
+    cautionLevel: "low",
+    scripturalContext: "Acts 2:41-42 - 'Those who accepted his message were baptized... They devoted themselves to the apostles' teaching and to fellowship.' Matthew 28:19-20 - 'Go and make disciples... teaching them to obey everything I have commanded.'"
+  },
+  {
+    id: "interest-meeting",
+    name: "Interest Meeting / Informational",
+    category: "cultural",
+    description: "An official meeting where organizations present information to prospective members. Interest meetings cover history, requirements, expectations, and the intake process. Attending an informational is typically the first formal step toward membership.",
+    christianPerspective: "Providing clear information before commitment is wise and biblical. Luke 14:28-30 counsels counting the cost before building. Jesus was transparent about the cost of discipleship (Mark 8:34-35). Interest meetings allow informed decisions. Christians should appreciate organizations that are upfront about expectations rather than obscuring them.",
+    cautionLevel: "low",
+    scripturalContext: "Luke 14:28 - 'Suppose one of you wants to build a tower. Won't you first sit down and estimate the cost?' Proverbs 18:15 - 'The heart of the discerning acquires knowledge.'"
+  },
+  {
+    id: "recommendation-letter",
+    name: "Recommendation Letter / Rec",
+    category: "cultural",
+    description: "A letter written by a current member vouching for a prospective member's character and suitability for membership. Many organizations require recommendations from graduate members. Recs carry significant weight in the selection process.",
+    christianPerspective: "Character references are thoroughly biblical. Paul wrote recommendations for Timothy (Philippians 2:19-22), Phoebe (Romans 16:1-2), and Onesimus (Philemon). Proverbs 22:1 states 'A good name is more desirable than great riches.' Having others vouch for your character reflects the biblical value of reputation built through consistent witness.",
+    cautionLevel: "low",
+    scripturalContext: "Romans 16:1-2 - 'I commend to you our sister Phoebe... I ask you to receive her in the Lord in a way worthy of his people.' Philippians 2:22 - 'You know that Timothy has proved himself.'"
+  },
+  {
+    id: "chapter",
+    name: "Chapter",
+    category: "cultural",
+    description: "A local unit of a national Greek organization. Undergraduate chapters are based at colleges/universities, while graduate/alumni chapters serve members after graduation. Each chapter has Greek letter designations (e.g., Alpha Chapter, Beta Gamma Chapter). Chapter is also used as a verb meaning to attend a chapter meeting.",
+    christianPerspective: "Local chapters within a larger organization mirror the New Testament church structure—local congregations connected to the universal body. Revelation 2-3 addresses seven specific local churches, each with unique characteristics yet part of Christ's one church. Chapters allow for local community while maintaining organizational unity.",
+    cautionLevel: "low",
+    scripturalContext: "Revelation 1:11 - 'Write on a scroll what you see and send it to the seven churches.' 1 Corinthians 12:27 - 'Now you are the body of Christ, and each one of you is a part of it.'"
+  },
+  {
+    id: "graduate-chapter",
+    name: "Graduate Chapter / Alumni Chapter",
+    category: "cultural",
+    description: "A chapter composed of members who have graduated from college. Graduate chapters allow lifelong participation in organizational activities, community service, and mentoring of undergraduates. Many Divine Nine members are most active in their graduate years.",
+    christianPerspective: "Lifelong commitment to a community of service reflects Christian values. Unlike organizations that end at graduation, the church calls for lifelong discipleship. Titus 2 specifically calls older members to mentor younger ones. Graduate chapters fulfill this multigenerational vision, allowing experienced members to guide the next generation.",
+    cautionLevel: "low",
+    scripturalContext: "Titus 2:2-4 - 'Teach the older men to be temperate... Likewise, teach the older women... to train the younger women.' Hebrews 10:25 - 'Not giving up meeting together.'"
+  },
+  {
+    id: "national-organization",
+    name: "National / Grand / International",
+    category: "cultural",
+    description: "The overarching organizational structure governing all chapters. Terms vary: 'National' or 'Grand' headquarters, 'International' for organizations with chapters abroad. National conventions, conclaves, or boules bring members together. National officers set policy and standards.",
+    christianPerspective: "Larger governance structures maintain unity and standards—similar to how denominations and church councils function. Acts 15 shows the Jerusalem Council making decisions affecting all churches. Having national standards ensures consistency while allowing local expression. Ecclesiastes 4:12 reminds us that unified cords are not easily broken.",
+    cautionLevel: "low",
+    scripturalContext: "Acts 15:28-29 - 'It seemed good to the Holy Spirit and to us not to burden you with anything beyond the following requirements.' Ecclesiastes 4:12 - 'A cord of three strands is not quickly broken.'"
+  },
+  {
+    id: "nphc",
+    name: "NPHC (National Pan-Hellenic Council)",
+    category: "cultural",
+    description: "The umbrella organization for the nine historically Black Greek letter organizations (Divine Nine). Founded in 1930, NPHC coordinates collaborative programming and represents member organizations. The nine organizations are: Alpha Phi Alpha, Alpha Kappa Alpha, Kappa Alpha Psi, Omega Psi Phi, Delta Sigma Theta, Phi Beta Sigma, Zeta Phi Beta, Sigma Gamma Rho, and Iota Phi Theta.",
+    christianPerspective: "Unity among distinct organizations reflects the biblical vision of diversity within unity. Psalm 133:1 celebrates how 'good and pleasant it is when God's people live together in unity.' Each organization maintains its identity while working together under NPHC—much like denominations cooperating while maintaining distinctives. Unity does not require uniformity.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 133:1 - 'How good and pleasant it is when God's people live together in unity!' John 17:21 - 'That all of them may be one, Father, just as you are in me and I am in you.'"
+  },
+  {
+    id: "divine-nine",
+    name: "Divine Nine / D9",
+    category: "cultural",
+    description: "The collective term for the nine historically Black Greek letter organizations that comprise the National Pan-Hellenic Council. The term 'Divine' reflects the sense of special purpose and calling these organizations represent in the African American community, with their emphasis on scholarship, service, and uplift.",
+    christianPerspective: "While 'divine' is a strong term, the organizations use it to express purpose and calling rather than claiming deity. The Divine Nine's founding principles of service, scholarship, and community uplift align with biblical values. Christians can appreciate the term as expressing high calling while remembering that all good purposes ultimately flow from God (James 1:17).",
+    cautionLevel: "low",
+    scripturalContext: "James 1:17 - 'Every good and perfect gift is from above.' Micah 6:8 - 'Act justly and to love mercy and to walk humbly with your God.'"
+  },
+  {
+    id: "crossing",
+    name: "Crossing / Made",
+    category: "cultural",
+    description: "'Crossing' refers to completing the intake process and becoming a full member—having 'crossed the burning sands.' Someone who has 'crossed' is 'made' or initiated. The term signifies transformation from aspirant to member and marks a significant life milestone for many.",
+    christianPerspective: "Crossing represents transformation and new identity—themes central to Christianity. Romans 6:4 describes how we are 'buried with him through baptism into death in order that... we too may live a new life.' Crossing into membership parallels crossing from old to new. Christians recognize that organizational crossing is meaningful, but spiritual crossing into Christ's kingdom is eternal.",
+    cautionLevel: "low",
+    scripturalContext: "Romans 6:4 - 'We were therefore buried with him through baptism into death in order that, just as Christ was raised from the dead... we too may live a new life.' 2 Corinthians 5:17 - 'If anyone is in Christ, the new creation has come.'"
+  },
+  {
+    id: "revealed",
+    name: "Revealed",
+    category: "cultural",
+    description: "The moment when new members are publicly presented at a probate or new member show. Being 'revealed' means transitioning from the private intake process to public recognition. The reveal is typically the climax of the probate show.",
+    christianPerspective: "Revelation of hidden things is a biblical theme. Colossians 3:4 speaks of when 'Christ, who is your life, appears, you also will appear with him in glory.' The joy of being revealed reflects the anticipation believers have of being revealed as children of God (Romans 8:19). Public reveals celebrate new identity and belonging.",
+    cautionLevel: "low",
+    scripturalContext: "Colossians 3:4 - 'When Christ, who is your life, appears, you also will appear with him in glory.' Romans 8:19 - 'The creation waits in eager expectation for the children of God to be revealed.'"
+  },
+  {
+    id: "yard-show",
+    name: "Yard Show",
+    category: "cultural",
+    description: "An outdoor performance event featuring stepping, strolling, and other Greek performances on 'the yard.' Yard shows showcase organizational talent and are often highlights of homecoming and Greek Week. Multiple organizations may perform in friendly competition.",
+    christianPerspective: "Public celebration and performance have biblical precedent. David danced publicly before the LORD (2 Samuel 6:14). Festivals brought communities together for celebration. Yard shows allow expression of joy, talent, and unity. Christians can participate with hearts that ultimately honor God through excellence and joy.",
+    cautionLevel: "low",
+    scripturalContext: "2 Samuel 6:14 - 'David danced before the LORD with all his might.' Psalm 100:1-2 - 'Shout for joy to the LORD, all the earth. Worship the LORD with gladness.'"
+  },
+  {
+    id: "greek-week",
+    name: "Greek Week",
+    category: "cultural",
+    description: "A campus-wide celebration of Greek life featuring events, competitions, community service, and showcases. Greek Week promotes unity across councils and organizations while highlighting Greek contributions to campus life.",
+    christianPerspective: "Dedicated times for celebration and community building are biblical. Israel had festival weeks (Feast of Tabernacles lasted seven days). Times set apart for fellowship, service, and celebration build community bonds. Greek Week can be an opportunity for Christian Greeks to demonstrate love and excellence.",
+    cautionLevel: "low",
+    scripturalContext: "Leviticus 23:41 - 'Celebrate this as a festival to the LORD for seven days each year.' Ecclesiastes 3:1,4 - 'There is a time for everything... a time to weep and a time to laugh.'"
+  },
+  {
+    id: "founders-day-d9",
+    name: "Founders Day",
+    category: "cultural",
+    description: "An annual celebration honoring the founders of a Greek organization. Founders Day typically includes programs, community service, and reflection on organizational history and founding principles. Each organization celebrates on its unique founding date.",
+    christianPerspective: "Honoring those who came before is thoroughly biblical. Hebrews 11 celebrates the 'great cloud of witnesses' who preceded us in faith. Remembering founders connects current members to their heritage and original vision. Christians honor organizational founders while recognizing that our ultimate foundation is Christ (1 Corinthians 3:11).",
+    cautionLevel: "low",
+    scripturalContext: "Hebrews 12:1 - 'Since we are surrounded by such a great cloud of witnesses.' Hebrews 13:7 - 'Remember your leaders, who spoke the word of God to you. Consider the outcome of their way of life.'"
+  },
+  {
+    id: "convention-conclave-boule",
+    name: "Convention / Conclave / Boule",
+    category: "cultural",
+    description: "Large national or regional gatherings of organization members. Different organizations use different terms: Conclave (Kappa Alpha Psi, Alpha Phi Alpha), Boule (Alpha Kappa Alpha, Sigma Gamma Rho), or Convention. These gatherings include business meetings, workshops, celebrations, and fellowship.",
+    christianPerspective: "Large assemblies for organizational business and fellowship mirror Christian conference traditions. Acts 15 describes the Jerusalem Council where church leaders gathered for important decisions. Psalm 107:32 speaks of praising God 'in the assembly of the elders.' National gatherings strengthen connections and advance organizational mission.",
+    cautionLevel: "low",
+    scripturalContext: "Acts 15:6 - 'The apostles and elders met to consider this question.' Psalm 107:32 - 'Let them exalt him in the assembly of the people and praise him in the council of the elders.'"
+  },
+  {
+    id: "set-party",
+    name: "Set / Party",
+    category: "cultural",
+    description: "A 'set' is a social event or party hosted by a Greek organization. Sets feature music, dancing, strolling, and Greek camaraderie. They range from small gatherings to large campus-wide events and are central to Greek social life.",
+    christianPerspective: "Social gatherings and celebrations are not inherently unbiblical—Jesus attended parties and celebrations (John 2:1-11, Luke 15). The key is conduct at these events. Romans 13:13 warns against 'orgies and drunkenness.' Christians can attend sets while maintaining biblical standards for behavior and making wise choices about environment and timing.",
+    cautionLevel: "medium",
+    cautionNote: "Christians should exercise wisdom about which events to attend and how to conduct themselves. Set limits beforehand, go with accountable friends, and be willing to leave if the environment compromises convictions.",
+    scripturalContext: "John 2:1-2 - 'Jesus and his disciples had also been invited to the wedding.' Romans 13:13-14 - 'Let us behave properly... not in carousing and drunkenness.'"
+  },
+  {
+    id: "shimmy",
+    name: "Shimmy",
+    category: "cultural",
+    description: "A signature dance move involving rapid shoulder movements, particularly associated with Delta Sigma Theta Sorority, Inc. The shimmy is performed during strolls, steps, and celebrations. Each organization may have signature moves that become identifying characteristics.",
+    christianPerspective: "Signature dance moves are simply cultural expressions of joy and identity. David's dancing before the Lord was distinctive and exuberant (2 Samuel 6:14). Miriam led the women in dance after crossing the Red Sea (Exodus 15:20). Dance movements themselves are neutral—the heart behind them matters most.",
+    cautionLevel: "low",
+    scripturalContext: "Exodus 15:20 - 'Miriam the prophet... took a timbrel in her hand, and all the women followed her, with timbrels and dancing.' 2 Samuel 6:14 - 'David danced before the LORD with all his might.'"
+  },
+  {
+    id: "finer-womanhood",
+    name: "Finer Womanhood / Scholarship / Service",
+    category: "cultural",
+    description: "Core values emphasized by Divine Nine organizations vary but commonly include scholarship, service, sisterhood/brotherhood, and uplift of the community. Zeta Phi Beta emphasizes 'Finer Womanhood,' while others stress achievement, leadership, and service. These principles guide organizational programming.",
+    christianPerspective: "The emphasis on character development, education, and service aligns beautifully with biblical values. Proverbs 31 describes the woman of noble character. 1 Timothy 4:12 calls young people to 'set an example... in speech, in conduct, in love, in faith and in purity.' Divine Nine principles of excellence, service, and character development echo Scripture's call to holiness and service.",
+    cautionLevel: "low",
+    scripturalContext: "Proverbs 31:10,30 - 'A wife of noble character who can find?... a woman who fears the LORD is to be praised.' 1 Timothy 4:12 - 'Set an example for the believers in speech, in conduct, in love, in faith and in purity.'"
+  },
+  {
+    id: "community-service-greek",
+    name: "Community Service / Philanthropy",
+    category: "cultural",
+    description: "A cornerstone of Divine Nine organizations is community service. Each organization has signature programs addressing education, health, economic development, and social justice. Service hours, fundraising, and community partnerships are expectations of membership.",
+    christianPerspective: "Service to others is fundamental to Christian faith. Matthew 25:35-40 describes serving 'the least of these' as serving Christ Himself. James 2:17 declares faith without works is dead. The Divine Nine's emphasis on service aligns perfectly with biblical calls to love our neighbors through action, not just words.",
+    cautionLevel: "low",
+    scripturalContext: "Matthew 25:40 - 'Whatever you did for one of the least of these brothers and sisters of mine, you did for me.' James 2:17 - 'Faith by itself, if it is not accompanied by action, is dead.'"
+  },
+  {
+    id: "greek-unity",
+    name: "Greek Unity",
+    category: "cultural",
+    description: "Events, attitudes, and initiatives promoting cooperation across different Greek organizations and councils. Greek unity events bring together NPHC, NPC, IFC, and multicultural Greeks. Unity is valued as strengthening the overall Greek community.",
+    christianPerspective: "Unity across organizational lines reflects Christ's prayer for His followers in John 17:21. Ephesians 4:3 urges believers to 'make every effort to keep the unity of the Spirit through the bond of peace.' Greek unity events demonstrate that common values transcend organizational boundaries—a principle Christians celebrate as reflecting God's unifying work.",
+    cautionLevel: "low",
+    scripturalContext: "John 17:21 - 'That all of them may be one, Father, just as you are in me and I am in you.' Ephesians 4:3 - 'Make every effort to keep the unity of the Spirit through the bond of peace.'"
+  },
+  {
+    id: "roll-call",
+    name: "Roll Call",
+    category: "cultural",
+    description: "A chant or call-and-response where members announce their organizational affiliation, founding date, and sometimes chapter information. Roll calls are performed at Greek events and serve as organizational introductions and expressions of pride.",
+    christianPerspective: "Announcing identity and heritage is biblical. The tribes of Israel were called by name and identified by their ancestors (Numbers 1). Jesus' genealogy in Matthew 1 is a 'roll call' of His heritage. Roll calls express belonging and heritage—concepts important in both Greek life and Scripture.",
+    cautionLevel: "low",
+    scripturalContext: "Numbers 1:2 - 'Take a census of the whole Israelite community by their clans and families, listing every man by name.' Isaiah 43:1 - 'I have summoned you by name; you are mine.'"
+  },
+  {
+    id: "hand-sign",
+    name: "Hand Sign / Sign",
+    category: "cultural",
+    description: "A distinctive hand gesture representing a Greek organization. Hand signs are used in photos, greetings, and as visual identifiers. Each Divine Nine organization has recognizable hand signs that members display with pride.",
+    christianPerspective: "Symbolic gestures have existed throughout history, including in faith traditions. The sign of the cross is used by many Christians. Raising hands in worship is biblical (Psalm 134:2). Hand signs are simply identifying marks—the meaning comes from what they represent, not inherent power in the gesture itself.",
+    cautionLevel: "low",
+    scripturalContext: "Psalm 134:2 - 'Lift up your hands in the sanctuary and praise the LORD.' 1 Timothy 2:8 - 'I want the men everywhere to pray, lifting up holy hands.'"
+  },
   // Fraternity-Specific Symbols
   {
     id: "lamp-symbol",
