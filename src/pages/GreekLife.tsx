@@ -4,10 +4,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Home, Users, Shield, BookOpen, Compass, Heart, Award, ArrowRight, AlertTriangle, Calendar, Building2, GraduationCap, Star, Volume2, VolumeX, Loader2 } from "lucide-react";
+import { Home, Users, Shield, BookOpen, Compass, Heart, Award, ArrowRight, AlertTriangle, Calendar, Building2, GraduationCap, Star, Volume2, VolumeX, Loader2, FileDown } from "lucide-react";
 import { SEOHead } from "@/components/SEOHead";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useAuth } from "@/contexts/AuthContext";
+import { useState, useRef } from "react";
+import { toast } from "sonner";
 
 interface Organization {
   name: string;
@@ -24,8 +26,183 @@ const GreekLife = () => {
   const { user } = useAuth();
   const { speak, stop, isPlaying, isLoading } = useTextToSpeech();
 
-  // Text content for TTS
-  const jesusGuildText = `Jesus was a TEKTON, a Greek word translated as carpenter but more accurately meaning master builder or craftsman. Ancient craft guilds were fraternal organizations with secret initiations, proprietary techniques, coded language, oaths of loyalty, and special recognition grips. Carpenters and builders were essential for city defense, constructing walls, gates, and fortifications. Joseph trained Jesus in this guild system for approximately 18 years. This is documented in Mark 6:3 where Jesus is called "the tekton" and Matthew 13:55 where Joseph is called "the tekton." Scholars like Ken M. Campbell and James D. Tabor have extensively documented ancient Mediterranean guild structures.`;
+  const [currentlyPlayingSection, setCurrentlyPlayingSection] = useState<string | null>(null);
+
+  // Text content for TTS sections
+  const ttsContent = {
+    jesusGuild: `Jesus was a TEKTON, a Greek word translated as carpenter but more accurately meaning master builder or craftsman. Ancient craft guilds were fraternal organizations with secret initiations, proprietary techniques, coded language, oaths of loyalty, and special recognition grips. Carpenters and builders were essential for city defense, constructing walls, gates, and fortifications. Joseph trained Jesus in this guild system for approximately 18 years. This is documented in Mark 6:3 where Jesus is called "the tekton" and Matthew 13:55 where Joseph is called "the tekton."`,
+    
+    religiousSects: `The Pharisees were a religious fraternity with secret teachings called oral Torah, initiation processes, distinctive dress, and hierarchical ranks. Paul boasted of his Pharisee membership even after conversion. The Sadducees were an elite priestly brotherhood with hereditary membership, secret Temple rituals, and exclusive access to the Holy of Holies. The Essenes were a secret monastic brotherhood with 1-3 year initiation periods, oath ceremonies, progressive secret doctrines, and distinctive white robes. They produced the Dead Sea Scrolls. The Zealots were a secret political-religious fraternity with blood oaths, code names, and covert meetings. Simon the Zealot was one of Jesus's twelve apostles.`,
+    
+    ancientGuilds: `The Bible records numerous professional guilds with fraternal structures. Stonemasons built Solomon's Temple with secret marks and guild techniques, as described in 1 Kings 5-6. Peter, James, and John were fishermen guild partners, called koinonoi in Luke 5:10. Matthew hosted his tax collector guild brothers for dinner with Jesus. Paul worked with Aquila and Priscilla through tentmaker guild connections. Metalworkers traced back to Tubal-Cain, with Bezalel crafting the Tabernacle. Prophetic guilds called Sons of the Prophets operated under Samuel, Elijah, and Elisha.`,
+    
+    romanGreek: `The early church emerged within and adapted existing fraternal structures. Roman Collegia were professional associations with patron deities, initiation rituals, common meals, burial funds, and mutual aid. The early church was often mistaken for or structured like a collegium. Greek Thiasoi were voluntary religious associations devoted to a deity, with initiation rites, sacred meals, hierarchies, and fellowship. The term ekklesia, meaning church, was borrowed from Greek civic assemblies. Synagogues were brotherhoods with membership requirements, initiation through circumcision and mikvah, distinctive practices, and discipline for members.`,
+    
+    earlyChurch: `The early church itself functioned as a secret society during persecution. Christians used secret handshakes, where the tickle palm grip traced half an ichthys fish; if the other person completed it, they were confirmed believers. MARANATHA was a secret password that Paul didn't translate, assuming readers knew it. The ICHTHYS fish symbol contained a hidden acronym meaning Jesus Christ, God's Son, Savior. The Holy Kiss was a ritual greeting commanded 5 times in Scripture. Catechumens underwent 1-3 years of initiation including preparation, fasting, exorcism, disrobing, anointing, new names, and white robes. The biblical precedent is Judges 12:5-6, where God's people used SHIBBOLETH as a secret password.`
+  };
+
+  // Handle TTS for a specific section
+  const handleSectionTTS = (sectionKey: string, text: string) => {
+    if (currentlyPlayingSection === sectionKey && isPlaying) {
+      stop();
+      setCurrentlyPlayingSection(null);
+    } else {
+      if (isPlaying) stop();
+      setCurrentlyPlayingSection(sectionKey);
+      speak(text);
+    }
+  };
+
+  // Generate PDF citations
+  const generateCitationsPDF = async () => {
+    try {
+      const { jsPDF } = await import("jspdf");
+      const doc = new jsPDF();
+      
+      // Title
+      doc.setFontSize(18);
+      doc.setFont("helvetica", "bold");
+      doc.text("Ancient Fraternities: A Biblical Foundation", 20, 20);
+      doc.text("Scholarly Citations & References", 20, 30);
+      
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text("Sacred Greeks Ministry - " + new Date().toLocaleDateString(), 20, 38);
+      
+      // Divider
+      doc.setDrawColor(200);
+      doc.line(20, 42, 190, 42);
+      
+      let y = 52;
+      const lineHeight = 5;
+      const pageHeight = 280;
+      
+      const citations = [
+        { num: "1", title: "TEKTON (Master Builder/Craftsman)", refs: [
+          "Mark 6:3, Matthew 13:55 — Greek τέκτων (tekton)",
+          "Campbell, Ken M. \"What Was Jesus' Occupation?\" Journal of the Evangelical Theological Society 48.3 (2005): 501-519.",
+          "Batey, Richard A. \"Is Not This the Carpenter?\" New Testament Studies 30.2 (1984): 249-258."
+        ]},
+        { num: "2", title: "Ancient Guild Structures", refs: [
+          "Kloppenborg, John S. \"Collegia and Thiasoi: Issues in Function, Taxonomy and Membership.\" Voluntary Associations in the Graeco-Roman World (1996): 16-30.",
+          "Harland, Philip A. Associations, Synagogues, and Congregations. Fortress Press, 2003.",
+          "Liu, Jinyu. Collegia Centonariorum: The Guilds of Textile Dealers in the Roman West. Brill, 2009."
+        ]},
+        { num: "3", title: "Jesus's Building Parables", refs: [
+          "Snyder, Graydon F. Ante Pacem: Archaeological Evidence of Church Life Before Constantine. Mercer University Press, 2003.",
+          "Matthew 7:24-27 (building on rock vs sand)",
+          "Mark 12:10, Psalm 118:22 (cornerstone rejected by builders)"
+        ]},
+        { num: "4", title: "Guild Oaths & Trade Secrets", refs: [
+          "MacMullen, Ramsay. Roman Social Relations. Yale University Press, 1974.",
+          "Pliny, Natural History 35.152 (guild secrecy)",
+          "Wilson, Robert McL. The Gnostic Problem. A.R. Mowbray, 1958."
+        ]},
+        { num: "5", title: "Builders & City Defense", refs: [
+          "Josephus, Jewish War 3.7.21 — Galilean builders' role in fortifications",
+          "Tabor, James D. The Jesus Dynasty. Simon & Schuster, 2006.",
+          "Reich, Ronny. \"Stone Vessels, Weights and Architectural Fragments.\" Excavations at the City of David Vol. 1 (1990)."
+        ]},
+        { num: "6", title: "Recognition Signs in Guilds", refs: [
+          "Dölger, Franz Joseph. ΙΧΘΥΣ: Das Fischsymbol in frühchristlicher Zeit. Aschendorff, 1922.",
+          "Ferguson, Everett. Backgrounds of Early Christianity. 3rd ed. Eerdmans, 2003.",
+          "Hengel, Martin. Judaism and Hellenism. Fortress Press, 1974."
+        ]},
+        { num: "7", title: "Jewish Apprenticeship & Training", refs: [
+          "Luke 3:23 — Jesus \"about thirty years old\" at ministry start",
+          "Safrai, S. & Stern, M. The Jewish People in the First Century. Van Gorcum, 1976.",
+          "Mishnah Avot 5:21 — Traditional Jewish age for training stages"
+        ]},
+        { num: "8", title: "Pharisees as Fraternity", refs: [
+          "Acts 23:6, Philippians 3:5 — Paul's Pharisee identity",
+          "Neusner, Jacob. The Rabbinic Traditions About the Pharisees Before 70. 3 vols. Brill, 1971.",
+          "Mason, Steve. Flavius Josephus on the Pharisees. Brill, 1991."
+        ]},
+        { num: "9", title: "Essene Brotherhood", refs: [
+          "Dead Sea Scrolls: Community Rule (1QS)",
+          "Josephus, Jewish War 2.119-161",
+          "Vermes, Geza. The Complete Dead Sea Scrolls in English. Penguin, 2004."
+        ]},
+        { num: "10", title: "Early Church Secret Practices", refs: [
+          "1 Corinthians 16:22 — \"MARANATHA\"",
+          "Romans 16:16, 1 Corinthians 16:20 — Holy Kiss",
+          "Hippolytus, Apostolic Tradition (c. 215 AD) — catechumenate initiations",
+          "Judges 12:5-6 — SHIBBOLETH precedent"
+        ]}
+      ];
+      
+      for (const citation of citations) {
+        if (y > pageHeight - 30) {
+          doc.addPage();
+          y = 20;
+        }
+        
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(11);
+        doc.text("[" + citation.num + "] " + citation.title, 20, y);
+        y += lineHeight + 2;
+        
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9);
+        for (const ref of citation.refs) {
+          if (y > pageHeight - 10) {
+            doc.addPage();
+            y = 20;
+          }
+          const lines = doc.splitTextToSize("• " + ref, 165);
+          doc.text(lines, 25, y);
+          y += lines.length * lineHeight;
+        }
+        y += 4;
+      }
+      
+      // Footer
+      if (y > pageHeight - 25) {
+        doc.addPage();
+        y = 20;
+      }
+      y += 10;
+      doc.setDrawColor(200);
+      doc.line(20, y, 190, y);
+      y += 8;
+      doc.setFontSize(8);
+      doc.setFont("helvetica", "italic");
+      doc.text("Generated by Sacred Greeks - sacredgreeks.com", 20, y);
+      doc.text("For apologetics and educational purposes", 20, y + 4);
+      
+      doc.save("ancient-fraternities-citations.pdf");
+      toast.success("PDF downloaded successfully!");
+    } catch (error) {
+      console.error("PDF generation error:", error);
+      toast.error("Failed to generate PDF");
+    }
+  };
+
+  // TTS button component
+  const TTSButton = ({ sectionKey, text }: { sectionKey: string; text: string }) => {
+    if (!user) return null;
+    const isSectionPlaying = currentlyPlayingSection === sectionKey && isPlaying;
+    const isSectionLoading = currentlyPlayingSection === sectionKey && isLoading;
+    
+    return (
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={() => handleSectionTTS(sectionKey, text)}
+        disabled={isLoading && currentlyPlayingSection !== sectionKey}
+        className="gap-2"
+      >
+        {isSectionLoading ? (
+          <Loader2 className="w-4 h-4 animate-spin" />
+        ) : isSectionPlaying ? (
+          <VolumeX className="w-4 h-4" />
+        ) : (
+          <Volume2 className="w-4 h-4" />
+        )}
+        {isSectionLoading ? "Loading..." : isSectionPlaying ? "Stop" : "Listen"}
+      </Button>
+    );
+  };
 
   const divineNine: Organization[] = [
     {
@@ -1951,14 +2128,26 @@ const GreekLife = () => {
           {/* Ancient Fraternities Introduction - Accordion Style */}
           <Card className="border-amber-500/30 bg-gradient-to-br from-amber-500/5 to-background">
             <CardHeader className="pb-2">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-amber-500/10">
-                  <BookOpen className="w-6 h-6 text-amber-600 dark:text-amber-400" />
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-amber-500/10">
+                    <BookOpen className="w-6 h-6 text-amber-600 dark:text-amber-400" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-amber-700 dark:text-amber-300">Ancient Fraternities: A Biblical Foundation</CardTitle>
+                    <CardDescription>Understanding the deep roots of fraternal organizations in Scripture and ancient culture</CardDescription>
+                  </div>
                 </div>
-                <div>
-                  <CardTitle className="text-amber-700 dark:text-amber-300">Ancient Fraternities: A Biblical Foundation</CardTitle>
-                  <CardDescription>Understanding the deep roots of fraternal organizations in Scripture and ancient culture</CardDescription>
-                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={generateCitationsPDF}
+                  className="gap-2 shrink-0"
+                >
+                  <FileDown className="w-4 h-4" />
+                  <span className="hidden sm:inline">Download Citations PDF</span>
+                  <span className="sm:hidden">PDF</span>
+                </Button>
               </div>
             </CardHeader>
             <CardContent className="pt-2">
@@ -1986,26 +2175,9 @@ const GreekLife = () => {
                   </AccordionTrigger>
                   <AccordionContent className="text-sm text-muted-foreground space-y-3">
                     {/* TTS Button */}
-                    {user && (
-                      <div className="flex justify-end">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => isPlaying ? stop() : speak(jesusGuildText)}
-                          disabled={isLoading}
-                          className="gap-2"
-                        >
-                          {isLoading ? (
-                            <Loader2 className="w-4 h-4 animate-spin" />
-                          ) : isPlaying ? (
-                            <VolumeX className="w-4 h-4" />
-                          ) : (
-                            <Volume2 className="w-4 h-4" />
-                          )}
-                          {isLoading ? "Loading..." : isPlaying ? "Stop" : "Listen"}
-                        </Button>
-                      </div>
-                    )}
+                    <div className="flex justify-end">
+                      <TTSButton sectionKey="jesusGuild" text={ttsContent.jesusGuild} />
+                    </div>
                     
                     <p>
                       Jesus was a <strong>TEKTON</strong> (τέκτων)—translated "carpenter" but more accurately "master builder" or "craftsman."<sup className="text-sacred">[1]</sup> Ancient craft guilds were <strong>FRATERNAL ORGANIZATIONS</strong> with:
@@ -2040,6 +2212,9 @@ const GreekLife = () => {
                     Religious Sects & Fraternities of Jesus's Time
                   </AccordionTrigger>
                   <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                    <div className="flex justify-end">
+                      <TTSButton sectionKey="religiousSects" text={ttsContent.religiousSects} />
+                    </div>
                     <div className="grid gap-3 md:grid-cols-2">
                       <div className="p-3 rounded-lg bg-muted/50">
                         <h5 className="font-semibold text-foreground">Pharisees</h5>
@@ -2066,6 +2241,9 @@ const GreekLife = () => {
                     Ancient Professional Guilds in Scripture
                   </AccordionTrigger>
                   <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                    <div className="flex justify-end">
+                      <TTSButton sectionKey="ancientGuilds" text={ttsContent.ancientGuilds} />
+                    </div>
                     <p>The Bible records numerous professional guilds with fraternal structures:</p>
                     <div className="grid gap-2 md:grid-cols-3">
                       <div className="p-2 rounded bg-muted/30 text-xs">
@@ -2095,6 +2273,9 @@ const GreekLife = () => {
                     Roman Collegia & Greek Thiasoi
                   </AccordionTrigger>
                   <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                    <div className="flex justify-end">
+                      <TTSButton sectionKey="romanGreek" text={ttsContent.romanGreek} />
+                    </div>
                     <p>The early church emerged within and adapted existing fraternal structures:</p>
                     <div className="space-y-2">
                       <div className="p-3 rounded-lg bg-muted/50">
@@ -2118,6 +2299,9 @@ const GreekLife = () => {
                     Early Church Secret Practices
                   </AccordionTrigger>
                   <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                    <div className="flex justify-end">
+                      <TTSButton sectionKey="earlyChurch" text={ttsContent.earlyChurch} />
+                    </div>
                     <p>The early church itself functioned as a secret society during persecution:</p>
                     <ul className="space-y-2 ml-4 list-disc">
                       <li><strong>Secret Handshakes:</strong> The "tickle palm grip" traced half an ichthys fish; if the other person completed it, they were confirmed believers</li>
