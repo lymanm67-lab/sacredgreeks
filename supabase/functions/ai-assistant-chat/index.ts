@@ -71,6 +71,109 @@ function validateMessages(messages: unknown): { valid: boolean; error?: string; 
   return { valid: true, messages: validatedMessages };
 }
 
+// Keywords that trigger real-time NPHC search
+const REALTIME_KEYWORDS = [
+  'current president', 'current leader', 'leadership', 'who leads',
+  'latest news', 'recent news', 'current events', 'upcoming events',
+  'national president', 'grand basileus', 'international president',
+  'current grand', 'who is the president', 'current head',
+  'national convention', 'boule', 'conclave', 'centennial'
+];
+
+// D9 organization search mappings
+const D9_SEARCH_TERMS: Record<string, string[]> = {
+  'alpha phi alpha': ['Alpha Phi Alpha', 'apa1906.net', 'Alphas'],
+  'alpha kappa alpha': ['Alpha Kappa Alpha', 'aka1908.com', 'AKA'],
+  'kappa alpha psi': ['Kappa Alpha Psi', 'kappaalphapsi1911.com', 'Kappas', 'Nupes'],
+  'omega psi phi': ['Omega Psi Phi', 'oppf.org', 'Ques', 'Omega'],
+  'delta sigma theta': ['Delta Sigma Theta', 'deltasigmatheta.org', 'Deltas'],
+  'phi beta sigma': ['Phi Beta Sigma', 'phibetasigma1914.org', 'Sigmas'],
+  'zeta phi beta': ['Zeta Phi Beta', 'zphib1920.org', 'Zetas'],
+  'sigma gamma rho': ['Sigma Gamma Rho', 'sgrho1922.org', 'SGRhos', 'Poodles'],
+  'iota phi theta': ['Iota Phi Theta', 'iotaphitheta.org', 'Iotas'],
+  'nphc': ['NPHC', 'nphchq.com', 'National Pan-Hellenic Council', 'Divine Nine']
+};
+
+function detectRealtimeQuery(userMessage: string): { needsRealtime: boolean; searchQuery: string | null; orgName: string | null } {
+  const lowerMessage = userMessage.toLowerCase();
+  
+  // Check if message contains realtime keywords
+  const hasRealtimeKeyword = REALTIME_KEYWORDS.some(keyword => lowerMessage.includes(keyword));
+  
+  if (!hasRealtimeKeyword) {
+    return { needsRealtime: false, searchQuery: null, orgName: null };
+  }
+  
+  // Find which organization is being asked about
+  for (const [key, terms] of Object.entries(D9_SEARCH_TERMS)) {
+    const isMatch = terms.some(term => lowerMessage.includes(term.toLowerCase()));
+    if (isMatch) {
+      const searchQuery = `${terms[0]} ${REALTIME_KEYWORDS.find(k => lowerMessage.includes(k)) || 'leadership'} 2024 2025`;
+      return { needsRealtime: true, searchQuery, orgName: terms[0] };
+    }
+  }
+  
+  // Generic D9/NPHC query
+  if (lowerMessage.includes('divine nine') || lowerMessage.includes('d9') || lowerMessage.includes('nphc')) {
+    return { needsRealtime: true, searchQuery: 'NPHC Divine Nine leadership news 2024 2025', orgName: 'NPHC/Divine Nine' };
+  }
+  
+  return { needsRealtime: false, searchQuery: null, orgName: null };
+}
+
+async function searchNPHCInfo(query: string): Promise<string | null> {
+  try {
+    const apiKey = Deno.env.get('FIRECRAWL_API_KEY');
+    if (!apiKey) {
+      console.log('FIRECRAWL_API_KEY not configured, skipping real-time search');
+      return null;
+    }
+
+    console.log('Performing Firecrawl search for:', query);
+
+    const response = await fetch('https://api.firecrawl.dev/v1/search', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        limit: 5,
+        scrapeOptions: {
+          formats: ['markdown']
+        }
+      }),
+    });
+
+    if (!response.ok) {
+      console.error('Firecrawl search failed:', response.status);
+      return null;
+    }
+
+    const data = await response.json();
+    console.log('Firecrawl search results received');
+
+    if (!data.success || !data.data || data.data.length === 0) {
+      console.log('No search results found');
+      return null;
+    }
+
+    // Compile search results into context
+    const results = data.data.slice(0, 3).map((result: any) => {
+      const title = result.title || 'Untitled';
+      const url = result.url || '';
+      const content = result.markdown?.substring(0, 1500) || result.description || '';
+      return `**${title}**\nSource: ${url}\n${content}`;
+    }).join('\n\n---\n\n');
+
+    return results;
+  } catch (error) {
+    console.error('Error searching NPHC info:', error);
+    return null;
+  }
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
@@ -99,6 +202,24 @@ serve(async (req) => {
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
+
+    // Get the latest user message to check for real-time query needs
+    const latestUserMessage = validation.messages?.filter(m => m.role === 'user').pop();
+    let realtimeContext = '';
+    
+    if (latestUserMessage) {
+      const { needsRealtime, searchQuery, orgName } = detectRealtimeQuery(latestUserMessage.content);
+      
+      if (needsRealtime && searchQuery) {
+        console.log(`Real-time query detected for: ${orgName}`);
+        const searchResults = await searchNPHCInfo(searchQuery);
+        
+        if (searchResults) {
+          realtimeContext = `\n\n**REAL-TIME SEARCH RESULTS (Use this for current/recent information about ${orgName}):**\n${searchResults}\n\n**Note:** The above information was retrieved from a live web search. Use it to answer questions about current leadership, recent news, or events. Always cite the source when using this information.`;
+          console.log('Real-time context added to prompt');
+        }
+      }
+    }
 
     const systemPrompt = `You are a helpful AI assistant for Sacred Greeks Life, a faith-based app helping Christians navigate Greek life. Created by Dr. Lyman Montgomery, author of "Sacred, Not Sinful: A Christian's Guide to Navigating Greek Life".
 
@@ -231,8 +352,9 @@ If you witness hazing, report it to the organization's national office or campus
 - Greek life alumni
 - Students considering Greek life
 - Campus ministers and faith leaders
+${realtimeContext}
 
-Be friendly, helpful, and guide users to the right features. When users ask about Divine Nine organizations, provide accurate founding info, colors, mottos, and direct them to official websites for current leadership and news. Always mention the P.R.O.O.F. framework when discussing faith and Greek life decisions. If asked about something outside the app, politely redirect to relevant features.`;
+Be friendly, helpful, and guide users to the right features. When users ask about Divine Nine organizations, provide accurate founding info, colors, mottos, and direct them to official websites for current leadership and news. When you have real-time search results available, use them to provide current information and cite your sources. Always mention the P.R.O.O.F. framework when discussing faith and Greek life decisions. If asked about something outside the app, politely redirect to relevant features.`;
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
