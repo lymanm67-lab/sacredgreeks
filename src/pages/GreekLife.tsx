@@ -18,6 +18,7 @@ import guildInitiationCeremony from "@/assets/guild-initiation-ceremony.jpg";
 import romanMasonMarks from "@/assets/roman-mason-marks.jpg";
 import guildCraftsmenMarks from "@/assets/guild-craftsmen-marks.jpg";
 import { downloadGuildRecognitionPDF } from "@/lib/guild-recognition-pdf";
+import { generateGuildComparisonPDF } from "@/lib/guild-comparison-pdf";
 
 interface Organization {
   name: string;
@@ -2594,6 +2595,16 @@ const GreekLife = () => {
                       <FileDown className="w-4 h-4" />
                       <span className="hidden sm:inline">Guild Recognition PDF</span>
                       <span className="sm:hidden">Guild</span>
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={generateGuildComparisonPDF}
+                      className="gap-2"
+                    >
+                      <FileDown className="w-4 h-4" />
+                      <span className="hidden sm:inline">Comparison Chart</span>
+                      <span className="sm:hidden">Compare</span>
                     </Button>
                     <Button
                       variant="outline"
