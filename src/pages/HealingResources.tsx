@@ -8,10 +8,11 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { 
   Home, Heart, Brain, User, Users, BookOpen, Phone, MessageSquare,
   ArrowRight, Shield, Sparkles, FileText, Cross, Search, X, Bookmark,
-  ChevronsDownUp, ChevronsUpDown
+  ChevronsDownUp, ChevronsUpDown, Volume2
 } from "lucide-react";
 import { useHealingFavorites } from "@/hooks/use-healing-favorites";
 import { cn } from "@/lib/utils";
+import { ListenButton } from "@/components/ListenButton";
 
 const HealingResources = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -436,22 +437,32 @@ const HealingResources = () => {
                     <CardTitle className="text-lg mt-2">{article.title}</CardTitle>
                     <CardDescription>{article.description}</CardDescription>
                   </CardHeader>
-                  <CardContent className="space-y-4">
-                    <p className="text-sm text-muted-foreground line-clamp-4">
-                      {article.content}
-                    </p>
-                    <div className="flex flex-wrap gap-1.5">
-                      <span className="text-xs text-muted-foreground">Recommended for:</span>
-                      {article.tags.map((tag, tagIndex) => (
-                        <Badge key={tagIndex} variant="secondary" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                    <Button variant="ghost" size="sm" className="text-sacred p-0 h-auto group-hover:underline">
-                      Read More <ArrowRight className="w-3 h-3 ml-1" />
-                    </Button>
-                  </CardContent>
+                    <CardContent className="space-y-4">
+                      <p className="text-sm text-muted-foreground line-clamp-4">
+                        {article.content}
+                      </p>
+                      <div className="flex flex-wrap gap-1.5">
+                        <span className="text-xs text-muted-foreground">Recommended for:</span>
+                        {article.tags.map((tag, tagIndex) => (
+                          <Badge key={tagIndex} variant="secondary" className="text-xs">
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                      <div className="flex items-center justify-between pt-2">
+                        <Button variant="ghost" size="sm" className="text-sacred p-0 h-auto group-hover:underline">
+                          Read More <ArrowRight className="w-3 h-3 ml-1" />
+                        </Button>
+                        <ListenButton 
+                          text={`${article.title}. ${article.content}`}
+                          itemId={`healing-filtered-${article.title.toLowerCase().replace(/\s+/g, '-')}`}
+                          title={article.title}
+                          voice="jessica"
+                          size="sm"
+                          showLabel={false}
+                        />
+                      </div>
+                    </CardContent>
                 </Card>
               ))}
             </div>
@@ -527,9 +538,19 @@ const HealingResources = () => {
                                   </Badge>
                                 ))}
                               </div>
-                              <Button variant="ghost" size="sm" className="text-sacred p-0 h-auto group-hover:underline">
-                                Read More <ArrowRight className="w-3 h-3 ml-1" />
-                              </Button>
+                              <div className="flex items-center justify-between pt-2">
+                                <Button variant="ghost" size="sm" className="text-sacred p-0 h-auto group-hover:underline">
+                                  Read More <ArrowRight className="w-3 h-3 ml-1" />
+                                </Button>
+                                <ListenButton 
+                                  text={`${article.title}. ${article.content}`}
+                                  itemId={`healing-${article.title.toLowerCase().replace(/\s+/g, '-')}`}
+                                  title={article.title}
+                                  voice="jessica"
+                                  size="sm"
+                                  showLabel={false}
+                                />
+                              </div>
                             </CardContent>
                           </Card>
                         ))}
