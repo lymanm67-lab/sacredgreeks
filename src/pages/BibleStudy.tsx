@@ -29,6 +29,7 @@ import { studyGuides, getStudiesByCategory, categories } from '@/data/bibleStudy
 import { ScriptureFlashcards } from '@/components/ScriptureFlashcards';
 import { BibleStudyGenerator } from '@/components/BibleStudyGenerator';
 import { ApologeticsQuickReference } from '@/components/ApologeticsQuickReference';
+import { RenouncedSupportSection } from '@/components/RenouncedSupportSection';
 
 // Demo data for Bible Study
 const DEMO_DAILY_VERSE = {
@@ -121,7 +122,7 @@ const BibleStudy = () => {
   const { savedSearches, loading: savedLoading, saveSearch, deleteSearch, isSearchSaved } = useSavedBibleSearches();
   
   // Accordion state with localStorage persistence
-  const ALL_ACCORDION_VALUES = ['proof-study', 'apologetics', 'flashcards'];
+  const ALL_ACCORDION_VALUES = ['proof-study', 'apologetics', 'flashcards', 'renounced-support'];
   const [accordionValues, setAccordionValues] = useState<string[]>(() => {
     const saved = localStorage.getItem('bible-study-accordion-state');
     return saved ? JSON.parse(saved) : [];
@@ -1021,6 +1022,24 @@ const BibleStudy = () => {
             </AccordionTrigger>
             <AccordionContent className="px-0 pb-0">
               <ScriptureFlashcards />
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* Supporting Those Who Have Renounced */}
+          <AccordionItem value="renounced-support" className="border rounded-lg overflow-hidden">
+            <AccordionTrigger className="px-4 py-3 hover:no-underline bg-gradient-to-r from-purple-500/10 to-background hover:from-purple-500/15">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-purple-500/10">
+                  <Heart className="w-5 h-5 text-purple-600" />
+                </div>
+                <div className="text-left">
+                  <h3 className="font-semibold text-foreground">Supporting Those Who Have Renounced</h3>
+                  <p className="text-xs text-muted-foreground">A grace-filled framework for loving and supporting members who have left</p>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-0 pb-0">
+              <RenouncedSupportSection embedded />
             </AccordionContent>
           </AccordionItem>
         </Accordion>

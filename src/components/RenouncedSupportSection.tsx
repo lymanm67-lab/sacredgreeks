@@ -3,36 +3,19 @@ import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Heart, Users, HandHeart, MessageCircleHeart, BookOpen, Shield, ArrowRight } from "lucide-react";
 
-export const RenouncedSupportSection = () => {
-  return (
-    <Card className="border-purple-500/30 bg-gradient-to-br from-purple-500/5 to-background">
-      <CardHeader>
-        <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-purple-500/10">
-            <HandHeart className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-          </div>
-          <div>
-            <Badge className="mb-1 bg-purple-500/10 text-purple-600 border-purple-500/20">
-              <Heart className="w-3 h-3 mr-1" />
-              Grace-Filled Approach
-            </Badge>
-            <CardTitle className="text-purple-700 dark:text-purple-300">
-              Supporting Those Who Have Renounced
-            </CardTitle>
-            <CardDescription>
-              A biblical framework for loving, supporting, and potentially winning back members who have left Greek life
-            </CardDescription>
-          </div>
-        </div>
-      </CardHeader>
-      
-      <CardContent className="space-y-4">
-        {/* Introduction */}
-        <div className="p-4 rounded-lg bg-muted/50 border border-border">
-          <p className="text-sm text-muted-foreground">
-            <strong className="text-foreground">The Sacred Greeks Position:</strong> We respect the sincere convictions of those who feel called to renounce their Greek affiliation. At the same time, we believe many renunciations stem from incomplete information, fear-based teaching, or unaddressed hurt. Our goal is not to argue but to <em>love well</em>—honoring their journey while keeping doors open.
-          </p>
-        </div>
+interface RenouncedSupportSectionProps {
+  embedded?: boolean;
+}
+
+export const RenouncedSupportSection = ({ embedded = false }: RenouncedSupportSectionProps) => {
+  const content = (
+    <div className="space-y-4">
+      {/* Introduction */}
+      <div className="p-4 rounded-lg bg-muted/50 border border-border">
+        <p className="text-sm text-muted-foreground">
+          <strong className="text-foreground">The Sacred Greeks Position:</strong> We respect the sincere convictions of those who feel called to renounce their Greek affiliation. At the same time, we believe many renunciations stem from incomplete information, fear-based teaching, or unaddressed hurt. Our goal is not to argue but to <em>love well</em>—honoring their journey while keeping doors open.
+        </p>
+      </div>
 
         <Accordion type="single" collapsible className="w-full">
           {/* Understanding Their Journey */}
@@ -301,6 +284,39 @@ export const RenouncedSupportSection = () => {
           <h5 className="font-semibold text-foreground mb-2">📚 Further Reading:</h5>
           <p><strong>Montgomery, Dr. Lyman A.</strong> <em>Sacred Not Sinful: A Biblical Response to the Black Greek Letter Organizations Debate</em>. Chapter 9: "Bridging the Divide" and Chapter 5: "Renounce or Redeem?"</p>
         </div>
+      </div>
+    );
+
+  // If embedded (inside an accordion), return just the content with padding
+  if (embedded) {
+    return <div className="p-4">{content}</div>;
+  }
+
+  // Otherwise, wrap in a Card for standalone use
+  return (
+    <Card className="border-purple-500/30 bg-gradient-to-br from-purple-500/5 to-background">
+      <CardHeader>
+        <div className="flex items-center gap-3">
+          <div className="p-2 rounded-lg bg-purple-500/10">
+            <HandHeart className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+          </div>
+          <div>
+            <Badge className="mb-1 bg-purple-500/10 text-purple-600 border-purple-500/20">
+              <Heart className="w-3 h-3 mr-1" />
+              Grace-Filled Approach
+            </Badge>
+            <CardTitle className="text-purple-700 dark:text-purple-300">
+              Supporting Those Who Have Renounced
+            </CardTitle>
+            <CardDescription>
+              A biblical framework for loving, supporting, and potentially winning back members who have left Greek life
+            </CardDescription>
+          </div>
+        </div>
+      </CardHeader>
+      
+      <CardContent>
+        {content}
       </CardContent>
     </Card>
   );
