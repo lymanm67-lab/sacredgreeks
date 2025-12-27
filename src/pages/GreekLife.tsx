@@ -12,6 +12,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useState, useRef } from "react";
 import { toast } from "sonner";
 import { HistoricalTimeline, HistoricalTimelineRef } from "@/components/HistoricalTimeline";
+import ancientCarpenterWorkshop from "@/assets/ancient-carpenter-workshop.jpg";
+import guildInitiationCeremony from "@/assets/guild-initiation-ceremony.jpg";
 
 interface Organization {
   name: string;
@@ -2387,6 +2389,29 @@ const GreekLife = () => {
                       <span className="hidden sm:inline">Download Citations PDF</span>
                       <span className="sm:hidden">PDF</span>
                     </Button>
+                    {user && (
+                      <Button
+                        variant={isSequentialPlaying ? "destructive" : "default"}
+                        size="sm"
+                        onClick={handleReadAll}
+                        disabled={isLoading && !isSequentialPlaying}
+                        className={`gap-2 ${!isSequentialPlaying ? "bg-gradient-to-r from-sacred to-amber-600 hover:from-sacred/90 hover:to-amber-600/90" : ""}`}
+                      >
+                        {isSequentialPlaying ? (
+                          <>
+                            <VolumeX className="w-4 h-4" />
+                            <span className="hidden sm:inline">Stop All</span>
+                            <span className="sm:hidden">Stop</span>
+                          </>
+                        ) : (
+                          <>
+                            <Volume2 className="w-4 h-4" />
+                            <span className="hidden sm:inline">Read All Sections</span>
+                            <span className="sm:hidden">Read All</span>
+                          </>
+                        )}
+                      </Button>
+                    )}
                   </div>
 
                   {/* Nested content accordions */}
@@ -2430,6 +2455,20 @@ const GreekLife = () => {
                       <AccordionContent className="text-sm text-muted-foreground space-y-4">
                         <div className="flex justify-end">
                           <TTSButton sectionKey="jesusGuild" text={ttsContent.jesusGuild} isDramatic />
+                        </div>
+                        {/* Historical Image */}
+                        <div className="relative rounded-xl overflow-hidden mb-4">
+                          <img 
+                            src={ancientCarpenterWorkshop} 
+                            alt="Ancient carpenter workshop with master craftsman teaching apprentices" 
+                            className="w-full h-48 sm:h-64 object-cover"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
+                          <div className="absolute bottom-3 left-3 right-3">
+                            <p className="text-xs text-muted-foreground italic">
+                              Artistic depiction: A master tekton instructing apprentices in his workshop
+                            </p>
+                          </div>
                         </div>
                         
                         <p>
@@ -2595,6 +2634,22 @@ const GreekLife = () => {
                             <Award className="w-4 h-4 text-sacred" />
                             Secret Handgrips & Recognition Words
                           </h5>
+                          
+                          {/* Historical Image */}
+                          <div className="relative rounded-xl overflow-hidden my-3">
+                            <img 
+                              src={guildInitiationCeremony} 
+                              alt="Ancient guild initiation ceremony with secret handshake" 
+                              className="w-full h-40 sm:h-52 object-cover"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
+                            <div className="absolute bottom-2 left-3 right-3">
+                              <p className="text-[10px] text-muted-foreground italic">
+                                Artistic depiction: The sacred moment of guild initiation and secret handgrip
+                              </p>
+                            </div>
+                          </div>
+                          
                           <p className="pl-6">
                             Guild members used <strong>secret recognition systems</strong> to identify fellow craftsmen—essential when traveling to other cities for work:
                           </p>
