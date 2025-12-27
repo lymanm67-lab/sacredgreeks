@@ -3639,10 +3639,12 @@ export const culturalComparisonCategories = [
   { id: "weddings", label: "Weddings & Family" },
   { id: "beauty", label: "Body & Beauty" },
   { id: "brands", label: "Brands & Logos" },
+  { id: "fashion", label: "Fashion & Products" },
   { id: "civic", label: "Civic & Legal" },
   { id: "church", label: "Church Architecture" },
   { id: "death", label: "Death & Memorials" },
-  { id: "medicine", label: "Medicine & Oaths" }
+  { id: "medicine", label: "Medicine & Oaths" },
+  { id: "medical", label: "Medical & Science" }
 ];
 
 export const culturalComparisons: CulturalComparisonEntry[] = [
@@ -4208,8 +4210,129 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
     id: "atlas-brand",
     category: "fashion",
     symbol: "Atlas in Branding",
-    ancientConnection: "Atlas was a Titan in Greek mythology condemned to hold up the sky. He was a pre-Olympian deity worshipped in some Greek traditions. Atlas imagery appears in countless brands, buildings, and corporate logos.",
-    modernUsage: "Atlas is used in maps, moving companies, fitness brands, and corporate logos encountered daily by Christians.",
-    appUsage: "A Titan from Greek religion appears in everyday branding that Christians use without scrutiny."
+    ancientConnection: "Atlas was a Titan in Greek mythology—one of the primordial gods who ruled before Zeus and the Olympians. He led the Titans in war against Zeus and was condemned to hold up the celestial spheres for eternity. Atlas was worshipped in North Africa and associated with astronomy and cosmic knowledge. The Atlas Mountains were believed to be his petrified form. He was the father of the Pleiades and Hyades star clusters, making him central to Greek religious cosmology.",
+    modernUsage: "Atlas is used in maps, moving companies, fitness brands, and corporate logos encountered daily by Christians. Atlas statues adorn buildings worldwide.",
+    appUsage: "A Titan god who warred against the heavens appears in everyday branding that Christians use without scrutiny."
+  },
+  {
+    id: "oracle-brand",
+    category: "fashion",
+    symbol: "Oracle Corporation",
+    ancientConnection: "Oracle is named after the sacred practice of consulting Greek gods for divine guidance. The Oracle at Delphi was the most sacred site in ancient Greece, where the Pythia priestess channeled Apollo to deliver prophecies. Greeks made pilgrimages, offered sacrifices, and based major decisions on oracular pronouncements. The Delphic Oracle influenced wars, colonies, and religious practices. Other oracles existed at Dodona (Zeus) and Didyma (Apollo). Consulting oracles was fundamental to Greek religious life.",
+    modernUsage: "Oracle database software powers church management systems, Christian nonprofit organizations, and seminary databases. The technology is fundamental to modern ministry infrastructure.",
+    appUsage: "A company named after the most sacred divination practice in Greek religion—where priestesses channeled pagan gods—runs Christian operations without concern."
+  },
+  {
+    id: "athena-brands",
+    category: "fashion",
+    symbol: "Athena in Branding",
+    ancientConnection: "Athena was one of the twelve Olympian gods—virgin goddess of wisdom, warfare, and crafts. She sprang fully formed from Zeus's head and was patron deity of Athens. The Parthenon was her temple, housing a massive gold and ivory statue. Athenians sacrificed to her annually at the Panathenaea festival. Athena gave humanity the olive tree and taught weaving. She carried the aegis (divine shield) and the gorgoneion (Medusa's head). Athena was invoked before battles and intellectual pursuits.",
+    modernUsage: "Athena appears in education brands, consulting firms, publishing companies, and technology startups used by Christians. Universities display Athena imagery.",
+    appUsage: "The patron goddess of Athens, with her own temple (Parthenon) and annual sacrifices, appears in brands Christians use daily while Greek letters are questioned."
+  },
+  {
+    id: "apollo-brands",
+    category: "fashion",
+    symbol: "Apollo in Branding",
+    ancientConnection: "Apollo was one of the most important Olympian gods—god of the sun, music, poetry, healing, plague, prophecy, and truth. He was worshipped at major temples including Delphi, where he spoke through the Oracle. Apollo slew the Python serpent and established his cult. The Pythian Games were held in his honor. He drove the sun chariot across the sky daily. Apollo was twin to Artemis and son of Zeus. Romans adopted him without changing his name—rare among Greek gods.",
+    modernUsage: "Apollo Theater hosts Christian artists. Apollo hospitals serve Christian patients. Apollo Global Management handles church investments. NASA's Apollo program is celebrated in Christian schools.",
+    appUsage: "A major Olympian god with temples, oracles, and sacred games has his name everywhere in Christian life while Greek letters face scrutiny."
+  },
+  {
+    id: "olympus-brands",
+    category: "fashion",
+    symbol: "Olympus Corporation & Mount Olympus",
+    ancientConnection: "Mount Olympus was the sacred home of the Greek gods—the divine realm where Zeus held court with the twelve Olympians. It was the most sacred place in Greek religion, believed to be where gods feasted on ambrosia and nectar. Olympus represented divine perfection and immortality. The Olympic Games were religious festivals honoring Zeus. Ascending Olympus was forbidden to mortals. The mountain was the axis connecting heaven and earth in Greek cosmology.",
+    modernUsage: "Olympus cameras are used by Christian photographers and churches. The Olympics are celebrated worldwide including in Christian communities. Olympus medical equipment is used in Christian hospitals.",
+    appUsage: "The literal home of the Greek gods—the most sacred site in their religion—is a brand name Christians use without theological concern."
+  },
+  {
+    id: "titan-brands",
+    category: "fashion",
+    symbol: "Titan in Branding",
+    ancientConnection: "The Titans were the elder gods of Greek religion—primordial deities who ruled before the Olympians. They included Cronus (who ate his children), Rhea, Hyperion, and others. The Titans warred against Zeus in the Titanomachy and were imprisoned in Tartarus. Titan worship predated the Olympians and represented raw cosmic power. Prometheus, a Titan, gave fire to humanity against Zeus's will.",
+    modernUsage: "Titan watches, Titan industries, and the Tennessee Titans are part of everyday Christian life. Titan is used for strength and power imagery.",
+    appUsage: "Elder gods who warred against heaven and were imprisoned in the underworld are brand names Christians embrace without concern."
+  },
+  {
+    id: "mercury-brands",
+    category: "fashion",
+    symbol: "Mercury in Branding",
+    ancientConnection: "Mercury was the Roman equivalent of Hermes—messenger god, guide of souls to the underworld, god of commerce, thieves, and travelers. Mercury was worshipped at the Temple of Mercury on the Aventine Hill. His festival (Mercuralia) was celebrated by merchants. Mercury's caduceus (staff with entwined serpents) was a sacred symbol. He conducted souls of the dead to Hades and was associated with magic and alchemy.",
+    modernUsage: "Mercury Marine engines power church boats. Mercury Insurance protects Christian families. The Mercury dime was U.S. currency. Mercury appears in countless brand names.",
+    appUsage: "The god who guides souls to the underworld and was worshipped by merchants is a brand name Christians use daily."
+  },
+  // Medical and Science Symbols with Greek/Pagan Origins
+  {
+    id: "rod-of-asclepius",
+    category: "medical",
+    symbol: "Rod of Asclepius (Medical Symbol)",
+    ancientConnection: "Asclepius was the Greek god of medicine and healing, son of Apollo. His cult was one of the most popular in ancient Greece, with major temples (Asclepieia) at Epidaurus, Kos, and Pergamon. Patients slept in temples hoping Asclepius would heal them in dreams. Snakes were sacred to him and kept in temples. The single serpent-entwined rod was his divine symbol. Hippocrates trained at an Asclepieion. The cult practiced incubation—sleeping in sacred spaces for divine healing visions.",
+    modernUsage: "The Rod of Asclepius is the official symbol of medicine, appearing on ambulances, hospitals, medical schools, and the World Health Organization logo. Christian doctors display it proudly.",
+    appUsage: "The symbol of a Greek healing god whose temples Christians would have visited for divine healing is the universal medical symbol—yet Greek letters are suspect."
+  },
+  {
+    id: "caduceus-medical",
+    category: "medical",
+    symbol: "Caduceus (Two-Serpent Staff)",
+    ancientConnection: "The caduceus was the sacred staff of Hermes (Mercury)—god of commerce, thieves, and guide of souls to the underworld. The two serpents represent the snakes that entwined when Hermes separated them with his staff. The caduceus was used in Hermes worship and represented his divine authority. It was associated with negotiation, magic, and alchemy. Hermes used it to conduct souls of the dead to Hades.",
+    modernUsage: "The caduceus is used by the U.S. Army Medical Corps, many hospitals, and medical organizations. It appears on pharmacy signs and medical buildings where Christians receive care.",
+    appUsage: "The magic staff of the god who guides souls to Hades marks Christian medical facilities while Greek letters are theologically questioned."
+  },
+  {
+    id: "hygeia-bowl",
+    category: "medical",
+    symbol: "Bowl of Hygeia (Pharmacy Symbol)",
+    ancientConnection: "Hygeia was the Greek goddess of health, cleanliness, and sanitation—daughter of Asclepius. She was worshipped alongside her father in healing temples. The Bowl of Hygeia (a snake drinking from a bowl) was her sacred symbol. Hygeia represented preventive medicine and was invoked for protection from disease. Her cult was widespread, and her image appeared in temple sanctuaries throughout Greece and Rome.",
+    modernUsage: "The Bowl of Hygeia is the international symbol of pharmacy, appearing on drugstores, pharmaceutical companies, and pharmacy schools. Christians pick up prescriptions under this goddess's symbol.",
+    appUsage: "A Greek goddess's sacred symbol marks every pharmacy where Christians fill prescriptions, yet Greek organizational letters face scrutiny."
+  },
+  {
+    id: "panacea-medicine",
+    category: "medical",
+    symbol: "Panacea (Universal Remedy Concept)",
+    ancientConnection: "Panacea was the Greek goddess of universal remedy—daughter of Asclepius and sister of Hygeia. She was worshipped for her power to heal all diseases. Physicians invoked her name in the original Hippocratic Oath: 'I swear by Apollo the Healer, by Asclepius, by Hygeia, and Panacea.' Her name means 'all-healing' and became the word for any cure-all medicine.",
+    modernUsage: "The word 'panacea' is used in Christian sermons, medical discussions, and everyday speech. The concept is referenced in Christian contexts regularly.",
+    appUsage: "A Greek goddess's name—invoked in ancient medical oaths to pagan gods—is common vocabulary in Christian life while Greek letters are questioned."
+  },
+  {
+    id: "psyche-psychology",
+    category: "medical",
+    symbol: "Psychology and Psychiatry",
+    ancientConnection: "Psyche was a Greek goddess—the divine personification of the soul. Her myth with Eros (Cupid) was a sacred story about the soul's journey to divine love. Psyche means 'soul' or 'spirit' in Greek. The butterfly was her symbol, representing the soul's immortality. Psychology literally means 'study of the soul/Psyche.' Psychiatry means 'healing of the soul/Psyche.' These fields are named after goddess worship.",
+    modernUsage: "Christian counselors practice psychology. Christian therapists provide psychiatric care. Churches offer psychological services. These Greek-goddess-derived terms are fundamental to Christian mental health ministry.",
+    appUsage: "Fields literally named after a Greek goddess of the soul are practiced by Christians while Greek organizational letters are theologically suspect."
+  },
+  {
+    id: "morphine-morpheus",
+    category: "medical",
+    symbol: "Morphine (Named After Morpheus)",
+    ancientConnection: "Morphine is named after Morpheus, the Greek god of dreams—son of Hypnos (god of sleep) and nephew of Thanatos (god of death). Morpheus shaped and formed dreams, appearing to sleepers in human form. He was worshipped for restful sleep and prophetic dreams. His name means 'shaper' or 'fashioner.' The god's ability to bring peaceful sleep inspired naming the painkiller after him.",
+    modernUsage: "Morphine is administered in Christian hospitals, hospices, and medical facilities. Christian patients receive morphine for pain management. The drug is essential to end-of-life Christian care.",
+    appUsage: "A drug named after the Greek god of dreams, son of Sleep and nephew of Death, is administered in Christian medical care while Greek letters face scrutiny."
+  },
+  {
+    id: "hygiene-goddess",
+    category: "medical",
+    symbol: "Hygiene (From Goddess Hygeia)",
+    ancientConnection: "The word 'hygiene' derives directly from Hygeia, Greek goddess of health and cleanliness. Every use of the word invokes her name. Hygeia was worshipped throughout the ancient world, with temples, statues, and regular sacrifices. The concept of cleanliness for health was her divine domain.",
+    modernUsage: "Christians teach hygiene, practice hygiene, and discuss hygiene in church settings. Hand hygiene signs appear in church bathrooms. Hygiene is fundamental to Christian health ministry.",
+    appUsage: "A word derived from a Greek goddess's name is spoken in churches daily while Greek letters are considered spiritually problematic."
+  },
+  {
+    id: "anatomy-medical",
+    category: "medical",
+    symbol: "Anatomy (Greek Origin)",
+    ancientConnection: "Anatomy comes from Greek 'anatomē' meaning 'dissection'—a practice developed in temples of Asclepius where priests studied the body as sacred creation. Greek medical knowledge was inseparable from religious practice. Galen, who shaped Western anatomy, worked at the Asclepieion of Pergamon. Anatomical study occurred in religious contexts honoring the healing gods.",
+    modernUsage: "Anatomy is taught in Christian medical schools, studied by Christian healthcare workers, and used in Christian health education.",
+    appUsage: "Medical terminology developed in Greek god-healing temples is fundamental to Christian healthcare while Greek letters are questioned."
+  },
+  {
+    id: "pharmaceutical",
+    category: "medical",
+    symbol: "Pharmaceutical (Pharmakon)",
+    ancientConnection: "Pharmaceutical derives from Greek 'pharmakon'—meaning drug, medicine, poison, or magical charm. In Greek religion, pharmaka were used in temple healing, mystery rites, and magical practices. The pharmakos was a ritual scapegoat in Greek religion. Drugs and healing were inseparable from religious practice in ancient Greece. Temple priests dispensed pharmaka as divine healing.",
+    modernUsage: "Pharmaceutical companies serve Christian patients. Christian pharmacists work in the pharmaceutical industry. Churches discuss pharmaceutical ethics.",
+    appUsage: "An industry named after Greek magical-religious healing practices serves Christians without concern while Greek letters face scrutiny."
   }
 ];
