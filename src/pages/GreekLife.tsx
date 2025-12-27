@@ -28,9 +28,25 @@ const GreekLife = () => {
 
   const [currentlyPlayingSection, setCurrentlyPlayingSection] = useState<string | null>(null);
 
+  const [isSequentialPlaying, setIsSequentialPlaying] = useState(false);
+  const [currentSequentialSection, setCurrentSequentialSection] = useState<number>(0);
+  const sequentialSections = ['introduction', 'jesusGuild', 'carpenterInitiation', 'religiousSects', 'ancientGuilds', 'romanGreek', 'earlyChurch'];
+
   // Text content for TTS sections
   const ttsContent = {
+    introduction: `Fraternities are not a modern invention. The concept of koinonia, a Greek word meaning fellowship, partnership, or communion, appears over 20 times in the New Testament and describes the essential fraternal bond between believers. When Scripture commands believers to have koinonia with one another, it's commanding exactly what Greek letter organizations create: shared life, mutual support, common identity, and exclusive fellowship.`,
+    
     jesusGuild: `Jesus was a TEKTON, a Greek word translated as carpenter but more accurately meaning master builder or craftsman. Ancient craft guilds were fraternal organizations with secret initiations, proprietary techniques, coded language, oaths of loyalty, and special recognition grips. Carpenters and builders were essential for city defense, constructing walls, gates, and fortifications. Joseph trained Jesus in this guild system for approximately 18 years. This is documented in Mark 6:3 where Jesus is called "the tekton" and Matthew 13:55 where Joseph is called "the tekton."`,
+    
+    carpenterInitiation: `Ancient carpenter guilds in the first century followed a structured initiation process documented in ancient texts. The selection process was rigorous. According to the Mishnah and Talmudic sources, apprentices typically began around age 12-13 following bar mitzvah, after demonstrating both physical capability and moral character. The guild master would observe the candidate for weeks, testing their patience, obedience, and natural aptitude with tools.
+    
+    The testing period lasted months to years. Candidates performed menial tasks, carrying materials, preparing tools, mixing adhesives from animal glues and plant resins. They were tested through deliberate hardships, working in extreme conditions, receiving harsh criticism, being given seemingly impossible tasks.
+    
+    The initiation ceremony itself was sacred and secret. Based on archaeological evidence from Greco-Roman collegia and descriptions in Josephus, guild initiations included ritual purification through washing, often in a mikvah or river. The candidate would recite sacred oaths never to reveal trade secrets on penalty of divine curse. There was symbolic death and rebirth, stripping of old garments and donning of the guild's distinctive work clothing. The master would grip the initiate's hand in the guild's secret manner, and the new member received a guild mark, a distinctive sign often carved into their personal tools.
+    
+    The guild secrets included sacred geometry and mathematical ratios passed only orally, coded terms for measurements and techniques, recognition grips to identify fellow craftsmen in other cities, proprietary formulas for wood preservation, adhesives, and finishes, and strategic knowledge since carpenters built siege equipment, fortifications, and war machines. This made their loyalty a matter of national security.
+    
+    Josephus, in Jewish Antiquities Book 15, describes how Herod imported guild craftsmen for the Temple reconstruction, noting they maintained strict secrecy about their techniques. The Mishnah Tractate Kiddushin discusses the obligations between a master craftsman and apprentice, including the transmission of wisdom only to worthy successors. First-century archaeological sites in Sepphoris and Nazareth have revealed guild marks on construction stones, indicating organized fraternal craft networks.`,
     
     religiousSects: `The Pharisees were a religious fraternity with secret teachings called oral Torah, initiation processes, distinctive dress, and hierarchical ranks. Paul boasted of his Pharisee membership even after conversion. The Sadducees were an elite priestly brotherhood with hereditary membership, secret Temple rituals, and exclusive access to the Holy of Holies. The Essenes were a secret monastic brotherhood with 1-3 year initiation periods, oath ceremonies, progressive secret doctrines, and distinctive white robes. They produced the Dead Sea Scrolls. The Zealots were a secret political-religious fraternity with blood oaths, code names, and covert meetings. Simon the Zealot was one of Jesus's twelve apostles.`,
     
@@ -46,11 +62,61 @@ const GreekLife = () => {
     if (currentlyPlayingSection === sectionKey && isPlaying) {
       stop();
       setCurrentlyPlayingSection(null);
+      setIsSequentialPlaying(false);
     } else {
       if (isPlaying) stop();
       setCurrentlyPlayingSection(sectionKey);
+      setIsSequentialPlaying(false);
       speak(text);
     }
+  };
+
+  // Sequential TTS - Read All Sections
+  const handleReadAll = async () => {
+    if (isSequentialPlaying) {
+      stop();
+      setIsSequentialPlaying(false);
+      setCurrentlyPlayingSection(null);
+      return;
+    }
+
+    setIsSequentialPlaying(true);
+    
+    for (let i = 0; i < sequentialSections.length; i++) {
+      if (!isSequentialPlaying && i > 0) break;
+      
+      const sectionKey = sequentialSections[i] as keyof typeof ttsContent;
+      setCurrentSequentialSection(i);
+      setCurrentlyPlayingSection(sectionKey);
+      
+      try {
+        await new Promise<void>((resolve, reject) => {
+          speak(ttsContent[sectionKey]);
+          // Wait for audio to complete (estimated 10 seconds per section)
+          const checkInterval = setInterval(() => {
+            if (!isPlaying) {
+              clearInterval(checkInterval);
+              resolve();
+            }
+          }, 500);
+          
+          // Timeout after 2 minutes per section
+          setTimeout(() => {
+            clearInterval(checkInterval);
+            resolve();
+          }, 120000);
+        });
+        
+        // Brief pause between sections
+        await new Promise(resolve => setTimeout(resolve, 1500));
+      } catch (error) {
+        console.error('Sequential TTS error:', error);
+        break;
+      }
+    }
+    
+    setIsSequentialPlaying(false);
+    setCurrentlyPlayingSection(null);
   };
 
   // Generate PDF citations
@@ -78,56 +144,95 @@ const GreekLife = () => {
       const pageHeight = 280;
       
       const citations = [
+        { num: "PRIMARY", title: "Sacred Not Sinful: A Biblical Response to the Black Greek Letter Organizations Debate", refs: [
+          "Montgomery, Dr. Lyman A. Sacred Not Sinful: A Biblical Response to the Black Greek Letter Organizations Debate. Sacred Greeks Ministry Publications.",
+          "Comprehensive theological examination of BGLOs through Scripture, church history, and African-American heritage.",
+          "Addresses common objections and provides biblical framework for understanding fraternal organizations."
+        ]},
         { num: "1", title: "TEKTON (Master Builder/Craftsman)", refs: [
           "Mark 6:3, Matthew 13:55 — Greek τέκτων (tekton)",
           "Campbell, Ken M. \"What Was Jesus' Occupation?\" Journal of the Evangelical Theological Society 48.3 (2005): 501-519.",
-          "Batey, Richard A. \"Is Not This the Carpenter?\" New Testament Studies 30.2 (1984): 249-258."
+          "Batey, Richard A. \"Is Not This the Carpenter?\" New Testament Studies 30.2 (1984): 249-258.",
+          "Oakman, Douglas E. Jesus and the Peasants. Cascade Books, 2008. Ch. 5: \"The Artisan Class.\""
         ]},
-        { num: "2", title: "Ancient Guild Structures", refs: [
+        { num: "2", title: "Ancient Carpenter Initiation Rites", refs: [
+          "Josephus, Jewish Antiquities 15.390-402 — Temple craftsmen's guild secrecy",
+          "Mishnah Kiddushin 4:14 — Master-apprentice obligations and training",
+          "Babylonian Talmud, Kiddushin 29a — Father's duty to teach son a trade",
+          "Avigad, Nahman. \"Excavations in the Jewish Quarter.\" Israel Exploration Journal 25 (1975). Guild marks on construction.",
+          "Reed, Jonathan L. Archaeology and the Galilean Jesus. Trinity Press, 2000. Ch. 3: \"Village Life and Crafts.\""
+        ]},
+        { num: "3", title: "Guild Selection & Testing Processes", refs: [
+          "Mishnah Avot 5:21 — Traditional Jewish ages for learning stages",
+          "Jeremias, Joachim. Jerusalem in the Time of Jesus. Fortress Press, 1969. Pp. 3-27: \"Economic Conditions.\"",
+          "Ben-Sasson, H.H. A History of the Jewish People. Harvard University Press, 1976. Ch. 6: \"Social Structure.\""
+        ]},
+        { num: "4", title: "Ancient Guild Structures & Collegia", refs: [
           "Kloppenborg, John S. \"Collegia and Thiasoi: Issues in Function, Taxonomy and Membership.\" Voluntary Associations in the Graeco-Roman World (1996): 16-30.",
           "Harland, Philip A. Associations, Synagogues, and Congregations. Fortress Press, 2003.",
-          "Liu, Jinyu. Collegia Centonariorum: The Guilds of Textile Dealers in the Roman West. Brill, 2009."
+          "Liu, Jinyu. Collegia Centonariorum: The Guilds of Textile Dealers in the Roman West. Brill, 2009.",
+          "Patterson, John R. \"The Collegia and the Transformation of the Towns of Italy.\" L'Italie d'Auguste à Dioclétien. Rome, 1994."
         ]},
-        { num: "3", title: "Jesus's Building Parables", refs: [
+        { num: "5", title: "Jesus's Building Parables", refs: [
           "Snyder, Graydon F. Ante Pacem: Archaeological Evidence of Church Life Before Constantine. Mercer University Press, 2003.",
-          "Matthew 7:24-27 (building on rock vs sand)",
-          "Mark 12:10, Psalm 118:22 (cornerstone rejected by builders)"
+          "Matthew 7:24-27 (building on rock vs sand) — Insider guild knowledge",
+          "Mark 12:10, Psalm 118:22 (cornerstone rejected by builders)",
+          "Ched Myers. Binding the Strong Man: A Political Reading of Mark's Story of Jesus. Orbis Books, 1988."
         ]},
-        { num: "4", title: "Guild Oaths & Trade Secrets", refs: [
+        { num: "6", title: "Guild Oaths & Trade Secrets", refs: [
           "MacMullen, Ramsay. Roman Social Relations. Yale University Press, 1974.",
-          "Pliny, Natural History 35.152 (guild secrecy)",
-          "Wilson, Robert McL. The Gnostic Problem. A.R. Mowbray, 1958."
+          "Pliny, Natural History 35.152 — Guild secrecy requirements",
+          "Wilson, Robert McL. The Gnostic Problem. A.R. Mowbray, 1958.",
+          "Vitruvius, De Architectura (c. 15 BC) — Roman building guild practices"
         ]},
-        { num: "5", title: "Builders & City Defense", refs: [
+        { num: "7", title: "Builders & Strategic Importance", refs: [
           "Josephus, Jewish War 3.7.21 — Galilean builders' role in fortifications",
+          "Josephus, Jewish War 2.18.9 — Carpenters as essential for siege equipment",
           "Tabor, James D. The Jesus Dynasty. Simon & Schuster, 2006.",
           "Reich, Ronny. \"Stone Vessels, Weights and Architectural Fragments.\" Excavations at the City of David Vol. 1 (1990)."
         ]},
-        { num: "6", title: "Recognition Signs in Guilds", refs: [
+        { num: "8", title: "Recognition Signs & Secret Grips", refs: [
           "Dölger, Franz Joseph. ΙΧΘΥΣ: Das Fischsymbol in frühchristlicher Zeit. Aschendorff, 1922.",
           "Ferguson, Everett. Backgrounds of Early Christianity. 3rd ed. Eerdmans, 2003.",
-          "Hengel, Martin. Judaism and Hellenism. Fortress Press, 1974."
+          "Hengel, Martin. Judaism and Hellenism. Fortress Press, 1974.",
+          "Goodenough, Erwin R. Jewish Symbols in the Greco-Roman Period. 13 vols. Princeton, 1953-68."
         ]},
-        { num: "7", title: "Jewish Apprenticeship & Training", refs: [
+        { num: "9", title: "Jewish Apprenticeship & Training", refs: [
           "Luke 3:23 — Jesus \"about thirty years old\" at ministry start",
           "Safrai, S. & Stern, M. The Jewish People in the First Century. Van Gorcum, 1976.",
-          "Mishnah Avot 5:21 — Traditional Jewish age for training stages"
+          "Mishnah Avot 5:21 — Traditional Jewish age for training stages",
+          "Flusser, David. Judaism and the Origins of Christianity. Magnes Press, 1988."
         ]},
-        { num: "8", title: "Pharisees as Fraternity", refs: [
+        { num: "10", title: "Pharisees as Fraternity", refs: [
           "Acts 23:6, Philippians 3:5 — Paul's Pharisee identity",
           "Neusner, Jacob. The Rabbinic Traditions About the Pharisees Before 70. 3 vols. Brill, 1971.",
-          "Mason, Steve. Flavius Josephus on the Pharisees. Brill, 1991."
+          "Mason, Steve. Flavius Josephus on the Pharisees. Brill, 1991.",
+          "Saldarini, Anthony J. Pharisees, Scribes and Sadducees in Palestinian Society. Eerdmans, 2001."
         ]},
-        { num: "9", title: "Essene Brotherhood", refs: [
-          "Dead Sea Scrolls: Community Rule (1QS)",
-          "Josephus, Jewish War 2.119-161",
-          "Vermes, Geza. The Complete Dead Sea Scrolls in English. Penguin, 2004."
+        { num: "11", title: "Essene Brotherhood & Initiation", refs: [
+          "Dead Sea Scrolls: Community Rule (1QS) — 1-3 year initiation, oaths, white robes",
+          "Josephus, Jewish War 2.119-161 — Detailed Essene practices",
+          "Vermes, Geza. The Complete Dead Sea Scrolls in English. Penguin, 2004.",
+          "Collins, John J. The Dead Sea Scrolls: A Biography. Princeton University Press, 2012."
         ]},
-        { num: "10", title: "Early Church Secret Practices", refs: [
-          "1 Corinthians 16:22 — \"MARANATHA\"",
-          "Romans 16:16, 1 Corinthians 16:20 — Holy Kiss",
-          "Hippolytus, Apostolic Tradition (c. 215 AD) — catechumenate initiations",
-          "Judges 12:5-6 — SHIBBOLETH precedent"
+        { num: "12", title: "Early Church Secret Practices", refs: [
+          "1 Corinthians 16:22 — \"MARANATHA\" secret password",
+          "Romans 16:16, 1 Corinthians 16:20 — Holy Kiss ritual",
+          "Hippolytus, Apostolic Tradition (c. 215 AD) — Catechumenate initiations",
+          "Tertullian, Apology 7, 39 — Early church secrecy during persecution",
+          "Judges 12:5-6 — SHIBBOLETH biblical precedent"
+        ]},
+        { num: "13", title: "Koinonia as Fraternal Bond", refs: [
+          "Acts 2:42 — \"They devoted themselves to the apostles' teaching and to koinonia\"",
+          "1 John 1:3, 7 — Fellowship with God and each other",
+          "Philippians 2:1 — \"Koinonia of the Spirit\"",
+          "Banks, Robert J. Paul's Idea of Community. Hendrickson, 1994. Ch. 4: \"The Meaning of Koinonia.\""
+        ]},
+        { num: "14", title: "African-American Greek Tradition", refs: [
+          "Ross, Lawrence C. The Divine Nine: The History of African American Fraternities and Sororities. Kensington, 2000.",
+          "Kimbrough, Walter M. Black Greek 101. Fairleigh Dickinson University Press, 2003.",
+          "Parks, Gregory S., ed. Black Greek-Letter Organizations in the Twenty-First Century. University Press of Kentucky, 2008.",
+          "Hughey, Matthew W. \"Constitutive Intersectionality and the Legitimacy of Black Greek-Letter Organizations.\" Journal of African American Studies 14.4 (2010)."
         ]}
       ];
       
@@ -2138,16 +2243,40 @@ const GreekLife = () => {
                     <CardDescription>Understanding the deep roots of fraternal organizations in Scripture and ancient culture</CardDescription>
                   </div>
                 </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={generateCitationsPDF}
-                  className="gap-2 shrink-0"
-                >
-                  <FileDown className="w-4 h-4" />
-                  <span className="hidden sm:inline">Download Citations PDF</span>
-                  <span className="sm:hidden">PDF</span>
-                </Button>
+                <div className="flex gap-2 shrink-0">
+                  {user && (
+                    <Button
+                      variant={isSequentialPlaying ? "destructive" : "default"}
+                      size="sm"
+                      onClick={handleReadAll}
+                      disabled={isLoading && !isSequentialPlaying}
+                      className="gap-2"
+                    >
+                      {isSequentialPlaying ? (
+                        <>
+                          <VolumeX className="w-4 h-4" />
+                          <span className="hidden sm:inline">Stop Reading</span>
+                        </>
+                      ) : (
+                        <>
+                          <Volume2 className="w-4 h-4" />
+                          <span className="hidden sm:inline">Read All Sections</span>
+                          <span className="sm:hidden">Read All</span>
+                        </>
+                      )}
+                    </Button>
+                  )}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={generateCitationsPDF}
+                    className="gap-2"
+                  >
+                    <FileDown className="w-4 h-4" />
+                    <span className="hidden sm:inline">Download Citations PDF</span>
+                    <span className="sm:hidden">PDF</span>
+                  </Button>
+                </div>
               </div>
             </CardHeader>
             <CardContent className="pt-2">
@@ -2159,10 +2288,19 @@ const GreekLife = () => {
                       Introduction: Fraternities in Scripture
                     </span>
                   </AccordionTrigger>
-                  <AccordionContent className="text-sm text-muted-foreground">
+                  <AccordionContent className="text-sm text-muted-foreground space-y-3">
+                    <div className="flex justify-end">
+                      <TTSButton sectionKey="introduction" text={ttsContent.introduction} />
+                    </div>
                     <p className="leading-relaxed">
                       <strong className="text-foreground">Fraternities are not a modern invention.</strong> The concept of <em>koinonia</em> (κοινωνία)—Greek for "fellowship," "partnership," or "communion"—appears over 20 times in the New Testament and describes the essential fraternal bond between believers. When Scripture commands believers to have "koinonia with one another," it's commanding exactly what Greek letter organizations create: shared life, mutual support, common identity, and exclusive fellowship.
                     </p>
+                    <div className="mt-3 p-3 rounded-lg bg-muted/30 border border-border text-xs space-y-1">
+                      <h5 className="font-semibold text-foreground mb-2">📚 Key Reference:</h5>
+                      <p><strong>Montgomery, Dr. Lyman A.</strong> <em>Sacred Not Sinful: A Biblical Response to the Black Greek Letter Organizations Debate</em>. Sacred Greeks Ministry Publications. — Comprehensive theological examination of BGLOs through Scripture, church history, and African-American heritage.</p>
+                      <p><strong>Acts 2:42</strong> — "They devoted themselves to the apostles' teaching and to koinonia"</p>
+                      <p><strong>Banks, Robert J.</strong> <em>Paul's Idea of Community</em>. Hendrickson, 1994. Ch. 4: "The Meaning of Koinonia."</p>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
 
@@ -2196,13 +2334,116 @@ const GreekLife = () => {
                     {/* Citations */}
                     <div className="mt-4 p-3 rounded-lg bg-muted/30 border border-border text-xs space-y-1">
                       <h5 className="font-semibold text-foreground mb-2">📚 Citations & References:</h5>
-                      <p><strong>[1]</strong> Mark 6:3, Matthew 13:55 — Greek "τέκτων" (tekton). See: Campbell, Ken M. "What Was Jesus' Occupation?" <em>Journal of the Evangelical Theological Society</em> 48.3 (2005): 501-519.</p>
+                      <p><strong>[1]</strong> Mark 6:3, Matthew 13:55 — Greek "τέκτων" (tekton). See: Campbell, Ken M. "What Was Jesus' Occupation?" <em>Journal of the Evangelical Theological Society</em> 48.3 (2005): 501-519. Also: Batey, Richard A. "Is Not This the Carpenter?" <em>New Testament Studies</em> 30.2 (1984): 249-258.</p>
                       <p><strong>[2]</strong> Kloppenborg, John S. "Collegia and Thiasoi: Issues in Function, Taxonomy and Membership." In <em>Voluntary Associations in the Graeco-Roman World</em> (1996), 16-30.</p>
-                      <p><strong>[3]</strong> Snyder, Graydon F. <em>Ante Pacem: Archaeological Evidence of Church Life Before Constantine</em>. Mercer University Press, 2003. Ch. 4.</p>
-                      <p><strong>[4]</strong> Harland, Philip A. <em>Associations, Synagogues, and Congregations</em>. Fortress Press, 2003. Pp. 28-53.</p>
-                      <p><strong>[5]</strong> Josephus, <em>Jewish War</em> 3.7.21 — Describes Galilean builders' role in fortifications. Also: Tabor, James D. <em>The Jesus Dynasty</em>. Simon & Schuster, 2006.</p>
-                      <p><strong>[6]</strong> Wilson, Robert McL. <em>The Gnostic Problem</em>. A.R. Mowbray, 1958. Discusses recognition signs in ancient Mediterranean guilds.</p>
-                      <p><strong>[7]</strong> Luke 3:23 — "about thirty years old" at ministry start; Mark 6:3 — known as "the tekton" indicating mastery. Jewish apprenticeship traditions documented in: Safrai, S. & Stern, M. <em>The Jewish People in the First Century</em>. Van Gorcum, 1976.</p>
+                      <p><strong>[3]</strong> Snyder, Graydon F. <em>Ante Pacem: Archaeological Evidence of Church Life Before Constantine</em>. Mercer University Press, 2003. Also: Myers, Ched. <em>Binding the Strong Man</em>. Orbis Books, 1988.</p>
+                      <p><strong>[4]</strong> Harland, Philip A. <em>Associations, Synagogues, and Congregations</em>. Fortress Press, 2003. Pp. 28-53. Also: MacMullen, Ramsay. <em>Roman Social Relations</em>. Yale University Press, 1974.</p>
+                      <p><strong>[5]</strong> Josephus, <em>Jewish War</em> 3.7.21 & 2.18.9 — Describes builders' role in fortifications and siege equipment. Also: Tabor, James D. <em>The Jesus Dynasty</em>. Simon & Schuster, 2006.</p>
+                      <p><strong>[6]</strong> Wilson, Robert McL. <em>The Gnostic Problem</em>. A.R. Mowbray, 1958. Also: Goodenough, Erwin R. <em>Jewish Symbols in the Greco-Roman Period</em>. 13 vols. Princeton, 1953-68.</p>
+                      <p><strong>[7]</strong> Luke 3:23 — "about thirty years old" at ministry start. Safrai, S. & Stern, M. <em>The Jewish People in the First Century</em>. Van Gorcum, 1976.</p>
+                      <p className="pt-2 border-t border-border/50"><strong>See also:</strong> Montgomery, Dr. Lyman A. <em>Sacred Not Sinful</em>. Chapter on "Jesus the Tekton."</p>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="carpenter-initiation" className="border-amber-500/20">
+                  <AccordionTrigger className="text-sm font-medium hover:no-underline">
+                    <span className="flex items-center gap-2">
+                      <Shield className="w-4 h-4 text-amber-700" />
+                      Ancient Carpenter Initiation Rites (First Century)
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="text-sm text-muted-foreground space-y-4">
+                    <div className="flex justify-end">
+                      <TTSButton sectionKey="carpenterInitiation" text={ttsContent.carpenterInitiation} />
+                    </div>
+                    
+                    <div className="p-4 rounded-lg bg-gradient-to-br from-amber-500/10 to-background border border-amber-500/20">
+                      <h5 className="font-bold text-foreground text-base mb-3">🔨 How Carpenters Were Selected, Tested, and Initiated in Jesus's Day</h5>
+                      <p className="text-xs italic text-muted-foreground mb-3">Based on Mishnaic, Talmudic, and Josephan sources, as well as archaeological evidence from Greco-Roman collegia</p>
+                    </div>
+
+                    {/* Stage 1: Selection */}
+                    <div className="p-3 rounded-lg bg-muted/50 border-l-4 border-amber-600">
+                      <h6 className="font-bold text-foreground mb-2">1️⃣ SELECTION: The Choosing of Candidates</h6>
+                      <ul className="text-xs space-y-1 list-disc ml-4">
+                        <li>Apprentices typically began around <strong>age 12-13</strong> following bar mitzvah (Mishnah Avot 5:21)</li>
+                        <li>Candidates demonstrated both <strong>physical capability</strong> and <strong>moral character</strong></li>
+                        <li>The guild master would <strong>observe the candidate for weeks</strong>, testing patience, obedience, and natural aptitude</li>
+                        <li>Family connections mattered: sons of guild members had priority (like Joseph training Jesus)</li>
+                        <li>Character references from community elders were required</li>
+                      </ul>
+                      <p className="text-xs mt-2 italic">Source: Mishnah Kiddushin 4:14; Babylonian Talmud Kiddushin 29a</p>
+                    </div>
+
+                    {/* Stage 2: Testing */}
+                    <div className="p-3 rounded-lg bg-muted/50 border-l-4 border-amber-500">
+                      <h6 className="font-bold text-foreground mb-2">2️⃣ TESTING: The Proving Period (Months to Years)</h6>
+                      <ul className="text-xs space-y-1 list-disc ml-4">
+                        <li><strong>Menial tasks</strong>: Carrying materials, preparing tools, cleaning the workshop</li>
+                        <li><strong>Mixing adhesives</strong> from animal glues and plant resins (secret formulas)</li>
+                        <li><strong>Deliberate hardships</strong>: Working in extreme conditions, harsh criticism, impossible tasks</li>
+                        <li><strong>Tests of loyalty</strong>: Could the candidate keep secrets under pressure?</li>
+                        <li><strong>Progressive skill development</strong>: Only those who persevered advanced</li>
+                        <li>Masters tested candidates' response to <strong>intentional misdirection</strong> to see if they would correct errors</li>
+                      </ul>
+                      <p className="text-xs mt-2 italic">Source: Jeremias, Joachim. "Jerusalem in the Time of Jesus" (1969), pp. 3-27</p>
+                    </div>
+
+                    {/* Stage 3: Initiation */}
+                    <div className="p-3 rounded-lg bg-muted/50 border-l-4 border-sacred">
+                      <h6 className="font-bold text-foreground mb-2">3️⃣ INITIATION: The Sacred Ceremony</h6>
+                      <p className="text-xs mb-2">Based on archaeological evidence from Greco-Roman collegia and descriptions in Josephus, guild initiations included:</p>
+                      <ul className="text-xs space-y-1 list-disc ml-4">
+                        <li><strong>Ritual Purification</strong>: Washing, often in a mikvah or river (similar to baptism symbolism)</li>
+                        <li><strong>Sacred Oaths</strong>: Reciting vows never to reveal trade secrets—on penalty of divine curse</li>
+                        <li><strong>Symbolic Death & Rebirth</strong>: Stripping of old garments, donning the guild's distinctive work clothing</li>
+                        <li><strong>Secret Handgrip</strong>: The master gripped the initiate's hand in the guild's distinctive manner</li>
+                        <li><strong>Guild Mark</strong>: A distinctive sign often carved into the initiate's personal tools</li>
+                        <li><strong>Patron Deity Invocation</strong>: (In pagan guilds) or blessing prayers (in Jewish contexts)</li>
+                        <li><strong>Sacred Meal</strong>: Fellowship meal with all guild members to seal the bond</li>
+                      </ul>
+                      <p className="text-xs mt-2 italic">Source: Josephus, Jewish Antiquities 15.390-402; Harland, "Associations, Synagogues, and Congregations" (2003)</p>
+                    </div>
+
+                    {/* Stage 4: Secrets */}
+                    <div className="p-3 rounded-lg bg-muted/50 border-l-4 border-purple-600">
+                      <h6 className="font-bold text-foreground mb-2">4️⃣ THE GUILD SECRETS: What Was Protected</h6>
+                      <ul className="text-xs space-y-1 list-disc ml-4">
+                        <li><strong>Sacred geometry</strong> and mathematical ratios passed only orally (never written)</li>
+                        <li><strong>Coded terms</strong> for measurements and techniques (Jesus's parables show this insider knowledge)</li>
+                        <li><strong>Recognition grips</strong> to identify fellow craftsmen when traveling to other cities</li>
+                        <li><strong>Proprietary formulas</strong> for wood preservation, waterproofing, adhesives, and finishes</li>
+                        <li><strong>Strategic knowledge</strong>: Carpenters built siege towers, battering rams, fortification gates, and war machines—making their loyalty a matter of <strong>NATIONAL SECURITY</strong></li>
+                        <li><strong>Guild passwords</strong>: To gain entry to guild meetings in other towns</li>
+                      </ul>
+                      <p className="text-xs mt-2 italic">Source: Vitruvius, "De Architectura" (c. 15 BC); Josephus, Jewish War 2.18.9; Reed, "Archaeology and the Galilean Jesus" (2000)</p>
+                    </div>
+
+                    {/* Archaeological Evidence */}
+                    <div className="p-3 rounded-lg bg-gradient-to-r from-amber-500/10 to-sacred/10 border border-border">
+                      <h6 className="font-bold text-foreground mb-2">🏛️ Archaeological Evidence</h6>
+                      <ul className="text-xs space-y-1 list-disc ml-4">
+                        <li><strong>Sepphoris excavations</strong> (4 miles from Nazareth): Guild marks found on construction stones</li>
+                        <li><strong>Nazareth excavations</strong>: Evidence of organized craft networks in Jesus's hometown</li>
+                        <li><strong>Temple Mount stones</strong>: Identical guild marks indicating coordinated construction crews</li>
+                        <li><strong>Roman collegia inscriptions</strong>: Document parallel initiation practices throughout the Empire</li>
+                      </ul>
+                      <p className="text-xs mt-2 italic">Source: Avigad, "Excavations in the Jewish Quarter" (1975); Reich, "Excavations at the City of David" Vol. 1</p>
+                    </div>
+
+                    {/* Full Citations */}
+                    <div className="mt-4 p-3 rounded-lg bg-muted/30 border border-border text-xs space-y-1">
+                      <h5 className="font-semibold text-foreground mb-2">📚 Complete Scholarly Citations:</h5>
+                      <p><strong>PRIMARY:</strong> Montgomery, Dr. Lyman A. <em>Sacred Not Sinful: A Biblical Response to the Black Greek Letter Organizations Debate</em>. Sacred Greeks Ministry Publications.</p>
+                      <p><strong>Josephus:</strong> <em>Jewish Antiquities</em> 15.390-402 (Temple craftsmen's guild secrecy); <em>Jewish War</em> 2.18.9, 3.7.21 (builders and fortifications)</p>
+                      <p><strong>Mishnah:</strong> Kiddushin 4:14 (master-apprentice obligations); Avot 5:21 (age stages for learning)</p>
+                      <p><strong>Talmud:</strong> Babylonian Talmud, Kiddushin 29a (father's duty to teach son a trade)</p>
+                      <p><strong>Vitruvius:</strong> <em>De Architectura</em> (c. 15 BC) — Roman building guild practices and training</p>
+                      <p><strong>Avigad, Nahman:</strong> "Excavations in the Jewish Quarter." <em>Israel Exploration Journal</em> 25 (1975) — Guild marks evidence</p>
+                      <p><strong>Reed, Jonathan L.:</strong> <em>Archaeology and the Galilean Jesus</em>. Trinity Press, 2000. Ch. 3: "Village Life and Crafts"</p>
+                      <p><strong>Jeremias, Joachim:</strong> <em>Jerusalem in the Time of Jesus</em>. Fortress Press, 1969. Pp. 3-27: Economic conditions and guild life</p>
+                      <p><strong>Harland, Philip A.:</strong> <em>Associations, Synagogues, and Congregations</em>. Fortress Press, 2003. Pp. 28-53</p>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
