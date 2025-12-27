@@ -3091,7 +3091,7 @@ export const customsSubcategories = [
   { id: "Birthday Tradition", label: "Birthday" },
   { id: "Religious Holiday", label: "Religious Holidays" },
   { id: "Cultural Holiday", label: "Cultural Holidays" },
-  { id: "Architecture", label: "Church Architecture" }
+  { id: "Church Architecture", label: "Church Architecture" }
 ];
 
 // Subcategories for Cultural - filter by organizationType
