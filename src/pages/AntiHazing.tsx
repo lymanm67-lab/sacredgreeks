@@ -2224,9 +2224,9 @@ const AntiHazing = () => {
                     <h4 className="text-sm font-semibold text-center mb-6">Key Legislative Milestones</h4>
                     <div className="relative">
                       {/* Timeline line */}
-                      <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-destructive via-primary to-primary/50" />
+                      <div className="absolute left-4 md:left-1/2 top-0 h-full w-0.5 bg-gradient-to-b from-destructive via-primary to-primary/50" style={{ minHeight: '100%' }} />
                       
-                      <div className="space-y-4">
+                      <div className="space-y-4 relative">
                         {legislativeMilestones.map((milestone, index) => (
                           <div 
                             key={index} 
