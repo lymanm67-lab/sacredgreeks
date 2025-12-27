@@ -21,6 +21,8 @@ import BookmarkNotesDialog from '@/components/symbol-guide/BookmarkNotesDialog';
 import ShareBookmarksDialog from '@/components/symbol-guide/ShareBookmarksDialog';
 import PrintComparisonGuideDialog from '@/components/symbol-guide/PrintComparisonGuideDialog';
 import ExpandableImage from '@/components/symbol-guide/ExpandableImage';
+import { DisciplinaArcaniSection } from '@/components/DisciplinaArcaniSection';
+import { ApologeticsCard } from '@/components/ApologeticsCard';
 
 // Sorting options for Double Standards
 type ComparisonSortOption = 'category' | 'symbol-asc' | 'symbol-desc';
@@ -1418,6 +1420,12 @@ const SymbolGuide = () => {
             </div>
           </TabsContent>
         </Tabs>
+
+        {/* Disciplina Arcani - Early Church Secrecy */}
+        <DisciplinaArcaniSection />
+
+        {/* Apologetics Card - PDF Generator */}
+        <ApologeticsCard />
       </main>
 
       {/* Notes Dialog */}
