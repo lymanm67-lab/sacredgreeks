@@ -158,6 +158,70 @@ export const symbolGuideContent: SymbolEntry[] = [
     cautionLevel: "low",
     scripturalContext: "1 Samuel 18:1 - 'Jonathan became one in spirit with David, and he loved him as himself.' Ecclesiastes 4:9-10 - 'Two are better than one... If either of them falls down, one can help the other up.'"
   },
+  {
+    id: "neo-neophyte",
+    name: "Neo / Neophyte",
+    category: "cultural",
+    description: "A newly initiated member of a Divine Nine organization. The term comes from the Greek 'neophytos' meaning 'newly planted.' Neos are in their first year of membership and are still learning the traditions, history, and expectations of their organization. They show deference to older members and demonstrate commitment through active participation.",
+    christianPerspective: "The term 'neophyte' was originally used in the early church to describe newly baptized Christians. 1 Timothy 3:6 uses 'neophyte' when warning against placing new converts in leadership too quickly. The concept of spiritual growth stages is biblical (1 Peter 2:2 - 'newborn babes, desire the pure milk of the word'), though all believers have equal standing before God regardless of their time in faith.",
+    cautionLevel: "low",
+    scripturalContext: "1 Corinthians 3:1-2 - 'I gave you milk, not solid food, for you were not yet ready.' 1 Peter 2:2 - 'Like newborn babies, crave pure spiritual milk, so that by it you may grow up in your salvation.'"
+  },
+  {
+    id: "prophyte",
+    name: "Prophyte",
+    category: "cultural",
+    description: "A member who is no longer a neophyte—typically after one year of membership. Prophytes are considered senior members who have 'proven' themselves and now serve as mentors and guides to newer members. They carry organizational knowledge and are expected to embody the ideals of their fraternity or sorority.",
+    christianPerspective: "The prophyte role mirrors Titus 2:3-5 where older believers are called to teach and mentor younger ones. This discipleship model is central to Christian faith. 2 Timothy 2:2 instructs: 'The things you have heard me say in the presence of many witnesses entrust to reliable people who will also be qualified to teach others.' The key is ensuring mentorship serves to build up rather than create unhealthy power dynamics.",
+    cautionLevel: "low",
+    scripturalContext: "Titus 2:3-5 - 'Likewise, teach the older women to be reverent... Then they can urge the younger women.' 2 Timothy 2:2 - 'Entrust to reliable people who will also be qualified to teach others.'"
+  },
+  {
+    id: "dean-of-pledges",
+    name: "Dean of Pledges / Dean of Intake",
+    category: "cultural",
+    description: "The member responsible for overseeing the education and development of new members during their intake/pledging process. This person serves as the primary teacher, mentor, and authority figure for the incoming line. The Dean teaches organizational history, values, and traditions while ensuring new members are prepared for initiation.",
+    christianPerspective: "The Dean role reflects the biblical pattern of spiritual shepherding. Ephesians 4:11-12 describes how God gave teachers 'to equip his people for works of service.' Acts 18:24-26 shows Priscilla and Aquila taking Apollos aside to 'explain the way of God more adequately.' This personal investment in someone's development mirrors the Dean's role in guiding new members.",
+    cautionLevel: "low",
+    scripturalContext: "Ephesians 4:11-12 - 'Christ himself gave... teachers, to equip his people for works of service.' Acts 18:26 - 'They invited him to their home and explained to him the way of God more adequately.'"
+  },
+  {
+    id: "ace-tail",
+    name: "Ace & Tail (Line Positions)",
+    category: "cultural",
+    description: "The 'Ace' is the first person on a pledge/intake line (number 1), while the 'Tail' is the last. The Ace leads the line and sets the pace, while the Tail ensures no one is left behind. Both positions carry significance and special responsibilities, often remembered distinctly within their organization.",
+    christianPerspective: "The Ace and Tail represent the biblical principle that every position matters in the body of Christ. Matthew 20:16 teaches 'the last will be first, and the first will be last,' reminding us that God values all positions equally. Revelation 22:13 declares Christ as 'the Alpha and the Omega, the First and the Last'—the Ace and Tail symbolically bookend the line just as Christ encompasses all things.",
+    cautionLevel: "low",
+    scripturalContext: "Matthew 20:16 - 'So the last will be first, and the first will be last.' Revelation 22:13 - 'I am the Alpha and the Omega, the First and the Last, the Beginning and the End.'"
+  },
+  {
+    id: "burning-sands",
+    name: "Crossing the Burning Sands",
+    category: "cultural",
+    description: "A metaphor for the initiation journey in Divine Nine organizations. 'Crossing the burning sands' represents the transformative process of becoming a full member—the trials, learning, bonding, and ultimate achievement of initiation. The phrase invokes imagery of desert journeys and emphasizes that membership is earned through perseverance.",
+    christianPerspective: "The burning sands metaphor echoes Israel's 40-year wilderness journey (Deuteronomy 8:2-5) where God tested and refined His people. Jesus faced 40 days of temptation in the desert. James 1:2-4 teaches that trials produce perseverance and mature character. 1 Peter 1:6-7 states these trials prove 'the genuineness of your faith.' The key is ensuring any modern 'trials' build up rather than tear down, with Christ as the ultimate source of transformation.",
+    cautionLevel: "medium",
+    cautionNote: "Christians should ensure that any initiation trials are ethical, dignified, and do not involve hazing or practices that violate conscience.",
+    scripturalContext: "Deuteronomy 8:2 - 'Remember how the LORD your God led you all the way in the wilderness... to test you.' James 1:2-4 - 'Consider it pure joy... the testing of your faith produces perseverance.'"
+  },
+  {
+    id: "line-name",
+    name: "Line Name",
+    category: "cultural",
+    description: "A name given to a new member during the intake process that reflects their personality, character, or a significant trait observed during their journey. Line names become part of a member's Greek identity and are deeply personal, often known primarily within the organization.",
+    christianPerspective: "The concept of receiving a new name is profoundly biblical. God renamed Abram to Abraham, Sarai to Sarah, Jacob to Israel, and Simon to Peter—each reflecting their new identity and calling. Revelation 2:17 promises believers 'a white stone with a new name written on it.' While line names reflect organizational identity, Christians receive their ultimate identity and new name from Christ.",
+    cautionLevel: "low",
+    scripturalContext: "Genesis 32:28 - 'Your name will no longer be Jacob, but Israel, because you have struggled with God and with humans and have overcome.' Revelation 2:17 - 'I will give... a white stone with a new name written on it.'"
+  },
+  {
+    id: "line-number",
+    name: "Line Number",
+    category: "cultural",
+    description: "The number assigned to each member in their intake line, indicating their position from Ace (1) to Tail. Line numbers become part of a member's Greek identity and are often incorporated into paraphernalia. Members may have special connections with those who share their number across different lines or chapters.",
+    christianPerspective: "While God 'numbers the hairs on our heads' (Luke 12:7), our worth is not in our number but in being known by name by our Creator. The 12 apostles were numbered yet each uniquely called. Acts 1:26 describes how Matthias 'was added to the eleven apostles.' Line numbers create order and shared identity without reducing individual significance.",
+    cautionLevel: "low",
+    scripturalContext: "Luke 12:7 - 'Indeed, the very hairs of your head are all numbered.' Acts 1:26 - 'He was added to the eleven apostles.'"
+  },
   // Fraternity-Specific Symbols
   {
     id: "lamp-symbol",
