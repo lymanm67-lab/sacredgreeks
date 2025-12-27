@@ -4,13 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Home, Users, Shield, BookOpen, Compass, Heart, Award, ArrowRight, AlertTriangle, Calendar, Building2, GraduationCap, Star, Volume2, VolumeX, Loader2, FileDown, Mic, Church } from "lucide-react";
+import { Home, Users, Shield, BookOpen, Compass, Heart, Award, ArrowRight, AlertTriangle, Calendar, Building2, GraduationCap, Star, Volume2, VolumeX, Loader2, FileDown, Mic, Church, Clock } from "lucide-react";
 import { SEOHead } from "@/components/SEOHead";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useAuth } from "@/contexts/AuthContext";
 import { useState, useRef } from "react";
 import { toast } from "sonner";
-import { HistoricalTimeline } from "@/components/HistoricalTimeline";
+import { HistoricalTimeline, HistoricalTimelineRef } from "@/components/HistoricalTimeline";
 
 interface Organization {
   name: string;
@@ -40,6 +40,14 @@ const GreekLife = () => {
   // State for controlled Councils accordion
   const [openCouncilsSection, setOpenCouncilsSection] = useState<string | undefined>(undefined);
   const [activeCouncilTab, setActiveCouncilTab] = useState<string>("nphc");
+
+  // Ref for timeline scroll
+  const timelineRef = useRef<HistoricalTimelineRef>(null);
+
+  // Handle jump to timeline with smooth scroll
+  const handleJumpToTimeline = () => {
+    timelineRef.current?.scrollIntoView();
+  };
 
   // Handle quick fact click - expands accordion and opens the relevant nested section with scroll
   const handleQuickFactClick = (sectionId: string) => {
@@ -2329,6 +2337,13 @@ const GreekLife = () => {
                     <Users className="w-4 h-4 text-sacred shrink-0" />
                     <span className="text-xs font-medium">Jesus as Guild Member</span>
                   </button>
+                  <button 
+                    onClick={handleJumpToTimeline}
+                    className="flex items-center gap-2 p-2 rounded-md bg-gradient-to-r from-amber-500/20 to-sacred/20 border border-sacred/30 hover:from-amber-500/30 hover:to-sacred/30 hover:scale-[1.02] transition-all cursor-pointer text-left col-span-2 sm:col-span-4 justify-center"
+                  >
+                    <Clock className="w-4 h-4 text-sacred shrink-0" />
+                    <span className="text-xs font-medium">Jump to Historical Timeline →</span>
+                  </button>
                 </div>
               </div>
               
@@ -2528,7 +2543,7 @@ const GreekLife = () => {
           </Accordion>
 
           {/* Historical Timeline */}
-          <HistoricalTimeline />
+          <HistoricalTimeline ref={timelineRef} />
 
           {/* Greek Councils Directory - Collapsed Accordion */}
           <Accordion

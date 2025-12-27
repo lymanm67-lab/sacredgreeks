@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useRef, forwardRef, useImperativeHandle } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Building2, Church, Users, GraduationCap, Crown, BookOpen, X } from "lucide-react";
+import { Building2, Church, Users, GraduationCap, Crown, BookOpen, ChevronLeft, ChevronRight } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 interface TimelineEvent {
   year: string;
@@ -11,8 +12,8 @@ interface TimelineEvent {
   description: string;
   category: "ancient" | "guild" | "church" | "masonic" | "greek" | "org";
   icon: React.ElementType;
-  colors?: string; // Custom colors for organizations
-  orgColors?: string; // Display colors (e.g., "Black and Old Gold")
+  colors?: string;
+  orgColors?: string;
 }
 
 const timelineEvents: TimelineEvent[] = [
@@ -196,7 +197,6 @@ const categoryColors = {
 };
 
 const getEventColor = (event: TimelineEvent) => {
-  // Use custom org colors if available
   if (event.colors) {
     return event.colors;
   }
@@ -212,73 +212,142 @@ const categoryLabels = {
   org: "Fraternities & Sororities"
 };
 
-export const HistoricalTimeline = () => {
+export interface HistoricalTimelineRef {
+  scrollIntoView: () => void;
+}
+
+export const HistoricalTimeline = forwardRef<HistoricalTimelineRef>((_, ref) => {
   const [selectedEvent, setSelectedEvent] = useState<TimelineEvent | null>(null);
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useImperativeHandle(ref, () => ({
+    scrollIntoView: () => {
+      timelineRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }));
+
+  const scrollTimeline = (direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 300;
+      const newScrollLeft = direction === "left" 
+        ? scrollContainerRef.current.scrollLeft - scrollAmount
+        : scrollContainerRef.current.scrollLeft + scrollAmount;
+      
+      scrollContainerRef.current.scrollTo({
+        left: newScrollLeft,
+        behavior: "smooth"
+      });
+    }
+  };
 
   return (
     <>
-      <Card className="border-sacred/30 bg-gradient-to-br from-muted/30 to-background">
-        <CardHeader>
+      <Card 
+        ref={timelineRef}
+        id="historical-timeline"
+        className="border-sacred/30 bg-gradient-to-br from-muted/30 to-background scroll-mt-20"
+      >
+        <CardHeader className="pb-2 sm:pb-4">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-lg bg-sacred/10">
-              <BookOpen className="w-6 h-6 text-sacred" />
+              <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-sacred" />
             </div>
-            <div>
-              <CardTitle className="text-base sm:text-lg">Historical Timeline: From Ancient Guilds to Modern Greeks</CardTitle>
-              <CardDescription className="text-xs sm:text-sm">
+            <div className="flex-1 min-w-0">
+              <CardTitle className="text-sm sm:text-lg leading-tight">Historical Timeline: From Ancient Guilds to Modern Greeks</CardTitle>
+              <CardDescription className="text-[10px] sm:text-sm mt-0.5">
                 Tracing the fraternal tradition through 4,000 years of history
               </CardDescription>
             </div>
           </div>
           
-          {/* Legend - Scrollable on mobile */}
-          <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-4">
-            {Object.entries(categoryLabels).map(([key, label]) => (
-              <Badge
-                key={key}
-                variant="outline"
-                className={`bg-gradient-to-r ${categoryColors[key as keyof typeof categoryColors]} text-xs`}
-              >
-                {label}
-              </Badge>
-            ))}
+          {/* Legend - Horizontal scroll on mobile */}
+          <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 mt-3 sm:mt-4">
+            <div className="flex gap-1 sm:gap-2 sm:flex-wrap min-w-max sm:min-w-0">
+              {Object.entries(categoryLabels).map(([key, label]) => (
+                <Badge
+                  key={key}
+                  variant="outline"
+                  className={`bg-gradient-to-r ${categoryColors[key as keyof typeof categoryColors]} text-[9px] sm:text-xs whitespace-nowrap`}
+                >
+                  {label}
+                </Badge>
+              ))}
+            </div>
           </div>
         </CardHeader>
         
-        <CardContent className="px-2 sm:px-6">
-          <ScrollArea className="w-full">
+        <CardContent className="px-2 sm:px-6 pt-0">
+          {/* Mobile Navigation Arrows */}
+          <div className="flex items-center justify-between mb-2 sm:hidden">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => scrollTimeline("left")}
+              className="h-8 px-2 text-muted-foreground hover:text-foreground"
+            >
+              <ChevronLeft className="w-4 h-4 mr-1" />
+              <span className="text-xs">Earlier</span>
+            </Button>
+            <span className="text-[10px] text-muted-foreground">Swipe or tap arrows</span>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => scrollTimeline("right")}
+              className="h-8 px-2 text-muted-foreground hover:text-foreground"
+            >
+              <span className="text-xs">Later</span>
+              <ChevronRight className="w-4 h-4 ml-1" />
+            </Button>
+          </div>
+
+          {/* Timeline Scroll Container */}
+          <div 
+            ref={scrollContainerRef}
+            className="overflow-x-auto scrollbar-thin scrollbar-thumb-sacred/30 scrollbar-track-transparent scroll-smooth"
+          >
             <div className="relative pb-4">
               {/* Timeline Events */}
-              <div className="flex gap-2 sm:gap-4 pb-2" style={{ minWidth: `${timelineEvents.length * 140}px` }}>
+              <div 
+                className="flex gap-3 sm:gap-4 pb-2" 
+                style={{ minWidth: `${timelineEvents.length * 130}px` }}
+              >
                 {timelineEvents.map((event, index) => {
                   const Icon = event.icon;
                   return (
                     <div
                       key={index}
-                      className="flex flex-col items-center cursor-pointer group"
-                      style={{ width: "120px" }}
+                      className="flex flex-col items-center cursor-pointer group animate-fade-in"
+                      style={{ 
+                        width: "115px",
+                        animationDelay: `${index * 50}ms`,
+                        animationFillMode: "both"
+                      }}
                       onClick={() => setSelectedEvent(event)}
                     >
                       {/* Year Badge - Above the line */}
-                      <Badge variant="outline" className="mb-1.5 text-[10px] sm:text-xs font-bold z-10 bg-background group-hover:bg-sacred/10 transition-colors">
+                      <Badge 
+                        variant="outline" 
+                        className="mb-1.5 text-[9px] sm:text-xs font-bold z-10 bg-background group-hover:bg-sacred/10 group-hover:scale-105 transition-all duration-200"
+                      >
                         {event.year}
                       </Badge>
                       
                       {/* Connector Dot - On the line */}
-                      <div className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-gradient-to-r ${getEventColor(event)} border-2 z-10 relative group-hover:scale-125 transition-transform`}>
+                      <div className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-gradient-to-r ${getEventColor(event)} border-2 z-10 relative group-hover:scale-150 transition-transform duration-200`}>
                         {/* Timeline Line Segment */}
                         {index < timelineEvents.length - 1 && (
-                          <div className="absolute top-1/2 left-full w-[108px] sm:w-[104px] h-0.5 sm:h-1 -translate-y-1/2 bg-gradient-to-r from-amber-500 via-purple-500 to-sacred opacity-30" />
+                          <div className="absolute top-1/2 left-full w-[103px] sm:w-[102px] h-0.5 sm:h-1 -translate-y-1/2 bg-gradient-to-r from-amber-500 via-purple-500 to-sacred opacity-30" />
                         )}
                       </div>
                       
                       {/* Event Card - Below the line */}
-                      <div className={`p-2 sm:p-3 rounded-lg bg-gradient-to-br ${getEventColor(event)} border h-full mt-1.5 sm:mt-2 group-hover:shadow-lg group-hover:scale-[1.02] transition-all`}>
+                      <div className={`p-2 sm:p-3 rounded-lg bg-gradient-to-br ${getEventColor(event)} border h-full mt-1.5 sm:mt-2 group-hover:shadow-lg group-hover:scale-[1.03] group-hover:-translate-y-1 transition-all duration-200`}>
                         <div className="flex items-center gap-1.5 sm:gap-2 mb-1 sm:mb-2">
                           <Icon className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
-                          <h4 className="text-[10px] sm:text-xs font-bold line-clamp-2">{event.title}</h4>
+                          <h4 className="text-[9px] sm:text-xs font-bold line-clamp-2 leading-tight">{event.title}</h4>
                         </div>
-                        <p className="text-[9px] sm:text-xs text-muted-foreground line-clamp-3 sm:line-clamp-4">
+                        <p className="text-[8px] sm:text-xs text-muted-foreground line-clamp-3 sm:line-clamp-4 leading-snug">
                           {event.description}
                         </p>
                       </div>
@@ -287,17 +356,16 @@ export const HistoricalTimeline = () => {
                 })}
               </div>
             </div>
-            <ScrollBar orientation="horizontal" />
-          </ScrollArea>
+          </div>
           
-          {/* Tap hint for mobile */}
-          <p className="text-[10px] text-muted-foreground text-center mt-2 sm:hidden">
-            Tap any event for details
+          {/* Mobile instruction */}
+          <p className="text-[9px] text-muted-foreground text-center mt-1 sm:hidden animate-pulse">
+            ← Swipe to explore • Tap for details →
           </p>
           
           {/* Summary */}
-          <div className="mt-3 sm:mt-4 p-3 sm:p-4 rounded-lg bg-sacred/5 border border-sacred/20">
-            <p className="text-xs sm:text-sm text-muted-foreground">
+          <div className="mt-3 sm:mt-4 p-3 sm:p-4 rounded-lg bg-sacred/5 border border-sacred/20 animate-fade-in" style={{ animationDelay: "500ms" }}>
+            <p className="text-[10px] sm:text-sm text-muted-foreground leading-relaxed">
               <strong className="text-foreground">Key Insight:</strong> The fraternal tradition flows unbroken from ancient craft guilds through early church practices to modern Greek organizations. Secret initiations, membership bonds, service, and mutual aid are not inventions of Greek life—they are continuations of practices with deep historical and biblical roots.
             </p>
           </div>
@@ -306,28 +374,28 @@ export const HistoricalTimeline = () => {
 
       {/* Event Detail Dialog */}
       <Dialog open={!!selectedEvent} onOpenChange={() => setSelectedEvent(null)}>
-        <DialogContent className={`max-w-md ${selectedEvent?.colors ? `bg-gradient-to-br ${selectedEvent.colors}` : ''}`}>
+        <DialogContent className={`max-w-[90vw] sm:max-w-md mx-4 ${selectedEvent?.colors ? `bg-gradient-to-br ${selectedEvent.colors}` : ''}`}>
           <DialogHeader>
             <div className="flex items-center gap-2">
               {selectedEvent && <selectedEvent.icon className="w-5 h-5 text-sacred" />}
-              <DialogTitle className="text-lg">{selectedEvent?.title}</DialogTitle>
+              <DialogTitle className="text-base sm:text-lg">{selectedEvent?.title}</DialogTitle>
             </div>
             <div className="flex flex-wrap gap-2 mt-1">
-              <Badge variant="outline" className="w-fit">
+              <Badge variant="outline" className="w-fit text-xs">
                 {selectedEvent?.year}
               </Badge>
               {selectedEvent?.orgColors && (
-                <Badge variant="secondary" className="w-fit">
+                <Badge variant="secondary" className="w-fit text-xs">
                   Colors: {selectedEvent.orgColors}
                 </Badge>
               )}
             </div>
           </DialogHeader>
-          <DialogDescription className="text-sm text-foreground">
+          <DialogDescription className="text-sm text-foreground leading-relaxed">
             {selectedEvent?.description}
           </DialogDescription>
           <div className="mt-2 flex flex-wrap gap-2">
-            <Badge className={`bg-gradient-to-r ${selectedEvent ? getEventColor(selectedEvent) : ''}`}>
+            <Badge className={`bg-gradient-to-r ${selectedEvent ? getEventColor(selectedEvent) : ''} text-xs`}>
               {selectedEvent ? categoryLabels[selectedEvent.category] : ''}
             </Badge>
           </div>
@@ -335,4 +403,6 @@ export const HistoricalTimeline = () => {
       </Dialog>
     </>
   );
-};
+});
+
+HistoricalTimeline.displayName = "HistoricalTimeline";
