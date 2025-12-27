@@ -3839,9 +3839,9 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
     id: "wigs",
     category: "beauty",
     symbol: "Wigs and Hair Pieces",
-    ancientConnection: "Ancient Egypt, Greece, and Rome used wigs and elaborate hair as signs of status, beauty, and sometimes ritual.",
+    ancientConnection: "In ancient Egypt, wigs held deep sacred significance—they symbolized connection to the divine and represented the life-giving waters of the Nile. Wigs were central to the cult of Isis, worn by her priestesses as symbols of divine femininity and power. Egyptian priests shaved their heads and donned elaborate wigs during temple rituals to achieve ritual purity and embody divine authority. The blue-black color of royal wigs represented the fertile Nile floodwaters, linking the wearer to cosmic regeneration.",
     modernUsage: "Wigs, extensions, locs, and protective styles are standard parts of modern grooming and fashion, including in church.",
-    appUsage: "Reinforce that Christians already use beauty practices with complex roots while keeping their worship of God."
+    appUsage: "Reinforce that Christians already use beauty practices with deep sacred roots in Isis worship and Egyptian temple rituals while keeping their worship of God."
   },
   {
     id: "cosmetics",
@@ -4023,9 +4023,9 @@ export const culturalComparisons: CulturalComparisonEntry[] = [
     id: "wigs-expanded",
     category: "beauty",
     symbol: "Wigs and Hair Pieces",
-    ancientConnection: "Egyptian priests shaved their heads and wore wigs as part of ritual purity. Pharaohs wore ceremonial wigs to embody divine authority. Wigs were offerings to the gods and worn in temple worship. Greek and Roman elites adopted the practice for status.",
+    ancientConnection: "In ancient Egypt, wigs were sacred objects tied to divine connection. They represented the Nile River—the source of all life—with their dark, flowing appearance symbolizing the fertile floodwaters. Wigs were integral to the Isis cult; her priestesses wore elaborate wigs during rituals invoking the goddess of magic and motherhood. Egyptian priests shaved their heads completely and wore ceremonial wigs to achieve ritual purity before entering temples. Pharaohs wore ornate wigs to embody Ra and other deities. Wigs were offered to gods in temples and placed in tombs for the afterlife journey.",
     modernUsage: "Wigs are worn by pastors, first ladies, choir members, and everyday Christians without spiritual concern.",
-    appUsage: "If wigs—originally worn in temple worship to embody divine authority—are acceptable, the inconsistency becomes clear."
+    appUsage: "If wigs—originally worn in Isis cult worship and temple rituals to embody divine authority and connect to the Nile gods—are acceptable, the inconsistency becomes glaring."
   },
   {
     id: "perfume-incense",
