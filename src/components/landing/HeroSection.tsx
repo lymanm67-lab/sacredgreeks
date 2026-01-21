@@ -30,11 +30,11 @@ export function LandingHeroSection({ user }: LandingHeroSectionProps) {
           
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight">
             Faith + Greek Life,{' '}
-            <span className="hero-title-gradient">Together</span>
+            <span className="hero-title-gradient">United</span>
           </h1>
           
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-            Daily devotionals, guided journeys, and tools designed for Christian Greeks.
+            The P.R.O.O.F. framework helps you grow spiritually while honoring your Greek commitments. Daily devotionals, guided journeys, and community—all in one place.
           </p>
 
           {!user && (
