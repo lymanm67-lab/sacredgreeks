@@ -31,6 +31,7 @@ import { BibleStudyGenerator } from '@/components/BibleStudyGenerator';
 import { ApologeticsQuickReference } from '@/components/ApologeticsQuickReference';
 import { RenouncedSupportSection } from '@/components/RenouncedSupportSection';
 import { PreviewBanner } from '@/components/PreviewBanner';
+import { DemoAudioGuide } from '@/components/DemoAudioGuide';
 
 // Demo data for Bible Study
 const DEMO_DAILY_VERSE = {
@@ -376,6 +377,11 @@ const BibleStudy = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
       <PreviewBanner featureName="Bible Study" />
+      <DemoAudioGuide 
+        pageId="bible-study" 
+        title="Bible Study" 
+        description="Explore scripture with study guides designed for Greek life members." 
+      />
       <PullToRefreshIndicator 
         isPulling={isPulling}
         isRefreshing={isRefreshing}
