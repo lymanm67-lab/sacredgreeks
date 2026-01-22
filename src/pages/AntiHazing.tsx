@@ -34,6 +34,7 @@ import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveCo
 import { RenouncedSupportSection } from "@/components/RenouncedSupportSection";
 import { ListenButton } from "@/components/ListenButton";
 import { PreviewBanner } from '@/components/PreviewBanner';
+import { DemoAudioGuide } from '@/components/DemoAudioGuide';
 
 const RESOURCES_ACCORDION_STORAGE_KEY = 'antihazing-resources-accordion-state';
 const ALTERNATIVES_ACCORDION_STORAGE_KEY = 'antihazing-alternatives-accordion-state';
@@ -1839,6 +1840,11 @@ const AntiHazing = () => {
   return (
     <div className="min-h-screen bg-background">
       <PreviewBanner featureName="Anti-Hazing Resources" />
+      <DemoAudioGuide 
+        pageId="anti-hazing" 
+        title="Anti-Hazing Resources" 
+        description="Critical information about hazing prevention, legal consequences, and building positive chapter cultures." 
+      />
       {/* Header */}
       <header className="border-b border-border bg-background sticky top-0 z-50">
         <div className="container mx-auto px-4">
