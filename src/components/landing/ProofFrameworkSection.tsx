@@ -11,35 +11,40 @@ const proofSteps = [
   {
     letter: "P",
     word: "Pledge Process",
-    description: "How does the intake and pledging process align with biblical values?",
+    criticism: "Hazing concerns",
+    description: "Biblical guidance on navigating intake processes with integrity",
     icon: Target,
     color: "from-blue-500 to-indigo-600",
   },
   {
     letter: "R",
     word: "Rituals",
-    description: "What rituals are involved and do they honor God?",
+    criticism: "Demonic portals",
+    description: "Discerning ceremonial practices through a scriptural lens",
     icon: Sparkles,
     color: "from-purple-500 to-violet-600",
   },
   {
     letter: "O",
     word: "Oaths",
-    description: "What oaths and vows are required of members?",
+    criticism: "Greek deity allegiance",
+    description: "Understanding vows and commitments in light of Scripture",
     icon: Scale,
     color: "from-amber-500 to-orange-600",
   },
   {
     letter: "O",
     word: "Obscurity",
-    description: "What is kept secret and does it conflict with walking in the light?",
+    criticism: "Secret societies",
+    description: "Addressing secrecy concerns while walking in the light",
     icon: Eye,
     color: "from-emerald-500 to-teal-600",
   },
   {
     letter: "F",
     word: "Founders",
-    description: "What is the foundation and history of the organization?",
+    criticism: "Masonic connections",
+    description: "Examining organizational history and foundations biblically",
     icon: Building,
     color: "from-rose-500 to-pink-600",
   },
@@ -84,7 +89,7 @@ export function ProofFrameworkSection() {
                     The P.R.O.O.F. Framework
                   </h3>
                   <p className="text-xs sm:text-sm text-muted-foreground">
-                    A biblical approach to evaluating Greek life
+                    Biblical responses to common Greek life criticisms
                   </p>
                 </div>
               </div>
@@ -129,9 +134,14 @@ export function ProofFrameworkSection() {
 
                       {/* Content */}
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-medium text-foreground text-sm">
-                          {step.word}
-                        </h4>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h4 className="font-medium text-foreground text-sm">
+                            {step.word}
+                          </h4>
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
+                            {step.criticism}
+                          </span>
+                        </div>
                         <p className="text-xs text-muted-foreground leading-relaxed">
                           {step.description}
                         </p>
