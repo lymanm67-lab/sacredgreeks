@@ -25,13 +25,13 @@ import { useDemoMode } from '@/contexts/DemoModeContext';
 const DEMO_DEVOTIONAL: Devotional = {
   id: 'demo-devotional',
   date: new Date().toISOString().split('T')[0],
-  title: 'Walking in Integrity',
-  scripture_ref: 'Proverbs 11:3',
-  scripture_text: 'The integrity of the upright guides them, but the unfaithful are destroyed by their duplicity.',
-  reflection: 'In Greek life, we often talk about the values our organizations were founded upon - integrity, scholarship, service, and brotherhood/sisterhood. Today\'s verse reminds us that integrity isn\'t just a buzzword; it\'s a guiding light that illuminates our path. When we walk with integrity, we don\'t have to worry about remembering which version of ourselves we showed to different people. Our character remains consistent whether we\'re at a chapter meeting, in class, or out with friends.',
-  proof_focus: 'Purpose',
-  application: 'Today, examine one area of your life where your actions might not align with your stated values. It could be in your academics, your relationships, or your leadership roles. Ask God to reveal any "duplicity" in your heart and commit to taking one concrete step toward greater integrity.',
-  prayer: 'Lord, I confess that I sometimes struggle to be the same person in every situation. Help me to walk with such integrity that my character remains consistent. Guide me today to make choices that honor You and reflect the values I claim to hold. Give me courage to be authentic, even when it\'s difficult. In Jesus\' name, Amen.',
+  title: 'Walking in the Light',
+  scripture_ref: '1 John 1:7',
+  scripture_text: 'But if we walk in the light, as he is in the light, we have fellowship with one another, and the blood of Jesus, his Son, purifies us from all sin.',
+  reflection: 'Critics often accuse Greek organizations of being "secret societies" hiding harmful practices. Today\'s verse challenges us to walk in the light - to be transparent, accountable, and honest. As Christians in Greek life, we can honor reasonable confidentiality while maintaining spiritual accountability. We don\'t have to reveal every ritual detail, but we should never hide things that would shame us if brought to light.',
+  proof_focus: 'Obscurity',
+  application: 'Today, evaluate one area of your Greek involvement that feels "hidden." Is it reasonable confidentiality or concerning secrecy? Do you have at least one spiritual mentor who knows about your Greek experiences and can provide godly counsel?',
+  prayer: 'Lord, You are light and in You there is no darkness at all. Help me to walk in transparency and truth. Give me wisdom to discern between honoring organizational traditions and hiding things that dishonor You. May my life be an open book that points others to Your glory. In Jesus\' name, Amen.',
 };
 
 interface Devotional {

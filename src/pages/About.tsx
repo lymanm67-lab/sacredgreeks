@@ -67,15 +67,52 @@ const About = () => {
           <CardHeader>
             <CardTitle>The P.R.O.O.F. Framework™</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3 text-muted-foreground leading-relaxed">
+          <CardContent className="space-y-4 text-muted-foreground leading-relaxed">
             <p>
-              Throughout the app you&apos;ll see references to the P.R.O.O.F. Framework™. This is a
-              proprietary biblical tool that helps you pause, pray, and respond wisely when facing hard
-              conversations, hazing culture, or pressure to compromise.
+              The P.R.O.O.F. Framework™ is a biblical response to the five most common criticisms 
+              of Christian involvement in Greek life. Each letter addresses a specific accusation 
+              with Scripture-based wisdom:
             </p>
-            <p>
-              Use the tools in this app—assessments, devotionals, prayer guides, and resources—to
-              apply P.R.O.O.F.™ in real-life Greek situations so that Christ is honored in both your
+            <div className="space-y-3">
+              <div className="flex gap-3 items-start">
+                <Badge className="bg-sacred/10 text-sacred border-sacred/20 shrink-0">P</Badge>
+                <div>
+                  <span className="font-medium text-foreground">Pledge Process</span>
+                  <span className="text-muted-foreground"> — Responding to hazing concerns with biblical guidance on intake integrity</span>
+                </div>
+              </div>
+              <div className="flex gap-3 items-start">
+                <Badge className="bg-sacred/10 text-sacred border-sacred/20 shrink-0">R</Badge>
+                <div>
+                  <span className="font-medium text-foreground">Rituals</span>
+                  <span className="text-muted-foreground"> — Addressing "demonic portal" accusations through scriptural discernment</span>
+                </div>
+              </div>
+              <div className="flex gap-3 items-start">
+                <Badge className="bg-sacred/10 text-sacred border-sacred/20 shrink-0">O</Badge>
+                <div>
+                  <span className="font-medium text-foreground">Oaths</span>
+                  <span className="text-muted-foreground"> — Answering Greek deity allegiance claims with biblical vow theology</span>
+                </div>
+              </div>
+              <div className="flex gap-3 items-start">
+                <Badge className="bg-sacred/10 text-sacred border-sacred/20 shrink-0">O</Badge>
+                <div>
+                  <span className="font-medium text-foreground">Obscurity</span>
+                  <span className="text-muted-foreground"> — Countering "secret society" fears while walking in the light</span>
+                </div>
+              </div>
+              <div className="flex gap-3 items-start">
+                <Badge className="bg-sacred/10 text-sacred border-sacred/20 shrink-0">F</Badge>
+                <div>
+                  <span className="font-medium text-foreground">Founders</span>
+                  <span className="text-muted-foreground"> — Examining Masonic connection claims with honest historical research</span>
+                </div>
+              </div>
+            </div>
+            <p className="pt-2">
+              Use the tools in this app—assessments, devotionals, prayer guides, and the P.R.O.O.F. Course—to
+              apply this framework in real-life situations so that Christ is honored in both your
               letters and your life.
             </p>
           </CardContent>

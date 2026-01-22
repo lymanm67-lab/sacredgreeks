@@ -6,40 +6,31 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-cron-secret",
 };
 
+// P.R.O.O.F. Framework - Biblical responses to common criticisms of Greek life
 const PROOF_FOCUSES = [
-  "Pressure",
-  "Relationships", 
-  "Obscurity",
-  "Opportunity",
-  "Freedom",
-  "Integrity",
-  "Purity",
-  "Community",
-  "Surrender",
-  "Perseverance",
-  "Courage",
-  "Stewardship",
-  "Identity",
-  "Purpose",
-  "Grace"
+  { focus: "Pledge Process", criticism: "Hazing", description: "Biblical guidance on navigating intake with integrity" },
+  { focus: "Rituals", criticism: "Demonic portals", description: "Discerning ceremonial practices through Scripture" },
+  { focus: "Oaths", criticism: "Greek deity allegiance", description: "Understanding vows in light of Scripture" },
+  { focus: "Obscurity", criticism: "Secret societies", description: "Walking in the light while honoring confidentiality" },
+  { focus: "Founders", criticism: "Masonic connections", description: "Examining organizational history biblically" },
 ];
 
 const THEMES = [
-  "Standing firm under peer pressure",
-  "Building authentic brotherhood/sisterhood",
-  "Being salt and light in Greek life",
-  "Using your influence for God's kingdom",
-  "Finding freedom from conformity",
-  "Living with integrity when no one watches",
-  "Guarding your heart and mind",
-  "Iron sharpening iron in community",
-  "Surrendering ambitions to God",
-  "Running the race with endurance",
-  "Speaking truth in love",
-  "Stewarding time and resources",
-  "Finding identity in Christ not letters",
-  "Discovering God's purpose for your chapter",
-  "Extending grace to struggling brothers/sisters"
+  "Navigating the pledge process with godly integrity",
+  "Discerning rituals - what honors God vs. what doesn't",
+  "Evaluating oaths and commitments through Scripture",
+  "Walking in the light amid organizational secrecy",
+  "Understanding founder history and spiritual foundations",
+  "Responding to accusations about hazing with grace",
+  "Addressing concerns about demonic rituals biblically",
+  "Answering questions about Greek deity symbolism",
+  "Being transparent while honoring reasonable confidentiality",
+  "Researching your organization's Masonic connections",
+  "Standing firm when criticized by other Christians",
+  "Balancing Greek loyalty with Christian faithfulness",
+  "Using your Greek platform for kingdom purposes",
+  "Mentoring new members with Christ-centered integrity",
+  "Reforming problematic practices from within"
 ];
 
 // Input validation
@@ -156,7 +147,8 @@ serve(async (req) => {
           continue;
         }
 
-        const proofFocus = PROOF_FOCUSES[dayOffset % PROOF_FOCUSES.length];
+        const proofFocusObj = PROOF_FOCUSES[dayOffset % PROOF_FOCUSES.length];
+        const proofFocus = `${proofFocusObj.focus} (addressing ${proofFocusObj.criticism} criticism)`;
         const theme = THEMES[dayOffset % THEMES.length];
 
         batchPromises.push(
