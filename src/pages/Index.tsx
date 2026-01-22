@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils";
 import { Play, Sparkles, User, ChevronRight, Shield, Heart, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DashboardPreview } from "@/components/landing/DashboardPreview";
+import { Testimonials } from "@/components/Testimonials";
+import { Footer } from "@/components/landing/Footer";
 
 const Index = () => {
   const { user } = useAuth();
@@ -180,7 +182,13 @@ const Index = () => {
 
         {/* Dashboard Preview Section */}
         <DashboardPreview />
+        
+        {/* Testimonials Section */}
+        <Testimonials />
       </main>
+      
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
