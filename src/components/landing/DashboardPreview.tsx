@@ -1,4 +1,4 @@
-import { Zap, Shield, BookOpen, Sparkles, ArrowRight } from "lucide-react";
+import { Zap, Shield, BookOpen, Sparkles, ArrowRight, Video, Users } from "lucide-react";
 import { motion } from "framer-motion";
 
 const features = [
@@ -28,6 +28,24 @@ const features = [
     gradient: "from-emerald-500 via-teal-500 to-cyan-500",
     bgGlow: "bg-emerald-500/20",
     highlights: ["12-Week Journey", "Group Guides", "Interactive Flashcards"],
+  },
+  {
+    icon: Video,
+    title: "Video Library",
+    subtitle: "Learn Through Powerful Stories",
+    description: "Watch testimonies, teachings, and discussions from Greeks who've navigated faith and fraternity life.",
+    gradient: "from-rose-500 via-pink-500 to-fuchsia-500",
+    bgGlow: "bg-rose-500/20",
+    highlights: ["50+ Videos", "Testimonies", "Teaching Series"],
+  },
+  {
+    icon: Users,
+    title: "Church Leaders",
+    subtitle: "Guidance From Trusted Voices",
+    description: "Connect with pastors and ministry leaders who understand the unique challenges of Greek life.",
+    gradient: "from-sky-500 via-blue-500 to-indigo-500",
+    bgGlow: "bg-sky-500/20",
+    highlights: ["Expert Insights", "Ministry Resources", "Leadership Tips"],
   },
 ];
 
