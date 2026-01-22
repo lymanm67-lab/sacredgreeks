@@ -9,7 +9,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Heart, Home, Eye, EyeOff, Mail, RefreshCw, AlertTriangle, Ban, Info, ExternalLink } from 'lucide-react';
+import { Home, Eye, EyeOff, Mail, RefreshCw, AlertTriangle, Ban, Info, ExternalLink } from 'lucide-react';
+import logo from '@/assets/sacred-greeks-logo.png';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { z } from 'zod';
@@ -289,9 +290,7 @@ const Auth = () => {
         <div className="flex-1 flex items-center justify-center p-4">
           <div className="w-full max-w-sm">
             <div className="text-center mb-6">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-sacred/10 mb-3">
-                <Heart className="w-6 h-6 text-sacred" />
-              </div>
+              <img src={logo} alt="Sacred Greeks" className="w-16 h-16 mx-auto mb-3" />
               <h1 className="text-2xl font-bold">Reset Password</h1>
             </div>
 
@@ -384,9 +383,7 @@ const Auth = () => {
       <div className="flex-1 flex items-center justify-center p-4">
         <div className="w-full max-w-sm">
           <div className="text-center mb-6">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-sacred/10 mb-3">
-              <Heart className="w-6 h-6 text-sacred" />
-            </div>
+            <img src={logo} alt="Sacred Greeks" className="w-16 h-16 mx-auto mb-3" />
             <h1 className="text-2xl font-bold">Sacred Greeks</h1>
             <p className="text-sm text-muted-foreground mt-1">
               Navigate faith and Greek life
