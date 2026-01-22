@@ -23,6 +23,7 @@ import PrintComparisonGuideDialog from '@/components/symbol-guide/PrintCompariso
 import ExpandableImage from '@/components/symbol-guide/ExpandableImage';
 import { DisciplinaArcaniSection } from '@/components/DisciplinaArcaniSection';
 import { ApologeticsCard } from '@/components/ApologeticsCard';
+import { PreviewBanner } from '@/components/PreviewBanner';
 
 // Sorting options for Double Standards
 type ComparisonSortOption = 'category' | 'symbol-asc' | 'symbol-desc';
@@ -907,6 +908,7 @@ const SymbolGuide = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
+      <PreviewBanner featureName="Symbols & Rituals Guide" />
       <header className="border-b bg-card/80 backdrop-blur-lg sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center gap-4">
           <Link to="/"><Button variant="ghost" size="icon"><ArrowLeft className="w-5 h-5" /></Button></Link>

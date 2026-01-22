@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { toast } from 'sonner';
 import { downloadMythBusterPDF } from '@/lib/myth-buster-pdf';
+import { PreviewBanner } from '@/components/PreviewBanner';
 
 const categoryIcons: Record<string, string> = {
   identity: '✝️',
@@ -99,6 +100,7 @@ const MythBuster = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
+      <PreviewBanner featureName="Myth Buster Library" />
       <header className="border-b bg-card/80 backdrop-blur-lg sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center gap-4">
           <Link to="/"><Button variant="ghost" size="icon"><ArrowLeft className="w-5 h-5" /></Button></Link>

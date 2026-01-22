@@ -30,6 +30,7 @@ import { ScriptureFlashcards } from '@/components/ScriptureFlashcards';
 import { BibleStudyGenerator } from '@/components/BibleStudyGenerator';
 import { ApologeticsQuickReference } from '@/components/ApologeticsQuickReference';
 import { RenouncedSupportSection } from '@/components/RenouncedSupportSection';
+import { PreviewBanner } from '@/components/PreviewBanner';
 
 // Demo data for Bible Study
 const DEMO_DAILY_VERSE = {
@@ -374,6 +375,7 @@ const BibleStudy = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
+      <PreviewBanner featureName="Bible Study" />
       <PullToRefreshIndicator 
         isPulling={isPulling}
         isRefreshing={isRefreshing}

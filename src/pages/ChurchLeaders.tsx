@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { SEOHead } from "@/components/SEOHead";
 import { toast } from "sonner";
+import { PreviewBanner } from '@/components/PreviewBanner';
 
 const essentialArticles = [
   {
@@ -338,6 +339,7 @@ const ChurchLeaders = () => {
       />
       
       <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
+        <PreviewBanner featureName="Church Leaders Resources" />
         {/* Hero Section */}
         <section className="relative py-16 md:py-24 px-4">
           <div className="container mx-auto max-w-6xl text-center">
