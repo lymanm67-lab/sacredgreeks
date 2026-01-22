@@ -24,7 +24,8 @@ import { useDemoMode } from '@/contexts/DemoModeContext';
 import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
 import { prefetchCommonRoutes } from '@/hooks/use-prefetch';
 import { useRealtimeNotifications } from '@/hooks/use-realtime-notifications';
-
+import { GuidedTour } from '@/components/GuidedTour';
+import { SkeletonDashboard } from '@/components/ui/SkeletonCard';
 interface DashboardStats {
   assessmentCount: number;
   prayerCount: number;
@@ -183,10 +184,9 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="w-16 h-16 border-4 border-sacred border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="text-muted-foreground">Loading your dashboard...</p>
+      <div className="min-h-screen bg-muted/30 p-4 md:p-8">
+        <div className="max-w-5xl mx-auto">
+          <SkeletonDashboard />
         </div>
       </div>
     );
@@ -409,6 +409,7 @@ const Dashboard = () => {
       </main>
 
       {showOnboarding && <Onboarding open={showOnboarding} onComplete={completeOnboarding} />}
+      <GuidedTour />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { useDemoMode } from "@/contexts/DemoModeContext";
+import { useLandingSurvey } from "@/hooks/use-landing-survey";
 import { useNavigate, Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -10,10 +11,12 @@ import { Button } from "@/components/ui/button";
 import { DashboardPreview } from "@/components/landing/DashboardPreview";
 import { Testimonials } from "@/components/Testimonials";
 import { Footer } from "@/components/landing/Footer";
+import { LandingPersonalizationSurvey } from "@/components/landing/LandingPersonalizationSurvey";
 
 const Index = () => {
   const { user } = useAuth();
   const { isDemoMode, setDemoMode } = useDemoMode();
+  const { showSurvey, completeSurvey, skipSurvey } = useLandingSurvey();
   const navigate = useNavigate();
 
   const handleDemoClick = () => {
@@ -189,6 +192,13 @@ const Index = () => {
       
       {/* Footer */}
       <Footer />
+
+      {/* Personalization Survey Modal */}
+      <LandingPersonalizationSurvey
+        open={showSurvey}
+        onComplete={completeSurvey}
+        onSkip={skipSurvey}
+      />
     </div>
   );
 };
