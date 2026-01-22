@@ -19,13 +19,13 @@ const APP_INFO = {
 
 const PROOF_FRAMEWORK = {
   name: "P.R.O.O.F. Framework",
-  description: "A biblical approach to evaluating Greek life membership while maintaining Christian faith.",
+  description: "A biblical response to common criticisms of Greek life involvement, providing Scripture-based answers to concerns about membership.",
   components: [
-    { letter: "P", name: "Pledge Process", description: "How does the intake and pledging process align with biblical values?" },
-    { letter: "R", name: "Rituals", description: "What rituals are involved and do they honor God?" },
-    { letter: "O", name: "Oaths", description: "What oaths and vows are required of members?" },
-    { letter: "O", name: "Obscurity", description: "What is kept secret and does it conflict with walking in the light?" },
-    { letter: "F", name: "Founders", description: "What is the foundation and history of the organization?" },
+    { letter: "P", name: "Pledge Process", criticism: "Hazing", description: "Biblical guidance on navigating intake processes" },
+    { letter: "R", name: "Rituals", criticism: "Demonic portals", description: "Discerning ceremonial practices through Scripture" },
+    { letter: "O", name: "Oaths", criticism: "Greek deity allegiance", description: "Understanding vows in light of Scripture" },
+    { letter: "O", name: "Obscurity", criticism: "Secret societies", description: "Addressing secrecy while walking in the light" },
+    { letter: "F", name: "Founders", criticism: "Masonic connections", description: "Examining organizational history biblically" },
   ],
 };
 
