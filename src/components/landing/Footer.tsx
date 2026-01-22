@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Facebook, Twitter, Instagram } from "lucide-react";
 import logo from "@/assets/sacred-greeks-logo.png";
+import { useExternalLinks } from "@/hooks/use-external-links";
 
 const socialLinks = [
   {
@@ -24,6 +25,8 @@ const socialLinks = [
 ];
 
 export function Footer() {
+  const { openExternalLink } = useExternalLinks();
+
   return (
     <footer className="border-t border-border bg-card mt-16">
       <div className="container mx-auto px-4 py-8">
@@ -37,18 +40,19 @@ export function Footer() {
             
             {/* Social Media Links */}
             <div className="flex items-center gap-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Follow us on ${social.name}`}
-                  className={`text-muted-foreground transition-colors ${social.hoverColor}`}
-                >
-                  <social.icon className="h-5 w-5" />
-                </a>
-              ))}
+              {socialLinks.map((social) => {
+                const IconComponent = social.icon;
+                return (
+                  <button
+                    key={social.name}
+                    onClick={() => openExternalLink(social.url)}
+                    aria-label={`Follow us on ${social.name}`}
+                    className={`text-muted-foreground transition-colors cursor-pointer ${social.hoverColor}`}
+                  >
+                    <IconComponent className="h-5 w-5" />
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -56,9 +60,12 @@ export function Footer() {
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
             <Link to="/user-guide" className="hover:text-sacred transition-colors">User Guide</Link>
             <Link to="/faq" className="hover:text-sacred transition-colors">FAQ</Link>
-            <a href="https://www.sacredgreeks.com" target="_blank" rel="noopener noreferrer" className="hover:text-sacred transition-colors">
+            <button 
+              onClick={() => openExternalLink("https://www.sacredgreeks.com")} 
+              className="hover:text-sacred transition-colors cursor-pointer"
+            >
               Website
-            </a>
+            </button>
             <Link to="/privacy" className="hover:text-sacred transition-colors">Privacy</Link>
             <Link to="/terms" className="hover:text-sacred transition-colors">Terms</Link>
             <Link to="/legal" className="hover:text-sacred transition-colors">Legal</Link>
