@@ -21,9 +21,8 @@ export function LandingHeroSection({ user }: LandingHeroSectionProps) {
               <img 
                 src={logo} 
                 alt="Sacred Greeks" 
-                className="h-10 w-auto" 
+                className="h-10 w-auto rounded-full" 
                 loading="lazy"
-                style={{ filter: 'brightness(0) saturate(100%) invert(38%) sepia(98%) saturate(3032%) hue-rotate(207deg) brightness(98%) contrast(97%)' }} 
               />
             </div>
           </div>
