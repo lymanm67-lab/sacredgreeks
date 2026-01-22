@@ -24,228 +24,370 @@ const lessons: Lesson[] = [
   {
     id: 1,
     letter: 'P',
-    title: 'Lesson 1: Process',
-    description: 'Understanding the intake process through a biblical lens',
-    duration: '10 min',
-    takeaways: 4,
+    title: 'Pledge Process: Responding to Hazing Accusations',
+    description: 'Biblical guidance on navigating intake with integrity',
+    duration: '12 min',
+    takeaways: 5,
     isLocked: false,
-    content: `The intake process in Greek organizations—commonly known as pledging or membership intake—is often the first encounter students have with the traditions and expectations of their chosen fraternity or sorority. This lesson examines how to approach this process with biblical wisdom.
+    content: `**The Criticism:** "Greek organizations promote hazing. Christians shouldn't participate in abusive intake processes."
 
-**Key Biblical Principles:**
+This is one of the most common accusations against Greek life. Critics point to news stories of hazing deaths and argue that Christians have no business joining organizations with such practices. How do we respond biblically?
 
-1. **Count the Cost (Luke 14:28-30)** - Before committing to any organization, carefully evaluate what will be required of you spiritually, emotionally, and physically.
+**Acknowledging the Truth:**
 
-2. **Guard Your Heart (Proverbs 4:23)** - The intake process often involves emotional vulnerability. Maintain spiritual boundaries that protect your relationship with God.
+First, we must be honest: hazing is real, harmful, and unbiblical. Scripture is clear:
+- "Do to others as you would have them do to you" (Luke 6:31)
+- "Do nothing out of selfish ambition... but in humility value others above yourselves" (Philippians 2:3)
 
-3. **Test the Spirits (1 John 4:1)** - Not everything presented as "tradition" aligns with biblical truth. Develop discernment to recognize what honors God.
+Any practice that degrades, humiliates, or harms another person violates God's command to love our neighbor.
 
-4. **Seek Godly Counsel (Proverbs 11:14)** - Don't navigate this journey alone. Consult mature Christians who can provide perspective.
+**The Biblical Response:**
+
+1. **Count the Cost (Luke 14:28-30)** - Before joining, research the organization's actual intake practices, not just their written policies.
+
+2. **Set Non-Negotiable Boundaries** - Determine in advance what you will and won't do:
+   - I will not participate in activities that demean or harm others
+   - I will not cover up abuse to "protect" the organization
+   - I will speak up when I witness wrongdoing
+
+3. **Be a Reformer, Not a Participant** - Christians in Greek life should actively work to eliminate hazing:
+   - Report violations to nationals and university officials
+   - Mentor new members with Christ-like servant leadership
+   - Model intake processes that build up rather than tear down
+
+4. **Guard Your Heart (Proverbs 4:23)** - If your intake experience requires compromising your faith, that's a red flag about the organization's culture.
 
 **Practical Application:**
 
-Before beginning any intake process, create a list of non-negotiable boundaries based on Scripture. These might include:
-- I will not participate in activities that mock my faith
-- I will not swear allegiance to anything above God
-- I will maintain my integrity regardless of pressure
-- I will speak up when asked to compromise my values
+If you're considering membership, ask current members (privately) about actual intake practices. If you're already a member, commit to being part of the solution by refusing to perpetuate harmful traditions.
+
+**Sample Response to Critics:**
+
+"You're right that hazing is sinful, and I oppose it completely. That's exactly why Christians should be in these organizations—to reform them from within. I set firm boundaries during my intake, and I'm committed to ensuring future members have a dignified experience that reflects Christ's love."
 
 **Reflection Questions:**
-1. What attracted me to this organization, and does it align with my calling as a Christian?
-2. Have I honestly counted the cost of membership?
-3. Who are the godly counselors in my life that I can consult?
-4. What are my non-negotiable boundaries?`
+1. What specific boundaries will I maintain during any intake process?
+2. Am I willing to walk away if those boundaries are violated?
+3. How can I actively work to eliminate hazing in my organization?`
   },
   {
     id: 2,
     letter: 'R',
-    title: 'Lesson 2: Rituals',
-    description: 'Discerning ceremonial practices with biblical wisdom',
+    title: 'Rituals: Addressing "Demonic Portal" Accusations',
+    description: 'Discerning ceremonial practices through Scripture',
     duration: '12 min',
-    takeaways: 4,
+    takeaways: 5,
     isLocked: true,
-    content: `Rituals are central to Greek letter organizations. From crossing ceremonies to initiation rites, these practices carry deep symbolic meaning. This lesson provides a framework for discerning which rituals honor God and which may conflict with Christian faith.
+    content: `**The Criticism:** "Greek rituals are demonic portals. You're opening yourself to spiritual attack by participating in pagan ceremonies."
+
+This accusation suggests that Greek rituals inherently invite demonic influence. Some critics claim that candles, robes, and ceremonial elements are occult practices. How do we respond biblically?
 
 **Understanding Ritual in Context:**
 
-The Bible itself contains rituals—communion, baptism, anointing with oil. The question isn't whether rituals are inherently wrong, but rather:
-- What is the origin and purpose of this ritual?
-- What am I being asked to affirm or invoke?
-- Does participation constitute worship of anything other than God?
+First, recognize that ritual itself is not evil. Scripture contains many God-ordained rituals:
+- Communion and baptism (Christian ordinances)
+- Passover and temple ceremonies (Old Testament worship)
+- Anointing with oil for healing (James 5:14)
+
+The question isn't whether rituals are wrong, but rather: What is being invoked, affirmed, or worshipped?
+
+**Biblical Discernment Framework:**
+
+1. **What is the ritual's origin and purpose?**
+   - Some Greek rituals have benign origins (literary societies, civic traditions)
+   - Others may have borrowed from mystery religions or Freemasonry
+   - Research your organization's specific history
+
+2. **What am I being asked to invoke or affirm?**
+   - Prayers to "the Supreme Being" or unnamed forces are concerning
+   - Affirmations of organizational loyalty are different from worship
+   - Be specific about what's actually happening vs. what critics assume
+
+3. **Does participation constitute worship?**
+   - Worship involves heart devotion, not just physical actions
+   - Many rituals are symbolic traditions, not religious ceremonies
+   - Apply Paul's principle from 1 Corinthians 8 about meat sacrificed to idols
 
 **Key Biblical Principles:**
 
-1. **No Other Gods (Exodus 20:3)** - Any ritual that invokes, honors, or pays homage to deities, spirits, or entities other than the God of the Bible violates the first commandment.
+1. **No Other Gods (Exodus 20:3)** - Never invoke, honor, or worship any deity besides the God of the Bible.
 
-2. **Worship in Spirit and Truth (John 4:24)** - Authentic worship is directed solely to God through Jesus Christ.
+2. **Greater is He (1 John 4:4)** - Christians cannot be "possessed" by demons through rituals. We're sealed by the Holy Spirit.
 
-3. **Come Out and Be Separate (2 Corinthians 6:17)** - Some rituals may require separation from practices that contradict Christian faith.
+3. **Test the Spirits (1 John 4:1)** - Develop discernment rather than fear-based assumptions.
 
-4. **All Things for God's Glory (1 Corinthians 10:31)** - Can you participate in this ritual to the glory of God?
+4. **Freedom with Wisdom (1 Corinthians 10:23-33)** - Some rituals are permissible but not beneficial.
 
-**Red Flags to Watch For:**
-- Invocation of ancestors, spirits, or unnamed powers
-- Altars, candles, or symbols associated with non-Christian spirituality
-- Oaths of silence that prevent you from seeking counsel
-- Practices described as "sacred" that have no Christian foundation
+**Red Flags vs. Yellow Flags:**
+
+**Red Flags (Exit Immediately):**
+- Explicit invocation of spirits, ancestors, or deities
+- Blood rituals or occult symbolism
+- Practices that mock Christ or Christianity
+
+**Yellow Flags (Proceed with Discernment):**
+- Candles and robes (common in many settings, including churches)
+- Greek letters and symbols (cultural, not inherently spiritual)
+- Oaths of confidentiality (evaluate content, not just secrecy)
+
+**Sample Response to Critics:**
+
+"I understand your concern, but I've carefully examined my organization's rituals. They don't invoke demons or worship false gods—they're ceremonial traditions similar to graduation ceremonies or fraternal lodge practices. The candles represent enlightenment through education, not occult practices. I participate with a clear conscience, asking 'Can I do this for God's glory?' If the answer were no, I wouldn't participate."
 
 **Reflection Questions:**
-1. What rituals have I observed or participated in?
-2. Do I understand the origin and meaning of these practices?
-3. Can I participate with a clear conscience before God?
-4. What would I do if asked to participate in something that violates my faith?`
+1. Have I personally examined my organization's rituals, or am I relying on assumptions?
+2. Can I articulate what each ritual element represents?
+3. Is there anything in my organization's ceremonies I cannot do in good conscience?`
   },
   {
     id: 3,
     letter: 'O',
-    title: 'Lesson 3: Oaths',
-    description: 'Evaluating vows and pledges through Scripture',
-    duration: '10 min',
-    takeaways: 4,
+    title: 'Oaths: Answering Greek Deity Allegiance Claims',
+    description: 'Understanding vows in light of Scripture',
+    duration: '12 min',
+    takeaways: 5,
     isLocked: true,
-    content: `Oaths, vows, and pledges are foundational to Greek letter organizations. Many require members to swear lifelong allegiance, promise secrecy, or make commitments that may conflict with Christian faith. This lesson examines how Scripture guides us in evaluating oaths.
+    content: `**The Criticism:** "Greek organizations require you to swear allegiance to Greek gods like Apollo, Athena, or Zeus. You're committing idolatry."
+
+This accusation claims that Greek letters and symbolism constitute worship of pagan deities. Critics argue that any reference to Greek mythology is inherently idolatrous. How do we respond biblically?
+
+**Understanding Greek Symbolism:**
+
+Most Black Greek Letter Organizations (BGLOs) chose Greek letters and symbols for academic prestige, not religious worship:
+- Greek was the language of scholarship, philosophy, and the New Testament
+- Early American universities emphasized classical education
+- Greek letters represented intellectual ideals, not deity worship
 
 **What Scripture Says About Oaths:**
 
-Jesus addressed oaths directly in Matthew 5:33-37, teaching His followers to let their "yes be yes" and "no be no." This doesn't prohibit all oaths, but it calls for:
-- Complete honesty in all speech
-- Caution about binding commitments
-- Recognition that we cannot control the future
+Jesus addressed oaths in Matthew 5:33-37, calling for honest speech rather than prohibiting all vows. Consider:
+- Marriage vows are oaths that honor God
+- Military oaths of service are taken by Christians
+- Courtroom oaths are expected in legal proceedings
 
-**Key Questions to Ask:**
+The issue is content, not the concept of oath-taking.
 
-1. **Does this oath place anything above God?** - Any oath that elevates an organization, its founders, or its traditions above God violates the first commandment.
+**Key Questions for Evaluating Oaths:**
 
-2. **Does this oath require future actions that may conflict with Scripture?** - Promising unconditional obedience to human authorities is dangerous.
+1. **Am I swearing to worship a false god?**
+   - References to "Greek ideals" differ from invocations of Greek deities
+   - Most organizational oaths focus on brotherhood, scholarship, and service
+   - Read your actual oath carefully—what does it specifically say?
 
-3. **Does this oath bind me to secrecy that prevents accountability?** - Christians need spiritual oversight and the ability to seek godly counsel.
+2. **Does this oath place anything above God?**
+   - "I will be loyal to my organization" differs from "My organization comes before God"
+   - Evaluate the hierarchy of commitments
 
-4. **Can I keep this oath in good conscience?** - If you're uncomfortable before taking an oath, that discomfort is worth examining.
+3. **Am I promising anything I cannot biblically do?**
+   - Unconditional obedience to human authorities is dangerous
+   - Promises to conceal criminal activity are wrong
+   - Commitments to lifelong service may conflict with divine calling
 
-**Biblical Examples:**
-- Jephthah's tragic vow (Judges 11) shows the danger of rash oaths
-- Peter's denial reminds us that we cannot guarantee future behavior
-- The Nazarite vow (Numbers 6) shows that some commitments can honor God
+4. **Can I keep this oath with integrity?**
+   - Don't take vows you don't intend to keep
+   - "Let your yes be yes and your no be no" (James 5:12)
 
-**Practical Guidance:**
+**Biblical Framework for Greek Symbolism:**
 
-Before taking any oath:
-1. Ask to see the oath in writing beforehand
-2. Consult with a pastor or mature Christian
-3. Consider whether you can fulfill this oath while fully following Christ
-4. Remember that no organization should demand what only God deserves
+Paul addressed similar concerns in 1 Corinthians 8-10 regarding meat sacrificed to idols:
+- "We know that an idol is nothing at all in the world" (8:4)
+- "But not everyone possesses this knowledge" (8:7)
+- Consider your own conscience AND the impact on others
+
+The Greek letters on your paraphernalia are not prayers to Zeus. They're organizational identifiers, similar to company logos or university abbreviations.
+
+**Sample Response to Critics:**
+
+"I appreciate your concern for my spiritual integrity. However, wearing Greek letters isn't worshipping Greek gods any more than driving a Mercury car worships the Roman deity. My organization's oath commits me to scholarship, service, and brotherhood—values that align with my faith. I've examined the specific words of my oath, and there's no invocation of pagan deities or pledge of worship to anyone but God."
+
+**Cautions:**
+
+Some organizations may have problematic elements:
+- If your oath explicitly invokes Greek deities, that's concerning
+- If you're required to bow to symbols or treat them as sacred, evaluate carefully
+- Always prioritize your commitment to Christ
 
 **Reflection Questions:**
-1. What oaths or pledges have I already taken?
-2. Are there conflicts between my Christian commitments and organizational oaths?
-3. How would I respond if asked to take an oath that conflicts with my faith?`
+1. Have I actually read my organization's oath, or am I relying on hearsay?
+2. Can I articulate what my oath commits me to?
+3. Is there any conflict between my organizational vows and my baptismal vows to Christ?`
   },
   {
     id: 4,
     letter: 'O',
-    title: 'Lesson 4: Obscurity',
-    description: 'Navigating secrecy as children of light',
-    duration: '10 min',
-    takeaways: 4,
+    title: 'Obscurity: Countering "Secret Society" Fears',
+    description: 'Walking in the light while honoring confidentiality',
+    duration: '12 min',
+    takeaways: 5,
     isLocked: true,
-    content: `Secrecy is a hallmark of many Greek letter organizations. While some confidentiality is reasonable, excessive secrecy can create spiritual dangers. This lesson explores how Christians should navigate the tension between organizational secrecy and living as "children of light."
+    content: `**The Criticism:** "Greek organizations are secret societies. Christians should have nothing to do with hidden darkness—'what fellowship has light with darkness?'"
+
+Critics claim that any organization with private rituals or confidential information is inherently evil. They equate Greek secrecy with occult practices. How do we respond biblically?
+
+**Understanding "Secret Society" Claims:**
+
+The term "secret society" conjures images of Illuminati conspiracies and occult rituals. But consider:
+- Churches have private leadership meetings
+- Families have confidential conversations
+- Businesses protect proprietary information
+- Even Jesus had private teaching for His disciples (Mark 4:10-11)
+
+Confidentiality isn't inherently sinful. The question is: What is being kept confidential, and why?
 
 **Light vs. Darkness in Scripture:**
 
-The Bible frequently uses light and darkness as metaphors for good and evil, truth and deception:
-
+The Bible does warn about darkness:
 - "God is light; in him there is no darkness at all" (1 John 1:5)
-- "You are the light of the world" (Matthew 5:14)
-- "Have nothing to do with the fruitless deeds of darkness, but rather expose them" (Ephesians 5:11)
+- "Have nothing to do with the fruitless deeds of darkness" (Ephesians 5:11)
 
-**Healthy vs. Unhealthy Secrecy:**
+But notice: Scripture condemns "fruitless deeds of darkness"—sinful actions done in secret—not simply having private matters.
+
+**Healthy vs. Concerning Secrecy:**
 
 **Reasonable Confidentiality:**
-- Protecting ritual elements as meaningful traditions
-- Keeping internal discussions private
-- Respecting organizational business matters
+- Protecting ritual elements as meaningful traditions (like wedding ceremonies)
+- Keeping internal organizational discussions private
+- Respecting pledges made to membership
+- Not broadcasting your organization's business to everyone
 
 **Concerning Secrecy:**
-- Practices that cannot be disclosed even to spiritual advisors
-- Threats for revealing organizational information
+- Practices that cannot be disclosed to ANY spiritual advisor
+- Threats of harm for revealing organizational information
 - Activities that must be hidden because they're shameful
-- Oaths of silence that override accountability relationships
+- Oaths of silence that prevent seeking help during abuse
 
 **Key Biblical Principles:**
 
-1. **Walk in the Light (1 John 1:7)** - Christians are called to transparency and honesty.
+1. **Walk in the Light (1 John 1:7)** - This means living transparently with God and maintaining spiritual accountability—not broadcasting everything publicly.
 
-2. **Nothing Hidden That Won't Be Revealed (Luke 12:2)** - What happens in secret will eventually come to light.
+2. **Nothing Hidden That Won't Be Revealed (Luke 12:2)** - This is a warning about hypocrisy, not confidentiality.
 
-3. **Accountability (James 5:16)** - We need community and oversight for spiritual health.
+3. **Accountability (Hebrews 10:24-25)** - Maintain relationships where you can share concerns and receive godly counsel.
 
-4. **Flee Evil (2 Timothy 2:22)** - If secrecy is protecting harmful practices, distance yourself.
+4. **Wisdom in Speech (Proverbs 11:13)** - "A gossip betrays a confidence, but a trustworthy person keeps a secret."
 
-**Questions to Consider:**
-1. Why does this need to be secret?
-2. Would I be comfortable if my pastor or parents knew about this?
-3. Does this secrecy protect tradition or hide wrongdoing?
-4. Can I maintain my spiritual accountability while honoring this secrecy?
+**The Accountability Test:**
 
-**Practical Application:**
+Ask yourself: Do I have at least one spiritually mature person who knows about my Greek involvement and can provide oversight? This might be:
+- A pastor or campus minister
+- A godly parent or family member
+- A mature Christian mentor
 
-Maintain at least one relationship (pastor, mentor, parent) where you can share concerns without violating reasonable confidentiality. If an organization requires you to keep secrets from everyone who provides spiritual oversight, this is a significant red flag.`
+You don't need to reveal ritual details, but you should be able to discuss your experiences, concerns, and questions with someone who can help you discern God's will.
+
+**Sample Response to Critics:**
+
+"I understand the concern about secrecy, but there's a difference between 'secret society' conspiracies and organizational confidentiality. I don't broadcast my family's private conversations either—that doesn't make my family a secret society. I maintain full accountability with my pastor and parents about my Greek involvement. I can discuss anything concerning with them. What I keep confidential are traditions that are meaningful to my organization, not sinful practices that would shame me."
+
+**Red Flags:**
+- If you're told NEVER to discuss organizational matters with ANYONE
+- If you're threatened for seeking spiritual counsel
+- If you're uncomfortable telling your pastor you're a member
+
+**Reflection Questions:**
+1. Can I honestly discuss my Greek involvement with my spiritual mentors?
+2. Is there anything I'm keeping secret because it's shameful rather than simply confidential?
+3. Do I have adequate spiritual accountability despite organizational privacy expectations?`
   },
   {
     id: 5,
     letter: 'F',
-    title: 'Lesson 5: Founders',
-    description: 'Understanding historical context and spiritual foundations',
-    duration: '12 min',
-    takeaways: 4,
+    title: 'Founders: Examining Masonic Connection Claims',
+    description: 'Researching organizational history biblically',
+    duration: '15 min',
+    takeaways: 6,
     isLocked: true,
-    content: `Every Greek letter organization has a founding story, founding principles, and founding members. Understanding this history is essential for discerning whether an organization aligns with Christian faith. This lesson examines how to research and evaluate organizational foundations.
+    content: `**The Criticism:** "Greek organizations were founded by Freemasons. You're participating in Masonic traditions and joining a pathway to the lodge."
 
-**Why Founders Matter:**
+This accusation claims that BGLO founders were Masons who incorporated lodge traditions into their organizations, making Greek membership a stepping stone to Freemasonry. How do we respond biblically?
 
-The spiritual beliefs, intentions, and practices of founders often shape an organization for generations. Many Greek organizations were founded in eras when:
-- Christian faith was assumed but not always central
-- Fraternal orders drew from multiple spiritual traditions
-- Secret societies and mystical practices were popular
-- Racial segregation shaped organizational development
+**Understanding the Historical Context:**
 
-**Key Research Questions:**
+Many BGLO founders were indeed Freemasons—this is historical fact, not conspiracy theory. In the early 20th century:
+- Freemasonry was extremely popular, especially among educated Black men
+- Masonic lodges provided social mobility, networking, and community
+- Many founders borrowed organizational structures from fraternal orders
+- Greek-letter organizations and Masonic lodges both used similar ceremonial elements
 
-1. **What were the founders' spiritual beliefs?** - Were they Christians? Did they draw from other religious traditions?
+However, having Masonic founders doesn't make an organization inherently Masonic, just as having Presbyterian founders doesn't make it a denomination.
 
-2. **What influenced the organization's symbols and rituals?** - Many Greek organizations incorporated Egyptian symbolism, Masonic traditions, or other spiritual elements.
+**Key Questions for Honest Evaluation:**
 
-3. **What was the original purpose?** - Literary societies, mutual aid, religious fellowship, or something else?
+1. **What was borrowed vs. what is essential?**
+   - Organizational structure (officers, chapters, rituals) is common across many groups
+   - Some symbolic elements may have Masonic origins
+   - Core purposes (scholarship, service, brotherhood) stand independently
 
-4. **How has the organization evolved?** - Some organizations have become more secular; others have deepened problematic spiritual elements.
+2. **Does the organization require or promote Freemasonry?**
+   - Most BGLOs have no formal connection to Masonic lodges
+   - Membership doesn't require joining the Masons
+   - Many members are faithful Christians with no Masonic involvement
 
-**Biblical Framework for Evaluation:**
+3. **What do the rituals actually teach?**
+   - Examine content, not just format
+   - Many "borrowed" elements have been given new meaning
+   - Focus on what YOUR organization teaches today
 
-1. **By Their Fruits (Matthew 7:16-20)** - What has this organization produced over time?
+**Biblical Framework:**
 
-2. **Test Everything (1 Thessalonians 5:21)** - Don't accept organizational history uncritically.
+1. **By Their Fruits (Matthew 7:16-20)** - Judge by the organization's actual impact:
+   - Community service and philanthropic giving
+   - Academic achievement and mentorship
+   - Lives transformed for better or worse
 
-3. **Truth Sets Free (John 8:32)** - Honest historical understanding leads to wise decisions.
+2. **Test Everything (1 Thessalonians 5:21)** - Research honestly:
+   - Read your organization's official history
+   - Consult multiple sources (favorable AND critical)
+   - Don't rely solely on YouTube conspiracy videos
 
-4. **New Creations (2 Corinthians 5:17)** - Even if an organization has a problematic past, can it be reformed?
+3. **Truth Sets Free (John 8:32)** - Embrace honest historical understanding:
+   - Acknowledge problematic elements if they exist
+   - Celebrate genuine contributions to society
+   - Make informed decisions based on facts
+
+4. **Redemption is Possible (2 Corinthians 5:17)** - Organizations can evolve:
+   - Many groups have reformed problematic practices
+   - Christians within can influence positive change
+   - Past doesn't always dictate present
+
+**Addressing Specific Concerns:**
+
+**"Your symbols are Masonic"**
+Many symbols (pyramids, all-seeing eye, clasped hands) appear across cultures and aren't inherently Masonic. Research YOUR organization's specific symbol meanings.
+
+**"Your rituals came from the lodge"**
+Ceremonial elements (candles, robes, processions) appear in churches, graduation ceremonies, weddings, and many secular contexts. Format doesn't equal meaning.
+
+**"Founders intended it as a Masonic pipeline"**
+This requires evidence, not assumption. Many founders saw Greek organizations as ALTERNATIVES to Masonic lodges—specifically designed for college students.
+
+**Sample Response to Critics:**
+
+"You're right that some of my organization's founders were Masons—that's documented history. But having Masonic founders doesn't make us a Masonic organization any more than having Baptist founders makes an organization a Baptist church. I've researched our actual rituals and teachings. They focus on scholarship, service, and brotherhood—not Masonic doctrine. I'm a faithful Christian who has no interest in joining the lodge, and my Greek membership doesn't require or promote that. I judge my organization by its fruits: the service hours, scholarships awarded, and community impact."
 
 **Practical Steps:**
 
-1. Research your organization's history from multiple sources
-2. Examine the meaning behind symbols, colors, and traditions
-3. Ask older members about the spiritual elements of the organization
-4. Consult with knowledgeable Christians who have studied Greek life
+1. Research your organization's founding history from primary sources
+2. Examine your ritual content (not just format) for concerning elements
+3. Ask older members about Masonic expectations or promotion
+4. Evaluate whether your organization leads people toward or away from Christ
 
-**Conclusion:**
+**The P.R.O.O.F. Framework Conclusion:**
 
-The P.R.O.O.F. Framework provides a comprehensive approach to evaluating Greek life participation:
+You've now examined all five common criticisms of Greek life:
 
-- **Pledge Process**: Enter with wisdom, counting the cost
-- **Rituals**: Discern what honors God
-- **Oaths**: Guard your commitments carefully
-- **Obscurity**: Walk in the light
-- **Founders**: Understand the foundation you're building on
+- **P - Pledge Process (Hazing)**: Enter with integrity, reform harmful practices
+- **R - Rituals (Demonic portals)**: Discern with Scripture, not fear
+- **O - Oaths (Greek deity allegiance)**: Evaluate content, not just controversy
+- **O - Obscurity (Secret societies)**: Maintain accountability, not total exposure
+- **F - Founders (Masonic connections)**: Research honestly, judge by present fruits
 
-May God give you wisdom as you navigate these important decisions, always keeping Christ at the center of your identity and choices.`
+Remember: Being Greek doesn't make you righteous, and being anti-Greek doesn't make you holy. What matters is whether you're walking faithfully with Christ in whatever context He's placed you.
+
+**Final Reflection:**
+1. Have I honestly researched my organization's history?
+2. Can I articulate a biblical response to each of the five criticisms?
+3. Am I committed to honoring Christ whether I remain Greek or not?`
   }
 ];
 
