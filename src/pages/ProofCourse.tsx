@@ -239,7 +239,7 @@ The spiritual beliefs, intentions, and practices of founders often shape an orga
 
 The P.R.O.O.F. Framework provides a comprehensive approach to evaluating Greek life participation:
 
-- **Process**: Enter with wisdom, counting the cost
+- **Pledge Process**: Enter with wisdom, counting the cost
 - **Rituals**: Discern what honors God
 - **Oaths**: Guard your commitments carefully
 - **Obscurity**: Walk in the light

@@ -37,7 +37,7 @@ const TOUR_STEPS: GuidedTourStep[] = [
   {
     id: 'journey',
     title: '30-Day Journey',
-    description: 'A structured program using the P.R.O.O.F. framework to integrate your faith and Greek identity.',
+    description: 'A structured program to build your faith foundation while integrating your Greek identity.',
     targetSelector: '[data-tour="journey"]',
     position: 'bottom',
   },

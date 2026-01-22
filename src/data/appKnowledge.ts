@@ -17,11 +17,11 @@ export const PROOF_FRAMEWORK = {
   name: "P.R.O.O.F. Framework",
   description: "A biblical approach to evaluating and navigating Greek life membership while maintaining your Christian faith and values.",
   components: [
-    { letter: "P", name: "Purpose", description: "What is the organization's purpose?" },
-    { letter: "R", name: "Rituals", description: "What rituals are involved?" },
-    { letter: "O", name: "Obligations", description: "What commitments are required?" },
-    { letter: "O", name: "Outcomes", description: "What are the spiritual outcomes?" },
-    { letter: "F", name: "Fellowship", description: "How does it affect Christian fellowship?" },
+    { letter: "P", name: "Pledge Process", description: "How does the intake and pledging process align with biblical values?" },
+    { letter: "R", name: "Rituals", description: "What rituals are involved and do they honor God?" },
+    { letter: "O", name: "Oaths", description: "What oaths and vows are required of members?" },
+    { letter: "O", name: "Obscurity", description: "What is kept secret and does it conflict with walking in the light?" },
+    { letter: "F", name: "Founders", description: "What is the foundation and history of the organization?" },
   ],
 };
 

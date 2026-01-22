@@ -92,11 +92,11 @@ export const GREEK_COUNCILS = {
 
 // P.R.O.O.F. Framework
 export const PROOF_FRAMEWORK = {
-  P: 'Purpose',
+  P: 'Pledge Process',
   R: 'Rituals',
-  O_1: 'Obligations',
-  O_2: 'Outcomes',
-  F: 'Fellowship',
+  O_1: 'Oaths',
+  O_2: 'Obscurity',
+  F: 'Founders',
 } as const;
 
 // Validation Limits
