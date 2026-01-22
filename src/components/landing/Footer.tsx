@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Facebook, Twitter, Instagram } from "lucide-react";
+import { Facebook, Twitter, Instagram, Youtube } from "lucide-react";
 import logo from "@/assets/sacred-greeks-logo.png";
 import { useExternalLinks } from "@/hooks/use-external-links";
 
@@ -21,6 +21,12 @@ const socialLinks = [
     icon: Facebook,
     url: "https://facebook.com/sacredgreeks",
     hoverColor: "hover:text-blue-600"
+  },
+  {
+    name: "YouTube",
+    icon: Youtube,
+    url: "https://youtube.com/@sacredgreeks",
+    hoverColor: "hover:text-red-500"
   }
 ];
 
