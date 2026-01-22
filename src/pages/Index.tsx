@@ -106,8 +106,8 @@ const Index = () => {
                 </span>
               </h1>
               <p className="text-muted-foreground text-sm sm:text-base md:text-lg max-w-md mx-auto leading-relaxed">
-                Grow spiritually while honoring your Greek commitments with the{' '}
-                <span className="font-semibold text-foreground">P.R.O.O.F. framework</span>
+                Daily devotionals, biblical guidance, and practical tools to help you{' '}
+                <span className="font-semibold text-foreground">thrive in faith and fraternity</span>
               </p>
             </div>
 
