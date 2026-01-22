@@ -1,7 +1,10 @@
-import { Zap, Shield, BookOpen, Sparkles, ArrowRight, Video, Users, AlertTriangle } from "lucide-react";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { Zap, Shield, BookOpen, Sparkles, ArrowRight, Video, Users, AlertTriangle, ChevronDown, ChevronUp } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
-const features = [
+// Primary features - highest conversion potential
+const primaryFeatures = [
   {
     icon: Zap,
     title: "MythBusters",
@@ -20,6 +23,19 @@ const features = [
     bgGlow: "bg-purple-500/20",
     highlights: ["100+ Symbols", "Historical Context", "Faith Connections"],
   },
+  {
+    icon: AlertTriangle,
+    title: "Anti-Hazing Resources",
+    subtitle: "Protect & Educate Your Chapter",
+    description: "Access vital hazing prevention tools, success stories, and memorial resources to keep your organization safe.",
+    gradient: "from-red-500 via-rose-600 to-pink-600",
+    bgGlow: "bg-red-500/20",
+    highlights: ["Prevention Tools", "Success Stories", "Memorial Wall"],
+  },
+];
+
+// Secondary features - revealed on expand
+const secondaryFeatures = [
   {
     icon: BookOpen,
     title: "Greek Life Bible Study",
@@ -47,18 +63,69 @@ const features = [
     bgGlow: "bg-sky-500/20",
     highlights: ["Expert Insights", "Ministry Resources", "Leadership Tips"],
   },
-  {
-    icon: AlertTriangle,
-    title: "Anti-Hazing Resources",
-    subtitle: "Protect & Educate Your Chapter",
-    description: "Access vital hazing prevention tools, success stories, and memorial resources to keep your organization safe.",
-    gradient: "from-red-500 via-rose-600 to-pink-600",
-    bgGlow: "bg-red-500/20",
-    highlights: ["Prevention Tools", "Success Stories", "Memorial Wall"],
-  },
 ];
 
+interface FeatureCardProps {
+  feature: typeof primaryFeatures[0];
+  index: number;
+  baseDelay?: number;
+}
+
+const FeatureCard = ({ feature, index, baseDelay = 0 }: FeatureCardProps) => (
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, delay: baseDelay + index * 0.15 }}
+    className="group relative"
+  >
+    {/* Glow effect on hover */}
+    <div className={`absolute -inset-1 ${feature.bgGlow} rounded-2xl blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-500`} />
+    
+    <div className="relative h-full bg-card border border-border/60 rounded-2xl p-5 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/30 overflow-hidden">
+      {/* Top gradient accent */}
+      <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${feature.gradient}`} />
+      
+      {/* Icon */}
+      <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+        <feature.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+      </div>
+
+      {/* Content */}
+      <h3 className="text-lg sm:text-xl font-bold text-foreground mb-1">
+        {feature.title}
+      </h3>
+      <p className={`text-xs sm:text-sm font-medium bg-gradient-to-r ${feature.gradient} bg-clip-text text-transparent mb-2`}>
+        {feature.subtitle}
+      </p>
+      <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+        {feature.description}
+      </p>
+
+      {/* Highlights */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        {feature.highlights.map((highlight) => (
+          <span
+            key={highlight}
+            className="text-[10px] sm:text-xs px-2 py-1 rounded-full bg-muted/80 text-muted-foreground border border-border/50"
+          >
+            {highlight}
+          </span>
+        ))}
+      </div>
+
+      {/* CTA hint */}
+      <div className="flex items-center gap-1.5 text-xs sm:text-sm font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <span>Explore</span>
+        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+      </div>
+    </div>
+  </motion.div>
+);
+
 export function DashboardPreview() {
+  const [showMore, setShowMore] = useState(false);
+
   return (
     <div className="w-full max-w-5xl mx-auto px-3 sm:px-6 py-10 sm:py-16">
       {/* Section Header */}
@@ -85,61 +152,56 @@ export function DashboardPreview() {
         </motion.div>
       </div>
 
-      {/* Feature Cards */}
+      {/* Primary Feature Cards - Always visible */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-        {features.map((feature, index) => (
-          <motion.div
-            key={feature.title}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.15 }}
-            className="group relative"
-          >
-            {/* Glow effect on hover */}
-            <div className={`absolute -inset-1 ${feature.bgGlow} rounded-2xl blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-500`} />
-            
-            <div className="relative h-full bg-card border border-border/60 rounded-2xl p-5 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/30 overflow-hidden">
-              {/* Top gradient accent */}
-              <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${feature.gradient}`} />
-              
-              {/* Icon */}
-              <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                <feature.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
-              </div>
-
-              {/* Content */}
-              <h3 className="text-lg sm:text-xl font-bold text-foreground mb-1">
-                {feature.title}
-              </h3>
-              <p className={`text-xs sm:text-sm font-medium bg-gradient-to-r ${feature.gradient} bg-clip-text text-transparent mb-2`}>
-                {feature.subtitle}
-              </p>
-              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                {feature.description}
-              </p>
-
-              {/* Highlights */}
-              <div className="flex flex-wrap gap-2 mb-4">
-                {feature.highlights.map((highlight) => (
-                  <span
-                    key={highlight}
-                    className="text-[10px] sm:text-xs px-2 py-1 rounded-full bg-muted/80 text-muted-foreground border border-border/50"
-                  >
-                    {highlight}
-                  </span>
-                ))}
-              </div>
-
-              {/* CTA hint */}
-              <div className="flex items-center gap-1.5 text-xs sm:text-sm font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span>Explore</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </div>
-          </motion.div>
+        {primaryFeatures.map((feature, index) => (
+          <FeatureCard key={feature.title} feature={feature} index={index} />
         ))}
       </div>
+
+      {/* Explore More Button */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.5 }}
+        className="flex justify-center mt-8"
+      >
+        <Button
+          variant="outline"
+          size="lg"
+          onClick={() => setShowMore(!showMore)}
+          className="gap-2 px-6 py-3 rounded-full border-primary/30 hover:border-primary/60 hover:bg-primary/5 transition-all duration-300 group"
+        >
+          <span className="font-medium">
+            {showMore ? "Show Less" : "Explore More Tools"}
+          </span>
+          {showMore ? (
+            <ChevronUp className="w-4 h-4 transition-transform group-hover:-translate-y-0.5" />
+          ) : (
+            <ChevronDown className="w-4 h-4 transition-transform group-hover:translate-y-0.5" />
+          )}
+        </Button>
+      </motion.div>
+
+      {/* Secondary Feature Cards - Expandable */}
+      <AnimatePresence>
+        {showMore && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mt-6">
+              {secondaryFeatures.map((feature, index) => (
+                <FeatureCard key={feature.title} feature={feature} index={index} baseDelay={0.1} />
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Bottom social proof */}
       <motion.div
