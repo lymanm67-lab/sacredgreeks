@@ -1,4 +1,4 @@
-import { Zap, Shield, BookOpen, Sparkles, ArrowRight, Video, Users } from "lucide-react";
+import { Zap, Shield, BookOpen, Sparkles, ArrowRight, Video, Users, AlertTriangle } from "lucide-react";
 import { motion } from "framer-motion";
 
 const features = [
@@ -46,6 +46,15 @@ const features = [
     gradient: "from-sky-500 via-blue-500 to-indigo-500",
     bgGlow: "bg-sky-500/20",
     highlights: ["Expert Insights", "Ministry Resources", "Leadership Tips"],
+  },
+  {
+    icon: AlertTriangle,
+    title: "Anti-Hazing Resources",
+    subtitle: "Protect & Educate Your Chapter",
+    description: "Access vital hazing prevention tools, success stories, and memorial resources to keep your organization safe.",
+    gradient: "from-red-500 via-rose-600 to-pink-600",
+    bgGlow: "bg-red-500/20",
+    highlights: ["Prevention Tools", "Success Stories", "Memorial Wall"],
   },
 ];
 
