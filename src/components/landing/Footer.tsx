@@ -1,5 +1,27 @@
 import { Link } from "react-router-dom";
+import { Facebook, Twitter, Instagram } from "lucide-react";
 import logo from "@/assets/sacred-greeks-logo.png";
+
+const socialLinks = [
+  {
+    name: "Instagram",
+    icon: Instagram,
+    url: "https://instagram.com/sacredgreeks",
+    hoverColor: "hover:text-pink-500"
+  },
+  {
+    name: "Twitter",
+    icon: Twitter,
+    url: "https://twitter.com/sacredgreeks",
+    hoverColor: "hover:text-sky-500"
+  },
+  {
+    name: "Facebook",
+    icon: Facebook,
+    url: "https://facebook.com/sacredgreeks",
+    hoverColor: "hover:text-blue-600"
+  }
+];
 
 export function Footer() {
   return (
@@ -12,9 +34,22 @@ export function Footer() {
               <img src={logo} alt="Sacred Greeks" className="h-5 w-auto opacity-60" loading="lazy" />
               <span className="text-sm font-semibold text-muted-foreground">Sacred Greeks™</span>
             </div>
-            <p className="text-xs text-muted-foreground">
-              © {new Date().getFullYear()} Sacred Greeks™. All Rights Reserved.
-            </p>
+            
+            {/* Social Media Links */}
+            <div className="flex items-center gap-4">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Follow us on ${social.name}`}
+                  className={`text-muted-foreground transition-colors ${social.hoverColor}`}
+                >
+                  <social.icon className="h-5 w-5" />
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Quick Links */}
@@ -28,6 +63,11 @@ export function Footer() {
             <Link to="/terms" className="hover:text-sacred transition-colors">Terms</Link>
             <Link to="/legal" className="hover:text-sacred transition-colors">Legal</Link>
           </div>
+
+          {/* Copyright */}
+          <p className="text-xs text-muted-foreground text-center">
+            © {new Date().getFullYear()} Sacred Greeks™. All Rights Reserved.
+          </p>
 
           {/* Trademark Notice */}
           <p className="text-[10px] text-muted-foreground/60 text-center max-w-2xl mx-auto">

@@ -76,12 +76,16 @@ export function VerseOfTheDay() {
     }
   }, [user, isDemoMode]);
 
+  const getRandomFallbackVerse = (): DailyVerse => {
+    const dayOfYear = Math.floor((new Date().getTime() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
+    const fallbackIndex = dayOfYear % FALLBACK_VERSES.length;
+    return FALLBACK_VERSES[fallbackIndex];
+  };
+
   const loadVerse = async () => {
     // If demo mode is enabled, always show fallback
     if (isDemoMode) {
-      const dayOfYear = Math.floor((new Date().getTime() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
-      const fallbackIndex = dayOfYear % FALLBACK_VERSES.length;
-      setVerse(FALLBACK_VERSES[fallbackIndex]);
+      setVerse(getRandomFallbackVerse());
       setLoading(false);
       return;
     }
@@ -89,28 +93,42 @@ export function VerseOfTheDay() {
     try {
       const today = new Date().toISOString().split('T')[0];
 
-      const { data, error } = await supabase
+      // First try to get today's verse
+      const { data: todayVerse, error: todayError } = await supabase
         .from('daily_verses')
         .select('*')
         .eq('date', today)
         .maybeSingle();
 
-      if (error) throw error;
+      if (todayError) throw todayError;
       
-      if (data) {
-        setVerse(data);
-      } else {
-        // Use fallback verse based on day of year for variety
-        const dayOfYear = Math.floor((new Date().getTime() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
-        const fallbackIndex = dayOfYear % FALLBACK_VERSES.length;
-        setVerse(FALLBACK_VERSES[fallbackIndex]);
+      if (todayVerse) {
+        setVerse(todayVerse);
+        return;
       }
+
+      // Fallback: Try to get the most recent past verse
+      const { data: recentVerse, error: recentError } = await supabase
+        .from('daily_verses')
+        .select('*')
+        .lt('date', today)
+        .order('date', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (recentError) throw recentError;
+
+      if (recentVerse) {
+        setVerse(recentVerse);
+        return;
+      }
+
+      // Final fallback: Use hardcoded verses
+      setVerse(getRandomFallbackVerse());
     } catch (error) {
       console.error('Error loading verse:', error);
-      // Use fallback on error too
-      const dayOfYear = Math.floor((new Date().getTime() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
-      const fallbackIndex = dayOfYear % FALLBACK_VERSES.length;
-      setVerse(FALLBACK_VERSES[fallbackIndex]);
+      // Use fallback on error
+      setVerse(getRandomFallbackVerse());
     } finally {
       setLoading(false);
     }
