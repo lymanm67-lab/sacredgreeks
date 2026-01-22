@@ -7,6 +7,7 @@ import logo from "@/assets/sacred-greeks-logo.png";
 import { cn } from "@/lib/utils";
 import { Play, Sparkles, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { DashboardPreview } from "@/components/landing/DashboardPreview";
 
 const Index = () => {
   const { user } = useAuth();
@@ -138,6 +139,9 @@ const Index = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* Dashboard Preview Section */}
+        <DashboardPreview />
       </main>
     </div>
   );
