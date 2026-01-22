@@ -55,6 +55,14 @@ const AudioWaveform = ({ isPlaying }: { isPlaying: boolean }) => {
   );
 };
 
+// Format time as MM:SS
+const formatTime = (seconds: number): string => {
+  if (!isFinite(seconds) || seconds < 0) return "0:00";
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins}:${secs.toString().padStart(2, "0")}`;
+};
+
 export const DemoAudioGuide = ({ pageId, title, description, contentRef }: DemoAudioGuideProps) => {
   const { user } = useAuth();
   const [isPlaying, setIsPlaying] = useState(false);
@@ -63,10 +71,15 @@ export const DemoAudioGuide = ({ pageId, title, description, contentRef }: DemoA
   const [hasStarted, setHasStarted] = useState(false);
   const [autoPlayAttempted, setAutoPlayAttempted] = useState(false);
   const [showSkip, setShowSkip] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const script = PAGE_SCRIPTS[pageId] || description;
   const cacheKey = `${AUDIO_CACHE_PREFIX}${pageId}`;
+  
+  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
+  const remainingTime = duration - currentTime;
 
   // Get cached audio from localStorage
   const getCachedAudio = useCallback((): string | null => {
@@ -104,6 +117,8 @@ export const DemoAudioGuide = ({ pageId, title, description, contentRef }: DemoA
     setIsPlaying(false);
     setIsPaused(false);
     setShowSkip(false);
+    setCurrentTime(0);
+    setDuration(0);
   }, []);
 
   const pauseAudio = useCallback(() => {
@@ -169,16 +184,25 @@ export const DemoAudioGuide = ({ pageId, title, description, contentRef }: DemoA
         cacheAudio(audioContent);
       }
 
-      // Use data URI for playback
       const audioUrl = `data:audio/mpeg;base64,${audioContent}`;
       const audio = new Audio(audioUrl);
       audioRef.current = audio;
+
+      // Set up time tracking
+      audio.onloadedmetadata = () => {
+        setDuration(audio.duration);
+      };
+
+      audio.ontimeupdate = () => {
+        setCurrentTime(audio.currentTime);
+      };
 
       audio.onended = () => {
         setIsPlaying(false);
         setIsPaused(false);
         setHasStarted(true);
         setShowSkip(false);
+        setCurrentTime(0);
       };
 
       audio.onerror = () => {
@@ -273,44 +297,71 @@ export const DemoAudioGuide = ({ pageId, title, description, contentRef }: DemoA
             </motion.div>
           )}
 
-          {/* Main audio control button */}
-          <Button
-            onClick={() => playAudio(false)}
-            disabled={isLoading}
-            size="lg"
-            className={`
-              rounded-full shadow-lg gap-2 px-4 transition-all duration-300
-              ${isPlaying 
-                ? "bg-sacred text-white hover:bg-sacred/90" 
-                : isPaused
-                  ? "bg-amber-500 text-white hover:bg-amber-500/90"
-                  : hasStarted 
-                    ? "bg-muted text-muted-foreground hover:bg-muted/80"
-                    : "bg-gradient-to-r from-sacred to-purple-600 text-white hover:from-sacred/90 hover:to-purple-600/90 animate-pulse"
-              }
-            `}
-          >
-            {isLoading ? (
-              <Loader2 className="h-5 w-5 animate-spin" />
-            ) : isPlaying ? (
-              <AudioWaveform isPlaying={true} />
-            ) : isPaused ? (
-              <Play className="h-5 w-5" />
-            ) : (
-              <Headphones className="h-5 w-5" />
+          {/* Main audio control with progress */}
+          <div className="flex flex-col items-end gap-1">
+            {/* Progress bar - visible when playing or paused */}
+            {(isPlaying || isPaused) && duration > 0 && (
+              <motion.div
+                initial={{ opacity: 0, width: 0 }}
+                animate={{ opacity: 1, width: "auto" }}
+                className="flex items-center gap-2 bg-background/95 backdrop-blur-sm rounded-full px-3 py-1.5 shadow-lg border"
+              >
+                <span className="text-xs text-muted-foreground font-mono w-10">
+                  {formatTime(currentTime)}
+                </span>
+                <div className="w-24 sm:w-32 h-1.5 bg-muted rounded-full overflow-hidden">
+                  <motion.div
+                    className="h-full bg-sacred rounded-full"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${progress}%` }}
+                    transition={{ duration: 0.1 }}
+                  />
+                </div>
+                <span className="text-xs text-muted-foreground font-mono w-10">
+                  -{formatTime(remainingTime)}
+                </span>
+              </motion.div>
             )}
-            <span className="hidden sm:inline">
-              {isLoading
-                ? "Loading..."
-                : isPlaying
-                ? "Playing..."
-                : isPaused
-                ? "Resume"
-                : hasStarted
-                ? "Replay Guide"
-                : "Audio Guide"}
-            </span>
-          </Button>
+
+            {/* Main audio control button */}
+            <Button
+              onClick={() => playAudio(false)}
+              disabled={isLoading}
+              size="lg"
+              className={`
+                rounded-full shadow-lg gap-2 px-4 transition-all duration-300
+                ${isPlaying 
+                  ? "bg-sacred text-white hover:bg-sacred/90" 
+                  : isPaused
+                    ? "bg-amber-500 text-white hover:bg-amber-500/90"
+                    : hasStarted 
+                      ? "bg-muted text-muted-foreground hover:bg-muted/80"
+                      : "bg-gradient-to-r from-sacred to-purple-600 text-white hover:from-sacred/90 hover:to-purple-600/90 animate-pulse"
+                }
+              `}
+            >
+              {isLoading ? (
+                <Loader2 className="h-5 w-5 animate-spin" />
+              ) : isPlaying ? (
+                <AudioWaveform isPlaying={true} />
+              ) : isPaused ? (
+                <Play className="h-5 w-5" />
+              ) : (
+                <Headphones className="h-5 w-5" />
+              )}
+              <span className="hidden sm:inline">
+                {isLoading
+                  ? "Loading..."
+                  : isPlaying
+                  ? "Playing..."
+                  : isPaused
+                  ? "Resume"
+                  : hasStarted
+                  ? "Replay Guide"
+                  : "Audio Guide"}
+              </span>
+            </Button>
+          </div>
         </div>
 
         {/* Tooltip for first-time visitors - only show if not auto-playing */}
