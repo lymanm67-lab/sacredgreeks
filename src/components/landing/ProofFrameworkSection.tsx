@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Target, Sparkles, Scale, Eye, Building, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+
+const STORAGE_KEY = "proof-section-expanded";
 
 const proofSteps = [
   {
@@ -44,7 +46,16 @@ const proofSteps = [
 ];
 
 export function ProofFrameworkSection() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(() => {
+    // Initialize from localStorage, default to false (collapsed)
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored === "true";
+  });
+
+  // Persist state to localStorage
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, String(isOpen));
+  }, [isOpen]);
 
   return (
     <section className="py-10 sm:py-12 w-full max-w-lg">

@@ -190,7 +190,7 @@ export function Onboarding({ open, onComplete, userId }: OnboardingProps) {
               </div>
               <h3 className="text-xl font-semibold">P.R.O.O.F. Framework</h3>
               <p className="text-muted-foreground">
-                Navigate challenging Greek life situations with biblical wisdom using our proven framework: Purpose, Relationships, Obedience, Opportunity, and Freedom.
+                Navigate challenging Greek life situations with biblical wisdom using our proven framework: Pledge Process, Rituals, Oaths, Obscurity, and Founders.
               </p>
             </div>
           )}
