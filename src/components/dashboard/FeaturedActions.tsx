@@ -24,7 +24,7 @@ const featuredActions = [
   {
     id: 'bglo-objections',
     title: 'Handle Greek Life Objections',
-    description: 'Navigate Greek life challenges using the PROOF framework',
+    description: 'Biblical responses to family, church, and ministry concerns',
     icon: MessageCircle,
     href: '/guide',
     gradient: 'from-amber-500 to-orange-600',

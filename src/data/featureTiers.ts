@@ -38,7 +38,7 @@ export interface FeatureDefinition {
 
 export const FEATURES: FeatureDefinition[] = [
   // Core features - Available to all
-  { id: '30-day-journey', name: '30-Day Journey', description: 'Daily readings through P.R.O.O.F. framework', category: 'core', minTier: 'free', canHide: true },
+  { id: '30-day-journey', name: '30-Day Journey', description: 'Build your faith foundation one day at a time', category: 'core', minTier: 'free', canHide: true },
   { id: 'daily-devotional', name: 'Daily Devotional', description: 'Scripture-based daily reflections', category: 'core', minTier: 'free', canHide: true },
   { id: 'myth-buster', name: 'Myth Buster', description: 'Biblical responses to common accusations', category: 'study', minTier: 'free', canHide: true },
   { id: 'symbol-guide', name: 'Symbol Guide', description: 'Christian perspectives on Greek symbolism', category: 'study', minTier: 'free', canHide: true },
@@ -54,7 +54,7 @@ export const FEATURES: FeatureDefinition[] = [
   { id: 'service-hours', name: 'Service Hours', description: 'Track community service activities', category: 'core', minTier: 'free', canHide: true },
   { id: 'content-hub', name: 'Content Hub', description: 'Podcasts, videos, and study guides', category: 'study', minTier: 'free', canHide: true },
   { id: 'family-fallout', name: 'Family & Ministry Fallout', description: 'Navigate damaged relationships', category: 'core', minTier: 'free', canHide: true },
-  { id: 'bglo-objections', name: 'Handle Objections', description: 'Navigate BGLO challenges with PROOF', category: 'study', minTier: 'free', canHide: true },
+  { id: 'bglo-objections', name: 'Handle Objections', description: 'Biblical responses to common concerns', category: 'study', minTier: 'free', canHide: true },
   
   // Community features
   { id: 'org-community', name: 'Greek Community', description: 'Connect with other Sacred Greeks', category: 'community', minTier: 'free', canHide: true },

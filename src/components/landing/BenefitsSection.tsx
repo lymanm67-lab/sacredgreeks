@@ -30,8 +30,8 @@ const benefits: Benefit[] = [
   },
   {
     icon: BookOpen,
-    title: "P.R.O.O.F. Framework",
-    description: "Navigate Greek life challenges with biblical guidance that works"
+    title: "Biblical Guidance",
+    description: "Tools to navigate Greek life challenges with Scripture-backed responses"
   }
 ];
 

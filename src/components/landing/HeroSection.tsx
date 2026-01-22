@@ -34,7 +34,7 @@ export function LandingHeroSection({ user }: LandingHeroSectionProps) {
           </h1>
           
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-            The P.R.O.O.F. framework helps you grow spiritually while honoring your Greek commitments. Daily devotionals, guided journeys, and community—all in one place.
+            Daily devotionals, biblical guidance, and practical tools to help you thrive in faith and fraternity—all in one place.
           </p>
 
           {!user && (

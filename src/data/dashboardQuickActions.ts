@@ -32,7 +32,7 @@ export const quickActions: QuickAction[] = [
   {
     id: '30-day-journey',
     title: '30-Day Journey',
-    description: 'Daily readings through P.R.O.O.F. framework',
+    description: 'Build your faith foundation one day at a time',
     icon: Calendar,
     href: '/journey',
     iconColor: 'text-white',
@@ -115,7 +115,7 @@ export const quickActions: QuickAction[] = [
   {
     id: 'bglo-objections',
     title: 'Handle Objections',
-    description: 'Navigate BGLO challenges with PROOF',
+    description: 'Biblical responses to common concerns',
     icon: MessageCircle,
     href: '/guide',
     iconColor: 'text-white',
