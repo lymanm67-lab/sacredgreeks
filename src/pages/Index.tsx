@@ -46,7 +46,12 @@ const Index = () => {
         <div className="container mx-auto px-3 sm:px-4">
           <div className="flex items-center justify-between h-12 sm:h-14">
             <Link to="/" className="flex items-center gap-2 group">
-              <img src={logo} alt="Sacred Greeks" className="h-7 sm:h-8 w-auto transition-transform group-hover:scale-105" loading="lazy" />
+              <img
+                src={logo}
+                alt="Sacred Greeks"
+                className="h-7 w-7 sm:h-8 sm:w-8 rounded-full object-cover bg-transparent transition-transform group-hover:scale-105"
+                loading="lazy"
+              />
               <span className="font-semibold text-foreground hidden sm:inline">Sacred Greeks</span>
             </Link>
             <div className="flex items-center gap-1 sm:gap-2">
@@ -77,7 +82,12 @@ const Index = () => {
               <div className="relative">
                 <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl animate-pulse" />
                 <div className="relative bg-gradient-to-br from-primary/15 to-primary/5 rounded-full p-3 sm:p-4 border border-primary/30 shadow-lg">
-                  <img src={logo} alt="Sacred Greeks" className="h-10 sm:h-12 w-auto" loading="lazy" />
+                  <img
+                    src={logo}
+                    alt="Sacred Greeks"
+                    className="h-10 w-10 sm:h-12 sm:w-12 rounded-full object-cover bg-transparent"
+                    loading="lazy"
+                  />
                 </div>
               </div>
             </div>
