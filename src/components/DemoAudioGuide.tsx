@@ -73,13 +73,77 @@ export const DemoAudioGuide = ({ pageId, title, description, contentRef }: DemoA
   const [showSkip, setShowSkip] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const progressBarRef = useRef<HTMLDivElement | null>(null);
 
   const script = PAGE_SCRIPTS[pageId] || description;
   const cacheKey = `${AUDIO_CACHE_PREFIX}${pageId}`;
   
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
   const remainingTime = duration - currentTime;
+
+  // Seek to a specific position based on click/drag position
+  const seekToPosition = useCallback((clientX: number) => {
+    if (!progressBarRef.current || !audioRef.current || duration <= 0) return;
+    
+    const rect = progressBarRef.current.getBoundingClientRect();
+    const clickPosition = Math.max(0, Math.min(clientX - rect.left, rect.width));
+    const percentage = clickPosition / rect.width;
+    const newTime = percentage * duration;
+    
+    audioRef.current.currentTime = newTime;
+    setCurrentTime(newTime);
+  }, [duration]);
+
+  // Handle click on progress bar
+  const handleProgressClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    seekToPosition(e.clientX);
+  }, [seekToPosition]);
+
+  // Handle drag start
+  const handleDragStart = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(true);
+    seekToPosition(e.clientX);
+  }, [seekToPosition]);
+
+  // Handle drag move
+  useEffect(() => {
+    if (!isDragging) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      seekToPosition(e.clientX);
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging, seekToPosition]);
+
+  // Handle touch events for mobile
+  const handleTouchStart = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    seekToPosition(e.touches[0].clientX);
+  }, [seekToPosition]);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    if (isDragging) {
+      seekToPosition(e.touches[0].clientX);
+    }
+  }, [isDragging, seekToPosition]);
+
+  const handleTouchEnd = useCallback(() => {
+    setIsDragging(false);
+  }, []);
 
   // Get cached audio from localStorage
   const getCachedAudio = useCallback((): string | null => {
@@ -299,7 +363,7 @@ export const DemoAudioGuide = ({ pageId, title, description, contentRef }: DemoA
 
           {/* Main audio control with progress */}
           <div className="flex flex-col items-end gap-1">
-            {/* Progress bar - visible when playing or paused */}
+            {/* Seekable Progress bar - visible when playing or paused */}
             {(isPlaying || isPaused) && duration > 0 && (
               <motion.div
                 initial={{ opacity: 0, width: 0 }}
@@ -309,12 +373,27 @@ export const DemoAudioGuide = ({ pageId, title, description, contentRef }: DemoA
                 <span className="text-xs text-muted-foreground font-mono w-10">
                   {formatTime(currentTime)}
                 </span>
-                <div className="w-24 sm:w-32 h-1.5 bg-muted rounded-full overflow-hidden">
+                <div 
+                  ref={progressBarRef}
+                  className="w-24 sm:w-32 h-2.5 bg-muted rounded-full overflow-hidden cursor-pointer relative group"
+                  onClick={handleProgressClick}
+                  onMouseDown={handleDragStart}
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
+                >
+                  {/* Progress fill */}
                   <motion.div
                     className="h-full bg-sacred rounded-full"
                     initial={{ width: 0 }}
                     animate={{ width: `${progress}%` }}
-                    transition={{ duration: 0.1 }}
+                    transition={{ duration: isDragging ? 0 : 0.1 }}
+                  />
+                  {/* Seek handle */}
+                  <motion.div
+                    className="absolute top-1/2 -translate-y-1/2 w-3.5 h-3.5 bg-white border-2 border-sacred rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
+                    style={{ left: `calc(${progress}% - 7px)` }}
+                    animate={{ scale: isDragging ? 1.2 : 1 }}
                   />
                 </div>
                 <span className="text-xs text-muted-foreground font-mono w-10">
