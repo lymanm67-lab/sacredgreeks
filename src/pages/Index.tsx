@@ -67,17 +67,22 @@ const Index = () => {
         <Card className="w-full max-w-lg shadow-lg border-border/50">
           <CardContent className="p-8">
             {/* Logo */}
-            <div className="flex justify-center mb-6">
-              <img src={logo} alt="Sacred Greeks" className="h-12 w-auto opacity-80" loading="lazy" />
+            <div className="flex justify-center mb-4">
+              <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-full p-3 border border-primary/20">
+                <img src={logo} alt="Sacred Greeks" className="h-10 w-auto" loading="lazy" />
+              </div>
             </div>
 
-            {/* Title */}
-            <div className="text-center mb-8">
-              <h1 className="text-3xl font-serif font-medium text-foreground mb-2">
-                Welcome to Sacred Greeks
+            {/* Strong Value Proposition */}
+            <div className="text-center mb-6">
+              <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
+                Faith + Greek Life,{' '}
+                <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                  United
+                </span>
               </h1>
-              <p className="text-muted-foreground">
-                Navigate Greek life with faith and confidence
+              <p className="text-muted-foreground text-sm sm:text-base max-w-md mx-auto">
+                The P.R.O.O.F. framework helps you grow spiritually while honoring your Greek commitments. Daily devotionals, guided journeys, and community—all in one place.
               </p>
             </div>
 
