@@ -528,7 +528,7 @@ const Auth = () => {
               {/* Heading */}
               <div className="space-y-3">
                 <h1 className="text-3xl md:text-4xl font-bold text-white">
-                  Faith + Greek Life, <span className="text-cyan-400">United</span>
+                  Faith + Greek Life, <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">United</span>
                 </h1>
                 <p className="text-slate-400 text-base">
                   Daily devotionals, biblical guidance, and practical tools<br />
@@ -870,7 +870,7 @@ const Auth = () => {
               <span className="text-sm font-medium">Featured Tools</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-              Everything You Need to <span className="text-emerald-400">Thrive</span>
+              Everything You Need to <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">Thrive</span>
             </h2>
             <p className="text-slate-400 max-w-2xl mx-auto">
               Powerful resources built by Greeks, for Greeks — grounded in faith and designed for your journey.
