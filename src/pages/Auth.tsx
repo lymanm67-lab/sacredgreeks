@@ -883,8 +883,8 @@ const Auth = () => {
                 {/* Colored top border - bolder */}
                 <div className={`absolute top-0 left-0 right-0 h-1.5 ${tool.topBorderColor}`} />
                 <CardHeader className="pt-6">
-                  <div className={`w-12 h-12 rounded-xl ${tool.bgColor} flex items-center justify-center mb-4 group-hover:${tool.hoverBgColor} transition-colors`}>
-                    <tool.icon className={`w-6 h-6 ${tool.iconColor}`} />
+                  <div className={`w-14 h-14 rounded-xl ${tool.bgColor} flex items-center justify-center mb-4 group-hover:${tool.hoverBgColor} transition-colors shadow-lg ring-1 ring-white/10`}>
+                    <tool.icon className={`w-7 h-7 ${tool.iconColor} drop-shadow-[0_0_8px_currentColor]`} strokeWidth={2.5} />
                   </div>
                   <CardTitle className="text-lg text-white">{tool.title}</CardTitle>
                   <CardDescription className={`font-medium ${tool.iconColor}`}>{tool.subtitle}</CardDescription>
@@ -926,8 +926,8 @@ const Auth = () => {
                   {/* Colored top border - bolder */}
                   <div className={`absolute top-0 left-0 right-0 h-1.5 ${tool.topBorderColor}`} />
                   <CardHeader className="pt-6">
-                    <div className={`w-12 h-12 rounded-xl ${tool.bgColor} flex items-center justify-center mb-4 group-hover:${tool.hoverBgColor} transition-colors`}>
-                      <tool.icon className={`w-6 h-6 ${tool.iconColor}`} />
+                    <div className={`w-14 h-14 rounded-xl ${tool.bgColor} flex items-center justify-center mb-4 group-hover:${tool.hoverBgColor} transition-colors shadow-lg ring-1 ring-white/10`}>
+                      <tool.icon className={`w-7 h-7 ${tool.iconColor} drop-shadow-[0_0_8px_currentColor]`} strokeWidth={2.5} />
                     </div>
                     <CardTitle className="text-lg text-white">{tool.title}</CardTitle>
                     <CardDescription className={`font-medium ${tool.iconColor}`}>{tool.subtitle}</CardDescription>
