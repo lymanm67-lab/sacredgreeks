@@ -105,11 +105,56 @@ const SECONDARY_TOOLS = [
 ];
 
 const PROOF_FRAMEWORK = [
-  { letter: "P", title: "Pledge Process", description: "How does the intake and pledging process align with biblical values?", color: "bg-blue-500" },
-  { letter: "R", title: "Rituals", description: "What rituals are involved and do they honor God?", color: "bg-purple-500" },
-  { letter: "O", title: "Oaths", description: "What oaths and vows are required of members?", color: "bg-orange-500" },
-  { letter: "O", title: "Obscurity", description: "What is kept secret and does it conflict with walking in the light?", color: "bg-green-500" },
-  { letter: "F", title: "Founders", description: "What is the foundation and history of the organization?", color: "bg-red-500" }
+  { 
+    letter: "P", 
+    title: "Pledge Process", 
+    description: "How does the intake and pledging process align with biblical values?", 
+    color: "bg-blue-500",
+    criticism: "Hazing Concerns",
+    response: "Biblical mentorship involves testing character, not abusing it. We reject hazing while embracing accountability and growth through godly community.",
+    scripture: "Hebrews 10:24-25",
+    scriptureText: "And let us consider how to stir up one another to love and good works, not neglecting to meet together..."
+  },
+  { 
+    letter: "R", 
+    title: "Rituals", 
+    description: "What rituals are involved and do they honor God?", 
+    color: "bg-purple-500",
+    criticism: "Demonic Portals",
+    response: "Not all ceremonies are worship. Many rituals focus on history, values, and commitment—like weddings or graduations. We discern based on content, not assumption.",
+    scripture: "1 Thessalonians 5:21",
+    scriptureText: "Test everything; hold fast what is good."
+  },
+  { 
+    letter: "O", 
+    title: "Oaths", 
+    description: "What oaths and vows are required of members?", 
+    color: "bg-orange-500",
+    criticism: "Greek Deity Allegiance",
+    response: "Using Greek letters doesn't mean worshiping Greek gods. Paul used Greek language and culture to spread the Gospel without endorsing paganism.",
+    scripture: "Acts 17:22-28",
+    scriptureText: "For as I passed along and observed the objects of your worship, I found also an altar with this inscription: 'To the unknown god.'..."
+  },
+  { 
+    letter: "O", 
+    title: "Obscurity", 
+    description: "What is kept secret and does it conflict with walking in the light?", 
+    color: "bg-green-500",
+    criticism: "Secret Societies",
+    response: "Privacy is not secrecy. Jesus had inner-circle moments with Peter, James, and John. Private ceremonies can simply mean membership-only experiences.",
+    scripture: "Mark 5:37",
+    scriptureText: "And he allowed no one to follow him except Peter and James and John the brother of James."
+  },
+  { 
+    letter: "F", 
+    title: "Founders", 
+    description: "What is the foundation and history of the organization?", 
+    color: "bg-red-500",
+    criticism: "Masonic Connections",
+    response: "An organization's origin doesn't determine its current purpose. Many institutions with complex histories serve godly purposes today. We are new creations in Christ.",
+    scripture: "2 Corinthians 5:17",
+    scriptureText: "Therefore, if anyone is in Christ, he is a new creation. The old has passed away; behold, the new has come."
+  }
 ];
 
 const D9_ORGS = ["ΑΦΑ", "ΔΣΘ", "ΚΑΨ", "ΑΚΑ"];
@@ -148,6 +193,7 @@ const Auth = () => {
   const [searchParams] = useSearchParams();
   const [isResetMode, setIsResetMode] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [expandedProof, setExpandedProof] = useState<number | null>(null);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [signupPassword, setSignupPassword] = useState('');
   const [resetPassword, setResetPassword] = useState('');
@@ -983,15 +1029,54 @@ const Auth = () => {
             {PROOF_FRAMEWORK.map((item, index) => (
               <div 
                 key={index}
-                className="flex gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
+                className={cn(
+                  "rounded-xl bg-white/5 border border-white/10 transition-all duration-300 overflow-hidden",
+                  expandedProof === index ? "bg-white/10 border-white/20" : "hover:bg-white/10"
+                )}
               >
-                <div className={`w-12 h-12 rounded-full ${item.color} flex items-center justify-center flex-shrink-0`}>
-                  <span className="text-xl font-bold text-white">{item.letter}</span>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg text-white">{item.title}</h3>
-                  <p className="text-white/60">{item.description}</p>
-                </div>
+                <button
+                  onClick={() => setExpandedProof(expandedProof === index ? null : index)}
+                  className="w-full flex items-center gap-4 p-4 text-left"
+                >
+                  <div className={`w-12 h-12 rounded-full ${item.color} flex items-center justify-center flex-shrink-0 shadow-lg`}>
+                    <span className="text-xl font-bold text-white">{item.letter}</span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-semibold text-lg text-white">{item.title}</h3>
+                      <span className="px-2 py-0.5 text-xs rounded-full bg-red-500/20 text-red-300 border border-red-500/30">
+                        Criticism: {item.criticism}
+                      </span>
+                    </div>
+                    <p className="text-white/60 text-sm">{item.description}</p>
+                  </div>
+                  <ChevronDown className={cn(
+                    "w-5 h-5 text-white/60 transition-transform duration-300 flex-shrink-0",
+                    expandedProof === index && "rotate-180"
+                  )} />
+                </button>
+                
+                {expandedProof === index && (
+                  <div className="px-4 pb-4 pt-0 border-t border-white/10 mt-0">
+                    <div className="pl-16 space-y-4">
+                      {/* Biblical Response */}
+                      <div className="p-4 rounded-lg bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20">
+                        <p className="text-white/90 font-medium mb-3">
+                          <span className="text-cyan-400">Biblical Response:</span> {item.response}
+                        </p>
+                        
+                        {/* Scripture Reference */}
+                        <div className="flex items-start gap-3 p-3 rounded-md bg-white/5">
+                          <BookOpen className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                          <div>
+                            <p className="text-amber-400 font-semibold text-sm">{item.scripture}</p>
+                            <p className="text-white/70 text-sm italic mt-1">"{item.scriptureText}"</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
