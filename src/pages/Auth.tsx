@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Home, Eye, EyeOff, RefreshCw, AlertTriangle, BookOpen, Heart, Shield, Quote, Star, Users, ChevronRight, ChevronDown, ChevronUp, Sparkles, Play, User, Moon, FileQuestion, ScrollText, Ban, Video, UserCheck } from 'lucide-react';
+import { Home, Eye, EyeOff, RefreshCw, AlertTriangle, BookOpen, Heart, Shield, Quote, Star, Users, ChevronRight, ChevronDown, ChevronUp, Sparkles, Play, User, Moon, Zap, Video, UserCheck } from 'lucide-react';
 import logo from '@/assets/sacred-greeks-logo.png';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -22,7 +22,7 @@ import { cn } from '@/lib/utils';
 
 const FEATURED_TOOLS = [
   {
-    icon: FileQuestion,
+    icon: Zap,
     title: "MythBusters",
     subtitle: "Debunk Greek Life Misconceptions",
     description: "Get biblical answers to common objections about Greek life and faith compatibility.",
@@ -35,7 +35,7 @@ const FEATURED_TOOLS = [
     topBorderColor: "bg-orange-500"
   },
   {
-    icon: ScrollText,
+    icon: Shield,
     title: "Symbols & Rituals Guide",
     subtitle: "Understand Hidden Meanings",
     description: "Explore the biblical and historical context behind Greek letters, rituals, and traditions.",
@@ -48,7 +48,7 @@ const FEATURED_TOOLS = [
     topBorderColor: "bg-fuchsia-500"
   },
   {
-    icon: Ban,
+    icon: AlertTriangle,
     title: "Anti-Hazing Resources",
     subtitle: "Protect & Educate Your Chapter",
     description: "Access vital hazing prevention tools, success stories, and memorial resources to keep your organization safe.",

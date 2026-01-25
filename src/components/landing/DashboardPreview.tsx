@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FileQuestion, ScrollText, BookOpen, Sparkles, ArrowRight, Video, UserCheck, Ban, ChevronDown, ChevronUp } from "lucide-react";
+import { Zap, Shield, BookOpen, Sparkles, ArrowRight, Video, UserCheck, AlertTriangle, ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
 // Primary features - highest conversion potential
 const primaryFeatures = [
   {
-    icon: FileQuestion,
+    icon: Zap,
     title: "MythBusters",
     subtitle: "Debunk Greek Life Misconceptions",
     description: "Get biblical answers to common objections about Greek life and faith compatibility.",
@@ -17,7 +17,7 @@ const primaryFeatures = [
     href: "/myth-buster",
   },
   {
-    icon: ScrollText,
+    icon: Shield,
     title: "Symbols & Rituals Guide",
     subtitle: "Understand Hidden Meanings",
     description: "Explore the biblical and historical context behind Greek letters, rituals, and traditions.",
@@ -27,7 +27,7 @@ const primaryFeatures = [
     href: "/symbols",
   },
   {
-    icon: Ban,
+    icon: AlertTriangle,
     title: "Anti-Hazing Resources",
     subtitle: "Protect & Educate Your Chapter",
     description: "Access vital hazing prevention tools, success stories, and memorial resources to keep your organization safe.",
