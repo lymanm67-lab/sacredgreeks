@@ -222,6 +222,26 @@ export const BELIEF_SCRIPTURES = {
       reference: "Job 3:25",
       text: "For the thing that I fear comes upon me, and what I dread befalls me.",
       principle: "Fear operates like faith in reverse—it still requires belief. If you do not believe something has authority, it cannot govern you spiritually."
+    },
+    {
+      reference: "2 Timothy 1:7",
+      text: "For God gave us a spirit not of fear but of power and love and self-control.",
+      principle: "Fear is not from God. The spirit of fear is foreign to the believer's identity—you don't have to accept or believe in its authority."
+    },
+    {
+      reference: "Isaiah 41:10",
+      text: "Fear not, for I am with you; be not dismayed, for I am your God; I will strengthen you, I will help you.",
+      principle: "God's presence displaces fear. When you believe He is with you, fear loses its grip because faith fills the space fear once occupied."
+    },
+    {
+      reference: "1 John 4:18",
+      text: "There is no fear in love, but perfect love casts out fear. For fear has to do with punishment, and whoever fears has not been perfected in love.",
+      principle: "Fear and love cannot coexist. Believing in God's perfect love removes the foundation that fear needs to operate."
+    },
+    {
+      reference: "Psalm 23:4",
+      text: "Even though I walk through the valley of the shadow of death, I will fear no evil, for you are with me.",
+      principle: "David's confidence wasn't that danger was absent—it was that God's presence made fear unnecessary. Belief in His presence overcomes fear."
     }
   ]
 };
