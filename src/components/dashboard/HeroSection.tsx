@@ -1,5 +1,7 @@
 import { Sparkles } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useDemoMode } from '@/contexts/DemoModeContext';
+import { Badge } from '@/components/ui/badge';
 import { WelcomeVideo } from './WelcomeVideo';
 
 const scriptures = [
@@ -23,6 +25,7 @@ const scriptures = [
 
 export const HeroSection = () => {
   const { user } = useAuth();
+  const { isDemoMode } = useDemoMode();
   const dailyScripture = scriptures[new Date().getDate() % scriptures.length];
   
   const getGreeting = () => {
@@ -36,6 +39,15 @@ export const HeroSection = () => {
 
   return (
     <div className="relative overflow-hidden rounded-3xl bg-gradient-hero p-6 md:p-8 lg:p-12 shadow-2xl">
+      {/* Preview Mode Badge */}
+      {(!user || isDemoMode) && (
+        <div className="absolute top-4 right-4 z-20">
+          <Badge variant="secondary" className="bg-amber-500/90 text-white border-amber-600/20 shadow-lg backdrop-blur-sm">
+            Preview Mode
+          </Badge>
+        </div>
+      )}
+      
       {/* Decorative elements */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
       <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
