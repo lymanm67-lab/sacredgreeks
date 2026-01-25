@@ -3,11 +3,11 @@ import { Home, BookOpen, Heart, BookHeart, Target } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { title: "Home", url: "/dashboard", icon: Home },
-  { title: "PROOF", url: "/proof-course", icon: Target },
-  { title: "Bible", url: "/bible-study", icon: BookOpen },
-  { title: "Prayer", url: "/prayer-journal", icon: BookHeart },
-  { title: "Wall", url: "/prayer-wall", icon: Heart },
+  { title: "Home", url: "/dashboard", icon: Home, iconColor: "text-blue-500" },
+  { title: "PROOF", url: "/proof-course", icon: Target, iconColor: "text-amber-500" },
+  { title: "Bible", url: "/bible-study", icon: BookOpen, iconColor: "text-blue-500" },
+  { title: "Prayer", url: "/prayer-journal", icon: BookHeart, iconColor: "text-rose-500" },
+  { title: "Wall", url: "/prayer-wall", icon: Heart, iconColor: "text-pink-500" },
 ];
 
 export function MobileBottomNav() {
@@ -28,10 +28,10 @@ export function MobileBottomNav() {
                 : "text-muted-foreground hover:text-foreground"
             )}
           >
-            <item.icon 
+          <item.icon 
               className={cn(
                 "h-5 w-5 transition-transform",
-                isActive(item.url) && "scale-110"
+                isActive(item.url) ? "scale-110 text-sacred" : item.iconColor
               )} 
             />
             <span className={cn(
