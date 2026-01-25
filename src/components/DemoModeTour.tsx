@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useDemoMode } from '@/contexts/DemoModeContext';
-import { FlaskConical, BookOpen, Heart, Users, Trophy, TrendingUp, ChevronRight, ChevronLeft, Check, Sparkles } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { FlaskConical, BookOpen, Heart, Users, Trophy, Sparkles, ChevronRight, ChevronLeft, Check, Library, Calendar, ChevronUp } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface TourStep {
@@ -13,47 +13,65 @@ interface TourStep {
   icon: React.ReactNode;
   feature: string;
   route?: string;
+  targetSelector?: string; // Selector for highlighting dashboard elements
 }
 
 const TOUR_STEPS: TourStep[] = [
   {
     title: 'Welcome to Demo Mode',
-    description: 'Demo mode shows you sample data across the app, so you can explore all features without needing to create your own content first.',
-    icon: <FlaskConical className="w-8 h-8 text-sacred" />,
+    description: 'Demo mode shows you sample data across the app. Let me show you the key features on your dashboard!',
+    icon: <FlaskConical className="w-8 h-8 text-primary" />,
     feature: 'overview',
   },
   {
     title: 'Daily Devotionals',
-    description: 'Experience daily spiritual readings with scripture, reflections, and applications. Demo mode shows a complete devotional experience.',
+    description: 'Start each day with scripture-based devotionals designed for Greeks navigating faith. Tap the highlighted card to explore!',
     icon: <BookOpen className="w-8 h-8 text-blue-500" />,
     feature: 'devotional',
     route: '/devotional',
+    targetSelector: '[data-tour="devotional"]',
+  },
+  {
+    title: 'Myth Buster Library',
+    description: 'Get biblical answers to common objections about Greek life and faith compatibility.',
+    icon: <Library className="w-8 h-8 text-purple-500" />,
+    feature: 'mythbuster',
+    route: '/myth-buster',
+    targetSelector: '[data-tour="mythbuster"]',
+  },
+  {
+    title: '30-Day Journey',
+    description: 'A structured program to build your faith foundation while integrating your Greek identity.',
+    icon: <Calendar className="w-8 h-8 text-amber-500" />,
+    feature: 'journey',
+    route: '/journey',
+    targetSelector: '[data-tour="journey"]',
   },
   {
     title: 'Prayer Wall & Journal',
-    description: 'See sample prayer requests and journal entries. Learn how to track your prayers and support others in the community.',
+    description: 'See sample prayer requests and journal entries. Track your prayers and support others in the community.',
     icon: <Heart className="w-8 h-8 text-red-500" />,
     feature: 'prayerWall',
     route: '/prayer-wall',
   },
   {
     title: 'Community Forum',
-    description: 'Explore discussion topics and see how members engage with each other. Demo discussions showcase different categories.',
+    description: 'Explore discussion topics and see how members engage with each other.',
     icon: <Users className="w-8 h-8 text-green-500" />,
     feature: 'forum',
     route: '/forum',
   },
   {
     title: 'Achievements & Progress',
-    description: 'Track your spiritual growth with gamification. Demo mode shows sample achievements and progress statistics.',
+    description: 'Track your spiritual growth with gamification. Demo mode shows sample achievements and progress.',
     icon: <Trophy className="w-8 h-8 text-yellow-500" />,
     feature: 'achievements',
     route: '/achievements',
   },
   {
-    title: 'Customize Your Experience',
-    description: 'You can toggle individual demo features on/off in your Profile settings. Choose what sample data you want to see!',
-    icon: <Sparkles className="w-8 h-8 text-purple-500" />,
+    title: 'You\'re All Set!',
+    description: 'Explore at your own pace. You can toggle demo features on/off in your Profile settings anytime.',
+    icon: <Sparkles className="w-8 h-8 text-primary" />,
     feature: 'customize',
     route: '/profile',
   },
@@ -64,6 +82,41 @@ export function DemoModeTour() {
   const [currentStep, setCurrentStep] = useState(0);
   const [isOpen, setIsOpen] = useState(!hasSeenTour && isDemoMode);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const currentTourStep = TOUR_STEPS[currentStep];
+  const isOnDashboard = location.pathname === '/dashboard';
+
+  // Add/remove highlight class on target elements and scroll into view
+  useEffect(() => {
+    if (!isOpen) return;
+    
+    const targetSelector = currentTourStep?.targetSelector;
+    if (!targetSelector || !isOnDashboard) return;
+
+    const targetEl = document.querySelector(targetSelector);
+    if (targetEl) {
+      targetEl.classList.add('tour-highlight');
+      // Scroll element into view with smooth animation
+      targetEl.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'center',
+        inline: 'nearest'
+      });
+      return () => {
+        targetEl.classList.remove('tour-highlight');
+      };
+    }
+  }, [currentStep, isOpen, currentTourStep?.targetSelector, isOnDashboard]);
+
+  // Clean up highlights when tour closes
+  useEffect(() => {
+    if (!isOpen) {
+      document.querySelectorAll('.tour-highlight').forEach(el => {
+        el.classList.remove('tour-highlight');
+      });
+    }
+  }, [isOpen]);
 
   const handleNext = () => {
     if (currentStep < TOUR_STEPS.length - 1) {
@@ -101,9 +154,9 @@ export function DemoModeTour() {
     return null;
   }
 
-  const currentTourStep = TOUR_STEPS[currentStep];
   const isLastStep = currentStep === TOUR_STEPS.length - 1;
   const isFirstStep = currentStep === 0;
+  const hasTarget = !!currentTourStep.targetSelector && isOnDashboard;
 
   return (
     <AnimatePresence>
@@ -126,6 +179,20 @@ export function DemoModeTour() {
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
             className="fixed left-1/2 bottom-4 -translate-x-1/2 z-[101] w-full max-w-md px-4"
           >
+            {/* Pointer arrow - only show when there's a target element */}
+            {hasTarget && (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex justify-center mb-2"
+              >
+                <div className="flex flex-col items-center text-primary">
+                  <ChevronUp className="w-6 h-6 animate-bounce" />
+                  <div className="w-0.5 h-8 bg-gradient-to-b from-primary to-transparent" />
+                </div>
+              </motion.div>
+            )}
+            
             <Card className="border-2 border-primary/30 shadow-2xl bg-card/95 backdrop-blur-md overflow-hidden">
               {/* Progress bar */}
               <div className="h-1 bg-muted w-full">
@@ -164,7 +231,7 @@ export function DemoModeTour() {
                   {TOUR_STEPS.map((_, index) => (
                     <div
                       key={index}
-                      className={`w-2 h-2 rounded-full transition-all ${
+                      className={`h-2 rounded-full transition-all ${
                         index === currentStep
                           ? 'w-6 bg-primary'
                           : index < currentStep
