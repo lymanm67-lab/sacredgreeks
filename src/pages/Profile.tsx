@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Home, User, Users } from 'lucide-react';
+import { Home, User, Users, RotateCcw } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
 import { NotificationSettings } from '@/components/NotificationSettings';
@@ -20,6 +20,7 @@ import { DemoModeToggle } from '@/components/DemoModeToggle';
 import { SidebarCustomization } from '@/components/SidebarCustomization';
 import { PersonalizationSettings } from '@/components/PersonalizationSettings';
 import { FeatureCustomization } from '@/components/FeatureCustomization';
+import { useTourReset } from '@/components/GuidedTour';
 
 const profileSchema = z.object({
   full_name: z.string().min(1, 'Name is required').max(100, 'Name must be less than 100 characters'),
@@ -29,6 +30,7 @@ const profileSchema = z.object({
 const Profile = () => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { resetTour } = useTourReset();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
@@ -283,6 +285,28 @@ const Profile = () => {
           <FeatureCustomization />
 
           <DemoModeToggle />
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <RotateCcw className="h-5 w-5 text-sacred" />
+                Dashboard Tour
+              </CardTitle>
+              <CardDescription>
+                Replay the guided tour to learn about Sacred Greeks features
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button 
+                variant="outline" 
+                onClick={resetTour}
+                className="gap-2"
+              >
+                <RotateCcw className="h-4 w-4" />
+                Restart Tour
+              </Button>
+            </CardContent>
+          </Card>
 
           <SidebarCustomization />
 

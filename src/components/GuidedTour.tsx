@@ -1,10 +1,27 @@
-import { memo, useCallback, useState, useEffect } from 'react';
+import { memo, useCallback, useState, useEffect, createContext, useContext } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { X, Sparkles, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { STORAGE_KEYS } from '@/lib/constants';
+
+// Context to share current tour step with other components
+interface TourContextType {
+  currentStepId: string | null;
+  isActive: boolean;
+}
+
+const TourContext = createContext<TourContextType>({ currentStepId: null, isActive: false });
+
+export const useTourHighlight = () => useContext(TourContext);
+
+// Map tour step IDs to data-tour attribute values
+const STEP_TO_TOUR_ATTR: Record<string, string> = {
+  devotional: 'devotional',
+  mythbuster: 'mythbuster',
+  journey: 'journey',
+};
 
 interface GuidedTourStep {
   id: string;
@@ -58,6 +75,9 @@ export const GuidedTour = memo(function GuidedTour({ onComplete }: GuidedTourPro
   const [currentStep, setCurrentStep] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
 
+  const step = TOUR_STEPS[currentStep];
+  const currentStepId = step?.id || null;
+
   useEffect(() => {
     const completed = localStorage.getItem(TOUR_COMPLETED_KEY);
     if (!completed) {
@@ -66,6 +86,22 @@ export const GuidedTour = memo(function GuidedTour({ onComplete }: GuidedTourPro
       return () => clearTimeout(timeout);
     }
   }, []);
+
+  // Add/remove highlight class on target elements
+  useEffect(() => {
+    if (!isVisible) return;
+    
+    const tourAttr = STEP_TO_TOUR_ATTR[currentStepId || ''];
+    if (!tourAttr) return;
+
+    const targetEl = document.querySelector(`[data-tour="${tourAttr}"]`);
+    if (targetEl) {
+      targetEl.classList.add('tour-highlight');
+      return () => {
+        targetEl.classList.remove('tour-highlight');
+      };
+    }
+  }, [currentStepId, isVisible]);
 
   const handleNext = useCallback(() => {
     if (currentStep < TOUR_STEPS.length - 1) {
@@ -82,12 +118,15 @@ export const GuidedTour = memo(function GuidedTour({ onComplete }: GuidedTourPro
   const handleComplete = useCallback(() => {
     localStorage.setItem(TOUR_COMPLETED_KEY, 'true');
     setIsVisible(false);
+    // Clean up any lingering highlights
+    document.querySelectorAll('.tour-highlight').forEach(el => {
+      el.classList.remove('tour-highlight');
+    });
     onComplete?.();
   }, [onComplete]);
 
   if (!isVisible) return null;
 
-  const step = TOUR_STEPS[currentStep];
   const isFirstStep = currentStep === 0;
   const isLastStep = currentStep === TOUR_STEPS.length - 1;
 

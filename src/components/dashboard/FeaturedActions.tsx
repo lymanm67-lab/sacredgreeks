@@ -7,6 +7,7 @@ import { FeatureCardSkeleton } from '@/components/ui/CardSkeleton';
 const featuredActions = [
   {
     id: 'daily-devotional',
+    tourId: 'devotional',
     title: 'Daily Scripture & Devotions',
     description: 'Begin your day with scripture, reflection, and spiritual guidance',
     icon: BookOpen,
@@ -15,6 +16,7 @@ const featuredActions = [
   },
   {
     id: 'myth-buster',
+    tourId: 'mythbuster',
     title: 'Mythbuster Library',
     description: 'Biblical responses to common accusations and misconceptions',
     icon: Library,
@@ -23,6 +25,7 @@ const featuredActions = [
   },
   {
     id: 'bglo-objections',
+    tourId: null,
     title: 'Handle Greek Life Objections',
     description: 'Biblical responses to family, church, and ministry concerns',
     icon: MessageCircle,
@@ -84,7 +87,10 @@ export const FeaturedActions = ({ isLoading = false }: FeaturedActionsProps) => 
             transition={{ delay: index * 0.1 }}
           >
             <Link to={action.href} className="block">
-              <Card className="group relative overflow-hidden border border-border bg-background hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer h-full">
+              <Card 
+                data-tour={action.tourId || undefined}
+                className="group relative overflow-hidden border border-border bg-background hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer h-full"
+              >
                 <div className="p-6 space-y-4">
                   {/* Icon */}
                   <motion.div 
