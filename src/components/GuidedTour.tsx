@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { X, Sparkles, ArrowRight, CheckCircle2, ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { STORAGE_KEYS } from '@/lib/constants';
+import { useDemoMode } from '@/contexts/DemoModeContext';
 
 // Context to share current tour step with other components
 interface TourContextType {
@@ -74,18 +75,22 @@ interface GuidedTourProps {
 export const GuidedTour = memo(function GuidedTour({ onComplete }: GuidedTourProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const { isDemoMode } = useDemoMode();
 
   const step = TOUR_STEPS[currentStep];
   const currentStepId = step?.id || null;
 
   useEffect(() => {
+    // Don't show guided tour if demo mode is active
+    if (isDemoMode) return;
+    
     const completed = localStorage.getItem(TOUR_COMPLETED_KEY);
     if (!completed) {
       // Delay tour start to let page render
       const timeout = setTimeout(() => setIsVisible(true), 1500);
       return () => clearTimeout(timeout);
     }
-  }, []);
+  }, [isDemoMode]);
 
   // Add/remove highlight class on target elements and scroll into view
   useEffect(() => {
