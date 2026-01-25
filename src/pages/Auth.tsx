@@ -422,54 +422,53 @@ const Auth = () => {
       <div className="flex-1 flex">
         {/* Left side - Hero/Value Proposition (Desktop/Tablet) */}
         <div className="hidden md:flex md:w-1/2 lg:w-[55%] relative overflow-hidden">
-          {/* Gradient background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent" />
+          {/* Navy gradient background */}
+          <div className="absolute inset-0 bg-[hsl(225,50%,12%)]" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[hsl(225,60%,18%)] via-[hsl(225,50%,12%)] to-[hsl(220,60%,8%)]" />
           
           {/* Decorative elements */}
-          <div className="absolute top-20 left-10 w-72 h-72 bg-white/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/20 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 left-1/3 w-48 h-48 bg-white/5 rounded-full blur-2xl" />
+          <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/15 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 left-1/3 w-48 h-48 bg-primary/10 rounded-full blur-2xl" />
+          <div className="absolute bottom-1/3 left-1/4 w-32 h-32 bg-[hsl(210,100%,50%)]/10 rounded-full blur-xl" />
           
           {/* Content */}
           <div className="relative z-10 flex flex-col justify-center p-8 lg:p-12 xl:p-16 text-white">
             <div className="animate-fade-in">
               {/* Logo with glow */}
               <div className="relative w-20 h-20 lg:w-24 lg:h-24 mb-6">
-                <div className="absolute inset-0 bg-white/20 rounded-full blur-xl" />
+                <div className="absolute inset-0 bg-primary/30 rounded-full blur-xl" />
                 <img 
                   src={logo} 
                   alt="Sacred Greeks" 
-                  className="relative w-full h-full rounded-full object-cover ring-4 ring-white/30" 
+                  className="relative w-full h-full rounded-full object-cover ring-4 ring-primary/40" 
                 />
               </div>
               
               <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 leading-tight">
                 Where Faith Meets<br />
-                <span className="text-white/90">Greek Excellence</span>
+                <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Greek Excellence</span>
               </h1>
               
-              <p className="text-lg lg:text-xl text-white/80 mb-8 max-w-md">
+              <p className="text-lg lg:text-xl text-white/70 mb-8 max-w-md">
                 Join a community of Greeks who are unapologetically pursuing Christ while honoring their letters.
               </p>
             </div>
 
-            {/* Features with colorful icons */}
+            {/* Features with glass-style icons */}
             <div className="space-y-4 mb-8">
               {VALUE_PROPOSITIONS.slice(0, 4).map((item, index) => (
                 <div 
                   key={index} 
-                  className="flex items-center gap-4 animate-fade-in"
+                  className="flex items-center gap-4 animate-fade-in group"
                   style={{ animationDelay: `${(index + 1) * 150}ms` }}
                 >
-                  <div className={cn(
-                    "w-10 h-10 lg:w-12 lg:h-12 rounded-xl flex items-center justify-center bg-gradient-to-br shadow-lg",
-                    item.gradient
-                  )}>
-                    <item.icon className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
+                  <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl flex items-center justify-center bg-white/10 backdrop-blur-sm border border-white/10 group-hover:bg-white/15 transition-colors">
+                    <item.icon className="w-5 h-5 lg:w-6 lg:h-6 text-primary" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-white">{item.title}</h3>
-                    <p className="text-sm text-white/70">{item.description}</p>
+                    <p className="text-sm text-white/60">{item.description}</p>
                   </div>
                 </div>
               ))}
@@ -477,16 +476,16 @@ const Auth = () => {
 
             {/* Social proof */}
             <div 
-              className="flex gap-6 lg:gap-8 pt-6 border-t border-white/20 animate-fade-in"
+              className="flex gap-6 lg:gap-8 pt-6 border-t border-white/10 animate-fade-in"
               style={{ animationDelay: '800ms' }}
             >
               {SOCIAL_PROOF.map((stat, index) => (
                 <div key={index} className="text-center">
                   <div className="flex items-center justify-center gap-1.5 mb-1">
-                    <stat.icon className="w-4 h-4 text-white/60" />
+                    <stat.icon className="w-4 h-4 text-primary" />
                     <span className="text-2xl lg:text-3xl font-bold text-white">{stat.value}</span>
                   </div>
-                  <span className="text-xs lg:text-sm text-white/60">{stat.label}</span>
+                  <span className="text-xs lg:text-sm text-white/50">{stat.label}</span>
                 </div>
               ))}
             </div>
@@ -499,14 +498,14 @@ const Auth = () => {
             {/* Mobile-only header */}
             <div className="text-center mb-6 md:hidden">
               <div className="relative w-16 h-16 mx-auto mb-3">
-                <div className="absolute inset-0 bg-primary/20 rounded-full blur-lg" />
+                <div className="absolute inset-0 bg-[hsl(225,60%,15%)]/80 rounded-full blur-lg" />
                 <img 
                   src={logo} 
                   alt="Sacred Greeks" 
-                  className="relative w-full h-full rounded-full object-cover ring-2 ring-primary/30" 
+                  className="relative w-full h-full rounded-full object-cover ring-2 ring-[hsl(225,60%,25%)]" 
                 />
               </div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              <h1 className="text-2xl font-bold text-foreground">
                 Sacred Greeks
               </h1>
               <p className="text-sm text-muted-foreground mt-1">
@@ -519,13 +518,10 @@ const Auth = () => {
               {VALUE_PROPOSITIONS.slice(0, 4).map((item, index) => (
                 <div 
                   key={index} 
-                  className={cn(
-                    "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-white bg-gradient-to-r shadow-sm animate-fade-in",
-                    item.gradient
-                  )}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-[hsl(225,60%,15%)] text-white shadow-sm animate-fade-in"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <item.icon className="w-3 h-3" />
+                  <item.icon className="w-3 h-3 text-primary" />
                   <span>{item.title}</span>
                 </div>
               ))}
