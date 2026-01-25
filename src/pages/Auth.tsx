@@ -19,6 +19,7 @@ import { PasswordStrengthIndicator } from '@/components/PasswordStrengthIndicato
 import { usePasswordBreachCheck } from '@/hooks/use-password-breach-check';
 import { useDisposableEmailCheck } from '@/hooks/use-disposable-email-check';
 import { cn } from '@/lib/utils';
+import { ProofFrameworkAudio } from '@/components/proof/ProofFrameworkAudio';
 
 const FEATURED_TOOLS = [
   {
@@ -1182,9 +1183,15 @@ const Auth = () => {
             })}
           </div>
 
-          <div className="text-center mt-8">
+          {/* PROOF Framework Audio */}
+          <ProofFrameworkAudio className="max-w-2xl mx-auto mt-8" />
+
+          <div className="text-center mt-8 flex flex-wrap justify-center gap-4">
             <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600" asChild>
-              <Link to="/proof">Learn More About P.R.O.O.F.</Link>
+              <Link to="/proof-course">Learn More About P.R.O.O.F.</Link>
+            </Button>
+            <Button variant="outline" className="border-amber-500/30 text-amber-300 hover:bg-amber-500/10" asChild>
+              <Link to="/faith-authority">Faith & Authority Teaching</Link>
             </Button>
           </div>
         </div>
