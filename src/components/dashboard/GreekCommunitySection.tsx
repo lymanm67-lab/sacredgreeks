@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useDemoMode } from '@/contexts/DemoModeContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { 
   ChevronDown, 
@@ -22,17 +24,35 @@ interface UserProfile {
   greek_organization: string | null;
 }
 
+// Demo profile for demo mode
+const DEMO_PROFILE: UserProfile = {
+  greek_council: 'nphc',
+  greek_organization: 'Phi Beta Sigma',
+};
+
 export const GreekCommunitySection = () => {
   const { user } = useAuth();
+  const { isDemoMode } = useDemoMode();
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [isOpen, setIsOpen] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [isDemo, setIsDemo] = useState(false);
 
   useEffect(() => {
+    // In demo mode, always show demo data regardless of auth state
+    if (isDemoMode) {
+      setUserProfile(DEMO_PROFILE);
+      setIsDemo(true);
+      setLoading(false);
+      return;
+    }
+    
     if (user) {
       loadProfile();
+    } else {
+      setLoading(false);
     }
-  }, [user]);
+  }, [user, isDemoMode]);
 
   const loadProfile = async () => {
     if (!user) return;
@@ -46,6 +66,7 @@ export const GreekCommunitySection = () => {
 
       if (data) {
         setUserProfile(data);
+        setIsDemo(false);
       }
     } catch (error) {
       console.error('Error loading profile:', error);
@@ -54,7 +75,7 @@ export const GreekCommunitySection = () => {
     }
   };
 
-  // Don't show if user has no Greek council set
+  // Don't show if user has no Greek council set (and not in demo mode)
   if (loading || !userProfile?.greek_council) {
     return null;
   }
@@ -66,7 +87,14 @@ export const GreekCommunitySection = () => {
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <Card className="border-sacred/20 bg-gradient-to-br from-sacred/5 to-warm-blue/5">
+      <Card className={`border-sacred/20 bg-gradient-to-br from-sacred/5 to-warm-blue/5 ${isDemo ? 'relative overflow-hidden' : ''}`}>
+        {isDemo && (
+          <div className="absolute top-2 right-2 z-10">
+            <Badge variant="secondary" className="text-xs bg-amber-500/10 text-amber-600 border-amber-500/20">
+              Sample
+            </Badge>
+          </div>
+        )}
         <CollapsibleTrigger asChild>
           <CardHeader className="cursor-pointer hover:bg-accent/50 transition-colors rounded-t-lg">
             <CardTitle className="flex items-center justify-between">
