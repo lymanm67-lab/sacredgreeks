@@ -105,6 +105,7 @@ const OrganizationDetail = lazy(() => import("./pages/OrganizationDetail"));
 const ProofCourse = lazy(() => import("./pages/ProofCourse"));
 const ProofAssessment = lazy(() => import("./pages/ProofAssessment"));
 const ChurchLeaders = lazy(() => import("./pages/ChurchLeaders"));
+const FaithAuthority = lazy(() => import("./pages/FaithAuthority"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -237,6 +238,7 @@ const App = () => (
                     <Route path="/proof-course" element={<ProofCourse />} />
                     <Route path="/proof-assessment" element={<ProofAssessment />} />
                     <Route path="/church-leaders" element={<ChurchLeaders />} />
+                    <Route path="/faith-authority" element={<FaithAuthority />} />
                     
                     {/* Protected routes - with sidebar */}
                     <Route
