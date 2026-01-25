@@ -28,10 +28,11 @@ const FEATURED_TOOLS = [
     description: "Get biblical answers to common objections about Greek life and faith compatibility.",
     tags: ["50+ Myths Debunked", "Scripture-Based", "Shareable Cards"],
     link: "/mythbusters",
-    bgColor: "bg-amber-500/20",
-    hoverBgColor: "bg-amber-500/30",
-    iconColor: "text-amber-400",
-    borderColor: "hover:border-amber-500/30"
+    bgColor: "bg-orange-500/20",
+    hoverBgColor: "bg-orange-500/30",
+    iconColor: "text-orange-400",
+    borderColor: "border-orange-500",
+    topBorderColor: "bg-orange-500"
   },
   {
     icon: Compass,
@@ -40,10 +41,11 @@ const FEATURED_TOOLS = [
     description: "Explore the biblical and historical context behind Greek letters, rituals, and traditions.",
     tags: ["100+ Symbols", "Historical Context", "Faith Connections"],
     link: "/symbols",
-    bgColor: "bg-purple-500/20",
-    hoverBgColor: "bg-purple-500/30",
-    iconColor: "text-purple-400",
-    borderColor: "hover:border-purple-500/30"
+    bgColor: "bg-fuchsia-500/20",
+    hoverBgColor: "bg-fuchsia-500/30",
+    iconColor: "text-fuchsia-400",
+    borderColor: "border-fuchsia-500",
+    topBorderColor: "bg-fuchsia-500"
   },
   {
     icon: Shield,
@@ -55,7 +57,8 @@ const FEATURED_TOOLS = [
     bgColor: "bg-red-500/20",
     hoverBgColor: "bg-red-500/30",
     iconColor: "text-red-400",
-    borderColor: "hover:border-red-500/30"
+    borderColor: "border-red-500",
+    topBorderColor: "bg-red-500"
   }
 ];
 
@@ -67,10 +70,11 @@ const SECONDARY_TOOLS = [
     description: "Dive deep into scripture with studies designed specifically for the Greek experience.",
     tags: ["12-Week Journey", "Group Guides", "Interactive Flashcards"],
     link: "/bible-study",
-    bgColor: "bg-emerald-500/20",
-    hoverBgColor: "bg-emerald-500/30",
-    iconColor: "text-emerald-400",
-    borderColor: "hover:border-emerald-500/30"
+    bgColor: "bg-green-500/20",
+    hoverBgColor: "bg-green-500/30",
+    iconColor: "text-green-400",
+    borderColor: "border-green-500",
+    topBorderColor: "bg-green-500"
   },
   {
     icon: Play,
@@ -79,10 +83,11 @@ const SECONDARY_TOOLS = [
     description: "Watch testimonies, teachings, and discussions from Greeks who've navigated faith and fraternity life.",
     tags: ["50+ Videos", "Testimonies", "Teaching Series"],
     link: "/video-library",
-    bgColor: "bg-rose-500/20",
-    hoverBgColor: "bg-rose-500/30",
-    iconColor: "text-rose-400",
-    borderColor: "hover:border-rose-500/30"
+    bgColor: "bg-pink-500/20",
+    hoverBgColor: "bg-pink-500/30",
+    iconColor: "text-pink-400",
+    borderColor: "border-pink-500",
+    topBorderColor: "bg-pink-500"
   },
   {
     icon: Users,
@@ -91,10 +96,11 @@ const SECONDARY_TOOLS = [
     description: "Connect with pastors and ministry leaders who understand the unique challenges of Greek life.",
     tags: ["Expert Insights", "Ministry Resources", "Leadership Tips"],
     link: "/church-leaders",
-    bgColor: "bg-sky-500/20",
-    hoverBgColor: "bg-sky-500/30",
-    iconColor: "text-sky-400",
-    borderColor: "hover:border-sky-500/30"
+    bgColor: "bg-purple-500/20",
+    hoverBgColor: "bg-purple-500/30",
+    iconColor: "text-purple-400",
+    borderColor: "border-purple-500",
+    topBorderColor: "bg-purple-500"
   }
 ];
 
@@ -806,24 +812,26 @@ const Auth = () => {
 
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {FEATURED_TOOLS.map((tool, index) => (
-              <Card key={index} className={`group hover:shadow-xl transition-all duration-300 bg-white/5 border-white/10 ${tool.borderColor} hover:bg-white/10`}>
-                <CardHeader>
+              <Card key={index} className="group hover:shadow-xl transition-all duration-300 bg-slate-800/80 border-slate-700/50 hover:bg-slate-800 relative overflow-hidden">
+                {/* Colored top border */}
+                <div className={`absolute top-0 left-0 right-0 h-1 ${tool.topBorderColor}`} />
+                <CardHeader className="pt-6">
                   <div className={`w-12 h-12 rounded-xl ${tool.bgColor} flex items-center justify-center mb-4 group-hover:${tool.hoverBgColor} transition-colors`}>
                     <tool.icon className={`w-6 h-6 ${tool.iconColor}`} />
                   </div>
                   <CardTitle className="text-lg text-white">{tool.title}</CardTitle>
-                  <CardDescription className="font-medium text-white/70">{tool.subtitle}</CardDescription>
+                  <CardDescription className={`font-medium ${tool.iconColor}`}>{tool.subtitle}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <p className="text-sm text-white/60">{tool.description}</p>
+                  <p className="text-sm text-slate-400">{tool.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {tool.tags.map((tag, i) => (
-                      <span key={i} className="text-xs px-2 py-1 rounded-full bg-white/10 text-white/60">
+                      <span key={i} className="text-xs px-2 py-1 rounded-full bg-slate-700/50 text-slate-300">
                         {tag}
                       </span>
                     ))}
                   </div>
-                  <Button variant="outline" size="sm" className="w-full border-white/20 text-white hover:bg-white/10" asChild>
+                  <Button variant="outline" size="sm" className="w-full border-slate-600 text-white hover:bg-slate-700" asChild>
                     <Link to={tool.link}>Explore Demo</Link>
                   </Button>
                 </CardContent>
@@ -847,24 +855,26 @@ const Auth = () => {
           {showMoreTools && (
             <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-8">
               {SECONDARY_TOOLS.map((tool, index) => (
-                <Card key={index} className={`group hover:shadow-xl transition-all duration-300 bg-white/5 border-white/10 ${tool.borderColor} hover:bg-white/10`}>
-                  <CardHeader>
+                <Card key={index} className="group hover:shadow-xl transition-all duration-300 bg-slate-800/80 border-slate-700/50 hover:bg-slate-800 relative overflow-hidden">
+                  {/* Colored top border */}
+                  <div className={`absolute top-0 left-0 right-0 h-1 ${tool.topBorderColor}`} />
+                  <CardHeader className="pt-6">
                     <div className={`w-12 h-12 rounded-xl ${tool.bgColor} flex items-center justify-center mb-4 group-hover:${tool.hoverBgColor} transition-colors`}>
                       <tool.icon className={`w-6 h-6 ${tool.iconColor}`} />
                     </div>
                     <CardTitle className="text-lg text-white">{tool.title}</CardTitle>
-                    <CardDescription className="font-medium text-white/70">{tool.subtitle}</CardDescription>
+                    <CardDescription className={`font-medium ${tool.iconColor}`}>{tool.subtitle}</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <p className="text-sm text-white/60">{tool.description}</p>
+                    <p className="text-sm text-slate-400">{tool.description}</p>
                     <div className="flex flex-wrap gap-2">
                       {tool.tags.map((tag, i) => (
-                        <span key={i} className="text-xs px-2 py-1 rounded-full bg-white/10 text-white/60">
+                        <span key={i} className="text-xs px-2 py-1 rounded-full bg-slate-700/50 text-slate-300">
                           {tag}
                         </span>
                       ))}
                     </div>
-                    <Button variant="outline" size="sm" className="w-full border-white/20 text-white hover:bg-white/10" asChild>
+                    <Button variant="outline" size="sm" className="w-full border-slate-600 text-white hover:bg-slate-700" asChild>
                       <Link to={tool.link}>Explore Demo</Link>
                     </Button>
                   </CardContent>
