@@ -603,233 +603,258 @@ const Auth = () => {
 
       {/* Auth Forms Section */}
       {showAuthForm && (
-        <section className="py-12 bg-slate-800/50 border-y border-white/10" id="auth-form">
+        <section className="py-12 bg-slate-900" id="auth-form">
           <div className="container mx-auto px-4">
             {pendingVerification ? (
-              <Card className="max-w-md mx-auto bg-white/10 backdrop-blur-md border-white/20">
-                <CardContent className="pt-6 text-center space-y-4">
-                  <div className="w-16 h-16 mx-auto bg-emerald-500/20 rounded-full flex items-center justify-center">
-                    <RefreshCw className="w-8 h-8 text-emerald-400" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white">Check Your Email</h3>
-                    <p className="text-white/60 text-sm mt-2">
-                      We sent a verification link to <span className="text-emerald-400">{pendingVerification}</span>
-                    </p>
-                  </div>
-                  <Button
-                    variant="outline"
-                    onClick={handleResendVerification}
-                    disabled={resendingEmail}
-                    className="w-full border-white/20 text-white hover:bg-white/10"
-                  >
-                    {resendingEmail ? (
-                      <>
-                        <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
-                        Sending...
-                      </>
-                    ) : (
-                      'Resend Verification Email'
-                    )}
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    className="w-full text-white/60 hover:text-white hover:bg-white/10"
-                    onClick={() => setPendingVerification(null)}
-                  >
-                    Use a different email
-                  </Button>
-                </CardContent>
-              </Card>
-            ) : (
-              <Card className="max-w-md mx-auto bg-white/10 backdrop-blur-md border-white/20">
-                <CardHeader className="text-center">
-                  <img src={logo} alt="Sacred Greeks" className="w-16 h-16 mx-auto rounded-full object-cover mb-4 ring-2 ring-amber-500/30" />
-                  <CardTitle className="text-white">{showAuthForm === 'signup' ? 'Create Your Account' : 'Welcome Back'}</CardTitle>
-                  <CardDescription className="text-white/60">
-                    {showAuthForm === 'signup' 
-                      ? 'Start your personalized faith journey today' 
-                      : 'Sign in to continue your journey'}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Tabs value={showAuthForm} onValueChange={(v) => setShowAuthForm(v as 'signin' | 'signup')}>
-                    <TabsList className="grid w-full grid-cols-2 mb-6 bg-white/10">
-                      <TabsTrigger value="signin" className="text-white data-[state=active]:bg-white/20 data-[state=active]:text-white">Sign In</TabsTrigger>
-                      <TabsTrigger value="signup" className="text-white data-[state=active]:bg-white/20 data-[state=active]:text-white">Sign Up</TabsTrigger>
-                    </TabsList>
-                    
-                    {/* Sign In Tab */}
-                    <TabsContent value="signin" className="mt-0">
-                      <form onSubmit={handleSignIn} className="space-y-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="signin-email" className="text-white">Email</Label>
-                          <Input
-                            id="signin-email"
-                            name="email"
-                            type="email"
-                            placeholder="you@example.com"
-                            defaultValue={savedEmail}
-                            autoComplete="email"
-                            required
-                            className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="signin-password" className="text-white">Password</Label>
-                          <div className="relative">
-                            <Input
-                              id="signin-password"
-                              name="password"
-                              type={showPassword ? "text" : "password"}
-                              placeholder="••••••••"
-                              autoComplete="current-password"
-                              required
-                              className="pr-10 bg-white/10 border-white/20 text-white placeholder:text-white/50"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => setShowPassword(!showPassword)}
-                              className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white"
-                            >
-                              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                            </button>
-                          </div>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <Checkbox
-                              id="remember"
-                              checked={rememberMe}
-                              onCheckedChange={(checked) => setRememberMe(checked as boolean)}
-                              className="border-white/30 data-[state=checked]:bg-amber-500"
-                            />
-                            <Label htmlFor="remember" className="text-sm cursor-pointer text-white/70">
-                              Remember me
-                            </Label>
-                          </div>
-                          <Link 
-                            to="/forgot-password" 
-                            className="text-sm text-amber-400 hover:underline"
-                          >
-                            Forgot password?
-                          </Link>
-                        </div>
-                        <Button
-                          type="submit"
-                          className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600"
-                          disabled={isLoading}
-                        >
-                          {isLoading ? 'Signing in...' : 'Sign In'}
-                          <ChevronRight className="w-4 h-4 ml-1" />
-                        </Button>
-                      </form>
-                    </TabsContent>
-                    
-                    {/* Sign Up Tab */}
-                    <TabsContent value="signup" className="mt-0">
-                      <form onSubmit={handleSignUp} className="space-y-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="signup-name" className="text-white">Full Name</Label>
-                          <Input
-                            id="signup-name"
-                            name="fullName"
-                            type="text"
-                            placeholder="John Smith"
-                            autoComplete="name"
-                            required
-                            className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="signup-email" className="text-white">Email</Label>
-                          <Input
-                            id="signup-email"
-                            name="email"
-                            type="email"
-                            placeholder="you@example.com"
-                            autoComplete="email"
-                            required
-                            value={signupEmail}
-                            onChange={(e) => {
-                              setSignupEmail(e.target.value);
-                              resetDisposableCheck();
-                            }}
-                            className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
-                          />
-                          {isDisposable && checkedDomain && (
-                            <div className="flex items-start gap-2 p-2 bg-destructive/20 border border-destructive/30 rounded-md">
-                              <AlertTriangle className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
-                              <p className="text-xs text-destructive">
-                                Disposable emails are not allowed
-                              </p>
-                            </div>
-                          )}
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="signup-password" className="text-white">Password</Label>
-                          <div className="relative">
-                            <Input
-                              id="signup-password"
-                              name="password"
-                              type={showPassword ? "text" : "password"}
-                              placeholder="••••••••"
-                              autoComplete="new-password"
-                              minLength={8}
-                              required
-                              value={signupPassword}
-                              onChange={(e) => {
-                                setSignupPassword(e.target.value);
-                                resetBreachCheck();
-                              }}
-                              className="pr-10 bg-white/10 border-white/20 text-white placeholder:text-white/50"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => setShowPassword(!showPassword)}
-                              className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white"
-                            >
-                              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                            </button>
-                          </div>
-                          <PasswordStrengthIndicator password={signupPassword} />
-                          {breachCount !== null && breachCount > 0 && (
-                            <div className="flex items-start gap-2 p-2 bg-destructive/20 border border-destructive/30 rounded-md">
-                              <AlertTriangle className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
-                              <p className="text-xs text-destructive">
-                                Password exposed in {breachCount.toLocaleString()} breaches
-                              </p>
-                            </div>
-                          )}
-                        </div>
-                        <Button
-                          type="submit"
-                          className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600"
-                          disabled={isLoading || isCheckingBreach}
-                        >
-                          {isCheckingBreach ? 'Checking...' : isLoading ? 'Creating account...' : 'Create Account'}
-                          <ChevronRight className="w-4 h-4 ml-1" />
-                        </Button>
-                      </form>
-                    </TabsContent>
-                  </Tabs>
-                  
-                  <div className="mt-6 text-center">
-                    <Button variant="link" className="text-white/60 hover:text-white" onClick={() => setShowAuthForm(null)}>
-                      ← Back to options
+              <div className="max-w-md mx-auto">
+                <div className="bg-slate-800/50 border border-slate-700 rounded-xl overflow-hidden">
+                  <div className="h-1 bg-cyan-500" />
+                  <div className="p-8 text-center space-y-4">
+                    <div className="w-16 h-16 mx-auto bg-cyan-500/20 rounded-full flex items-center justify-center">
+                      <RefreshCw className="w-8 h-8 text-cyan-400" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">Check Your Email</h3>
+                      <p className="text-slate-400 text-sm mt-2">
+                        We sent a verification link to <span className="text-cyan-400">{pendingVerification}</span>
+                      </p>
+                    </div>
+                    <Button
+                      variant="outline"
+                      onClick={handleResendVerification}
+                      disabled={resendingEmail}
+                      className="w-full border-slate-600 text-white hover:bg-slate-700"
+                    >
+                      {resendingEmail ? (
+                        <>
+                          <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                          Sending...
+                        </>
+                      ) : (
+                        'Resend Verification Email'
+                      )}
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="w-full text-slate-400 hover:text-white hover:bg-slate-700"
+                      onClick={() => setPendingVerification(null)}
+                    >
+                      Use a different email
                     </Button>
                   </div>
+                </div>
+              </div>
+            ) : (
+              <div className="max-w-md mx-auto">
+                <div className="bg-slate-800/50 border border-slate-700 rounded-xl overflow-hidden">
+                  {/* Cyan top border */}
+                  <div className="h-1 bg-cyan-500" />
                   
-                  <div className="mt-4 text-center text-sm text-white/50">
-                    <p>
-                      By continuing, you agree to our{' '}
-                      <Link to="/terms" className="text-amber-400 hover:underline">Terms</Link>
-                      {' '}and{' '}
-                      <Link to="/privacy" className="text-amber-400 hover:underline">Privacy Policy</Link>
-                    </p>
+                  <div className="p-8">
+                    {/* Header */}
+                    <div className="text-center mb-6">
+                      <div className="w-16 h-16 mx-auto rounded-full bg-slate-700 border-2 border-slate-600 flex items-center justify-center mb-4">
+                        <img src={logo} alt="Sacred Greeks" className="w-10 h-10 rounded-full object-cover" />
+                      </div>
+                      <h2 className="text-xl font-bold text-white">
+                        {showAuthForm === 'signup' ? 'Create Your Account' : 'Welcome Back'}
+                      </h2>
+                      <p className="text-slate-400 text-sm mt-1">
+                        {showAuthForm === 'signup' 
+                          ? 'Start your personalized faith journey today' 
+                          : 'Sign in to continue your journey'}
+                      </p>
+                    </div>
+
+                    {/* Tabs */}
+                    <Tabs value={showAuthForm} onValueChange={(v) => setShowAuthForm(v as 'signin' | 'signup')}>
+                      <TabsList className="grid w-full grid-cols-2 mb-6 bg-slate-700/50 border border-slate-600 p-1 rounded-lg">
+                        <TabsTrigger 
+                          value="signin" 
+                          className="text-slate-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-white rounded-md transition-all"
+                        >
+                          Sign In
+                        </TabsTrigger>
+                        <TabsTrigger 
+                          value="signup" 
+                          className="text-slate-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-white rounded-md transition-all"
+                        >
+                          Sign Up
+                        </TabsTrigger>
+                      </TabsList>
+                      
+                      {/* Sign In Tab */}
+                      <TabsContent value="signin" className="mt-0">
+                        <form onSubmit={handleSignIn} className="space-y-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="signin-email" className="text-slate-300">Email</Label>
+                            <Input
+                              id="signin-email"
+                              name="email"
+                              type="email"
+                              placeholder="you@example.com"
+                              defaultValue={savedEmail}
+                              autoComplete="email"
+                              required
+                              className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-cyan-500 focus:ring-cyan-500/20"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="signin-password" className="text-slate-300">Password</Label>
+                            <div className="relative">
+                              <Input
+                                id="signin-password"
+                                name="password"
+                                type={showPassword ? "text" : "password"}
+                                placeholder="••••••••"
+                                autoComplete="current-password"
+                                required
+                                className="pr-10 bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-cyan-500 focus:ring-cyan-500/20"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white"
+                              >
+                                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                              </button>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <Checkbox
+                                id="remember"
+                                checked={rememberMe}
+                                onCheckedChange={(checked) => setRememberMe(checked as boolean)}
+                                className="border-slate-500 data-[state=checked]:bg-cyan-500 data-[state=checked]:border-cyan-500"
+                              />
+                              <Label htmlFor="remember" className="text-sm cursor-pointer text-slate-400">
+                                Remember me
+                              </Label>
+                            </div>
+                            <Link 
+                              to="/forgot-password" 
+                              className="text-sm text-cyan-400 hover:underline"
+                            >
+                              Forgot password?
+                            </Link>
+                          </div>
+                          <Button
+                            type="submit"
+                            className="w-full bg-cyan-500 hover:bg-cyan-600 text-white"
+                            disabled={isLoading}
+                          >
+                            {isLoading ? 'Signing in...' : 'Sign In'}
+                            <ChevronRight className="w-4 h-4 ml-1" />
+                          </Button>
+                        </form>
+                      </TabsContent>
+                      
+                      {/* Sign Up Tab */}
+                      <TabsContent value="signup" className="mt-0">
+                        <form onSubmit={handleSignUp} className="space-y-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="signup-name" className="text-slate-300">Full Name</Label>
+                            <Input
+                              id="signup-name"
+                              name="fullName"
+                              type="text"
+                              placeholder="John Smith"
+                              autoComplete="name"
+                              required
+                              className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-cyan-500 focus:ring-cyan-500/20"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="signup-email" className="text-slate-300">Email</Label>
+                            <Input
+                              id="signup-email"
+                              name="email"
+                              type="email"
+                              placeholder="you@example.com"
+                              autoComplete="email"
+                              required
+                              value={signupEmail}
+                              onChange={(e) => {
+                                setSignupEmail(e.target.value);
+                                resetDisposableCheck();
+                              }}
+                              className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-cyan-500 focus:ring-cyan-500/20"
+                            />
+                            {isDisposable && checkedDomain && (
+                              <div className="flex items-start gap-2 p-2 bg-red-500/20 border border-red-500/30 rounded-md">
+                                <AlertTriangle className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
+                                <p className="text-xs text-red-400">
+                                  Disposable emails are not allowed
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="signup-password" className="text-slate-300">Password</Label>
+                            <div className="relative">
+                              <Input
+                                id="signup-password"
+                                name="password"
+                                type={showPassword ? "text" : "password"}
+                                placeholder="••••••••"
+                                autoComplete="new-password"
+                                minLength={8}
+                                required
+                                value={signupPassword}
+                                onChange={(e) => {
+                                  setSignupPassword(e.target.value);
+                                  resetBreachCheck();
+                                }}
+                                className="pr-10 bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-cyan-500 focus:ring-cyan-500/20"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white"
+                              >
+                                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                              </button>
+                            </div>
+                            <PasswordStrengthIndicator password={signupPassword} />
+                            {breachCount !== null && breachCount > 0 && (
+                              <div className="flex items-start gap-2 p-2 bg-red-500/20 border border-red-500/30 rounded-md">
+                                <AlertTriangle className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
+                                <p className="text-xs text-red-400">
+                                  Password exposed in {breachCount.toLocaleString()} breaches
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                          <Button
+                            type="submit"
+                            className="w-full bg-cyan-500 hover:bg-cyan-600 text-white"
+                            disabled={isLoading || isCheckingBreach}
+                          >
+                            {isCheckingBreach ? 'Checking...' : isLoading ? 'Creating account...' : 'Create Account'}
+                            <ChevronRight className="w-4 h-4 ml-1" />
+                          </Button>
+                        </form>
+                      </TabsContent>
+                    </Tabs>
+                    
+                    <div className="mt-6 text-center">
+                      <Button variant="link" className="text-slate-400 hover:text-white" onClick={() => setShowAuthForm(null)}>
+                        ← Back to options
+                      </Button>
+                    </div>
+                    
+                    <div className="mt-4 text-center text-sm text-slate-500">
+                      <p>
+                        By continuing, you agree to our{' '}
+                        <Link to="/terms" className="text-cyan-400 hover:underline">Terms</Link>
+                        {' '}and{' '}
+                        <Link to="/privacy" className="text-cyan-400 hover:underline">Privacy Policy</Link>
+                      </p>
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             )}
           </div>
         </section>
