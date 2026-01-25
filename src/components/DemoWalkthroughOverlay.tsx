@@ -103,7 +103,8 @@ function DemoWalkthroughOverlayInner({ customTemplate }: DemoWalkthroughOverlayP
   const activeTemplate = customTemplate || ONBOARDING_TEMPLATES.find(t => t.scenario === currentScenario) || ONBOARDING_TEMPLATES[0];
 
   useEffect(() => {
-    if (isDemoMode && !hasSeenTour) {
+    // Disabled in favor of the new DemoModeTour component
+    if (false && isDemoMode && !hasSeenTour) {
       setIsVisible(true);
       setCurrentStep(0);
     }
