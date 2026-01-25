@@ -1148,6 +1148,32 @@ const Auth = () => {
                             </p>
                           </div>
                         </div>
+
+                        {/* Core Principle - Only for Rituals */}
+                        {item.letter === "R" && (
+                          <div className="p-4 rounded-xl bg-gradient-to-r from-amber-500/20 via-orange-500/15 to-amber-500/20 border border-amber-500/30">
+                            <div className="flex items-start gap-3">
+                              <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                                <Zap className="w-5 h-5 text-amber-400" />
+                              </div>
+                              <div>
+                                <h4 className="text-amber-300 font-semibold text-sm mb-2">The Core Principle</h4>
+                                <p className="text-white/80 text-sm leading-relaxed">
+                                  If you mentioned a deity's name during a ritual but <strong className="text-amber-300">did not know it was a deity</strong> and 
+                                  <strong className="text-amber-300"> do not believe it to be a deity</strong>... it holds no authority over you. 
+                                  Paul wrote that an idol is "nothing in the world" (1 Cor 8:4). The false god has no real existence.
+                                </p>
+                                <Link 
+                                  to="/faith-authority" 
+                                  className="inline-flex items-center gap-1 mt-3 text-amber-400 hover:text-amber-300 text-xs font-medium transition-colors"
+                                >
+                                  Learn more about Faith & Authority
+                                  <ChevronRight className="w-3 h-3" />
+                                </Link>
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}
