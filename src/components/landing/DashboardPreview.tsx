@@ -1,33 +1,33 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Zap, Shield, BookOpen, Sparkles, ArrowRight, Video, Users, AlertTriangle, ChevronDown, ChevronUp } from "lucide-react";
+import { FileQuestion, ScrollText, BookOpen, Sparkles, ArrowRight, Video, UserCheck, Ban, ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
 // Primary features - highest conversion potential
 const primaryFeatures = [
   {
-    icon: Zap,
+    icon: FileQuestion,
     title: "MythBusters",
     subtitle: "Debunk Greek Life Misconceptions",
     description: "Get biblical answers to common objections about Greek life and faith compatibility.",
     gradient: "from-amber-500 via-orange-500 to-red-500",
-    bgGlow: "bg-amber-500/20",
+    bgGlow: "bg-orange-500/20",
     highlights: ["50+ Myths Debunked", "Scripture-Based", "Shareable Cards"],
     href: "/myth-buster",
   },
   {
-    icon: Shield,
+    icon: ScrollText,
     title: "Symbols & Rituals Guide",
     subtitle: "Understand Hidden Meanings",
     description: "Explore the biblical and historical context behind Greek letters, rituals, and traditions.",
-    gradient: "from-violet-500 via-purple-500 to-indigo-600",
-    bgGlow: "bg-purple-500/20",
+    gradient: "from-violet-500 via-fuchsia-500 to-purple-600",
+    bgGlow: "bg-fuchsia-500/20",
     highlights: ["100+ Symbols", "Historical Context", "Faith Connections"],
     href: "/symbols",
   },
   {
-    icon: AlertTriangle,
+    icon: Ban,
     title: "Anti-Hazing Resources",
     subtitle: "Protect & Educate Your Chapter",
     description: "Access vital hazing prevention tools, success stories, and memorial resources to keep your organization safe.",
@@ -56,17 +56,17 @@ const secondaryFeatures = [
     subtitle: "Learn Through Powerful Stories",
     description: "Watch testimonies, teachings, and discussions from Greeks who've navigated faith and fraternity life.",
     gradient: "from-rose-500 via-pink-500 to-fuchsia-500",
-    bgGlow: "bg-rose-500/20",
+    bgGlow: "bg-pink-500/20",
     highlights: ["50+ Videos", "Testimonies", "Teaching Series"],
     href: "/content-hub",
   },
   {
-    icon: Users,
+    icon: UserCheck,
     title: "Church Leaders",
     subtitle: "Guidance From Trusted Voices",
     description: "Connect with pastors and ministry leaders who understand the unique challenges of Greek life.",
-    gradient: "from-sky-500 via-blue-500 to-indigo-500",
-    bgGlow: "bg-sky-500/20",
+    gradient: "from-purple-500 via-violet-500 to-indigo-500",
+    bgGlow: "bg-purple-500/20",
     highlights: ["Expert Insights", "Ministry Resources", "Leadership Tips"],
     href: "/church-leaders",
   },
