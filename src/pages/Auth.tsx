@@ -491,10 +491,29 @@ const Auth = () => {
               </div>
             </div>
 
+            {/* Testimonial Quote */}
+            <div 
+              className="p-4 rounded-xl bg-white/5 border border-white/10 mb-6 animate-fade-in"
+              style={{ animationDelay: '700ms' }}
+            >
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                  <span className="text-sm font-bold text-primary">DL</span>
+                </div>
+                <div>
+                  <p className="text-sm text-white/80 italic leading-relaxed mb-2">
+                    "This rigorous research bridges the gap between Black Greek Letter Organizations and the church community. Sacred Greeks reminds us that spreading the gospel takes on many forms."
+                  </p>
+                  <p className="text-xs font-semibold text-white">Pastor Demetrius Logwood</p>
+                  <p className="text-[10px] text-white/50">Charity Missionary Baptist Church</p>
+                </div>
+              </div>
+            </div>
+
             {/* Social proof */}
             <div 
               className="flex gap-6 lg:gap-8 pt-6 border-t border-white/10 animate-fade-in"
-              style={{ animationDelay: '800ms' }}
+              style={{ animationDelay: '900ms' }}
             >
               {SOCIAL_PROOF.map((stat, index) => (
                 <div key={index} className="text-center">
