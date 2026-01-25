@@ -19,8 +19,9 @@ import { PasswordStrengthIndicator } from '@/components/PasswordStrengthIndicato
 import { usePasswordBreachCheck } from '@/hooks/use-password-breach-check';
 import { useDisposableEmailCheck } from '@/hooks/use-disposable-email-check';
 import { cn } from '@/lib/utils';
-import { ProofFrameworkAudio } from '@/components/proof/ProofFrameworkAudio';
+import { ProofAudioPlayer } from '@/components/proof/ProofAudioPlayer';
 import { ProofLetterAudio } from '@/components/proof/ProofLetterAudio';
+import { PROOF_FRAMEWORK_DATA } from '@/lib/proofFrameworkData';
 
 const FEATURED_TOOLS = [
   {
@@ -106,73 +107,7 @@ const SECONDARY_TOOLS = [
   }
 ];
 
-const PROOF_FRAMEWORK = [
-  { 
-    letter: "P", 
-    title: "Pledge Process", 
-    description: "How does the intake and pledging process align with biblical values?", 
-    color: "bg-blue-500",
-    criticism: "Hazing Concerns",
-    criticismExample: '"Greeks brutalize new members through hazing rituals that are dangerous and sinful."',
-    response: "Biblical mentorship involves testing character, not abusing it. We reject hazing while embracing accountability and growth through godly community.",
-    scripture: "Hebrews 10:24-25",
-    scriptureText: "And let us consider how to stir up one another to love and good works, not neglecting to meet together...",
-    supportingScripture: "Romans 14:5",
-    supportingText: "Each one should be fully convinced in his own mind."
-  },
-  { 
-    letter: "R", 
-    title: "Rituals", 
-    description: "What rituals are involved and do they honor God?", 
-    color: "bg-purple-500",
-    criticism: "Demonic Portals",
-    criticismExample: '"Greek rituals open demonic portals and invite evil spirits through occult practices."',
-    response: "Not all ceremonies are worship. Many rituals focus on history, values, and commitment—like weddings or graduations. We discern based on content, not assumption.",
-    scripture: "1 Thessalonians 5:21",
-    scriptureText: "Test everything; hold fast what is good.",
-    supportingScripture: "Romans 14:14",
-    supportingText: "Nothing is unclean in itself, but it is unclean for anyone who thinks it unclean."
-  },
-  { 
-    letter: "O", 
-    title: "Oaths", 
-    description: "What oaths and vows are required of members?", 
-    color: "bg-orange-500",
-    criticism: "Greek Deity Allegiance",
-    criticismExample: '"Using Greek letters means you\'re worshiping Zeus, Apollo, and other pagan gods."',
-    response: "Using Greek letters doesn't mean worshiping Greek gods. Paul used Greek language and culture to spread the Gospel without endorsing paganism.",
-    scripture: "Acts 17:22-28",
-    scriptureText: "For as I passed along and observed the objects of your worship, I found also an altar with this inscription: 'To the unknown god.'...",
-    supportingScripture: "1 Corinthians 8:7",
-    supportingText: "Not all possess this knowledge. Some, through former association with idols, eat food as really offered to an idol, and their conscience, being weak, is defiled."
-  },
-  { 
-    letter: "O", 
-    title: "Obscurity", 
-    description: "What is kept secret and does it conflict with walking in the light?", 
-    color: "bg-green-500",
-    criticism: "Secret Societies",
-    criticismExample: '"Greeks are secret societies that hide evil practices from the public. If it\'s good, why hide it?"',
-    response: "Privacy is not secrecy. Jesus had inner-circle moments with Peter, James, and John. Private ceremonies can simply mean membership-only experiences.",
-    scripture: "Mark 5:37",
-    scriptureText: "And he allowed no one to follow him except Peter and James and John the brother of James.",
-    supportingScripture: "Romans 14:23",
-    supportingText: "Whatever does not proceed from faith is sin."
-  },
-  { 
-    letter: "F", 
-    title: "Founders", 
-    description: "What is the foundation and history of the organization?", 
-    color: "bg-red-500",
-    criticism: "Masonic Connections",
-    criticismExample: '"Greek organizations were founded by Freemasons, so they\'re all connected to the Illuminati."',
-    response: "An organization's origin doesn't determine its current purpose. Many institutions with complex histories serve godly purposes today. We are new creations in Christ.",
-    scripture: "2 Corinthians 5:17",
-    scriptureText: "Therefore, if anyone is in Christ, he is a new creation. The old has passed away; behold, the new has come.",
-    supportingScripture: "Romans 14:5",
-    supportingText: "One person esteems one day as better than another, while another esteems all days alike. Each one should be fully convinced in his own mind."
-  }
-];
+// Using PROOF_FRAMEWORK_DATA from lib instead of local constant
 
 const D9_ORGS = ["ΑΦΑ", "ΔΣΘ", "ΚΑΨ", "ΑΚΑ"];
 
@@ -1044,6 +979,9 @@ const Auth = () => {
             </p>
           </div>
 
+          {/* Audio Player - Above Framework */}
+          <ProofAudioPlayer className="max-w-2xl mx-auto mb-8" />
+
           {/* Expand All Button */}
           <div className="max-w-3xl mx-auto mb-4 flex justify-end">
             <Button
@@ -1067,7 +1005,7 @@ const Auth = () => {
           </div>
 
           <div className="max-w-3xl mx-auto space-y-4">
-            {PROOF_FRAMEWORK.map((item, index) => {
+            {PROOF_FRAMEWORK_DATA.map((item, index) => {
               const isExpanded = allProofExpanded || expandedProof === index;
               return (
                 <div 
@@ -1151,27 +1089,31 @@ const Auth = () => {
                           </div>
                         </div>
 
-                        {/* Core Principle - Only for Rituals */}
-                        {item.letter === "R" && (
+                        {/* Core Principle - For all letters with corePrinciple */}
+                        {item.corePrinciple && (
                           <div className="p-4 rounded-xl bg-gradient-to-r from-amber-500/20 via-orange-500/15 to-amber-500/20 border border-amber-500/30">
                             <div className="flex items-start gap-3">
                               <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
                                 <Zap className="w-5 h-5 text-amber-400" />
                               </div>
                               <div>
-                                <h4 className="text-amber-300 font-semibold text-sm mb-2">The Core Principle</h4>
+                                <h4 className="text-amber-300 font-semibold text-sm mb-2">{item.corePrinciple.title}</h4>
                                 <p className="text-white/80 text-sm leading-relaxed">
-                                  If you mentioned a deity's name during a ritual but <strong className="text-amber-300">did not know it was a deity</strong> and 
-                                  <strong className="text-amber-300"> do not believe it to be a deity</strong>... it holds no authority over you. 
-                                  Paul wrote that an idol is "nothing in the world" (1 Cor 8:4). The false god has no real existence.
+                                  {item.corePrinciple.text}
                                 </p>
-                                <Link 
-                                  to="/faith-authority" 
-                                  className="inline-flex items-center gap-1 mt-3 text-amber-400 hover:text-amber-300 text-xs font-medium transition-colors"
-                                >
-                                  Learn more about Faith & Authority
-                                  <ChevronRight className="w-3 h-3" />
-                                </Link>
+                                <div className="mt-3 p-2 rounded-md bg-amber-500/10 border border-amber-500/20">
+                                  <p className="text-amber-400 font-semibold text-xs">{item.corePrinciple.scripture}</p>
+                                  <p className="text-white/70 text-xs italic mt-1">"{item.corePrinciple.scriptureText}"</p>
+                                </div>
+                                {item.letter === "R" && (
+                                  <Link 
+                                    to="/faith-authority" 
+                                    className="inline-flex items-center gap-1 mt-3 text-amber-400 hover:text-amber-300 text-xs font-medium transition-colors"
+                                  >
+                                    Learn more about Faith & Authority
+                                    <ChevronRight className="w-3 h-3" />
+                                  </Link>
+                                )}
                               </div>
                             </div>
                           </div>
@@ -1189,7 +1131,7 @@ const Auth = () => {
                             scriptureText={item.scriptureText}
                             supportingScripture={item.supportingScripture}
                             supportingText={item.supportingText}
-                            corePrinciple={item.letter === "R" ? "Here's a powerful truth: If you mentioned a deity's name during a ritual but did not know it was a deity and do not believe it to be a deity, it holds no authority over you. Paul wrote in First Corinthians 8:4 that an idol is nothing in the world. The false god has no real existence. Your conscience and your faith determine spiritual effect." : undefined}
+                            corePrinciple={item.corePrinciple ? `Core Principle - ${item.corePrinciple.title}: ${item.corePrinciple.text} Scripture says in ${item.corePrinciple.scripture}: "${item.corePrinciple.scriptureText}"` : undefined}
                             className="text-purple-300 hover:text-purple-200 hover:bg-purple-500/10"
                           />
                         </div>
@@ -1200,9 +1142,6 @@ const Auth = () => {
               );
             })}
           </div>
-
-          {/* PROOF Framework Audio */}
-          <ProofFrameworkAudio className="max-w-2xl mx-auto mt-8" />
 
           <div className="text-center mt-8 flex flex-wrap justify-center gap-4">
             <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600" asChild>

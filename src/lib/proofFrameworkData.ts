@@ -59,6 +59,12 @@ export const PROOF_FRAMEWORK_DATA: ProofItem[] = [
     scriptureText: "And let us consider how to stir up one another to love and good works, not neglecting to meet together...",
     supportingScripture: "Romans 14:5",
     supportingText: "Each one should be fully convinced in his own mind.",
+    corePrinciple: {
+      title: "Godly Mentorship",
+      text: "Biblical discipleship involves challenge and growth, but never abuse or degradation. Jesus pushed His disciples to grow through teaching, experience, and accountability—never through harm. The process of becoming a member can honor God when it builds character through service, learning, and genuine brotherhood.",
+      scripture: "Proverbs 27:17",
+      scriptureText: "Iron sharpens iron, and one man sharpens another."
+    },
     examples: [
       {
         myth: "Pledging always involves hazing and abuse",
@@ -119,6 +125,12 @@ export const PROOF_FRAMEWORK_DATA: ProofItem[] = [
     scriptureText: "For as I passed along and observed the objects of your worship, I found also an altar with this inscription: 'To the unknown god.'...",
     supportingScripture: "1 Corinthians 8:7",
     supportingText: "Not all possess this knowledge. Some, through former association with idols, eat food as really offered to an idol, and their conscience, being weak, is defiled.",
+    corePrinciple: {
+      title: "Cultural Engagement",
+      text: "Paul engaged Greek culture without worshiping Greek gods. He quoted their poets, used their language, and found common ground to share the Gospel. Using Greek letters, words, or cultural elements doesn't constitute worship—it's the heart's intent and the object of devotion that matters to God.",
+      scripture: "1 Corinthians 9:22",
+      scriptureText: "I have become all things to all people, that by all means I might save some."
+    },
     examples: [
       {
         myth: "Greek letters represent worship of Greek gods",
@@ -146,6 +158,12 @@ export const PROOF_FRAMEWORK_DATA: ProofItem[] = [
     scriptureText: "And he allowed no one to follow him except Peter and James and John the brother of James.",
     supportingScripture: "Romans 14:23",
     supportingText: "Whatever does not proceed from faith is sin.",
+    corePrinciple: {
+      title: "Sacred Privacy",
+      text: "Jesus Himself maintained an inner circle and taught some things privately. Not everything private is sinful—the Bible distinguishes between evil done in darkness and wisdom about sharing sacred moments. What matters is whether private practices align with Scripture, not whether they're public.",
+      scripture: "Matthew 13:10-11",
+      scriptureText: "To you it has been given to know the secrets of the kingdom of heaven, but to them it has not been given."
+    },
     examples: [
       {
         myth: "Secret rituals mean there's something evil to hide",
@@ -173,6 +191,12 @@ export const PROOF_FRAMEWORK_DATA: ProofItem[] = [
     scriptureText: "Therefore, if anyone is in Christ, he is a new creation. The old has passed away; behold, the new has come.",
     supportingScripture: "Romans 14:5",
     supportingText: "One person esteems one day as better than another, while another esteems all days alike. Each one should be fully convinced in his own mind.",
+    corePrinciple: {
+      title: "Redemption & Transformation",
+      text: "God specializes in redemption. Many institutions—including universities, hospitals, and even denominations—have evolved beyond their founders' original beliefs. We judge by present fruit, not historical roots. If Christ can make individuals new creations, organizations can be transformed too.",
+      scripture: "Matthew 7:16-20",
+      scriptureText: "You will recognize them by their fruits. Are grapes gathered from thornbushes, or figs from thistles?"
+    },
     examples: [
       {
         myth: "Founders' beliefs forever define the organization",
