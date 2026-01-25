@@ -95,24 +95,23 @@ export const GuidedTour = memo(function GuidedTour({ onComplete }: GuidedTourPro
     <AnimatePresence>
       {isVisible && (
         <>
-          {/* Backdrop */}
+          {/* Subtle backdrop - allows dashboard to remain visible */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-[100]"
-            onClick={handleSkip}
+            className="fixed inset-0 bg-background/30 z-[100] pointer-events-none"
           />
           
-          {/* Tour Card */}
+          {/* Tour Card - positioned at bottom for visibility */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 100 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[101] w-full max-w-md px-4"
+            className="fixed left-1/2 bottom-4 -translate-x-1/2 z-[101] w-full max-w-md px-4"
           >
-            <Card className="border-2 border-primary/30 shadow-2xl">
+            <Card className="border-2 border-primary/30 shadow-2xl bg-card/95 backdrop-blur-md">
               <CardContent className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <Badge variant="secondary" className="bg-primary/10 text-primary border-0">
