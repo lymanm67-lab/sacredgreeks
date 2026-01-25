@@ -75,17 +75,20 @@ const Dashboard = () => {
   });
 
   useEffect(() => {
-    if (user) {
-      loadDashboardData();
-    }
+    loadDashboardData();
   }, [user, isDemoMode]);
 
   const loadDashboardData = async () => {
-    if (!user) return;
-
+    // In demo mode, always show demo stats regardless of auth state
     if (isDemoMode) {
       setStats(DEMO_STATS);
       setIsDemoStats(true);
+      setLoading(false);
+      return;
+    }
+
+    // If not in demo mode and no user, set loading to false
+    if (!user) {
       setLoading(false);
       return;
     }
