@@ -39,14 +39,14 @@ const categoryDescriptions: Record<string, string> = {
   history: 'Questions about origins, founders, and historical roots'
 };
 
-// PROOF category filter definitions
+// PROOF category filter definitions - P (blue), R (purple), O (orange), O (green), F (red)
 const proofCategories: { id: ProofCategory | 'all'; label: string; icon: React.ComponentType<{ className?: string }>; color: string }[] = [
   { id: 'all', label: 'All', icon: Target, color: 'bg-muted text-foreground' },
-  { id: 'pledge-process', label: 'Pledge Process', icon: Target, color: 'bg-red-500/10 text-red-600 border-red-500/30' },
+  { id: 'pledge-process', label: 'Pledge Process', icon: Target, color: 'bg-blue-500/10 text-blue-600 border-blue-500/30' },
   { id: 'rituals', label: 'Rituals', icon: Sparkles, color: 'bg-purple-500/10 text-purple-600 border-purple-500/30' },
-  { id: 'oaths', label: 'Oaths', icon: Scale, color: 'bg-amber-500/10 text-amber-600 border-amber-500/30' },
-  { id: 'obscurity', label: 'Obscurity', icon: Eye, color: 'bg-blue-500/10 text-blue-600 border-blue-500/30' },
-  { id: 'founders', label: 'Founders', icon: Building, color: 'bg-emerald-500/10 text-emerald-600 border-emerald-500/30' },
+  { id: 'oaths', label: 'Oaths', icon: Scale, color: 'bg-orange-500/10 text-orange-600 border-orange-500/30' },
+  { id: 'obscurity', label: 'Obscurity', icon: Eye, color: 'bg-green-500/10 text-green-600 border-green-500/30' },
+  { id: 'founders', label: 'Founders', icon: Building, color: 'bg-red-500/10 text-red-600 border-red-500/30' },
 ];
 
 const MythBuster = () => {

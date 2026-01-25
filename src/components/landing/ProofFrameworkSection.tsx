@@ -14,7 +14,7 @@ const proofSteps = [
     criticism: "Hazing concerns",
     description: "Biblical guidance on navigating intake processes with integrity",
     icon: Target,
-    color: "from-blue-500 to-indigo-600",
+    color: "from-blue-500 to-blue-600",
   },
   {
     letter: "R",
@@ -22,7 +22,7 @@ const proofSteps = [
     criticism: "Demonic portals",
     description: "Discerning ceremonial practices through a scriptural lens",
     icon: Sparkles,
-    color: "from-purple-500 to-violet-600",
+    color: "from-purple-500 to-purple-600",
   },
   {
     letter: "O",
@@ -30,7 +30,7 @@ const proofSteps = [
     criticism: "Greek deity allegiance",
     description: "Understanding vows and commitments in light of Scripture",
     icon: Scale,
-    color: "from-amber-500 to-orange-600",
+    color: "from-orange-500 to-orange-600",
   },
   {
     letter: "O",
@@ -38,7 +38,7 @@ const proofSteps = [
     criticism: "Secret societies",
     description: "Addressing secrecy concerns while walking in the light",
     icon: Eye,
-    color: "from-emerald-500 to-teal-600",
+    color: "from-green-500 to-green-600",
   },
   {
     letter: "F",
@@ -46,7 +46,7 @@ const proofSteps = [
     criticism: "Masonic connections",
     description: "Examining organizational history and foundations biblically",
     icon: Building,
-    color: "from-rose-500 to-pink-600",
+    color: "from-red-500 to-red-600",
   },
 ];
 
