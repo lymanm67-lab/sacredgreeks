@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useDemoMode } from '@/contexts/DemoModeContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,7 +10,6 @@ import { Trophy, Target, CheckCircle2, Flame, Star, ArrowRight } from 'lucide-re
 import { useGamification } from '@/hooks/use-gamification';
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
-import { useDemoMode } from '@/contexts/DemoModeContext';
 
 interface Challenge {
   id: string;
