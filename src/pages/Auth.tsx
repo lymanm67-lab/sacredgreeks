@@ -966,9 +966,9 @@ const Auth = () => {
 
 
       {/* P.R.O.O.F. Framework Section */}
-      <section className="py-16 md:py-24 relative overflow-hidden">
+      <section className="py-16 md:py-24 relative overflow-hidden bg-slate-900/50">
         {/* Background decoration */}
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 right-20 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl" />
           <div className="absolute bottom-20 left-20 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
         </div>
@@ -982,7 +982,7 @@ const Auth = () => {
             </p>
           </div>
 
-          {/* Audio Player - Above Framework */}
+          {/* Audio Player */}
           <ProofAudioPlayer className="max-w-2xl mx-auto mb-8" />
 
           {/* Expand All Button */}
