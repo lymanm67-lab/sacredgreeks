@@ -429,12 +429,11 @@ html {
 .gradient-shimmer {
   background: linear-gradient(
     90deg,
-    hsl(180, 80%, 50%) 0%,
-    hsl(160, 70%, 45%) 20%,
-    hsl(200, 90%, 55%) 40%,
-    hsl(170, 85%, 50%) 60%,
-    hsl(190, 75%, 55%) 80%,
-    hsl(180, 80%, 50%) 100%
+    hsl(210, 100%, 55%) 0%,
+    hsl(185, 80%, 50%) 25%,
+    hsl(200, 90%, 60%) 50%,
+    hsl(175, 75%, 45%) 75%,
+    hsl(210, 100%, 55%) 100%
   );
   background-size: 200% auto;
   background-clip: text;
