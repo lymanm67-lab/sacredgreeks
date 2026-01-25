@@ -114,7 +114,9 @@ const PROOF_FRAMEWORK = [
     criticismExample: '"Greeks brutalize new members through hazing rituals that are dangerous and sinful."',
     response: "Biblical mentorship involves testing character, not abusing it. We reject hazing while embracing accountability and growth through godly community.",
     scripture: "Hebrews 10:24-25",
-    scriptureText: "And let us consider how to stir up one another to love and good works, not neglecting to meet together..."
+    scriptureText: "And let us consider how to stir up one another to love and good works, not neglecting to meet together...",
+    supportingScripture: "Romans 14:5",
+    supportingText: "Each one should be fully convinced in his own mind."
   },
   { 
     letter: "R", 
@@ -125,7 +127,9 @@ const PROOF_FRAMEWORK = [
     criticismExample: '"Greek rituals open demonic portals and invite evil spirits through occult practices."',
     response: "Not all ceremonies are worship. Many rituals focus on history, values, and commitment—like weddings or graduations. We discern based on content, not assumption.",
     scripture: "1 Thessalonians 5:21",
-    scriptureText: "Test everything; hold fast what is good."
+    scriptureText: "Test everything; hold fast what is good.",
+    supportingScripture: "Romans 14:14",
+    supportingText: "Nothing is unclean in itself, but it is unclean for anyone who thinks it unclean."
   },
   { 
     letter: "O", 
@@ -136,7 +140,9 @@ const PROOF_FRAMEWORK = [
     criticismExample: '"Using Greek letters means you\'re worshiping Zeus, Apollo, and other pagan gods."',
     response: "Using Greek letters doesn't mean worshiping Greek gods. Paul used Greek language and culture to spread the Gospel without endorsing paganism.",
     scripture: "Acts 17:22-28",
-    scriptureText: "For as I passed along and observed the objects of your worship, I found also an altar with this inscription: 'To the unknown god.'..."
+    scriptureText: "For as I passed along and observed the objects of your worship, I found also an altar with this inscription: 'To the unknown god.'...",
+    supportingScripture: "1 Corinthians 8:7",
+    supportingText: "Not all possess this knowledge. Some, through former association with idols, eat food as really offered to an idol, and their conscience, being weak, is defiled."
   },
   { 
     letter: "O", 
@@ -147,7 +153,9 @@ const PROOF_FRAMEWORK = [
     criticismExample: '"Greeks are secret societies that hide evil practices from the public. If it\'s good, why hide it?"',
     response: "Privacy is not secrecy. Jesus had inner-circle moments with Peter, James, and John. Private ceremonies can simply mean membership-only experiences.",
     scripture: "Mark 5:37",
-    scriptureText: "And he allowed no one to follow him except Peter and James and John the brother of James."
+    scriptureText: "And he allowed no one to follow him except Peter and James and John the brother of James.",
+    supportingScripture: "Romans 14:23",
+    supportingText: "Whatever does not proceed from faith is sin."
   },
   { 
     letter: "F", 
@@ -158,7 +166,9 @@ const PROOF_FRAMEWORK = [
     criticismExample: '"Greek organizations were founded by Freemasons, so they\'re all connected to the Illuminati."',
     response: "An organization's origin doesn't determine its current purpose. Many institutions with complex histories serve godly purposes today. We are new creations in Christ.",
     scripture: "2 Corinthians 5:17",
-    scriptureText: "Therefore, if anyone is in Christ, he is a new creation. The old has passed away; behold, the new has come."
+    scriptureText: "Therefore, if anyone is in Christ, he is a new creation. The old has passed away; behold, the new has come.",
+    supportingScripture: "Romans 14:5",
+    supportingText: "One person esteems one day as better than another, while another esteems all days alike. Each one should be fully convinced in his own mind."
   }
 ];
 
@@ -1113,12 +1123,22 @@ const Auth = () => {
                             <span className="text-cyan-400">Biblical Response:</span> {item.response}
                           </p>
                           
-                          {/* Scripture Reference */}
-                          <div className="flex items-start gap-3 p-3 rounded-md bg-white/5">
+                          {/* Primary Scripture Reference */}
+                          <div className="flex items-start gap-3 p-3 rounded-md bg-white/5 mb-3">
                             <BookOpen className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
                             <div>
                               <p className="text-amber-400 font-semibold text-sm">{item.scripture}</p>
                               <p className="text-white/70 text-sm italic mt-1">"{item.scriptureText}"</p>
+                            </div>
+                          </div>
+
+                          {/* Supporting Scripture - Romans 14 / 1 Cor 8 */}
+                          <div className="flex items-start gap-3 p-3 rounded-md bg-purple-500/10 border border-purple-500/20">
+                            <Heart className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
+                            <div>
+                              <p className="text-purple-300 text-xs font-medium mb-1">Conscience Principle</p>
+                              <p className="text-purple-400 font-semibold text-sm">{item.supportingScripture}</p>
+                              <p className="text-white/70 text-sm italic mt-1">"{item.supportingText}"</p>
                             </div>
                           </div>
                         </div>
