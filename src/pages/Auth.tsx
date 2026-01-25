@@ -19,12 +19,12 @@ import { PasswordStrengthIndicator } from '@/components/PasswordStrengthIndicato
 import { usePasswordBreachCheck } from '@/hooks/use-password-breach-check';
 import { useDisposableEmailCheck } from '@/hooks/use-disposable-email-check';
 import { cn } from '@/lib/utils';
-import { ProofAudioPlayer } from '@/components/proof/ProofAudioPlayer';
+
 import { ProofLetterAudio } from '@/components/proof/ProofLetterAudio';
 import { PROOF_FRAMEWORK_DATA } from '@/lib/proofFrameworkData';
-import { GuildJourneyDiagram, GuildAudioPlayer } from '@/components/ancient-guilds';
 import { generateGuildOnePagerPDF } from '@/lib/guild-onepager-pdf';
 import { generateGuildComparisonPDF } from '@/lib/guild-comparison-pdf';
+import { ProofAudioPlayer } from '@/components/proof/ProofAudioPlayer';
 
 const FEATURED_TOOLS = [
   {
@@ -1119,8 +1119,11 @@ const Auth = () => {
                                 )}
                                 {item.letter === "P" && (
                                   <div className="mt-4 space-y-4">
-                                    <GuildJourneyDiagram />
-                                    <GuildAudioPlayer />
+                                    <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                                      <p className="text-blue-300 text-sm">
+                                        <strong>Ancient Guild Context:</strong> Jesus as a τέκτων (tekton/carpenter) and Paul as a tentmaker participated in guild-organized trades with structured apprenticeship, mentorship, and brotherhood.
+                                      </p>
+                                    </div>
                                     <div className="flex flex-wrap gap-2 pt-2">
                                       <Button
                                         variant="outline"
