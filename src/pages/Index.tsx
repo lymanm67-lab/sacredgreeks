@@ -40,12 +40,12 @@ const Index = () => {
 
   return (
     <div className={cn(
-      "min-h-screen bg-slate-900 flex flex-col",
+      "min-h-screen bg-[hsl(225,50%,8%)] flex flex-col",
       isDemoMode && "pt-11"
     )}>
-      {/* Dark Slate Header */}
+      {/* Dark Navy Header */}
       <header className={cn(
-        "border-b border-slate-700/50 bg-slate-900/95 backdrop-blur-sm sticky z-50",
+        "border-b border-slate-700/50 bg-[hsl(225,50%,8%)]/95 backdrop-blur-sm sticky z-50",
         isDemoMode ? "top-11" : "top-0"
       )}>
         <div className="container mx-auto px-3 sm:px-4">
@@ -75,17 +75,17 @@ const Index = () => {
       </header>
 
       {/* Main Content - Scrollable on mobile */}
-      <main className="flex-1 flex flex-col items-center px-3 sm:px-4 py-6 sm:py-8 md:py-12 overflow-y-auto bg-slate-900">
+      <main className="flex-1 flex flex-col items-center px-3 sm:px-4 py-6 sm:py-8 md:py-12 overflow-y-auto bg-[hsl(225,50%,8%)]">
         {/* Hero Card */}
         <Card className="w-full max-w-lg shadow-xl border-slate-700/50 overflow-hidden animate-fade-in bg-slate-800/50">
-          {/* Decorative top gradient bar - Cyan accent */}
-          <div className="h-1.5 bg-cyan-500" />
+          {/* Decorative top gradient bar - Blue accent */}
+          <div className="h-1.5 bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500" />
           
           <CardContent className="p-4 sm:p-6 md:p-8">
             {/* Logo with glow effect */}
             <div className="flex justify-center mb-4 sm:mb-5">
               <div className="relative">
-                <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-xl animate-pulse" />
+                <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-xl animate-pulse" />
                 <div className="relative bg-gradient-to-br from-slate-700 to-slate-800 rounded-full p-3 sm:p-4 border-2 border-slate-600 shadow-lg">
                   <img
                     src={logo}
@@ -101,28 +101,28 @@ const Index = () => {
             <div className="text-center mb-5 sm:mb-6">
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-3 leading-tight">
                 Faith + Greek Life,{' '}
-                <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                <span className="gradient-shimmer">
                   United
                 </span>
               </h1>
               <p className="text-slate-400 text-sm sm:text-base md:text-lg max-w-md mx-auto leading-relaxed">
                 Daily devotionals, biblical guidance, and practical tools to help you{' '}
-                <span className="font-semibold text-white">thrive in faith and fraternity</span>
+                <span className="gradient-shimmer font-semibold">thrive</span> in faith and fraternity
               </p>
             </div>
 
             {/* Trust indicators */}
             <div className="flex items-center justify-center gap-4 sm:gap-6 mb-5 sm:mb-6 text-xs sm:text-sm text-slate-400">
               <div className="flex items-center gap-1.5">
-                <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
+                <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400" />
                 <span>Faith-First</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
+                <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400" />
                 <span>Community</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
+                <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400" />
                 <span>Daily Growth</span>
               </div>
             </div>
@@ -149,10 +149,10 @@ const Index = () => {
               {/* Create Account Option - Primary CTA with cyan accent */}
               <button
                 onClick={handleCreateAccount}
-                className="w-full p-3 sm:p-4 rounded-xl border border-cyan-500/50 bg-slate-700/50 hover:bg-slate-700 transition-all text-left flex items-center gap-3 sm:gap-4 group shadow-md hover:shadow-lg hover:border-cyan-400"
+                className="w-full p-3 sm:p-4 rounded-xl border border-blue-500/50 bg-slate-700/50 hover:bg-slate-700 transition-all text-left flex items-center gap-3 sm:gap-4 group shadow-md hover:shadow-lg hover:border-blue-400"
               >
-                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0 group-hover:bg-cyan-500/30 transition-all">
-                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-500/30 transition-all">
+                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <h3 className="font-semibold text-white text-sm sm:text-base">Create Your Account</h3>
@@ -160,7 +160,7 @@ const Index = () => {
                     Start your personalized faith journey today
                   </p>
                 </div>
-                <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-blue-400 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
               </button>
 
               {/* Sign In Option */}
