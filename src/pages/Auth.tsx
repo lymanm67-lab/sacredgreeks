@@ -411,7 +411,7 @@ const Auth = () => {
       <div className="flex-1 flex items-center justify-center p-4 md:p-6 lg:p-8">
         <div className="w-full max-w-5xl grid md:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
           {/* Left side - Value Proposition */}
-          <div className="hidden md:block space-y-6 lg:space-y-8">
+          <div className="hidden md:block space-y-6 lg:space-y-8 animate-fade-in">
             <div>
               <img src={logo} alt="Sacred Greeks" className="w-16 h-16 lg:w-20 lg:h-20 rounded-full object-cover mb-3 lg:mb-4" />
               <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-2">
@@ -424,7 +424,11 @@ const Auth = () => {
 
             <div className="space-y-3 lg:space-y-4">
               {VALUE_PROPOSITIONS.map((item, index) => (
-                <div key={index} className="flex items-start gap-3">
+                <div 
+                  key={index} 
+                  className="flex items-start gap-3 animate-fade-in"
+                  style={{ animationDelay: `${(index + 1) * 100}ms` }}
+                >
                   <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
                     <item.icon className="w-4 h-4 lg:w-5 lg:h-5 text-primary" />
                   </div>
@@ -436,7 +440,7 @@ const Auth = () => {
               ))}
             </div>
 
-            <div className="pt-3 lg:pt-4 border-t border-border">
+            <div className="pt-3 lg:pt-4 border-t border-border animate-fade-in" style={{ animationDelay: '600ms' }}>
               <p className="text-xs lg:text-sm text-muted-foreground flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-primary" />
                 100% free to start. No credit card required.
@@ -445,14 +449,28 @@ const Auth = () => {
           </div>
 
           {/* Right side - Auth Form */}
-          <div className="w-full max-w-sm mx-auto md:mx-0">
+          <div className="w-full max-w-sm mx-auto md:mx-0 animate-fade-in">
             {/* Mobile-only header */}
-            <div className="text-center mb-6 md:hidden">
-              <img src={logo} alt="Sacred Greeks" className="w-16 h-16 rounded-full object-cover mx-auto mb-3" />
-              <h1 className="text-2xl font-bold">Sacred Greeks</h1>
-              <p className="text-sm text-muted-foreground mt-1">
-                Navigate faith and Greek life
+            <div className="text-center mb-4 md:hidden">
+              <img src={logo} alt="Sacred Greeks" className="w-14 h-14 rounded-full object-cover mx-auto mb-2" />
+              <h1 className="text-xl font-bold">Sacred Greeks</h1>
+              <p className="text-xs text-muted-foreground mt-1">
+                Faith + Greek Life, United
               </p>
+            </div>
+
+            {/* Mobile-only condensed features */}
+            <div className="flex flex-wrap justify-center gap-2 mb-4 md:hidden">
+              {VALUE_PROPOSITIONS.slice(0, 4).map((item, index) => (
+                <div 
+                  key={index} 
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-primary/10 text-xs animate-fade-in"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <item.icon className="w-3 h-3 text-primary" />
+                  <span className="text-foreground font-medium">{item.title}</span>
+                </div>
+              ))}
             </div>
 
             <Tabs defaultValue="signin" className="w-full">
