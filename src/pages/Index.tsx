@@ -40,12 +40,12 @@ const Index = () => {
 
   return (
     <div className={cn(
-      "min-h-screen bg-gradient-to-b from-background via-background to-muted/50 flex flex-col",
+      "min-h-screen bg-slate-900 flex flex-col",
       isDemoMode && "pt-11"
     )}>
-      {/* Simple Header */}
+      {/* Dark Slate Header */}
       <header className={cn(
-        "border-b border-border/50 bg-background/80 backdrop-blur-sm sticky z-50",
+        "border-b border-slate-700/50 bg-slate-900/95 backdrop-blur-sm sticky z-50",
         isDemoMode ? "top-11" : "top-0"
       )}>
         <div className="container mx-auto px-3 sm:px-4">
@@ -57,14 +57,14 @@ const Index = () => {
                 className="h-7 w-7 sm:h-8 sm:w-8 rounded-full object-cover bg-transparent transition-transform group-hover:scale-105"
                 loading="lazy"
               />
-              <span className="font-semibold text-foreground hidden sm:inline">Sacred Greeks</span>
+              <span className="font-semibold text-white hidden sm:inline">Sacred Greeks</span>
             </Link>
             <div className="flex items-center gap-1 sm:gap-2">
               <Button 
                 onClick={handleSignIn}
                 variant="ghost"
                 size="sm"
-                className="text-xs sm:text-sm px-2 sm:px-3"
+                className="text-xs sm:text-sm px-2 sm:px-3 text-slate-300 hover:text-white hover:bg-slate-800"
               >
                 Sign In
               </Button>
@@ -75,18 +75,18 @@ const Index = () => {
       </header>
 
       {/* Main Content - Scrollable on mobile */}
-      <main className="flex-1 flex flex-col items-center px-3 sm:px-4 py-6 sm:py-8 md:py-12 overflow-y-auto">
+      <main className="flex-1 flex flex-col items-center px-3 sm:px-4 py-6 sm:py-8 md:py-12 overflow-y-auto bg-slate-900">
         {/* Hero Card */}
-        <Card className="w-full max-w-lg shadow-xl border-border/50 overflow-hidden animate-fade-in">
-          {/* Decorative top gradient bar */}
-          <div className="h-1.5 bg-gradient-to-r from-primary via-primary/80 to-primary/60" />
+        <Card className="w-full max-w-lg shadow-xl border-slate-700/50 overflow-hidden animate-fade-in bg-slate-800/50">
+          {/* Decorative top gradient bar - Cyan accent */}
+          <div className="h-1.5 bg-cyan-500" />
           
           <CardContent className="p-4 sm:p-6 md:p-8">
             {/* Logo with glow effect */}
             <div className="flex justify-center mb-4 sm:mb-5">
               <div className="relative">
-                <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl animate-pulse" />
-                <div className="relative bg-gradient-to-br from-primary/15 to-primary/5 rounded-full p-3 sm:p-4 border border-primary/30 shadow-lg">
+                <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-xl animate-pulse" />
+                <div className="relative bg-gradient-to-br from-slate-700 to-slate-800 rounded-full p-3 sm:p-4 border-2 border-slate-600 shadow-lg">
                   <img
                     src={logo}
                     alt="Sacred Greeks"
@@ -99,30 +99,30 @@ const Index = () => {
 
             {/* Strong Value Proposition */}
             <div className="text-center mb-5 sm:mb-6">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2 sm:mb-3 leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-3 leading-tight">
                 Faith + Greek Life,{' '}
-                <span className="bg-gradient-to-r from-primary via-emerald-500 to-primary bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
                   United
                 </span>
               </h1>
-              <p className="text-muted-foreground text-sm sm:text-base md:text-lg max-w-md mx-auto leading-relaxed">
+              <p className="text-slate-400 text-sm sm:text-base md:text-lg max-w-md mx-auto leading-relaxed">
                 Daily devotionals, biblical guidance, and practical tools to help you{' '}
-                <span className="font-semibold text-foreground">thrive in faith and fraternity</span>
+                <span className="font-semibold text-white">thrive in faith and fraternity</span>
               </p>
             </div>
 
             {/* Trust indicators */}
-            <div className="flex items-center justify-center gap-4 sm:gap-6 mb-5 sm:mb-6 text-xs sm:text-sm text-muted-foreground">
+            <div className="flex items-center justify-center gap-4 sm:gap-6 mb-5 sm:mb-6 text-xs sm:text-sm text-slate-400">
               <div className="flex items-center gap-1.5">
-                <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" />
+                <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
                 <span>Faith-First</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" />
+                <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
                 <span>Community</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" />
+                <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
                 <span>Daily Growth</span>
               </div>
             </div>
@@ -132,52 +132,52 @@ const Index = () => {
               {/* Demo Option */}
               <button
                 onClick={handleDemoClick}
-                className="w-full p-3 sm:p-4 rounded-xl border border-border bg-background hover:bg-muted/50 hover:border-primary/30 transition-all text-left flex items-center gap-3 sm:gap-4 group shadow-sm hover:shadow-md"
+                className="w-full p-3 sm:p-4 rounded-xl border border-slate-600 bg-slate-700/50 hover:bg-slate-700 transition-all text-left flex items-center gap-3 sm:gap-4 group shadow-sm hover:shadow-md"
               >
-                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center flex-shrink-0 group-hover:from-primary/30 group-hover:to-primary/20 transition-all">
-                  <Play className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-slate-600 flex items-center justify-center flex-shrink-0 group-hover:bg-slate-500 transition-all">
+                  <Play className="w-4 h-4 sm:w-5 sm:h-5 text-slate-300" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h3 className="font-semibold text-foreground text-sm sm:text-base">Try Demo First</h3>
-                  <p className="text-xs sm:text-sm text-muted-foreground truncate sm:whitespace-normal">
+                  <h3 className="font-semibold text-white text-sm sm:text-base">Try Demo First</h3>
+                  <p className="text-xs sm:text-sm text-slate-400 truncate sm:whitespace-normal">
                     Explore all features with sample data
                   </p>
                 </div>
-                <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-slate-300 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
               </button>
 
-              {/* Create Account Option - Primary CTA */}
+              {/* Create Account Option - Primary CTA with cyan accent */}
               <button
                 onClick={handleCreateAccount}
-                className="w-full p-3 sm:p-4 rounded-xl border-2 border-primary/60 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 hover:from-primary/20 hover:via-primary/10 hover:to-primary/20 transition-all text-left flex items-center gap-3 sm:gap-4 group shadow-md hover:shadow-lg hover:border-primary"
+                className="w-full p-3 sm:p-4 rounded-xl border border-cyan-500/50 bg-slate-700/50 hover:bg-slate-700 transition-all text-left flex items-center gap-3 sm:gap-4 group shadow-md hover:shadow-lg hover:border-cyan-400"
               >
-                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center flex-shrink-0 shadow-md group-hover:scale-105 transition-transform">
-                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-primary-foreground" />
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0 group-hover:bg-cyan-500/30 transition-all">
+                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h3 className="font-semibold text-foreground text-sm sm:text-base">Create Your Account</h3>
-                  <p className="text-xs sm:text-sm text-muted-foreground truncate sm:whitespace-normal">
+                  <h3 className="font-semibold text-white text-sm sm:text-base">Create Your Account</h3>
+                  <p className="text-xs sm:text-sm text-slate-400 truncate sm:whitespace-normal">
                     Start your personalized faith journey today
                   </p>
                 </div>
-                <ChevronRight className="w-4 h-4 text-primary group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
               </button>
 
               {/* Sign In Option */}
               <button
                 onClick={handleSignIn}
-                className="w-full p-3 sm:p-4 rounded-xl border border-border bg-background hover:bg-muted/50 hover:border-primary/30 transition-all text-left flex items-center gap-3 sm:gap-4 group shadow-sm hover:shadow-md"
+                className="w-full p-3 sm:p-4 rounded-xl border border-slate-600 bg-slate-700/50 hover:bg-slate-700 transition-all text-left flex items-center gap-3 sm:gap-4 group shadow-sm hover:shadow-md"
               >
-                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center flex-shrink-0 group-hover:from-primary/30 group-hover:to-primary/20 transition-all">
-                  <User className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-slate-600 flex items-center justify-center flex-shrink-0 group-hover:bg-slate-500 transition-all">
+                  <User className="w-4 h-4 sm:w-5 sm:h-5 text-slate-300" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h3 className="font-semibold text-foreground text-sm sm:text-base">Sign In</h3>
-                  <p className="text-xs sm:text-sm text-muted-foreground">
+                  <h3 className="font-semibold text-white text-sm sm:text-base">Sign In</h3>
+                  <p className="text-xs sm:text-sm text-slate-400">
                     Already have an account? Continue here
                   </p>
                 </div>
-                <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-slate-300 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
               </button>
             </div>
           </CardContent>

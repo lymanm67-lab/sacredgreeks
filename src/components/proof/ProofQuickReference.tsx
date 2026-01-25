@@ -26,7 +26,7 @@ const proofResponses = [
     response: "Biblical mentorship involves testing character, not abusing it. We reject hazing while embracing accountability and growth through godly community (Hebrews 10:24-25).",
     scripture: "Hebrews 10:24-25",
     icon: Target,
-    color: "from-blue-500 to-indigo-600",
+    color: "from-blue-500 to-blue-600",
   },
   {
     letter: "R",
@@ -35,7 +35,7 @@ const proofResponses = [
     response: "Not all ceremonies are worship. Many rituals focus on history, values, and commitment—like weddings or graduations. We discern based on content, not assumption (1 Thessalonians 5:21).",
     scripture: "1 Thessalonians 5:21",
     icon: Sparkles,
-    color: "from-purple-500 to-violet-600",
+    color: "from-purple-500 to-purple-600",
   },
   {
     letter: "O",
@@ -44,7 +44,7 @@ const proofResponses = [
     response: "Using Greek letters doesn't mean worshiping Greek gods. Paul used Greek language and culture to spread the Gospel without endorsing paganism (Acts 17:22-28).",
     scripture: "Acts 17:22-28",
     icon: Scale,
-    color: "from-amber-500 to-orange-600",
+    color: "from-orange-500 to-orange-600",
   },
   {
     letter: "O",
@@ -53,7 +53,7 @@ const proofResponses = [
     response: "Privacy is not secrecy. Jesus had inner-circle moments with Peter, James, and John. Private ceremonies can simply mean membership-only experiences (Mark 5:37).",
     scripture: "Mark 5:37",
     icon: Eye,
-    color: "from-emerald-500 to-teal-600",
+    color: "from-green-500 to-green-600",
   },
   {
     letter: "F",
@@ -62,7 +62,7 @@ const proofResponses = [
     response: "An organization's origin doesn't determine its current purpose. Many institutions with complex histories serve godly purposes today. We are new creations in Christ (2 Corinthians 5:17).",
     scripture: "2 Corinthians 5:17",
     icon: Building,
-    color: "from-rose-500 to-pink-600",
+    color: "from-red-500 to-red-600",
   },
 ];
 
