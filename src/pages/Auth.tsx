@@ -19,8 +19,6 @@ import { PasswordStrengthIndicator } from '@/components/PasswordStrengthIndicato
 import { usePasswordBreachCheck } from '@/hooks/use-password-breach-check';
 import { useDisposableEmailCheck } from '@/hooks/use-disposable-email-check';
 import { cn } from '@/lib/utils';
-import { BeliefTeachingAudio } from '@/components/proof/BeliefTeachingAudio';
-import { FaithAuthoritySection } from '@/components/proof/FaithAuthoritySection';
 
 const FEATURED_TOOLS = [
   {
@@ -1026,15 +1024,6 @@ const Auth = () => {
         </div>
       </section>
 
-      {/* Faith & Authority Section - Power of Belief */}
-      <FaithAuthoritySection className="bg-slate-900/50" />
-
-      {/* Belief Teaching Audio */}
-      <section className="py-8 bg-slate-900/30">
-        <div className="container mx-auto px-4">
-          <BeliefTeachingAudio className="max-w-2xl mx-auto" />
-        </div>
-      </section>
 
       {/* P.R.O.O.F. Framework Section */}
       <section className="py-16 md:py-24 relative overflow-hidden">
