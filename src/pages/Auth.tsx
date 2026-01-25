@@ -27,7 +27,11 @@ const FEATURED_TOOLS = [
     subtitle: "Debunk Greek Life Misconceptions",
     description: "Get biblical answers to common objections about Greek life and faith compatibility.",
     tags: ["50+ Myths Debunked", "Scripture-Based", "Shareable Cards"],
-    link: "/mythbusters"
+    link: "/mythbusters",
+    bgColor: "bg-amber-500/20",
+    hoverBgColor: "bg-amber-500/30",
+    iconColor: "text-amber-400",
+    borderColor: "hover:border-amber-500/30"
   },
   {
     icon: Compass,
@@ -35,7 +39,11 @@ const FEATURED_TOOLS = [
     subtitle: "Understand Hidden Meanings",
     description: "Explore the biblical and historical context behind Greek letters, rituals, and traditions.",
     tags: ["100+ Symbols", "Historical Context", "Faith Connections"],
-    link: "/symbols"
+    link: "/symbols",
+    bgColor: "bg-purple-500/20",
+    hoverBgColor: "bg-purple-500/30",
+    iconColor: "text-purple-400",
+    borderColor: "hover:border-purple-500/30"
   },
   {
     icon: Shield,
@@ -43,7 +51,11 @@ const FEATURED_TOOLS = [
     subtitle: "Protect & Educate Your Chapter",
     description: "Access vital hazing prevention tools, success stories, and memorial resources to keep your organization safe.",
     tags: ["Prevention Tools", "Success Stories", "Memorial Wall"],
-    link: "/anti-hazing"
+    link: "/anti-hazing",
+    bgColor: "bg-red-500/20",
+    hoverBgColor: "bg-red-500/30",
+    iconColor: "text-red-400",
+    borderColor: "hover:border-red-500/30"
   }
 ];
 
@@ -54,7 +66,11 @@ const SECONDARY_TOOLS = [
     subtitle: "Faith Foundations for Greeks",
     description: "Dive deep into scripture with studies designed specifically for the Greek experience.",
     tags: ["12-Week Journey", "Group Guides", "Interactive Flashcards"],
-    link: "/bible-study"
+    link: "/bible-study",
+    bgColor: "bg-emerald-500/20",
+    hoverBgColor: "bg-emerald-500/30",
+    iconColor: "text-emerald-400",
+    borderColor: "hover:border-emerald-500/30"
   },
   {
     icon: Play,
@@ -62,7 +78,11 @@ const SECONDARY_TOOLS = [
     subtitle: "Learn Through Powerful Stories",
     description: "Watch testimonies, teachings, and discussions from Greeks who've navigated faith and fraternity life.",
     tags: ["50+ Videos", "Testimonies", "Teaching Series"],
-    link: "/video-library"
+    link: "/video-library",
+    bgColor: "bg-rose-500/20",
+    hoverBgColor: "bg-rose-500/30",
+    iconColor: "text-rose-400",
+    borderColor: "hover:border-rose-500/30"
   },
   {
     icon: Users,
@@ -70,7 +90,11 @@ const SECONDARY_TOOLS = [
     subtitle: "Guidance From Trusted Voices",
     description: "Connect with pastors and ministry leaders who understand the unique challenges of Greek life.",
     tags: ["Expert Insights", "Ministry Resources", "Leadership Tips"],
-    link: "/church-leaders"
+    link: "/church-leaders",
+    bgColor: "bg-sky-500/20",
+    hoverBgColor: "bg-sky-500/30",
+    iconColor: "text-sky-400",
+    borderColor: "hover:border-sky-500/30"
   }
 ];
 
@@ -782,10 +806,10 @@ const Auth = () => {
 
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {FEATURED_TOOLS.map((tool, index) => (
-              <Card key={index} className="group hover:shadow-xl transition-all duration-300 bg-white/5 border-white/10 hover:border-amber-500/30 hover:bg-white/10">
+              <Card key={index} className={`group hover:shadow-xl transition-all duration-300 bg-white/5 border-white/10 ${tool.borderColor} hover:bg-white/10`}>
                 <CardHeader>
-                  <div className="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center mb-4 group-hover:bg-amber-500/30 transition-colors">
-                    <tool.icon className="w-6 h-6 text-amber-400" />
+                  <div className={`w-12 h-12 rounded-xl ${tool.bgColor} flex items-center justify-center mb-4 group-hover:${tool.hoverBgColor} transition-colors`}>
+                    <tool.icon className={`w-6 h-6 ${tool.iconColor}`} />
                   </div>
                   <CardTitle className="text-lg text-white">{tool.title}</CardTitle>
                   <CardDescription className="font-medium text-white/70">{tool.subtitle}</CardDescription>
@@ -823,10 +847,10 @@ const Auth = () => {
           {showMoreTools && (
             <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-8">
               {SECONDARY_TOOLS.map((tool, index) => (
-                <Card key={index} className="group hover:shadow-xl transition-all duration-300 bg-white/5 border-white/10 hover:border-amber-500/30 hover:bg-white/10">
+                <Card key={index} className={`group hover:shadow-xl transition-all duration-300 bg-white/5 border-white/10 ${tool.borderColor} hover:bg-white/10`}>
                   <CardHeader>
-                    <div className="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center mb-4 group-hover:bg-amber-500/30 transition-colors">
-                      <tool.icon className="w-6 h-6 text-amber-400" />
+                    <div className={`w-12 h-12 rounded-xl ${tool.bgColor} flex items-center justify-center mb-4 group-hover:${tool.hoverBgColor} transition-colors`}>
+                      <tool.icon className={`w-6 h-6 ${tool.iconColor}`} />
                     </div>
                     <CardTitle className="text-lg text-white">{tool.title}</CardTitle>
                     <CardDescription className="font-medium text-white/70">{tool.subtitle}</CardDescription>
