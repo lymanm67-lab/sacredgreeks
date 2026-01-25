@@ -1026,6 +1026,16 @@ const Auth = () => {
         </div>
       </section>
 
+      {/* Faith & Authority Section - Power of Belief */}
+      <FaithAuthoritySection className="bg-slate-900/50" />
+
+      {/* Belief Teaching Audio */}
+      <section className="py-8 bg-slate-900/30">
+        <div className="container mx-auto px-4">
+          <BeliefTeachingAudio className="max-w-2xl mx-auto" />
+        </div>
+      </section>
+
       {/* P.R.O.O.F. Framework Section */}
       <section className="py-16 md:py-24 relative overflow-hidden">
         {/* Background decoration */}
@@ -1157,9 +1167,6 @@ const Auth = () => {
             })}
           </div>
 
-          {/* Belief Teaching Audio */}
-          <BeliefTeachingAudio className="mt-6 max-w-2xl mx-auto" />
-
           <div className="text-center mt-8">
             <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600" asChild>
               <Link to="/proof">Learn More About P.R.O.O.F.</Link>
@@ -1167,9 +1174,6 @@ const Auth = () => {
           </div>
         </div>
       </section>
-
-      {/* Faith & Authority Section */}
-      <FaithAuthoritySection className="bg-slate-900/50" />
 
       {/* Testimonials Section */}
       <section className="py-16 md:py-24 bg-slate-800/30">
