@@ -1133,13 +1133,18 @@ const Auth = () => {
                           </div>
 
                           {/* Supporting Scripture - Romans 14 / 1 Cor 8 */}
-                          <div className="flex items-start gap-3 p-3 rounded-md bg-purple-500/10 border border-purple-500/20">
-                            <Heart className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
-                            <div>
-                              <p className="text-purple-300 text-xs font-medium mb-1">Conscience Principle</p>
-                              <p className="text-purple-400 font-semibold text-sm">{item.supportingScripture}</p>
-                              <p className="text-white/70 text-sm italic mt-1">"{item.supportingText}"</p>
+                          <div className="p-3 rounded-md bg-purple-500/10 border border-purple-500/20">
+                            <div className="flex items-start gap-3">
+                              <Heart className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
+                              <div>
+                                <p className="text-purple-300 text-xs font-medium mb-1">Conscience Principle</p>
+                                <p className="text-purple-400 font-semibold text-sm">{item.supportingScripture}</p>
+                                <p className="text-white/70 text-sm italic mt-1">"{item.supportingText}"</p>
+                              </div>
                             </div>
+                            <p className="text-white/50 text-xs mt-3 pl-8 border-t border-purple-500/20 pt-2">
+                              💡 <span className="text-purple-300/80">Believers may hold different convictions on secondary matters while remaining faithful.</span> What defiles one person's conscience may be permissible for another—but both must act from faith.
+                            </p>
                           </div>
                         </div>
                       </div>
