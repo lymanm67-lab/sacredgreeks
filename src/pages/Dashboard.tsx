@@ -375,7 +375,7 @@ const Dashboard = () => {
           {/* Quick Links */}
           <div className="grid gap-4 md:grid-cols-2">
             <Link to="/journey">
-              <Card className="border border-border bg-background hover:border-primary/50 transition-all cursor-pointer h-full">
+              <Card data-tour="journey" className="border border-border bg-background hover:border-primary/50 transition-all cursor-pointer h-full">
                 <CardContent className="pt-6">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-sacred to-warm-blue flex items-center justify-center">
