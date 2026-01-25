@@ -1,74 +1,13 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Target, Sparkles, Scale, Eye, Building, ChevronDown, Quote } from "lucide-react";
+import { ChevronDown, ChevronUp, Quote, AlertTriangle, Heart, Share2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { PROOF_FRAMEWORK_DATA, generateShareableText } from "@/lib/proofFrameworkData";
+import { toast } from "sonner";
 
 const STORAGE_KEY = "proof-section-expanded";
-
-const proofSteps = [
-  {
-    letter: "P",
-    word: "Pledge Process",
-    criticism: "Hazing concerns",
-    description: "Biblical guidance on navigating intake processes with integrity",
-    response: "Biblical mentorship involves testing character, not abusing it. We reject hazing while embracing accountability and growth through godly community.",
-    scripture: "Hebrews 10:24-25",
-    scriptureText: "And let us consider how to stir up one another to love and good works...",
-    icon: Target,
-    color: "bg-blue-500",
-    gradientColor: "from-blue-500 to-blue-600",
-  },
-  {
-    letter: "R",
-    word: "Rituals",
-    criticism: "Demonic portals",
-    description: "Discerning ceremonial practices through a scriptural lens",
-    response: "Not all ceremonies are worship. Many rituals focus on history, values, and commitment—like weddings or graduations. We discern based on content, not assumption.",
-    scripture: "1 Thessalonians 5:21",
-    scriptureText: "Test everything; hold fast what is good.",
-    icon: Sparkles,
-    color: "bg-purple-500",
-    gradientColor: "from-purple-500 to-purple-600",
-  },
-  {
-    letter: "O",
-    word: "Oaths",
-    criticism: "Greek deity allegiance",
-    description: "Understanding vows and commitments in light of Scripture",
-    response: "Using Greek letters doesn't mean worshiping Greek gods. Paul used Greek language and culture to spread the Gospel without endorsing paganism.",
-    scripture: "Acts 17:22-28",
-    scriptureText: "For as I passed along and observed the objects of your worship...",
-    icon: Scale,
-    color: "bg-orange-500",
-    gradientColor: "from-orange-500 to-orange-600",
-  },
-  {
-    letter: "O",
-    word: "Obscurity",
-    criticism: "Secret societies",
-    description: "Addressing secrecy concerns while walking in the light",
-    response: "Privacy is not secrecy. Jesus had inner-circle moments with Peter, James, and John. Private ceremonies can simply mean membership-only experiences.",
-    scripture: "Mark 5:37",
-    scriptureText: "And he allowed no one to follow him except Peter and James and John...",
-    icon: Eye,
-    color: "bg-green-500",
-    gradientColor: "from-green-500 to-green-600",
-  },
-  {
-    letter: "F",
-    word: "Founders",
-    criticism: "Masonic connections",
-    description: "Examining organizational history and foundations biblically",
-    response: "An organization's origin doesn't determine its current purpose. Many institutions with complex histories serve godly purposes today. We are new creations in Christ.",
-    scripture: "2 Corinthians 5:17",
-    scriptureText: "Therefore, if anyone is in Christ, he is a new creation...",
-    icon: Building,
-    color: "bg-red-500",
-    gradientColor: "from-red-500 to-red-600",
-  },
-];
 
 export function ProofFrameworkSection() {
   const [isOpen, setIsOpen] = useState(() => {
@@ -95,7 +34,7 @@ export function ProofFrameworkSection() {
               <div className="flex items-center gap-3 sm:gap-4">
                 {/* Letter badges in a row */}
                 <div className="flex -space-x-1">
-                  {proofSteps.map((step, index) => (
+                  {PROOF_FRAMEWORK_DATA.map((step, index) => (
                     <div
                       key={step.letter + index}
                       className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full ${step.color} flex items-center justify-center border-2 border-background shadow-sm`}
@@ -138,8 +77,8 @@ export function ProofFrameworkSection() {
                 >
                   <div className="h-px bg-border mb-3" />
                   
-                  {proofSteps.map((step, index) => {
-                    const itemKey = step.letter + step.word;
+                  {PROOF_FRAMEWORK_DATA.map((step, index) => {
+                    const itemKey = step.letter + step.title;
                     const isItemExpanded = expandedItem === itemKey;
                     
                     return (
@@ -165,7 +104,7 @@ export function ProofFrameworkSection() {
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-center gap-2 flex-wrap">
                                   <h4 className="font-medium text-foreground text-sm">
-                                    {step.word}
+                                    {step.title}
                                   </h4>
                                   <span className="text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
                                     {step.criticism}
