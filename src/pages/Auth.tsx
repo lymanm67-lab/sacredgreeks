@@ -47,6 +47,33 @@ const FEATURED_TOOLS = [
   }
 ];
 
+const SECONDARY_TOOLS = [
+  {
+    icon: BookOpen,
+    title: "Greek Life Bible Study",
+    subtitle: "Faith Foundations for Greeks",
+    description: "Dive deep into scripture with studies designed specifically for the Greek experience.",
+    tags: ["12-Week Journey", "Group Guides", "Interactive Flashcards"],
+    link: "/bible-study"
+  },
+  {
+    icon: Play,
+    title: "Video Library",
+    subtitle: "Learn Through Powerful Stories",
+    description: "Watch testimonies, teachings, and discussions from Greeks who've navigated faith and fraternity life.",
+    tags: ["50+ Videos", "Testimonies", "Teaching Series"],
+    link: "/video-library"
+  },
+  {
+    icon: Users,
+    title: "Church Leaders",
+    subtitle: "Guidance From Trusted Voices",
+    description: "Connect with pastors and ministry leaders who understand the unique challenges of Greek life.",
+    tags: ["Expert Insights", "Ministry Resources", "Leadership Tips"],
+    link: "/church-leaders"
+  }
+];
+
 const PROOF_FRAMEWORK = [
   { letter: "P", title: "Pledge Process", description: "How does the intake and pledging process align with biblical values?" },
   { letter: "R", title: "Rituals", description: "What rituals are involved and do they honor God?" },
@@ -791,6 +818,36 @@ const Auth = () => {
               {showMoreTools ? 'Show Less' : 'Explore More Tools'}
             </Button>
           </div>
+
+          {/* Secondary Tools - shown when expanded */}
+          {showMoreTools && (
+            <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-8">
+              {SECONDARY_TOOLS.map((tool, index) => (
+                <Card key={index} className="group hover:shadow-xl transition-all duration-300 bg-white/5 border-white/10 hover:border-emerald-500/30 hover:bg-white/10">
+                  <CardHeader>
+                    <div className="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center mb-4 group-hover:bg-emerald-500/30 transition-colors">
+                      <tool.icon className="w-6 h-6 text-emerald-400" />
+                    </div>
+                    <CardTitle className="text-lg text-white">{tool.title}</CardTitle>
+                    <CardDescription className="font-medium text-white/70">{tool.subtitle}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <p className="text-sm text-white/60">{tool.description}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {tool.tags.map((tag, i) => (
+                        <span key={i} className="text-xs px-2 py-1 rounded-full bg-white/10 text-white/60">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <Button variant="outline" size="sm" className="w-full border-white/20 text-white hover:bg-white/10" asChild>
+                      <Link to={tool.link}>Explore Demo</Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
 
           {/* D9 Orgs Badge */}
           <div className="flex flex-wrap items-center justify-center gap-3 mt-12">
