@@ -514,8 +514,8 @@ const Auth = () => {
         <div className="max-w-lg mx-auto">
           {/* Main Hero Card */}
           <div className="bg-slate-800/50 border border-slate-700 rounded-xl overflow-hidden">
-            {/* Teal/cyan gradient top border accent */}
-            <div className="h-1 bg-gradient-to-r from-teal-500 via-cyan-500 to-emerald-500" />
+            {/* Blue-cyan gradient top border accent */}
+            <div className="h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500" />
             
             <div className="p-8 text-center space-y-6">
               {/* Logo Badge */}
@@ -539,15 +539,15 @@ const Auth = () => {
               {/* Badges */}
               <div className="flex flex-wrap justify-center gap-4 pt-2">
                 <div className="flex items-center gap-2 text-slate-400">
-                  <Shield className="w-4 h-4 text-teal-400" />
+                  <Shield className="w-4 h-4 text-blue-400" />
                   <span className="text-sm">Faith-First</span>
                 </div>
                 <div className="flex items-center gap-2 text-slate-400">
-                  <Heart className="w-4 h-4 text-teal-400" />
+                  <Heart className="w-4 h-4 text-blue-400" />
                   <span className="text-sm">Community</span>
                 </div>
                 <div className="flex items-center gap-2 text-slate-400">
-                  <BookOpen className="w-4 h-4 text-teal-400" />
+                  <BookOpen className="w-4 h-4 text-blue-400" />
                   <span className="text-sm">Daily Growth</span>
                 </div>
               </div>
@@ -608,15 +608,15 @@ const Auth = () => {
             {pendingVerification ? (
               <div className="max-w-md mx-auto">
                 <div className="bg-slate-800/50 border border-slate-700 rounded-xl overflow-hidden">
-                  <div className="h-1 bg-gradient-to-r from-teal-500 via-cyan-500 to-emerald-500" />
+                  <div className="h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500" />
                   <div className="p-8 text-center space-y-4">
-                    <div className="w-16 h-16 mx-auto bg-teal-500/20 rounded-full flex items-center justify-center">
-                      <RefreshCw className="w-8 h-8 text-teal-400" />
+                    <div className="w-16 h-16 mx-auto bg-blue-500/20 rounded-full flex items-center justify-center">
+                      <RefreshCw className="w-8 h-8 text-blue-400" />
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-white">Check Your Email</h3>
                       <p className="text-slate-400 text-sm mt-2">
-                        We sent a verification link to <span className="text-teal-400">{pendingVerification}</span>
+                        We sent a verification link to <span className="text-blue-400">{pendingVerification}</span>
                       </p>
                     </div>
                     <Button
@@ -647,8 +647,8 @@ const Auth = () => {
             ) : (
               <div className="max-w-md mx-auto">
                 <div className="bg-slate-800/50 border border-slate-700 rounded-xl overflow-hidden">
-                  {/* Teal/cyan gradient top border */}
-                  <div className="h-1 bg-gradient-to-r from-teal-500 via-cyan-500 to-emerald-500" />
+                  {/* Blue-cyan gradient top border */}
+                  <div className="h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500" />
                   
                   <div className="p-8">
                     {/* Header */}
@@ -671,13 +671,13 @@ const Auth = () => {
                       <TabsList className="grid w-full grid-cols-2 mb-6 bg-slate-700/50 border border-slate-600 p-1 rounded-lg">
                         <TabsTrigger 
                           value="signin" 
-                          className="text-slate-300 data-[state=active]:bg-teal-500 data-[state=active]:text-white rounded-md transition-all"
+                          className="text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white rounded-md transition-all"
                         >
                           Sign In
                         </TabsTrigger>
                         <TabsTrigger 
                           value="signup" 
-                          className="text-slate-300 data-[state=active]:bg-teal-500 data-[state=active]:text-white rounded-md transition-all"
+                          className="text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white rounded-md transition-all"
                         >
                           Sign Up
                         </TabsTrigger>
@@ -696,7 +696,7 @@ const Auth = () => {
                               defaultValue={savedEmail}
                               autoComplete="email"
                               required
-                              className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-teal-500 focus:ring-teal-500/20"
+                              className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-blue-500 focus:ring-blue-500/20"
                             />
                           </div>
                           <div className="space-y-2">
@@ -870,7 +870,7 @@ const Auth = () => {
               <span className="text-sm font-medium">Featured Tools</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-              Everything You Need to <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">Thrive</span>
+              Everything You Need to <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent">Thrive</span>
             </h2>
             <p className="text-slate-400 max-w-2xl mx-auto">
               Powerful resources built by Greeks, for Greeks — grounded in faith and designed for your journey.
