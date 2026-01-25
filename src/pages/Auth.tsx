@@ -603,6 +603,227 @@ const Auth = () => {
         </div>
       </section>
 
+      {/* P.R.O.O.F. Framework Section - Moved higher for visibility */}
+      <section className="py-16 md:py-24 relative overflow-hidden bg-slate-900/50">
+        {/* Background decoration */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-20 right-20 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 left-20 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-12">
+            <p className="text-purple-400 font-medium mb-2">Our Framework</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">The P.R.O.O.F. Framework</h2>
+            <p className="text-white/60 max-w-2xl mx-auto">
+              A biblical approach to evaluating Greek life membership while maintaining your Christian faith and values.
+            </p>
+          </div>
+
+          {/* Audio Player */}
+          <ProofAudioPlayer className="max-w-2xl mx-auto mb-8" />
+
+          {/* Expand All Button */}
+          <div className="max-w-3xl mx-auto mb-4 flex justify-end">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setAllProofExpanded(!allProofExpanded)}
+              className="text-purple-400 hover:text-purple-300 hover:bg-purple-500/10"
+            >
+              {allProofExpanded ? (
+                <>
+                  <ChevronUp className="w-4 h-4 mr-2" />
+                  Collapse All
+                </>
+              ) : (
+                <>
+                  <ChevronDown className="w-4 h-4 mr-2" />
+                  Expand All
+                </>
+              )}
+            </Button>
+          </div>
+
+          <div className="max-w-3xl mx-auto space-y-4">
+            {PROOF_FRAMEWORK_DATA.map((item, index) => {
+              const isExpanded = allProofExpanded || expandedProof === index;
+              return (
+                <div 
+                  key={index}
+                  className={cn(
+                    "rounded-xl bg-white/5 border border-white/10 transition-all duration-300 overflow-hidden",
+                    isExpanded ? "bg-white/10 border-white/20" : "hover:bg-white/10"
+                  )}
+                >
+                  <button
+                    onClick={() => {
+                      if (allProofExpanded) {
+                        setAllProofExpanded(false);
+                        setExpandedProof(index);
+                      } else {
+                        setExpandedProof(expandedProof === index ? null : index);
+                      }
+                    }}
+                    className="w-full flex items-center gap-4 p-4 text-left"
+                  >
+                    <div className={`w-12 h-12 rounded-full ${item.color} flex items-center justify-center flex-shrink-0 shadow-lg`}>
+                      <span className="text-xl font-bold text-white">{item.letter}</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1 flex-wrap">
+                        <h3 className="font-semibold text-lg text-white">{item.title}</h3>
+                        <span className="px-2 py-0.5 text-xs rounded-full bg-red-500/20 text-red-300 border border-red-500/30">
+                          Criticism: {item.criticism}
+                        </span>
+                      </div>
+                      <p className="text-white/60 text-sm">{item.description}</p>
+                    </div>
+                    <ChevronDown className={cn(
+                      "w-5 h-5 text-white/60 transition-transform duration-300 flex-shrink-0",
+                      isExpanded && "rotate-180"
+                    )} />
+                  </button>
+                  
+                  {isExpanded && (
+                    <div className="px-4 pb-4 pt-0 border-t border-white/10 mt-0 animate-fade-in">
+                      <div className="pl-16 space-y-4 pt-4">
+                        {/* Criticism Example */}
+                        <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
+                          <div className="flex items-start gap-3">
+                            <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                            <div>
+                              <p className="text-red-300 font-medium text-sm mb-1">Common Criticism:</p>
+                              <p className="text-white/80 italic text-sm">{item.criticismExample}</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Biblical Response */}
+                        <div className="p-4 rounded-lg bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20">
+                          <p className="text-white/90 font-medium mb-3">
+                            <span className="text-cyan-400">Biblical Response:</span> {item.response}
+                          </p>
+                          
+                          {/* Primary Scripture Reference */}
+                          <div className="flex items-start gap-3 p-3 rounded-md bg-white/5 mb-3">
+                            <BookOpen className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                            <div>
+                              <p className="text-amber-400 font-semibold text-sm">{item.scripture}</p>
+                              <p className="text-white/70 text-sm italic mt-1">"{item.scriptureText}"</p>
+                            </div>
+                          </div>
+
+                          {/* Supporting Scripture - Romans 14 / 1 Cor 8 */}
+                          <div className="p-3 rounded-md bg-purple-500/10 border border-purple-500/20">
+                            <div className="flex items-start gap-3">
+                              <Heart className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
+                              <div>
+                                <p className="text-purple-300 text-xs font-medium mb-1">Conscience Principle</p>
+                                <p className="text-purple-400 font-semibold text-sm">{item.supportingScripture}</p>
+                                <p className="text-white/70 text-sm italic mt-1">"{item.supportingText}"</p>
+                              </div>
+                            </div>
+                            <p className="text-white/50 text-xs mt-3 pl-8 border-t border-purple-500/20 pt-2">
+                              💡 <span className="text-purple-300/80">Believers may hold different convictions on secondary matters while remaining faithful.</span> What defiles one person's conscience may be permissible for another—but both must act from faith.
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Core Principle - For all letters with corePrinciple */}
+                        {item.corePrinciple && (
+                          <div className="p-4 rounded-xl bg-gradient-to-r from-amber-500/20 via-orange-500/15 to-amber-500/20 border border-amber-500/30">
+                            <div className="flex items-start gap-3">
+                              <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                                <Zap className="w-5 h-5 text-amber-400" />
+                              </div>
+                              <div>
+                                <h4 className="text-amber-300 font-semibold text-sm mb-2">{item.corePrinciple.title}</h4>
+                                <p className="text-white/80 text-sm leading-relaxed">
+                                  {item.corePrinciple.text}
+                                </p>
+                                <div className="mt-3 p-2 rounded-md bg-amber-500/10 border border-amber-500/20">
+                                  <p className="text-amber-400 font-semibold text-xs">{item.corePrinciple.scripture}</p>
+                                  <p className="text-white/70 text-xs italic mt-1">"{item.corePrinciple.scriptureText}"</p>
+                                </div>
+                                {item.letter === "R" && (
+                                  <Link 
+                                    to="/faith-authority" 
+                                    className="inline-flex items-center gap-1 mt-3 text-amber-400 hover:text-amber-300 text-xs font-medium transition-colors"
+                                  >
+                                    Learn more about Faith & Authority
+                                    <ChevronRight className="w-3 h-3" />
+                                  </Link>
+                                )}
+                                {item.letter === "P" && (
+                                  <div className="mt-4 space-y-4">
+                                    <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                                      <p className="text-blue-300 text-sm">
+                                        <strong>Ancient Guild Context:</strong> Jesus as a τέκτων (tekton/carpenter) and Paul as a tentmaker participated in guild-organized trades with structured apprenticeship, mentorship, and brotherhood.
+                                      </p>
+                                    </div>
+                                    <div className="flex flex-wrap gap-2 pt-2">
+                                      <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => generateGuildOnePagerPDF()}
+                                        className="text-amber-300 border-amber-500/30 hover:bg-amber-500/10 text-xs"
+                                      >
+                                        <FileDown className="w-3 h-3 mr-1" />
+                                        Download One-Pager PDF
+                                      </Button>
+                                      <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => generateGuildComparisonPDF()}
+                                        className="text-amber-300 border-amber-500/30 hover:bg-amber-500/10 text-xs"
+                                      >
+                                        <FileDown className="w-3 h-3 mr-1" />
+                                        Full Comparison Guide
+                                      </Button>
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Listen Button for this section */}
+                        <div className="flex justify-end pt-2 border-t border-white/10">
+                          <ProofLetterAudio 
+                            letter={item.letter}
+                            title={item.title}
+                            criticism={item.criticism}
+                            criticismExample={item.criticismExample}
+                            response={item.response}
+                            scripture={item.scripture}
+                            scriptureText={item.scriptureText}
+                            supportingScripture={item.supportingScripture}
+                            supportingText={item.supportingText}
+                            corePrinciple={item.corePrinciple ? `Core Principle - ${item.corePrinciple.title}: ${item.corePrinciple.text} Scripture says in ${item.corePrinciple.scripture}: "${item.corePrinciple.scriptureText}"` : undefined}
+                            className="text-purple-300 hover:text-purple-200 hover:bg-purple-500/10"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="text-center mt-8 flex flex-wrap justify-center gap-4">
+            <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600" asChild>
+              <Link to="/proof-course">Learn More About P.R.O.O.F.</Link>
+            </Button>
+            <Button variant="outline" className="border-amber-500/30 text-amber-300 hover:bg-amber-500/10" asChild>
+              <Link to="/faith-authority">Faith & Authority Teaching</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Auth Forms Section */}
       {showAuthForm && (
         <section className="py-12 bg-[hsl(225,50%,8%)]" id="auth-form">
@@ -960,228 +1181,6 @@ const Auth = () => {
               </span>
             ))}
             <span className="text-sm text-white/60">500+ Greeks growing in faith</span>
-          </div>
-        </div>
-      </section>
-
-
-      {/* P.R.O.O.F. Framework Section */}
-      <section className="py-16 md:py-24 relative overflow-hidden bg-slate-900/50">
-        {/* Background decoration */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 right-20 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 left-20 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
-        </div>
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-12">
-            <p className="text-purple-400 font-medium mb-2">Our Framework</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">The P.R.O.O.F. Framework</h2>
-            <p className="text-white/60 max-w-2xl mx-auto">
-              A biblical approach to evaluating Greek life membership while maintaining your Christian faith and values.
-            </p>
-          </div>
-
-          {/* Audio Player */}
-          <ProofAudioPlayer className="max-w-2xl mx-auto mb-8" />
-
-          {/* Expand All Button */}
-          <div className="max-w-3xl mx-auto mb-4 flex justify-end">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setAllProofExpanded(!allProofExpanded)}
-              className="text-purple-400 hover:text-purple-300 hover:bg-purple-500/10"
-            >
-              {allProofExpanded ? (
-                <>
-                  <ChevronUp className="w-4 h-4 mr-2" />
-                  Collapse All
-                </>
-              ) : (
-                <>
-                  <ChevronDown className="w-4 h-4 mr-2" />
-                  Expand All
-                </>
-              )}
-            </Button>
-          </div>
-
-          <div className="max-w-3xl mx-auto space-y-4">
-            {PROOF_FRAMEWORK_DATA.map((item, index) => {
-              const isExpanded = allProofExpanded || expandedProof === index;
-              return (
-                <div 
-                  key={index}
-                  className={cn(
-                    "rounded-xl bg-white/5 border border-white/10 transition-all duration-300 overflow-hidden",
-                    isExpanded ? "bg-white/10 border-white/20" : "hover:bg-white/10"
-                  )}
-                >
-                  <button
-                    onClick={() => {
-                      if (allProofExpanded) {
-                        setAllProofExpanded(false);
-                        setExpandedProof(index);
-                      } else {
-                        setExpandedProof(expandedProof === index ? null : index);
-                      }
-                    }}
-                    className="w-full flex items-center gap-4 p-4 text-left"
-                  >
-                    <div className={`w-12 h-12 rounded-full ${item.color} flex items-center justify-center flex-shrink-0 shadow-lg`}>
-                      <span className="text-xl font-bold text-white">{item.letter}</span>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1 flex-wrap">
-                        <h3 className="font-semibold text-lg text-white">{item.title}</h3>
-                        <span className="px-2 py-0.5 text-xs rounded-full bg-red-500/20 text-red-300 border border-red-500/30">
-                          Criticism: {item.criticism}
-                        </span>
-                      </div>
-                      <p className="text-white/60 text-sm">{item.description}</p>
-                    </div>
-                    <ChevronDown className={cn(
-                      "w-5 h-5 text-white/60 transition-transform duration-300 flex-shrink-0",
-                      isExpanded && "rotate-180"
-                    )} />
-                  </button>
-                  
-                  {isExpanded && (
-                    <div className="px-4 pb-4 pt-0 border-t border-white/10 mt-0 animate-fade-in">
-                      <div className="pl-16 space-y-4 pt-4">
-                        {/* Criticism Example */}
-                        <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
-                          <div className="flex items-start gap-3">
-                            <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                            <div>
-                              <p className="text-red-300 font-medium text-sm mb-1">Common Criticism:</p>
-                              <p className="text-white/80 italic text-sm">{item.criticismExample}</p>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Biblical Response */}
-                        <div className="p-4 rounded-lg bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20">
-                          <p className="text-white/90 font-medium mb-3">
-                            <span className="text-cyan-400">Biblical Response:</span> {item.response}
-                          </p>
-                          
-                          {/* Primary Scripture Reference */}
-                          <div className="flex items-start gap-3 p-3 rounded-md bg-white/5 mb-3">
-                            <BookOpen className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-                            <div>
-                              <p className="text-amber-400 font-semibold text-sm">{item.scripture}</p>
-                              <p className="text-white/70 text-sm italic mt-1">"{item.scriptureText}"</p>
-                            </div>
-                          </div>
-
-                          {/* Supporting Scripture - Romans 14 / 1 Cor 8 */}
-                          <div className="p-3 rounded-md bg-purple-500/10 border border-purple-500/20">
-                            <div className="flex items-start gap-3">
-                              <Heart className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
-                              <div>
-                                <p className="text-purple-300 text-xs font-medium mb-1">Conscience Principle</p>
-                                <p className="text-purple-400 font-semibold text-sm">{item.supportingScripture}</p>
-                                <p className="text-white/70 text-sm italic mt-1">"{item.supportingText}"</p>
-                              </div>
-                            </div>
-                            <p className="text-white/50 text-xs mt-3 pl-8 border-t border-purple-500/20 pt-2">
-                              💡 <span className="text-purple-300/80">Believers may hold different convictions on secondary matters while remaining faithful.</span> What defiles one person's conscience may be permissible for another—but both must act from faith.
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* Core Principle - For all letters with corePrinciple */}
-                        {item.corePrinciple && (
-                          <div className="p-4 rounded-xl bg-gradient-to-r from-amber-500/20 via-orange-500/15 to-amber-500/20 border border-amber-500/30">
-                            <div className="flex items-start gap-3">
-                              <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-                                <Zap className="w-5 h-5 text-amber-400" />
-                              </div>
-                              <div>
-                                <h4 className="text-amber-300 font-semibold text-sm mb-2">{item.corePrinciple.title}</h4>
-                                <p className="text-white/80 text-sm leading-relaxed">
-                                  {item.corePrinciple.text}
-                                </p>
-                                <div className="mt-3 p-2 rounded-md bg-amber-500/10 border border-amber-500/20">
-                                  <p className="text-amber-400 font-semibold text-xs">{item.corePrinciple.scripture}</p>
-                                  <p className="text-white/70 text-xs italic mt-1">"{item.corePrinciple.scriptureText}"</p>
-                                </div>
-                                {item.letter === "R" && (
-                                  <Link 
-                                    to="/faith-authority" 
-                                    className="inline-flex items-center gap-1 mt-3 text-amber-400 hover:text-amber-300 text-xs font-medium transition-colors"
-                                  >
-                                    Learn more about Faith & Authority
-                                    <ChevronRight className="w-3 h-3" />
-                                  </Link>
-                                )}
-                                {item.letter === "P" && (
-                                  <div className="mt-4 space-y-4">
-                                    <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                                      <p className="text-blue-300 text-sm">
-                                        <strong>Ancient Guild Context:</strong> Jesus as a τέκτων (tekton/carpenter) and Paul as a tentmaker participated in guild-organized trades with structured apprenticeship, mentorship, and brotherhood.
-                                      </p>
-                                    </div>
-                                    <div className="flex flex-wrap gap-2 pt-2">
-                                      <Button
-                                        variant="outline"
-                                        size="sm"
-                                        onClick={() => generateGuildOnePagerPDF()}
-                                        className="text-amber-300 border-amber-500/30 hover:bg-amber-500/10 text-xs"
-                                      >
-                                        <FileDown className="w-3 h-3 mr-1" />
-                                        Download One-Pager PDF
-                                      </Button>
-                                      <Button
-                                        variant="outline"
-                                        size="sm"
-                                        onClick={() => generateGuildComparisonPDF()}
-                                        className="text-amber-300 border-amber-500/30 hover:bg-amber-500/10 text-xs"
-                                      >
-                                        <FileDown className="w-3 h-3 mr-1" />
-                                        Full Comparison Guide
-                                      </Button>
-                                    </div>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        )}
-
-                        {/* Listen Button for this section */}
-                        <div className="flex justify-end pt-2 border-t border-white/10">
-                          <ProofLetterAudio 
-                            letter={item.letter}
-                            title={item.title}
-                            criticism={item.criticism}
-                            criticismExample={item.criticismExample}
-                            response={item.response}
-                            scripture={item.scripture}
-                            scriptureText={item.scriptureText}
-                            supportingScripture={item.supportingScripture}
-                            supportingText={item.supportingText}
-                            corePrinciple={item.corePrinciple ? `Core Principle - ${item.corePrinciple.title}: ${item.corePrinciple.text} Scripture says in ${item.corePrinciple.scripture}: "${item.corePrinciple.scriptureText}"` : undefined}
-                            className="text-purple-300 hover:text-purple-200 hover:bg-purple-500/10"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="text-center mt-8 flex flex-wrap justify-center gap-4">
-            <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600" asChild>
-              <Link to="/proof-course">Learn More About P.R.O.O.F.</Link>
-            </Button>
-            <Button variant="outline" className="border-amber-500/30 text-amber-300 hover:bg-amber-500/10" asChild>
-              <Link to="/faith-authority">Faith & Authority Teaching</Link>
-            </Button>
           </div>
         </div>
       </section>
