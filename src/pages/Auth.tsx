@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Home, Eye, EyeOff, Mail, RefreshCw, AlertTriangle, Ban, Info, ExternalLink, BookOpen, Heart, Shield, Sparkles, CheckCircle2, MessageCircle, Users, Star, Zap } from 'lucide-react';
+import { Home, Eye, EyeOff, Mail, RefreshCw, AlertTriangle, Ban, Info, ExternalLink, BookOpen, Heart, Shield, Sparkles, CheckCircle2, MessageCircle, Users, Star, Zap, Search, FileText, Play } from 'lucide-react';
 import logo from '@/assets/sacred-greeks-logo.png';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -19,37 +19,35 @@ import { usePasswordBreachCheck } from '@/hooks/use-password-breach-check';
 import { useDisposableEmailCheck } from '@/hooks/use-disposable-email-check';
 import { cn } from '@/lib/utils';
 
-const VALUE_PROPOSITIONS = [
+const FEATURED_TOOLS = [
+  {
+    icon: Search,
+    title: "MythBusters",
+    description: "Scripture-based answers to every objection"
+  },
   {
     icon: BookOpen,
-    title: "Daily Devotionals",
-    description: "Scripture-based guidance for Greeks navigating faith",
-    gradient: "from-blue-500 to-cyan-500"
+    title: "Symbols & Rituals",
+    description: "Biblical & historical context for Greek traditions"
   },
   {
     icon: Shield,
-    title: "Biblical Responses",
-    description: "Answers to common objections about Greek life",
-    gradient: "from-emerald-500 to-teal-500"
+    title: "Anti-Hazing Resources",
+    description: "Prevention tools & memorial wall"
   },
   {
     icon: Heart,
     title: "Prayer Journal",
-    description: "Track your prayers and celebrate answered ones",
-    gradient: "from-rose-500 to-pink-500"
-  },
-  {
-    icon: MessageCircle,
-    title: "Community Support",
-    description: "Connect with fellow believers in Greek life",
-    gradient: "from-violet-500 to-purple-500"
-  },
-  {
-    icon: Sparkles,
-    title: "Spiritual Growth",
-    description: "Tools to deepen your faith journey",
-    gradient: "from-amber-500 to-orange-500"
+    description: "Track prayers & celebrate answered ones"
   }
+];
+
+const PROOF_LETTERS = [
+  { letter: "P", word: "Pledge", description: "Evaluate the commitment" },
+  { letter: "R", word: "Rituals", description: "Examine the practices" },
+  { letter: "O", word: "Oaths", description: "Assess the vows" },
+  { letter: "O", word: "Obscurity", description: "Consider the secrecy" },
+  { letter: "F", word: "Founders", description: "Research the origins" }
 ];
 
 const SOCIAL_PROOF = [
@@ -445,33 +443,52 @@ const Auth = () => {
                 />
               </div>
               
-              <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 leading-tight">
-                Where Faith Meets<br />
-                <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Greek Excellence</span>
+              <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 leading-tight">
+                Faith + Greek Life,<br />
+                <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">United</span>
               </h1>
               
-              <p className="text-lg lg:text-xl text-white/70 mb-8 max-w-md">
-                Join a community of Greeks who are unapologetically pursuing Christ while honoring their letters.
+              <p className="text-base lg:text-lg text-white/70 mb-6 max-w-md">
+                Everything you need to thrive in faith and fraternity.
               </p>
             </div>
 
-            {/* Features with glass-style icons */}
-            <div className="space-y-4 mb-8">
-              {VALUE_PROPOSITIONS.slice(0, 4).map((item, index) => (
+            {/* Featured Tools */}
+            <div className="space-y-3 mb-6">
+              <p className="text-xs uppercase tracking-wider text-white/40 font-medium">Featured Tools</p>
+              {FEATURED_TOOLS.map((item, index) => (
                 <div 
                   key={index} 
-                  className="flex items-center gap-4 animate-fade-in group"
-                  style={{ animationDelay: `${(index + 1) * 150}ms` }}
+                  className="flex items-center gap-3 animate-fade-in group"
+                  style={{ animationDelay: `${(index + 1) * 100}ms` }}
                 >
-                  <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl flex items-center justify-center bg-white/10 backdrop-blur-sm border border-white/10 group-hover:bg-white/15 transition-colors">
-                    <item.icon className="w-5 h-5 lg:w-6 lg:h-6 text-primary" />
+                  <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg flex items-center justify-center bg-white/10 backdrop-blur-sm border border-white/10 group-hover:bg-white/15 transition-colors">
+                    <item.icon className="w-4 h-4 lg:w-5 lg:h-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-white">{item.title}</h3>
-                    <p className="text-sm text-white/60">{item.description}</p>
+                    <h3 className="font-semibold text-sm text-white">{item.title}</h3>
+                    <p className="text-xs text-white/50">{item.description}</p>
                   </div>
                 </div>
               ))}
+            </div>
+
+            {/* P.R.O.O.F. Framework mini */}
+            <div 
+              className="p-4 rounded-xl bg-white/5 border border-white/10 mb-6 animate-fade-in"
+              style={{ animationDelay: '600ms' }}
+            >
+              <p className="text-xs uppercase tracking-wider text-white/40 font-medium mb-3">The P.R.O.O.F. Framework</p>
+              <div className="flex justify-between">
+                {PROOF_LETTERS.map((item, index) => (
+                  <div key={index} className="text-center group cursor-default">
+                    <div className="w-8 h-8 lg:w-9 lg:h-9 rounded-lg bg-primary/20 flex items-center justify-center mb-1 group-hover:bg-primary/30 transition-colors">
+                      <span className="text-sm lg:text-base font-bold text-primary">{item.letter}</span>
+                    </div>
+                    <span className="text-[10px] text-white/50 hidden lg:block">{item.word}</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Social proof */}
@@ -515,7 +532,7 @@ const Auth = () => {
 
             {/* Mobile-only condensed features */}
             <div className="flex flex-wrap justify-center gap-2 mb-6 md:hidden">
-              {VALUE_PROPOSITIONS.slice(0, 4).map((item, index) => (
+              {FEATURED_TOOLS.slice(0, 4).map((item, index) => (
                 <div 
                   key={index} 
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-[hsl(225,60%,15%)] text-white shadow-sm animate-fade-in"
