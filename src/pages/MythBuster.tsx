@@ -9,6 +9,7 @@ import { ArrowLeft, Search, BookOpen, ExternalLink, Filter, Copy, Check, Message
 import { mythBusterContent, mythCategories, mythScenarios, mythOrganizations } from '@/data/mythBusterContent';
 import { ListenButton } from '@/components/ListenButton';
 import { FISTFramework } from '@/components/myth-buster/FISTFramework';
+import { ProofQuickReference } from '@/components/proof/ProofQuickReference';
 import { MythBusterDownloads } from '@/components/myth-buster/MythBusterDownloads';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -120,6 +121,12 @@ const MythBuster = () => {
       <main className="container mx-auto px-4 py-8 max-w-4xl">
         {/* F.I.S.T. Framework */}
         <FISTFramework />
+
+        {/* P.R.O.O.F. Quick Reference */}
+        <div className="mb-8">
+          <ProofQuickReference />
+        </div>
+        
         
         {/* Search & Filter - Compact */}
         <div className="mb-8 space-y-4 bg-card p-4 rounded-lg border">
