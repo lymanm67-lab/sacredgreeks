@@ -408,36 +408,36 @@ const Auth = () => {
         </div>
       </header>
 
-      <div className="flex-1 flex items-center justify-center p-4">
-        <div className="w-full max-w-4xl grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <div className="flex-1 flex items-center justify-center p-4 md:p-6 lg:p-8">
+        <div className="w-full max-w-5xl grid md:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
           {/* Left side - Value Proposition */}
-          <div className="hidden lg:block space-y-8">
+          <div className="hidden md:block space-y-6 lg:space-y-8">
             <div>
-              <img src={logo} alt="Sacred Greeks" className="w-20 h-20 rounded-full object-cover mb-4" />
-              <h1 className="text-3xl font-bold text-foreground mb-2">
+              <img src={logo} alt="Sacred Greeks" className="w-16 h-16 lg:w-20 lg:h-20 rounded-full object-cover mb-3 lg:mb-4" />
+              <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-2">
                 Faith + Greek Life, <span className="text-primary">United</span>
               </h1>
-              <p className="text-muted-foreground text-lg">
+              <p className="text-muted-foreground text-base lg:text-lg">
                 Join thousands of Greeks navigating faith with confidence
               </p>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-3 lg:space-y-4">
               {VALUE_PROPOSITIONS.map((item, index) => (
                 <div key={index} className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <item.icon className="w-5 h-5 text-primary" />
+                  <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <item.icon className="w-4 h-4 lg:w-5 lg:h-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground">{item.description}</p>
+                    <h3 className="font-semibold text-sm lg:text-base text-foreground">{item.title}</h3>
+                    <p className="text-xs lg:text-sm text-muted-foreground">{item.description}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="pt-4 border-t border-border">
-              <p className="text-sm text-muted-foreground flex items-center gap-2">
+            <div className="pt-3 lg:pt-4 border-t border-border">
+              <p className="text-xs lg:text-sm text-muted-foreground flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-primary" />
                 100% free to start. No credit card required.
               </p>
@@ -445,9 +445,9 @@ const Auth = () => {
           </div>
 
           {/* Right side - Auth Form */}
-          <div className="w-full max-w-sm mx-auto lg:mx-0">
+          <div className="w-full max-w-sm mx-auto md:mx-0">
             {/* Mobile-only header */}
-            <div className="text-center mb-6 lg:hidden">
+            <div className="text-center mb-6 md:hidden">
               <img src={logo} alt="Sacred Greeks" className="w-16 h-16 rounded-full object-cover mx-auto mb-3" />
               <h1 className="text-2xl font-bold">Sacred Greeks</h1>
               <p className="text-sm text-muted-foreground mt-1">
