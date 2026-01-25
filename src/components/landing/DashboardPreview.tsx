@@ -12,7 +12,8 @@ const primaryFeatures = [
     subtitle: "Debunk Greek Life Misconceptions",
     description: "Get biblical answers to common objections about Greek life and faith compatibility.",
     gradient: "from-amber-500 via-orange-500 to-red-500",
-    bgGlow: "bg-orange-500/20",
+    bgGlow: "bg-orange-600/30",
+    borderColor: "border-orange-500/70",
     highlights: ["50+ Myths Debunked", "Scripture-Based", "Shareable Cards"],
     href: "/myth-buster",
   },
@@ -22,7 +23,8 @@ const primaryFeatures = [
     subtitle: "Understand Hidden Meanings",
     description: "Explore the biblical and historical context behind Greek letters, rituals, and traditions.",
     gradient: "from-violet-500 via-fuchsia-500 to-purple-600",
-    bgGlow: "bg-fuchsia-500/20",
+    bgGlow: "bg-fuchsia-600/30",
+    borderColor: "border-fuchsia-500/70",
     highlights: ["100+ Symbols", "Historical Context", "Faith Connections"],
     href: "/symbols",
   },
@@ -32,7 +34,8 @@ const primaryFeatures = [
     subtitle: "Protect & Educate Your Chapter",
     description: "Access vital hazing prevention tools, success stories, and memorial resources to keep your organization safe.",
     gradient: "from-red-500 via-rose-600 to-pink-600",
-    bgGlow: "bg-red-500/20",
+    bgGlow: "bg-red-600/30",
+    borderColor: "border-red-500/70",
     highlights: ["Prevention Tools", "Success Stories", "Memorial Wall"],
     href: "/anti-hazing",
   },
@@ -46,7 +49,8 @@ const secondaryFeatures = [
     subtitle: "Faith Foundations for Greeks",
     description: "Dive deep into scripture with studies designed specifically for the Greek experience.",
     gradient: "from-blue-500 via-sky-500 to-cyan-500",
-    bgGlow: "bg-blue-500/20",
+    bgGlow: "bg-blue-600/30",
+    borderColor: "border-blue-500/70",
     highlights: ["12-Week Journey", "Group Guides", "Interactive Flashcards"],
     href: "/bible-study",
   },
@@ -56,7 +60,8 @@ const secondaryFeatures = [
     subtitle: "Learn Through Powerful Stories",
     description: "Watch testimonies, teachings, and discussions from Greeks who've navigated faith and fraternity life.",
     gradient: "from-rose-500 via-pink-500 to-fuchsia-500",
-    bgGlow: "bg-pink-500/20",
+    bgGlow: "bg-pink-600/30",
+    borderColor: "border-pink-500/70",
     highlights: ["50+ Videos", "Testimonies", "Teaching Series"],
     href: "/content-hub",
   },
@@ -66,7 +71,8 @@ const secondaryFeatures = [
     subtitle: "Guidance From Trusted Voices",
     description: "Connect with pastors and ministry leaders who understand the unique challenges of Greek life.",
     gradient: "from-purple-500 via-violet-500 to-indigo-500",
-    bgGlow: "bg-purple-500/20",
+    bgGlow: "bg-purple-600/30",
+    borderColor: "border-purple-500/70",
     highlights: ["Expert Insights", "Ministry Resources", "Leadership Tips"],
     href: "/church-leaders",
   },
@@ -88,11 +94,11 @@ const FeatureCard = ({ feature, index, baseDelay = 0 }: FeatureCardProps) => (
   >
     <Link to={feature.href} className="block h-full">
       {/* Glow effect on hover */}
-      <div className={`absolute -inset-1 ${feature.bgGlow} rounded-2xl blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-500`} />
+      <div className={`absolute -inset-1 ${feature.bgGlow} rounded-2xl blur-xl opacity-40 group-hover:opacity-80 transition-opacity duration-500`} />
       
-      <div className="relative h-full bg-card border border-border/60 rounded-2xl p-5 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-primary/30 overflow-hidden cursor-pointer">
+      <div className={`relative h-full bg-card border-2 ${feature.borderColor} rounded-2xl p-5 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer`}>
         {/* Top gradient accent */}
-        <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${feature.gradient}`} />
+        <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${feature.gradient}`} />
         
         {/* Icon */}
         <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
