@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Home, Eye, EyeOff, RefreshCw, AlertTriangle, BookOpen, Heart, Shield, Search, Quote, Star, Users, ChevronRight, ChevronDown, ChevronUp, Sparkles, Play, Compass, User, Circle, Moon } from 'lucide-react';
+import { Home, Eye, EyeOff, RefreshCw, AlertTriangle, BookOpen, Heart, Shield, Quote, Star, Users, ChevronRight, ChevronDown, ChevronUp, Sparkles, Play, User, Moon, FileQuestion, ScrollText, Ban, Video, UserCheck } from 'lucide-react';
 import logo from '@/assets/sacred-greeks-logo.png';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -22,7 +22,7 @@ import { cn } from '@/lib/utils';
 
 const FEATURED_TOOLS = [
   {
-    icon: Search,
+    icon: FileQuestion,
     title: "MythBusters",
     subtitle: "Debunk Greek Life Misconceptions",
     description: "Get biblical answers to common objections about Greek life and faith compatibility.",
@@ -35,7 +35,7 @@ const FEATURED_TOOLS = [
     topBorderColor: "bg-orange-500"
   },
   {
-    icon: Compass,
+    icon: ScrollText,
     title: "Symbols & Rituals Guide",
     subtitle: "Understand Hidden Meanings",
     description: "Explore the biblical and historical context behind Greek letters, rituals, and traditions.",
@@ -48,7 +48,7 @@ const FEATURED_TOOLS = [
     topBorderColor: "bg-fuchsia-500"
   },
   {
-    icon: Shield,
+    icon: Ban,
     title: "Anti-Hazing Resources",
     subtitle: "Protect & Educate Your Chapter",
     description: "Access vital hazing prevention tools, success stories, and memorial resources to keep your organization safe.",
@@ -77,7 +77,7 @@ const SECONDARY_TOOLS = [
     topBorderColor: "bg-green-500"
   },
   {
-    icon: Play,
+    icon: Video,
     title: "Video Library",
     subtitle: "Learn Through Powerful Stories",
     description: "Watch testimonies, teachings, and discussions from Greeks who've navigated faith and fraternity life.",
@@ -90,7 +90,7 @@ const SECONDARY_TOOLS = [
     topBorderColor: "bg-pink-500"
   },
   {
-    icon: Users,
+    icon: UserCheck,
     title: "Church Leaders",
     subtitle: "Guidance From Trusted Voices",
     description: "Connect with pastors and ministry leaders who understand the unique challenges of Greek life.",
@@ -489,9 +489,9 @@ const Auth = () => {
   }
 
   return (
-    <div className={cn("min-h-screen bg-slate-900", isDemoMode && "pt-11")}>
+    <div className={cn("min-h-screen bg-[hsl(225,50%,8%)]", isDemoMode && "pt-11")}>
       {/* Navigation */}
-      <header className="border-b border-slate-700/50 bg-slate-900 sticky top-0 z-50">
+      <header className="border-b border-slate-700/50 bg-[hsl(225,50%,8%)] sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
             <img src={logo} alt="Sacred Greeks" className="w-10 h-10 rounded-full object-cover" />
@@ -514,8 +514,8 @@ const Auth = () => {
         <div className="max-w-lg mx-auto">
           {/* Main Hero Card */}
           <div className="bg-slate-800/50 border border-slate-700 rounded-xl overflow-hidden">
-            {/* Cyan top border accent */}
-            <div className="h-1 bg-cyan-500" />
+            {/* Teal/cyan gradient top border accent */}
+            <div className="h-1 bg-gradient-to-r from-teal-500 via-cyan-500 to-emerald-500" />
             
             <div className="p-8 text-center space-y-6">
               {/* Logo Badge */}
@@ -528,26 +528,26 @@ const Auth = () => {
               {/* Heading */}
               <div className="space-y-3">
                 <h1 className="text-3xl md:text-4xl font-bold text-white">
-                  Faith + Greek Life, <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">United</span>
+                  Faith + Greek Life, <span className="gradient-shimmer">United</span>
                 </h1>
                 <p className="text-slate-400 text-base">
                   Daily devotionals, biblical guidance, and practical tools<br />
-                  to help you <span className="text-white font-medium">thrive in faith and fraternity</span>
+                  to help you <span className="gradient-shimmer font-medium">thrive</span> in faith and fraternity
                 </p>
               </div>
 
               {/* Badges */}
               <div className="flex flex-wrap justify-center gap-4 pt-2">
                 <div className="flex items-center gap-2 text-slate-400">
-                  <Circle className="w-4 h-4" />
+                  <Shield className="w-4 h-4 text-teal-400" />
                   <span className="text-sm">Faith-First</span>
                 </div>
                 <div className="flex items-center gap-2 text-slate-400">
-                  <Heart className="w-4 h-4" />
+                  <Heart className="w-4 h-4 text-teal-400" />
                   <span className="text-sm">Community</span>
                 </div>
                 <div className="flex items-center gap-2 text-slate-400">
-                  <BookOpen className="w-4 h-4" />
+                  <BookOpen className="w-4 h-4 text-teal-400" />
                   <span className="text-sm">Daily Growth</span>
                 </div>
               </div>
@@ -570,15 +570,15 @@ const Auth = () => {
 
                 {/* Create Your Account - Highlighted */}
                 <button onClick={() => setShowAuthForm('signup')} className="w-full">
-                  <div className="flex items-center gap-4 p-4 bg-slate-700/50 hover:bg-slate-700 border border-cyan-500/50 rounded-lg transition-colors group">
-                    <div className="w-10 h-10 rounded-full bg-cyan-500/20 flex items-center justify-center">
-                      <Sparkles className="w-5 h-5 text-cyan-400" />
+                  <div className="flex items-center gap-4 p-4 bg-slate-700/50 hover:bg-slate-700 border border-teal-500/50 rounded-lg transition-colors group">
+                    <div className="w-10 h-10 rounded-full bg-teal-500/20 flex items-center justify-center">
+                      <Sparkles className="w-5 h-5 text-teal-400" />
                     </div>
                     <div className="flex-1 text-left">
                       <p className="font-semibold text-white">Create Your Account</p>
                       <p className="text-sm text-slate-400">Start your personalized faith journey today</p>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-slate-300 transition-colors" />
+                    <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-teal-400 transition-colors" />
                   </div>
                 </button>
 
@@ -603,20 +603,20 @@ const Auth = () => {
 
       {/* Auth Forms Section */}
       {showAuthForm && (
-        <section className="py-12 bg-slate-900" id="auth-form">
+        <section className="py-12 bg-[hsl(225,50%,8%)]" id="auth-form">
           <div className="container mx-auto px-4">
             {pendingVerification ? (
               <div className="max-w-md mx-auto">
                 <div className="bg-slate-800/50 border border-slate-700 rounded-xl overflow-hidden">
-                  <div className="h-1 bg-cyan-500" />
+                  <div className="h-1 bg-gradient-to-r from-teal-500 via-cyan-500 to-emerald-500" />
                   <div className="p-8 text-center space-y-4">
-                    <div className="w-16 h-16 mx-auto bg-cyan-500/20 rounded-full flex items-center justify-center">
-                      <RefreshCw className="w-8 h-8 text-cyan-400" />
+                    <div className="w-16 h-16 mx-auto bg-teal-500/20 rounded-full flex items-center justify-center">
+                      <RefreshCw className="w-8 h-8 text-teal-400" />
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-white">Check Your Email</h3>
                       <p className="text-slate-400 text-sm mt-2">
-                        We sent a verification link to <span className="text-cyan-400">{pendingVerification}</span>
+                        We sent a verification link to <span className="text-teal-400">{pendingVerification}</span>
                       </p>
                     </div>
                     <Button
@@ -647,8 +647,8 @@ const Auth = () => {
             ) : (
               <div className="max-w-md mx-auto">
                 <div className="bg-slate-800/50 border border-slate-700 rounded-xl overflow-hidden">
-                  {/* Cyan top border */}
-                  <div className="h-1 bg-cyan-500" />
+                  {/* Teal/cyan gradient top border */}
+                  <div className="h-1 bg-gradient-to-r from-teal-500 via-cyan-500 to-emerald-500" />
                   
                   <div className="p-8">
                     {/* Header */}
@@ -671,13 +671,13 @@ const Auth = () => {
                       <TabsList className="grid w-full grid-cols-2 mb-6 bg-slate-700/50 border border-slate-600 p-1 rounded-lg">
                         <TabsTrigger 
                           value="signin" 
-                          className="text-slate-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-white rounded-md transition-all"
+                          className="text-slate-300 data-[state=active]:bg-teal-500 data-[state=active]:text-white rounded-md transition-all"
                         >
                           Sign In
                         </TabsTrigger>
                         <TabsTrigger 
                           value="signup" 
-                          className="text-slate-300 data-[state=active]:bg-cyan-500 data-[state=active]:text-white rounded-md transition-all"
+                          className="text-slate-300 data-[state=active]:bg-teal-500 data-[state=active]:text-white rounded-md transition-all"
                         >
                           Sign Up
                         </TabsTrigger>
@@ -696,7 +696,7 @@ const Auth = () => {
                               defaultValue={savedEmail}
                               autoComplete="email"
                               required
-                              className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-cyan-500 focus:ring-cyan-500/20"
+                              className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-teal-500 focus:ring-teal-500/20"
                             />
                           </div>
                           <div className="space-y-2">
