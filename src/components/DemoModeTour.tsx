@@ -162,14 +162,16 @@ export function DemoModeTour() {
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Dim backdrop - creates spotlight effect */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/20 backdrop-blur-[2px] z-[100]"
-            onClick={handleSkip}
-          />
+          {/* Dim backdrop - only show when highlighting specific elements */}
+          {hasTarget && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/30 backdrop-blur-[2px] z-[100]"
+              onClick={handleSkip}
+            />
+          )}
           
           {/* Tour Card - positioned at bottom for visibility */}
           <motion.div
