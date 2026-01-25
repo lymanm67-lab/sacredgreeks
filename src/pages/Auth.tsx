@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Home, Eye, EyeOff, RefreshCw, AlertTriangle, BookOpen, Heart, Shield, Search, Quote, Star, Users, ChevronRight, ChevronDown, ChevronUp, Sparkles, Play, Compass } from 'lucide-react';
+import { Home, Eye, EyeOff, RefreshCw, AlertTriangle, BookOpen, Heart, Shield, Search, Quote, Star, Users, ChevronRight, ChevronDown, ChevronUp, Sparkles, Play, Compass, User, Circle, Moon } from 'lucide-react';
 import logo from '@/assets/sacred-greeks-logo.png';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -489,78 +489,114 @@ const Auth = () => {
   }
 
   return (
-    <div className={cn("min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900", isDemoMode && "pt-11")}>
+    <div className={cn("min-h-screen bg-slate-900", isDemoMode && "pt-11")}>
       {/* Navigation */}
-      <header className="border-b border-white/10 bg-white/5 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b border-slate-700/50 bg-slate-900 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="Sacred Greeks" className="w-10 h-10 rounded-full object-cover ring-2 ring-amber-500/30" />
+            <img src={logo} alt="Sacred Greeks" className="w-10 h-10 rounded-full object-cover" />
             <span className="font-bold text-xl text-white">Sacred Greeks</span>
           </Link>
           <div className="flex items-center gap-4">
             <DemoModeControl />
-            <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10" asChild>
-              <Link to="/">
-                <Home className="w-4 h-4 mr-2" />
-                Home
-              </Link>
+            <Button variant="ghost" size="sm" className="text-slate-300 hover:text-white hover:bg-slate-800" onClick={() => setShowAuthForm('signin')}>
+              Sign In
+            </Button>
+            <Button variant="ghost" size="icon" className="text-slate-400 hover:text-white hover:bg-slate-800">
+              <Moon className="w-5 h-5" />
             </Button>
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="py-16 md:py-24 relative overflow-hidden">
-        {/* Background decoration */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-amber-500/20 rounded-full blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-orange-500/20 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl" />
-        </div>
-        
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <div className="max-w-3xl mx-auto space-y-6">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white">
-              Faith + Greek Life, <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-300">United</span>
-            </h1>
-            <p className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto">
-              Daily devotionals, biblical guidance, and practical tools to help you thrive in faith and fraternity
-            </p>
+      {/* Hero Section - Centered Card */}
+      <section className="py-12 md:py-20 px-4">
+        <div className="max-w-lg mx-auto">
+          {/* Main Hero Card */}
+          <div className="bg-slate-800/50 border border-slate-700 rounded-xl overflow-hidden">
+            {/* Cyan top border accent */}
+            <div className="h-1 bg-cyan-500" />
             
-            {/* Badges */}
-            <div className="flex flex-wrap justify-center gap-3 pt-4">
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                <Sparkles className="w-4 h-4" />
-                <span className="text-sm font-medium">Faith-First</span>
+            <div className="p-8 text-center space-y-6">
+              {/* Logo Badge */}
+              <div className="flex justify-center">
+                <div className="w-20 h-20 rounded-full bg-slate-700 border-2 border-slate-600 flex items-center justify-center">
+                  <img src={logo} alt="Sacred" className="w-12 h-12 rounded-full object-cover" />
+                </div>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">
-                <Users className="w-4 h-4" />
-                <span className="text-sm font-medium">Community</span>
-              </div>
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">
-                <BookOpen className="w-4 h-4" />
-                <span className="text-sm font-medium">Daily Growth</span>
-              </div>
-            </div>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-              <Button variant="outline" size="lg" className="gap-2 border-white/20 text-white hover:bg-white/10" asChild>
-                <Link to="/demo">
-                  <Play className="w-4 h-4" />
-                  Try Demo First
+              {/* Heading */}
+              <div className="space-y-3">
+                <h1 className="text-3xl md:text-4xl font-bold text-white">
+                  Faith + Greek Life, <span className="text-cyan-400">United</span>
+                </h1>
+                <p className="text-slate-400 text-base">
+                  Daily devotionals, biblical guidance, and practical tools<br />
+                  to help you <span className="text-white font-medium">thrive in faith and fraternity</span>
+                </p>
+              </div>
+
+              {/* Badges */}
+              <div className="flex flex-wrap justify-center gap-4 pt-2">
+                <div className="flex items-center gap-2 text-slate-400">
+                  <Circle className="w-4 h-4" />
+                  <span className="text-sm">Faith-First</span>
+                </div>
+                <div className="flex items-center gap-2 text-slate-400">
+                  <Heart className="w-4 h-4" />
+                  <span className="text-sm">Community</span>
+                </div>
+                <div className="flex items-center gap-2 text-slate-400">
+                  <BookOpen className="w-4 h-4" />
+                  <span className="text-sm">Daily Growth</span>
+                </div>
+              </div>
+
+              {/* Action Buttons as Cards */}
+              <div className="space-y-3 pt-4">
+                {/* Try Demo First */}
+                <Link to="/demo" className="block">
+                  <div className="flex items-center gap-4 p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600 rounded-lg transition-colors group">
+                    <div className="w-10 h-10 rounded-full bg-slate-600 flex items-center justify-center">
+                      <Play className="w-5 h-5 text-slate-300" />
+                    </div>
+                    <div className="flex-1 text-left">
+                      <p className="font-semibold text-white">Try Demo First</p>
+                      <p className="text-sm text-slate-400">Explore all features with sample data</p>
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-slate-300 transition-colors" />
+                  </div>
                 </Link>
-              </Button>
-              <Button size="lg" className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white border-0" onClick={() => setShowAuthForm('signup')}>
-                Create Your Account
-              </Button>
-              <Button variant="ghost" size="lg" className="text-white/70 hover:text-white hover:bg-white/10" onClick={() => setShowAuthForm('signin')}>
-                Sign In
-              </Button>
+
+                {/* Create Your Account - Highlighted */}
+                <button onClick={() => setShowAuthForm('signup')} className="w-full">
+                  <div className="flex items-center gap-4 p-4 bg-slate-700/50 hover:bg-slate-700 border border-cyan-500/50 rounded-lg transition-colors group">
+                    <div className="w-10 h-10 rounded-full bg-cyan-500/20 flex items-center justify-center">
+                      <Sparkles className="w-5 h-5 text-cyan-400" />
+                    </div>
+                    <div className="flex-1 text-left">
+                      <p className="font-semibold text-white">Create Your Account</p>
+                      <p className="text-sm text-slate-400">Start your personalized faith journey today</p>
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-slate-300 transition-colors" />
+                  </div>
+                </button>
+
+                {/* Sign In */}
+                <button onClick={() => setShowAuthForm('signin')} className="w-full">
+                  <div className="flex items-center gap-4 p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600 rounded-lg transition-colors group">
+                    <div className="w-10 h-10 rounded-full bg-slate-600 flex items-center justify-center">
+                      <User className="w-5 h-5 text-slate-300" />
+                    </div>
+                    <div className="flex-1 text-left">
+                      <p className="font-semibold text-white">Sign In</p>
+                      <p className="text-sm text-slate-400">Already have an account? Continue here</p>
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-slate-300 transition-colors" />
+                  </div>
+                </button>
+              </div>
             </div>
-            <p className="text-sm text-white/50">
-              Explore all features with sample data • Start your personalized faith journey today
-            </p>
           </div>
         </div>
       </section>
@@ -800,12 +836,18 @@ const Auth = () => {
       )}
 
       {/* Featured Tools Section */}
-      <section className="py-16 md:py-24 bg-slate-800/30">
+      <section className="py-16 md:py-24 bg-slate-900">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <p className="text-amber-400 font-medium mb-2">Featured Tools</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Everything You Need to Thrive</h2>
-            <p className="text-white/60 max-w-2xl mx-auto">
+            {/* Featured Tools Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800 border border-slate-700 text-slate-300 mb-6">
+              <Sparkles className="w-4 h-4" />
+              <span className="text-sm font-medium">Featured Tools</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
+              Everything You Need to <span className="text-emerald-400">Thrive</span>
+            </h2>
+            <p className="text-slate-400 max-w-2xl mx-auto">
               Powerful resources built by Greeks, for Greeks — grounded in faith and designed for your journey.
             </p>
           </div>
