@@ -170,7 +170,16 @@ export const GuidedTour = memo(function GuidedTour({ onComplete }: GuidedTourPro
                 </div>
               </motion.div>
             )}
-            <Card className="border-2 border-primary/30 shadow-2xl bg-card/95 backdrop-blur-md">
+            <Card className="border-2 border-primary/30 shadow-2xl bg-card/95 backdrop-blur-md overflow-hidden">
+              {/* Progress bar */}
+              <div className="h-1 bg-muted w-full">
+                <motion.div 
+                  className="h-full bg-gradient-to-r from-primary to-accent"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${((currentStep + 1) / TOUR_STEPS.length) * 100}%` }}
+                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                />
+              </div>
               <CardContent className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <Badge variant="secondary" className="bg-primary/10 text-primary border-0">
