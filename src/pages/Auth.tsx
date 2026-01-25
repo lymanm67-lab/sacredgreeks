@@ -464,7 +464,7 @@ const Auth = () => {
       <header className="border-b border-white/10 bg-white/5 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="Sacred Greeks" className="w-10 h-10 rounded-full object-cover ring-2 ring-emerald-500/30" />
+            <img src={logo} alt="Sacred Greeks" className="w-10 h-10 rounded-full object-cover ring-2 ring-amber-500/30" />
             <span className="font-bold text-xl text-white">Sacred Greeks</span>
           </Link>
           <div className="flex items-center gap-4">
@@ -483,15 +483,15 @@ const Auth = () => {
       <section className="py-16 md:py-24 relative overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-emerald-500/20 rounded-full blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-amber-500/20 rounded-full blur-3xl" />
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-orange-500/20 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl" />
         </div>
         
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="max-w-3xl mx-auto space-y-6">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white">
-              Faith + Greek Life, <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">United</span>
+              Faith + Greek Life, <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-300">United</span>
             </h1>
             <p className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto">
               Daily devotionals, biblical guidance, and practical tools to help you thrive in faith and fraternity
@@ -507,7 +507,7 @@ const Auth = () => {
                 <Users className="w-4 h-4" />
                 <span className="text-sm font-medium">Community</span>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">
                 <BookOpen className="w-4 h-4" />
                 <span className="text-sm font-medium">Daily Growth</span>
               </div>
@@ -521,7 +521,7 @@ const Auth = () => {
                   Try Demo First
                 </Link>
               </Button>
-              <Button size="lg" className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white border-0" onClick={() => setShowAuthForm('signup')}>
+              <Button size="lg" className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white border-0" onClick={() => setShowAuthForm('signup')}>
                 Create Your Account
               </Button>
               <Button variant="ghost" size="lg" className="text-white/70 hover:text-white hover:bg-white/10" onClick={() => setShowAuthForm('signin')}>
@@ -578,7 +578,7 @@ const Auth = () => {
             ) : (
               <Card className="max-w-md mx-auto bg-white/10 backdrop-blur-md border-white/20">
                 <CardHeader className="text-center">
-                  <img src={logo} alt="Sacred Greeks" className="w-16 h-16 mx-auto rounded-full object-cover mb-4 ring-2 ring-emerald-500/30" />
+                  <img src={logo} alt="Sacred Greeks" className="w-16 h-16 mx-auto rounded-full object-cover mb-4 ring-2 ring-amber-500/30" />
                   <CardTitle className="text-white">{showAuthForm === 'signup' ? 'Create Your Account' : 'Welcome Back'}</CardTitle>
                   <CardDescription className="text-white/60">
                     {showAuthForm === 'signup' 
@@ -636,7 +636,7 @@ const Auth = () => {
                               id="remember"
                               checked={rememberMe}
                               onCheckedChange={(checked) => setRememberMe(checked as boolean)}
-                              className="border-white/30 data-[state=checked]:bg-emerald-500"
+                              className="border-white/30 data-[state=checked]:bg-amber-500"
                             />
                             <Label htmlFor="remember" className="text-sm cursor-pointer text-white/70">
                               Remember me
@@ -644,14 +644,14 @@ const Auth = () => {
                           </div>
                           <Link 
                             to="/forgot-password" 
-                            className="text-sm text-emerald-400 hover:underline"
+                            className="text-sm text-amber-400 hover:underline"
                           >
                             Forgot password?
                           </Link>
                         </div>
                         <Button
                           type="submit"
-                          className="w-full bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600"
+                          className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600"
                           disabled={isLoading}
                         >
                           {isLoading ? 'Signing in...' : 'Sign In'}
@@ -738,7 +738,7 @@ const Auth = () => {
                         </div>
                         <Button
                           type="submit"
-                          className="w-full bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600"
+                          className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600"
                           disabled={isLoading || isCheckingBreach}
                         >
                           {isCheckingBreach ? 'Checking...' : isLoading ? 'Creating account...' : 'Create Account'}
@@ -757,9 +757,9 @@ const Auth = () => {
                   <div className="mt-4 text-center text-sm text-white/50">
                     <p>
                       By continuing, you agree to our{' '}
-                      <Link to="/terms" className="text-emerald-400 hover:underline">Terms</Link>
+                      <Link to="/terms" className="text-amber-400 hover:underline">Terms</Link>
                       {' '}and{' '}
-                      <Link to="/privacy" className="text-emerald-400 hover:underline">Privacy Policy</Link>
+                      <Link to="/privacy" className="text-amber-400 hover:underline">Privacy Policy</Link>
                     </p>
                   </div>
                 </CardContent>
@@ -773,7 +773,7 @@ const Auth = () => {
       <section className="py-16 md:py-24 bg-slate-800/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <p className="text-emerald-400 font-medium mb-2">Featured Tools</p>
+            <p className="text-amber-400 font-medium mb-2">Featured Tools</p>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Everything You Need to Thrive</h2>
             <p className="text-white/60 max-w-2xl mx-auto">
               Powerful resources built by Greeks, for Greeks — grounded in faith and designed for your journey.
@@ -782,10 +782,10 @@ const Auth = () => {
 
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {FEATURED_TOOLS.map((tool, index) => (
-              <Card key={index} className="group hover:shadow-xl transition-all duration-300 bg-white/5 border-white/10 hover:border-emerald-500/30 hover:bg-white/10">
+              <Card key={index} className="group hover:shadow-xl transition-all duration-300 bg-white/5 border-white/10 hover:border-amber-500/30 hover:bg-white/10">
                 <CardHeader>
-                  <div className="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center mb-4 group-hover:bg-emerald-500/30 transition-colors">
-                    <tool.icon className="w-6 h-6 text-emerald-400" />
+                  <div className="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center mb-4 group-hover:bg-amber-500/30 transition-colors">
+                    <tool.icon className="w-6 h-6 text-amber-400" />
                   </div>
                   <CardTitle className="text-lg text-white">{tool.title}</CardTitle>
                   <CardDescription className="font-medium text-white/70">{tool.subtitle}</CardDescription>
@@ -823,10 +823,10 @@ const Auth = () => {
           {showMoreTools && (
             <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-8">
               {SECONDARY_TOOLS.map((tool, index) => (
-                <Card key={index} className="group hover:shadow-xl transition-all duration-300 bg-white/5 border-white/10 hover:border-emerald-500/30 hover:bg-white/10">
+                <Card key={index} className="group hover:shadow-xl transition-all duration-300 bg-white/5 border-white/10 hover:border-amber-500/30 hover:bg-white/10">
                   <CardHeader>
-                    <div className="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center mb-4 group-hover:bg-emerald-500/30 transition-colors">
-                      <tool.icon className="w-6 h-6 text-emerald-400" />
+                    <div className="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center mb-4 group-hover:bg-amber-500/30 transition-colors">
+                      <tool.icon className="w-6 h-6 text-amber-400" />
                     </div>
                     <CardTitle className="text-lg text-white">{tool.title}</CardTitle>
                     <CardDescription className="font-medium text-white/70">{tool.subtitle}</CardDescription>
@@ -852,7 +852,7 @@ const Auth = () => {
           {/* D9 Orgs Badge */}
           <div className="flex flex-wrap items-center justify-center gap-3 mt-12">
             {D9_ORGS.map((org, i) => (
-              <span key={i} className="px-3 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 font-semibold text-sm border border-emerald-500/30">
+              <span key={i} className="px-3 py-1.5 rounded-full bg-amber-500/20 text-amber-300 font-semibold text-sm border border-amber-500/30">
                 {org}
               </span>
             ))}
@@ -932,7 +932,7 @@ const Auth = () => {
             </Card>
 
             {/* Video Testimonial */}
-            <Card className="overflow-hidden bg-white/5 border-emerald-500/30">
+            <Card className="overflow-hidden bg-white/5 border-amber-500/30">
               <CardContent className="p-0">
                 <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                   <iframe
