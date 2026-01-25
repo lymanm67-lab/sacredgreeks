@@ -2,7 +2,7 @@ import { memo, useCallback, useState, useEffect, createContext, useContext } fro
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { X, Sparkles, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { X, Sparkles, ArrowRight, CheckCircle2, ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { STORAGE_KEYS } from '@/lib/constants';
 
@@ -87,7 +87,7 @@ export const GuidedTour = memo(function GuidedTour({ onComplete }: GuidedTourPro
     }
   }, []);
 
-  // Add/remove highlight class on target elements
+  // Add/remove highlight class on target elements and scroll into view
   useEffect(() => {
     if (!isVisible) return;
     
@@ -97,6 +97,12 @@ export const GuidedTour = memo(function GuidedTour({ onComplete }: GuidedTourPro
     const targetEl = document.querySelector(`[data-tour="${tourAttr}"]`);
     if (targetEl) {
       targetEl.classList.add('tour-highlight');
+      // Scroll element into view with smooth animation
+      targetEl.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'center',
+        inline: 'nearest'
+      });
       return () => {
         targetEl.classList.remove('tour-highlight');
       };
@@ -129,6 +135,7 @@ export const GuidedTour = memo(function GuidedTour({ onComplete }: GuidedTourPro
 
   const isFirstStep = currentStep === 0;
   const isLastStep = currentStep === TOUR_STEPS.length - 1;
+  const hasTarget = !!step.targetSelector;
 
   return (
     <AnimatePresence>
@@ -150,6 +157,19 @@ export const GuidedTour = memo(function GuidedTour({ onComplete }: GuidedTourPro
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
             className="fixed left-1/2 bottom-4 -translate-x-1/2 z-[101] w-full max-w-md px-4"
           >
+            {/* Pointer arrow - only show when there's a target element */}
+            {hasTarget && (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex justify-center mb-2"
+              >
+                <div className="flex flex-col items-center text-primary">
+                  <ChevronUp className="w-6 h-6 animate-bounce" />
+                  <div className="w-0.5 h-8 bg-gradient-to-b from-primary to-transparent" />
+                </div>
+              </motion.div>
+            )}
             <Card className="border-2 border-primary/30 shadow-2xl bg-card/95 backdrop-blur-md">
               <CardContent className="p-6">
                 <div className="flex items-start justify-between mb-4">
