@@ -161,127 +161,113 @@ export function DemoModeTour() {
   return (
     <AnimatePresence>
       {isOpen && (
-        <>
-          {/* Dim backdrop - only show when highlighting specific elements */}
+        <motion.div
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 100 }}
+          transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+          className="fixed left-1/2 bottom-4 -translate-x-1/2 z-50 w-full max-w-md px-4 pointer-events-none"
+        >
+          {/* Pointer arrow - only show when there's a target element */}
           {hasTarget && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/30 backdrop-blur-[2px] z-[100]"
-              onClick={handleSkip}
-            />
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex justify-center mb-2"
+            >
+              <div className="flex flex-col items-center text-primary">
+                <ChevronUp className="w-6 h-6 animate-bounce" />
+                <div className="w-0.5 h-8 bg-gradient-to-b from-primary to-transparent" />
+              </div>
+            </motion.div>
           )}
           
-          {/* Tour Card - positioned at bottom for visibility */}
-          <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 100 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed left-1/2 bottom-4 -translate-x-1/2 z-[101] w-full max-w-md px-4"
-          >
-            {/* Pointer arrow - only show when there's a target element */}
-            {hasTarget && (
+          <Card className="border-2 border-primary/30 shadow-2xl bg-card/95 backdrop-blur-md overflow-hidden pointer-events-auto">
+            {/* Progress bar */}
+            <div className="h-1 bg-muted w-full">
               <motion.div 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="flex justify-center mb-2"
-              >
-                <div className="flex flex-col items-center text-primary">
-                  <ChevronUp className="w-6 h-6 animate-bounce" />
-                  <div className="w-0.5 h-8 bg-gradient-to-b from-primary to-transparent" />
-                </div>
-              </motion.div>
-            )}
+                className="h-full bg-gradient-to-r from-primary to-accent"
+                initial={{ width: 0 }}
+                animate={{ width: `${((currentStep + 1) / TOUR_STEPS.length) * 100}%` }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+              />
+            </div>
             
-            <Card className="border-2 border-primary/30 shadow-2xl bg-card/95 backdrop-blur-md overflow-hidden">
-              {/* Progress bar */}
-              <div className="h-1 bg-muted w-full">
-                <motion.div 
-                  className="h-full bg-gradient-to-r from-primary to-accent"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${((currentStep + 1) / TOUR_STEPS.length) * 100}%` }}
-                  transition={{ duration: 0.3, ease: 'easeOut' }}
-                />
+            <CardContent className="p-6">
+              <div className="flex items-start justify-between mb-4">
+                <Badge variant="secondary" className="bg-primary/10 text-primary border-0">
+                  <Sparkles className="w-3 h-3 mr-1" />
+                  Step {currentStep + 1} of {TOUR_STEPS.length}
+                </Badge>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 -mt-1 -mr-2"
+                  onClick={handleSkip}
+                >
+                  <Check className="w-4 h-4" />
+                </Button>
               </div>
-              
-              <CardContent className="p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <Badge variant="secondary" className="bg-primary/10 text-primary border-0">
-                    <Sparkles className="w-3 h-3 mr-1" />
-                    Step {currentStep + 1} of {TOUR_STEPS.length}
-                  </Badge>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-8 w-8 -mt-1 -mr-2"
-                    onClick={handleSkip}
-                  >
-                    <Check className="w-4 h-4" />
+
+              <div className="flex items-center gap-3 mb-2">
+                {currentTourStep.icon}
+                <h3 className="text-xl font-bold text-foreground">{currentTourStep.title}</h3>
+              </div>
+              <p className="text-muted-foreground mb-6">{currentTourStep.description}</p>
+
+              {/* Progress dots */}
+              <div className="flex items-center justify-center gap-2 mb-6">
+                {TOUR_STEPS.map((_, index) => (
+                  <div
+                    key={index}
+                    className={`h-2 rounded-full transition-all ${
+                      index === currentStep
+                        ? 'w-6 bg-primary'
+                        : index < currentStep
+                        ? 'w-2 bg-primary/50'
+                        : 'w-2 bg-muted'
+                    }`}
+                  />
+                ))}
+              </div>
+
+              <div className="flex items-center justify-between gap-2">
+                {!isFirstStep && (
+                  <Button variant="outline" size="sm" onClick={handlePrevious}>
+                    <ChevronLeft className="w-4 h-4 mr-1" />
+                    Back
                   </Button>
-                </div>
-
-                <div className="flex items-center gap-3 mb-2">
-                  {currentTourStep.icon}
-                  <h3 className="text-xl font-bold text-foreground">{currentTourStep.title}</h3>
-                </div>
-                <p className="text-muted-foreground mb-6">{currentTourStep.description}</p>
-
-                {/* Progress dots */}
-                <div className="flex items-center justify-center gap-2 mb-6">
-                  {TOUR_STEPS.map((_, index) => (
-                    <div
-                      key={index}
-                      className={`h-2 rounded-full transition-all ${
-                        index === currentStep
-                          ? 'w-6 bg-primary'
-                          : index < currentStep
-                          ? 'w-2 bg-primary/50'
-                          : 'w-2 bg-muted'
-                      }`}
-                    />
-                  ))}
-                </div>
-
-                <div className="flex items-center justify-between gap-2">
-                  {!isFirstStep && (
-                    <Button variant="outline" size="sm" onClick={handlePrevious}>
-                      <ChevronLeft className="w-4 h-4 mr-1" />
-                      Back
+                )}
+                
+                {isFirstStep && (
+                  <Button variant="ghost" size="sm" onClick={handleSkip} className="text-muted-foreground">
+                    Skip tour
+                  </Button>
+                )}
+                
+                <div className="flex gap-2 ml-auto">
+                  {currentTourStep.route && !isLastStep && (
+                    <Button variant="outline" size="sm" onClick={handleExplore}>
+                      Explore
                     </Button>
                   )}
                   
-                  {isFirstStep && (
-                    <Button variant="ghost" size="sm" onClick={handleSkip} className="text-muted-foreground">
-                      Skip tour
+                  {isLastStep ? (
+                    <Button onClick={handleComplete} className="bg-primary hover:bg-primary/90">
+                      <Check className="w-4 h-4 mr-1" />
+                      Get Started
+                    </Button>
+                  ) : (
+                    <Button onClick={handleNext} className="bg-primary hover:bg-primary/90">
+                      Next
+                      <ChevronRight className="w-4 h-4 ml-1" />
                     </Button>
                   )}
-                  
-                  <div className="flex gap-2 ml-auto">
-                    {currentTourStep.route && !isLastStep && (
-                      <Button variant="outline" size="sm" onClick={handleExplore}>
-                        Explore
-                      </Button>
-                    )}
-                    
-                    {isLastStep ? (
-                      <Button onClick={handleComplete} className="bg-primary hover:bg-primary/90">
-                        <Check className="w-4 h-4 mr-1" />
-                        Get Started
-                      </Button>
-                    ) : (
-                      <Button onClick={handleNext} className="bg-primary hover:bg-primary/90">
-                        Next
-                        <ChevronRight className="w-4 h-4 ml-1" />
-                      </Button>
-                    )}
-                  </div>
                 </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
       )}
     </AnimatePresence>
   );
