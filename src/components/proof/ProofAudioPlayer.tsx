@@ -1,9 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { Volume2, Pause, Loader2, Play, RotateCcw } from "lucide-react";
+import { Volume2, Pause, Loader2, Play, RotateCcw, Crown, Lock } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useSubscription } from "@/hooks/use-subscription";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -31,6 +33,7 @@ interface ProofAudioPlayerProps {
 
 export function ProofAudioPlayer({ className }: ProofAudioPlayerProps) {
   const { user } = useAuth();
+  const { subscribed, tier, loading: subLoading } = useSubscription();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
@@ -39,6 +42,9 @@ export function ProofAudioPlayer({ className }: ProofAudioPlayerProps) {
   const [currentTime, setCurrentTime] = useState(0);
   const [playbackRate, setPlaybackRate] = useState(1);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Check if user has Pro or Ministry tier
+  const hasPremiumAccess = subscribed && (tier === 'pro' || tier === 'ministry');
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -49,6 +55,11 @@ export function ProofAudioPlayer({ className }: ProofAudioPlayerProps) {
   const handlePlay = async () => {
     if (!user) {
       toast.error("Please sign in to listen to audio teachings");
+      return;
+    }
+
+    if (!hasPremiumAccess) {
+      toast.error("Upgrade to Pro for the full audio player with progress controls");
       return;
     }
 
@@ -171,6 +182,64 @@ export function ProofAudioPlayer({ className }: ProofAudioPlayerProps) {
     };
   }, []);
 
+  // Show locked state for non-Pro users
+  if (!hasPremiumAccess && !subLoading) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className={className}
+      >
+        <div className="p-4 rounded-xl bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 relative overflow-hidden">
+          <div className="absolute top-2 right-2">
+            <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs font-medium">
+              <Crown className="w-3 h-3" />
+              Pro
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+              <Lock className="w-5 h-5 text-amber-400" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h4 className="text-amber-300 font-semibold text-sm">P.R.O.O.F. Audio Premium</h4>
+              <p className="text-white/50 text-xs">Full audio player with progress & speed controls</p>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            {/* Fake progress bar (disabled) */}
+            <div className="space-y-1 opacity-50">
+              <div className="h-2 bg-white/10 rounded-full" />
+              <div className="flex justify-between text-xs text-white/30">
+                <span>0:00</span>
+                <span>3:24</span>
+              </div>
+            </div>
+
+            {/* Upgrade CTA */}
+            <div className="flex items-center gap-2">
+              <Link to="/subscribe" className="flex-1">
+                <Button
+                  size="sm"
+                  className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white border-0"
+                >
+                  <Crown className="w-4 h-4 mr-2" />
+                  Upgrade to Pro
+                </Button>
+              </Link>
+            </div>
+
+            <p className="text-xs text-white/40 text-center">
+              Unlock progress tracking, playback speed (0.75x-2x), and seamless audio experience
+            </p>
+          </div>
+        </div>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -183,7 +252,10 @@ export function ProofAudioPlayer({ className }: ProofAudioPlayerProps) {
             <Volume2 className="w-5 h-5 text-purple-400" />
           </div>
           <div className="flex-1 min-w-0">
-            <h4 className="text-purple-300 font-semibold text-sm">Listen to P.R.O.O.F. Framework</h4>
+            <h4 className="text-purple-300 font-semibold text-sm flex items-center gap-2">
+              Listen to P.R.O.O.F. Framework
+              <span className="px-1.5 py-0.5 rounded bg-purple-500/30 text-purple-300 text-[10px] font-medium">PRO</span>
+            </h4>
             <p className="text-white/50 text-xs">Complete audio explanation • ~3 min</p>
           </div>
         </div>

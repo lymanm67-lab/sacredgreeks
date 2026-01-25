@@ -26,12 +26,14 @@ import { PremiumGate } from '@/components/PremiumGate';
 import { useDemoMode } from '@/contexts/DemoModeContext';
 import { StudyGuideDialog, StudyGuide } from '@/components/bible-study/StudyGuideDialog';
 import { studyGuides, getStudiesByCategory, categories } from '@/data/bibleStudyGuides';
+import { GREEK_LIFE_READING_PLANS } from '@/data/bibleReadingPlans';
 import { ScriptureFlashcards } from '@/components/ScriptureFlashcards';
 import { BibleStudyGenerator } from '@/components/BibleStudyGenerator';
 import { ApologeticsQuickReference } from '@/components/ApologeticsQuickReference';
 import { RenouncedSupportSection } from '@/components/RenouncedSupportSection';
 import { PreviewBanner } from '@/components/PreviewBanner';
 import { DemoAudioGuide } from '@/components/DemoAudioGuide';
+import { Flame, Users, Crown, Heart as HeartIcon, BookOpen as BookOpenIcon } from 'lucide-react';
 
 // Demo data for Bible Study
 const DEMO_DAILY_VERSE = {
@@ -72,35 +74,14 @@ const DEMO_SAVED_SEARCHES = [
   }
 ];
 
-const readingPlans = [
-  {
-    title: "30-Day Faith Foundation",
-    description: "Build a strong foundation in Christian faith and Greek life integration",
-    duration: "30 days",
-    verses: [
-      "Romans 12:1-2", "Philippians 2:1-11", "1 Corinthians 13:1-13", "Galatians 5:22-26",
-      "Ephesians 4:1-6", "Colossians 3:12-17", "James 1:22-27", "1 Peter 2:9-12"
-    ]
-  },
-  {
-    title: "Leadership in Greek Life",
-    description: "Biblical principles for servant leadership in your chapter",
-    duration: "14 days",
-    verses: [
-      "Mark 10:42-45", "John 13:1-17", "1 Timothy 3:1-7", "Titus 1:5-9",
-      "1 Peter 5:1-4", "Proverbs 11:14", "Proverbs 16:18-19"
-    ]
-  },
-  {
-    title: "P.R.O.O.F. Deep Dive",
-    description: "Explore the P.R.O.O.F. framework through Scripture",
-    duration: "21 days",
-    verses: [
-      "Matthew 5-7", "Romans 8:1-17", "Galatians 5:16-26", "Ephesians 4:17-32",
-      "Philippians 4:4-9", "Colossians 3:1-17", "1 John 1:5-10"
-    ]
-  }
-];
+// Icon mapping for reading plans
+const PLAN_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  Flame: Flame,
+  Users: Users,
+  Crown: Crown,
+  Heart: HeartIcon,
+  BookOpen: BookOpenIcon,
+};
 
 type TopicKey = 'all' | 'greek-life' | 'discernment' | 'foundation' | 'purpose';
 
@@ -902,56 +883,93 @@ const BibleStudy = () => {
 
             {/* Reading Plans Tab */}
             <TabsContent value="plans" className="space-y-6">
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {readingPlans.map((plan, index) => (
-                  <Card key={index} className="hover:shadow-lg transition-shadow">
-                    <CardHeader>
-                      <div className="flex items-center gap-2 mb-2">
-                        <Calendar className="w-5 h-5 text-sacred" />
-                        <Badge variant="outline" className="text-xs">
-                          {plan.duration}
-                        </Badge>
-                      </div>
-                      <CardTitle className="text-xl">{plan.title}</CardTitle>
-                      <CardDescription>{plan.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div>
-                        <p className="text-sm font-semibold mb-2">Key Passages:</p>
-                        <div className="flex flex-wrap gap-1">
-                          {plan.verses.slice(0, 4).map((verse, idx) => (
-                            <Badge key={idx} variant="secondary" className="text-xs">
-                              {verse}
-                            </Badge>
-                          ))}
-                          {plan.verses.length > 4 && (
-                            <Badge variant="secondary" className="text-xs">
-                              +{plan.verses.length - 4} more
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-                      <Button className="w-full bg-sacred hover:bg-sacred/90" size="sm">
-                        <BookOpen className="w-4 h-4 mr-2" />
-                        Start Reading Plan
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
+              {/* Category badges */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                <Badge variant="outline" className="bg-orange-500/10 text-orange-600 border-orange-500/30">
+                  <Flame className="w-3 h-3 mr-1" /> Apologetics
+                </Badge>
+                <Badge variant="outline" className="bg-blue-500/10 text-blue-600 border-blue-500/30">
+                  <Users className="w-3 h-3 mr-1" /> Identity
+                </Badge>
+                <Badge variant="outline" className="bg-amber-500/10 text-amber-600 border-amber-500/30">
+                  <Crown className="w-3 h-3 mr-1" /> Leadership
+                </Badge>
+                <Badge variant="outline" className="bg-pink-500/10 text-pink-600 border-pink-500/30">
+                  <HeartIcon className="w-3 h-3 mr-1" /> Community
+                </Badge>
               </div>
 
-              {/* Coming Soon Banner */}
-              <Card className="bg-gradient-to-r from-sacred/10 to-warm-blue/10 border-sacred/20">
-                <CardContent className="py-6">
-                  <div className="text-center space-y-2">
-                    <Sparkles className="w-8 h-8 mx-auto text-sacred" />
-                    <h3 className="font-semibold text-lg">More Plans Coming Soon</h3>
-                    <p className="text-sm text-muted-foreground max-w-md mx-auto">
-                      We're working on adding more reading plans tailored specifically for Greek life challenges and spiritual growth
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {GREEK_LIFE_READING_PLANS.map((plan) => {
+                  const IconComponent = PLAN_ICONS[plan.icon] || BookOpenIcon;
+                  const categoryColors: Record<string, string> = {
+                    apologetics: 'from-orange-500/10 to-red-500/10 border-orange-500/30',
+                    identity: 'from-blue-500/10 to-indigo-500/10 border-blue-500/30',
+                    leadership: 'from-amber-500/10 to-yellow-500/10 border-amber-500/30',
+                    community: 'from-pink-500/10 to-rose-500/10 border-pink-500/30',
+                    faith: 'from-sacred/10 to-warm-blue/10 border-sacred/30',
+                  };
+                  
+                  return (
+                    <Card 
+                      key={plan.id} 
+                      className={`hover:shadow-lg transition-shadow bg-gradient-to-br ${categoryColors[plan.category] || ''}`}
+                    >
+                      <CardHeader>
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 rounded-full bg-sacred/20 flex items-center justify-center">
+                              <IconComponent className="w-4 h-4 text-sacred" />
+                            </div>
+                            <Badge variant="outline" className="text-xs">
+                              {plan.duration}
+                            </Badge>
+                          </div>
+                          <Badge variant="secondary" className="text-xs capitalize">
+                            {plan.category}
+                          </Badge>
+                        </div>
+                        <CardTitle className="text-lg">{plan.title}</CardTitle>
+                        <CardDescription className="text-sm">{plan.description}</CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <div>
+                          <p className="text-sm font-semibold mb-2">Key Themes:</p>
+                          <div className="flex flex-wrap gap-1">
+                            {plan.keyThemes.slice(0, 3).map((theme, idx) => (
+                              <Badge key={idx} variant="secondary" className="text-xs">
+                                {theme}
+                              </Badge>
+                            ))}
+                            {plan.keyThemes.length > 3 && (
+                              <Badge variant="secondary" className="text-xs">
+                                +{plan.keyThemes.length - 3} more
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold mb-2">Sample Readings:</p>
+                          <div className="flex flex-wrap gap-1">
+                            {plan.dailyReadings.slice(0, 3).map((reading, idx) => (
+                              <Badge key={idx} variant="outline" className="text-xs">
+                                {reading.scripture}
+                              </Badge>
+                            ))}
+                            <Badge variant="outline" className="text-xs text-muted-foreground">
+                              +{plan.dailyReadings.length - 3} days
+                            </Badge>
+                          </div>
+                        </div>
+                        <Button className="w-full bg-sacred hover:bg-sacred/90" size="sm">
+                          <BookOpen className="w-4 h-4 mr-2" />
+                          Start {plan.durationDays}-Day Plan
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
             </TabsContent>
         </Tabs>
 

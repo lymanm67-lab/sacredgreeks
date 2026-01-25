@@ -66,6 +66,7 @@ export const FEATURES: FeatureDefinition[] = [
   { id: 'prayer-guide', name: 'Prayer Guide', description: 'AI prayers, templates & learning', category: 'ai', minTier: 'pro', canHide: true },
   { id: 'response-coach', name: 'Response Coach', description: 'AI-powered conversation practice', category: 'ai', minTier: 'pro', canHide: true },
   { id: 'coaching', name: 'Coaching Application', description: 'Apply for personalized coaching', category: 'ai', minTier: 'pro', canHide: true },
+  { id: 'proof-audio-premium', name: 'P.R.O.O.F. Audio Premium', description: 'Advanced audio player with progress, speed controls', category: 'ai', minTier: 'pro', canHide: false },
   
   // Ministry features - Require Ministry tier
   { id: 'chapter-resources', name: 'Chapter Resources', description: 'Resources for chapter leaders', category: 'chapter', minTier: 'ministry', canHide: true },
