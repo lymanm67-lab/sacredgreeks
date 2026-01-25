@@ -713,9 +713,11 @@ html {
 
 .tour-highlight {
   position: relative;
-  z-index: 50;
+  z-index: 101 !important;
   animation: tour-pulse 1.5s ease-in-out infinite;
   outline: 3px solid hsl(var(--primary));
   outline-offset: 4px;
   border-radius: var(--radius);
+  background: hsl(var(--card)) !important;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5), 0 0 40px 8px hsl(var(--primary) / 0.3);
 }
