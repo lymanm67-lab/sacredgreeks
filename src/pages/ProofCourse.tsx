@@ -10,6 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { ListenButton } from '@/components/ListenButton';
 import { FaithAuthoritySection } from '@/components/proof/FaithAuthoritySection';
 import { BeliefTeachingAudio } from '@/components/proof/BeliefTeachingAudio';
+import { ProofFrameworkAudio } from '@/components/proof/ProofFrameworkAudio';
 
 interface Lesson {
   id: number;
@@ -683,6 +684,11 @@ const ProofCourse = () => {
                 </CardContent>
               </Card>
             )}
+
+            {/* PROOF Framework Audio Overview */}
+            <div className="mt-8 mb-8">
+              <ProofFrameworkAudio className="max-w-2xl mx-auto" />
+            </div>
 
             {/* Faith & Authority Section */}
             <FaithAuthoritySection className="mt-12 -mx-4 sm:-mx-6" />

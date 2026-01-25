@@ -20,6 +20,7 @@ import { usePasswordBreachCheck } from '@/hooks/use-password-breach-check';
 import { useDisposableEmailCheck } from '@/hooks/use-disposable-email-check';
 import { cn } from '@/lib/utils';
 import { ProofFrameworkAudio } from '@/components/proof/ProofFrameworkAudio';
+import { ProofLetterAudio } from '@/components/proof/ProofLetterAudio';
 
 const FEATURED_TOOLS = [
   {
@@ -1175,6 +1176,23 @@ const Auth = () => {
                             </div>
                           </div>
                         )}
+
+                        {/* Listen Button for this section */}
+                        <div className="flex justify-end pt-2 border-t border-white/10">
+                          <ProofLetterAudio 
+                            letter={item.letter}
+                            title={item.title}
+                            criticism={item.criticism}
+                            criticismExample={item.criticismExample}
+                            response={item.response}
+                            scripture={item.scripture}
+                            scriptureText={item.scriptureText}
+                            supportingScripture={item.supportingScripture}
+                            supportingText={item.supportingText}
+                            corePrinciple={item.letter === "R" ? "Here's a powerful truth: If you mentioned a deity's name during a ritual but did not know it was a deity and do not believe it to be a deity, it holds no authority over you. Paul wrote in First Corinthians 8:4 that an idol is nothing in the world. The false god has no real existence. Your conscience and your faith determine spiritual effect." : undefined}
+                            className="text-purple-300 hover:text-purple-200 hover:bg-purple-500/10"
+                          />
+                        </div>
                       </div>
                     </div>
                   )}
