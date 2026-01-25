@@ -163,6 +163,33 @@ export const studyGuides: StudyGuide[] = [
       'Create a personal discipleship plan for your mentoring relationships'
     ]
   },
+  {
+    id: 'ancient-trade-guilds-biblical-foundation',
+    title: 'Ancient Trade Guilds: A Biblical Foundation for Brotherhood',
+    category: 'Greek Life',
+    introduction: 'In the first century Mediterranean world, skilled trades were commonly organized through craft guilds—associations that functioned socially and economically much like later fraternities. As a master carpenter (τέκτων), Jesus of Nazareth would have been trained within a structured trade environment that emphasized apprenticeship, mastery, reputation, and mutual support. Likewise, Paul the Apostle, identified in Acts as a tentmaker, worked within a recognized artisan trade that was typically guild-organized in Greco-Roman cities. These guilds were not merely economic units—they provided identity, networking, protection, and ethical standards, operating with shared symbols, expectations, and rituals that bound members together. While Christians later rejected idolatrous worship tied to some guilds, the organizational structure itself was familiar, neutral, and widely accepted.',
+    keyScriptures: [
+      { ref: 'Mark 6:3', text: 'Is not this the carpenter, the son of Mary, the brother of James, and Joses, and of Juda, and Simon?' },
+      { ref: 'Acts 18:3', text: 'And because he was of the same craft, he abode with them, and wrought: for by their occupation they were tentmakers.' },
+      { ref: '1 Corinthians 8:4', text: 'We know that an idol is nothing at all in the world, and that there is none other God but one.' },
+      { ref: 'Acts 2:44-45', text: 'And all that believed were together, and had all things common; And sold their possessions and goods, and parted them to all men, as every man had need.' },
+      { ref: 'Proverbs 27:17', text: 'Iron sharpeneth iron; so a man sharpeneth the countenance of his friend.' }
+    ],
+    discussionQuestions: [
+      'How does knowing Jesus worked within a trade guild structure change your view of organizational membership?',
+      'What parallels do you see between ancient guild practices and your Greek organization?',
+      'Scripture shows Paul rejected idolatry, not organization. How does this distinction help you evaluate Greek life participation?',
+      'Ancient guilds had membership requirements, initiation ceremonies, and signs of recognition. Why were these not considered sinful?',
+      'How can understanding guild culture help you respond to critics who say Greek organizations are unbiblical?'
+    ],
+    applicationPoints: [
+      'Research the common features of ancient trade guilds: membership requirements, initiation, ethical standards, oaths of integrity, rituals, signs of recognition, and mutual support',
+      'Note that these same features existed in organizations Jesus and Paul participated in',
+      'Distinguish between organizational structure (neutral) and worship content (what matters)',
+      'Use this historical context when discussing Greek life with fellow believers',
+      'Remember: the early church adopted many organizational patterns from their cultural context while maintaining distinct worship of Christ alone'
+    ]
+  },
 
   // Discernment Studies
   {

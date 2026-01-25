@@ -28,6 +28,26 @@ export interface RitualEntry {
 
 export const symbolGuideContent: SymbolEntry[] = [
   {
+    id: "ancient-trade-guilds",
+    name: "Ancient Trade Guilds (Jesus & Paul)",
+    category: "historical",
+    description: "In the first century Mediterranean world, skilled trades were commonly organized through craft guilds—associations that functioned socially and economically much like later fraternities. As a master carpenter (τέκτων), Jesus of Nazareth would have been trained within a structured trade environment that emphasized apprenticeship, mastery, reputation, and mutual support. Likewise, Paul the Apostle, identified in Acts as a tentmaker, worked within a recognized artisan trade that was typically guild-organized in Greco-Roman cities. These guilds provided identity, networking, protection, and ethical standards, operating with shared symbols, expectations, and rituals that bound members together.",
+    doubleStandard: "Critics condemn Greek organizations for having membership requirements, initiation ceremonies, and mutual support structures—yet these same features existed in the trade guilds that Jesus and Paul participated in. If fraternal organization was inherently sinful, Jesus would not have worked within a guild structure, and Paul would not have continued his trade while spreading the Gospel.",
+    christianPerspective: "Scripture shows that early Christians, including Paul, rejected idolatry—not community or organization. Paul's critiques in 1 Corinthians addressed worship practices, not vocational association. The presence of structure, oaths of integrity, or symbolic practices was not inherently sinful. What mattered was who or what was being worshiped. Understanding guild culture helps explain why early Christians did not see organizational belonging, symbols, or pledges as automatically sinful.",
+    biblicalParallels: [
+      "Membership Requirements: Completion of apprenticeship, demonstrated skill, acceptance by existing members—similar to how Jesus trained the Twelve for three years before commissioning them",
+      "Initiation and Advancement: Formal entry after training, progression from apprentice to journeyman to master—paralleling spiritual growth from 'babes in Christ' to mature believers",
+      "Ethical and Behavioral Standards: Expectations for honesty and accountability to fellow members—reflecting the 'one another' commands in Scripture",
+      "Oaths or Pledges: Commitments to uphold trade standards and loyalty to fellow craftsmen—professional oaths, not worship acts",
+      "Rituals and Symbolism: Ceremonies marking advancement, use of tools or symbols representing the craft—similar to baptism, communion, and ordination in the church",
+      "Signs of Recognition: Trade-specific terminology, gestures identifying membership—practical, not mystical",
+      "Mutual Support: Assistance during illness or hardship, burial support, collective advocacy—the early church practiced this same mutual care (Acts 2:44-45)"
+    ],
+    scriptureReferences: ["Acts 18:3", "Mark 6:3", "1 Corinthians 8:4", "1 Corinthians 10:23", "Romans 14:14"],
+    cautionLevel: "low",
+    scripturalContext: "Acts 18:3 - 'Because he was a tentmaker as they were, he stayed and worked with them.' Mark 6:3 - 'Is not this the carpenter (τέκτων), the son of Mary?'"
+  },
+  {
     id: "greek-letters",
     name: "Greek Letters",
     category: "organizational",
