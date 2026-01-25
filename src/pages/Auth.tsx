@@ -20,6 +20,7 @@ import { usePasswordBreachCheck } from '@/hooks/use-password-breach-check';
 import { useDisposableEmailCheck } from '@/hooks/use-disposable-email-check';
 import { cn } from '@/lib/utils';
 import { BeliefTeachingAudio } from '@/components/proof/BeliefTeachingAudio';
+import { FaithAuthoritySection } from '@/components/proof/FaithAuthoritySection';
 
 const FEATURED_TOOLS = [
   {
@@ -1166,6 +1167,9 @@ const Auth = () => {
           </div>
         </div>
       </section>
+
+      {/* Faith & Authority Section */}
+      <FaithAuthoritySection className="bg-slate-900/50" />
 
       {/* Testimonials Section */}
       <section className="py-16 md:py-24 bg-slate-800/30">

@@ -8,6 +8,8 @@ import { Lock, Play, Clock, Lightbulb, CheckCircle2, BookOpen, Mail, ArrowRight 
 import { SEOHead } from '@/components/SEOHead';
 import { useToast } from '@/hooks/use-toast';
 import { ListenButton } from '@/components/ListenButton';
+import { FaithAuthoritySection } from '@/components/proof/FaithAuthoritySection';
+import { BeliefTeachingAudio } from '@/components/proof/BeliefTeachingAudio';
 
 interface Lesson {
   id: number;
@@ -670,6 +672,14 @@ const ProofCourse = () => {
                 </CardContent>
               </Card>
             )}
+
+            {/* Faith & Authority Section */}
+            <FaithAuthoritySection className="mt-12 -mx-4 sm:-mx-6" />
+            
+            {/* Belief Teaching Audio */}
+            <div className="mt-8">
+              <BeliefTeachingAudio className="max-w-2xl mx-auto" />
+            </div>
           </>
         )}
       </div>
