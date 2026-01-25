@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Home, Eye, EyeOff, RefreshCw, AlertTriangle, BookOpen, Heart, Shield, Quote, Star, Users, ChevronRight, ChevronDown, ChevronUp, Sparkles, Play, User, Moon, Zap, Video, UserCheck } from 'lucide-react';
+import { Home, Eye, EyeOff, RefreshCw, AlertTriangle, BookOpen, Heart, Shield, Quote, Star, Users, ChevronRight, ChevronDown, ChevronUp, Sparkles, Play, User, Moon, Zap, Video, UserCheck, FileDown } from 'lucide-react';
 import logo from '@/assets/sacred-greeks-logo.png';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -22,6 +22,9 @@ import { cn } from '@/lib/utils';
 import { ProofAudioPlayer } from '@/components/proof/ProofAudioPlayer';
 import { ProofLetterAudio } from '@/components/proof/ProofLetterAudio';
 import { PROOF_FRAMEWORK_DATA } from '@/lib/proofFrameworkData';
+import { GuildJourneyDiagram, GuildAudioPlayer } from '@/components/ancient-guilds';
+import { generateGuildOnePagerPDF } from '@/lib/guild-onepager-pdf';
+import { generateGuildComparisonPDF } from '@/lib/guild-comparison-pdf';
 
 const FEATURED_TOOLS = [
   {
@@ -1113,6 +1116,32 @@ const Auth = () => {
                                     Learn more about Faith & Authority
                                     <ChevronRight className="w-3 h-3" />
                                   </Link>
+                                )}
+                                {item.letter === "P" && (
+                                  <div className="mt-4 space-y-4">
+                                    <GuildJourneyDiagram />
+                                    <GuildAudioPlayer />
+                                    <div className="flex flex-wrap gap-2 pt-2">
+                                      <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => generateGuildOnePagerPDF()}
+                                        className="text-amber-300 border-amber-500/30 hover:bg-amber-500/10 text-xs"
+                                      >
+                                        <FileDown className="w-3 h-3 mr-1" />
+                                        Download One-Pager PDF
+                                      </Button>
+                                      <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => generateGuildComparisonPDF()}
+                                        className="text-amber-300 border-amber-500/30 hover:bg-amber-500/10 text-xs"
+                                      >
+                                        <FileDown className="w-3 h-3 mr-1" />
+                                        Full Comparison Guide
+                                      </Button>
+                                    </div>
+                                  </div>
                                 )}
                               </div>
                             </div>
