@@ -31,21 +31,23 @@ export function OrgWelcomeCard() {
   const [isDemo, setIsDemo] = useState(false);
 
   useEffect(() => {
-    if (user) {
-      loadOrgInfo();
-    }
-  }, [user, isDemoMode]);
-
-  const loadOrgInfo = async () => {
-    if (!user) return;
-    
-    // If demo mode is enabled, show demo data
+    // In demo mode, always show demo data regardless of auth state
     if (isDemoMode) {
       setOrgInfo(DEMO_ORG_INFO);
       setIsDemo(true);
       setLoading(false);
       return;
     }
+    
+    if (user) {
+      loadOrgInfo();
+    } else {
+      setLoading(false);
+    }
+  }, [user, isDemoMode]);
+
+  const loadOrgInfo = async () => {
+    if (!user) return;
     
     try {
       const { data, error } = await supabase
