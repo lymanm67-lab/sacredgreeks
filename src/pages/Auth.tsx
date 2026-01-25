@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Home, Eye, EyeOff, Mail, RefreshCw, AlertTriangle, Ban, Info, ExternalLink, BookOpen, Heart, Shield, Sparkles, CheckCircle2, MessageCircle } from 'lucide-react';
+import { Home, Eye, EyeOff, Mail, RefreshCw, AlertTriangle, Ban, Info, ExternalLink, BookOpen, Heart, Shield, Sparkles, CheckCircle2, MessageCircle, Users, Star, Zap } from 'lucide-react';
 import logo from '@/assets/sacred-greeks-logo.png';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -23,28 +23,39 @@ const VALUE_PROPOSITIONS = [
   {
     icon: BookOpen,
     title: "Daily Devotionals",
-    description: "Scripture-based guidance for Greeks navigating faith"
+    description: "Scripture-based guidance for Greeks navigating faith",
+    gradient: "from-blue-500 to-cyan-500"
   },
   {
     icon: Shield,
     title: "Biblical Responses",
-    description: "Answers to common objections about Greek life"
+    description: "Answers to common objections about Greek life",
+    gradient: "from-emerald-500 to-teal-500"
   },
   {
     icon: Heart,
     title: "Prayer Journal",
-    description: "Track your prayers and celebrate answered ones"
+    description: "Track your prayers and celebrate answered ones",
+    gradient: "from-rose-500 to-pink-500"
   },
   {
     icon: MessageCircle,
     title: "Community Support",
-    description: "Connect with fellow believers in Greek life"
+    description: "Connect with fellow believers in Greek life",
+    gradient: "from-violet-500 to-purple-500"
   },
   {
     icon: Sparkles,
     title: "Spiritual Growth",
-    description: "Tools to deepen your faith journey"
+    description: "Tools to deepen your faith journey",
+    gradient: "from-amber-500 to-orange-500"
   }
+];
+
+const SOCIAL_PROOF = [
+  { label: "Active Members", value: "500+", icon: Users },
+  { label: "Daily Devotionals", value: "365", icon: BookOpen },
+  { label: "Prayers Shared", value: "2K+", icon: Heart }
 ];
 
 const authSchema = z.object({
@@ -408,79 +419,134 @@ const Auth = () => {
         </div>
       </header>
 
-      <div className="flex-1 flex items-center justify-center p-4 md:p-6 lg:p-8">
-        <div className="w-full max-w-5xl grid md:grid-cols-2 gap-6 md:gap-8 lg:gap-12 items-center">
-          {/* Left side - Value Proposition */}
-          <div className="hidden md:block space-y-6 lg:space-y-8 animate-fade-in">
-            <div>
-              <img src={logo} alt="Sacred Greeks" className="w-16 h-16 lg:w-20 lg:h-20 rounded-full object-cover mb-3 lg:mb-4" />
-              <h1 className="text-2xl lg:text-3xl font-bold text-foreground mb-2">
-                Faith + Greek Life, <span className="text-primary">United</span>
+      <div className="flex-1 flex">
+        {/* Left side - Hero/Value Proposition (Desktop/Tablet) */}
+        <div className="hidden md:flex md:w-1/2 lg:w-[55%] relative overflow-hidden">
+          {/* Gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-accent" />
+          
+          {/* Decorative elements */}
+          <div className="absolute top-20 left-10 w-72 h-72 bg-white/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/20 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 left-1/3 w-48 h-48 bg-white/5 rounded-full blur-2xl" />
+          
+          {/* Content */}
+          <div className="relative z-10 flex flex-col justify-center p-8 lg:p-12 xl:p-16 text-white">
+            <div className="animate-fade-in">
+              {/* Logo with glow */}
+              <div className="relative w-20 h-20 lg:w-24 lg:h-24 mb-6">
+                <div className="absolute inset-0 bg-white/20 rounded-full blur-xl" />
+                <img 
+                  src={logo} 
+                  alt="Sacred Greeks" 
+                  className="relative w-full h-full rounded-full object-cover ring-4 ring-white/30" 
+                />
+              </div>
+              
+              <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 leading-tight">
+                Where Faith Meets<br />
+                <span className="text-white/90">Greek Excellence</span>
               </h1>
-              <p className="text-muted-foreground text-base lg:text-lg">
-                Join thousands of Greeks navigating faith with confidence
+              
+              <p className="text-lg lg:text-xl text-white/80 mb-8 max-w-md">
+                Join a community of Greeks who are unapologetically pursuing Christ while honoring their letters.
               </p>
             </div>
 
-            <div className="space-y-3 lg:space-y-4">
-              {VALUE_PROPOSITIONS.map((item, index) => (
+            {/* Features with colorful icons */}
+            <div className="space-y-4 mb-8">
+              {VALUE_PROPOSITIONS.slice(0, 4).map((item, index) => (
                 <div 
                   key={index} 
-                  className="flex items-start gap-3 animate-fade-in"
-                  style={{ animationDelay: `${(index + 1) * 100}ms` }}
+                  className="flex items-center gap-4 animate-fade-in"
+                  style={{ animationDelay: `${(index + 1) * 150}ms` }}
                 >
-                  <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <item.icon className="w-4 h-4 lg:w-5 lg:h-5 text-primary" />
+                  <div className={cn(
+                    "w-10 h-10 lg:w-12 lg:h-12 rounded-xl flex items-center justify-center bg-gradient-to-br shadow-lg",
+                    item.gradient
+                  )}>
+                    <item.icon className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-sm lg:text-base text-foreground">{item.title}</h3>
-                    <p className="text-xs lg:text-sm text-muted-foreground">{item.description}</p>
+                    <h3 className="font-semibold text-white">{item.title}</h3>
+                    <p className="text-sm text-white/70">{item.description}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="pt-3 lg:pt-4 border-t border-border animate-fade-in" style={{ animationDelay: '600ms' }}>
-              <p className="text-xs lg:text-sm text-muted-foreground flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-primary" />
-                100% free to start. No credit card required.
-              </p>
+            {/* Social proof */}
+            <div 
+              className="flex gap-6 lg:gap-8 pt-6 border-t border-white/20 animate-fade-in"
+              style={{ animationDelay: '800ms' }}
+            >
+              {SOCIAL_PROOF.map((stat, index) => (
+                <div key={index} className="text-center">
+                  <div className="flex items-center justify-center gap-1.5 mb-1">
+                    <stat.icon className="w-4 h-4 text-white/60" />
+                    <span className="text-2xl lg:text-3xl font-bold text-white">{stat.value}</span>
+                  </div>
+                  <span className="text-xs lg:text-sm text-white/60">{stat.label}</span>
+                </div>
+              ))}
             </div>
           </div>
+        </div>
 
-          {/* Right side - Auth Form */}
-          <div className="w-full max-w-sm mx-auto md:mx-0 animate-fade-in">
+        {/* Right side - Auth Form */}
+        <div className="w-full md:w-1/2 lg:w-[45%] flex items-center justify-center p-4 md:p-8 lg:p-12 bg-background">
+          <div className="w-full max-w-sm animate-fade-in">
             {/* Mobile-only header */}
-            <div className="text-center mb-4 md:hidden">
-              <img src={logo} alt="Sacred Greeks" className="w-14 h-14 rounded-full object-cover mx-auto mb-2" />
-              <h1 className="text-xl font-bold">Sacred Greeks</h1>
-              <p className="text-xs text-muted-foreground mt-1">
+            <div className="text-center mb-6 md:hidden">
+              <div className="relative w-16 h-16 mx-auto mb-3">
+                <div className="absolute inset-0 bg-primary/20 rounded-full blur-lg" />
+                <img 
+                  src={logo} 
+                  alt="Sacred Greeks" 
+                  className="relative w-full h-full rounded-full object-cover ring-2 ring-primary/30" 
+                />
+              </div>
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Sacred Greeks
+              </h1>
+              <p className="text-sm text-muted-foreground mt-1">
                 Faith + Greek Life, United
               </p>
             </div>
 
             {/* Mobile-only condensed features */}
-            <div className="flex flex-wrap justify-center gap-2 mb-4 md:hidden">
+            <div className="flex flex-wrap justify-center gap-2 mb-6 md:hidden">
               {VALUE_PROPOSITIONS.slice(0, 4).map((item, index) => (
                 <div 
                   key={index} 
-                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-primary/10 text-xs animate-fade-in"
+                  className={cn(
+                    "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-white bg-gradient-to-r shadow-sm animate-fade-in",
+                    item.gradient
+                  )}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <item.icon className="w-3 h-3 text-primary" />
-                  <span className="text-foreground font-medium">{item.title}</span>
+                  <item.icon className="w-3 h-3" />
+                  <span>{item.title}</span>
                 </div>
               ))}
             </div>
 
+            {/* Desktop form header */}
+            <div className="hidden md:block mb-6">
+              <h2 className="text-2xl font-bold text-foreground">Get Started</h2>
+              <p className="text-muted-foreground mt-1">
+                Create your account or sign in to continue
+              </p>
+            </div>
+
             <Tabs defaultValue="signin" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-4">
-                <TabsTrigger value="signin">Sign In</TabsTrigger>
-                <TabsTrigger value="signup">Sign Up</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 mb-4 bg-muted/50">
+                <TabsTrigger value="signin" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Sign In</TabsTrigger>
+                <TabsTrigger value="signup" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Sign Up</TabsTrigger>
               </TabsList>
 
               <TabsContent value="signin" className="mt-0">
-                <Card>
+                <Card className="border-0 shadow-xl bg-card/50 backdrop-blur-sm">
                 <CardContent className="pt-6">
                   <form onSubmit={handleSignIn} className="space-y-4">
                     <div className="space-y-2">
@@ -536,7 +602,7 @@ const Auth = () => {
                     </div>
                     <Button
                       type="submit"
-                      className="w-full bg-sacred hover:bg-sacred/90"
+                      className="w-full bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity shadow-lg"
                       disabled={isLoading}
                     >
                       {isLoading ? 'Signing in...' : 'Sign In'}
@@ -547,7 +613,7 @@ const Auth = () => {
             </TabsContent>
 
             <TabsContent value="signup" className="mt-0">
-              <Card>
+              <Card className="border-0 shadow-xl bg-card/50 backdrop-blur-sm">
                 <CardContent className="pt-6">
                   {pendingVerification ? (
                     <div className="space-y-4 text-center py-2">
@@ -669,11 +735,17 @@ const Auth = () => {
                       </div>
                       <Button
                         type="submit"
-                        className="w-full bg-sacred hover:bg-sacred/90"
+                        className="w-full bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity shadow-lg"
                         disabled={isLoading || isCheckingBreach || isDisposable === true}
                       >
-                        {isCheckingBreach ? 'Checking...' : isLoading ? 'Creating...' : 'Sign Up'}
+                        {isCheckingBreach ? 'Checking...' : isLoading ? 'Creating...' : 'Create Account'}
                       </Button>
+                      
+                      {/* Trust indicator */}
+                      <p className="text-xs text-center text-muted-foreground mt-4 flex items-center justify-center gap-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-status-low" />
+                        Free forever. No credit card required.
+                      </p>
                     </form>
                   )}
                 </CardContent>
