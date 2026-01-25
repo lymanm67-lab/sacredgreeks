@@ -70,11 +70,11 @@ const SECONDARY_TOOLS = [
     description: "Dive deep into scripture with studies designed specifically for the Greek experience.",
     tags: ["12-Week Journey", "Group Guides", "Interactive Flashcards"],
     link: "/bible-study",
-    bgColor: "bg-green-500/20",
-    hoverBgColor: "bg-green-500/30",
-    iconColor: "text-green-400",
-    borderColor: "border-green-500",
-    topBorderColor: "bg-green-500"
+    bgColor: "bg-blue-500/20",
+    hoverBgColor: "bg-blue-500/30",
+    iconColor: "text-blue-400",
+    borderColor: "border-blue-500",
+    topBorderColor: "bg-blue-500"
   },
   {
     icon: Video,
