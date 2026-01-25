@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { ArrowLeft, Search, BookOpen, ExternalLink, Filter, Copy, Check, MessageSquare, ChevronDown, Download, FileText } from 'lucide-react';
-import { mythBusterContent, mythCategories, mythScenarios, mythOrganizations } from '@/data/mythBusterContent';
+import { cn } from '@/lib/utils';
+import { ArrowLeft, Search, BookOpen, ExternalLink, Filter, Copy, Check, MessageSquare, ChevronDown, Download, FileText, Target, Sparkles, Scale, Eye, Building, X } from 'lucide-react';
+import { mythBusterContent, mythCategories, mythScenarios, mythOrganizations, ProofCategory } from '@/data/mythBusterContent';
 import { ListenButton } from '@/components/ListenButton';
 import { FISTFramework } from '@/components/myth-buster/FISTFramework';
 import { ProofQuickReference } from '@/components/proof/ProofQuickReference';
@@ -38,10 +39,21 @@ const categoryDescriptions: Record<string, string> = {
   history: 'Questions about origins, founders, and historical roots'
 };
 
+// PROOF category filter definitions
+const proofCategories: { id: ProofCategory | 'all'; label: string; icon: React.ComponentType<{ className?: string }>; color: string }[] = [
+  { id: 'all', label: 'All', icon: Target, color: 'bg-muted text-foreground' },
+  { id: 'pledge-process', label: 'Pledge Process', icon: Target, color: 'bg-red-500/10 text-red-600 border-red-500/30' },
+  { id: 'rituals', label: 'Rituals', icon: Sparkles, color: 'bg-purple-500/10 text-purple-600 border-purple-500/30' },
+  { id: 'oaths', label: 'Oaths', icon: Scale, color: 'bg-amber-500/10 text-amber-600 border-amber-500/30' },
+  { id: 'obscurity', label: 'Obscurity', icon: Eye, color: 'bg-blue-500/10 text-blue-600 border-blue-500/30' },
+  { id: 'founders', label: 'Founders', icon: Building, color: 'bg-emerald-500/10 text-emerald-600 border-emerald-500/30' },
+];
+
 const MythBuster = () => {
   const [search, setSearch] = useState('');
   const [scenario, setScenario] = useState('all');
   const [organization, setOrganization] = useState('all');
+  const [proofFilter, setProofFilter] = useState<ProofCategory | 'all'>('all');
   const [expandedCategories, setExpandedCategories] = useState<string[]>(['identity']);
   const [isDownloading, setIsDownloading] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -83,7 +95,8 @@ const MythBuster = () => {
       myth.tags.some(t => t.toLowerCase().includes(search.toLowerCase()));
     const matchesScenario = scenario === 'all' || myth.scenario === scenario;
     const matchesOrganization = organization === 'all' || myth.organization === organization;
-    return matchesSearch && matchesScenario && matchesOrganization;
+    const matchesProofCategory = proofFilter === 'all' || myth.proofCategory === proofFilter;
+    return matchesSearch && matchesScenario && matchesOrganization && matchesProofCategory;
   });
 
   // Group myths by category
@@ -165,12 +178,40 @@ const MythBuster = () => {
             </Select>
           </div>
           
+          {/* PROOF Category Filter Badges */}
+          <div className="space-y-2">
+            <p className="text-xs font-medium text-muted-foreground">Filter by P.R.O.O.F. Criticism:</p>
+            <div className="flex flex-wrap gap-2">
+              {proofCategories.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => setProofFilter(cat.id)}
+                  className={cn(
+                    "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-all",
+                    proofFilter === cat.id 
+                      ? `${cat.color} ring-2 ring-offset-2 ring-sacred/30` 
+                      : "bg-muted/50 text-muted-foreground hover:bg-muted border-transparent"
+                  )}
+                >
+                  <cat.icon className="w-3 h-3" />
+                  {cat.label}
+                  {proofFilter === cat.id && cat.id !== 'all' && (
+                    <X 
+                      className="w-3 h-3 ml-1 hover:text-foreground" 
+                      onClick={(e) => { e.stopPropagation(); setProofFilter('all'); }}
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+          
           <div className="flex items-center justify-between text-sm flex-wrap gap-2">
             <Badge variant="secondary">{filtered.length} myths found</Badge>
             <div className="flex items-center gap-2">
-              {search && (
-                <Button variant="ghost" size="sm" onClick={() => setSearch('')}>
-                  Clear search
+              {(search || proofFilter !== 'all') && (
+                <Button variant="ghost" size="sm" onClick={() => { setSearch(''); setProofFilter('all'); }}>
+                  Clear filters
                 </Button>
               )}
               <Button 
@@ -194,8 +235,8 @@ const MythBuster = () => {
         {filtered.length === 0 ? (
           <Card>
             <CardContent className="py-12 text-center">
-              <p className="text-muted-foreground">No myths found matching your search.</p>
-              <Button variant="link" onClick={() => { setSearch(''); setScenario('all'); setOrganization('all'); }}>
+              <p className="text-muted-foreground">No myths found matching your filters.</p>
+              <Button variant="link" onClick={() => { setSearch(''); setScenario('all'); setOrganization('all'); setProofFilter('all'); }}>
                 Clear all filters
               </Button>
             </CardContent>

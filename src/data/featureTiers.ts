@@ -49,6 +49,7 @@ export const FEATURES: FeatureDefinition[] = [
   { id: 'achievements', name: 'Achievements', description: 'View your progress and unlocked badges', category: 'core', minTier: 'free', canHide: true },
   { id: 'did-you-know', name: 'Did You Know?', description: 'Educational content and videos', category: 'study', minTier: 'free', canHide: true },
   { id: 'new-assessment', name: 'New Assessment', description: 'Discover your 5 Persona Types', category: 'core', minTier: 'free', canHide: true },
+  { id: 'proof-assessment', name: 'P.R.O.O.F. Quiz', description: 'Identify which criticism you face most', category: 'core', minTier: 'free', canHide: true },
   { id: 'shattered-masks', name: 'Shattered Masks', description: 'Discover your archetype', category: 'core', minTier: 'free', canHide: true },
   { id: 'assessment-history', name: 'My Assessments', description: 'View your past assessment results', category: 'core', minTier: 'free', canHide: true },
   { id: 'service-hours', name: 'Service Hours', description: 'Track community service activities', category: 'core', minTier: 'free', canHide: true },
