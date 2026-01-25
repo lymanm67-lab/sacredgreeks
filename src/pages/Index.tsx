@@ -9,7 +9,6 @@ import { cn } from "@/lib/utils";
 import { Play, Sparkles, User, ChevronRight, Shield, Heart, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DashboardPreview } from "@/components/landing/DashboardPreview";
-import { ProofFrameworkSection } from "@/components/landing/ProofFrameworkSection";
 import { Testimonials } from "@/components/Testimonials";
 import { Footer } from "@/components/landing/Footer";
 import { LandingPersonalizationSurvey } from "@/components/landing/LandingPersonalizationSurvey";
@@ -186,9 +185,6 @@ const Index = () => {
 
         {/* Dashboard Preview Section */}
         <DashboardPreview />
-        
-        {/* P.R.O.O.F. Framework Explainer */}
-        <ProofFrameworkSection />
         
         {/* Testimonials Section */}
         <Testimonials />

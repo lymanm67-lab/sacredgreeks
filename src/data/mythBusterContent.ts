@@ -1,7 +1,10 @@
+export type ProofCategory = 'pledge-process' | 'rituals' | 'oaths' | 'obscurity' | 'founders';
+
 export interface MythEntry {
   id: string;
   myth: string;
   category: string;
+  proofCategory?: ProofCategory;
   scenario?: string;
   organization?: string;
   shortAnswer: string;
@@ -13,7 +16,7 @@ export interface MythEntry {
 }
 
 export const mythBusterContent: MythEntry[] = [
-  // Community & Service
+// Community & Service
   {
     id: "greeks-dont-serve",
     myth: "Greeks Don't Serve the Community Like the Church Does",
@@ -33,6 +36,7 @@ export const mythBusterContent: MythEntry[] = [
     id: "dark-historical-roots",
     myth: "Greek Organizations Have Dark Historical Roots",
     category: "history",
+    proofCategory: "founders",
     scenario: "Church Challenge",
     organization: "BGLO",
     shortAnswer: "Greek organizations were founded on occult and pagan principles that still influence them today.",
@@ -48,6 +52,7 @@ export const mythBusterContent: MythEntry[] = [
     id: "founded-to-mock",
     myth: "Greek Organizations Were Founded to Mock Christianity",
     category: "history",
+    proofCategory: "founders",
     scenario: "Social Media Defense",
     organization: "BGLO",
     shortAnswer: "These organizations were created specifically to pull Black people away from the church.",
@@ -77,6 +82,7 @@ export const mythBusterContent: MythEntry[] = [
     id: "greek-rituals-concern",
     myth: "What About Greek Rituals and Ceremonies?",
     category: "rituals",
+    proofCategory: "rituals",
     scenario: "Prospective Member Question",
     organization: "BGLO",
     shortAnswer: "I'm concerned about participating in Greek rituals. Will they conflict with my faith?",
@@ -149,6 +155,7 @@ export const mythBusterContent: MythEntry[] = [
     id: "founder-beliefs",
     myth: "Greek Founders Had Questionable Religious Beliefs",
     category: "history",
+    proofCategory: "founders",
     scenario: "Ministry Leader Concern",
     organization: "BGLO",
     shortAnswer: "Some Greek organization founders held non-Christian beliefs, so we should question members' faith.",
@@ -178,6 +185,7 @@ export const mythBusterContent: MythEntry[] = [
     id: "symbols-demonic",
     myth: "Greek Symbols Are Demonic",
     category: "rituals",
+    proofCategory: "rituals",
     scenario: "Social Media Defense",
     organization: "BGLO",
     shortAnswer: "All the Greek symbols and hand signs are actually demonic symbols.",
@@ -222,6 +230,7 @@ export const mythBusterContent: MythEntry[] = [
     id: "rituals-satanic",
     myth: "Greek Rituals Are Satanic",
     category: "rituals",
+    proofCategory: "rituals",
     scenario: "Family Objection",
     organization: "BGLO",
     shortAnswer: "Greek organizations practice satanic rituals behind closed doors.",
@@ -251,6 +260,7 @@ export const mythBusterContent: MythEntry[] = [
     id: "unchristian-ceremonies",
     myth: "Greek Ceremonies Involve Unchristian Rituals",
     category: "rituals",
+    proofCategory: "rituals",
     scenario: "Family Discussion",
     organization: "BGLO",
     shortAnswer: "I've heard Greek ceremonies involve rituals that Christians shouldn't participate in.",
@@ -295,6 +305,7 @@ export const mythBusterContent: MythEntry[] = [
     id: "ungodly-founder-backgrounds",
     myth: "Greek Founders Had Ungodly Backgrounds",
     category: "history",
+    proofCategory: "founders",
     scenario: "Church Setting",
     shortAnswer: "The founders of Greek organizations were not Christians, so the organizations are spiritually compromised.",
     detailedResponse: "Many institutions we use daily were founded by non-Christians. This doesn't make them inherently evil. God uses imperfect vessels and can redeem any organization for His purposes. Focus on current leadership, values, and how members live out their faith today.",
@@ -309,6 +320,7 @@ export const mythBusterContent: MythEntry[] = [
     id: "step-shows-pagan",
     myth: "Greek Step Shows Are Pagan Worship",
     category: "rituals",
+    proofCategory: "rituals",
     scenario: "Church Setting",
     organization: "BGLO",
     shortAnswer: "When Greeks step or stroll at church events, they're performing pagan rituals.",
@@ -353,6 +365,7 @@ export const mythBusterContent: MythEntry[] = [
     id: "secret-rituals-concern",
     myth: "Why Would a Christian Join Something With Secret Rituals?",
     category: "rituals",
+    proofCategory: "obscurity",
     scenario: "Church Challenge",
     shortAnswer: "Christians shouldn't join organizations with private ceremonies because secrecy equals deception.",
     detailedResponse: "Privacy is not the same as secrecy. Jesus had inner circle moments with Peter, James, and John. Private ceremonies can simply mean membership-only experiences, like many professional organizations. The question is whether the content violates Scripture, not whether it's public. Many Greek rituals focus on history, values, and community bonds.",
