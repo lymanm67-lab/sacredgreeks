@@ -111,6 +111,7 @@ const PROOF_FRAMEWORK = [
     description: "How does the intake and pledging process align with biblical values?", 
     color: "bg-blue-500",
     criticism: "Hazing Concerns",
+    criticismExample: '"Greeks brutalize new members through hazing rituals that are dangerous and sinful."',
     response: "Biblical mentorship involves testing character, not abusing it. We reject hazing while embracing accountability and growth through godly community.",
     scripture: "Hebrews 10:24-25",
     scriptureText: "And let us consider how to stir up one another to love and good works, not neglecting to meet together..."
@@ -121,6 +122,7 @@ const PROOF_FRAMEWORK = [
     description: "What rituals are involved and do they honor God?", 
     color: "bg-purple-500",
     criticism: "Demonic Portals",
+    criticismExample: '"Greek rituals open demonic portals and invite evil spirits through occult practices."',
     response: "Not all ceremonies are worship. Many rituals focus on history, values, and commitment—like weddings or graduations. We discern based on content, not assumption.",
     scripture: "1 Thessalonians 5:21",
     scriptureText: "Test everything; hold fast what is good."
@@ -131,6 +133,7 @@ const PROOF_FRAMEWORK = [
     description: "What oaths and vows are required of members?", 
     color: "bg-orange-500",
     criticism: "Greek Deity Allegiance",
+    criticismExample: '"Using Greek letters means you\'re worshiping Zeus, Apollo, and other pagan gods."',
     response: "Using Greek letters doesn't mean worshiping Greek gods. Paul used Greek language and culture to spread the Gospel without endorsing paganism.",
     scripture: "Acts 17:22-28",
     scriptureText: "For as I passed along and observed the objects of your worship, I found also an altar with this inscription: 'To the unknown god.'..."
@@ -141,6 +144,7 @@ const PROOF_FRAMEWORK = [
     description: "What is kept secret and does it conflict with walking in the light?", 
     color: "bg-green-500",
     criticism: "Secret Societies",
+    criticismExample: '"Greeks are secret societies that hide evil practices from the public. If it\'s good, why hide it?"',
     response: "Privacy is not secrecy. Jesus had inner-circle moments with Peter, James, and John. Private ceremonies can simply mean membership-only experiences.",
     scripture: "Mark 5:37",
     scriptureText: "And he allowed no one to follow him except Peter and James and John the brother of James."
@@ -151,6 +155,7 @@ const PROOF_FRAMEWORK = [
     description: "What is the foundation and history of the organization?", 
     color: "bg-red-500",
     criticism: "Masonic Connections",
+    criticismExample: '"Greek organizations were founded by Freemasons, so they\'re all connected to the Illuminati."',
     response: "An organization's origin doesn't determine its current purpose. Many institutions with complex histories serve godly purposes today. We are new creations in Christ.",
     scripture: "2 Corinthians 5:17",
     scriptureText: "Therefore, if anyone is in Christ, he is a new creation. The old has passed away; behold, the new has come."
@@ -194,6 +199,7 @@ const Auth = () => {
   const [isResetMode, setIsResetMode] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [expandedProof, setExpandedProof] = useState<number | null>(null);
+  const [allProofExpanded, setAllProofExpanded] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [signupPassword, setSignupPassword] = useState('');
   const [resetPassword, setResetPassword] = useState('');
@@ -1025,60 +1031,103 @@ const Auth = () => {
             </p>
           </div>
 
+          {/* Expand All Button */}
+          <div className="max-w-3xl mx-auto mb-4 flex justify-end">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setAllProofExpanded(!allProofExpanded)}
+              className="text-purple-400 hover:text-purple-300 hover:bg-purple-500/10"
+            >
+              {allProofExpanded ? (
+                <>
+                  <ChevronUp className="w-4 h-4 mr-2" />
+                  Collapse All
+                </>
+              ) : (
+                <>
+                  <ChevronDown className="w-4 h-4 mr-2" />
+                  Expand All
+                </>
+              )}
+            </Button>
+          </div>
+
           <div className="max-w-3xl mx-auto space-y-4">
-            {PROOF_FRAMEWORK.map((item, index) => (
-              <div 
-                key={index}
-                className={cn(
-                  "rounded-xl bg-white/5 border border-white/10 transition-all duration-300 overflow-hidden",
-                  expandedProof === index ? "bg-white/10 border-white/20" : "hover:bg-white/10"
-                )}
-              >
-                <button
-                  onClick={() => setExpandedProof(expandedProof === index ? null : index)}
-                  className="w-full flex items-center gap-4 p-4 text-left"
+            {PROOF_FRAMEWORK.map((item, index) => {
+              const isExpanded = allProofExpanded || expandedProof === index;
+              return (
+                <div 
+                  key={index}
+                  className={cn(
+                    "rounded-xl bg-white/5 border border-white/10 transition-all duration-300 overflow-hidden",
+                    isExpanded ? "bg-white/10 border-white/20" : "hover:bg-white/10"
+                  )}
                 >
-                  <div className={`w-12 h-12 rounded-full ${item.color} flex items-center justify-center flex-shrink-0 shadow-lg`}>
-                    <span className="text-xl font-bold text-white">{item.letter}</span>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-semibold text-lg text-white">{item.title}</h3>
-                      <span className="px-2 py-0.5 text-xs rounded-full bg-red-500/20 text-red-300 border border-red-500/30">
-                        Criticism: {item.criticism}
-                      </span>
+                  <button
+                    onClick={() => {
+                      if (allProofExpanded) {
+                        setAllProofExpanded(false);
+                        setExpandedProof(index);
+                      } else {
+                        setExpandedProof(expandedProof === index ? null : index);
+                      }
+                    }}
+                    className="w-full flex items-center gap-4 p-4 text-left"
+                  >
+                    <div className={`w-12 h-12 rounded-full ${item.color} flex items-center justify-center flex-shrink-0 shadow-lg`}>
+                      <span className="text-xl font-bold text-white">{item.letter}</span>
                     </div>
-                    <p className="text-white/60 text-sm">{item.description}</p>
-                  </div>
-                  <ChevronDown className={cn(
-                    "w-5 h-5 text-white/60 transition-transform duration-300 flex-shrink-0",
-                    expandedProof === index && "rotate-180"
-                  )} />
-                </button>
-                
-                {expandedProof === index && (
-                  <div className="px-4 pb-4 pt-0 border-t border-white/10 mt-0">
-                    <div className="pl-16 space-y-4">
-                      {/* Biblical Response */}
-                      <div className="p-4 rounded-lg bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20">
-                        <p className="text-white/90 font-medium mb-3">
-                          <span className="text-cyan-400">Biblical Response:</span> {item.response}
-                        </p>
-                        
-                        {/* Scripture Reference */}
-                        <div className="flex items-start gap-3 p-3 rounded-md bg-white/5">
-                          <BookOpen className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-                          <div>
-                            <p className="text-amber-400 font-semibold text-sm">{item.scripture}</p>
-                            <p className="text-white/70 text-sm italic mt-1">"{item.scriptureText}"</p>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1 flex-wrap">
+                        <h3 className="font-semibold text-lg text-white">{item.title}</h3>
+                        <span className="px-2 py-0.5 text-xs rounded-full bg-red-500/20 text-red-300 border border-red-500/30">
+                          Criticism: {item.criticism}
+                        </span>
+                      </div>
+                      <p className="text-white/60 text-sm">{item.description}</p>
+                    </div>
+                    <ChevronDown className={cn(
+                      "w-5 h-5 text-white/60 transition-transform duration-300 flex-shrink-0",
+                      isExpanded && "rotate-180"
+                    )} />
+                  </button>
+                  
+                  {isExpanded && (
+                    <div className="px-4 pb-4 pt-0 border-t border-white/10 mt-0 animate-fade-in">
+                      <div className="pl-16 space-y-4 pt-4">
+                        {/* Criticism Example */}
+                        <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
+                          <div className="flex items-start gap-3">
+                            <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                            <div>
+                              <p className="text-red-300 font-medium text-sm mb-1">Common Criticism:</p>
+                              <p className="text-white/80 italic text-sm">{item.criticismExample}</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Biblical Response */}
+                        <div className="p-4 rounded-lg bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20">
+                          <p className="text-white/90 font-medium mb-3">
+                            <span className="text-cyan-400">Biblical Response:</span> {item.response}
+                          </p>
+                          
+                          {/* Scripture Reference */}
+                          <div className="flex items-start gap-3 p-3 rounded-md bg-white/5">
+                            <BookOpen className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                            <div>
+                              <p className="text-amber-400 font-semibold text-sm">{item.scripture}</p>
+                              <p className="text-white/70 text-sm italic mt-1">"{item.scriptureText}"</p>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            ))}
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           <div className="text-center mt-8">
