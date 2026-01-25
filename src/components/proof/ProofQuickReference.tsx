@@ -179,6 +179,17 @@ export function ProofQuickReference() {
         <p className="text-sm text-muted-foreground">
           Biblical responses to common anti-Greek life criticisms. Tap each card to see examples.
         </p>
+        <div className="mt-3 p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
+          <div className="flex items-start gap-2">
+            <Heart className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="text-xs font-medium text-purple-400 mb-1">About the Conscience Principle</p>
+              <p className="text-xs text-muted-foreground">
+                Scripture teaches that believers may hold different convictions on secondary matters while remaining faithful (Romans 14). What defiles one person's conscience may be permissible for another—but both must act from faith, not against their convictions.
+              </p>
+            </div>
+          </div>
+        </div>
       </CardHeader>
 
       <CardContent ref={cardRef} className="space-y-3">
