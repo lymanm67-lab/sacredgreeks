@@ -54,27 +54,32 @@ export const PROOF_FRAMEWORK_DATA: ProofItem[] = [
     icon: Target,
     criticism: "Hazing Concerns",
     criticismExample: '"Greeks brutalize new members through hazing rituals that are dangerous and sinful."',
-    response: "Biblical mentorship involves testing character, not abusing it. We reject hazing while embracing accountability and growth through godly community.",
+    response: "Biblical mentorship involves testing character, not abusing it. We reject hazing while embracing accountability and growth through godly community. Ancient trade guilds—including those Jesus and Paul belonged to—used structured apprenticeship, testing, and mentorship without abuse.",
     scripture: "Hebrews 10:24-25",
     scriptureText: "And let us consider how to stir up one another to love and good works, not neglecting to meet together...",
     supportingScripture: "Romans 14:5",
     supportingText: "Each one should be fully convinced in his own mind.",
     corePrinciple: {
-      title: "Godly Mentorship",
-      text: "Biblical discipleship involves challenge and growth, but never abuse or degradation. Jesus pushed His disciples to grow through teaching, experience, and accountability—never through harm. The process of becoming a member can honor God when it builds character through service, learning, and genuine brotherhood.",
+      title: "Godly Mentorship & Ancient Guild Parallels",
+      text: "In the first century Mediterranean world, skilled trades were organized through craft guilds that functioned much like modern fraternities. As a master carpenter (τέκτων), Jesus of Nazareth would have been trained within a structured trade environment emphasizing apprenticeship, mastery, reputation, and mutual support. Paul the Apostle, identified in Acts as a tentmaker, worked within a recognized artisan trade that was typically guild-organized in Greco-Roman cities. These guilds provided identity, networking, protection, and ethical standards—operating with shared symbols, expectations, and rituals that bound members together. Common features included: membership requirements (apprenticeship, demonstrated skill, acceptance by existing members), initiation and advancement ceremonies, ethical and behavioral standards, oaths of professional integrity, rituals marking advancement, signs of recognition, and mutual support during hardship. While Christians rejected idolatrous worship tied to some guilds, the organizational structure itself was familiar, neutral, and widely accepted. Biblical discipleship involves challenge and growth, but never abuse or degradation.",
       scripture: "Proverbs 27:17",
       scriptureText: "Iron sharpens iron, and one man sharpens another."
     },
     examples: [
       {
         myth: "Pledging always involves hazing and abuse",
-        truth: "True discipleship involves mentorship, not abuse. Jesus tested His disciples through teaching and experience, never through degradation.",
+        truth: "True discipleship involves mentorship, not abuse. Jesus tested His disciples through teaching and experience, never through degradation. Ancient guilds used structured training and evaluation—not abuse.",
         additionalScripture: "Proverbs 27:17"
       },
       {
         myth: "You must endure suffering to prove loyalty",
         truth: "Loyalty is proven through commitment and character over time, not through inflicted pain. Christ calls us to serve one another in love.",
         additionalScripture: "Galatians 5:13"
+      },
+      {
+        myth: "Fraternal organizations are a modern invention with no biblical precedent",
+        truth: "Trade guilds in Jesus' and Paul's time shared many features with modern fraternities: membership requirements, initiation ceremonies, ethical standards, oaths of integrity, and mutual support. The structure is ancient and neutral—what matters is the content and purpose.",
+        additionalScripture: "Acts 18:3"
       }
     ]
   },
