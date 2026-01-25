@@ -141,12 +141,12 @@ export const GuidedTour = memo(function GuidedTour({ onComplete }: GuidedTourPro
     <AnimatePresence>
       {isVisible && (
         <>
-          {/* Subtle backdrop - allows dashboard to remain visible */}
+          {/* Subtle backdrop overlay - minimal to keep dashboard visible */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-background/30 z-[100] pointer-events-none"
+            className="fixed inset-0 bg-transparent z-[100] pointer-events-none"
           />
           
           {/* Tour Card - positioned at bottom for visibility */}
