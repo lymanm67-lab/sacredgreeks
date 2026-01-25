@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Home, Eye, EyeOff, Mail, RefreshCw, AlertTriangle, Ban, Info, ExternalLink } from 'lucide-react';
+import { Home, Eye, EyeOff, Mail, RefreshCw, AlertTriangle, Ban, Info, ExternalLink, BookOpen, Heart, Shield, Sparkles, CheckCircle2, MessageCircle } from 'lucide-react';
 import logo from '@/assets/sacred-greeks-logo.png';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -18,6 +18,34 @@ import { PasswordStrengthIndicator } from '@/components/PasswordStrengthIndicato
 import { usePasswordBreachCheck } from '@/hooks/use-password-breach-check';
 import { useDisposableEmailCheck } from '@/hooks/use-disposable-email-check';
 import { cn } from '@/lib/utils';
+
+const VALUE_PROPOSITIONS = [
+  {
+    icon: BookOpen,
+    title: "Daily Devotionals",
+    description: "Scripture-based guidance for Greeks navigating faith"
+  },
+  {
+    icon: Shield,
+    title: "Biblical Responses",
+    description: "Answers to common objections about Greek life"
+  },
+  {
+    icon: Heart,
+    title: "Prayer Journal",
+    description: "Track your prayers and celebrate answered ones"
+  },
+  {
+    icon: MessageCircle,
+    title: "Community Support",
+    description: "Connect with fellow believers in Greek life"
+  },
+  {
+    icon: Sparkles,
+    title: "Spiritual Growth",
+    description: "Tools to deepen your faith journey"
+  }
+];
 
 const authSchema = z.object({
   email: z.string().email('Invalid email address').max(255, 'Email must be less than 255 characters'),
@@ -381,23 +409,60 @@ const Auth = () => {
       </header>
 
       <div className="flex-1 flex items-center justify-center p-4">
-        <div className="w-full max-w-sm">
-          <div className="text-center mb-6">
-            <img src={logo} alt="Sacred Greeks" className="w-16 h-16 mx-auto mb-3" />
-            <h1 className="text-2xl font-bold">Sacred Greeks</h1>
-            <p className="text-sm text-muted-foreground mt-1">
-              Navigate faith and Greek life
-            </p>
+        <div className="w-full max-w-4xl grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          {/* Left side - Value Proposition */}
+          <div className="hidden lg:block space-y-8">
+            <div>
+              <img src={logo} alt="Sacred Greeks" className="w-20 h-20 rounded-full object-cover mb-4" />
+              <h1 className="text-3xl font-bold text-foreground mb-2">
+                Faith + Greek Life, <span className="text-primary">United</span>
+              </h1>
+              <p className="text-muted-foreground text-lg">
+                Join thousands of Greeks navigating faith with confidence
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              {VALUE_PROPOSITIONS.map((item, index) => (
+                <div key={index} className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <item.icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground">{item.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="pt-4 border-t border-border">
+              <p className="text-sm text-muted-foreground flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-primary" />
+                100% free to start. No credit card required.
+              </p>
+            </div>
           </div>
 
-          <Tabs defaultValue="signin" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-4">
-              <TabsTrigger value="signin">Sign In</TabsTrigger>
-              <TabsTrigger value="signup">Sign Up</TabsTrigger>
-            </TabsList>
+          {/* Right side - Auth Form */}
+          <div className="w-full max-w-sm mx-auto lg:mx-0">
+            {/* Mobile-only header */}
+            <div className="text-center mb-6 lg:hidden">
+              <img src={logo} alt="Sacred Greeks" className="w-16 h-16 rounded-full object-cover mx-auto mb-3" />
+              <h1 className="text-2xl font-bold">Sacred Greeks</h1>
+              <p className="text-sm text-muted-foreground mt-1">
+                Navigate faith and Greek life
+              </p>
+            </div>
 
-            <TabsContent value="signin" className="mt-0">
-              <Card>
+            <Tabs defaultValue="signin" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-4">
+                <TabsTrigger value="signin">Sign In</TabsTrigger>
+                <TabsTrigger value="signup">Sign Up</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="signin" className="mt-0">
+                <Card>
                 <CardContent className="pt-6">
                   <form onSubmit={handleSignIn} className="space-y-4">
                     <div className="space-y-2">
@@ -597,6 +662,7 @@ const Auth = () => {
               </Card>
             </TabsContent>
           </Tabs>
+          </div>
         </div>
       </div>
     </div>
