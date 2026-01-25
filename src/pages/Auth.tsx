@@ -19,6 +19,7 @@ import { PasswordStrengthIndicator } from '@/components/PasswordStrengthIndicato
 import { usePasswordBreachCheck } from '@/hooks/use-password-breach-check';
 import { useDisposableEmailCheck } from '@/hooks/use-disposable-email-check';
 import { cn } from '@/lib/utils';
+import { BeliefTeachingAudio } from '@/components/proof/BeliefTeachingAudio';
 
 const FEATURED_TOOLS = [
   {
@@ -1154,6 +1155,9 @@ const Auth = () => {
               );
             })}
           </div>
+
+          {/* Belief Teaching Audio */}
+          <BeliefTeachingAudio className="mt-6 max-w-2xl mx-auto" />
 
           <div className="text-center mt-8">
             <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600" asChild>
