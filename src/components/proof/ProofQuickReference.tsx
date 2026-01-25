@@ -13,7 +13,8 @@ import {
   ChevronUp,
   Quote,
   AlertTriangle,
-  Heart
+  Heart,
+  Zap
 } from "lucide-react";
 import { toast } from "sonner";
 import html2canvas from "html2canvas";
@@ -287,6 +288,23 @@ export function ProofQuickReference() {
                             </div>
                           </div>
                         </div>
+
+                        {/* Core Principle - Only for Rituals */}
+                        {item.corePrinciple && (
+                          <div className="p-3 rounded-lg bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30">
+                            <div className="flex items-start gap-2">
+                              <Zap className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
+                              <div>
+                                <p className="text-[10px] font-medium text-amber-400 uppercase tracking-wide mb-1">{item.corePrinciple.title}:</p>
+                                <p className="text-xs text-foreground leading-relaxed mb-2">{item.corePrinciple.text}</p>
+                                <div className="bg-background/30 rounded p-2 border-l-2 border-amber-400/50">
+                                  <p className="text-xs text-white/90 italic">"{item.corePrinciple.scriptureText}"</p>
+                                  <p className="text-[10px] text-amber-400/80 mt-1 font-medium">— {item.corePrinciple.scripture}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
 
                         {/* Examples */}
                         <div className="space-y-2">

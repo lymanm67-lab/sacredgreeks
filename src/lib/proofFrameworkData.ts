@@ -27,6 +27,12 @@ export interface ProofItem {
   scriptureText: string;
   supportingScripture: string;
   supportingText: string;
+  corePrinciple?: {
+    title: string;
+    text: string;
+    scripture: string;
+    scriptureText: string;
+  };
   examples: {
     myth: string;
     truth: string;
@@ -80,6 +86,12 @@ export const PROOF_FRAMEWORK_DATA: ProofItem[] = [
     scriptureText: "Test everything; hold fast what is good.",
     supportingScripture: "Romans 14:14",
     supportingText: "Nothing is unclean in itself, but it is unclean for anyone who thinks it unclean.",
+    corePrinciple: {
+      title: "The Power of Belief",
+      text: "Rituals, symbols, and ceremonies only hold spiritual power when the participant believes in their authority. An unrecognized deity or unbelieved ritual cannot affect you spiritually. Just as Jesus' power was limited by unbelief, so too spiritual forces—real or imagined—require faith to operate.",
+      scripture: "1 Corinthians 8:4",
+      scriptureText: "We know that 'an idol is nothing at all in the world' and that 'there is no God but one.'"
+    },
     examples: [
       {
         myth: "All Greek rituals are demonic or occult",
