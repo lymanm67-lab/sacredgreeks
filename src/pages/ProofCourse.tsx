@@ -4,13 +4,18 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Lock, Play, Clock, Lightbulb, CheckCircle2, BookOpen, Mail, ArrowRight } from 'lucide-react';
+import { Lock, Play, Clock, Lightbulb, CheckCircle2, BookOpen, Mail, ArrowRight, FileDown, Users } from 'lucide-react';
 import { SEOHead } from '@/components/SEOHead';
 import { useToast } from '@/hooks/use-toast';
 import { ListenButton } from '@/components/ListenButton';
 import { FaithAuthoritySection } from '@/components/proof/FaithAuthoritySection';
 import { BeliefTeachingAudio } from '@/components/proof/BeliefTeachingAudio';
 import { ProofFrameworkAudio } from '@/components/proof/ProofFrameworkAudio';
+import { GuildJourneyDiagram, GuildAudioPlayer } from '@/components/ancient-guilds';
+import { generateGuildOnePagerPDF } from '@/lib/guild-onepager-pdf';
+import { generateGuildComparisonPDF } from '@/lib/guild-comparison-pdf';
+import { generateJesusMasterCarpenterPDF } from '@/lib/jesus-master-carpenter-pdf';
+import { Link } from 'react-router-dom';
 
 interface Lesson {
   id: number;
@@ -649,6 +654,86 @@ const ProofCourse = () => {
                   </Card>
                 );
               })}
+            </div>
+
+            {/* Ancient Guild Context Section */}
+            <div className="mt-12 mb-8">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center">
+                  <Users className="w-5 h-5 text-amber-500" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-foreground">Ancient Guild Context</h2>
+                  <p className="text-sm text-muted-foreground">Jesus & Paul's membership in trade guilds</p>
+                </div>
+              </div>
+
+              {/* Guild Journey Diagram */}
+              <GuildJourneyDiagram className="mb-6" />
+
+              {/* Guild Audio Player */}
+              <GuildAudioPlayer className="mb-6" />
+
+              {/* PDF Downloads */}
+              <Card className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-amber-500/30">
+                <CardContent className="p-6">
+                  <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+                    <FileDown className="w-5 h-5 text-amber-500" />
+                    Downloadable Resources
+                  </h3>
+                  <div className="grid sm:grid-cols-3 gap-3">
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        generateGuildOnePagerPDF();
+                        toast({ title: 'One-Pager PDF downloaded!' });
+                      }}
+                      className="justify-start border-amber-500/30 hover:bg-amber-500/10"
+                    >
+                      <FileDown className="w-4 h-4 mr-2 text-amber-500" />
+                      <span className="text-left">
+                        <span className="block text-sm font-medium">One-Pager</span>
+                        <span className="block text-xs text-muted-foreground">Quick Reference</span>
+                      </span>
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        generateGuildComparisonPDF();
+                        toast({ title: 'Comparison Guide downloaded!' });
+                      }}
+                      className="justify-start border-amber-500/30 hover:bg-amber-500/10"
+                    >
+                      <FileDown className="w-4 h-4 mr-2 text-amber-500" />
+                      <span className="text-left">
+                        <span className="block text-sm font-medium">Full Guide</span>
+                        <span className="block text-xs text-muted-foreground">Detailed Comparison</span>
+                      </span>
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        generateJesusMasterCarpenterPDF();
+                        toast({ title: 'Jesus Master Carpenter PDF downloaded!' });
+                      }}
+                      className="justify-start border-amber-500/30 hover:bg-amber-500/10"
+                    >
+                      <FileDown className="w-4 h-4 mr-2 text-amber-500" />
+                      <span className="text-left">
+                        <span className="block text-sm font-medium">Jesus the Tekton</span>
+                        <span className="block text-xs text-muted-foreground">Carpenter Study</span>
+                      </span>
+                    </Button>
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-amber-500/20">
+                    <Button asChild variant="ghost" className="text-amber-600 hover:text-amber-500 hover:bg-amber-500/10">
+                      <Link to="/chapter-kit">
+                        View All Chapter Resources →
+                      </Link>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
 
             {/* Unlock CTA */}
