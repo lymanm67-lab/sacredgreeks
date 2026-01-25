@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
-import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, ExternalLink, Share2, FileDown, Scale, History, Sparkles, Printer, Crown, Building, GraduationCap, Landmark, Users, Heart, Scroll, BookOpen, LayoutGrid, List, Filter, Volume2, ArrowUpDown } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, CheckCircle, AlertCircle, Search, Bookmark, BookmarkCheck, Lightbulb, ChevronDown, ChevronUp, Edit2, Trash2, ExternalLink, Share2, FileDown, Scale, History, Sparkles, Printer, Crown, Building, GraduationCap, Landmark, Users, Heart, Scroll, BookOpen, LayoutGrid, List, Filter, Volume2, ArrowUpDown, Hammer, Download } from 'lucide-react';
 import { symbolGuideContent, ritualGuideContent, symbolCategories, customsSubcategories, culturalSubcategories, culturalComparisons, culturalComparisonCategories, SymbolEntry, RitualEntry, CulturalComparisonEntry } from '@/data/symbolGuideContent';
 import { getSymbolImageUrl } from '@/data/symbolImageUrls';
 import { ListenButton } from '@/components/ListenButton';
@@ -25,6 +25,8 @@ import { DisciplinaArcaniSection } from '@/components/DisciplinaArcaniSection';
 import { ApologeticsCard } from '@/components/ApologeticsCard';
 import { PreviewBanner } from '@/components/PreviewBanner';
 import { DemoAudioGuide } from '@/components/DemoAudioGuide';
+import { GuildJourneyDiagram, GuildAudioPlayer } from '@/components/ancient-guilds';
+import { generateJesusMasterCarpenterPDF } from '@/lib/jesus-master-carpenter-pdf';
 
 // Sorting options for Double Standards
 type ComparisonSortOption = 'category' | 'symbol-asc' | 'symbol-desc';
@@ -58,6 +60,7 @@ const categoryIcons: Record<string, React.ReactNode> = {
   symbols: <Badge variant="outline" className="gap-1"><Sparkles className="w-3 h-3" /> Symbols</Badge>,
   oaths: <Badge variant="outline" className="gap-1"><Scroll className="w-3 h-3" /> Oaths</Badge>,
   customs: <Badge variant="outline" className="gap-1"><Heart className="w-3 h-3" /> Customs</Badge>,
+  historical: <Badge variant="outline" className="gap-1"><Hammer className="w-3 h-3" /> Historical</Badge>,
 };
 
 type OathTone = 'amber' | 'blue' | 'emerald' | 'muted';
@@ -555,6 +558,30 @@ const SymbolGuide = () => {
                   </li>
                 ))}
               </ul>
+            </div>
+          )}
+
+          {/* Ancient Trade Guilds Special Section */}
+          {symbol.id === 'ancient-trade-guilds' && (
+            <div className="space-y-4 pt-2">
+              {/* Audio Player */}
+              <GuildAudioPlayer />
+              
+              {/* Journey Diagram */}
+              <GuildJourneyDiagram />
+              
+              {/* PDF Download */}
+              <Button
+                variant="outline"
+                className="w-full border-amber-500/30 text-amber-600 dark:text-amber-400 hover:bg-amber-500/10"
+                onClick={() => {
+                  generateJesusMasterCarpenterPDF();
+                  toast.success("PDF downloaded successfully!");
+                }}
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Download "Jesus the Master Carpenter" PDF Guide
+              </Button>
             </div>
           )}
           
