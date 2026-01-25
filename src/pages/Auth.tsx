@@ -105,11 +105,11 @@ const SECONDARY_TOOLS = [
 ];
 
 const PROOF_FRAMEWORK = [
-  { letter: "P", title: "Pledge Process", description: "How does the intake and pledging process align with biblical values?" },
-  { letter: "R", title: "Rituals", description: "What rituals are involved and do they honor God?" },
-  { letter: "O", title: "Oaths", description: "What oaths and vows are required of members?" },
-  { letter: "O", title: "Obscurity", description: "What is kept secret and does it conflict with walking in the light?" },
-  { letter: "F", title: "Founders", description: "What is the foundation and history of the organization?" }
+  { letter: "P", title: "Pledge Process", description: "How does the intake and pledging process align with biblical values?", color: "bg-blue-500" },
+  { letter: "R", title: "Rituals", description: "What rituals are involved and do they honor God?", color: "bg-purple-500" },
+  { letter: "O", title: "Oaths", description: "What oaths and vows are required of members?", color: "bg-orange-500" },
+  { letter: "O", title: "Obscurity", description: "What is kept secret and does it conflict with walking in the light?", color: "bg-green-500" },
+  { letter: "F", title: "Founders", description: "What is the foundation and history of the organization?", color: "bg-red-500" }
 ];
 
 const D9_ORGS = ["ΑΦΑ", "ΔΣΘ", "ΚΑΨ", "ΑΚΑ"];
@@ -983,9 +983,9 @@ const Auth = () => {
             {PROOF_FRAMEWORK.map((item, index) => (
               <div 
                 key={index}
-                className="flex gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-purple-500/30 hover:bg-white/10 transition-colors"
+                className="flex gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
               >
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
+                <div className={`w-12 h-12 rounded-full ${item.color} flex items-center justify-center flex-shrink-0`}>
                   <span className="text-xl font-bold text-white">{item.letter}</span>
                 </div>
                 <div>
