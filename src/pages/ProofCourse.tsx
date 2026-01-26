@@ -481,6 +481,57 @@ const ProofCourse = () => {
           </p>
         </div>
 
+        {/* Subscription Status Indicator */}
+        {!subLoading && (
+          <div className={`mb-8 p-4 rounded-xl border ${
+            hasPremiumAccess 
+              ? 'bg-gradient-to-r from-amber-500/10 via-sacred/10 to-amber-500/10 border-amber-500/30' 
+              : 'bg-muted/50 border-border'
+          }`}>
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-3">
+                {hasPremiumAccess ? (
+                  <>
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-sacred flex items-center justify-center shadow-lg">
+                      <CheckCircle2 className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-foreground flex items-center gap-2">
+                        {tier === 'ministry' ? 'Ministry' : 'Pro'} Member
+                        <Badge className="bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/30">
+                          Full Access
+                        </Badge>
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        All 5 lessons unlocked • Premium audio included
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
+                      <Lock className="w-5 h-5 text-muted-foreground" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-foreground">Free Access</p>
+                      <p className="text-sm text-muted-foreground">
+                        First lesson available • Upgrade to unlock all content
+                      </p>
+                    </div>
+                  </>
+                )}
+              </div>
+              {!hasPremiumAccess && (
+                <Button asChild size="sm" className="bg-sacred hover:bg-sacred/90">
+                  <Link to="/subscription">
+                    Upgrade to Pro
+                  </Link>
+                </Button>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* Active Lesson View */}
         {currentLesson && (() => {
           const lessonColors = getColorForLesson(currentLesson.id);
