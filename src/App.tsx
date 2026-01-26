@@ -97,7 +97,6 @@ const MeetDrLyman = lazy(() => import("./pages/MeetDrLyman"));
 const TheChallenge = lazy(() => import("./pages/TheChallenge"));
 const BiblicalGuides = lazy(() => import("./pages/BiblicalGuides"));
 const TheBook = lazy(() => import("./pages/TheBook"));
-const GreekLife = lazy(() => import("./pages/GreekLife"));
 const Contact = lazy(() => import("./pages/Contact"));
 const ToolsResources = lazy(() => import("./pages/ToolsResources"));
 const HealingResources = lazy(() => import("./pages/HealingResources"));
@@ -108,7 +107,6 @@ const ChurchLeaders = lazy(() => import("./pages/ChurchLeaders"));
 const FaithAuthority = lazy(() => import("./pages/FaithAuthority"));
 const ChapterKit = lazy(() => import("./pages/ChapterKit"));
 const EconomicHistory = lazy(() => import("./pages/EconomicHistory"));
-const AncientGuildTraining = lazy(() => import("./pages/AncientGuildTraining"));
 const GreekLifeTraining = lazy(() => import("./pages/GreekLifeTraining"));
 
 // Loading fallback component

@@ -222,16 +222,16 @@ export function CatacombArtGallery({ className }: CatacombArtGalleryProps) {
         </CollapsibleTrigger>
 
         <CollapsibleContent>
-          <CardHeader className="pt-0 pb-2">
+          <div className="px-6 pb-2">
             <ListenButton 
               text={narrativeText + " " + catacombArtworks.map(a => `${a.title}. ${a.description} ${a.significance}`).join(" ")}
               itemId="catacomb-gallery-overview"
               variant="outline"
               size="sm"
             />
-          </CardHeader>
+          </div>
 
-      <CardContent className="space-y-4">
+          <CardContent className="space-y-4">
         {/* Gallery Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {catacombArtworks.map((artwork, index) => (
@@ -333,96 +333,96 @@ export function CatacombArtGallery({ className }: CatacombArtGalleryProps) {
             </div>
           </div>
         </div>
-      </CardContent>
+          </CardContent>
+        </CollapsibleContent>
 
-      {/* Detail Modal */}
-      <Dialog open={!!selectedArtwork} onOpenChange={(open) => !open && setSelectedArtwork(null)}>
-        <DialogContent className="max-w-2xl max-h-[90vh] p-0 overflow-hidden">
-          <ScrollArea className="max-h-[90vh]">
-            <div className="p-6">
-              <DialogHeader className="mb-4">
-                <div className="flex items-center justify-between">
-                  <Badge className={cn(selectedArtwork?.colors.primary, "text-white")}>
-                    {selectedArtwork?.symbolType}
-                  </Badge>
-                  <div className="flex gap-1">
-                    <Button variant="ghost" size="icon" onClick={handlePrevious}>
-                      <ChevronLeft className="w-4 h-4" />
-                    </Button>
-                    <span className="text-xs text-muted-foreground self-center px-2">
-                      {currentIndex + 1} / {catacombArtworks.length}
+        {/* Detail Modal */}
+        <Dialog open={!!selectedArtwork} onOpenChange={(open) => !open && setSelectedArtwork(null)}>
+          <DialogContent className="max-w-2xl max-h-[90vh] p-0 overflow-hidden">
+            <ScrollArea className="max-h-[90vh]">
+              <div className="p-6">
+                <DialogHeader className="mb-4">
+                  <div className="flex items-center justify-between">
+                    <Badge className={cn(selectedArtwork?.colors.primary, "text-white")}>
+                      {selectedArtwork?.symbolType}
+                    </Badge>
+                    <div className="flex gap-1">
+                      <Button variant="ghost" size="icon" onClick={handlePrevious}>
+                        <ChevronLeft className="w-4 h-4" />
+                      </Button>
+                      <span className="text-xs text-muted-foreground self-center px-2">
+                        {currentIndex + 1} / {catacombArtworks.length}
+                      </span>
+                      <Button variant="ghost" size="icon" onClick={handleNext}>
+                        <ChevronRight className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+                  <DialogTitle className="text-xl mt-2">{selectedArtwork?.title}</DialogTitle>
+                  <DialogDescription className="flex flex-wrap gap-3 mt-2">
+                    <span className="flex items-center gap-1 text-xs">
+                      <MapPin className="w-3 h-3" /> {selectedArtwork?.location}
                     </span>
-                    <Button variant="ghost" size="icon" onClick={handleNext}>
-                      <ChevronRight className="w-4 h-4" />
-                    </Button>
+                    <span className="flex items-center gap-1 text-xs">
+                      <Calendar className="w-3 h-3" /> {selectedArtwork?.period}
+                    </span>
+                  </DialogDescription>
+                </DialogHeader>
+
+                {/* Artistic Representation */}
+                <div className={cn(
+                  "w-full aspect-video rounded-lg mb-4 flex items-center justify-center border border-border/50",
+                  selectedArtwork?.colors.primary + "/10"
+                )}>
+                  <div className="text-center p-6">
+                    <p className="text-sm text-muted-foreground italic mb-4">
+                      "{selectedArtwork?.imageDescription}"
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Artistic interpretation based on archaeological documentation
+                    </p>
                   </div>
                 </div>
-                <DialogTitle className="text-xl mt-2">{selectedArtwork?.title}</DialogTitle>
-                <DialogDescription className="flex flex-wrap gap-3 mt-2">
-                  <span className="flex items-center gap-1 text-xs">
-                    <MapPin className="w-3 h-3" /> {selectedArtwork?.location}
-                  </span>
-                  <span className="flex items-center gap-1 text-xs">
-                    <Calendar className="w-3 h-3" /> {selectedArtwork?.period}
-                  </span>
-                </DialogDescription>
-              </DialogHeader>
 
-              {/* Artistic Representation */}
-              <div className={cn(
-                "w-full aspect-video rounded-lg mb-4 flex items-center justify-center border border-border/50",
-                selectedArtwork?.colors.primary + "/10"
-              )}>
-                <div className="text-center p-6">
-                  <p className="text-sm text-muted-foreground italic mb-4">
-                    "{selectedArtwork?.imageDescription}"
-                  </p>
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold text-sm text-foreground mb-1">Description</h4>
+                    <p className="text-sm text-muted-foreground">{selectedArtwork?.description}</p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-sm text-foreground mb-1">Historical Significance</h4>
+                    <p className="text-sm text-muted-foreground">{selectedArtwork?.significance}</p>
+                  </div>
+
+                  <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
+                    <h4 className="font-semibold text-sm text-blue-500 flex items-center gap-2 mb-1">
+                      <BookOpen className="w-4 h-4" /> Biblical Connection
+                    </h4>
+                    <p className="text-sm text-muted-foreground">{selectedArtwork?.biblicalConnection}</p>
+                  </div>
+
+                  <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
+                    <h4 className="font-semibold text-sm text-amber-500 mb-1">Modern Parallel</h4>
+                    <p className="text-sm text-muted-foreground">{selectedArtwork?.modernParallel}</p>
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-center mt-6 pt-4 border-t border-border">
+                  <ListenButton 
+                    text={`${selectedArtwork?.title}. ${selectedArtwork?.description} ${selectedArtwork?.significance} Biblical Connection: ${selectedArtwork?.biblicalConnection} Modern Parallel: ${selectedArtwork?.modernParallel}`}
+                    itemId={`catacomb-artwork-${selectedArtwork?.id}`}
+                    variant="outline"
+                    size="sm"
+                  />
                   <p className="text-xs text-muted-foreground">
-                    Artistic interpretation based on archaeological documentation
+                    Click arrows or swipe to explore more artifacts
                   </p>
                 </div>
               </div>
-
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-semibold text-sm text-foreground mb-1">Description</h4>
-                  <p className="text-sm text-muted-foreground">{selectedArtwork?.description}</p>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-sm text-foreground mb-1">Historical Significance</h4>
-                  <p className="text-sm text-muted-foreground">{selectedArtwork?.significance}</p>
-                </div>
-
-                <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
-                  <h4 className="font-semibold text-sm text-blue-500 flex items-center gap-2 mb-1">
-                    <BookOpen className="w-4 h-4" /> Biblical Connection
-                  </h4>
-                  <p className="text-sm text-muted-foreground">{selectedArtwork?.biblicalConnection}</p>
-                </div>
-
-                <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
-                  <h4 className="font-semibold text-sm text-amber-500 mb-1">Modern Parallel</h4>
-                  <p className="text-sm text-muted-foreground">{selectedArtwork?.modernParallel}</p>
-                </div>
-              </div>
-
-              <div className="flex justify-between items-center mt-6 pt-4 border-t border-border">
-              <ListenButton 
-                  text={`${selectedArtwork?.title}. ${selectedArtwork?.description} ${selectedArtwork?.significance} Biblical Connection: ${selectedArtwork?.biblicalConnection} Modern Parallel: ${selectedArtwork?.modernParallel}`}
-                  itemId={`catacomb-artwork-${selectedArtwork?.id}`}
-                  variant="outline"
-                  size="sm"
-                />
-                <p className="text-xs text-muted-foreground">
-                  Click arrows or swipe to explore more artifacts
-                </p>
-              </div>
-            </div>
-          </ScrollArea>
-        </DialogContent>
-      </Dialog>
-        </CollapsibleContent>
+            </ScrollArea>
+          </DialogContent>
+        </Dialog>
       </Card>
     </Collapsible>
   );

@@ -29,6 +29,7 @@ import { SkeletonDashboard } from '@/components/ui/SkeletonCard';
 import { DashboardTrainingProgress } from '@/components/training/DashboardTrainingProgress';
 import { DashboardAIAssistant } from '@/components/dashboard/DashboardAIAssistant';
 import { LearningJourneyTimeline } from '@/components/dashboard/LearningJourneyTimeline';
+import { LearningPathsMap } from '@/components/dashboard/LearningPathsMap';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -335,8 +336,13 @@ const Dashboard = () => {
             <LearningJourneyTimeline />
           </div>
 
-          {/* Training Progress Section */}
+          {/* Learning Paths Map */}
           <div className="animate-fade-in" style={{ animationDelay: '0.25s' }}>
+            <LearningPathsMap />
+          </div>
+
+          {/* Training Progress Section */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
             <DashboardTrainingProgress />
           </div>
 
