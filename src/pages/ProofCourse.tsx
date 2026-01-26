@@ -71,19 +71,19 @@ Any practice that degrades, humiliates, or harms another person violates God's c
 
 **The Biblical Response:**
 
-1. **Count the Cost (Luke 14:28-30)** - Before joining, research the organization's actual intake practices, not just their written policies.
+• **Count the Cost (Luke 14:28-30)** - Before joining, research the organization's actual intake practices, not just their written policies.
 
-2. **Set Non-Negotiable Boundaries** - Determine in advance what you will and won't do:
+• **Set Non-Negotiable Boundaries** - Determine in advance what you will and won't do:
    - I will not participate in activities that demean or harm others
    - I will not cover up abuse to "protect" the organization
    - I will speak up when I witness wrongdoing
 
-3. **Be a Reformer, Not a Participant** - Christians in Greek life should actively work to eliminate hazing:
+• **Be a Reformer, Not a Participant** - Christians in Greek life should actively work to eliminate hazing:
    - Report violations to nationals and university officials
    - Mentor new members with Christ-like servant leadership
    - Model intake processes that build up rather than tear down
 
-4. **Guard Your Heart (Proverbs 4:23)** - If your intake experience requires compromising your faith, that's a red flag about the organization's culture.
+• **Guard Your Heart (Proverbs 4:23)** - If your intake experience requires compromising your faith, that's a red flag about the organization's culture.
 
 **Practical Application:**
 
@@ -94,9 +94,9 @@ If you're considering membership, ask current members (privately) about actual i
 "You're right that hazing is sinful, and I oppose it completely. That's exactly why Christians should be in these organizations—to reform them from within. I set firm boundaries during my intake, and I'm committed to ensuring future members have a dignified experience that reflects Christ's love."
 
 **Reflection Questions:**
-1. What specific boundaries will I maintain during any intake process?
-2. Am I willing to walk away if those boundaries are violated?
-3. How can I actively work to eliminate hazing in my organization?`
+• What specific boundaries will I maintain during any intake process?
+• Am I willing to walk away if those boundaries are violated?
+• How can I actively work to eliminate hazing in my organization?`
   },
   {
     id: 2,
@@ -121,30 +121,30 @@ The question isn't whether rituals are wrong, but rather: What is being invoked,
 
 **Biblical Discernment Framework:**
 
-1. **What is the ritual's origin and purpose?**
+• **What is the ritual's origin and purpose?**
    - Some Greek rituals have benign origins (literary societies, civic traditions)
    - Others may have borrowed from mystery religions or Freemasonry
    - Research your organization's specific history
 
-2. **What am I being asked to invoke or affirm?**
+• **What am I being asked to invoke or affirm?**
    - Prayers to "the Supreme Being" or unnamed forces are concerning
    - Affirmations of organizational loyalty are different from worship
    - Be specific about what's actually happening vs. what critics assume
 
-3. **Does participation constitute worship?**
+• **Does participation constitute worship?**
    - Worship involves heart devotion, not just physical actions
    - Many rituals are symbolic traditions, not religious ceremonies
    - Apply Paul's principle from 1 Corinthians 8 about meat sacrificed to idols
 
 **Key Biblical Principles:**
 
-1. **No Other Gods (Exodus 20:3)** - Never invoke, honor, or worship any deity besides the God of the Bible.
+• **No Other Gods (Exodus 20:3)** - Never invoke, honor, or worship any deity besides the God of the Bible.
 
-2. **Greater is He (1 John 4:4)** - Christians cannot be "possessed" by demons through rituals. We're sealed by the Holy Spirit.
+• **Greater is He (1 John 4:4)** - Christians cannot be "possessed" by demons through rituals. We're sealed by the Holy Spirit.
 
-3. **Test the Spirits (1 John 4:1)** - Develop discernment rather than fear-based assumptions.
+• **Test the Spirits (1 John 4:1)** - Develop discernment rather than fear-based assumptions.
 
-4. **Freedom with Wisdom (1 Corinthians 10:23-33)** - Some rituals are permissible but not beneficial.
+• **Freedom with Wisdom (1 Corinthians 10:23-33)** - Some rituals are permissible but not beneficial.
 
 **Red Flags vs. Yellow Flags:**
 
@@ -173,11 +173,11 @@ Just as Jesus' power was limited in Nazareth because of their unbelief (Mark 6:5
 This doesn't mean all rituals are permissible—some clearly violate Scripture. But it does mean that symbolic ceremonies rooted in academic or civic tradition, when approached with a clear conscience and without belief in false spiritual power, cannot open "demonic portals" or curse you. Your faith is in Christ alone, and His authority supersedes all else.
 
 **Reflection Questions:**
-1. Have I personally examined my organization's rituals, or am I relying on assumptions?
-2. Can I articulate what each ritual element represents?
-3. Is there anything in my organization's ceremonies I cannot do in good conscience?
-4. Am I giving power to rituals through my fear rather than standing in Christ's authority?
-5. Can I explain the "power of belief" principle to someone who is afraid of rituals?`
+• Have I personally examined my organization's rituals, or am I relying on assumptions?
+• Can I articulate what each ritual element represents?
+• Is there anything in my organization's ceremonies I cannot do in good conscience?
+• Am I giving power to rituals through my fear rather than standing in Christ's authority?
+• Can I explain the "power of belief" principle to someone who is afraid of rituals?`
   },
   {
     id: 3,
@@ -209,21 +209,21 @@ The issue is content, not the concept of oath-taking.
 
 **Key Questions for Evaluating Oaths:**
 
-1. **Am I swearing to worship a false god?**
+• **Am I swearing to worship a false god?**
    - References to "Greek ideals" differ from invocations of Greek deities
    - Most organizational oaths focus on brotherhood, scholarship, and service
    - Read your actual oath carefully—what does it specifically say?
 
-2. **Does this oath place anything above God?**
+• **Does this oath place anything above God?**
    - "I will be loyal to my organization" differs from "My organization comes before God"
    - Evaluate the hierarchy of commitments
 
-3. **Am I promising anything I cannot biblically do?**
+• **Am I promising anything I cannot biblically do?**
    - Unconditional obedience to human authorities is dangerous
    - Promises to conceal criminal activity are wrong
    - Commitments to lifelong service may conflict with divine calling
 
-4. **Can I keep this oath with integrity?**
+• **Can I keep this oath with integrity?**
    - Don't take vows you don't intend to keep
    - "Let your yes be yes and your no be no" (James 5:12)
 
@@ -248,11 +248,11 @@ Some organizations may have problematic elements:
 - Always prioritize your commitment to Christ
 
 **Reflection Questions:**
-1. Have I actually read my organization's oath, or am I relying on hearsay?
-2. Can I articulate what my oath commits me to?
-3. Is there any conflict between my organizational vows and my baptismal vows to Christ?
-4. Would I be comfortable reciting my oath in front of my pastor?
-5. Does my oath require unconditional loyalty that could conflict with following God?`
+• Have I actually read my organization's oath, or am I relying on hearsay?
+• Can I articulate what my oath commits me to?
+• Is there any conflict between my organizational vows and my baptismal vows to Christ?
+• Would I be comfortable reciting my oath in front of my pastor?
+• Does my oath require unconditional loyalty that could conflict with following God?`
   },
   {
     id: 4,
@@ -300,13 +300,13 @@ But notice: Scripture condemns "fruitless deeds of darkness"—sinful actions do
 
 **Key Biblical Principles:**
 
-1. **Walk in the Light (1 John 1:7)** - This means living transparently with God and maintaining spiritual accountability—not broadcasting everything publicly.
+• **Walk in the Light (1 John 1:7)** - This means living transparently with God and maintaining spiritual accountability—not broadcasting everything publicly.
 
-2. **Nothing Hidden That Won't Be Revealed (Luke 12:2)** - This is a warning about hypocrisy, not confidentiality.
+• **Nothing Hidden That Won't Be Revealed (Luke 12:2)** - This is a warning about hypocrisy, not confidentiality.
 
-3. **Accountability (Hebrews 10:24-25)** - Maintain relationships where you can share concerns and receive godly counsel.
+• **Accountability (Hebrews 10:24-25)** - Maintain relationships where you can share concerns and receive godly counsel.
 
-4. **Wisdom in Speech (Proverbs 11:13)** - "A gossip betrays a confidence, but a trustworthy person keeps a secret."
+• **Wisdom in Speech (Proverbs 11:13)** - "A gossip betrays a confidence, but a trustworthy person keeps a secret."
 
 **The Accountability Test:**
 
@@ -327,11 +327,11 @@ You don't need to reveal ritual details, but you should be able to discuss your 
 - If you're uncomfortable telling your pastor you're a member
 
 **Reflection Questions:**
-1. Can I honestly discuss my Greek involvement with my spiritual mentors?
-2. Is there anything I'm keeping secret because it's shameful rather than simply confidential?
-3. Do I have adequate spiritual accountability despite organizational privacy expectations?
-4. Would I be comfortable if my organization's practices were made public?
-5. Am I being secretive to protect wrongdoing or simply maintaining appropriate confidentiality?`
+• Can I honestly discuss my Greek involvement with my spiritual mentors?
+• Is there anything I'm keeping secret because it's shameful rather than simply confidential?
+• Do I have adequate spiritual accountability despite organizational privacy expectations?
+• Would I be comfortable if my organization's practices were made public?
+• Am I being secretive to protect wrongdoing or simply maintaining appropriate confidentiality?`
   },
   {
     id: 5,
@@ -372,11 +372,11 @@ In response, African Americans created their own institutions:
 - **Fraternal Benefit Societies**: Lodges like Prince Hall Freemasonry offered life insurance, burial benefits, sick pay, and emergency loans to members
 
 **Key Fraternal Benefits:**
-1. **Death Benefits**: Guaranteed burial expenses and survivor payments
-2. **Sick Benefits**: Weekly payments during illness or injury
-3. **Widow & Orphan Funds**: Ongoing support for deceased members' families
-4. **Emergency Loans**: Low-interest loans unavailable from white banks
-5. **Business Networks**: Economic opportunities and job referrals
+• **Death Benefits**: Guaranteed burial expenses and survivor payments
+• **Sick Benefits**: Weekly payments during illness or injury
+• **Widow & Orphan Funds**: Ongoing support for deceased members' families
+• **Emergency Loans**: Low-interest loans unavailable from white banks
+• **Business Networks**: Economic opportunities and job referrals
 
 **The Broader Impact:**
 - By 1900, African American fraternal orders had over 2 million members
@@ -388,15 +388,15 @@ This context matters: African American men didn't join lodges primarily for ritu
 
 **Key Questions for Honest Evaluation:**
 
-1. **What was borrowed vs. what is essential?** - Organizational structure is common across many groups; core purposes (scholarship, service, brotherhood) stand independently
+• **What was borrowed vs. what is essential?** - Organizational structure is common across many groups; core purposes (scholarship, service, brotherhood) stand independently
 
-2. **Does the organization require or promote Freemasonry?** - Most BGLOs have no formal Masonic connection; membership doesn't require joining the lodge
+• **Does the organization require or promote Freemasonry?** - Most BGLOs have no formal Masonic connection; membership doesn't require joining the lodge
 
-3. **What do the rituals actually teach?** - Examine content, not just format; focus on what YOUR organization teaches today
+• **What do the rituals actually teach?** - Examine content, not just format; focus on what YOUR organization teaches today
 
-4. **By their fruits you shall know them** - Judge by actual impact: service, scholarships, lives transformed
+• **By their fruits you shall know them** - Judge by actual impact: service, scholarships, lives transformed
 
-5. **Is redemption and reformation evident?** - Organizations can evolve; Christians within can influence positive change
+• **Is redemption and reformation evident?** - Organizations can evolve; Christians within can influence positive change
 
 **Sample Response to Critics:**
 
@@ -415,9 +415,9 @@ You've now examined all five common criticisms of Greek life:
 Remember: Being Greek doesn't make you righteous, and being anti-Greek doesn't make you holy. What matters is whether you're walking faithfully with Christ in whatever context He's placed you.
 
 **Reflection Questions:**
-1. Have I honestly researched my organization's history?
-2. Can I articulate a biblical response to each of the five criticisms?
-3. Am I committed to honoring Christ whether I remain Greek or not?`
+• Have I honestly researched my organization's history?
+• Can I articulate a biblical response to each of the five criticisms?
+• Am I committed to honoring Christ whether I remain Greek or not?`
   }
 ];
 
