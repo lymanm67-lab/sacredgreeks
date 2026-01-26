@@ -28,6 +28,26 @@ interface Lesson {
   content?: string;
 }
 
+// Color mapping for each PROOF letter
+const PROOF_COLORS = {
+  P: { bg: 'bg-blue-500', bgLight: 'bg-blue-500/10', border: 'border-blue-500/30', text: 'text-blue-500', gradient: 'from-blue-500 to-blue-600' },
+  R: { bg: 'bg-purple-500', bgLight: 'bg-purple-500/10', border: 'border-purple-500/30', text: 'text-purple-500', gradient: 'from-purple-500 to-purple-600' },
+  O1: { bg: 'bg-orange-500', bgLight: 'bg-orange-500/10', border: 'border-orange-500/30', text: 'text-orange-500', gradient: 'from-orange-500 to-orange-600' },
+  O2: { bg: 'bg-green-500', bgLight: 'bg-green-500/10', border: 'border-green-500/30', text: 'text-green-500', gradient: 'from-green-500 to-green-600' },
+  F: { bg: 'bg-red-500', bgLight: 'bg-red-500/10', border: 'border-red-500/30', text: 'text-red-500', gradient: 'from-red-500 to-red-600' },
+};
+
+const getColorForLesson = (id: number) => {
+  switch(id) {
+    case 1: return PROOF_COLORS.P;
+    case 2: return PROOF_COLORS.R;
+    case 3: return PROOF_COLORS.O1;
+    case 4: return PROOF_COLORS.O2;
+    case 5: return PROOF_COLORS.F;
+    default: return PROOF_COLORS.P;
+  }
+};
+
 const lessons: Lesson[] = [
   {
     id: 1,
@@ -483,13 +503,15 @@ const ProofCourse = () => {
         </div>
 
         {/* Active Lesson View */}
-        {currentLesson && (
-          <Card className="mb-8 border-sacred/20">
-            <CardHeader>
+        {currentLesson && (() => {
+          const lessonColors = getColorForLesson(currentLesson.id);
+          return (
+          <Card className={`mb-8 border-2 ${lessonColors.border}`}>
+            <CardHeader className={`${lessonColors.bgLight} border-b ${lessonColors.border}`}>
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-sacred/10 flex items-center justify-center">
-                    <span className="text-2xl font-bold text-sacred">{currentLesson.letter}</span>
+                <div className="flex items-center gap-4">
+                  <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${lessonColors.gradient} flex items-center justify-center shadow-lg`}>
+                    <span className="text-3xl font-bold text-white">{currentLesson.letter}</span>
                   </div>
                   <div>
                     <CardTitle className="text-xl">{currentLesson.title}</CardTitle>
@@ -545,14 +567,15 @@ const ProofCourse = () => {
                 <Button variant="outline" onClick={() => setActiveLesson(null)}>
                   Back to Course
                 </Button>
-                <Button onClick={() => completeLesson(currentLesson.id)} className="gap-2">
+                <Button onClick={() => completeLesson(currentLesson.id)} className={`gap-2 ${lessonColors.bg} hover:opacity-90`}>
                   <CheckCircle2 className="w-4 h-4" />
                   Complete Lesson
                 </Button>
               </div>
             </CardContent>
           </Card>
-        )}
+        );
+        })()}
 
         {/* Course Overview (shown when no lesson is active) */}
         {!activeLesson && (
@@ -578,81 +601,79 @@ const ProofCourse = () => {
                 const isAccessible = lesson.id === 1 || isUnlocked || !lesson.isLocked;
                 const isCompleted = completedLessons.includes(lesson.id);
 
-                return (
-                  <Card 
-                    key={lesson.id} 
-                    className={`transition-all ${
-                      isAccessible 
-                        ? 'hover:border-sacred/50 cursor-pointer' 
-                        : 'opacity-75'
-                    } ${isCompleted ? 'border-green-500/30 bg-green-500/5' : ''}`}
-                    onClick={() => isAccessible && startLesson(lesson.id)}
-                  >
-                    <CardContent className="py-4">
-                      <div className="flex items-center gap-4">
-                        {/* Letter Badge */}
-                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${
-                          isCompleted 
-                            ? 'bg-green-500/20' 
-                            : isAccessible 
-                              ? 'bg-sacred/10' 
-                              : 'bg-muted'
-                        }`}>
-                          {isCompleted ? (
-                            <CheckCircle2 className="w-6 h-6 text-green-500" />
-                          ) : (
-                            <span className={`text-xl font-bold ${
-                              isAccessible ? 'text-sacred' : 'text-muted-foreground'
-                            }`}>
-                              {lesson.letter}
-                            </span>
-                          )}
-                        </div>
+                  const colors = getColorForLesson(lesson.id);
+                  
+                  return (
+                    <Card 
+                      key={lesson.id} 
+                      className={`transition-all duration-300 ${colors.border} border-2 ${
+                        isAccessible 
+                          ? `hover:${colors.bgLight} hover:shadow-lg hover:shadow-${colors.text.replace('text-', '')}/20 cursor-pointer` 
+                          : 'opacity-60'
+                      } ${isCompleted ? 'border-green-500/50 bg-green-500/5' : ''}`}
+                      onClick={() => isAccessible && startLesson(lesson.id)}
+                    >
+                      <CardContent className="py-4">
+                        <div className="flex items-center gap-4">
+                          {/* Letter Badge with Color */}
+                          <div className={`w-14 h-14 rounded-xl flex items-center justify-center shrink-0 ${
+                            isCompleted 
+                              ? 'bg-green-500/20' 
+                              : `bg-gradient-to-br ${colors.gradient}`
+                          } shadow-lg`}>
+                            {isCompleted ? (
+                              <CheckCircle2 className="w-7 h-7 text-green-500" />
+                            ) : (
+                              <span className="text-2xl font-bold text-white drop-shadow-sm">
+                                {lesson.letter}
+                              </span>
+                            )}
+                          </div>
 
-                        {/* Content */}
-                        <div className="flex-1 min-w-0">
-                          <h3 className={`font-semibold ${
-                            isAccessible ? 'text-foreground' : 'text-muted-foreground'
-                          }`}>
-                            {lesson.title}
-                          </h3>
-                          <p className="text-sm text-muted-foreground truncate">
-                            {lesson.description}
-                          </p>
-                          <div className="flex items-center gap-3 mt-1.5">
-                            <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                              <Clock className="w-3 h-3" />
-                              {lesson.duration}
-                            </span>
-                            <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                              <Lightbulb className="w-3 h-3" />
-                              {lesson.takeaways} key takeaways
-                            </span>
+                          {/* Content */}
+                          <div className="flex-1 min-w-0">
+                            <h3 className={`font-semibold text-lg ${
+                              isAccessible ? 'text-foreground' : 'text-muted-foreground'
+                            }`}>
+                              {lesson.title}
+                            </h3>
+                            <p className="text-sm text-muted-foreground truncate">
+                              {lesson.description}
+                            </p>
+                            <div className="flex items-center gap-3 mt-2">
+                              <span className={`flex items-center gap-1 text-xs ${colors.text}`}>
+                                <Clock className="w-3.5 h-3.5" />
+                                {lesson.duration}
+                              </span>
+                              <span className={`flex items-center gap-1 text-xs ${colors.text}`}>
+                                <Lightbulb className="w-3.5 h-3.5" />
+                                {lesson.takeaways} key takeaways
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Action */}
+                          <div className="shrink-0">
+                            {isCompleted ? (
+                              <Badge variant="outline" className="bg-green-500/10 text-green-600 border-green-500/30">
+                                Complete
+                              </Badge>
+                            ) : isAccessible ? (
+                              <Button size="sm" className={`gap-1.5 ${colors.bg} hover:opacity-90 text-white shadow-md`}>
+                                <Play className="w-4 h-4" />
+                                Start
+                              </Button>
+                            ) : (
+                              <div className="flex items-center gap-1.5 text-muted-foreground text-sm">
+                                <Lock className="w-4 h-4" />
+                                Locked
+                              </div>
+                            )}
                           </div>
                         </div>
-
-                        {/* Action */}
-                        <div className="shrink-0">
-                          {isCompleted ? (
-                            <Badge variant="outline" className="bg-green-500/10 text-green-600 border-green-500/30">
-                              Complete
-                            </Badge>
-                          ) : isAccessible ? (
-                            <Button size="sm" variant="ghost" className="gap-1.5">
-                              <Play className="w-4 h-4" />
-                              Start
-                            </Button>
-                          ) : (
-                            <div className="flex items-center gap-1.5 text-muted-foreground text-sm">
-                              <Lock className="w-4 h-4" />
-                              Locked
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
+                      </CardContent>
+                    </Card>
+                  );
               })}
             </div>
 
