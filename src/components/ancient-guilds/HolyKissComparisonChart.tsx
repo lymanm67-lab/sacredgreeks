@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Hand, MessageSquare, BookOpen, ArrowRight, Check, Volume2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Hand, MessageSquare, BookOpen, ArrowRight, Check, Volume2, ChevronDown, ChevronUp } from 'lucide-react';
 import { ListenButton } from '@/components/ListenButton';
 
 interface ComparisonItem {
@@ -69,10 +71,15 @@ The key insight is this: The structure of recognition practices—physical gestu
 
 Scripture references: Romans 16:16, 1 Corinthians 16:20, 2 Corinthians 13:12, 1 Thessalonians 5:26, 1 Peter 5:14 all command the holy kiss. 1 Corinthians 16:22 and the Didache 10:6 preserve the Aramaic password Maranatha.`;
 
-export function HolyKissComparisonChart({ className }: { className?: string }) {
+export function HolyKissComparisonChart({ className, defaultOpen = false }: { className?: string; defaultOpen?: boolean }) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+
   return (
     <Card className={`border-green-500/30 overflow-hidden ${className}`}>
-      <CardHeader className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 pb-4">
+      <CardHeader 
+        className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 pb-4 cursor-pointer hover:bg-green-500/15 transition-colors"
+        onClick={() => setIsOpen(!isOpen)}
+      >
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div className="flex items-center gap-3">
@@ -88,13 +95,22 @@ export function HolyKissComparisonChart({ className }: { className?: string }) {
                 </p>
               </div>
             </div>
-            <Badge variant="outline" className="bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/30">
-              Biblical Precedent
-            </Badge>
+            <div className="flex items-center gap-2">
+              <Badge variant="outline" className="bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/30">
+                Biblical Precedent
+              </Badge>
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                {isOpen ? (
+                  <ChevronUp className="w-4 h-4" />
+                ) : (
+                  <ChevronDown className="w-4 h-4" />
+                )}
+              </Button>
+            </div>
           </div>
 
-          {/* TTS Button */}
-          <div className="flex items-center gap-2 pt-2 border-t border-green-500/20">
+          {/* TTS Button - always visible */}
+          <div className="flex items-center gap-2 pt-2 border-t border-green-500/20" onClick={(e) => e.stopPropagation()}>
             <Volume2 className="w-4 h-4 text-green-600" />
             <span className="text-sm text-muted-foreground">Listen to comparison:</span>
             <ListenButton
@@ -110,88 +126,90 @@ export function HolyKissComparisonChart({ className }: { className?: string }) {
         </div>
       </CardHeader>
 
-      <CardContent className="p-0">
-        {/* Key Insight Banner */}
-        <div className="p-4 bg-sacred/10 border-b border-sacred/20">
-          <div className="flex items-start gap-3">
-            <BookOpen className="w-5 h-5 text-sacred mt-0.5 flex-shrink-0" />
-            <div>
-              <p className="font-semibold text-sm text-sacred">Key Insight</p>
-              <p className="text-sm text-muted-foreground mt-1">
-                The <strong>structure</strong> of recognition practices—physical gesture + verbal password—was 
-                established in the <em>earliest Christian communities</em>. When Greek organizations use 
-                similar structures, they employ a pattern with biblical precedent.
-              </p>
+      {isOpen && (
+        <CardContent className="p-0">
+          {/* Key Insight Banner */}
+          <div className="p-4 bg-sacred/10 border-b border-sacred/20">
+            <div className="flex items-start gap-3">
+              <BookOpen className="w-5 h-5 text-sacred mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="font-semibold text-sm text-sacred">Key Insight</p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  The <strong>structure</strong> of recognition practices—physical gesture + verbal password—was 
+                  established in the <em>earliest Christian communities</em>. When Greek organizations use 
+                  similar structures, they employ a pattern with biblical precedent.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Comparison Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b bg-muted/30">
-                <th className="p-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wide w-[20%]">
-                  Element
-                </th>
-                <th className="p-3 text-left text-xs font-semibold text-green-700 dark:text-green-400 uppercase tracking-wide w-[40%]">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-green-500 rounded-full" />
-                    Early Christian Practice
-                  </div>
-                </th>
-                <th className="p-3 text-left text-xs font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wide w-[40%]">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-amber-500 rounded-full" />
-                    Greek Organization Practice
-                  </div>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {comparisonData.map((row, idx) => (
-                <tr key={idx} className="border-b last:border-0 hover:bg-muted/20 transition-colors">
-                  <td className="p-3 font-medium text-sm text-foreground align-top">
-                    {row.element}
-                  </td>
-                  <td className="p-3 text-sm text-muted-foreground align-top">
-                    <div className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                      <div>
-                        {row.earlyChristian}
-                        {row.scripture && (
-                          <p className="text-xs text-green-600 dark:text-green-400 mt-1 italic">
-                            {row.scripture}
-                          </p>
-                        )}
-                      </div>
+          {/* Comparison Table */}
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b bg-muted/30">
+                  <th className="p-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wide w-[20%]">
+                    Element
+                  </th>
+                  <th className="p-3 text-left text-xs font-semibold text-green-700 dark:text-green-400 uppercase tracking-wide w-[40%]">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 bg-green-500 rounded-full" />
+                      Early Christian Practice
                     </div>
-                  </td>
-                  <td className="p-3 text-sm text-muted-foreground align-top">
-                    <div className="flex items-start gap-2">
-                      <ArrowRight className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
-                      <span>{row.greekOrg}</span>
+                  </th>
+                  <th className="p-3 text-left text-xs font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wide w-[40%]">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 bg-amber-500 rounded-full" />
+                      Greek Organization Practice
                     </div>
-                  </td>
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {comparisonData.map((row, idx) => (
+                  <tr key={idx} className="border-b last:border-0 hover:bg-muted/20 transition-colors">
+                    <td className="p-3 font-medium text-sm text-foreground align-top">
+                      {row.element}
+                    </td>
+                    <td className="p-3 text-sm text-muted-foreground align-top">
+                      <div className="flex items-start gap-2">
+                        <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                        <div>
+                          {row.earlyChristian}
+                          {row.scripture && (
+                            <p className="text-xs text-green-600 dark:text-green-400 mt-1 italic">
+                              {row.scripture}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </td>
+                    <td className="p-3 text-sm text-muted-foreground align-top">
+                      <div className="flex items-start gap-2">
+                        <ArrowRight className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
+                        <span>{row.greekOrg}</span>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-        {/* Scripture References Footer */}
-        <div className="p-4 bg-gradient-to-r from-green-500/5 to-emerald-500/5 border-t">
-          <div className="flex items-start gap-2">
-            <MessageSquare className="w-4 h-4 text-green-600 mt-1 flex-shrink-0" />
-            <div className="text-xs text-muted-foreground">
-              <strong className="text-foreground">Scripture Commands for Holy Kiss:</strong>{' '}
-              Romans 16:16, 1 Corinthians 16:20, 2 Corinthians 13:12, 1 Thessalonians 5:26, 1 Peter 5:14.{' '}
-              <strong className="text-foreground">Maranatha preserved in:</strong>{' '}
-              1 Corinthians 16:22, Didache 10:6.
+          {/* Scripture References Footer */}
+          <div className="p-4 bg-gradient-to-r from-green-500/5 to-emerald-500/5 border-t">
+            <div className="flex items-start gap-2">
+              <MessageSquare className="w-4 h-4 text-green-600 mt-1 flex-shrink-0" />
+              <div className="text-xs text-muted-foreground">
+                <strong className="text-foreground">Scripture Commands for Holy Kiss:</strong>{' '}
+                Romans 16:16, 1 Corinthians 16:20, 2 Corinthians 13:12, 1 Thessalonians 5:26, 1 Peter 5:14.{' '}
+                <strong className="text-foreground">Maranatha preserved in:</strong>{' '}
+                1 Corinthians 16:22, Didache 10:6.
+              </div>
             </div>
           </div>
-        </div>
-      </CardContent>
+        </CardContent>
+      )}
     </Card>
   );
 }
