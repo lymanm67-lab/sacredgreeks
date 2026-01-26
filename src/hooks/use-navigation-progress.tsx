@@ -6,6 +6,8 @@ interface NavProgressData {
   proofCourse: number;
   proofQuiz: number;
   guildTraining: number;
+  greekLifeTraining: number;
+  mythBuster: number;
   faithAuthority: number;
   journey: number;
   bibleStudy: number;
@@ -23,6 +25,8 @@ export const useNavigationProgress = () => {
           proofCourse: 0,
           proofQuiz: 0,
           guildTraining: 0,
+          greekLifeTraining: 0,
+          mythBuster: 0,
           faithAuthority: 0,
           journey: 0,
           bibleStudy: 0,
@@ -44,9 +48,18 @@ export const useNavigationProgress = () => {
       const guildSessions = studyProgress?.filter(p => p.session_id >= 6 && p.session_id <= 15 && p.completed) || [];
       const guildTraining = Math.round((guildSessions.length / 10) * 100);
 
+      // Greek Life Training (foundation 21-24 + modules 6-15 = 14 total items)
+      const foundationSessions = studyProgress?.filter(p => p.session_id >= 21 && p.session_id <= 24 && p.completed) || [];
+      const greekLifeTraining = Math.round(((foundationSessions.length + guildSessions.length) / 14) * 100);
+
       // Faith & Authority (sessions 16-20)
       const faithSessions = studyProgress?.filter(p => p.session_id >= 16 && p.session_id <= 20 && p.completed) || [];
       const faithAuthority = Math.round((faithSessions.length / 5) * 100);
+
+      // Myth Buster progress (sessions 100+)
+      const mythSessions = studyProgress?.filter(p => p.session_id >= 100 && p.session_id < 200 && p.completed) || [];
+      // Assuming there are 20 myths to review (can be adjusted)
+      const mythBuster = Math.min(Math.round((mythSessions.length / 20) * 100), 100);
 
       // Fetch journey progress (30-day)
       const { data: journeyData } = await supabase
@@ -87,6 +100,8 @@ export const useNavigationProgress = () => {
         proofCourse,
         proofQuiz,
         guildTraining,
+        greekLifeTraining,
+        mythBuster,
         faithAuthority,
         journey,
         bibleStudy,
@@ -107,6 +122,10 @@ export const useNavigationProgress = () => {
         return progressData.proofQuiz;
       case "/ancient-guild-training":
         return progressData.guildTraining;
+      case "/greek-life-training":
+        return progressData.greekLifeTraining;
+      case "/myth-buster":
+        return progressData.mythBuster;
       case "/faith-authority":
         return progressData.faithAuthority;
       case "/journey":
