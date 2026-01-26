@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -7,6 +7,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ListenButton } from '@/components/ListenButton';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Landmark, 
   MapPin, 
@@ -17,7 +18,10 @@ import {
   ChevronDown,
   ZoomIn,
   Info,
-  ExternalLink
+  Play,
+  Pause,
+  RotateCcw,
+  X
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -30,6 +34,14 @@ import oransFigure from '@/assets/catacombs/orans-figure.jpg';
 import jonahWhale from '@/assets/catacombs/jonah-whale.jpg';
 import peacockImmortality from '@/assets/catacombs/peacock-immortality.jpg';
 import doveBaptism from '@/assets/catacombs/dove-baptism.jpg';
+import danielLions from '@/assets/catacombs/daniel-lions.jpg';
+import mosesRock from '@/assets/catacombs/moses-rock.jpg';
+import lazarusRaising from '@/assets/catacombs/lazarus-raising.jpg';
+import threeHebrews from '@/assets/catacombs/three-hebrews.jpg';
+import baptismScene from '@/assets/catacombs/baptism-scene.jpg';
+import vineGrapes from '@/assets/catacombs/vine-grapes.jpg';
+import paradisePalms from '@/assets/catacombs/paradise-palms.jpg';
+import epitaphInscription from '@/assets/catacombs/epitaph-inscription.jpg';
 
 // Image map for artworks
 const catacombImages: Record<string, string> = {
@@ -41,6 +53,14 @@ const catacombImages: Record<string, string> = {
   'jonah-whale': jonahWhale,
   'peacock-immortality': peacockImmortality,
   'dove-baptism': doveBaptism,
+  'daniel-lions': danielLions,
+  'moses-rock': mosesRock,
+  'lazarus-raising': lazarusRaising,
+  'three-hebrews': threeHebrews,
+  'baptism-scene': baptismScene,
+  'vine-grapes': vineGrapes,
+  'paradise-palms': paradisePalms,
+  'epitaph-inscription': epitaphInscription,
 };
 
 interface CatacombArtwork {
@@ -173,6 +193,118 @@ const catacombArtworks: CatacombArtwork[] = [
     modernParallel: 'Initiation ceremonies marking new beginnings and membership are central to both Christian baptism and Greek organizational intake.',
     imageDescription: 'Delicate painting of a white dove in flight, carrying a green olive branch, with rays of light emanating from above',
     colors: { primary: 'bg-rose-500', accent: 'text-rose-500' }
+  },
+  {
+    id: 'daniel-lions',
+    title: 'Daniel in the Lions\' Den',
+    location: 'Catacomb of Saints Peter and Marcellinus, Rome',
+    period: '3rd Century',
+    century: '250-300 AD',
+    symbolType: 'Deliverance',
+    description: 'Daniel standing peacefully with arms raised in prayer between two fierce lions. One of the most frequently depicted Old Testament scenes in catacomb art.',
+    significance: 'Daniel\'s deliverance from death symbolized God\'s power to save His faithful through persecution—a powerful message for Christians facing Roman execution.',
+    biblicalConnection: 'Daniel 6:22 - "My God sent his angel, and he shut the mouths of the lions. They have not hurt me."',
+    modernParallel: 'Standing firm in faith despite pressure reflects the courage required to maintain one\'s values in challenging social environments.',
+    imageDescription: 'Young man in prayer posture standing calmly between two large roaring lions in a Roman arena setting',
+    colors: { primary: 'bg-orange-500', accent: 'text-orange-500' }
+  },
+  {
+    id: 'moses-rock',
+    title: 'Moses Striking the Rock',
+    location: 'Catacomb of San Callisto, Rome',
+    period: '3rd Century',
+    century: '200-280 AD',
+    symbolType: 'Typology',
+    description: 'Moses with staff striking the rock at Horeb, water flowing forth to quench the thirst of the Israelites. A prefiguration of Christ as the source of living water.',
+    significance: 'Early Christians saw Moses as a type of Christ—the rock representing Christ from whom flows the water of eternal life and baptism.',
+    biblicalConnection: 'John 7:38 - "Whoever believes in me, as Scripture has said, rivers of living water will flow from within them."',
+    modernParallel: 'Leadership that provides for community needs mirrors the servant-leadership ideals in Greek organizational structures.',
+    imageDescription: 'Bearded figure striking a rock with a staff as water pours forth, crowd of people gathering to drink',
+    colors: { primary: 'bg-sky-500', accent: 'text-sky-500' }
+  },
+  {
+    id: 'lazarus-raising',
+    title: 'The Raising of Lazarus',
+    location: 'Catacomb of Via Latina, Rome',
+    period: '4th Century',
+    century: '320-360 AD',
+    symbolType: 'Resurrection',
+    description: 'Jesus with raised hand commanding Lazarus to emerge from the tomb, still wrapped in burial cloths. Witnesses look on in amazement.',
+    significance: 'This miracle directly prefigured Christ\'s own resurrection and promised resurrection to all believers—central to Christian hope in death.',
+    biblicalConnection: 'John 11:25 - "I am the resurrection and the life. The one who believes in me will live, even though they die."',
+    modernParallel: 'Transformation and new life are themes in initiation rituals that mark passage from one state to another.',
+    imageDescription: 'Jesus gesturing toward a figure emerging from a tomb archway, family members witnessing the miracle',
+    colors: { primary: 'bg-yellow-500', accent: 'text-yellow-500' }
+  },
+  {
+    id: 'three-hebrews',
+    title: 'Three Hebrews in the Fiery Furnace',
+    location: 'Catacomb of Priscilla, Rome',
+    period: '3rd Century',
+    century: '250-300 AD',
+    symbolType: 'Deliverance',
+    description: 'Shadrach, Meshach, and Abednego standing unharmed in Nebuchadnezzar\'s furnace, often with a fourth angelic figure present.',
+    significance: 'Like Daniel, this scene represented divine protection for those who refuse to worship false gods—directly relevant to Christians refusing Roman emperor worship.',
+    biblicalConnection: 'Daniel 3:25 - "Look! I see four men walking around in the fire, unbound and unharmed, and the fourth looks like a son of the gods."',
+    modernParallel: 'Standing together with brothers and sisters in conviction echoes the unity of purpose in fraternal bonds.',
+    imageDescription: 'Three figures standing in flames with arms raised, an angelic fourth figure visible, fire burning around them',
+    colors: { primary: 'bg-red-500', accent: 'text-red-500' }
+  },
+  {
+    id: 'baptism-scene',
+    title: 'Baptismal Initiation Scene',
+    location: 'Catacomb of San Callisto, Rome',
+    period: '3rd Century',
+    century: '220-280 AD',
+    symbolType: 'Initiation',
+    description: 'A convert being immersed in water by a minister, with the dove of the Holy Spirit descending. Represents the sacrament of Christian initiation.',
+    significance: 'Baptism marked the boundary between the uninitiated world and the Christian community—a sacred threshold crossing.',
+    biblicalConnection: 'Romans 6:4 - "We were therefore buried with him through baptism into death in order that... we too may live a new life."',
+    modernParallel: 'The parallels to fraternal initiation are striking—ritual marking, new identity, community membership, and sacred solemnity.',
+    imageDescription: 'Figure being immersed in baptismal waters, another figure assisting, dove descending from above with cross symbol',
+    colors: { primary: 'bg-blue-600', accent: 'text-blue-600' }
+  },
+  {
+    id: 'vine-grapes',
+    title: 'The True Vine - Eucharistic Symbol',
+    location: 'Catacomb of Domitilla, Rome',
+    period: '4th Century',
+    century: '320-380 AD',
+    symbolType: 'Eucharist',
+    description: 'Intertwined grape vines with abundant clusters of grapes and leaves, often framing burial niches or decorating ceilings.',
+    significance: 'The vine represented Christ\'s blood shed for believers, the Eucharistic wine, and the interconnected community of Christians as branches.',
+    biblicalConnection: 'John 15:5 - "I am the vine; you are the branches. If you remain in me and I in you, you will bear much fruit."',
+    modernParallel: 'The imagery of interconnected branches reflects the bonds of brotherhood and sisterhood in fraternal organizations.',
+    imageDescription: 'Decorative border with intertwined grape vines, clusters of purple grapes, and green leaves on aged plaster',
+    colors: { primary: 'bg-purple-600', accent: 'text-purple-600' }
+  },
+  {
+    id: 'paradise-palms',
+    title: 'Paradise Garden - Celestial Hope',
+    location: 'Catacomb of Vigna Massimo, Rome',
+    period: '4th Century',
+    century: '340-380 AD',
+    symbolType: 'Afterlife',
+    description: 'Ceiling fresco depicting palm trees against a starry night sky, representing the paradise awaiting faithful Christians after death.',
+    significance: 'Palms symbolized victory and eternal rest. The starry heavens depicted the cosmic realm where souls would dwell with God.',
+    biblicalConnection: 'Revelation 7:9 - "A great multitude... standing before the throne and before the Lamb, holding palm branches in their hands."',
+    modernParallel: 'The hope of reward and achievement beyond present struggles motivates dedication in both faith and fraternal service.',
+    imageDescription: 'Dome ceiling with deep blue sky, golden stars, and palm trees representing the eternal paradise garden',
+    colors: { primary: 'bg-blue-800', accent: 'text-blue-800' }
+  },
+  {
+    id: 'epitaph-inscription',
+    title: 'ΙΧΘΥΣ Epitaph Inscription',
+    location: 'Catacomb of San Sebastiano, Rome',
+    period: '2nd-3rd Century',
+    century: '150-250 AD',
+    symbolType: 'Memorial',
+    description: 'Stone burial marker featuring the Greek letters ΙΧΘΥΣ (fish), often combined with anchor-cross symbols and Latin memorial inscriptions.',
+    significance: 'These epitaphs served as permanent testimony to Christian faith, marking graves with coded symbols that proclaimed hope in resurrection.',
+    biblicalConnection: 'Philippians 3:20 - "Our citizenship is in heaven. And we eagerly await a Savior from there, the Lord Jesus Christ."',
+    modernParallel: 'Memorial traditions honoring departed members preserve organizational history and connect living members to their heritage.',
+    imageDescription: 'Carved stone tablet with IXTHUS letters, fish symbol, cross, and anchor motifs, Latin inscription DIS MANIBUS',
+    colors: { primary: 'bg-stone-500', accent: 'text-stone-500' }
   }
 ];
 
@@ -196,6 +328,53 @@ export function CatacombArtGallery({ className }: CatacombArtGalleryProps) {
   const [selectedArtwork, setSelectedArtwork] = useState<CatacombArtwork | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  
+  // Tour Mode State
+  const [isTourMode, setIsTourMode] = useState(false);
+  const [tourIndex, setTourIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const TOUR_INTERVAL = 8000; // 8 seconds per artwork
+
+  // Auto-advance tour
+  useEffect(() => {
+    if (!isTourMode || !isPlaying) return;
+    
+    const timer = setInterval(() => {
+      setTourIndex((prev) => {
+        if (prev >= catacombArtworks.length - 1) {
+          setIsPlaying(false);
+          return prev;
+        }
+        return prev + 1;
+      });
+    }, TOUR_INTERVAL);
+
+    return () => clearInterval(timer);
+  }, [isTourMode, isPlaying]);
+
+  const startTour = useCallback(() => {
+    setIsTourMode(true);
+    setTourIndex(0);
+    setIsPlaying(true);
+  }, []);
+
+  const stopTour = useCallback(() => {
+    setIsTourMode(false);
+    setIsPlaying(false);
+    setTourIndex(0);
+  }, []);
+
+  const togglePlayPause = useCallback(() => {
+    setIsPlaying((prev) => !prev);
+  }, []);
+
+  const tourPrevious = useCallback(() => {
+    setTourIndex((prev) => (prev === 0 ? catacombArtworks.length - 1 : prev - 1));
+  }, []);
+
+  const tourNext = useCallback(() => {
+    setTourIndex((prev) => (prev >= catacombArtworks.length - 1 ? 0 : prev + 1));
+  }, []);
 
   const handlePrevious = () => {
     const newIndex = currentIndex === 0 ? catacombArtworks.length - 1 : currentIndex - 1;
@@ -213,6 +392,8 @@ export function CatacombArtGallery({ className }: CatacombArtGalleryProps) {
     setSelectedArtwork(artwork);
     setCurrentIndex(index);
   };
+
+  const currentTourArtwork = catacombArtworks[tourIndex];
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
@@ -245,13 +426,22 @@ export function CatacombArtGallery({ className }: CatacombArtGalleryProps) {
         </CollapsibleTrigger>
 
         <CollapsibleContent>
-          <div className="px-6 pb-2">
+          <div className="px-6 pb-2 flex flex-wrap gap-2">
             <ListenButton 
               text={narrativeText + " " + catacombArtworks.map(a => `${a.title}. ${a.description} ${a.significance}`).join(" ")}
               itemId="catacomb-gallery-overview"
               variant="outline"
               size="sm"
             />
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={startTour}
+              className="gap-2"
+            >
+              <Play className="w-4 h-4" />
+              Start Guided Tour
+            </Button>
           </div>
 
           <CardContent className="space-y-4">
@@ -291,7 +481,7 @@ export function CatacombArtGallery({ className }: CatacombArtGalleryProps) {
             {/* Info Card */}
             <div className="bg-muted/30 rounded-lg p-4 border border-border/50">
               <div className="flex items-start gap-3">
-                <Info className="w-5 h-5 text-stone-400 shrink-0 mt-0.5" />
+                <Info className="w-5 h-5 text-muted-foreground shrink-0 mt-0.5" />
                 <div className="text-sm text-muted-foreground">
                   <p className="mb-2">
                     <strong className="text-foreground">Archaeological Context:</strong> These artworks are from Rome's 
@@ -306,6 +496,145 @@ export function CatacombArtGallery({ className }: CatacombArtGalleryProps) {
             </div>
           </CardContent>
         </CollapsibleContent>
+
+        {/* Tour Mode Dialog */}
+        <Dialog open={isTourMode} onOpenChange={(open) => !open && stopTour()}>
+          <DialogContent className="max-w-4xl max-h-[95vh] p-0 overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={tourIndex}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.4 }}
+                className="relative"
+              >
+                {/* Tour Header */}
+                <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between">
+                  <Badge className="bg-background/90 backdrop-blur-sm text-foreground">
+                    Tour: {tourIndex + 1} of {catacombArtworks.length}
+                  </Badge>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={stopTour}
+                    className="bg-background/90 backdrop-blur-sm hover:bg-background"
+                  >
+                    <X className="w-4 h-4" />
+                  </Button>
+                </div>
+
+                {/* Large Image Display */}
+                <div className="w-full aspect-video relative">
+                  <OptimizedImage
+                    src={catacombImages[currentTourArtwork.id]}
+                    alt={currentTourArtwork.title}
+                    className="w-full h-full"
+                    priority
+                  />
+                  {/* Progress bar */}
+                  {isPlaying && (
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-muted/50">
+                      <motion.div
+                        className="h-full bg-primary"
+                        initial={{ width: '0%' }}
+                        animate={{ width: '100%' }}
+                        transition={{ duration: TOUR_INTERVAL / 1000, ease: 'linear' }}
+                        key={`progress-${tourIndex}`}
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* Tour Content */}
+                <ScrollArea className="max-h-[40vh]">
+                  <div className="p-6">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge className={cn(currentTourArtwork.colors.primary, "text-white text-xs")}>
+                        {currentTourArtwork.symbolType}
+                      </Badge>
+                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        <Calendar className="w-3 h-3" /> {currentTourArtwork.century}
+                      </span>
+                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        <MapPin className="w-3 h-3" /> {currentTourArtwork.location.split(',')[0]}
+                      </span>
+                    </div>
+
+                    <h3 className="text-xl font-bold text-foreground mb-2">{currentTourArtwork.title}</h3>
+                    <p className="text-sm text-muted-foreground mb-4">{currentTourArtwork.description}</p>
+
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="bg-primary/10 border border-primary/30 rounded-lg p-3">
+                        <h4 className="font-semibold text-sm text-primary flex items-center gap-2 mb-1">
+                          <BookOpen className="w-4 h-4" /> Biblical Connection
+                        </h4>
+                        <p className="text-xs text-muted-foreground">{currentTourArtwork.biblicalConnection}</p>
+                      </div>
+
+                      <div className="bg-secondary/50 border border-border rounded-lg p-3">
+                        <h4 className="font-semibold text-sm text-foreground mb-1">Modern Parallel</h4>
+                        <p className="text-xs text-muted-foreground">{currentTourArtwork.modernParallel}</p>
+                      </div>
+                    </div>
+                  </div>
+                </ScrollArea>
+
+                {/* Tour Controls */}
+                <div className="border-t border-border p-4 flex items-center justify-center gap-4">
+                  <Button variant="outline" size="icon" onClick={tourPrevious}>
+                    <ChevronLeft className="w-5 h-5" />
+                  </Button>
+                  
+                  <Button 
+                    variant="default" 
+                    size="icon" 
+                    onClick={togglePlayPause}
+                    className="w-12 h-12 rounded-full"
+                  >
+                    {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+                  </Button>
+                  
+                  <Button variant="outline" size="icon" onClick={tourNext}>
+                    <ChevronRight className="w-5 h-5" />
+                  </Button>
+
+                  <Button variant="ghost" size="sm" onClick={() => { setTourIndex(0); setIsPlaying(true); }} className="ml-4">
+                    <RotateCcw className="w-4 h-4 mr-1" />
+                    Restart
+                  </Button>
+                </div>
+
+                {/* Thumbnail Progress */}
+                <div className="px-4 pb-4">
+                  <div className="flex gap-1 overflow-x-auto py-2">
+                    {catacombArtworks.map((artwork, index) => (
+                      <button
+                        key={artwork.id}
+                        onClick={() => setTourIndex(index)}
+                        className={cn(
+                          "w-12 h-12 rounded-md overflow-hidden border-2 shrink-0 transition-all",
+                          index === tourIndex 
+                            ? "border-primary ring-2 ring-primary/50" 
+                            : index < tourIndex 
+                              ? "border-primary/50 opacity-70" 
+                              : "border-border opacity-50"
+                        )}
+                      >
+                        <OptimizedImage
+                          src={catacombImages[artwork.id]}
+                          alt={artwork.title}
+                          aspectRatio="square"
+                          className="w-full h-full"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </DialogContent>
+        </Dialog>
 
         {/* Detail Modal */}
         <Dialog open={!!selectedArtwork} onOpenChange={(open) => !open && setSelectedArtwork(null)}>
