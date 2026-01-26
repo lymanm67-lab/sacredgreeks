@@ -11,7 +11,7 @@ import { ListenButton } from '@/components/ListenButton';
 import { FaithAuthoritySection } from '@/components/proof/FaithAuthoritySection';
 import { BeliefTeachingAudio } from '@/components/proof/BeliefTeachingAudio';
 import { ProofFrameworkAudio } from '@/components/proof/ProofFrameworkAudio';
-import { GuildJourneyDiagram, GuildAudioPlayer, HolyKissComparisonChart, FirstCenturyGuildsSection, GuildEvolutionTimeline, JesusPaulBrotherhoodArticle } from '@/components/ancient-guilds';
+import { GuildJourneyDiagram, GuildAudioPlayer, HolyKissComparisonChart, FirstCenturyGuildsSection, GuildEvolutionTimeline, JesusPaulBrotherhoodArticle, IchthysTraceDiagram } from '@/components/ancient-guilds';
 import { GuildPracticesSection } from '@/components/ancient-guilds/GuildPracticesSection';
 import { generateGuildOnePagerPDF } from '@/lib/guild-onepager-pdf';
 import { generateGuildComparisonPDF } from '@/lib/guild-comparison-pdf';
@@ -763,6 +763,9 @@ const ProofCourse = () => {
 
               {/* Holy Kiss Comparison Chart - Collapsible */}
               <HolyKissComparisonChart className="mb-6" />
+
+              {/* Ichthys Fish Trace Diagram - Visual Step-by-Step */}
+              <IchthysTraceDiagram className="mb-6" />
 
               {/* Guild Evolution Timeline */}
               <GuildEvolutionTimeline className="mb-6" />
