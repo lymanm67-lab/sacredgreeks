@@ -11,7 +11,7 @@ import { ListenButton } from '@/components/ListenButton';
 import { FaithAuthoritySection } from '@/components/proof/FaithAuthoritySection';
 import { BeliefTeachingAudio } from '@/components/proof/BeliefTeachingAudio';
 import { ProofFrameworkAudio } from '@/components/proof/ProofFrameworkAudio';
-import { GuildJourneyDiagram, GuildAudioPlayer } from '@/components/ancient-guilds';
+import { GuildJourneyDiagram, GuildAudioPlayer, HolyKissComparisonChart, FirstCenturyGuildsSection } from '@/components/ancient-guilds';
 import { GuildPracticesSection } from '@/components/ancient-guilds/GuildPracticesSection';
 import { generateGuildOnePagerPDF } from '@/lib/guild-onepager-pdf';
 import { generateGuildComparisonPDF } from '@/lib/guild-comparison-pdf';
@@ -755,8 +755,14 @@ const ProofCourse = () => {
               {/* Guild Audio Player */}
               <GuildAudioPlayer className="mb-6" />
 
+              {/* 1st-Century Guilds Section - Tekton & Tentmaker */}
+              <FirstCenturyGuildsSection className="mb-6" />
+
               {/* Historical Guild Practices - Oaths, Handshakes, Phrases, Rituals */}
               <GuildPracticesSection className="mb-6" />
+
+              {/* Holy Kiss Comparison Chart */}
+              <HolyKissComparisonChart className="mb-6" />
 
               {/* PDF Downloads */}
               <Card className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-amber-500/30">
