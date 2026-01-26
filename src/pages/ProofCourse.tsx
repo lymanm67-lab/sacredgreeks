@@ -11,17 +11,8 @@ import { ListenButton } from '@/components/ListenButton';
 import { FaithAuthoritySection } from '@/components/proof/FaithAuthoritySection';
 import { BeliefTeachingAudio } from '@/components/proof/BeliefTeachingAudio';
 import { ProofFrameworkAudio } from '@/components/proof/ProofFrameworkAudio';
-import { GuildJourneyDiagram, GuildAudioPlayer, HolyKissComparisonChart, FirstCenturyGuildsSection, GuildEvolutionTimeline, JesusPaulBrotherhoodArticle, IchthysTraceDiagram, EarlyChristianSymbolsGuide } from '@/components/ancient-guilds';
-import { GuildPracticesSection } from '@/components/ancient-guilds/GuildPracticesSection';
-import { generateGuildOnePagerPDF } from '@/lib/guild-onepager-pdf';
-import { generateGuildComparisonPDF } from '@/lib/guild-comparison-pdf';
-import { generateJesusMasterCarpenterPDF } from '@/lib/jesus-master-carpenter-pdf';
 import { generateProofLessonPDF, generateAllProofLessonsPDF } from '@/lib/proof-lesson-pdf';
-import { generateEconomicHistoryPDF } from '@/lib/economic-history-pdf';
-import { generateGuildWorksheetPDF } from '@/lib/guild-worksheet-pdf';
 import { generateLessonWorksheetPDF, generateAllWorksheetsPDF } from '@/lib/proof-worksheet-pdf';
-import { generateBrotherhoodStudyGuidePDF } from '@/lib/brotherhood-study-guide-pdf';
-import { generateIchthysTracePDF } from '@/lib/ichthys-trace-pdf';
 import { Link } from 'react-router-dom';
 
 interface Lesson {
@@ -739,202 +730,34 @@ const ProofCourse = () => {
               })}
             </div>
 
-            {/* Ancient Guild Context Section */}
-            <div className="mt-12 mb-8">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center">
-                  <Users className="w-5 h-5 text-amber-500" />
-                </div>
-                <div>
-                  <h2 className="text-xl font-bold text-foreground">Ancient Guild Context</h2>
-                  <p className="text-sm text-muted-foreground">Jesus & Paul's membership in trade guilds</p>
-                </div>
-              </div>
-
-              {/* Guild Journey Diagram */}
-              <GuildJourneyDiagram className="mb-6" />
-
-              {/* Guild Audio Player */}
-              <GuildAudioPlayer className="mb-6" />
-
-              {/* 1st-Century Guilds Section - Tekton & Tentmaker */}
-              <FirstCenturyGuildsSection className="mb-6" />
-
-              {/* Historical Guild Practices - Oaths, Handshakes, Phrases, Rituals */}
-              <GuildPracticesSection className="mb-6" />
-
-              {/* Holy Kiss Comparison Chart - Collapsible */}
-              <HolyKissComparisonChart className="mb-6" />
-
-              {/* Ichthys Fish Trace Diagram - Visual Step-by-Step */}
-              <IchthysTraceDiagram className="mb-6" />
-
-              {/* Early Christian Symbols Guide */}
-              <EarlyChristianSymbolsGuide className="mb-6" />
-
-              {/* Guild Evolution Timeline */}
-              <GuildEvolutionTimeline className="mb-6" />
-
-              {/* Jesus, Paul, and the Brotherhood Question - Featured Article */}
-              <JesusPaulBrotherhoodArticle className="mb-6" />
-
-              {/* PDF Downloads */}
-              <Card className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-amber-500/30">
-                <CardContent className="p-6">
-                  <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-                    <FileDown className="w-5 h-5 text-amber-500" />
-                    Downloadable Resources
-                  </h3>
-                  <div className="grid sm:grid-cols-3 gap-3">
-                    <Button
-                      variant="outline"
-                      onClick={() => {
-                        generateGuildOnePagerPDF();
-                        toast({ title: 'One-Pager PDF downloaded!' });
-                      }}
-                      className="justify-start border-amber-500/30 hover:bg-amber-500/10"
-                    >
-                      <FileDown className="w-4 h-4 mr-2 text-amber-500" />
-                      <span className="text-left">
-                        <span className="block text-sm font-medium">One-Pager</span>
-                        <span className="block text-xs text-muted-foreground">Quick Reference</span>
-                      </span>
-                    </Button>
-                    <Button
-                      variant="outline"
-                      onClick={() => {
-                        generateGuildComparisonPDF();
-                        toast({ title: 'Comparison Guide downloaded!' });
-                      }}
-                      className="justify-start border-amber-500/30 hover:bg-amber-500/10"
-                    >
-                      <FileDown className="w-4 h-4 mr-2 text-amber-500" />
-                      <span className="text-left">
-                        <span className="block text-sm font-medium">Full Guide</span>
-                        <span className="block text-xs text-muted-foreground">Detailed Comparison</span>
-                      </span>
-                    </Button>
-                    <Button
-                      variant="outline"
-                      onClick={() => {
-                        generateJesusMasterCarpenterPDF();
-                        toast({ title: 'Jesus Master Carpenter PDF downloaded!' });
-                      }}
-                      className="justify-start border-amber-500/30 hover:bg-amber-500/10"
-                    >
-                      <FileDown className="w-4 h-4 mr-2 text-amber-500" />
-                      <span className="text-left">
-                        <span className="block text-sm font-medium">Jesus the Tekton</span>
-                        <span className="block text-xs text-muted-foreground">Carpenter Study</span>
-                      </span>
-                    </Button>
-                    <Button
-                      variant="outline"
-                      onClick={() => {
-                        generateBrotherhoodStudyGuidePDF();
-                        toast({ title: 'Brotherhood Study Guide downloaded!' });
-                      }}
-                      className="justify-start border-amber-500/30 hover:bg-amber-500/10"
-                    >
-                      <FileDown className="w-4 h-4 mr-2 text-amber-500" />
-                      <span className="text-left">
-                        <span className="block text-sm font-medium">Brotherhood Guide</span>
-                        <span className="block text-xs text-muted-foreground">Group Study</span>
-                      </span>
-                    </Button>
-                    <Button
-                      variant="outline"
-                      onClick={() => {
-                        generateIchthysTracePDF();
-                        toast({ title: 'Ichthys Trace Guide downloaded!' });
-                      }}
-                      className="justify-start border-amber-500/30 hover:bg-amber-500/10"
-                    >
-                      <FileDown className="w-4 h-4 mr-2 text-amber-500" />
-                      <span className="text-left">
-                        <span className="block text-sm font-medium">Ichthys Trace</span>
-                        <span className="block text-xs text-muted-foreground">Recognition Guide</span>
-                      </span>
-                    </Button>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-amber-500/20 grid grid-cols-2 sm:grid-cols-4 gap-2">
-                    <Button asChild variant="ghost" className="text-amber-600 hover:text-amber-500 hover:bg-amber-500/10 justify-start">
-                      <Link to="/chapter-kit">
-                        📚 Chapter Resources →
-                      </Link>
-                    </Button>
-                    <Button asChild variant="ghost" className="text-amber-600 hover:text-amber-500 hover:bg-amber-500/10 justify-start">
-                      <Link to="/economic-history">
-                        📊 Economic Timeline →
-                      </Link>
-                    </Button>
-                    <Button asChild variant="ghost" className="text-amber-600 hover:text-amber-500 hover:bg-amber-500/10 justify-start">
-                      <Link to="/faith-authority">
-                        ✝️ Faith & Authority →
-                      </Link>
-                    </Button>
-                    <Button asChild variant="ghost" className="text-amber-600 hover:text-amber-500 hover:bg-amber-500/10 justify-start">
-                      <Link to="/symbols">
-                        🔍 Symbol Guide →
-                      </Link>
-                    </Button>
-                  </div>
-                    <div className="mt-4 pt-4 border-t border-amber-500/20">
-                    <h4 className="font-medium text-foreground mb-3 text-sm">P.R.O.O.F. Lesson Summaries & Worksheets</h4>
-                    <div className="flex flex-wrap gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          generateAllProofLessonsPDF();
-                          toast({ title: 'Complete Lesson Guide downloaded!' });
-                        }}
-                        className="border-sacred/30 hover:bg-sacred/10"
-                      >
-                        <FileDown className="w-4 h-4 mr-2 text-sacred" />
-                        All Lessons PDF
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          generateAllWorksheetsPDF();
-                          toast({ title: 'All Worksheets PDF downloaded!' });
-                        }}
-                        className="border-sacred/30 hover:bg-sacred/10"
-                      >
-                        <Printer className="w-4 h-4 mr-2 text-sacred" />
-                        All Worksheets PDF
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          generateEconomicHistoryPDF();
-                          toast({ title: 'Economic History PDF downloaded!' });
-                        }}
-                        className="border-amber-500/30 hover:bg-amber-500/10"
-                      >
-                        <FileDown className="w-4 h-4 mr-2 text-amber-500" />
-                        Economic History PDF
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          generateGuildWorksheetPDF();
-                          toast({ title: 'Guild Practices Worksheet downloaded!' });
-                        }}
-                        className="border-amber-500/30 hover:bg-amber-500/10"
-                      >
-                        <FileDown className="w-4 h-4 mr-2 text-amber-500" />
-                        Guild Worksheet
-                      </Button>
+            {/* Ancient Guild Context - Link to Dedicated Course */}
+            <Card className="mt-12 mb-8 border-amber-500/30 bg-gradient-to-r from-amber-500/10 to-orange-500/10 hover:border-amber-500/50 transition-all">
+              <CardContent className="p-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg shrink-0">
+                      <Users className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h2 className="text-lg font-bold text-foreground">Ancient Guild Training</h2>
+                      <p className="text-sm text-muted-foreground">
+                        Jesus & Paul's membership in trade guilds • 10 modules • Interactive diagrams
+                      </p>
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        <Badge variant="outline" className="text-xs border-amber-500/30 text-amber-600">Catacomb Gallery</Badge>
+                        <Badge variant="outline" className="text-xs border-amber-500/30 text-amber-600">Ichthys Trace</Badge>
+                        <Badge variant="outline" className="text-xs border-amber-500/30 text-amber-600">Brotherhood Article</Badge>
+                      </div>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            </div>
+                  <Button asChild className="bg-amber-500 hover:bg-amber-600 text-white shrink-0">
+                    <Link to="/ancient-guild-training">
+                      Start Training →
+                    </Link>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
 
             {/* PROOF Framework Audio Overview */}
             <div className="mt-8 mb-8">
