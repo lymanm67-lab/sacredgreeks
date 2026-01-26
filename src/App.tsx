@@ -235,7 +235,7 @@ const App = () => (
                     <Route path="/biblical-guides" element={<BiblicalGuides />} />
                     <Route path="/the-book" element={<TheBook />} />
                     <Route path="/book" element={<Navigate to="/the-book" replace />} />
-                    <Route path="/greek-life" element={<GreekLife />} />
+                    <Route path="/greek-life" element={<Navigate to="/greek-life-training" replace />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/tools-resources" element={<ToolsResources />} />
                     <Route path="/healing-resources" element={<HealingResources />} />
