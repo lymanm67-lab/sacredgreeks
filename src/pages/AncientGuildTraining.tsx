@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -6,10 +6,12 @@ import { Progress } from '@/components/ui/progress';
 import { SEOHead } from '@/components/SEOHead';
 import { useToast } from '@/hooks/use-toast';
 import { ListenButton } from '@/components/ListenButton';
-import { FileDown, Users, Landmark, BookOpen, ArrowLeft, Target, CheckCircle2 } from 'lucide-react';
+import { FileDown, Users, Landmark, BookOpen, ArrowLeft, Target, CheckCircle2, Circle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useNavigationProgress } from '@/hooks/use-navigation-progress';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 import { 
   GuildJourneyDiagram, 
   GuildAudioPlayer, 
@@ -36,11 +38,78 @@ The training covers guild journey from apprentice to master, historical practice
 
 This is not about defending every practice of modern organizations. It's about understanding that organizational structure, communal identity, and formational processes are not inherently opposed to faith—they were woven into the fabric of the world Jesus and Paul inhabited.`;
 
+// Module session IDs map (6-15 for 10 modules)
+const MODULE_SESSION_IDS = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+
 export default function AncientGuildTraining() {
   const { toast } = useToast();
+  const { user } = useAuth();
   const { progressData } = useNavigationProgress();
-  const progress = progressData?.guildTraining || 0;
-  const completedModules = Math.round((progress / 100) * 10);
+  const [completedModules, setCompletedModules] = useState<number[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Load completed modules
+  useEffect(() => {
+    const loadProgress = async () => {
+      if (!user) {
+        setIsLoading(false);
+        return;
+      }
+      
+      const { data } = await supabase
+        .from('study_session_progress')
+        .select('session_id')
+        .eq('user_id', user.id)
+        .eq('completed', true)
+        .gte('session_id', 6)
+        .lte('session_id', 15);
+      
+      if (data) {
+        setCompletedModules(data.map(d => d.session_id));
+      }
+      setIsLoading(false);
+    };
+    
+    loadProgress();
+  }, [user]);
+
+  const toggleModuleComplete = async (moduleIndex: number) => {
+    if (!user) {
+      toast({ title: 'Sign in required', description: 'Please sign in to track progress', variant: 'destructive' });
+      return;
+    }
+
+    const sessionId = MODULE_SESSION_IDS[moduleIndex];
+    const isCurrentlyComplete = completedModules.includes(sessionId);
+    
+    if (isCurrentlyComplete) {
+      // Remove completion
+      await supabase
+        .from('study_session_progress')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('session_id', sessionId);
+      
+      setCompletedModules(prev => prev.filter(id => id !== sessionId));
+      toast({ title: 'Module unmarked', description: `Module ${moduleIndex + 1} progress removed` });
+    } else {
+      // Mark complete
+      await supabase
+        .from('study_session_progress')
+        .upsert({
+          user_id: user.id,
+          session_id: sessionId,
+          completed: true,
+          completed_at: new Date().toISOString()
+        }, { onConflict: 'user_id,session_id' });
+      
+      setCompletedModules(prev => [...prev, sessionId]);
+      toast({ title: 'Module completed! 🎉', description: `Module ${moduleIndex + 1} marked as complete` });
+    }
+  };
+
+  const progress = progressData?.guildTraining || Math.round((completedModules.length / 10) * 100);
+  const completedCount = completedModules.length;
 
   return (
     <>
@@ -83,7 +152,7 @@ export default function AncientGuildTraining() {
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-medium text-foreground">Training Progress</span>
                   <Badge variant="secondary" className="bg-amber-500/20 text-amber-500 border-amber-500/30">
-                    {completedModules}/10
+                    {completedCount}/10
                   </Badge>
                 </div>
                 <div className="flex items-center gap-3">
@@ -126,7 +195,7 @@ export default function AncientGuildTraining() {
                     that structured brotherhood, apprenticeship, and mutual accountability have ancient biblical precedent.
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    <Badge variant="outline" className="text-xs">8 Training Modules</Badge>
+                    <Badge variant="outline" className="text-xs">10 Training Modules</Badge>
                     <Badge variant="outline" className="text-xs">PDF Resources</Badge>
                     <Badge variant="outline" className="text-xs">Audio Narration</Badge>
                     <Badge variant="outline" className="text-xs">Interactive Diagrams</Badge>
@@ -140,90 +209,150 @@ export default function AncientGuildTraining() {
           <div className="space-y-6">
             {/* Module 1: Guild Journey Diagram */}
             <div>
-              <div className="flex items-center gap-2 mb-3">
-                <Badge className="bg-amber-500 text-white">Module 1</Badge>
-                <h3 className="font-semibold text-foreground">Guild Journey: Apprentice to Master</h3>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <Badge className={completedModules.includes(6) ? 'bg-green-500 text-white' : 'bg-amber-500 text-white'}>Module 1</Badge>
+                  <h3 className="font-semibold text-foreground">Guild Journey: Apprentice to Master</h3>
+                </div>
+                <Button variant="ghost" size="sm" onClick={() => toggleModuleComplete(0)} className="gap-2">
+                  {completedModules.includes(6) ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Circle className="w-4 h-4" />}
+                  {completedModules.includes(6) ? 'Completed' : 'Mark Complete'}
+                </Button>
               </div>
               <GuildJourneyDiagram className="mb-0" />
             </div>
 
             {/* Module 2: Guild Audio Player */}
             <div>
-              <div className="flex items-center gap-2 mb-3">
-                <Badge className="bg-amber-500 text-white">Module 2</Badge>
-                <h3 className="font-semibold text-foreground">Audio Teaching: Historical Context</h3>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <Badge className={completedModules.includes(7) ? 'bg-green-500 text-white' : 'bg-amber-500 text-white'}>Module 2</Badge>
+                  <h3 className="font-semibold text-foreground">Audio Teaching: Historical Context</h3>
+                </div>
+                <Button variant="ghost" size="sm" onClick={() => toggleModuleComplete(1)} className="gap-2">
+                  {completedModules.includes(7) ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Circle className="w-4 h-4" />}
+                  {completedModules.includes(7) ? 'Completed' : 'Mark Complete'}
+                </Button>
               </div>
               <GuildAudioPlayer className="mb-0" />
             </div>
 
             {/* Module 3: 1st-Century Guilds Section */}
             <div>
-              <div className="flex items-center gap-2 mb-3">
-                <Badge className="bg-amber-500 text-white">Module 3</Badge>
-                <h3 className="font-semibold text-foreground">Tekton & Tentmaker Associations</h3>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <Badge className={completedModules.includes(8) ? 'bg-green-500 text-white' : 'bg-amber-500 text-white'}>Module 3</Badge>
+                  <h3 className="font-semibold text-foreground">Tekton & Tentmaker Associations</h3>
+                </div>
+                <Button variant="ghost" size="sm" onClick={() => toggleModuleComplete(2)} className="gap-2">
+                  {completedModules.includes(8) ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Circle className="w-4 h-4" />}
+                  {completedModules.includes(8) ? 'Completed' : 'Mark Complete'}
+                </Button>
               </div>
               <FirstCenturyGuildsSection className="mb-0" />
             </div>
 
             {/* Module 4: Guild Practices */}
             <div>
-              <div className="flex items-center gap-2 mb-3">
-                <Badge className="bg-amber-500 text-white">Module 4</Badge>
-                <h3 className="font-semibold text-foreground">Historical Practices: Oaths, Handshakes, Rituals</h3>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <Badge className={completedModules.includes(9) ? 'bg-green-500 text-white' : 'bg-amber-500 text-white'}>Module 4</Badge>
+                  <h3 className="font-semibold text-foreground">Historical Practices: Oaths, Handshakes, Rituals</h3>
+                </div>
+                <Button variant="ghost" size="sm" onClick={() => toggleModuleComplete(3)} className="gap-2">
+                  {completedModules.includes(9) ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Circle className="w-4 h-4" />}
+                  {completedModules.includes(9) ? 'Completed' : 'Mark Complete'}
+                </Button>
               </div>
               <GuildPracticesSection className="mb-0" />
             </div>
 
             {/* Module 5: Holy Kiss Comparison */}
             <div>
-              <div className="flex items-center gap-2 mb-3">
-                <Badge className="bg-amber-500 text-white">Module 5</Badge>
-                <h3 className="font-semibold text-foreground">Recognition Rituals: The Holy Kiss</h3>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <Badge className={completedModules.includes(10) ? 'bg-green-500 text-white' : 'bg-amber-500 text-white'}>Module 5</Badge>
+                  <h3 className="font-semibold text-foreground">Recognition Rituals: The Holy Kiss</h3>
+                </div>
+                <Button variant="ghost" size="sm" onClick={() => toggleModuleComplete(4)} className="gap-2">
+                  {completedModules.includes(10) ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Circle className="w-4 h-4" />}
+                  {completedModules.includes(10) ? 'Completed' : 'Mark Complete'}
+                </Button>
               </div>
               <HolyKissComparisonChart className="mb-0" />
             </div>
 
             {/* Module 6: Ichthys Trace */}
             <div>
-              <div className="flex items-center gap-2 mb-3">
-                <Badge className="bg-amber-500 text-white">Module 6</Badge>
-                <h3 className="font-semibold text-foreground">The Ichthys Trace: Covert Recognition</h3>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <Badge className={completedModules.includes(11) ? 'bg-green-500 text-white' : 'bg-amber-500 text-white'}>Module 6</Badge>
+                  <h3 className="font-semibold text-foreground">The Ichthys Trace: Covert Recognition</h3>
+                </div>
+                <Button variant="ghost" size="sm" onClick={() => toggleModuleComplete(5)} className="gap-2">
+                  {completedModules.includes(11) ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Circle className="w-4 h-4" />}
+                  {completedModules.includes(11) ? 'Completed' : 'Mark Complete'}
+                </Button>
               </div>
               <IchthysTraceDiagram className="mb-0" />
             </div>
 
             {/* Module 7: Early Christian Symbols */}
             <div>
-              <div className="flex items-center gap-2 mb-3">
-                <Badge className="bg-amber-500 text-white">Module 7</Badge>
-                <h3 className="font-semibold text-foreground">Early Christian Symbols Guide</h3>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <Badge className={completedModules.includes(12) ? 'bg-green-500 text-white' : 'bg-amber-500 text-white'}>Module 7</Badge>
+                  <h3 className="font-semibold text-foreground">Early Christian Symbols Guide</h3>
+                </div>
+                <Button variant="ghost" size="sm" onClick={() => toggleModuleComplete(6)} className="gap-2">
+                  {completedModules.includes(12) ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Circle className="w-4 h-4" />}
+                  {completedModules.includes(12) ? 'Completed' : 'Mark Complete'}
+                </Button>
               </div>
               <EarlyChristianSymbolsGuide className="mb-0" />
             </div>
 
             {/* Module 8: Catacomb Art Gallery */}
             <div>
-              <div className="flex items-center gap-2 mb-3">
-                <Badge className="bg-amber-500 text-white">Module 8</Badge>
-                <h3 className="font-semibold text-foreground">Catacomb Art Gallery: Archaeological Evidence</h3>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <Badge className={completedModules.includes(13) ? 'bg-green-500 text-white' : 'bg-amber-500 text-white'}>Module 8</Badge>
+                  <h3 className="font-semibold text-foreground">Catacomb Art Gallery: Archaeological Evidence</h3>
+                </div>
+                <Button variant="ghost" size="sm" onClick={() => toggleModuleComplete(7)} className="gap-2">
+                  {completedModules.includes(13) ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Circle className="w-4 h-4" />}
+                  {completedModules.includes(13) ? 'Completed' : 'Mark Complete'}
+                </Button>
               </div>
               <CatacombArtGallery className="mb-0" />
             </div>
 
             {/* Module 9: Guild Evolution Timeline */}
             <div>
-              <div className="flex items-center gap-2 mb-3">
-                <Badge className="bg-amber-500 text-white">Module 9</Badge>
-                <h3 className="font-semibold text-foreground">Evolution: Guilds to Greek Organizations</h3>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <Badge className={completedModules.includes(14) ? 'bg-green-500 text-white' : 'bg-amber-500 text-white'}>Module 9</Badge>
+                  <h3 className="font-semibold text-foreground">Evolution: Guilds to Greek Organizations</h3>
+                </div>
+                <Button variant="ghost" size="sm" onClick={() => toggleModuleComplete(8)} className="gap-2">
+                  {completedModules.includes(14) ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Circle className="w-4 h-4" />}
+                  {completedModules.includes(14) ? 'Completed' : 'Mark Complete'}
+                </Button>
               </div>
               <GuildEvolutionTimeline className="mb-0" />
             </div>
 
             {/* Module 10: Brotherhood Article */}
             <div>
-              <div className="flex items-center gap-2 mb-3">
-                <Badge className="bg-amber-500 text-white">Module 10</Badge>
-                <h3 className="font-semibold text-foreground">Jesus, Paul, and the Brotherhood Question</h3>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <Badge className={completedModules.includes(15) ? 'bg-green-500 text-white' : 'bg-amber-500 text-white'}>Module 10</Badge>
+                  <h3 className="font-semibold text-foreground">Jesus, Paul, and the Brotherhood Question</h3>
+                </div>
+                <Button variant="ghost" size="sm" onClick={() => toggleModuleComplete(9)} className="gap-2">
+                  {completedModules.includes(15) ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Circle className="w-4 h-4" />}
+                  {completedModules.includes(15) ? 'Completed' : 'Mark Complete'}
+                </Button>
               </div>
               <JesusPaulBrotherhoodArticle className="mb-0" />
             </div>

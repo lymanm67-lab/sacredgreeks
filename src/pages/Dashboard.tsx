@@ -5,7 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { TrendingUp, LogOut, FileText, User, BookOpen, FlaskConical, Calendar, Menu, Home, Heart, MessageSquare } from 'lucide-react';
+import { TrendingUp, LogOut, FileText, User, BookOpen, FlaskConical, Calendar, Menu, Home, Heart, MessageSquare, GraduationCap } from 'lucide-react';
 
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useToast } from '@/hooks/use-toast';
@@ -26,6 +26,7 @@ import { prefetchCommonRoutes } from '@/hooks/use-prefetch';
 import { useRealtimeNotifications } from '@/hooks/use-realtime-notifications';
 import { GuidedTour } from '@/components/GuidedTour';
 import { SkeletonDashboard } from '@/components/ui/SkeletonCard';
+import { DashboardTrainingProgress } from '@/components/training/DashboardTrainingProgress';
 interface DashboardStats {
   assessmentCount: number;
   prayerCount: number;
@@ -319,6 +320,11 @@ const Dashboard = () => {
           {/* Greek Community Section */}
           <div className="animate-fade-in" style={{ animationDelay: '0.15s' }}>
             <GreekCommunitySection />
+          </div>
+
+          {/* Training Progress Section */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <DashboardTrainingProgress />
           </div>
 
           {/* Featured Actions - The 3 Core Tools */}
