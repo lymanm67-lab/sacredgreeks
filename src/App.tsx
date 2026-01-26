@@ -91,6 +91,9 @@ const InstallGuide = lazy(() => import("./pages/InstallGuide"));
 const ShareToolkit = lazy(() => import("./pages/ShareToolkit"));
 const AnalyticsDashboard = lazy(() => import("./pages/AnalyticsDashboard"));
 const EmailAnalytics = lazy(() => import("./pages/admin/EmailAnalytics"));
+const LandingAnalytics = lazy(() => import("./pages/admin/LandingAnalytics"));
+const LandingABTest = lazy(() => import("./pages/LandingABTest"));
+const LeadSegmentation = lazy(() => import("./pages/admin/LeadSegmentation"));
 const NotificationPreferences = lazy(() => import("./pages/NotificationPreferences"));
 const CoachingApplication = lazy(() => import("./pages/CoachingApplication"));
 const AntiHazing = lazy(() => import("./pages/AntiHazing"));
@@ -185,6 +188,7 @@ const App = () => (
                     {/* Public routes - no sidebar */}
                     <Route path="/" element={<Index />} />
                     <Route path="/index" element={<Navigate to="/" replace />} />
+                    <Route path="/land" element={<LandingABTest />} />
                     <Route path="/auth" element={<Auth />} />
                     <Route path="/au" element={<Navigate to="/auth" replace />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
@@ -373,6 +377,22 @@ const App = () => (
                       element={
                         <ProtectedPageWithLayout>
                           <EmailAnalytics />
+                        </ProtectedPageWithLayout>
+                      }
+                    />
+                    <Route
+                      path="/admin/landing-analytics"
+                      element={
+                        <ProtectedPageWithLayout>
+                          <LandingAnalytics />
+                        </ProtectedPageWithLayout>
+                      }
+                    />
+                    <Route
+                      path="/admin/lead-segmentation"
+                      element={
+                        <ProtectedPageWithLayout>
+                          <LeadSegmentation />
                         </ProtectedPageWithLayout>
                       }
                     />

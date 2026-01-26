@@ -482,6 +482,42 @@ export type Database = {
         }
         Relationships: []
       }
+      email_automation_workflows: {
+        Row: {
+          created_at: string
+          delay_hours: number
+          email_template_key: string
+          id: string
+          is_active: boolean
+          name: string
+          subject_variant_type: string
+          trigger_segment: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          delay_hours?: number
+          email_template_key: string
+          id?: string
+          is_active?: boolean
+          name: string
+          subject_variant_type?: string
+          trigger_segment: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          delay_hours?: number
+          email_template_key?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          subject_variant_type?: string
+          trigger_segment?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       email_campaigns: {
         Row: {
           completed_at: string | null
@@ -945,6 +981,175 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      landing_page_conversions: {
+        Row: {
+          conversion_type: string
+          converted_at: string
+          id: string
+          user_id: string | null
+          variant_id: string
+          visit_id: string
+        }
+        Insert: {
+          conversion_type: string
+          converted_at?: string
+          id?: string
+          user_id?: string | null
+          variant_id: string
+          visit_id: string
+        }
+        Update: {
+          conversion_type?: string
+          converted_at?: string
+          id?: string
+          user_id?: string | null
+          variant_id?: string
+          visit_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "landing_page_conversions_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "landing_page_variants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "landing_page_conversions_visit_id_fkey"
+            columns: ["visit_id"]
+            isOneToOne: false
+            referencedRelation: "landing_page_visits"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      landing_page_variants: {
+        Row: {
+          created_at: string
+          cta_text: string
+          headline: string
+          id: string
+          is_active: boolean
+          is_control: boolean
+          name: string
+          subheadline: string | null
+          updated_at: string
+          variant_key: string
+          weight: number
+        }
+        Insert: {
+          created_at?: string
+          cta_text?: string
+          headline: string
+          id?: string
+          is_active?: boolean
+          is_control?: boolean
+          name: string
+          subheadline?: string | null
+          updated_at?: string
+          variant_key: string
+          weight?: number
+        }
+        Update: {
+          created_at?: string
+          cta_text?: string
+          headline?: string
+          id?: string
+          is_active?: boolean
+          is_control?: boolean
+          name?: string
+          subheadline?: string | null
+          updated_at?: string
+          variant_key?: string
+          weight?: number
+        }
+        Relationships: []
+      }
+      landing_page_visits: {
+        Row: {
+          id: string
+          referrer: string | null
+          session_id: string
+          user_agent: string | null
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          variant_id: string
+          visited_at: string
+        }
+        Insert: {
+          id?: string
+          referrer?: string | null
+          session_id: string
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          variant_id: string
+          visited_at?: string
+        }
+        Update: {
+          id?: string
+          referrer?: string | null
+          session_id?: string
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          variant_id?: string
+          visited_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "landing_page_visits_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "landing_page_variants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lead_segments: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          last_activity_at: string
+          segment_type: string
+          source_campaign_id: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          last_activity_at?: string
+          segment_type: string
+          source_campaign_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          last_activity_at?: string
+          segment_type?: string
+          source_campaign_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lead_segments_source_campaign_id_fkey"
+            columns: ["source_campaign_id"]
+            isOneToOne: false
+            referencedRelation: "email_campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       morning_notification_settings: {
         Row: {
