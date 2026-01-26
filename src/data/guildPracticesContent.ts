@@ -275,6 +275,121 @@ export const GUILD_HANDSHAKES: GuildPractice[] = [
         note: "Traces guild recognition practices to their medieval origins"
       }
     ]
+  },
+  {
+    id: 'right-hand-fellowship',
+    category: 'handshake',
+    title: 'The Right Hand of Fellowship',
+    historicalContext: 'In the 1st-century Greco-Roman world, the "right hand of fellowship" (Greek: dexias koinōnias) was far more than a casual handshake. It was a formal covenantal gesture signifying partnership, agreement, and mutual commitment. Roman historian Tacitus and Jewish sources document this as a binding public declaration of alliance.',
+    example: 'When Paul met with James, Peter (Cephas), and John in Jerusalem (Galatians 2:9), they extended to him "the right hand of fellowship"—a formal, public endorsement of his apostolic ministry and a covenant of partnership. This involved a deliberate, intentional grip rather than a casual greeting, often accompanied by a verbal affirmation of the terms of partnership. In ancient trade associations and synagogue communities, this same gesture formalized business partnerships, guild memberships, and covenantal relationships.',
+    modernParallel: 'Greek organizations use formal handshakes/grips as covenant gestures—not mere greetings, but deliberate identity markers signifying mutual commitment and partnership.',
+    biblicalConnection: 'Galatians 2:9 - "James, Cephas and John, those esteemed as pillars, gave me and Barnabas the right hand of fellowship when they recognized the grace given to me." This was apostolic endorsement through a physical covenant gesture—far more significant than a casual greeting.',
+    scholarlyReferences: [
+      {
+        author: "Longenecker, Richard N.",
+        title: "Galatians (Word Biblical Commentary)",
+        publication: "Word Books",
+        year: "1990",
+        page: "pp. 58-61",
+        note: "Detailed exegesis of 'right hand of fellowship' as formal covenant gesture in Greco-Roman context"
+      },
+      {
+        author: "Dunn, James D.G.",
+        title: "The Epistle to the Galatians",
+        publication: "Hendrickson Publishers",
+        year: "1993",
+        page: "pp. 110-112",
+        note: "Analyzes dexias koinōnias as partnership agreement in ancient Mediterranean culture"
+      },
+      {
+        author: "Malina, Bruce J. & Pilch, John J.",
+        title: "Social-Science Commentary on the Letters of Paul",
+        publication: "Fortress Press",
+        year: "2006",
+        page: "pp. 195-197",
+        note: "Cultural anthropology of handshake as formal covenant in 1st-century Judaism"
+      },
+      {
+        author: "Winter, Bruce W.",
+        title: "Seek the Welfare of the City: Christians as Benefactors and Citizens",
+        publication: "Eerdmans",
+        year: "1994",
+        page: "pp. 45-49",
+        note: "Documents formal partnership gestures in Greco-Roman voluntary associations"
+      },
+      {
+        author: "Tacitus",
+        title: "Histories (Book 1.54)",
+        publication: "Classical Sources",
+        year: "c. 105 CE",
+        note: "Roman documentation of dextrarum iunctio (right hand joining) as binding oath of alliance"
+      }
+    ]
+  },
+  {
+    id: 'holy-kiss-maranatha',
+    category: 'handshake',
+    title: 'The Holy Kiss with "Maranatha"',
+    historicalContext: 'The "holy kiss" (Greek: philēma hagion) practiced by 1st-century Christians was not a casual greeting but a liturgical act of recognition and benediction. Scholars suggest it was combined with the whispered Aramaic password "Maranatha" (meaning "Our Lord, come!" or "The Lord has come")—functioning as a secret Christian recognition phrase during times of persecution.',
+    example: 'In early Christian gatherings, the holy kiss was exchanged during worship assemblies, particularly before the Lord\'s Supper. Church historian Justin Martyr (c. 150 AD) describes this practice. The whispered word "Maranatha" (1 Corinthians 16:22) served as a verbal password—only genuine believers would know and respond to this Aramaic phrase. This combination of physical gesture (kiss) plus whispered password directly parallels guild practices of grip plus password for identification.',
+    modernParallel: 'Greek organizations combine physical grips with verbal passwords or phrases—the same recognition structure used by the earliest Christians to identify fellow believers.',
+    biblicalConnection: 'Romans 16:16, 1 Corinthians 16:20, 2 Corinthians 13:12, 1 Thessalonians 5:26, 1 Peter 5:14 all command the "holy kiss." 1 Corinthians 16:22 preserves the Aramaic "Maranatha" as part of early Christian liturgy—evidence of a sacred recognition phrase.',
+    scholarlyReferences: [
+      {
+        author: "Penn, Michael Philip",
+        title: "Kissing Christians: Ritual and Community in the Late Ancient Church",
+        publication: "University of Pennsylvania Press",
+        year: "2005",
+        page: "pp. 1-45",
+        note: "Definitive scholarly study of the holy kiss as ritual practice in early Christianity"
+      },
+      {
+        author: "Moule, C.F.D.",
+        title: "A Reconsideration of the Context of Maranatha",
+        publication: "New Testament Studies",
+        year: "1960",
+        page: "Vol. 6, pp. 307-310",
+        note: "Analyzes Maranatha as liturgical password in early Christian worship"
+      },
+      {
+        author: "Cullmann, Oscar",
+        title: "Early Christian Worship",
+        publication: "SCM Press",
+        year: "1953",
+        page: "pp. 13-17, 25-29",
+        note: "Links Maranatha with the holy kiss as recognition practices in early liturgy"
+      },
+      {
+        author: "Bradshaw, Paul F.",
+        title: "The Search for the Origins of Christian Worship",
+        publication: "Oxford University Press",
+        year: "2002",
+        page: "pp. 72-76",
+        note: "Documents Maranatha as early Christian password phrase"
+      },
+      {
+        author: "Hurtado, Larry W.",
+        title: "At the Origins of Christian Worship",
+        publication: "Eerdmans",
+        year: "1999",
+        page: "pp. 67-73",
+        note: "Examines ritual greetings and verbal formulas in early Christian gatherings"
+      },
+      {
+        author: "Justin Martyr",
+        title: "First Apology (Chapter 65)",
+        publication: "c. 155 AD",
+        year: "155 CE",
+        note: "Primary source describing the holy kiss in early Christian liturgy"
+      },
+      {
+        author: "Didache (The Teaching of the Twelve Apostles)",
+        title: "Chapter 10:6",
+        publication: "Early Christian Text",
+        year: "c. 50-120 CE",
+        note: "Preserves 'Maranatha' in liturgical context, possibly as recognition response"
+      }
+    ]
   }
 ];
 
