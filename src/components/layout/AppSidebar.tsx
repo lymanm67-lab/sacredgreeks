@@ -46,16 +46,18 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
-// Main section - Core features
+// Main section - Core features (ordered: Dashboard → Learning Path → Spiritual Practices)
 const mainNavItems = [
   { title: "Dashboard", url: "/dashboard", icon: Home, featureId: null, iconColor: "text-blue-500" },
+  // Learning Path
   { title: "PROOF Course", url: "/proof-course", icon: Target, featureId: null, iconColor: "text-amber-500" },
+  { title: "PROOF Quiz", url: "/proof-assessment", icon: ClipboardCheck, featureId: null, iconColor: "text-emerald-500" },
   { title: "Guild Training", url: "/ancient-guild-training", icon: Landmark, featureId: null, iconColor: "text-orange-500" },
   { title: "Faith & Authority", url: "/faith-authority", icon: BookOpen, featureId: null, iconColor: "text-amber-500" },
-  { title: "PROOF Quiz", url: "/proof-assessment", icon: ClipboardCheck, featureId: null, iconColor: "text-emerald-500" },
+  // Spiritual Practices
   { title: "30-Day Journey", url: "/journey", icon: Calendar, featureId: null, iconColor: "text-cyan-500" },
-  { title: "Prayer Journal", url: "/prayer-journal", icon: BookHeart, featureId: null, iconColor: "text-rose-500" },
   { title: "Bible Study", url: "/bible-study", icon: BookOpen, featureId: null, iconColor: "text-purple-500" },
+  { title: "Prayer Journal", url: "/prayer-journal", icon: BookHeart, featureId: null, iconColor: "text-rose-500" },
 ];
 
 // Community section
