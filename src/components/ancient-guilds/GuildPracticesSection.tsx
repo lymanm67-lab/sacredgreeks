@@ -205,8 +205,9 @@ function PracticeCard({ practice }: { practice: GuildPractice }) {
   );
 }
 
-export function GuildPracticesSection({ className }: GuildPracticesSectionProps) {
+export function GuildPracticesSection({ className, defaultOpen = false }: GuildPracticesSectionProps & { defaultOpen?: boolean }) {
   const [activeTab, setActiveTab] = useState<'oath' | 'handshake' | 'phrase' | 'ritual'>('oath');
+  const [isOpen, setIsOpen] = useState(defaultOpen);
 
   const handleDownloadWorksheet = () => {
     generateGuildWorksheetPDF();
@@ -220,17 +221,36 @@ export function GuildPracticesSection({ className }: GuildPracticesSectionProps)
   return (
     <div className={className}>
       <Card className="border-sacred/30 overflow-hidden">
-        <CardHeader className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 pb-4">
+        <CardHeader 
+          className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 pb-4 cursor-pointer hover:from-amber-500/15 hover:to-orange-500/15 transition-colors"
+          onClick={() => setIsOpen(!isOpen)}
+        >
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between flex-wrap gap-4">
-              <div>
-                <CardTitle className="text-xl flex items-center gap-2">
-                  <Scroll className="w-5 h-5 text-amber-600" />
-                  Historical Guild Practices
-                </CardTitle>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Sample oaths, handshakes, phrases & rituals from ancient trade guilds
-                </p>
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg">
+                  <Scroll className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    Historical Guild Practices
+                  </CardTitle>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Sample oaths, handshakes, phrases & rituals from ancient trade guilds
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Badge variant="outline" className="bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/30">
+                  4 Categories
+                </Badge>
+                <Button variant="ghost" size="icon" className="h-8 w-8">
+                  {isOpen ? (
+                    <ChevronUp className="w-4 h-4" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4" />
+                  )}
+                </Button>
               </div>
               <div className="flex items-center gap-2 flex-wrap">
                 <Dialog>
@@ -295,7 +315,7 @@ export function GuildPracticesSection({ className }: GuildPracticesSectionProps)
             </div>
 
             {/* TTS for Overview */}
-            <div className="flex items-center gap-2 pt-2 border-t border-amber-500/20">
+            <div className="flex items-center gap-2 pt-2 border-t border-amber-500/20" onClick={(e) => e.stopPropagation()}>
               <Volume2 className="w-4 h-4 text-sacred" />
               <span className="text-sm text-muted-foreground">Listen to full overview:</span>
               <ListenButton
@@ -310,6 +330,15 @@ export function GuildPracticesSection({ className }: GuildPracticesSectionProps)
             </div>
           </div>
         </CardHeader>
+
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
 
         <CardContent className="p-6">
           {/* Key Principle */}
@@ -440,6 +469,9 @@ export function GuildPracticesSection({ className }: GuildPracticesSectionProps)
             </div>
           </div>
         </CardContent>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </Card>
     </div>
   );

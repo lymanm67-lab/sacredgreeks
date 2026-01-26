@@ -37,6 +37,7 @@ The bottom line: Pagan cults are religious systems and were rightly rejected. Bu
 
 interface GuildAudioPlayerProps {
   className?: string;
+  defaultOpen?: boolean; // Accepted for consistency but this component is always expanded
 }
 
 export function GuildAudioPlayer({ className }: GuildAudioPlayerProps) {

@@ -148,8 +148,9 @@ Both guilds practiced similar organizational elements to modern Greek-letter org
 The key insight is this: Jesus and Paul were both members of organized fraternal trade associations that used oaths, symbols, hierarchy, and mutual aid—the same structural elements found in Greek-letter organizations today. The question is not whether such organizations are acceptable, but whether their practices direct members toward idolatry or serve legitimate professional and social purposes.`;
 };
 
-export function FirstCenturyGuildsSection({ className }: { className?: string }) {
+export function FirstCenturyGuildsSection({ className, defaultOpen = false }: { className?: string; defaultOpen?: boolean }) {
   const [expandedGuild, setExpandedGuild] = useState<string | null>(null);
+  const [isOpen, setIsOpen] = useState(defaultOpen);
 
   const toggleGuild = (guildId: string) => {
     setExpandedGuild(prev => prev === guildId ? null : guildId);
@@ -157,7 +158,10 @@ export function FirstCenturyGuildsSection({ className }: { className?: string })
 
   return (
     <Card className={`border-sacred/30 overflow-hidden ${className}`}>
-      <CardHeader className="bg-gradient-to-r from-sacred/10 to-amber-500/10 pb-4">
+      <CardHeader 
+        className="bg-gradient-to-r from-sacred/10 to-amber-500/10 pb-4 cursor-pointer hover:from-sacred/15 hover:to-amber-500/15 transition-colors"
+        onClick={() => setIsOpen(!isOpen)}
+      >
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div className="flex items-center gap-3">
@@ -167,50 +171,28 @@ export function FirstCenturyGuildsSection({ className }: { className?: string })
               <div>
                 <CardTitle className="text-lg flex items-center gap-2">
                   1st-Century Trade Guilds
-                  <Badge variant="outline" className="bg-sacred/10 text-sacred border-sacred/30 text-xs">
-                    Jesus's Era
-                  </Badge>
                 </CardTitle>
                 <p className="text-sm text-muted-foreground mt-1">
                   Tektons (Carpenters) & Skēnopoioi (Tentmakers) in biblical context
                 </p>
               </div>
             </div>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="outline" size="sm" className="border-sacred/30 hover:bg-sacred/10">
-                  <GraduationCap className="w-4 h-4 mr-2" />
-                  Scholarly Sources
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-lg">
-                <DialogHeader>
-                  <DialogTitle>Academic Sources: 1st-Century Guilds</DialogTitle>
-                  <DialogDescription>
-                    Key scholarly works documenting trade associations during the apostolic era
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="space-y-3 mt-4 max-h-[60vh] overflow-y-auto">
-                  {FIRST_CENTURY_GUILDS.map(guild => (
-                    <div key={guild.id} className="space-y-2">
-                      <h4 className={`font-semibold text-sm ${guild.color} flex items-center gap-2`}>
-                        <guild.icon className="w-4 h-4" />
-                        {guild.name}
-                      </h4>
-                      {guild.scholarlyNotes.map((note, idx) => (
-                        <p key={idx} className="text-xs text-muted-foreground pl-6 italic">
-                          • {note}
-                        </p>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              </DialogContent>
-            </Dialog>
+            <div className="flex items-center gap-2">
+              <Badge variant="outline" className="bg-sacred/10 text-sacred border-sacred/30 text-xs">
+                Jesus's Era
+              </Badge>
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                {isOpen ? (
+                  <ChevronUp className="w-4 h-4" />
+                ) : (
+                  <ChevronDown className="w-4 h-4" />
+                )}
+              </Button>
+            </div>
           </div>
 
           {/* TTS Button */}
-          <div className="flex items-center gap-2 pt-2 border-t border-sacred/20">
+          <div className="flex items-center gap-2 pt-2 border-t border-sacred/20" onClick={(e) => e.stopPropagation()}>
             <Volume2 className="w-4 h-4 text-sacred" />
             <span className="text-sm text-muted-foreground">Listen to overview:</span>
             <ListenButton
@@ -226,7 +208,15 @@ export function FirstCenturyGuildsSection({ className }: { className?: string })
         </div>
       </CardHeader>
 
-      <CardContent className="p-6 space-y-4">
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <CardContent className="p-6 space-y-4">
         {/* Key Principle */}
         <div className="p-4 rounded-lg bg-sacred/10 border border-sacred/20">
           <p className="text-sm">
@@ -335,6 +325,9 @@ export function FirstCenturyGuildsSection({ className }: { className?: string })
           </p>
         </div>
       </CardContent>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </Card>
   );
 }

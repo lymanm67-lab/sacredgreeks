@@ -9,7 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 import { ListenButton } from '@/components/ListenButton';
 import { 
   FileDown, Users, Landmark, BookOpen, ArrowLeft, Target, CheckCircle2, Circle, 
-  BookHeart, Scroll, Building2, ChevronRight, Star, Printer
+  BookHeart, Scroll, Building2, ChevronRight, Star, Printer, ChevronsUpDown
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -100,6 +100,7 @@ export default function GreekLifeTraining() {
   const [completedFoundation, setCompletedFoundation] = useState<number[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('foundation');
+  const [allModulesExpanded, setAllModulesExpanded] = useState(false);
   const timelineRef = useRef<HistoricalTimelineRef>(null);
 
   // Load completed modules and foundation sections
@@ -436,14 +437,25 @@ export default function GreekLifeTraining() {
 
             {/* Part 2: Guild Training Modules */}
             <TabsContent value="modules" className="space-y-6">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-4 flex-wrap gap-4">
                 <div>
                   <h3 className="text-lg font-semibold">Interactive Training Modules</h3>
                   <p className="text-sm text-muted-foreground">Deep dive into ancient guild practices</p>
                 </div>
-                <div className="flex items-center gap-2 bg-muted/50 px-3 py-1.5 rounded-lg">
-                  <Progress value={modulesProgress} className="w-20 h-2" />
-                  <span className="text-sm font-medium">{modulesProgress}%</span>
+                <div className="flex items-center gap-3">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => setAllModulesExpanded(!allModulesExpanded)}
+                    className="gap-2"
+                  >
+                    <ChevronsUpDown className="w-4 h-4" />
+                    {allModulesExpanded ? 'Collapse All' : 'Expand All'}
+                  </Button>
+                  <div className="flex items-center gap-2 bg-muted/50 px-3 py-1.5 rounded-lg">
+                    <Progress value={modulesProgress} className="w-20 h-2" />
+                    <span className="text-sm font-medium">{modulesProgress}%</span>
+                  </div>
                 </div>
               </div>
 
@@ -470,9 +482,9 @@ export default function GreekLifeTraining() {
                             <Circle className="w-4 h-4" />
                           )}
                           {isComplete ? 'Completed' : 'Mark Complete'}
-                        </Button>
+                      </Button>
                       </div>
-                      <ModuleComponent className="mb-0" />
+                      <ModuleComponent className="mb-0" defaultOpen={allModulesExpanded} key={`${index}-${allModulesExpanded}`} />
                     </div>
                   );
                 })}
