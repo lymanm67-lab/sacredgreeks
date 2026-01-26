@@ -238,7 +238,7 @@ export function GuildPracticesSection({ className }: GuildPracticesSectionProps)
                     <Button
                       variant="outline"
                       size="sm"
-                      className="border-blue-500/30 text-blue-700 dark:text-blue-400 hover:bg-blue-500/10"
+                      className="border-blue-500/30 text-white hover:bg-blue-500/10"
                     >
                       <GraduationCap className="w-4 h-4 mr-2" />
                       View All Sources
