@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
-import { ArrowLeft, Search, BookOpen, ExternalLink, Filter, Copy, Check, MessageSquare, ChevronDown, Download, FileText, Target, Sparkles, Scale, Eye, Building, X } from 'lucide-react';
+import { ArrowLeft, Search, BookOpen, ExternalLink, Filter, Copy, Check, MessageSquare, ChevronDown, Download, FileText, Target, Sparkles, Scale, Eye, Building, X, CheckCircle2 } from 'lucide-react';
 import { mythBusterContent, mythCategories, mythScenarios, mythOrganizations, ProofCategory } from '@/data/mythBusterContent';
 import { ListenButton } from '@/components/ListenButton';
 import { FISTFramework } from '@/components/myth-buster/FISTFramework';
@@ -18,6 +19,8 @@ import { toast } from 'sonner';
 import { downloadMythBusterPDF } from '@/lib/myth-buster-pdf';
 import { PreviewBanner } from '@/components/PreviewBanner';
 import { DemoAudioGuide } from '@/components/DemoAudioGuide';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 
 const categoryIcons: Record<string, string> = {
   identity: '✝️',
@@ -50,6 +53,7 @@ const proofCategories: { id: ProofCategory | 'all'; label: string; icon: React.C
 ];
 
 const MythBuster = () => {
+  const { user } = useAuth();
   const [search, setSearch] = useState('');
   const [scenario, setScenario] = useState('all');
   const [organization, setOrganization] = useState('all');
@@ -57,6 +61,71 @@ const MythBuster = () => {
   const [expandedCategories, setExpandedCategories] = useState<string[]>(['identity']);
   const [isDownloading, setIsDownloading] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [reviewedMyths, setReviewedMyths] = useState<string[]>([]);
+
+  // Load reviewed myths on mount
+  useEffect(() => {
+    const loadReviewedMyths = async () => {
+      if (!user) return;
+      
+      const { data } = await supabase
+        .from('study_session_progress')
+        .select('session_id')
+        .eq('user_id', user.id)
+        .eq('completed', true)
+        .gte('session_id', 100)
+        .lt('session_id', 200);
+      
+      if (data) {
+        // Convert session IDs back to myth IDs
+        const mythIds = data.map(d => {
+          const index = d.session_id - 100;
+          return mythBusterContent[index]?.id;
+        }).filter(Boolean);
+        setReviewedMyths(mythIds);
+      }
+    };
+    
+    loadReviewedMyths();
+  }, [user]);
+
+  const toggleMythReviewed = async (mythId: string) => {
+    if (!user) {
+      toast.info('Sign in to track your progress');
+      return;
+    }
+
+    const mythIndex = mythBusterContent.findIndex(m => m.id === mythId);
+    if (mythIndex === -1) return;
+    
+    const sessionId = 100 + mythIndex;
+    const isReviewed = reviewedMyths.includes(mythId);
+
+    if (isReviewed) {
+      await supabase
+        .from('study_session_progress')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('session_id', sessionId);
+      
+      setReviewedMyths(prev => prev.filter(id => id !== mythId));
+      toast.success('Myth unmarked');
+    } else {
+      await supabase
+        .from('study_session_progress')
+        .upsert({
+          user_id: user.id,
+          session_id: sessionId,
+          completed: true,
+          completed_at: new Date().toISOString()
+        }, { onConflict: 'user_id,session_id' });
+      
+      setReviewedMyths(prev => [...prev, mythId]);
+      toast.success('Myth reviewed! ✓');
+    }
+  };
+
+  const reviewProgress = Math.round((reviewedMyths.length / mythBusterContent.length) * 100);
 
   const handleCopy = (text: string, id: string) => {
     navigator.clipboard.writeText(text);
@@ -122,12 +191,28 @@ const MythBuster = () => {
         description="Explore common myths about Greek life and learn the truth with research-backed facts." 
       />
       <header className="border-b bg-card/80 backdrop-blur-lg sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center gap-4">
-          <Link to="/"><Button variant="ghost" size="icon"><ArrowLeft className="w-5 h-5" /></Button></Link>
-          <div>
-            <h1 className="text-xl font-bold">Myth Buster Library</h1>
-            <p className="text-sm text-muted-foreground">Biblical responses with ready-to-use scripts</p>
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center gap-4">
+            <Link to="/"><Button variant="ghost" size="icon"><ArrowLeft className="w-5 h-5" /></Button></Link>
+            <div className="flex-1">
+              <h1 className="text-xl font-bold">Myth Buster Library</h1>
+              <p className="text-sm text-muted-foreground">Biblical responses with ready-to-use scripts</p>
+            </div>
+            {user && (
+              <div className="hidden sm:flex items-center gap-3 bg-muted/50 px-3 py-2 rounded-lg">
+                <div className="text-sm text-muted-foreground">Progress</div>
+                <Progress value={reviewProgress} className="w-24 h-2" />
+                <Badge variant="secondary" className="text-xs">{reviewedMyths.length}/{mythBusterContent.length}</Badge>
+              </div>
+            )}
           </div>
+          {user && (
+            <div className="sm:hidden mt-3 flex items-center gap-3 bg-muted/50 px-3 py-2 rounded-lg">
+              <div className="text-sm text-muted-foreground">Progress</div>
+              <Progress value={reviewProgress} className="flex-1 h-2" />
+              <Badge variant="secondary" className="text-xs">{reviewedMyths.length}/{mythBusterContent.length}</Badge>
+            </div>
+          )}
         </div>
       </header>
 
@@ -275,12 +360,21 @@ const MythBuster = () => {
                             <AccordionItem value={myth.id} className="border-none">
                               <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-muted/30">
                                 <div className="flex items-start gap-3 text-left flex-1">
-                                  <MessageSquare className="w-4 h-4 mt-1 text-sacred shrink-0" />
-                                  <div>
+                                  {reviewedMyths.includes(myth.id) ? (
+                                    <CheckCircle2 className="w-4 h-4 mt-1 text-green-500 shrink-0" />
+                                  ) : (
+                                    <MessageSquare className="w-4 h-4 mt-1 text-sacred shrink-0" />
+                                  )}
+                                  <div className="flex-1">
                                     <p className="font-medium text-sm">{myth.myth}</p>
-                                    {myth.scenario && (
-                                      <Badge variant="outline" className="text-xs mt-1">{myth.scenario}</Badge>
-                                    )}
+                                    <div className="flex items-center gap-2 mt-1">
+                                      {myth.scenario && (
+                                        <Badge variant="outline" className="text-xs">{myth.scenario}</Badge>
+                                      )}
+                                      {reviewedMyths.includes(myth.id) && (
+                                        <Badge variant="secondary" className="text-xs bg-green-500/10 text-green-600 border-green-500/30">Reviewed</Badge>
+                                      )}
+                                    </div>
                                   </div>
                                 </div>
                               </AccordionTrigger>
@@ -356,16 +450,39 @@ const MythBuster = () => {
                                     </div>
                                   </div>
                                   
-                                  {/* Tags & Related */}
+                                   {/* Tags & Related + Mark Reviewed */}
                                   <div className="flex flex-wrap items-center gap-2 pt-2 border-t">
                                     {myth.tags.slice(0, 4).map(tag => (
                                       <Badge key={tag} variant="secondary" className="text-xs">{tag}</Badge>
                                     ))}
-                                    {myth.relatedArticle && (
-                                      <Link to={myth.relatedArticleUrl || '/articles'} className="inline-flex items-center gap-1 text-xs text-sacred hover:underline ml-auto">
-                                        <ExternalLink className="w-3 h-3" /> Related article
-                                      </Link>
-                                    )}
+                                    <div className="flex items-center gap-2 ml-auto">
+                                      {myth.relatedArticle && (
+                                        <Link to={myth.relatedArticleUrl || '/articles'} className="inline-flex items-center gap-1 text-xs text-sacred hover:underline">
+                                          <ExternalLink className="w-3 h-3" /> Related article
+                                        </Link>
+                                      )}
+                                      <Button
+                                        variant={reviewedMyths.includes(myth.id) ? "secondary" : "outline"}
+                                        size="sm"
+                                        className="gap-1.5 h-7"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          toggleMythReviewed(myth.id);
+                                        }}
+                                      >
+                                        {reviewedMyths.includes(myth.id) ? (
+                                          <>
+                                            <CheckCircle2 className="w-3 h-3 text-green-500" />
+                                            Reviewed
+                                          </>
+                                        ) : (
+                                          <>
+                                            <CheckCircle2 className="w-3 h-3" />
+                                            Mark Reviewed
+                                          </>
+                                        )}
+                                      </Button>
+                                    </div>
                                   </div>
                                 </div>
                               </AccordionContent>

@@ -52,7 +52,8 @@ import {
 const learningPathItems = [
   { title: "PROOF Course", url: "/proof-course", icon: Target, featureId: null, iconColor: "text-amber-500", hasProgress: true },
   { title: "PROOF Quiz", url: "/proof-assessment", icon: ClipboardCheck, featureId: null, iconColor: "text-emerald-500", hasProgress: true },
-  { title: "Guild Training", url: "/ancient-guild-training", icon: Landmark, featureId: null, iconColor: "text-orange-500", hasProgress: true },
+  { title: "Greek Life & Guild", url: "/greek-life-training", icon: Building2, featureId: null, iconColor: "text-violet-500", hasProgress: true },
+  { title: "Myth Busters", url: "/myth-buster", icon: Zap, featureId: null, iconColor: "text-yellow-500", hasProgress: true },
   { title: "Faith & Authority", url: "/faith-authority", icon: BookOpen, featureId: null, iconColor: "text-amber-500", hasProgress: true },
 ];
 
@@ -73,10 +74,8 @@ const communityNavItems = [
 
 // Tools & Resources section
 const toolsNavItems = [
-  { title: "Greek Life", url: "/greek-life", icon: Building2, featureId: null, iconColor: "text-violet-500", hasProgress: false },
   { title: "Anti-Hazing", url: "/anti-hazing", icon: ShieldAlert, featureId: null, iconColor: "text-red-500", hasProgress: false },
   { title: "Symbol Guide", url: "/symbol-guide", icon: Compass, featureId: null, iconColor: "text-teal-500", hasProgress: false },
-  { title: "Myth Busters", url: "/myth-buster", icon: Zap, featureId: null, iconColor: "text-yellow-500", hasProgress: false },
   { title: "Video Library", url: "/video-library", icon: Video, featureId: null, iconColor: "text-sky-500", hasProgress: false },
   { title: "Church Leaders", url: "/church-leaders", icon: Church, featureId: null, iconColor: "text-lime-500", hasProgress: false },
   { title: "Achievements", url: "/achievements", icon: Trophy, featureId: 'achievements', iconColor: "text-amber-400", hasProgress: false },
