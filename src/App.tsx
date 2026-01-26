@@ -90,6 +90,7 @@ const Changelog = lazy(() => import("./pages/Changelog"));
 const InstallGuide = lazy(() => import("./pages/InstallGuide"));
 const ShareToolkit = lazy(() => import("./pages/ShareToolkit"));
 const AnalyticsDashboard = lazy(() => import("./pages/AnalyticsDashboard"));
+const EmailAnalytics = lazy(() => import("./pages/admin/EmailAnalytics"));
 const NotificationPreferences = lazy(() => import("./pages/NotificationPreferences"));
 const CoachingApplication = lazy(() => import("./pages/CoachingApplication"));
 const AntiHazing = lazy(() => import("./pages/AntiHazing"));
@@ -364,6 +365,14 @@ const App = () => (
                       element={
                         <ProtectedPageWithLayout>
                           <Admin />
+                        </ProtectedPageWithLayout>
+                      }
+                    />
+                    <Route
+                      path="/admin/email-analytics"
+                      element={
+                        <ProtectedPageWithLayout>
+                          <EmailAnalytics />
                         </ProtectedPageWithLayout>
                       }
                     />
