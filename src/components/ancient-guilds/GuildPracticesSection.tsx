@@ -14,17 +14,39 @@ import {
   ChevronDown,
   ChevronUp,
   Quote,
-  ArrowRight
+  ArrowRight,
+  Volume2,
+  GraduationCap,
+  ExternalLink
 } from 'lucide-react';
 import { 
   GUILD_OATHS, 
   GUILD_HANDSHAKES, 
   GUILD_PHRASES, 
   GUILD_RITUALS,
-  type GuildPractice 
+  GENERAL_REFERENCES,
+  type GuildPractice,
+  type ScholarlyReference,
+  generateTTSTextForCategory,
+  generateGuildPracticesOverviewTTS
 } from '@/data/guildPracticesContent';
 import { generateGuildWorksheetPDF } from '@/lib/guild-worksheet-pdf';
 import { toast } from 'sonner';
+import { ListenButton } from '@/components/ListenButton';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface GuildPracticesSectionProps {
   className?: string;
@@ -64,6 +86,22 @@ const CATEGORY_CONFIG = {
     description: 'Ceremonies marking advancement and celebration'
   }
 };
+
+function ReferenceCard({ reference }: { reference: ScholarlyReference }) {
+  return (
+    <div className="p-3 bg-muted/30 rounded-lg border border-border/50 text-sm">
+      <p className="font-medium text-foreground">{reference.author}</p>
+      <p className="italic text-muted-foreground">"{reference.title}"</p>
+      <p className="text-xs text-muted-foreground mt-1">
+        {reference.publication}, {reference.year}
+        {reference.page && `, ${reference.page}`}
+      </p>
+      {reference.note && (
+        <p className="text-xs text-sacred/80 mt-1 italic">↳ {reference.note}</p>
+      )}
+    </div>
+  );
+}
 
 function PracticeCard({ practice }: { practice: GuildPractice }) {
   const [expanded, setExpanded] = useState(false);
@@ -136,6 +174,27 @@ function PracticeCard({ practice }: { practice: GuildPractice }) {
                     </div>
                   </div>
                 )}
+
+                {/* Scholarly References */}
+                {practice.scholarlyReferences && practice.scholarlyReferences.length > 0 && (
+                  <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="references" className="border-none">
+                      <AccordionTrigger className="py-2 text-sm font-medium text-muted-foreground hover:text-foreground">
+                        <div className="flex items-center gap-2">
+                          <GraduationCap className="w-4 h-4" />
+                          <span>Scholarly References ({practice.scholarlyReferences.length})</span>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="space-y-2 pt-2">
+                          {practice.scholarlyReferences.map((ref, idx) => (
+                            <ReferenceCard key={idx} reference={ref} />
+                          ))}
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                )}
               </CardContent>
             </motion.div>
           )}
@@ -146,33 +205,87 @@ function PracticeCard({ practice }: { practice: GuildPractice }) {
 }
 
 export function GuildPracticesSection({ className }: GuildPracticesSectionProps) {
+  const [activeTab, setActiveTab] = useState<'oath' | 'handshake' | 'phrase' | 'ritual'>('oath');
+
   const handleDownloadWorksheet = () => {
     generateGuildWorksheetPDF();
     toast.success('Worksheet PDF downloaded!');
+  };
+
+  const getCategoryTTSText = (category: 'oath' | 'handshake' | 'phrase' | 'ritual') => {
+    return generateTTSTextForCategory(category);
   };
 
   return (
     <div className={className}>
       <Card className="border-sacred/30 overflow-hidden">
         <CardHeader className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 pb-4">
-          <div className="flex items-center justify-between flex-wrap gap-4">
-            <div>
-              <CardTitle className="text-xl flex items-center gap-2">
-                <Scroll className="w-5 h-5 text-amber-600" />
-                Historical Guild Practices
-              </CardTitle>
-              <p className="text-sm text-muted-foreground mt-1">
-                Sample oaths, handshakes, phrases & rituals from ancient trade guilds
-              </p>
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div>
+                <CardTitle className="text-xl flex items-center gap-2">
+                  <Scroll className="w-5 h-5 text-amber-600" />
+                  Historical Guild Practices
+                </CardTitle>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Sample oaths, handshakes, phrases & rituals from ancient trade guilds
+                </p>
+              </div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="border-blue-500/30 text-blue-700 dark:text-blue-400 hover:bg-blue-500/10"
+                    >
+                      <GraduationCap className="w-4 h-4 mr-2" />
+                      View All Sources
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle className="flex items-center gap-2">
+                        <GraduationCap className="w-5 h-5" />
+                        Scholarly References
+                      </DialogTitle>
+                      <DialogDescription>
+                        Academic sources supporting the historical guild practices research
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-3 mt-4">
+                      <h4 className="font-semibold text-sm text-muted-foreground">General References</h4>
+                      {GENERAL_REFERENCES.map((ref, idx) => (
+                        <ReferenceCard key={idx} reference={ref} />
+                      ))}
+                    </div>
+                  </DialogContent>
+                </Dialog>
+                <Button
+                  variant="outline"
+                  onClick={handleDownloadWorksheet}
+                  className="border-amber-500/30 text-amber-700 dark:text-amber-400 hover:bg-amber-500/10"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Worksheet
+                </Button>
+              </div>
             </div>
-            <Button
-              variant="outline"
-              onClick={handleDownloadWorksheet}
-              className="border-amber-500/30 text-amber-700 dark:text-amber-400 hover:bg-amber-500/10"
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Download Worksheet
-            </Button>
+
+            {/* TTS for Overview */}
+            <div className="flex items-center gap-2 pt-2 border-t border-amber-500/20">
+              <Volume2 className="w-4 h-4 text-sacred" />
+              <span className="text-sm text-muted-foreground">Listen to full overview:</span>
+              <ListenButton
+                text={generateGuildPracticesOverviewTTS()}
+                itemId="guild-practices-overview"
+                title="Historical Guild Practices Overview"
+                voice="onyx"
+                variant="outline"
+                size="sm"
+                showLabel={true}
+              />
+            </div>
           </div>
         </CardHeader>
 
@@ -187,7 +300,7 @@ export function GuildPracticesSection({ className }: GuildPracticesSectionProps)
             </p>
           </div>
 
-          <Tabs defaultValue="oath" className="w-full">
+          <Tabs defaultValue="oath" className="w-full" onValueChange={(v) => setActiveTab(v as any)}>
             <TabsList className="grid w-full grid-cols-4 mb-6">
               {(Object.keys(CATEGORY_CONFIG) as Array<keyof typeof CATEGORY_CONFIG>).map((category) => {
                 const config = CATEGORY_CONFIG[category];
@@ -206,10 +319,19 @@ export function GuildPracticesSection({ className }: GuildPracticesSectionProps)
             </TabsList>
 
             <TabsContent value="oath" className="space-y-4">
-              <div className="flex items-center gap-2 mb-4">
+              <div className="flex items-center justify-between gap-2 mb-4 flex-wrap">
                 <Badge variant="outline" className="bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/30">
                   {CATEGORY_CONFIG.oath.description}
                 </Badge>
+                <ListenButton
+                  text={getCategoryTTSText('oath')}
+                  itemId="guild-oaths-tts"
+                  title="Guild Oaths"
+                  voice="onyx"
+                  variant="ghost"
+                  size="sm"
+                  showLabel={true}
+                />
               </div>
               {GUILD_OATHS.map((practice) => (
                 <PracticeCard key={practice.id} practice={practice} />
@@ -217,10 +339,19 @@ export function GuildPracticesSection({ className }: GuildPracticesSectionProps)
             </TabsContent>
 
             <TabsContent value="handshake" className="space-y-4">
-              <div className="flex items-center gap-2 mb-4">
+              <div className="flex items-center justify-between gap-2 mb-4 flex-wrap">
                 <Badge variant="outline" className="bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/30">
                   {CATEGORY_CONFIG.handshake.description}
                 </Badge>
+                <ListenButton
+                  text={getCategoryTTSText('handshake')}
+                  itemId="guild-handshakes-tts"
+                  title="Guild Handshakes"
+                  voice="onyx"
+                  variant="ghost"
+                  size="sm"
+                  showLabel={true}
+                />
               </div>
               {GUILD_HANDSHAKES.map((practice) => (
                 <PracticeCard key={practice.id} practice={practice} />
@@ -228,10 +359,19 @@ export function GuildPracticesSection({ className }: GuildPracticesSectionProps)
             </TabsContent>
 
             <TabsContent value="phrase" className="space-y-4">
-              <div className="flex items-center gap-2 mb-4">
+              <div className="flex items-center justify-between gap-2 mb-4 flex-wrap">
                 <Badge variant="outline" className="bg-purple-500/10 text-purple-700 dark:text-purple-400 border-purple-500/30">
                   {CATEGORY_CONFIG.phrase.description}
                 </Badge>
+                <ListenButton
+                  text={getCategoryTTSText('phrase')}
+                  itemId="guild-phrases-tts"
+                  title="Guild Phrases"
+                  voice="onyx"
+                  variant="ghost"
+                  size="sm"
+                  showLabel={true}
+                />
               </div>
               {GUILD_PHRASES.map((practice) => (
                 <PracticeCard key={practice.id} practice={practice} />
@@ -239,10 +379,19 @@ export function GuildPracticesSection({ className }: GuildPracticesSectionProps)
             </TabsContent>
 
             <TabsContent value="ritual" className="space-y-4">
-              <div className="flex items-center gap-2 mb-4">
+              <div className="flex items-center justify-between gap-2 mb-4 flex-wrap">
                 <Badge variant="outline" className="bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/30">
                   {CATEGORY_CONFIG.ritual.description}
                 </Badge>
+                <ListenButton
+                  text={getCategoryTTSText('ritual')}
+                  itemId="guild-rituals-tts"
+                  title="Guild Rituals"
+                  voice="onyx"
+                  variant="ghost"
+                  size="sm"
+                  showLabel={true}
+                />
               </div>
               {GUILD_RITUALS.map((practice) => (
                 <PracticeCard key={practice.id} practice={practice} />
