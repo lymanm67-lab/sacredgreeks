@@ -8,7 +8,8 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-const MAX_TEXT_LENGTH = 5000;
+const MAX_CHUNK_LENGTH = 4500; // Leave room for safety margin
+const MAX_TOTAL_LENGTH = 50000; // Maximum total text length
 
 // ElevenLabs voice IDs - using diverse voices for dynamic narration
 const ELEVENLABS_VOICES: Record<string, string> = {
@@ -37,6 +38,120 @@ const ELEVENLABS_VOICES: Record<string, string> = {
   matilda: "XrExE9yKIg1WjnnlVkGX", // Matilda - warm, nurturing female
   lily: "pFZP5JQG7iQjIQuC4Bku", // Lily - youthful, energetic female
 };
+
+// Split text into chunks at natural boundaries (sentences/paragraphs)
+function splitTextIntoChunks(text: string, maxLength: number): string[] {
+  const chunks: string[] = [];
+  let remaining = text.trim();
+
+  while (remaining.length > 0) {
+    if (remaining.length <= maxLength) {
+      chunks.push(remaining);
+      break;
+    }
+
+    // Find a good break point (paragraph, sentence, or word boundary)
+    let breakPoint = -1;
+
+    // Try paragraph break first
+    const paragraphBreak = remaining.lastIndexOf("\n\n", maxLength);
+    if (paragraphBreak > maxLength * 0.5) {
+      breakPoint = paragraphBreak + 2;
+    }
+
+    // Try sentence break if no paragraph break found
+    if (breakPoint === -1) {
+      const sentenceEndings = [". ", "! ", "? ", ".\n", "!\n", "?\n"];
+      for (const ending of sentenceEndings) {
+        const idx = remaining.lastIndexOf(ending, maxLength);
+        if (idx > maxLength * 0.5 && idx > breakPoint) {
+          breakPoint = idx + ending.length;
+        }
+      }
+    }
+
+    // Fall back to word boundary
+    if (breakPoint === -1) {
+      const spaceBreak = remaining.lastIndexOf(" ", maxLength);
+      if (spaceBreak > maxLength * 0.5) {
+        breakPoint = spaceBreak + 1;
+      } else {
+        // Last resort: hard break at maxLength
+        breakPoint = maxLength;
+      }
+    }
+
+    chunks.push(remaining.substring(0, breakPoint).trim());
+    remaining = remaining.substring(breakPoint).trim();
+  }
+
+  return chunks;
+}
+
+// Generate speech for a single chunk with optional context for stitching
+async function generateChunkAudio(
+  text: string,
+  voiceId: string,
+  voice: string,
+  apiKey: string,
+  previousText?: string,
+  nextText?: string
+): Promise<ArrayBuffer> {
+  const body: Record<string, unknown> = {
+    text,
+    model_id: "eleven_turbo_v2_5", // Use turbo for faster multi-chunk processing
+    voice_settings: {
+      stability: voice === "dramatic" || voice === "ancient" ? 0.4 : 0.5,
+      similarity_boost: 0.75,
+      style: voice === "dramatic" || voice === "ancient" ? 0.7 : 0.5,
+      use_speaker_boost: true,
+      speed: voice === "dramatic" || voice === "ancient" ? 0.9 : 1.0,
+    },
+  };
+
+  // Add stitching context if provided (last ~2-3 sentences)
+  if (previousText) {
+    const sentences = previousText.split(/[.!?]+/).filter(s => s.trim());
+    body.previous_text = sentences.slice(-3).join(". ").trim();
+  }
+  if (nextText) {
+    const sentences = nextText.split(/[.!?]+/).filter(s => s.trim());
+    body.next_text = sentences.slice(0, 3).join(". ").trim();
+  }
+
+  const response = await fetch(
+    `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=mp3_44100_128`,
+    {
+      method: "POST",
+      headers: {
+        "xi-api-key": apiKey,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+  );
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`ElevenLabs API error: ${response.status} - ${errorText}`);
+  }
+
+  return response.arrayBuffer();
+}
+
+// Concatenate MP3 audio buffers into a single ArrayBuffer
+function concatenateAudioBuffers(buffers: ArrayBuffer[]): ArrayBuffer {
+  const totalLength = buffers.reduce((sum, buf) => sum + buf.byteLength, 0);
+  const result = new Uint8Array(totalLength);
+  let offset = 0;
+
+  for (const buffer of buffers) {
+    result.set(new Uint8Array(buffer), offset);
+    offset += buffer.byteLength;
+  }
+
+  return result.buffer as ArrayBuffer;
+}
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -70,9 +185,9 @@ serve(async (req) => {
       );
     }
 
-    if (text.length > MAX_TEXT_LENGTH) {
+    if (text.length > MAX_TOTAL_LENGTH) {
       return new Response(
-        JSON.stringify({ error: `Text must be ${MAX_TEXT_LENGTH} characters or less. Current length: ${text.length}` }),
+        JSON.stringify({ error: `Text must be ${MAX_TOTAL_LENGTH} characters or less. Current length: ${text.length}` }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -82,66 +197,69 @@ serve(async (req) => {
       throw new Error("ElevenLabs API key not configured");
     }
 
-    // Get the ElevenLabs voice ID (use mapping or default to Daniel)
+    // Get the ElevenLabs voice ID (use mapping or default to onyx)
     const voiceId = ELEVENLABS_VOICES[voice] || ELEVENLABS_VOICES.onyx;
 
-    console.log(`User ${user.email} generating speech with ElevenLabs for text length: ${text.length}, voice: ${voice} (${voiceId})`);
+    console.log(`User ${user.email} generating speech for text length: ${text.length}, voice: ${voice}`);
 
-    // Generate speech using ElevenLabs
-    const response = await fetch(
-      `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
-      {
-        method: "POST",
-        headers: {
-          "xi-api-key": ELEVENLABS_API_KEY,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          text,
-          model_id: "eleven_multilingual_v2",
-          output_format: "mp3_44100_128",
-          voice_settings: {
-            stability: voice === "dramatic" || voice === "ancient" ? 0.4 : 0.5,
-            similarity_boost: 0.75,
-            style: voice === "dramatic" || voice === "ancient" ? 0.7 : 0.5,
-            use_speaker_boost: true,
-            speed: voice === "dramatic" || voice === "ancient" ? 0.9 : 1.0,
-          },
-        }),
-      }
-    );
+    // Split text into chunks if needed
+    const chunks = splitTextIntoChunks(text, MAX_CHUNK_LENGTH);
+    console.log(`Split into ${chunks.length} chunk(s)`);
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("ElevenLabs API error:", response.status, errorText);
-      
-      if (response.status === 429) {
-        return new Response(
-          JSON.stringify({ error: "Rate limit exceeded. Please try again in a moment." }),
-          { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    let finalAudioBuffer: ArrayBuffer;
+
+    if (chunks.length === 1) {
+      // Single chunk - simple request
+      finalAudioBuffer = await generateChunkAudio(chunks[0], voiceId, voice, ELEVENLABS_API_KEY);
+    } else {
+      // Multiple chunks - use request stitching for natural flow
+      const audioBuffers: ArrayBuffer[] = [];
+
+      for (let i = 0; i < chunks.length; i++) {
+        const previousText = i > 0 ? chunks[i - 1] : undefined;
+        const nextText = i < chunks.length - 1 ? chunks[i + 1] : undefined;
+
+        console.log(`Processing chunk ${i + 1}/${chunks.length} (${chunks[i].length} chars)`);
+
+        const buffer = await generateChunkAudio(
+          chunks[i],
+          voiceId,
+          voice,
+          ELEVENLABS_API_KEY,
+          previousText,
+          nextText
         );
+
+        audioBuffers.push(buffer);
       }
-      
-      throw new Error(`Failed to generate speech: ${errorText}`);
+
+      // Concatenate all audio buffers
+      finalAudioBuffer = concatenateAudioBuffers(audioBuffers);
     }
 
-    // Convert audio buffer to base64 using Deno's encoding library
-    const arrayBuffer = await response.arrayBuffer();
-    const base64Audio = base64Encode(arrayBuffer);
+    const base64Audio = base64Encode(finalAudioBuffer);
 
-    console.log(`Successfully generated ${Math.round(arrayBuffer.byteLength / 1024)}KB audio`);
+    console.log(`Successfully generated ${Math.round(finalAudioBuffer.byteLength / 1024)}KB audio from ${chunks.length} chunk(s)`);
 
     return new Response(JSON.stringify({ audioContent: base64Audio }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (error) {
     console.error("Text-to-speech error:", error);
+    
+    if (error instanceof Error && error.message.includes("429")) {
+      return new Response(
+        JSON.stringify({ error: "Rate limit exceeded. Please try again in a moment." }),
+        { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+    
     return new Response(
       JSON.stringify({
         error: error instanceof Error ? error.message : "Unknown error",
       }),
       {
-        status: 400,
+        status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       }
     );
