@@ -8,9 +8,8 @@ import { SEOHead } from '@/components/SEOHead';
 import { useToast } from '@/hooks/use-toast';
 import { useSubscription } from '@/hooks/use-subscription';
 import { ListenButton } from '@/components/ListenButton';
-import { FaithAuthoritySection } from '@/components/proof/FaithAuthoritySection';
-import { BeliefTeachingAudio } from '@/components/proof/BeliefTeachingAudio';
 import { ProofFrameworkAudio } from '@/components/proof/ProofFrameworkAudio';
+import { Sparkles } from 'lucide-react';
 import { generateProofLessonPDF, generateAllProofLessonsPDF } from '@/lib/proof-lesson-pdf';
 import { generateLessonWorksheetPDF, generateAllWorksheetsPDF } from '@/lib/proof-worksheet-pdf';
 import { Link } from 'react-router-dom';
@@ -764,13 +763,30 @@ const ProofCourse = () => {
               <ProofFrameworkAudio className="max-w-2xl mx-auto" />
             </div>
 
-            {/* Faith & Authority Section */}
-            <FaithAuthoritySection className="mt-12 -mx-4 sm:-mx-6" />
-            
-            {/* Belief Teaching Audio */}
-            <div className="mt-8">
-              <BeliefTeachingAudio className="max-w-2xl mx-auto" />
-            </div>
+            {/* Faith & Authority Link Card */}
+            <Card className="mt-12 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-amber-500/30 hover:border-amber-500/50 transition-all">
+              <CardContent className="p-6">
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+                  <div className="p-3 rounded-xl bg-amber-500/20">
+                    <Sparkles className="w-8 h-8 text-amber-400" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-foreground mb-1">Faith & Authority</h3>
+                    <p className="text-muted-foreground text-sm">
+                      Discover how faith unlocks spiritual access. Learn why what you don't believe cannot hold power over you.
+                    </p>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      <Badge variant="outline" className="text-amber-500 border-amber-500/30">Power of Belief</Badge>
+                      <Badge variant="outline" className="text-amber-500 border-amber-500/30">Scripture Cards</Badge>
+                      <Badge variant="outline" className="text-amber-500 border-amber-500/30">Audio Teaching</Badge>
+                    </div>
+                  </div>
+                  <Button asChild className="bg-amber-500 hover:bg-amber-600 text-black">
+                    <Link to="/faith-authority">Explore Teaching</Link>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           </>
         )}
       </div>
