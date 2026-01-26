@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ListenButton } from '@/components/ListenButton';
 import { 
   Landmark, 
@@ -12,6 +13,7 @@ import {
   BookOpen, 
   ChevronLeft, 
   ChevronRight,
+  ChevronDown,
   ZoomIn,
   Info,
   ExternalLink
@@ -170,6 +172,7 @@ interface CatacombArtGalleryProps {
 export function CatacombArtGallery({ className }: CatacombArtGalleryProps) {
   const [selectedArtwork, setSelectedArtwork] = useState<CatacombArtwork | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handlePrevious = () => {
     const newIndex = currentIndex === 0 ? catacombArtworks.length - 1 : currentIndex - 1;
@@ -189,30 +192,44 @@ export function CatacombArtGallery({ className }: CatacombArtGalleryProps) {
   };
 
   return (
-    <Card className={cn("border-stone-500/30 bg-gradient-to-br from-stone-900/50 to-stone-800/30", className)}>
-      <CardHeader className="pb-4">
-        <div className="flex items-start justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-stone-500/20 flex items-center justify-center">
-              <Landmark className="w-5 h-5 text-stone-400" />
+    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+      <Card className={cn("border-stone-500/30 bg-gradient-to-br from-stone-900/50 to-stone-800/30", className)}>
+        <CollapsibleTrigger asChild>
+          <CardHeader className="pb-4 cursor-pointer hover:bg-muted/20 transition-colors rounded-t-lg">
+            <div className="flex items-start justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-stone-500/20 flex items-center justify-center">
+                  <Landmark className="w-5 h-5 text-stone-400" />
+                </div>
+                <div>
+                  <CardTitle className="text-lg text-foreground">Catacomb Art Gallery</CardTitle>
+                  <p className="text-sm text-muted-foreground">Archaeological Evidence of Early Christian Symbols</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Badge variant="secondary" className="text-xs">{catacombArtworks.length} Artworks</Badge>
+                <ChevronDown className={cn(
+                  "w-5 h-5 text-muted-foreground transition-transform duration-200",
+                  isOpen && "rotate-180"
+                )} />
+              </div>
             </div>
-            <div>
-              <CardTitle className="text-lg text-foreground">Catacomb Art Gallery</CardTitle>
-              <p className="text-sm text-muted-foreground">Archaeological Evidence of Early Christian Symbols</p>
-            </div>
-          </div>
-          <ListenButton 
-            text={narrativeText + " " + catacombArtworks.map(a => `${a.title}. ${a.description} ${a.significance}`).join(" ")}
-            itemId="catacomb-gallery-overview"
-            variant="ghost"
-            size="sm"
-          />
-        </div>
-        <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
-          Explore authenticated artwork from Rome's underground burial chambers, where early Christians developed 
-          a visual language of faith under Roman persecution. Each symbol served as both art and secret code.
-        </p>
-      </CardHeader>
+            <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
+              Explore authenticated artwork from Rome's underground burial chambers, where early Christians developed 
+              a visual language of faith under Roman persecution. Each symbol served as both art and secret code.
+            </p>
+          </CardHeader>
+        </CollapsibleTrigger>
+
+        <CollapsibleContent>
+          <CardHeader className="pt-0 pb-2">
+            <ListenButton 
+              text={narrativeText + " " + catacombArtworks.map(a => `${a.title}. ${a.description} ${a.significance}`).join(" ")}
+              itemId="catacomb-gallery-overview"
+              variant="outline"
+              size="sm"
+            />
+          </CardHeader>
 
       <CardContent className="space-y-4">
         {/* Gallery Grid */}
@@ -405,6 +422,8 @@ export function CatacombArtGallery({ className }: CatacombArtGalleryProps) {
           </ScrollArea>
         </DialogContent>
       </Dialog>
-    </Card>
+        </CollapsibleContent>
+      </Card>
+    </Collapsible>
   );
 }
