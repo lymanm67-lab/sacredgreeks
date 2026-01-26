@@ -344,7 +344,8 @@ This accusation claims that BGLO founders were Masons who incorporated lodge tra
 
 Many BGLO founders were indeed Freemasons—this is historical fact, not conspiracy theory. In the early 20th century:
 - Freemasonry was extremely popular, especially among educated Black men
-- Masonic lodges provided social mobility, networking, and community
+- **African American men often joined Masonic lodges because white insurance companies refused to sell them death benefit insurance**—lodges provided burial insurance, life insurance, and mutual aid as key membership benefits
+- Masonic lodges provided social mobility, networking, community support, and essential financial services denied by mainstream institutions
 - Many founders borrowed organizational structures from fraternal orders
 - Greek-letter organizations and Masonic lodges both used similar ceremonial elements
 
