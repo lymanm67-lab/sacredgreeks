@@ -40,12 +40,12 @@ export const useNavigationProgress = () => {
       const proofSessions = studyProgress?.filter(p => p.session_id >= 1 && p.session_id <= 5 && p.completed) || [];
       const proofCourse = Math.round((proofSessions.length / 5) * 100);
 
-      // Guild Training (sessions 6-10) 
-      const guildSessions = studyProgress?.filter(p => p.session_id >= 6 && p.session_id <= 10 && p.completed) || [];
-      const guildTraining = Math.round((guildSessions.length / 5) * 100);
+      // Guild Training (sessions 6-15 for 10 modules) 
+      const guildSessions = studyProgress?.filter(p => p.session_id >= 6 && p.session_id <= 15 && p.completed) || [];
+      const guildTraining = Math.round((guildSessions.length / 10) * 100);
 
-      // Faith & Authority (sessions 11-15)
-      const faithSessions = studyProgress?.filter(p => p.session_id >= 11 && p.session_id <= 15 && p.completed) || [];
+      // Faith & Authority (sessions 16-20)
+      const faithSessions = studyProgress?.filter(p => p.session_id >= 16 && p.session_id <= 20 && p.completed) || [];
       const faithAuthority = Math.round((faithSessions.length / 5) * 100);
 
       // Fetch journey progress (30-day)

@@ -509,7 +509,7 @@ const ProofCourse = () => {
             </Card>
           </motion.div>
 
-          {/* Subscription Status Card - Always Dynamic */}
+          {/* Subscription Status Card - Always Dynamic with Features */}
           <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
             <Card className={`relative overflow-hidden border-2 h-full ${hasPremiumAccess ? 'bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-yellow-500/10 border-amber-500/30 hover:border-amber-500/50 shadow-lg shadow-amber-500/10' : 'bg-gradient-to-br from-amber-500/5 via-orange-400/5 to-yellow-500/10 border-amber-400/20 hover:border-amber-500/40 shadow-lg shadow-amber-400/10'}`}>
               {/* Animated background glow - Always visible */}
@@ -548,31 +548,45 @@ const ProofCourse = () => {
                       {hasPremiumAccess && <Zap className="w-4 h-4 text-amber-400" />}
                     </h4>
                     <p className="text-xs text-muted-foreground">
-                      {hasPremiumAccess ? 'All 5 lessons unlocked' : 'Unlock all lessons'}
+                      {hasPremiumAccess ? 'Full access unlocked' : 'Unlock premium features'}
                     </p>
                   </div>
                 </div>
-                {!hasPremiumAccess ? (
-                  <Button asChild size="sm" className="w-full mt-4 bg-gradient-to-r from-amber-500 to-orange-500 text-black font-semibold hover:from-amber-600 hover:to-orange-600 shadow-lg shadow-amber-500/25">
+                
+                {/* Features List */}
+                <div className="mt-3 space-y-1.5">
+                  {[
+                    { label: 'All 5 PROOF Lessons', included: hasPremiumAccess },
+                    { label: 'Premium Audio Player', included: hasPremiumAccess },
+                    { label: 'Ancient Guild Training', included: hasPremiumAccess },
+                    { label: 'AI Response Coach', included: hasPremiumAccess },
+                  ].map((feature, i) => (
+                    <div key={i} className="flex items-center gap-2 text-xs">
+                      {feature.included ? (
+                        <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
+                      ) : (
+                        <Lock className="w-3 h-3 text-muted-foreground/50" />
+                      )}
+                      <span className={feature.included ? 'text-foreground' : 'text-muted-foreground/70'}>
+                        {feature.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                
+                {!hasPremiumAccess && (
+                  <Button asChild size="sm" className="w-full mt-3 bg-gradient-to-r from-amber-500 to-orange-500 text-black font-semibold hover:from-amber-600 hover:to-orange-600 shadow-lg shadow-amber-500/25">
                     <Link to="/subscription">
                       <Zap className="w-4 h-4 mr-2" />
-                      Unlock All Lessons
+                      Unlock All Features
                     </Link>
                   </Button>
-                ) : (
-                  <div className="mt-4 space-y-2">
-                    <Badge className="bg-amber-500/20 text-amber-500 border-amber-500/40 font-medium">
-                      <CheckCircle2 className="w-3 h-3 mr-1" />
-                      Premium Audio Included
-                    </Badge>
-                    <p className="text-xs text-muted-foreground">All worksheets & PDFs available</p>
-                  </div>
                 )}
               </CardContent>
             </Card>
           </motion.div>
 
-          {/* Resources Card - Dynamic with download animations */}
+          {/* Resources Card - Dynamic with featured PDFs */}
           <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
             <Card className="relative overflow-hidden bg-gradient-to-br from-blue-500/10 via-cyan-500/5 to-teal-500/10 border-2 border-blue-500/30 hover:border-blue-500/50 transition-all shadow-lg shadow-blue-500/10 h-full">
               {/* Animated background glow */}
@@ -590,7 +604,7 @@ const ProofCourse = () => {
               </motion.div>
               
               <CardContent className="relative p-4">
-                <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center gap-3 mb-3">
                   <motion.div 
                     className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/30"
                     animate={{ scale: [1, 1.05, 1] }}
@@ -605,26 +619,37 @@ const ProofCourse = () => {
                         FREE
                       </Badge>
                     </h4>
-                    <p className="text-xs text-muted-foreground">Downloadable materials</p>
+                    <p className="text-xs text-muted-foreground">5 PDFs + 5 Worksheets</p>
                   </div>
                 </div>
+                
+                {/* Featured PDFs List */}
+                <div className="space-y-1.5 mb-3">
+                  {['Pledge Response Guide', 'Ritual Discernment', 'Oath Analysis'].map((pdf, i) => (
+                    <div key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <FileDown className="w-3 h-3 text-blue-400" />
+                      <span>{pdf}</span>
+                    </div>
+                  ))}
+                </div>
+                
                 <div className="grid grid-cols-2 gap-2">
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="text-xs h-9 border-blue-500/30 hover:bg-blue-500/10 hover:border-blue-500/50 group transition-all"
+                    className="text-xs h-8 border-blue-500/30 hover:bg-blue-500/10 hover:border-blue-500/50 group transition-all"
                     onClick={() => generateAllProofLessonsPDF()}
                   >
-                    <FileDown className="w-3.5 h-3.5 mr-1.5 text-blue-400 group-hover:scale-110 transition-transform" />
+                    <FileDown className="w-3.5 h-3.5 mr-1 text-blue-400 group-hover:scale-110 transition-transform" />
                     All PDFs
                   </Button>
                   <Button 
                     variant="outline" 
                     size="sm"
-                    className="text-xs h-9 border-cyan-500/30 hover:bg-cyan-500/10 hover:border-cyan-500/50 group transition-all"
+                    className="text-xs h-8 border-cyan-500/30 hover:bg-cyan-500/10 hover:border-cyan-500/50 group transition-all"
                     onClick={() => generateAllWorksheetsPDF()}
                   >
-                    <Printer className="w-3.5 h-3.5 mr-1.5 text-cyan-400 group-hover:scale-110 transition-transform" />
+                    <Printer className="w-3.5 h-3.5 mr-1 text-cyan-400 group-hover:scale-110 transition-transform" />
                     Worksheets
                   </Button>
                 </div>
