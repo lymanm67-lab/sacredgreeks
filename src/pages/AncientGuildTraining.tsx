@@ -2,11 +2,14 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
 import { SEOHead } from '@/components/SEOHead';
 import { useToast } from '@/hooks/use-toast';
 import { ListenButton } from '@/components/ListenButton';
-import { FileDown, Users, Landmark, BookOpen, ArrowLeft } from 'lucide-react';
+import { FileDown, Users, Landmark, BookOpen, ArrowLeft, Target, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { useNavigationProgress } from '@/hooks/use-navigation-progress';
 import { 
   GuildJourneyDiagram, 
   GuildAudioPlayer, 
@@ -35,6 +38,9 @@ This is not about defending every practice of modern organizations. It's about u
 
 export default function AncientGuildTraining() {
   const { toast } = useToast();
+  const { progressData } = useNavigationProgress();
+  const progress = progressData?.guildTraining || 0;
+  const completedModules = Math.round((progress / 100) * 10);
 
   return (
     <>
@@ -46,34 +52,63 @@ export default function AncientGuildTraining() {
       
       <div className="min-h-screen bg-background">
         <div className="max-w-5xl mx-auto px-4 py-8">
-          {/* Header */}
+          {/* Header with Progress Widget */}
           <div className="mb-8">
             <Link to="/proof-course" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4">
               <ArrowLeft className="w-4 h-4" />
               Back to P.R.O.O.F. Course
             </Link>
             
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg">
+                <motion.div 
+                  className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg shadow-amber-500/30"
+                  animate={{ scale: [1, 1.02, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
                   <Users className="w-7 h-7 text-white" />
-                </div>
+                </motion.div>
                 <div>
                   <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Ancient Guild Training</h1>
                   <p className="text-muted-foreground">Jesus & Paul's Membership in Trade Guilds</p>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Badge variant="secondary" className="bg-amber-500/20 text-amber-500 border-amber-500/30">
-                  Historical Context
-                </Badge>
-                <ListenButton 
-                  text={courseOverviewText}
-                  itemId="guild-training-overview"
-                  variant="outline"
-                  size="sm"
-                />
-              </div>
+              
+              {/* Progress Widget */}
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 rounded-xl p-4 min-w-[200px]"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium text-foreground">Training Progress</span>
+                  <Badge variant="secondary" className="bg-amber-500/20 text-amber-500 border-amber-500/30">
+                    {completedModules}/10
+                  </Badge>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Progress value={progress} className="h-2 flex-1" />
+                  <span className="text-sm font-bold text-amber-500">{Math.round(progress)}%</span>
+                </div>
+                {progress >= 100 && (
+                  <div className="flex items-center gap-1 mt-2 text-green-500 text-xs font-medium">
+                    <CheckCircle2 className="w-3 h-3" />
+                    Training Complete!
+                  </div>
+                )}
+              </motion.div>
+            </div>
+            
+            <div className="flex items-center gap-2 mt-4">
+              <Badge variant="secondary" className="bg-amber-500/20 text-amber-500 border-amber-500/30">
+                Historical Context
+              </Badge>
+              <ListenButton 
+                text={courseOverviewText}
+                itemId="guild-training-overview"
+                variant="outline"
+                size="sm"
+              />
             </div>
           </div>
 
