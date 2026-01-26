@@ -25,6 +25,7 @@ import {
   GUILD_PHRASES, 
   GUILD_RITUALS,
   GENERAL_REFERENCES,
+  FIRST_CENTURY_REFERENCES,
   type GuildPractice,
   type ScholarlyReference,
   generateTTSTextForCategory,
@@ -253,11 +254,32 @@ export function GuildPracticesSection({ className }: GuildPracticesSectionProps)
                         Academic sources supporting the historical guild practices research
                       </DialogDescription>
                     </DialogHeader>
-                    <div className="space-y-3 mt-4">
-                      <h4 className="font-semibold text-sm text-muted-foreground">General References</h4>
-                      {GENERAL_REFERENCES.map((ref, idx) => (
-                        <ReferenceCard key={idx} reference={ref} />
-                      ))}
+                    <div className="space-y-6 mt-4">
+                      {/* 1st Century References */}
+                      <div className="space-y-3">
+                        <h4 className="font-semibold text-sm text-sacred flex items-center gap-2">
+                          <span className="w-2 h-2 bg-sacred rounded-full" />
+                          1st-Century Roman-Era Guild References (Jesus's Era)
+                        </h4>
+                        <p className="text-xs text-muted-foreground italic mb-2">
+                          These sources document trade guilds, artisan associations, and voluntary organizations 
+                          that existed during the time of Jesus and the apostle Paul.
+                        </p>
+                        {FIRST_CENTURY_REFERENCES.map((ref, idx) => (
+                          <ReferenceCard key={`1st-${idx}`} reference={ref} />
+                        ))}
+                      </div>
+
+                      {/* Medieval References */}
+                      <div className="space-y-3 pt-4 border-t">
+                        <h4 className="font-semibold text-sm text-muted-foreground flex items-center gap-2">
+                          <span className="w-2 h-2 bg-amber-500 rounded-full" />
+                          Medieval European Guild References
+                        </h4>
+                        {GENERAL_REFERENCES.map((ref, idx) => (
+                          <ReferenceCard key={`gen-${idx}`} reference={ref} />
+                        ))}
+                      </div>
                     </div>
                   </DialogContent>
                 </Dialog>

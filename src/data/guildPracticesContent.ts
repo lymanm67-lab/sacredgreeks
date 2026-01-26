@@ -62,6 +62,86 @@ export const GENERAL_REFERENCES: ScholarlyReference[] = [
   }
 ];
 
+// 1st-Century Roman-Era Guild References (Jesus's Era)
+export const FIRST_CENTURY_REFERENCES: ScholarlyReference[] = [
+  {
+    author: "Harland, Philip A.",
+    title: "Associations, Synagogues, and Congregations: Claiming a Place in Ancient Mediterranean Society",
+    publication: "Fortress Press",
+    year: "2003",
+    note: "Definitive study of voluntary associations in the Greco-Roman world, including trade guilds in 1st-century Palestine"
+  },
+  {
+    author: "Kloppenborg, John S.",
+    title: "Collegia and Thiasoi: Issues in Function, Taxonomy, and Membership",
+    publication: "Brill Academic Publishers",
+    year: "1996",
+    page: "pp. 16-30",
+    note: "Analyzes the organizational structure of Roman collegia (trade guilds) contemporary with early Christianity"
+  },
+  {
+    author: "Ascough, Richard S.",
+    title: "Paul's Macedonian Associations: The Social Context of Philippians and 1 Thessalonians",
+    publication: "Mohr Siebeck",
+    year: "2003",
+    note: "Examines trade associations that Paul and early Christians would have encountered"
+  },
+  {
+    author: "MacMullen, Ramsay",
+    title: "Roman Social Relations: 50 B.C. to A.D. 284",
+    publication: "Yale University Press",
+    year: "1974",
+    page: "pp. 71-87",
+    note: "Documents artisan guilds and their social functions in the Roman Empire during the apostolic era"
+  },
+  {
+    author: "Burford, Alison",
+    title: "Craftsmen in Greek and Roman Society",
+    publication: "Cornell University Press",
+    year: "1972",
+    note: "Comprehensive study of craftsmen's associations including carpenters (tektons) and tentmakers"
+  },
+  {
+    author: "Wilson, Stephen G.",
+    title: "Voluntary Associations: An Overview",
+    publication: "Routledge",
+    year: "1996",
+    page: "pp. 1-15",
+    note: "Survey of Greco-Roman voluntary associations including those in 1st-century Judea"
+  },
+  {
+    author: "Hock, Ronald F.",
+    title: "The Social Context of Paul's Ministry: Tentmaking and Apostleship",
+    publication: "Fortress Press",
+    year: "1980",
+    note: "Examines Paul's involvement with the tentmaking trade guild and its practices"
+  },
+  {
+    author: "Meeks, Wayne A.",
+    title: "The First Urban Christians: The Social World of the Apostle Paul",
+    publication: "Yale University Press",
+    year: "1983",
+    page: "pp. 29-50",
+    note: "Classic work documenting artisan associations and social structures Paul encountered"
+  },
+  {
+    author: "Fiensy, David A.",
+    title: "Jesus the Galilean: Soundings in a First Century Life",
+    publication: "Gorgias Press",
+    year: "2007",
+    page: "pp. 83-102",
+    note: "Analyzes Jesus's role as a tekton (craftsman) and the guild context of Galilean artisans"
+  },
+  {
+    author: "Safrai, S. & Stern, M. (eds.)",
+    title: "The Jewish People in the First Century (CRINT)",
+    publication: "Van Gorcum",
+    year: "1976",
+    page: "Vol. 2, pp. 631-677",
+    note: "Documents Jewish trade guilds and artisan associations in Roman-era Palestine"
+  }
+];
+
 export const GUILD_OATHS: GuildPractice[] = [
   {
     id: 'apprentice-oath',

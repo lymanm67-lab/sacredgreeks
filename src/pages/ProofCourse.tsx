@@ -809,15 +809,25 @@ const ProofCourse = () => {
                       </span>
                     </Button>
                   </div>
-                  <div className="mt-4 pt-4 border-t border-amber-500/20 flex flex-wrap gap-2">
-                    <Button asChild variant="ghost" className="text-amber-600 hover:text-amber-500 hover:bg-amber-500/10">
+                  <div className="mt-4 pt-4 border-t border-amber-500/20 grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    <Button asChild variant="ghost" className="text-amber-600 hover:text-amber-500 hover:bg-amber-500/10 justify-start">
                       <Link to="/chapter-kit">
-                        View All Chapter Resources →
+                        📚 Chapter Resources →
                       </Link>
                     </Button>
-                    <Button asChild variant="ghost" className="text-amber-600 hover:text-amber-500 hover:bg-amber-500/10">
+                    <Button asChild variant="ghost" className="text-amber-600 hover:text-amber-500 hover:bg-amber-500/10 justify-start">
                       <Link to="/economic-history">
-                        📊 Economic History Timeline →
+                        📊 Economic Timeline →
+                      </Link>
+                    </Button>
+                    <Button asChild variant="ghost" className="text-amber-600 hover:text-amber-500 hover:bg-amber-500/10 justify-start">
+                      <Link to="/faith-authority">
+                        ✝️ Faith & Authority →
+                      </Link>
+                    </Button>
+                    <Button asChild variant="ghost" className="text-amber-600 hover:text-amber-500 hover:bg-amber-500/10 justify-start">
+                      <Link to="/symbols">
+                        🔍 Symbol Guide →
                       </Link>
                     </Button>
                   </div>
