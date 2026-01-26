@@ -27,6 +27,7 @@ import { useRealtimeNotifications } from '@/hooks/use-realtime-notifications';
 import { GuidedTour } from '@/components/GuidedTour';
 import { SkeletonDashboard } from '@/components/ui/SkeletonCard';
 import { DashboardTrainingProgress } from '@/components/training/DashboardTrainingProgress';
+import { DashboardAIAssistant } from '@/components/dashboard/DashboardAIAssistant';
 interface DashboardStats {
   assessmentCount: number;
   prayerCount: number;
@@ -307,8 +308,13 @@ const Dashboard = () => {
 
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-5xl mx-auto space-y-8">
-          {/* Hero Section with Welcome & Video */}
+          {/* AI Assistant */}
           <div className="animate-fade-in">
+            <DashboardAIAssistant />
+          </div>
+
+          {/* Hero Section with Welcome & Video */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.05s' }}>
             <HeroSection />
           </div>
 
