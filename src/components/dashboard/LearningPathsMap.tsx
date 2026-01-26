@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { Button } from '@/components/ui/button';
 import { 
   Target, 
   Building2, 
@@ -12,10 +14,12 @@ import {
   Circle,
   ArrowRight,
   Sparkles,
-  Map
+  Map,
+  Award
 } from 'lucide-react';
 import { useNavigationProgress } from '@/hooks/use-navigation-progress';
 import { cn } from '@/lib/utils';
+import { MasterCertificateDialog } from './MasterCertificateDialog';
 
 interface LearningPath {
   id: string;
@@ -88,6 +92,7 @@ const learningPaths: LearningPath[] = [
 
 export function LearningPathsMap() {
   const { progressData, isLoading } = useNavigationProgress();
+  const [showCertificate, setShowCertificate] = useState(false);
 
   const getCompletedCount = (path: LearningPath): number => {
     if (!progressData) return 0;
@@ -251,16 +256,33 @@ export function LearningPathsMap() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="flex items-center gap-3 p-4 rounded-lg bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30"
+            className="flex items-center justify-between gap-3 p-4 rounded-lg bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30"
           >
-            <CheckCircle2 className="w-6 h-6 text-green-500" />
-            <div>
-              <p className="font-semibold text-green-500">All Paths Complete!</p>
-              <p className="text-xs text-muted-foreground">You've mastered the Sacred Greeks curriculum</p>
+            <div className="flex items-center gap-3">
+              <CheckCircle2 className="w-6 h-6 text-green-500" />
+              <div>
+                <p className="font-semibold text-green-500">All Paths Complete!</p>
+                <p className="text-xs text-muted-foreground">You've mastered the Sacred Greeks curriculum</p>
+              </div>
             </div>
+            <Button 
+              onClick={() => setShowCertificate(true)}
+              variant="outline"
+              size="sm"
+              className="border-green-500/50 text-green-600 hover:bg-green-500/10"
+            >
+              <Award className="w-4 h-4 mr-2" />
+              Certificate
+            </Button>
           </motion.div>
         )}
       </CardContent>
+
+      <MasterCertificateDialog
+        open={showCertificate}
+        onOpenChange={setShowCertificate}
+        completedPaths={learningPaths.map(p => p.title)}
+      />
     </Card>
   );
 }

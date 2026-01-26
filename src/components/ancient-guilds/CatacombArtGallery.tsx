@@ -232,107 +232,107 @@ export function CatacombArtGallery({ className }: CatacombArtGalleryProps) {
           </div>
 
           <CardContent className="space-y-4">
-        {/* Gallery Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {catacombArtworks.map((artwork, index) => (
-            <button
-              key={artwork.id}
-              onClick={() => openArtwork(artwork, index)}
-              className="group relative aspect-square rounded-lg overflow-hidden border border-border/50 bg-muted/30 hover:border-stone-400/50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-stone-400/50"
-            >
-              {/* Artistic Representation */}
-              <div className={cn(
-                "absolute inset-0 flex items-center justify-center",
-                artwork.colors.primary + "/20"
-              )}>
-                <div className="text-center p-3">
+            {/* Gallery Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {catacombArtworks.map((artwork, index) => (
+                <button
+                  key={artwork.id}
+                  onClick={() => openArtwork(artwork, index)}
+                  className="group relative aspect-square rounded-lg overflow-hidden border border-border/50 bg-muted/30 hover:border-stone-400/50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-stone-400/50"
+                >
+                  {/* Artistic Representation */}
                   <div className={cn(
-                    "w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-2",
-                    artwork.colors.primary + "/30"
+                    "absolute inset-0 flex items-center justify-center",
+                    artwork.colors.primary + "/20"
                   )}>
-                    {artwork.symbolType === 'Ichthys' && (
-                      <svg className={cn("w-8 h-8", artwork.colors.accent)} viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2c-4 0-8 3-8 7s4 7 8 7c-2 0-4 2-4 4h8c0-2-2-4-4-4 4 0 8-3 8-7s-4-7-8-7z" />
-                      </svg>
-                    )}
-                    {artwork.symbolType === 'Pastoral' && (
-                      <svg className={cn("w-8 h-8", artwork.colors.accent)} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <circle cx="12" cy="6" r="3" />
-                        <path d="M12 9v3" />
-                        <path d="M8 20l4-8 4 8" />
-                        <path d="M6 16c0-2 2-3 6-3s6 1 6 3" />
-                      </svg>
-                    )}
-                    {artwork.symbolType === 'Monogram' && (
-                      <span className={cn("text-2xl font-bold", artwork.colors.accent)}>☧</span>
-                    )}
-                    {artwork.symbolType === 'Disguised Cross' && (
-                      <svg className={cn("w-8 h-8", artwork.colors.accent)} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M12 2v20M8 6l4-4 4 4M6 22c0-4 2-6 6-6s6 2 6 6" />
-                      </svg>
-                    )}
-                    {artwork.symbolType === 'Gesture' && (
-                      <svg className={cn("w-8 h-8", artwork.colors.accent)} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <circle cx="12" cy="5" r="3" />
-                        <path d="M12 8v6M8 10l-3-5M16 10l3-5M10 14l-2 6M14 14l2 6" />
-                      </svg>
-                    )}
-                    {artwork.symbolType === 'Typology' && (
-                      <svg className={cn("w-8 h-8", artwork.colors.accent)} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <ellipse cx="12" cy="12" rx="10" ry="6" />
-                        <path d="M6 12c0 3 2.5 5 6 5s6-2 6-5" />
-                      </svg>
-                    )}
-                    {artwork.symbolType === 'Resurrection' && (
-                      <svg className={cn("w-8 h-8", artwork.colors.accent)} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <circle cx="12" cy="8" r="3" />
-                        <path d="M12 11v2M8 16c0 0 2 4 4 4s4-4 4-4" />
-                        <path d="M6 13l2 3M18 13l-2 3M3 18l3-2M21 18l-3-2" />
-                      </svg>
-                    )}
-                    {artwork.symbolType === 'Holy Spirit' && (
-                      <svg className={cn("w-8 h-8", artwork.colors.accent)} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M12 2c-3 0-6 2-6 5s3 5 6 5 6-2 6-5-3-5-6-5z" />
-                        <path d="M12 12v4M8 14l4 6 4-6" />
-                      </svg>
-                    )}
+                    <div className="text-center p-3">
+                      <div className={cn(
+                        "w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-2",
+                        artwork.colors.primary + "/30"
+                      )}>
+                        {artwork.symbolType === 'Ichthys' && (
+                          <svg className={cn("w-8 h-8", artwork.colors.accent)} viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2c-4 0-8 3-8 7s4 7 8 7c-2 0-4 2-4 4h8c0-2-2-4-4-4 4 0 8-3 8-7s-4-7-8-7z" />
+                          </svg>
+                        )}
+                        {artwork.symbolType === 'Pastoral' && (
+                          <svg className={cn("w-8 h-8", artwork.colors.accent)} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <circle cx="12" cy="6" r="3" />
+                            <path d="M12 9v3" />
+                            <path d="M8 20l4-8 4 8" />
+                            <path d="M6 16c0-2 2-3 6-3s6 1 6 3" />
+                          </svg>
+                        )}
+                        {artwork.symbolType === 'Monogram' && (
+                          <span className={cn("text-2xl font-bold", artwork.colors.accent)}>☧</span>
+                        )}
+                        {artwork.symbolType === 'Disguised Cross' && (
+                          <svg className={cn("w-8 h-8", artwork.colors.accent)} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M12 2v20M8 6l4-4 4 4M6 22c0-4 2-6 6-6s6 2 6 6" />
+                          </svg>
+                        )}
+                        {artwork.symbolType === 'Gesture' && (
+                          <svg className={cn("w-8 h-8", artwork.colors.accent)} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <circle cx="12" cy="5" r="3" />
+                            <path d="M12 8v6M8 10l-3-5M16 10l3-5M10 14l-2 6M14 14l2 6" />
+                          </svg>
+                        )}
+                        {artwork.symbolType === 'Typology' && (
+                          <svg className={cn("w-8 h-8", artwork.colors.accent)} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <ellipse cx="12" cy="12" rx="10" ry="6" />
+                            <path d="M6 12c0 3 2.5 5 6 5s6-2 6-5" />
+                          </svg>
+                        )}
+                        {artwork.symbolType === 'Resurrection' && (
+                          <svg className={cn("w-8 h-8", artwork.colors.accent)} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <circle cx="12" cy="8" r="3" />
+                            <path d="M12 11v2M8 16c0 0 2 4 4 4s4-4 4-4" />
+                            <path d="M6 13l2 3M18 13l-2 3M3 18l3-2M21 18l-3-2" />
+                          </svg>
+                        )}
+                        {artwork.symbolType === 'Holy Spirit' && (
+                          <svg className={cn("w-8 h-8", artwork.colors.accent)} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M12 2c-3 0-6 2-6 5s3 5 6 5 6-2 6-5-3-5-6-5z" />
+                            <path d="M12 12v4M8 14l4 6 4-6" />
+                          </svg>
+                        )}
+                      </div>
+                      <p className="text-xs font-medium text-foreground/90 line-clamp-2">{artwork.title.split(' - ')[0]}</p>
+                    </div>
                   </div>
-                  <p className="text-xs font-medium text-foreground/90 line-clamp-2">{artwork.title.split(' - ')[0]}</p>
+                  
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <ZoomIn className="w-6 h-6 text-foreground" />
+                  </div>
+
+                  {/* Period Badge */}
+                  <Badge 
+                    variant="secondary" 
+                    className="absolute top-2 left-2 text-[10px] bg-background/80 backdrop-blur-sm"
+                  >
+                    {artwork.century}
+                  </Badge>
+                </button>
+              ))}
+            </div>
+
+            {/* Info Card */}
+            <div className="bg-muted/30 rounded-lg p-4 border border-border/50">
+              <div className="flex items-start gap-3">
+                <Info className="w-5 h-5 text-stone-400 shrink-0 mt-0.5" />
+                <div className="text-sm text-muted-foreground">
+                  <p className="mb-2">
+                    <strong className="text-foreground">Archaeological Context:</strong> These artworks are from Rome's 
+                    underground catacombs, active burial sites from the 2nd-5th centuries AD. Scholars like André Grabar 
+                    and Fabrizio Bisconti have documented over 60 miles of tunnels containing early Christian iconography.
+                  </p>
+                  <p className="text-xs">
+                    Sources: Vatican Museums, Pontifical Commission for Sacred Archaeology, Cambridge Archaeological Journal
+                  </p>
                 </div>
               </div>
-              
-              {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <ZoomIn className="w-6 h-6 text-foreground" />
-              </div>
-
-              {/* Period Badge */}
-              <Badge 
-                variant="secondary" 
-                className="absolute top-2 left-2 text-[10px] bg-background/80 backdrop-blur-sm"
-              >
-                {artwork.century}
-              </Badge>
-            </button>
-          ))}
-        </div>
-
-        {/* Info Card */}
-        <div className="bg-muted/30 rounded-lg p-4 border border-border/50">
-          <div className="flex items-start gap-3">
-            <Info className="w-5 h-5 text-stone-400 shrink-0 mt-0.5" />
-            <div className="text-sm text-muted-foreground">
-              <p className="mb-2">
-                <strong className="text-foreground">Archaeological Context:</strong> These artworks are from Rome's 
-                underground catacombs, active burial sites from the 2nd-5th centuries AD. Scholars like André Grabar 
-                and Fabrizio Bisconti have documented over 60 miles of tunnels containing early Christian iconography.
-              </p>
-              <p className="text-xs">
-                Sources: Vatican Museums, Pontifical Commission for Sacred Archaeology, Cambridge Archaeological Journal
-              </p>
             </div>
-          </div>
-        </div>
           </CardContent>
         </CollapsibleContent>
 
