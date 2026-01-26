@@ -509,47 +509,51 @@ const ProofCourse = () => {
             </Card>
           </motion.div>
 
-          {/* Subscription Status Card - Dynamic with tier-based styling */}
+          {/* Subscription Status Card - Always Dynamic */}
           <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
-            <Card className={`relative overflow-hidden border-2 h-full ${hasPremiumAccess ? 'bg-gradient-to-br from-amber-500/10 to-orange-500/10 border-amber-500/30 hover:border-amber-500/50 shadow-lg shadow-amber-500/10' : 'bg-gradient-to-br from-slate-500/5 to-slate-400/5 border-border'}`}>
-              {/* Animated background for premium */}
-              {hasPremiumAccess && (
-                <>
-                  <div className="absolute -top-12 -right-12 w-32 h-32 bg-amber-500/20 rounded-full blur-2xl" />
-                  <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-orange-500/20 rounded-full blur-2xl" />
-                  <motion.div
-                    className="absolute top-2 right-2"
-                    animate={{ rotate: [0, 10, -10, 0] }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                  >
-                    <Crown className="w-5 h-5 text-amber-400" />
-                  </motion.div>
-                </>
-              )}
+            <Card className={`relative overflow-hidden border-2 h-full ${hasPremiumAccess ? 'bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-yellow-500/10 border-amber-500/30 hover:border-amber-500/50 shadow-lg shadow-amber-500/10' : 'bg-gradient-to-br from-amber-500/5 via-orange-400/5 to-yellow-500/10 border-amber-400/20 hover:border-amber-500/40 shadow-lg shadow-amber-400/10'}`}>
+              {/* Animated background glow - Always visible */}
+              <div className={`absolute -top-12 -right-12 w-32 h-32 ${hasPremiumAccess ? 'bg-amber-500/20' : 'bg-amber-400/15'} rounded-full blur-2xl`} />
+              <div className={`absolute -bottom-8 -left-8 w-24 h-24 ${hasPremiumAccess ? 'bg-orange-500/20' : 'bg-orange-400/15'} rounded-full blur-2xl`} />
+              
+              {/* Floating decorative elements */}
+              <motion.div
+                className="absolute top-3 right-3"
+                animate={hasPremiumAccess ? { rotate: [0, 10, -10, 0] } : { y: [0, -3, 0] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                {hasPremiumAccess ? (
+                  <Crown className="w-5 h-5 text-amber-400" />
+                ) : (
+                  <Sparkles className="w-4 h-4 text-amber-400/60" />
+                )}
+              </motion.div>
+              
               <CardContent className="relative p-4">
                 <div className="flex items-center gap-3">
                   <motion.div 
-                    className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${hasPremiumAccess ? 'bg-gradient-to-br from-amber-500 to-orange-500 shadow-lg shadow-amber-500/30' : 'bg-muted'}`}
-                    animate={hasPremiumAccess ? { scale: [1, 1.05, 1] } : {}}
-                    transition={{ duration: 2, repeat: Infinity }}
+                    className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${hasPremiumAccess ? 'bg-gradient-to-br from-amber-500 to-orange-500 shadow-lg shadow-amber-500/30' : 'bg-gradient-to-br from-amber-400/80 to-orange-400/80 shadow-lg shadow-amber-400/20'}`}
+                    animate={{ scale: [1, 1.05, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
                   >
                     {hasPremiumAccess ? (
                       <Star className="w-6 h-6 text-white fill-white" />
                     ) : (
-                      <Lock className="w-5 h-5 text-muted-foreground" />
+                      <Lock className="w-5 h-5 text-white" />
                     )}
                   </motion.div>
                   <div className="flex-1 min-w-0">
                     <h4 className="font-semibold text-foreground flex items-center gap-2">
-                      {hasPremiumAccess ? `${tier === 'ministry' ? 'Ministry' : 'Pro'} Access` : 'Free Access'}
+                      {hasPremiumAccess ? `${tier === 'ministry' ? 'Ministry' : 'Pro'} Access` : 'Upgrade Access'}
+                      {hasPremiumAccess && <Zap className="w-4 h-4 text-amber-400" />}
                     </h4>
                     <p className="text-xs text-muted-foreground">
-                      {hasPremiumAccess ? 'All 5 lessons unlocked' : 'First lesson free'}
+                      {hasPremiumAccess ? 'All 5 lessons unlocked' : 'Unlock all lessons'}
                     </p>
                   </div>
                 </div>
                 {!hasPremiumAccess ? (
-                  <Button asChild size="sm" className="w-full mt-4 bg-gradient-to-r from-amber-500 to-orange-500 text-black font-semibold hover:from-amber-600 hover:to-orange-600 shadow-lg shadow-amber-500/20">
+                  <Button asChild size="sm" className="w-full mt-4 bg-gradient-to-r from-amber-500 to-orange-500 text-black font-semibold hover:from-amber-600 hover:to-orange-600 shadow-lg shadow-amber-500/25">
                     <Link to="/subscription">
                       <Zap className="w-4 h-4 mr-2" />
                       Unlock All Lessons
@@ -570,10 +574,21 @@ const ProofCourse = () => {
 
           {/* Resources Card - Dynamic with download animations */}
           <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
-            <Card className="relative overflow-hidden bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border-2 border-blue-500/30 hover:border-blue-500/50 transition-all shadow-lg shadow-blue-500/10 h-full">
+            <Card className="relative overflow-hidden bg-gradient-to-br from-blue-500/10 via-cyan-500/5 to-teal-500/10 border-2 border-blue-500/30 hover:border-blue-500/50 transition-all shadow-lg shadow-blue-500/10 h-full">
               {/* Animated background glow */}
               <div className="absolute -top-12 -right-12 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl" />
               <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-cyan-500/20 rounded-full blur-2xl" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-teal-500/10 rounded-full blur-xl" />
+              
+              {/* Floating decorative sparkles */}
+              <motion.div
+                className="absolute top-3 right-3"
+                animate={{ y: [0, -3, 0], rotate: [0, 5, 0] }}
+                transition={{ duration: 2.5, repeat: Infinity }}
+              >
+                <Sparkles className="w-4 h-4 text-cyan-400" />
+              </motion.div>
+              
               <CardContent className="relative p-4">
                 <div className="flex items-center gap-3 mb-4">
                   <motion.div 
@@ -586,7 +601,7 @@ const ProofCourse = () => {
                   <div className="flex-1 min-w-0">
                     <h4 className="font-semibold text-foreground flex items-center gap-2">
                       Course Resources
-                      <Badge variant="secondary" className="text-[10px] px-1.5 py-0 bg-blue-500/20 text-blue-400 border-blue-500/30">
+                      <Badge variant="secondary" className="text-[10px] px-1.5 py-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-cyan-400 border-cyan-500/30">
                         FREE
                       </Badge>
                     </h4>
@@ -597,19 +612,19 @@ const ProofCourse = () => {
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="text-xs h-9 border-blue-500/30 hover:bg-blue-500/10 hover:border-blue-500/50"
+                    className="text-xs h-9 border-blue-500/30 hover:bg-blue-500/10 hover:border-blue-500/50 group transition-all"
                     onClick={() => generateAllProofLessonsPDF()}
                   >
-                    <FileDown className="w-3.5 h-3.5 mr-1.5 text-blue-400" />
+                    <FileDown className="w-3.5 h-3.5 mr-1.5 text-blue-400 group-hover:scale-110 transition-transform" />
                     All PDFs
                   </Button>
                   <Button 
                     variant="outline" 
                     size="sm"
-                    className="text-xs h-9 border-blue-500/30 hover:bg-blue-500/10 hover:border-blue-500/50"
+                    className="text-xs h-9 border-cyan-500/30 hover:bg-cyan-500/10 hover:border-cyan-500/50 group transition-all"
                     onClick={() => generateAllWorksheetsPDF()}
                   >
-                    <Printer className="w-3.5 h-3.5 mr-1.5 text-blue-400" />
+                    <Printer className="w-3.5 h-3.5 mr-1.5 text-cyan-400 group-hover:scale-110 transition-transform" />
                     Worksheets
                   </Button>
                 </div>
