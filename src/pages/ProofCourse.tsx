@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Lock, Play, Clock, Lightbulb, CheckCircle2, BookOpen, FileDown, Users, Printer, Download, ArrowLeft, Sparkles, Volume2, GraduationCap } from 'lucide-react';
+import { Lock, Play, Clock, Lightbulb, CheckCircle2, BookOpen, FileDown, Users, Printer, Download, ArrowLeft, Sparkles, Volume2, GraduationCap, Crown, Star, Zap } from 'lucide-react';
 import { SEOHead } from '@/components/SEOHead';
 import { useToast } from '@/hooks/use-toast';
 import { useSubscription } from '@/hooks/use-subscription';
 import { ListenButton } from '@/components/ListenButton';
 import { ProofFrameworkAudio } from '@/components/proof/ProofFrameworkAudio';
 import { ProofCourseOnboarding } from '@/components/proof/ProofCourseOnboarding';
+import { useCourseCompletion } from '@/hooks/use-course-celebration';
 import { generateProofLessonPDF, generateAllProofLessonsPDF } from '@/lib/proof-lesson-pdf';
 import { generateLessonWorksheetPDF, generateAllWorksheetsPDF } from '@/lib/proof-worksheet-pdf';
 import { Link } from 'react-router-dom';
@@ -450,6 +451,12 @@ const ProofCourse = () => {
   const progress = (completedLessons.length / lessons.length) * 100;
   const currentLesson = activeLesson ? lessons.find(l => l.id === activeLesson) : null;
 
+  // Course completion celebration
+  useCourseCompletion({
+    completedLessons: completedLessons.length,
+    totalLessons: lessons.length,
+  });
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead 
@@ -472,91 +479,143 @@ const ProofCourse = () => {
           transition={{ delay: 0.2 }}
           className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"
         >
-          {/* Audio Overview Card */}
-          <Card className="bg-gradient-to-br from-purple-500/5 to-pink-500/5 border-purple-500/20 hover:border-purple-500/40 transition-all">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center shrink-0">
-                  <Volume2 className="w-5 h-5 text-purple-400" />
+          {/* Audio Overview Card - Dynamic with pulse animation */}
+          <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
+            <Card className="relative overflow-hidden bg-gradient-to-br from-purple-500/10 to-pink-500/10 border-2 border-purple-500/30 hover:border-purple-500/50 transition-all shadow-lg shadow-purple-500/10 h-full">
+              {/* Animated background glow */}
+              <div className="absolute -top-12 -right-12 w-32 h-32 bg-purple-500/20 rounded-full blur-2xl" />
+              <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-pink-500/20 rounded-full blur-2xl" />
+              <CardContent className="relative p-4">
+                <div className="flex items-center gap-3">
+                  <motion.div 
+                    className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shrink-0 shadow-lg shadow-purple-500/30"
+                    animate={{ scale: [1, 1.05, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <Volume2 className="w-6 h-6 text-white" />
+                  </motion.div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-semibold text-foreground flex items-center gap-2">
+                      Audio Overview
+                      <Sparkles className="w-4 h-4 text-purple-400" />
+                    </h4>
+                    <p className="text-xs text-muted-foreground">Listen to framework summary</p>
+                  </div>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-semibold text-sm text-foreground">Audio Overview</h4>
-                  <p className="text-xs text-muted-foreground">Listen to framework summary</p>
+                <div className="mt-4">
+                  <ProofFrameworkAudio className="w-full" />
                 </div>
-              </div>
-              <div className="mt-3">
-                <ProofFrameworkAudio className="w-full" />
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </motion.div>
 
-          {/* Subscription Status Card */}
-          <Card className={`border-2 ${hasPremiumAccess ? 'border-amber-500/30 bg-gradient-to-br from-amber-500/5 to-orange-500/5' : 'border-border bg-muted/30'}`}>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${hasPremiumAccess ? 'bg-gradient-to-br from-amber-500 to-orange-500' : 'bg-muted'}`}>
-                  {hasPremiumAccess ? (
-                    <CheckCircle2 className="w-5 h-5 text-white" />
-                  ) : (
-                    <Lock className="w-5 h-5 text-muted-foreground" />
-                  )}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-semibold text-sm text-foreground">
-                    {hasPremiumAccess ? `${tier === 'ministry' ? 'Ministry' : 'Pro'} Access` : 'Free Access'}
-                  </h4>
-                  <p className="text-xs text-muted-foreground">
-                    {hasPremiumAccess ? 'All 5 lessons unlocked' : 'First lesson free'}
-                  </p>
-                </div>
-              </div>
-              {!hasPremiumAccess && (
-                <Button asChild size="sm" className="w-full mt-3 bg-gradient-to-r from-amber-500 to-orange-500 text-black hover:from-amber-600 hover:to-orange-600">
-                  <Link to="/subscription">Unlock All Lessons</Link>
-                </Button>
-              )}
+          {/* Subscription Status Card - Dynamic with tier-based styling */}
+          <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
+            <Card className={`relative overflow-hidden border-2 h-full ${hasPremiumAccess ? 'bg-gradient-to-br from-amber-500/10 to-orange-500/10 border-amber-500/30 hover:border-amber-500/50 shadow-lg shadow-amber-500/10' : 'bg-gradient-to-br from-slate-500/5 to-slate-400/5 border-border'}`}>
+              {/* Animated background for premium */}
               {hasPremiumAccess && (
-                <Badge className="mt-3 bg-amber-500/10 text-amber-600 border-amber-500/30">
-                  Premium Audio Included
-                </Badge>
+                <>
+                  <div className="absolute -top-12 -right-12 w-32 h-32 bg-amber-500/20 rounded-full blur-2xl" />
+                  <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-orange-500/20 rounded-full blur-2xl" />
+                  <motion.div
+                    className="absolute top-2 right-2"
+                    animate={{ rotate: [0, 10, -10, 0] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  >
+                    <Crown className="w-5 h-5 text-amber-400" />
+                  </motion.div>
+                </>
               )}
-            </CardContent>
-          </Card>
+              <CardContent className="relative p-4">
+                <div className="flex items-center gap-3">
+                  <motion.div 
+                    className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${hasPremiumAccess ? 'bg-gradient-to-br from-amber-500 to-orange-500 shadow-lg shadow-amber-500/30' : 'bg-muted'}`}
+                    animate={hasPremiumAccess ? { scale: [1, 1.05, 1] } : {}}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    {hasPremiumAccess ? (
+                      <Star className="w-6 h-6 text-white fill-white" />
+                    ) : (
+                      <Lock className="w-5 h-5 text-muted-foreground" />
+                    )}
+                  </motion.div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-semibold text-foreground flex items-center gap-2">
+                      {hasPremiumAccess ? `${tier === 'ministry' ? 'Ministry' : 'Pro'} Access` : 'Free Access'}
+                    </h4>
+                    <p className="text-xs text-muted-foreground">
+                      {hasPremiumAccess ? 'All 5 lessons unlocked' : 'First lesson free'}
+                    </p>
+                  </div>
+                </div>
+                {!hasPremiumAccess ? (
+                  <Button asChild size="sm" className="w-full mt-4 bg-gradient-to-r from-amber-500 to-orange-500 text-black font-semibold hover:from-amber-600 hover:to-orange-600 shadow-lg shadow-amber-500/20">
+                    <Link to="/subscription">
+                      <Zap className="w-4 h-4 mr-2" />
+                      Unlock All Lessons
+                    </Link>
+                  </Button>
+                ) : (
+                  <div className="mt-4 space-y-2">
+                    <Badge className="bg-amber-500/20 text-amber-500 border-amber-500/40 font-medium">
+                      <CheckCircle2 className="w-3 h-3 mr-1" />
+                      Premium Audio Included
+                    </Badge>
+                    <p className="text-xs text-muted-foreground">All worksheets & PDFs available</p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </motion.div>
 
-          {/* Resources Card */}
-          <Card className="bg-gradient-to-br from-blue-500/5 to-cyan-500/5 border-blue-500/20 hover:border-blue-500/40 transition-all">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center shrink-0">
-                  <GraduationCap className="w-5 h-5 text-blue-400" />
+          {/* Resources Card - Dynamic with download animations */}
+          <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
+            <Card className="relative overflow-hidden bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border-2 border-blue-500/30 hover:border-blue-500/50 transition-all shadow-lg shadow-blue-500/10 h-full">
+              {/* Animated background glow */}
+              <div className="absolute -top-12 -right-12 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl" />
+              <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-cyan-500/20 rounded-full blur-2xl" />
+              <CardContent className="relative p-4">
+                <div className="flex items-center gap-3 mb-4">
+                  <motion.div 
+                    className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/30"
+                    animate={{ scale: [1, 1.05, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                  >
+                    <GraduationCap className="w-6 h-6 text-white" />
+                  </motion.div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-semibold text-foreground flex items-center gap-2">
+                      Course Resources
+                      <Badge variant="secondary" className="text-[10px] px-1.5 py-0 bg-blue-500/20 text-blue-400 border-blue-500/30">
+                        FREE
+                      </Badge>
+                    </h4>
+                    <p className="text-xs text-muted-foreground">Downloadable materials</p>
+                  </div>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-semibold text-sm text-foreground">Course Resources</h4>
-                  <p className="text-xs text-muted-foreground">Downloadable materials</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="text-xs h-9 border-blue-500/30 hover:bg-blue-500/10 hover:border-blue-500/50"
+                    onClick={() => generateAllProofLessonsPDF()}
+                  >
+                    <FileDown className="w-3.5 h-3.5 mr-1.5 text-blue-400" />
+                    All PDFs
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="text-xs h-9 border-blue-500/30 hover:bg-blue-500/10 hover:border-blue-500/50"
+                    onClick={() => generateAllWorksheetsPDF()}
+                  >
+                    <Printer className="w-3.5 h-3.5 mr-1.5 text-blue-400" />
+                    Worksheets
+                  </Button>
                 </div>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="text-xs h-8"
-                  onClick={() => generateAllProofLessonsPDF()}
-                >
-                  <FileDown className="w-3 h-3 mr-1" />
-                  All PDFs
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  className="text-xs h-8"
-                  onClick={() => generateAllWorksheetsPDF()}
-                >
-                  <Printer className="w-3 h-3 mr-1" />
-                  Worksheets
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </motion.div>
         </motion.div>
 
         {/* Active Lesson View */}
