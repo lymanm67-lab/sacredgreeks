@@ -130,7 +130,7 @@ export function AppSidebar() {
           <NavLink 
             to={item.url} 
             className={cn(
-              "flex items-center gap-3 transition-colors",
+              "flex items-center gap-3 transition-colors py-2 px-2 -mx-2 rounded-md",
               isActive(item.url) && "text-primary font-medium"
             )}
           >
