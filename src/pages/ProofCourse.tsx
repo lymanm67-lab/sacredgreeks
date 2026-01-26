@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Lock, Play, Clock, Lightbulb, CheckCircle2, BookOpen, FileDown, Users, Printer, Download } from 'lucide-react';
+import { Lock, Play, Clock, Lightbulb, CheckCircle2, BookOpen, FileDown, Users, Printer, Download, ArrowLeft, Sparkles, Volume2, GraduationCap } from 'lucide-react';
 import { SEOHead } from '@/components/SEOHead';
 import { useToast } from '@/hooks/use-toast';
 import { useSubscription } from '@/hooks/use-subscription';
 import { ListenButton } from '@/components/ListenButton';
 import { ProofFrameworkAudio } from '@/components/proof/ProofFrameworkAudio';
-import { Sparkles } from 'lucide-react';
+import { ProofCourseOnboarding } from '@/components/proof/ProofCourseOnboarding';
 import { generateProofLessonPDF, generateAllProofLessonsPDF } from '@/lib/proof-lesson-pdf';
 import { generateLessonWorksheetPDF, generateAllWorksheetsPDF } from '@/lib/proof-worksheet-pdf';
 import { Link } from 'react-router-dom';
@@ -456,74 +457,107 @@ const ProofCourse = () => {
         description="Master the biblical framework for navigating Greek life with faith, wisdom, and confidence. 5 lessons with practical applications."
       />
 
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <Badge variant="secondary" className="mb-4">Deep Dive Course</Badge>
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            P.R.O.O.F. Framework
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Master the biblical framework for navigating Greek life with faith, wisdom, and confidence. 
-            5 lessons, practical applications, and reflection exercises.
-          </p>
-        </div>
+      <div className="container mx-auto px-4 py-8 max-w-5xl">
+        {/* Onboarding Hero Section */}
+        <ProofCourseOnboarding 
+          onStartCourse={() => startLesson(completedLessons.length > 0 ? Math.min(completedLessons.length + 1, 5) : 1)}
+          completedLessons={completedLessons.length}
+          totalLessons={lessons.length}
+        />
 
-        {/* Subscription Status Indicator */}
-        {!subLoading && (
-          <div className={`mb-8 p-4 rounded-xl border ${
-            hasPremiumAccess 
-              ? 'bg-gradient-to-r from-amber-500/10 via-sacred/10 to-amber-500/10 border-amber-500/30' 
-              : 'bg-muted/50 border-border'
-          }`}>
-            <div className="flex items-center justify-between flex-wrap gap-4">
+        {/* Quick Access Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"
+        >
+          {/* Audio Overview Card */}
+          <Card className="bg-gradient-to-br from-purple-500/5 to-pink-500/5 border-purple-500/20 hover:border-purple-500/40 transition-all">
+            <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                {hasPremiumAccess ? (
-                  <>
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-sacred flex items-center justify-center shadow-lg">
-                      <CheckCircle2 className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-foreground flex items-center gap-2">
-                        {tier === 'ministry' ? 'Ministry' : 'Pro'} Member
-                        <Badge className="bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/30">
-                          Full Access
-                        </Badge>
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        All 5 lessons unlocked • Premium audio included
-                      </p>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
-                      <Lock className="w-5 h-5 text-muted-foreground" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-foreground">Free Access</p>
-                      <p className="text-sm text-muted-foreground">
-                        First lesson available • Upgrade to unlock all content
-                      </p>
-                    </div>
-                  </>
-                )}
+                <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center shrink-0">
+                  <Volume2 className="w-5 h-5 text-purple-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-semibold text-sm text-foreground">Audio Overview</h4>
+                  <p className="text-xs text-muted-foreground">Listen to framework summary</p>
+                </div>
+              </div>
+              <div className="mt-3">
+                <ProofFrameworkAudio className="w-full" />
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Subscription Status Card */}
+          <Card className={`border-2 ${hasPremiumAccess ? 'border-amber-500/30 bg-gradient-to-br from-amber-500/5 to-orange-500/5' : 'border-border bg-muted/30'}`}>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${hasPremiumAccess ? 'bg-gradient-to-br from-amber-500 to-orange-500' : 'bg-muted'}`}>
+                  {hasPremiumAccess ? (
+                    <CheckCircle2 className="w-5 h-5 text-white" />
+                  ) : (
+                    <Lock className="w-5 h-5 text-muted-foreground" />
+                  )}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-semibold text-sm text-foreground">
+                    {hasPremiumAccess ? `${tier === 'ministry' ? 'Ministry' : 'Pro'} Access` : 'Free Access'}
+                  </h4>
+                  <p className="text-xs text-muted-foreground">
+                    {hasPremiumAccess ? 'All 5 lessons unlocked' : 'First lesson free'}
+                  </p>
+                </div>
               </div>
               {!hasPremiumAccess && (
-                <Button asChild size="sm" className="bg-sacred hover:bg-sacred/90">
-                  <Link to="/subscription">
-                    Upgrade to Pro
-                  </Link>
+                <Button asChild size="sm" className="w-full mt-3 bg-gradient-to-r from-amber-500 to-orange-500 text-black hover:from-amber-600 hover:to-orange-600">
+                  <Link to="/subscription">Unlock All Lessons</Link>
                 </Button>
               )}
-            </div>
-          </div>
-        )}
+              {hasPremiumAccess && (
+                <Badge className="mt-3 bg-amber-500/10 text-amber-600 border-amber-500/30">
+                  Premium Audio Included
+                </Badge>
+              )}
+            </CardContent>
+          </Card>
 
-        {/* PROOF Framework Audio Overview - Above Lessons */}
-        <div className="mb-8">
-          <ProofFrameworkAudio className="max-w-2xl mx-auto" />
-        </div>
+          {/* Resources Card */}
+          <Card className="bg-gradient-to-br from-blue-500/5 to-cyan-500/5 border-blue-500/20 hover:border-blue-500/40 transition-all">
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center shrink-0">
+                  <GraduationCap className="w-5 h-5 text-blue-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-semibold text-sm text-foreground">Course Resources</h4>
+                  <p className="text-xs text-muted-foreground">Downloadable materials</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="text-xs h-8"
+                  onClick={() => generateAllProofLessonsPDF()}
+                >
+                  <FileDown className="w-3 h-3 mr-1" />
+                  All PDFs
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="text-xs h-8"
+                  onClick={() => generateAllWorksheetsPDF()}
+                >
+                  <Printer className="w-3 h-3 mr-1" />
+                  Worksheets
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
 
         {/* Active Lesson View */}
         {currentLesson && (() => {
@@ -637,23 +671,39 @@ const ProofCourse = () => {
         {/* Course Overview (shown when no lesson is active) */}
         {!activeLesson && (
           <>
-            {/* Progress Bar */}
-            {completedLessons.length > 0 && (
-              <Card className="mb-6">
-                <CardContent className="pt-6">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium">Course Progress</span>
-                    <span className="text-sm text-muted-foreground">
-                      {completedLessons.length} of {lessons.length} lessons complete
-                    </span>
-                  </div>
-                  <Progress value={progress} className="h-2" />
-                </CardContent>
-              </Card>
-            )}
+            {/* Section Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="flex items-center justify-between mb-6"
+            >
+              <div>
+                <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
+                  <BookOpen className="w-5 h-5 text-amber-500" />
+                  Course Lessons
+                </h2>
+                <p className="text-sm text-muted-foreground mt-1">
+                  {completedLessons.length > 0 
+                    ? `${completedLessons.length} of ${lessons.length} completed` 
+                    : 'Start with the first lesson to begin your journey'}
+                </p>
+              </div>
+              {completedLessons.length > 0 && (
+                <div className="flex items-center gap-2">
+                  <Progress value={progress} className="w-24 h-2" />
+                  <span className="text-xs text-muted-foreground font-medium">{Math.round(progress)}%</span>
+                </div>
+              )}
+            </motion.div>
 
-            {/* Lessons List */}
-            <div className="space-y-4 mb-8">
+            {/* Lessons Grid */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="grid gap-4 mb-8"
+            >
               {lessons.map((lesson) => {
                 const isAccessible = lesson.id === 1 || hasPremiumAccess;
                 const isCompleted = completedLessons.includes(lesson.id);
@@ -732,61 +782,70 @@ const ProofCourse = () => {
                     </Card>
                   );
               })}
-            </div>
+            </motion.div>
 
-            {/* Ancient Guild Context - Link to Dedicated Course */}
-            <Card className="mt-12 mb-8 border-amber-500/30 bg-gradient-to-r from-amber-500/10 to-orange-500/10 hover:border-amber-500/50 transition-all">
-              <CardContent className="p-6">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg shrink-0">
-                      <Users className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <h2 className="text-lg font-bold text-foreground">Ancient Guild Training</h2>
-                      <p className="text-sm text-muted-foreground">
-                        Jesus & Paul's membership in trade guilds • 10 modules • Interactive diagrams
-                      </p>
-                      <div className="flex flex-wrap gap-2 mt-2">
-                        <Badge variant="outline" className="text-xs border-amber-500/30 text-amber-600">Catacomb Gallery</Badge>
-                        <Badge variant="outline" className="text-xs border-amber-500/30 text-amber-600">Ichthys Trace</Badge>
-                        <Badge variant="outline" className="text-xs border-amber-500/30 text-amber-600">Brotherhood Article</Badge>
+            {/* Continue Learning Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="mt-12"
+            >
+              <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-amber-500" />
+                Continue Your Learning
+              </h2>
+              
+              <div className="grid md:grid-cols-2 gap-4">
+                {/* Ancient Guild Training Card */}
+                <Card className="border-orange-500/20 bg-gradient-to-br from-orange-500/5 to-amber-500/5 hover:border-orange-500/40 transition-all group">
+                  <CardContent className="p-5">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center shadow-lg shrink-0 group-hover:scale-105 transition-transform">
+                        <Users className="w-6 h-6 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-bold text-foreground mb-1">Ancient Guild Training</h3>
+                        <p className="text-sm text-muted-foreground mb-3">
+                          Jesus & Paul's trade guild membership • 10 interactive modules
+                        </p>
+                        <div className="flex flex-wrap gap-1.5 mb-3">
+                          <Badge variant="outline" className="text-xs border-orange-500/30 text-orange-600">Catacomb Gallery</Badge>
+                          <Badge variant="outline" className="text-xs border-orange-500/30 text-orange-600">Ichthys Trace</Badge>
+                        </div>
+                        <Button asChild size="sm" className="bg-orange-500 hover:bg-orange-600 text-white">
+                          <Link to="/ancient-guild-training">Start Training →</Link>
+                        </Button>
                       </div>
                     </div>
-                  </div>
-                  <Button asChild className="bg-amber-500 hover:bg-amber-600 text-white shrink-0">
-                    <Link to="/ancient-guild-training">
-                      Start Training →
-                    </Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+                  </CardContent>
+                </Card>
 
-            {/* Faith & Authority Link Card */}
-            <Card className="mt-12 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-amber-500/30 hover:border-amber-500/50 transition-all">
-              <CardContent className="p-6">
-                <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
-                  <div className="p-3 rounded-xl bg-amber-500/20">
-                    <Sparkles className="w-8 h-8 text-amber-400" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-foreground mb-1">Faith & Authority</h3>
-                    <p className="text-muted-foreground text-sm">
-                      Discover how faith unlocks spiritual access. Learn why what you don't believe cannot hold power over you.
-                    </p>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      <Badge variant="outline" className="text-amber-500 border-amber-500/30">Power of Belief</Badge>
-                      <Badge variant="outline" className="text-amber-500 border-amber-500/30">Scripture Cards</Badge>
-                      <Badge variant="outline" className="text-amber-500 border-amber-500/30">Audio Teaching</Badge>
+                {/* Faith & Authority Card */}
+                <Card className="border-amber-500/20 bg-gradient-to-br from-amber-500/5 to-yellow-500/5 hover:border-amber-500/40 transition-all group">
+                  <CardContent className="p-5">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center shadow-lg shrink-0 group-hover:scale-105 transition-transform">
+                        <Sparkles className="w-6 h-6 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-bold text-foreground mb-1">Faith & Authority</h3>
+                        <p className="text-sm text-muted-foreground mb-3">
+                          How faith unlocks spiritual access • Power of Belief teaching
+                        </p>
+                        <div className="flex flex-wrap gap-1.5 mb-3">
+                          <Badge variant="outline" className="text-xs border-amber-500/30 text-amber-600">Scripture Cards</Badge>
+                          <Badge variant="outline" className="text-xs border-amber-500/30 text-amber-600">Audio Teaching</Badge>
+                        </div>
+                        <Button asChild size="sm" className="bg-amber-500 hover:bg-amber-600 text-black">
+                          <Link to="/faith-authority">Explore Teaching →</Link>
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                  <Button asChild className="bg-amber-500 hover:bg-amber-600 text-black">
-                    <Link to="/faith-authority">Explore Teaching</Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+                  </CardContent>
+                </Card>
+              </div>
+            </motion.div>
           </>
         )}
       </div>
