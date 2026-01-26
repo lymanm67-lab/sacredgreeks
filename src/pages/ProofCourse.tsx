@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Lock, Play, Clock, Lightbulb, CheckCircle2, BookOpen, FileDown, Users } from 'lucide-react';
+import { Lock, Play, Clock, Lightbulb, CheckCircle2, BookOpen, FileDown, Users, Printer, Download } from 'lucide-react';
 import { SEOHead } from '@/components/SEOHead';
 import { useToast } from '@/hooks/use-toast';
 import { useSubscription } from '@/hooks/use-subscription';
@@ -19,6 +19,7 @@ import { generateJesusMasterCarpenterPDF } from '@/lib/jesus-master-carpenter-pd
 import { generateProofLessonPDF, generateAllProofLessonsPDF } from '@/lib/proof-lesson-pdf';
 import { generateEconomicHistoryPDF } from '@/lib/economic-history-pdf';
 import { generateGuildWorksheetPDF } from '@/lib/guild-worksheet-pdf';
+import { generateLessonWorksheetPDF, generateAllWorksheetsPDF } from '@/lib/proof-worksheet-pdf';
 import { Link } from 'react-router-dom';
 
 interface Lesson {
@@ -588,7 +589,41 @@ const ProofCourse = () => {
                 })}
               </div>
 
-              <div className="flex items-center justify-between mt-8 pt-6 border-t">
+              {/* Download Section */}
+              <div className="mt-8 pt-6 border-t">
+                <h4 className="font-semibold text-sm mb-4 flex items-center gap-2">
+                  <Download className="w-4 h-4" />
+                  Downloadable Resources for This Lesson
+                </h4>
+                <div className="flex flex-wrap gap-3">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      generateProofLessonPDF(currentLesson.id - 1);
+                      toast({ title: 'Lesson Summary PDF downloaded!' });
+                    }}
+                    className={`${lessonColors.border} hover:${lessonColors.bgLight}`}
+                  >
+                    <FileDown className={`w-4 h-4 mr-2 ${lessonColors.text}`} />
+                    Lesson Summary PDF
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      generateLessonWorksheetPDF(currentLesson.id - 1);
+                      toast({ title: 'Printable Worksheet downloaded!' });
+                    }}
+                    className={`${lessonColors.border} hover:${lessonColors.bgLight}`}
+                  >
+                    <Printer className={`w-4 h-4 mr-2 ${lessonColors.text}`} />
+                    Printable Worksheet
+                  </Button>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between mt-6 pt-6 border-t">
                 <Button variant="outline" onClick={() => setActiveLesson(null)}>
                   Back to Course
                 </Button>
@@ -787,7 +822,7 @@ const ProofCourse = () => {
                     </Button>
                   </div>
                     <div className="mt-4 pt-4 border-t border-amber-500/20">
-                    <h4 className="font-medium text-foreground mb-3 text-sm">P.R.O.O.F. Lesson Summaries</h4>
+                    <h4 className="font-medium text-foreground mb-3 text-sm">P.R.O.O.F. Lesson Summaries & Worksheets</h4>
                     <div className="flex flex-wrap gap-2">
                       <Button
                         variant="outline"
@@ -800,6 +835,18 @@ const ProofCourse = () => {
                       >
                         <FileDown className="w-4 h-4 mr-2 text-sacred" />
                         All Lessons PDF
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          generateAllWorksheetsPDF();
+                          toast({ title: 'All Worksheets PDF downloaded!' });
+                        }}
+                        className="border-sacred/30 hover:bg-sacred/10"
+                      >
+                        <Printer className="w-4 h-4 mr-2 text-sacred" />
+                        All Worksheets PDF
                       </Button>
                       <Button
                         variant="outline"
