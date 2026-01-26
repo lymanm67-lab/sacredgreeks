@@ -11,7 +11,7 @@ import { ListenButton } from '@/components/ListenButton';
 import { FaithAuthoritySection } from '@/components/proof/FaithAuthoritySection';
 import { BeliefTeachingAudio } from '@/components/proof/BeliefTeachingAudio';
 import { ProofFrameworkAudio } from '@/components/proof/ProofFrameworkAudio';
-import { GuildJourneyDiagram, GuildAudioPlayer, HolyKissComparisonChart, FirstCenturyGuildsSection, GuildEvolutionTimeline, JesusPaulBrotherhoodArticle, IchthysTraceDiagram } from '@/components/ancient-guilds';
+import { GuildJourneyDiagram, GuildAudioPlayer, HolyKissComparisonChart, FirstCenturyGuildsSection, GuildEvolutionTimeline, JesusPaulBrotherhoodArticle, IchthysTraceDiagram, EarlyChristianSymbolsGuide } from '@/components/ancient-guilds';
 import { GuildPracticesSection } from '@/components/ancient-guilds/GuildPracticesSection';
 import { generateGuildOnePagerPDF } from '@/lib/guild-onepager-pdf';
 import { generateGuildComparisonPDF } from '@/lib/guild-comparison-pdf';
@@ -20,6 +20,8 @@ import { generateProofLessonPDF, generateAllProofLessonsPDF } from '@/lib/proof-
 import { generateEconomicHistoryPDF } from '@/lib/economic-history-pdf';
 import { generateGuildWorksheetPDF } from '@/lib/guild-worksheet-pdf';
 import { generateLessonWorksheetPDF, generateAllWorksheetsPDF } from '@/lib/proof-worksheet-pdf';
+import { generateBrotherhoodStudyGuidePDF } from '@/lib/brotherhood-study-guide-pdf';
+import { generateIchthysTracePDF } from '@/lib/ichthys-trace-pdf';
 import { Link } from 'react-router-dom';
 
 interface Lesson {
@@ -767,6 +769,9 @@ const ProofCourse = () => {
               {/* Ichthys Fish Trace Diagram - Visual Step-by-Step */}
               <IchthysTraceDiagram className="mb-6" />
 
+              {/* Early Christian Symbols Guide */}
+              <EarlyChristianSymbolsGuide className="mb-6" />
+
               {/* Guild Evolution Timeline */}
               <GuildEvolutionTimeline className="mb-6" />
 
@@ -821,6 +826,34 @@ const ProofCourse = () => {
                       <span className="text-left">
                         <span className="block text-sm font-medium">Jesus the Tekton</span>
                         <span className="block text-xs text-muted-foreground">Carpenter Study</span>
+                      </span>
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        generateBrotherhoodStudyGuidePDF();
+                        toast({ title: 'Brotherhood Study Guide downloaded!' });
+                      }}
+                      className="justify-start border-amber-500/30 hover:bg-amber-500/10"
+                    >
+                      <FileDown className="w-4 h-4 mr-2 text-amber-500" />
+                      <span className="text-left">
+                        <span className="block text-sm font-medium">Brotherhood Guide</span>
+                        <span className="block text-xs text-muted-foreground">Group Study</span>
+                      </span>
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        generateIchthysTracePDF();
+                        toast({ title: 'Ichthys Trace Guide downloaded!' });
+                      }}
+                      className="justify-start border-amber-500/30 hover:bg-amber-500/10"
+                    >
+                      <FileDown className="w-4 h-4 mr-2 text-amber-500" />
+                      <span className="text-left">
+                        <span className="block text-sm font-medium">Ichthys Trace</span>
+                        <span className="block text-xs text-muted-foreground">Recognition Guide</span>
                       </span>
                     </Button>
                   </div>
