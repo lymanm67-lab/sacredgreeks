@@ -5,12 +5,46 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Gift, Trash2, Search, RefreshCw, Crown, Users } from "lucide-react";
+import { Gift, Trash2, Search, RefreshCw, Crown, Users, Check, Sparkles, BookOpen, Mic, Brain, Building2 } from "lucide-react";
 import { format } from "date-fns";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+
+// Tier configuration with features
+const TIER_CONFIG = {
+  pro: {
+    name: "Pro",
+    icon: Crown,
+    color: "text-amber-500",
+    bgColor: "bg-amber-500/10",
+    borderColor: "border-amber-500/30",
+    description: "Full access to all AI-powered features",
+    features: [
+      { icon: Brain, label: "Ask Dr. Lyman AI" },
+      { icon: Mic, label: "Response Coach" },
+      { icon: Sparkles, label: "AI Prayer Guide" },
+      { icon: BookOpen, label: "Premium Audio Controls" },
+      { icon: Check, label: "Unlimited Feature Customization" },
+    ]
+  },
+  ministry: {
+    name: "Ministry (Full Access)",
+    icon: Users,
+    color: "text-purple-500",
+    bgColor: "bg-purple-500/10",
+    borderColor: "border-purple-500/30",
+    description: "Complete access to all features including chapter tools",
+    features: [
+      { icon: Check, label: "Everything in Pro" },
+      { icon: Building2, label: "Chapter Resources" },
+      { icon: BookOpen, label: "Chapter Meeting Notes" },
+      { icon: Users, label: "Ministry Leadership Tools" },
+      { icon: Sparkles, label: "Priority Support" },
+    ]
+  }
+};
 
 interface GiftedSubscription {
   id: string;
@@ -245,28 +279,53 @@ export function GiftSubscriptionManager() {
             )}
           </div>
 
-          {/* Tier Selection */}
-          <div className="space-y-2">
-            <Label>Subscription Tier</Label>
-            <Select value={tier} onValueChange={(v) => setTier(v as "pro" | "ministry")}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="pro">
-                  <div className="flex items-center gap-2">
-                    <Crown className="h-4 w-4 text-amber-500" />
-                    Pro
+          {/* Tier Selection with Feature Details */}
+          <div className="space-y-3">
+            <Label>Select Access Level</Label>
+            <RadioGroup value={tier} onValueChange={(v) => setTier(v as "pro" | "ministry")} className="space-y-3">
+              {(Object.entries(TIER_CONFIG) as [keyof typeof TIER_CONFIG, typeof TIER_CONFIG.pro][]).map(([tierKey, config]) => {
+                const IconComponent = config.icon;
+                const isSelected = tier === tierKey;
+                return (
+                  <div key={tierKey}>
+                    <label
+                      className={`flex cursor-pointer rounded-lg border-2 p-4 transition-all ${
+                        isSelected 
+                          ? `${config.borderColor} ${config.bgColor}` 
+                          : 'border-border hover:border-muted-foreground/50'
+                      }`}
+                    >
+                      <RadioGroupItem value={tierKey} className="sr-only" />
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className={`p-2 rounded-full ${config.bgColor}`}>
+                            <IconComponent className={`h-5 w-5 ${config.color}`} />
+                          </div>
+                          <div>
+                            <p className="font-semibold">{config.name}</p>
+                            <p className="text-sm text-muted-foreground">{config.description}</p>
+                          </div>
+                          {isSelected && (
+                            <Check className="h-5 w-5 text-primary ml-auto" />
+                          )}
+                        </div>
+                        <div className="grid grid-cols-2 gap-2 mt-3 pl-12">
+                          {config.features.map((feature, idx) => {
+                            const FeatureIcon = feature.icon;
+                            return (
+                              <div key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
+                                <FeatureIcon className="h-3.5 w-3.5" />
+                                <span>{feature.label}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </label>
                   </div>
-                </SelectItem>
-                <SelectItem value="ministry">
-                  <div className="flex items-center gap-2">
-                    <Users className="h-4 w-4 text-purple-500" />
-                    Ministry
-                  </div>
-                </SelectItem>
-              </SelectContent>
-            </Select>
+                );
+              })}
+            </RadioGroup>
           </div>
 
           {/* Reason */}
