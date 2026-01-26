@@ -520,6 +520,11 @@ const ProofCourse = () => {
           </div>
         )}
 
+        {/* PROOF Framework Audio Overview - Above Lessons */}
+        <div className="mb-8">
+          <ProofFrameworkAudio className="max-w-2xl mx-auto" />
+        </div>
+
         {/* Active Lesson View */}
         {currentLesson && (() => {
           const lessonColors = getColorForLesson(currentLesson.id);
@@ -757,11 +762,6 @@ const ProofCourse = () => {
                 </div>
               </CardContent>
             </Card>
-
-            {/* PROOF Framework Audio Overview */}
-            <div className="mt-8 mb-8">
-              <ProofFrameworkAudio className="max-w-2xl mx-auto" />
-            </div>
 
             {/* Faith & Authority Link Card */}
             <Card className="mt-12 bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-amber-500/30 hover:border-amber-500/50 transition-all">

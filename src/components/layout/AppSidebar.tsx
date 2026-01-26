@@ -46,15 +46,16 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
-// Main section - Core features (ordered: Dashboard → Learning Path → Spiritual Practices)
-const mainNavItems = [
-  { title: "Dashboard", url: "/dashboard", icon: Home, featureId: null, iconColor: "text-blue-500" },
-  // Learning Path
+// Learning Path section
+const learningPathItems = [
   { title: "PROOF Course", url: "/proof-course", icon: Target, featureId: null, iconColor: "text-amber-500" },
   { title: "PROOF Quiz", url: "/proof-assessment", icon: ClipboardCheck, featureId: null, iconColor: "text-emerald-500" },
   { title: "Guild Training", url: "/ancient-guild-training", icon: Landmark, featureId: null, iconColor: "text-orange-500" },
   { title: "Faith & Authority", url: "/faith-authority", icon: BookOpen, featureId: null, iconColor: "text-amber-500" },
-  // Spiritual Practices
+];
+
+// Spiritual Practices section
+const spiritualPracticesItems = [
   { title: "30-Day Journey", url: "/journey", icon: Calendar, featureId: null, iconColor: "text-cyan-500" },
   { title: "Bible Study", url: "/bible-study", icon: BookOpen, featureId: null, iconColor: "text-purple-500" },
   { title: "Prayer Journal", url: "/prayer-journal", icon: BookHeart, featureId: null, iconColor: "text-rose-500" },
@@ -92,14 +93,15 @@ export function AppSidebar() {
   const isActive = (path: string) => location.pathname === path;
 
   // Filter nav items based on feature visibility
-  const filterNavItems = (items: typeof mainNavItems) => {
+  const filterNavItems = (items: typeof learningPathItems) => {
     return items.filter(item => {
       if (!item.featureId) return true;
       return isFeatureVisible(item.featureId);
     });
   };
 
-  const filteredMainNav = filterNavItems(mainNavItems);
+  const filteredLearningPath = filterNavItems(learningPathItems);
+  const filteredSpiritualPractices = filterNavItems(spiritualPracticesItems);
   const filteredCommunityNav = filterNavItems(communityNavItems);
   const filteredToolsNav = filterNavItems(toolsNavItems);
 
@@ -167,13 +169,36 @@ export function AppSidebar() {
       <SidebarSeparator />
 
       <SidebarContent>
-        {/* Main Section */}
-        {preferences.showMain && filteredMainNav.length > 0 && (
+        {/* Dashboard - Always First */}
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <NavItem item={{ title: "Dashboard", url: "/dashboard", icon: Home, iconColor: "text-blue-500" }} />
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        {/* Learning Path Section */}
+        {preferences.showMain && filteredLearningPath.length > 0 && (
           <SidebarGroup>
-            <SidebarGroupLabel>Main</SidebarGroupLabel>
+            <SidebarGroupLabel>Learning Path</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {filteredMainNav.map((item) => (
+                {filteredLearningPath.map((item) => (
+                  <NavItem key={item.url} item={item} />
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
+
+        {/* Spiritual Practices Section */}
+        {preferences.showMain && filteredSpiritualPractices.length > 0 && (
+          <SidebarGroup>
+            <SidebarGroupLabel>Spiritual Practices</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {filteredSpiritualPractices.map((item) => (
                   <NavItem key={item.url} item={item} />
                 ))}
               </SidebarMenu>
