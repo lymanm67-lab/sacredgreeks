@@ -26,9 +26,11 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 import { SidebarSearch } from "./SidebarSearch";
 import { useSidebarPreferences } from "@/hooks/use-sidebar-preferences";
 import { useFeaturePreferences } from "@/hooks/use-feature-preferences";
+import { useNavigationProgress } from "@/hooks/use-navigation-progress";
 import { SubscriptionBadge } from "@/components/dashboard/SubscriptionBadge";
 import { DemoModeControl } from "@/components/GlobalDemoIndicator";
 import {
@@ -46,40 +48,40 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
-// Learning Path section
+// Learning Path section - items with progress tracking
 const learningPathItems = [
-  { title: "PROOF Course", url: "/proof-course", icon: Target, featureId: null, iconColor: "text-amber-500" },
-  { title: "PROOF Quiz", url: "/proof-assessment", icon: ClipboardCheck, featureId: null, iconColor: "text-emerald-500" },
-  { title: "Guild Training", url: "/ancient-guild-training", icon: Landmark, featureId: null, iconColor: "text-orange-500" },
-  { title: "Faith & Authority", url: "/faith-authority", icon: BookOpen, featureId: null, iconColor: "text-amber-500" },
+  { title: "PROOF Course", url: "/proof-course", icon: Target, featureId: null, iconColor: "text-amber-500", hasProgress: true },
+  { title: "PROOF Quiz", url: "/proof-assessment", icon: ClipboardCheck, featureId: null, iconColor: "text-emerald-500", hasProgress: true },
+  { title: "Guild Training", url: "/ancient-guild-training", icon: Landmark, featureId: null, iconColor: "text-orange-500", hasProgress: true },
+  { title: "Faith & Authority", url: "/faith-authority", icon: BookOpen, featureId: null, iconColor: "text-amber-500", hasProgress: true },
 ];
 
-// Spiritual Practices section
+// Spiritual Practices section - items with progress tracking
 const spiritualPracticesItems = [
-  { title: "30-Day Journey", url: "/journey", icon: Calendar, featureId: null, iconColor: "text-cyan-500" },
-  { title: "Bible Study", url: "/bible-study", icon: BookOpen, featureId: null, iconColor: "text-purple-500" },
-  { title: "Prayer Journal", url: "/prayer-journal", icon: BookHeart, featureId: null, iconColor: "text-rose-500" },
+  { title: "30-Day Journey", url: "/journey", icon: Calendar, featureId: null, iconColor: "text-cyan-500", hasProgress: true },
+  { title: "Bible Study", url: "/bible-study", icon: BookOpen, featureId: null, iconColor: "text-purple-500", hasProgress: true },
+  { title: "Prayer Journal", url: "/prayer-journal", icon: BookHeart, featureId: null, iconColor: "text-rose-500", hasProgress: true },
 ];
 
 // Community section
 const communityNavItems = [
-  { title: "Prayer Wall", url: "/prayer-wall", icon: Heart, featureId: null, iconColor: "text-pink-500" },
-  { title: "Forum", url: "/forum", icon: MessageSquare, featureId: null, iconColor: "text-cyan-500" },
-  { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null, iconColor: "text-indigo-500" },
-  { title: "Group Coaching", url: "/community", icon: GraduationCap, featureId: null, iconColor: "text-orange-500" },
+  { title: "Prayer Wall", url: "/prayer-wall", icon: Heart, featureId: null, iconColor: "text-pink-500", hasProgress: false },
+  { title: "Forum", url: "/forum", icon: MessageSquare, featureId: null, iconColor: "text-cyan-500", hasProgress: false },
+  { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null, iconColor: "text-indigo-500", hasProgress: false },
+  { title: "Group Coaching", url: "/community", icon: GraduationCap, featureId: null, iconColor: "text-orange-500", hasProgress: false },
 ];
 
 // Tools & Resources section
 const toolsNavItems = [
-  { title: "Greek Life", url: "/greek-life", icon: Building2, featureId: null, iconColor: "text-violet-500" },
-  { title: "Anti-Hazing", url: "/anti-hazing", icon: ShieldAlert, featureId: null, iconColor: "text-red-500" },
-  { title: "Symbol Guide", url: "/symbol-guide", icon: Compass, featureId: null, iconColor: "text-teal-500" },
-  { title: "Myth Busters", url: "/myth-buster", icon: Zap, featureId: null, iconColor: "text-yellow-500" },
-  { title: "Video Library", url: "/video-library", icon: Video, featureId: null, iconColor: "text-sky-500" },
-  { title: "Church Leaders", url: "/church-leaders", icon: Church, featureId: null, iconColor: "text-lime-500" },
-  { title: "Achievements", url: "/achievements", icon: Trophy, featureId: 'achievements', iconColor: "text-amber-400" },
-  { title: "Notifications", url: "/notification-preferences", icon: Bell, featureId: null, iconColor: "text-fuchsia-500" },
-  { title: "Settings", url: "/profile", icon: Settings, featureId: null, iconColor: "text-slate-500" },
+  { title: "Greek Life", url: "/greek-life", icon: Building2, featureId: null, iconColor: "text-violet-500", hasProgress: false },
+  { title: "Anti-Hazing", url: "/anti-hazing", icon: ShieldAlert, featureId: null, iconColor: "text-red-500", hasProgress: false },
+  { title: "Symbol Guide", url: "/symbol-guide", icon: Compass, featureId: null, iconColor: "text-teal-500", hasProgress: false },
+  { title: "Myth Busters", url: "/myth-buster", icon: Zap, featureId: null, iconColor: "text-yellow-500", hasProgress: false },
+  { title: "Video Library", url: "/video-library", icon: Video, featureId: null, iconColor: "text-sky-500", hasProgress: false },
+  { title: "Church Leaders", url: "/church-leaders", icon: Church, featureId: null, iconColor: "text-lime-500", hasProgress: false },
+  { title: "Achievements", url: "/achievements", icon: Trophy, featureId: 'achievements', iconColor: "text-amber-400", hasProgress: false },
+  { title: "Notifications", url: "/notification-preferences", icon: Bell, featureId: null, iconColor: "text-fuchsia-500", hasProgress: false },
+  { title: "Settings", url: "/profile", icon: Settings, featureId: null, iconColor: "text-slate-500", hasProgress: false },
 ];
 
 export function AppSidebar() {
@@ -89,6 +91,7 @@ export function AppSidebar() {
   const { user, profile, signOut } = useAuth();
   const { preferences } = useSidebarPreferences();
   const { isFeatureVisible } = useFeaturePreferences();
+  const { getProgressForPath } = useNavigationProgress();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -115,26 +118,38 @@ export function AppSidebar() {
     return 'U';
   };
 
-  const NavItem = ({ item }: { item: { title: string; url: string; icon: React.ComponentType<{ className?: string }>; iconColor?: string } }) => (
-    <SidebarMenuItem>
-      <SidebarMenuButton
-        asChild
-        isActive={isActive(item.url)}
-        tooltip={collapsed ? item.title : undefined}
-      >
-        <NavLink 
-          to={item.url} 
-          className={cn(
-            "flex items-center gap-3 transition-colors",
-            isActive(item.url) && "text-primary font-medium"
-          )}
+  const NavItem = ({ item, showProgress = false }: { item: { title: string; url: string; icon: React.ComponentType<{ className?: string }>; iconColor?: string; hasProgress?: boolean }; showProgress?: boolean }) => {
+    const progress = showProgress && item.hasProgress ? getProgressForPath(item.url) : 0;
+    
+    return (
+      <SidebarMenuItem>
+        <SidebarMenuButton
+          asChild
+          isActive={isActive(item.url)}
+          tooltip={collapsed ? item.title : undefined}
         >
-          <item.icon className={cn("h-4 w-4 shrink-0", item.iconColor)} />
-          <span>{item.title}</span>
-        </NavLink>
-      </SidebarMenuButton>
-    </SidebarMenuItem>
-  );
+          <NavLink 
+            to={item.url} 
+            className={cn(
+              "flex items-center gap-3 transition-colors",
+              isActive(item.url) && "text-primary font-medium"
+            )}
+          >
+            <item.icon className={cn("h-4 w-4 shrink-0", item.iconColor)} />
+            <div className="flex-1 min-w-0">
+              <span className="block truncate">{item.title}</span>
+              {showProgress && item.hasProgress && !collapsed && progress > 0 && (
+                <div className="flex items-center gap-2 mt-1">
+                  <Progress value={progress} className="h-1 flex-1" />
+                  <span className="text-[10px] text-muted-foreground w-7">{progress}%</span>
+                </div>
+              )}
+            </div>
+          </NavLink>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+    );
+  };
 
   return (
     <Sidebar collapsible="icon" className="border-r border-border">
@@ -185,7 +200,7 @@ export function AppSidebar() {
             <SidebarGroupContent>
               <SidebarMenu>
                 {filteredLearningPath.map((item) => (
-                  <NavItem key={item.url} item={item} />
+                  <NavItem key={item.url} item={item} showProgress />
                 ))}
               </SidebarMenu>
             </SidebarGroupContent>
@@ -199,7 +214,7 @@ export function AppSidebar() {
             <SidebarGroupContent>
               <SidebarMenu>
                 {filteredSpiritualPractices.map((item) => (
-                  <NavItem key={item.url} item={item} />
+                  <NavItem key={item.url} item={item} showProgress />
                 ))}
               </SidebarMenu>
             </SidebarGroupContent>

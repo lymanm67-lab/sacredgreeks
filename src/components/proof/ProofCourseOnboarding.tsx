@@ -113,8 +113,8 @@ export function ProofCourseOnboarding({
             transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
             className="relative"
           >
-            {/* PROOF Letters Circle */}
-            <div className="relative w-48 h-48 md:w-56 md:h-56">
+            {/* PROOF Letters Circle - Balanced Pentagon Layout */}
+            <div className="relative w-52 h-52 md:w-60 md:h-60">
               {/* Center Icon */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-500/20 to-orange-500/20 border border-amber-500/30 flex items-center justify-center">
@@ -122,20 +122,21 @@ export function ProofCourseOnboarding({
                 </div>
               </div>
 
-              {/* Letter Badges */}
+              {/* Letter Badges - Pentagon arrangement for visual balance */}
               {[
-                { letter: "P", color: "bg-blue-500", position: "top-0 left-1/2 -translate-x-1/2", completed: completedLessons >= 1 },
-                { letter: "R", color: "bg-purple-500", position: "top-1/4 right-0", completed: completedLessons >= 2 },
-                { letter: "O", color: "bg-orange-500", position: "bottom-1/4 right-0", completed: completedLessons >= 3 },
-                { letter: "O", color: "bg-green-500", position: "bottom-1/4 left-0", completed: completedLessons >= 4 },
-                { letter: "F", color: "bg-red-500", position: "top-1/4 left-0", completed: completedLessons >= 5 },
+                { letter: "P", color: "bg-blue-500", top: "0%", left: "50%", transform: "-translate-x-1/2", completed: completedLessons >= 1 },
+                { letter: "R", color: "bg-purple-500", top: "31%", left: "95%", transform: "-translate-x-1/2", completed: completedLessons >= 2 },
+                { letter: "O", color: "bg-orange-500", top: "81%", left: "79%", transform: "-translate-x-1/2", completed: completedLessons >= 3 },
+                { letter: "O", color: "bg-green-500", top: "81%", left: "21%", transform: "-translate-x-1/2", completed: completedLessons >= 4 },
+                { letter: "F", color: "bg-red-500", top: "31%", left: "5%", transform: "-translate-x-1/2", completed: completedLessons >= 5 },
               ].map((item, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, scale: 0 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.5 + index * 0.1 }}
-                  className={`absolute ${item.position} w-12 h-12 rounded-xl ${item.completed ? 'bg-green-500/20 border-green-500/50' : `${item.color}/20 border-white/20`} border-2 flex items-center justify-center shadow-lg backdrop-blur-sm`}
+                  style={{ top: item.top, left: item.left }}
+                  className={`absolute -translate-x-1/2 w-12 h-12 rounded-xl ${item.completed ? 'bg-green-500/20 border-green-500/50' : `${item.color}/20 border-white/20`} border-2 flex items-center justify-center shadow-lg backdrop-blur-sm`}
                 >
                   {item.completed ? (
                     <CheckCircle2 className="w-6 h-6 text-green-400" />
