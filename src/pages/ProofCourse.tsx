@@ -15,6 +15,8 @@ import { GuildJourneyDiagram, GuildAudioPlayer } from '@/components/ancient-guil
 import { generateGuildOnePagerPDF } from '@/lib/guild-onepager-pdf';
 import { generateGuildComparisonPDF } from '@/lib/guild-comparison-pdf';
 import { generateJesusMasterCarpenterPDF } from '@/lib/jesus-master-carpenter-pdf';
+import { generateProofLessonPDF, generateAllProofLessonsPDF } from '@/lib/proof-lesson-pdf';
+import { generateEconomicHistoryPDF } from '@/lib/economic-history-pdf';
 import { Link } from 'react-router-dom';
 
 interface Lesson {
@@ -767,12 +769,46 @@ const ProofCourse = () => {
                       </span>
                     </Button>
                   </div>
-                  <div className="mt-4 pt-4 border-t border-amber-500/20">
+                  <div className="mt-4 pt-4 border-t border-amber-500/20 flex flex-wrap gap-2">
                     <Button asChild variant="ghost" className="text-amber-600 hover:text-amber-500 hover:bg-amber-500/10">
                       <Link to="/chapter-kit">
                         View All Chapter Resources →
                       </Link>
                     </Button>
+                    <Button asChild variant="ghost" className="text-amber-600 hover:text-amber-500 hover:bg-amber-500/10">
+                      <Link to="/economic-history">
+                        📊 Economic History Timeline →
+                      </Link>
+                    </Button>
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-amber-500/20">
+                    <h4 className="font-medium text-foreground mb-3 text-sm">P.R.O.O.F. Lesson Summaries</h4>
+                    <div className="flex flex-wrap gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          generateAllProofLessonsPDF();
+                          toast({ title: 'Complete Lesson Guide downloaded!' });
+                        }}
+                        className="border-sacred/30 hover:bg-sacred/10"
+                      >
+                        <FileDown className="w-4 h-4 mr-2 text-sacred" />
+                        All Lessons PDF
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          generateEconomicHistoryPDF();
+                          toast({ title: 'Economic History PDF downloaded!' });
+                        }}
+                        className="border-amber-500/30 hover:bg-amber-500/10"
+                      >
+                        <FileDown className="w-4 h-4 mr-2 text-amber-500" />
+                        Economic History PDF
+                      </Button>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
