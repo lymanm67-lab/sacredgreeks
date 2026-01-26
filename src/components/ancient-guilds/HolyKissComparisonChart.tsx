@@ -20,6 +20,12 @@ const comparisonData: ComparisonItem[] = [
     scripture: 'Romans 16:16; 1 Corinthians 16:20'
   },
   {
+    element: 'Tickle Palm Grip',
+    earlyChristian: 'Ichthys Trace – during a handshake, one Christian would trace a curved line (half of the fish symbol) in the other\'s palm. If they completed the fish, they were confirmed as a believer.',
+    greekOrg: 'Distinctive grips with subtle pressure points, finger positions, or movements that only initiated members recognize.',
+    scripture: 'Galatians 2:9 (Right hand of fellowship)'
+  },
+  {
     element: 'Verbal Component',
     earlyChristian: '"Maranatha" (Aramaic: "Our Lord, come!") – whispered password known only to believers',
     greekOrg: 'Call-and-response phrases, passwords, or verbal recognitions known to members',
@@ -32,44 +38,48 @@ const comparisonData: ComparisonItem[] = [
   },
   {
     element: 'Context',
-    earlyChristian: 'Gathered worship assemblies; before the Lord\'s Supper; greeting fellow travelers',
+    earlyChristian: 'Gathered worship assemblies; before the Lord\'s Supper; greeting fellow travelers; catacombs',
     greekOrg: 'Chapter meetings; formal events; encountering unknown members; conventions'
   },
   {
     element: 'Secrecy Rationale',
-    earlyChristian: 'Protection from Roman persecution; outsiders wouldn\'t know the Aramaic password',
+    earlyChristian: 'Protection from Roman persecution; outsiders wouldn\'t know the Aramaic password or recognize the ichthys trace',
     greekOrg: 'Organizational identity protection; meaningful traditions preserved for initiated members'
   },
   {
     element: 'Historical Period',
-    earlyChristian: '1st-3rd century AD (documented by Paul, Justin Martyr, Didache)',
+    earlyChristian: '1st-3rd century AD (documented by Paul, Justin Martyr, Didache, Church Fathers)',
     greekOrg: '19th century AD - present (modeled on fraternal lodge practices)'
   }
 ];
 
-const ttsText = `Holy Kiss and Maranatha Comparison Chart.
+const ttsText = `Holy Kiss, Maranatha, and Tickle Palm Grip Comparison Chart.
 
-This chart compares the early Christian recognition practices with modern Greek organization practices.
+This chart compares early Christian recognition practices with modern Greek organization traditions.
 
-The early church combined the holy kiss—a formal liturgical greeting—with the whispered Aramaic password "Maranatha," meaning "Our Lord, come." This combination of physical gesture plus verbal password served to identify genuine believers during times of persecution.
+The early church used multiple covert recognition methods during Roman persecution:
 
-This structure directly parallels Greek organization practices: a formal grip or handshake combined with verbal passwords or call-and-response phrases.
+First, the Holy Kiss combined with Maranatha. The holy kiss was a formal liturgical greeting, and believers would whisper the Aramaic password "Maranatha," meaning "Our Lord, come." This combination of physical gesture plus verbal password served to identify genuine believers.
+
+Second, the Tickle Palm Grip, also called the Ichthys Trace. During a handshake, one Christian would trace a curved line—half of the fish symbol—in the other person's palm. If the stranger was a fellow Christian, they would complete the fish shape, confirming their shared faith without verbal disclosure that could endanger both parties. This grip determined who could be trusted with the location of hidden gatherings, sacred texts, and the identities of church leaders.
+
+These structures directly parallel Greek organization practices: formal grips combined with verbal passwords or call-and-response phrases.
 
 Key comparison points:
 
-Physical Gesture: Early Christians used the Holy Kiss as a formal liturgical greeting. Greek organizations use organizational grips or handshakes as formal recognition gestures.
+Physical Gesture: Early Christians used the Holy Kiss as a formal liturgical greeting. Greek organizations use organizational grips as formal recognition gestures.
 
-Verbal Component: Early Christians whispered "Maranatha" as a password known only to believers. Greek organizations use call-and-response phrases or passwords known to members.
+Tickle Palm Grip: Early Christians traced the ichthys fish symbol in each other's palms. Greek organizations use distinctive grips with subtle pressure points or movements.
 
-Purpose: Both systems serve to identify genuine members and authenticate community belonging.
+Verbal Component: Early Christians whispered "Maranatha" as a password. Greek organizations use passwords or call-and-response phrases.
 
-Context: The holy kiss was exchanged in worship assemblies and when greeting fellow travelers. Greek organizations use recognition practices in chapter meetings, formal events, and when encountering unknown members.
+Purpose: Both systems identify genuine members and authenticate community belonging.
 
-Secrecy Rationale: Early Christians kept their practices secret for protection from Roman persecution. Greek organizations maintain privacy to protect organizational identity and preserve meaningful traditions.
+Secrecy Rationale: Early Christians kept their practices secret for protection from Roman persecution. Greek organizations maintain privacy to protect organizational identity.
 
-The key insight is this: The structure of recognition practices—physical gesture combined with verbal password—was established in the earliest Christian communities. When Greek organizations use similar structures, they are employing a pattern with biblical precedent.
+The key insight: The structure of recognition practices—physical gesture combined with verbal password—was established in the earliest Christian communities. When Greek organizations use similar structures, they employ a pattern with biblical precedent.
 
-Scripture references: Romans 16:16, 1 Corinthians 16:20, 2 Corinthians 13:12, 1 Thessalonians 5:26, 1 Peter 5:14 all command the holy kiss. 1 Corinthians 16:22 and the Didache 10:6 preserve the Aramaic password Maranatha.`;
+Scripture references: Romans 16:16, 1 Corinthians 16:20, 2 Corinthians 13:12, 1 Thessalonians 5:26, 1 Peter 5:14, 1 Corinthians 16:22, Galatians 2:9, and the Didache 10:6.`;
 
 export function HolyKissComparisonChart({ className, defaultOpen = false }: { className?: string; defaultOpen?: boolean }) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
