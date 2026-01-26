@@ -98,7 +98,7 @@ function ReferenceCard({ reference }: { reference: ScholarlyReference }) {
         {reference.page && `, ${reference.page}`}
       </p>
       {reference.note && (
-        <p className="text-xs text-sacred/80 mt-1 italic">↳ {reference.note}</p>
+        <p className="text-xs text-amber-400/80 mt-1 italic">↳ {reference.note}</p>
       )}
     </div>
   );
@@ -257,8 +257,8 @@ export function GuildPracticesSection({ className }: GuildPracticesSectionProps)
                     <div className="space-y-6 mt-4">
                       {/* 1st Century References */}
                       <div className="space-y-3">
-                        <h4 className="font-semibold text-sm text-sacred flex items-center gap-2">
-                          <span className="w-2 h-2 bg-sacred rounded-full" />
+                        <h4 className="font-semibold text-sm text-amber-400 flex items-center gap-2">
+                          <span className="w-2 h-2 bg-amber-400 rounded-full" />
                           1st-Century Roman-Era Guild References (Jesus's Era)
                         </h4>
                         <p className="text-xs text-muted-foreground italic mb-2">
