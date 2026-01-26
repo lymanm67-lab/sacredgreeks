@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { History, Hammer, Building2, GraduationCap, Users, ArrowRight, Volume2 } from 'lucide-react';
+import { History, Hammer, Building2, GraduationCap, Users, ArrowRight, Volume2, ChevronDown, ChevronUp } from 'lucide-react';
 import { ListenButton } from '@/components/ListenButton';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface TimelineEra {
   period: string;
@@ -126,9 +128,14 @@ const colorClasses = {
 };
 
 export function GuildEvolutionTimeline({ className }: { className?: string }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
     <Card className={`border-sacred/30 overflow-hidden ${className}`}>
-      <CardHeader className="bg-gradient-to-r from-sacred/10 to-purple-500/10 pb-4">
+      <CardHeader 
+        className="bg-gradient-to-r from-sacred/10 to-purple-500/10 pb-4 cursor-pointer hover:bg-sacred/5 transition-colors"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div className="flex items-center gap-3">
@@ -138,6 +145,11 @@ export function GuildEvolutionTimeline({ className }: { className?: string }) {
               <div>
                 <CardTitle className="text-lg flex items-center gap-2">
                   Guild Evolution Timeline
+                  {isExpanded ? (
+                    <ChevronUp className="w-5 h-5 text-muted-foreground" />
+                  ) : (
+                    <ChevronDown className="w-5 h-5 text-muted-foreground" />
+                  )}
                 </CardTitle>
                 <p className="text-sm text-muted-foreground mt-1">
                   From 1st-century trade guilds to modern Greek organizations
@@ -149,8 +161,8 @@ export function GuildEvolutionTimeline({ className }: { className?: string }) {
             </Badge>
           </div>
 
-          {/* TTS Button */}
-          <div className="flex items-center gap-2 pt-2 border-t border-sacred/20">
+          {/* TTS Button - always visible */}
+          <div className="flex items-center gap-2 pt-2 border-t border-sacred/20" onClick={(e) => e.stopPropagation()}>
             <Volume2 className="w-4 h-4 text-sacred" />
             <span className="text-sm text-muted-foreground">Listen to timeline:</span>
             <ListenButton
@@ -166,11 +178,19 @@ export function GuildEvolutionTimeline({ className }: { className?: string }) {
         </div>
       </CardHeader>
 
-      <CardContent className="p-6">
-        {/* Timeline */}
-        <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-green-500 via-amber-500 via-blue-500 to-purple-500 hidden md:block" />
+      <AnimatePresence>
+        {isExpanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+          >
+            <CardContent className="p-6">
+              {/* Timeline */}
+              <div className="relative">
+                {/* Vertical line */}
+                <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-green-500 via-amber-500 via-blue-500 to-purple-500 hidden md:block" />
 
           <div className="space-y-6">
             {timelineData.map((era, idx) => {
@@ -231,19 +251,22 @@ export function GuildEvolutionTimeline({ className }: { className?: string }) {
                   </div>
                 </div>
               );
-            })}
+              })}
+            </div>
           </div>
-        </div>
 
-        {/* Key Insight */}
-        <div className="mt-6 p-4 bg-gradient-to-r from-sacred/10 to-purple-500/10 rounded-lg border border-sacred/20">
-          <p className="text-sm text-muted-foreground">
-            <strong className="text-foreground">Key Insight:</strong> The structural DNA of modern Greek organizations—apprenticeship, 
-            initiation, recognition practices, mutual aid—traces directly back to 1st-century trade guilds where 
-            Jesus and Paul practiced their crafts.
-          </p>
-        </div>
-      </CardContent>
+          {/* Key Insight */}
+          <div className="mt-6 p-4 bg-gradient-to-r from-sacred/10 to-purple-500/10 rounded-lg border border-sacred/20">
+            <p className="text-sm text-muted-foreground">
+              <strong className="text-foreground">Key Insight:</strong> The structural DNA of modern Greek organizations—apprenticeship, 
+              initiation, recognition practices, mutual aid—traces directly back to 1st-century trade guilds where 
+              Jesus and Paul practiced their crafts.
+            </p>
+          </div>
+        </CardContent>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </Card>
   );
 }
