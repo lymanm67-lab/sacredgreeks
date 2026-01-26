@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -8,6 +8,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { ListenButton } from '@/components/ListenButton';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTourNarration } from '@/hooks/use-tour-narration';
 import { 
   Landmark, 
   MapPin, 
@@ -21,7 +22,10 @@ import {
   Play,
   Pause,
   RotateCcw,
-  X
+  X,
+  Volume2,
+  VolumeX,
+  Loader2
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -333,11 +337,50 @@ export function CatacombArtGallery({ className }: CatacombArtGalleryProps) {
   const [isTourMode, setIsTourMode] = useState(false);
   const [tourIndex, setTourIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const TOUR_INTERVAL = 8000; // 8 seconds per artwork
+  const [waitingForNarration, setWaitingForNarration] = useState(false);
+  const TOUR_INTERVAL = 8000; // Base 8 seconds per artwork (extended while narrating)
+  const hasSpokenRef = useRef<Set<number>>(new Set());
 
-  // Auto-advance tour
+  // Tour narration hook
+  const {
+    speakText: narrate,
+    stopNarration,
+    isLoading: isNarrationLoading,
+    isPlaying: isNarrating,
+    isEnabled: isNarrationEnabled,
+    toggleNarration,
+  } = useTourNarration({ voice: "ancient" });
+
+  // Generate narration text for artwork
+  const getNarrationText = useCallback((artwork: CatacombArtwork) => {
+    return `${artwork.title}. ${artwork.description} Historical Significance: ${artwork.significance} Biblical Connection: ${artwork.biblicalConnection}`;
+  }, []);
+
+  // Auto-narrate when tour index changes
+  useEffect(() => {
+    if (!isTourMode || !isNarrationEnabled) return;
+    
+    const artwork = catacombArtworks[tourIndex];
+    if (artwork && !hasSpokenRef.current.has(tourIndex)) {
+      hasSpokenRef.current.add(tourIndex);
+      narrate(getNarrationText(artwork));
+    }
+  }, [tourIndex, isTourMode, isNarrationEnabled, narrate, getNarrationText]);
+
+  // Auto-advance tour - wait for narration to complete if playing
   useEffect(() => {
     if (!isTourMode || !isPlaying) return;
+    
+    // If narration is playing, wait for it to finish before advancing
+    if (isNarrating || isNarrationLoading) {
+      setWaitingForNarration(true);
+      return;
+    }
+
+    // Narration finished, reset waiting state
+    if (waitingForNarration) {
+      setWaitingForNarration(false);
+    }
     
     const timer = setInterval(() => {
       setTourIndex((prev) => {
@@ -350,31 +393,38 @@ export function CatacombArtGallery({ className }: CatacombArtGalleryProps) {
     }, TOUR_INTERVAL);
 
     return () => clearInterval(timer);
-  }, [isTourMode, isPlaying]);
+  }, [isTourMode, isPlaying, isNarrating, isNarrationLoading, waitingForNarration]);
 
   const startTour = useCallback(() => {
+    hasSpokenRef.current.clear();
     setIsTourMode(true);
     setTourIndex(0);
     setIsPlaying(true);
   }, []);
 
   const stopTour = useCallback(() => {
+    stopNarration();
     setIsTourMode(false);
     setIsPlaying(false);
     setTourIndex(0);
-  }, []);
+    hasSpokenRef.current.clear();
+  }, [stopNarration]);
 
   const togglePlayPause = useCallback(() => {
     setIsPlaying((prev) => !prev);
   }, []);
 
   const tourPrevious = useCallback(() => {
+    stopNarration();
+    hasSpokenRef.current.delete(tourIndex - 1 < 0 ? catacombArtworks.length - 1 : tourIndex - 1);
     setTourIndex((prev) => (prev === 0 ? catacombArtworks.length - 1 : prev - 1));
-  }, []);
+  }, [stopNarration, tourIndex]);
 
   const tourNext = useCallback(() => {
+    stopNarration();
+    hasSpokenRef.current.delete(tourIndex + 1 >= catacombArtworks.length ? 0 : tourIndex + 1);
     setTourIndex((prev) => (prev >= catacombArtworks.length - 1 ? 0 : prev + 1));
-  }, []);
+  }, [stopNarration, tourIndex]);
 
   const handlePrevious = () => {
     const newIndex = currentIndex === 0 ? catacombArtworks.length - 1 : currentIndex - 1;
@@ -511,9 +561,39 @@ export function CatacombArtGallery({ className }: CatacombArtGalleryProps) {
               >
                 {/* Tour Header */}
                 <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between">
-                  <Badge className="bg-background/90 backdrop-blur-sm text-foreground">
-                    Tour: {tourIndex + 1} of {catacombArtworks.length}
-                  </Badge>
+                  <div className="flex items-center gap-2">
+                    <Badge className="bg-background/90 backdrop-blur-sm text-foreground">
+                      Tour: {tourIndex + 1} of {catacombArtworks.length}
+                    </Badge>
+                    {/* Narration Status Indicator */}
+                    {isNarrationEnabled && (
+                      <Badge 
+                        variant="secondary" 
+                        className={cn(
+                          "bg-background/90 backdrop-blur-sm gap-1.5",
+                          isNarrating && "text-primary animate-pulse",
+                          isNarrationLoading && "text-muted-foreground"
+                        )}
+                      >
+                        {isNarrationLoading ? (
+                          <>
+                            <Loader2 className="w-3 h-3 animate-spin" />
+                            <span className="text-xs">Loading...</span>
+                          </>
+                        ) : isNarrating ? (
+                          <>
+                            <Volume2 className="w-3 h-3" />
+                            <span className="text-xs">Narrating</span>
+                          </>
+                        ) : (
+                          <>
+                            <Volume2 className="w-3 h-3" />
+                            <span className="text-xs">Audio On</span>
+                          </>
+                        )}
+                      </Badge>
+                    )}
+                  </div>
                   <Button
                     variant="ghost"
                     size="icon"
@@ -532,8 +612,8 @@ export function CatacombArtGallery({ className }: CatacombArtGalleryProps) {
                     className="w-full h-full"
                     priority
                   />
-                  {/* Progress bar */}
-                  {isPlaying && (
+                  {/* Progress bar - pauses when narrating */}
+                  {isPlaying && !isNarrating && !isNarrationLoading && (
                     <div className="absolute bottom-0 left-0 right-0 h-1 bg-muted/50">
                       <motion.div
                         className="h-full bg-primary"
@@ -542,6 +622,12 @@ export function CatacombArtGallery({ className }: CatacombArtGalleryProps) {
                         transition={{ duration: TOUR_INTERVAL / 1000, ease: 'linear' }}
                         key={`progress-${tourIndex}`}
                       />
+                    </div>
+                  )}
+                  {/* Waiting for narration indicator */}
+                  {isPlaying && (isNarrating || isNarrationLoading) && (
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary/30">
+                      <div className="h-full bg-primary animate-pulse" style={{ width: '100%' }} />
                     </div>
                   )}
                 </div>
@@ -581,7 +667,27 @@ export function CatacombArtGallery({ className }: CatacombArtGalleryProps) {
                 </ScrollArea>
 
                 {/* Tour Controls */}
-                <div className="border-t border-border p-4 flex items-center justify-center gap-4">
+                <div className="border-t border-border p-4 flex items-center justify-center gap-3">
+                  {/* Narration Toggle */}
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    onClick={toggleNarration}
+                    className={cn(
+                      "transition-colors",
+                      isNarrationEnabled ? "text-primary" : "text-muted-foreground"
+                    )}
+                    title={isNarrationEnabled ? "Disable narration" : "Enable narration"}
+                  >
+                    {isNarrationEnabled ? (
+                      <Volume2 className="w-5 h-5" />
+                    ) : (
+                      <VolumeX className="w-5 h-5" />
+                    )}
+                  </Button>
+
+                  <div className="w-px h-8 bg-border" />
+
                   <Button variant="outline" size="icon" onClick={tourPrevious}>
                     <ChevronLeft className="w-5 h-5" />
                   </Button>
@@ -599,7 +705,14 @@ export function CatacombArtGallery({ className }: CatacombArtGalleryProps) {
                     <ChevronRight className="w-5 h-5" />
                   </Button>
 
-                  <Button variant="ghost" size="sm" onClick={() => { setTourIndex(0); setIsPlaying(true); }} className="ml-4">
+                  <div className="w-px h-8 bg-border" />
+
+                  <Button variant="ghost" size="sm" onClick={() => { 
+                    stopNarration();
+                    hasSpokenRef.current.clear();
+                    setTourIndex(0); 
+                    setIsPlaying(true); 
+                  }}>
                     <RotateCcw className="w-4 h-4 mr-1" />
                     Restart
                   </Button>
@@ -611,7 +724,11 @@ export function CatacombArtGallery({ className }: CatacombArtGalleryProps) {
                     {catacombArtworks.map((artwork, index) => (
                       <button
                         key={artwork.id}
-                        onClick={() => setTourIndex(index)}
+                        onClick={() => {
+                          stopNarration();
+                          hasSpokenRef.current.delete(index);
+                          setTourIndex(index);
+                        }}
                         className={cn(
                           "w-12 h-12 rounded-md overflow-hidden border-2 shrink-0 transition-all",
                           index === tourIndex 
