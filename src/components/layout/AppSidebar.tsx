@@ -195,11 +195,13 @@ export function AppSidebar() {
         {/* Learning Path Section */}
         {preferences.showMain && filteredLearningPath.length > 0 && (
           <SidebarGroup>
-            <SidebarGroupLabel>Learning Path</SidebarGroupLabel>
+            <SidebarGroupLabel className="mb-4">Learning Path</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {filteredLearningPath.map((item) => (
-                  <NavItem key={item.url} item={item} showProgress />
+                {filteredLearningPath.map((item, index) => (
+                  <div key={item.url} className={item.url === '/proof-assessment' ? 'mb-2' : ''}>
+                    <NavItem item={item} showProgress />
+                  </div>
                 ))}
               </SidebarMenu>
             </SidebarGroupContent>
