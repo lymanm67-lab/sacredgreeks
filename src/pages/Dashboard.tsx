@@ -30,6 +30,7 @@ import { DashboardTrainingProgress } from '@/components/training/DashboardTraini
 import { DashboardAIAssistant } from '@/components/dashboard/DashboardAIAssistant';
 import { LearningJourneyTimeline } from '@/components/dashboard/LearningJourneyTimeline';
 import { LearningPathsMap } from '@/components/dashboard/LearningPathsMap';
+import { PathCompletionAchievements } from '@/components/dashboard/PathCompletionAchievements';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -339,6 +340,11 @@ const Dashboard = () => {
           {/* Learning Paths Map */}
           <div className="animate-fade-in" style={{ animationDelay: '0.25s' }}>
             <LearningPathsMap />
+          </div>
+
+          {/* Path Completion Achievements */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.27s' }}>
+            <PathCompletionAchievements />
           </div>
 
           {/* Training Progress Section */}
