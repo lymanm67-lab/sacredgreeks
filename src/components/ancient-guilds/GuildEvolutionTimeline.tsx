@@ -127,8 +127,8 @@ const colorClasses = {
   }
 };
 
-export function GuildEvolutionTimeline({ className }: { className?: string }) {
-  const [isExpanded, setIsExpanded] = useState(false);
+export function GuildEvolutionTimeline({ className, defaultOpen = false }: { className?: string; defaultOpen?: boolean }) {
+  const [isExpanded, setIsExpanded] = useState(defaultOpen);
 
   return (
     <Card className={`border-sacred/30 overflow-hidden ${className}`}>

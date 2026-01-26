@@ -141,6 +141,7 @@ const JOURNEY_STAGES: JourneyStage[] = [
 
 interface GuildJourneyDiagramProps {
   className?: string;
+  defaultOpen?: boolean; // Accepted for consistency but this component is always expanded
 }
 
 export function GuildJourneyDiagram({ className }: GuildJourneyDiagramProps) {
