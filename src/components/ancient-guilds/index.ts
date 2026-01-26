@@ -6,3 +6,4 @@ export { GuildEvolutionTimeline } from './GuildEvolutionTimeline';
 export { JesusPaulBrotherhoodArticle } from './JesusPaulBrotherhoodArticle';
 export { IchthysTraceDiagram } from './IchthysTraceDiagram';
 export { EarlyChristianSymbolsGuide } from './EarlyChristianSymbolsGuide';
+export { CatacombArtGallery } from './CatacombArtGallery';
