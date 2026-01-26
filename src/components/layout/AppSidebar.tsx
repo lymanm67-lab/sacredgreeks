@@ -121,7 +121,7 @@ export function AppSidebar() {
     const progress = showProgress && item.hasProgress ? getProgressForPath(item.url) : 0;
     
     return (
-      <SidebarMenuItem className="isolate">
+      <SidebarMenuItem className="isolate mb-1">
         <SidebarMenuButton
           asChild
           isActive={isActive(item.url)}
@@ -130,7 +130,7 @@ export function AppSidebar() {
           <NavLink 
             to={item.url} 
             className={cn(
-              "flex items-center gap-3 transition-colors py-2 px-2 -mx-2 rounded-md",
+              "flex items-center gap-3 transition-colors py-3 px-3 -mx-3 rounded-md",
               isActive(item.url) && "text-primary font-medium"
             )}
           >
@@ -195,11 +195,11 @@ export function AppSidebar() {
         {/* Learning Path Section */}
         {preferences.showMain && filteredLearningPath.length > 0 && (
           <SidebarGroup>
-            <SidebarGroupLabel className="!mb-6">Learning Path</SidebarGroupLabel>
-            <SidebarGroupContent>
+            <SidebarGroupLabel className="!mb-4">Learning Path</SidebarGroupLabel>
+            <SidebarGroupContent className="pt-2">
               <SidebarMenu>
                 {filteredLearningPath.map((item, index) => (
-                  <div key={item.url} className={item.url === '/proof-assessment' ? '!mb-3' : ''}>
+                  <div key={item.url} className={item.url === '/proof-assessment' ? '!mb-2' : ''}>
                     <NavItem item={item} showProgress />
                   </div>
                 ))}
