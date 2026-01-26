@@ -121,7 +121,7 @@ export function AppSidebar() {
     const progress = showProgress && item.hasProgress ? getProgressForPath(item.url) : 0;
     
     return (
-      <SidebarMenuItem>
+      <SidebarMenuItem className="isolate">
         <SidebarMenuButton
           asChild
           isActive={isActive(item.url)}
@@ -135,12 +135,12 @@ export function AppSidebar() {
             )}
           >
             <item.icon className={cn("h-4 w-4 shrink-0", item.iconColor)} />
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 overflow-hidden">
               <span className="block truncate">{item.title}</span>
               {showProgress && item.hasProgress && !collapsed && progress > 0 && (
                 <div className="flex items-center gap-2 mt-1">
                   <Progress value={progress} className="h-1 flex-1" />
-                  <span className="text-[10px] text-muted-foreground w-7">{progress}%</span>
+                  <span className="text-[10px] text-muted-foreground w-7 shrink-0">{progress}%</span>
                 </div>
               )}
             </div>
