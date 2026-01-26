@@ -94,6 +94,8 @@ const EmailAnalytics = lazy(() => import("./pages/admin/EmailAnalytics"));
 const LandingAnalytics = lazy(() => import("./pages/admin/LandingAnalytics"));
 const LandingABTest = lazy(() => import("./pages/LandingABTest"));
 const LeadSegmentation = lazy(() => import("./pages/admin/LeadSegmentation"));
+const FaithSnapshot = lazy(() => import("./pages/FaithSnapshot"));
+const MarketingDashboard = lazy(() => import("./pages/admin/MarketingDashboard"));
 const NotificationPreferences = lazy(() => import("./pages/NotificationPreferences"));
 const CoachingApplication = lazy(() => import("./pages/CoachingApplication"));
 const AntiHazing = lazy(() => import("./pages/AntiHazing"));
@@ -189,6 +191,7 @@ const App = () => (
                     <Route path="/" element={<Index />} />
                     <Route path="/index" element={<Navigate to="/" replace />} />
                     <Route path="/land" element={<LandingABTest />} />
+                    <Route path="/snapshot" element={<FaithSnapshot />} />
                     <Route path="/auth" element={<Auth />} />
                     <Route path="/au" element={<Navigate to="/auth" replace />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
@@ -393,6 +396,14 @@ const App = () => (
                       element={
                         <ProtectedPageWithLayout>
                           <LeadSegmentation />
+                        </ProtectedPageWithLayout>
+                      }
+                    />
+                    <Route
+                      path="/admin/marketing"
+                      element={
+                        <ProtectedPageWithLayout>
+                          <MarketingDashboard />
                         </ProtectedPageWithLayout>
                       }
                     />
