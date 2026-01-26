@@ -28,6 +28,8 @@ import { GuidedTour } from '@/components/GuidedTour';
 import { SkeletonDashboard } from '@/components/ui/SkeletonCard';
 import { DashboardTrainingProgress } from '@/components/training/DashboardTrainingProgress';
 import { DashboardAIAssistant } from '@/components/dashboard/DashboardAIAssistant';
+import { LearningJourneyTimeline } from '@/components/dashboard/LearningJourneyTimeline';
+
 interface DashboardStats {
   assessmentCount: number;
   prayerCount: number;
@@ -328,8 +330,13 @@ const Dashboard = () => {
             <GreekCommunitySection />
           </div>
 
-          {/* Training Progress Section */}
+          {/* Learning Journey Timeline */}
           <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <LearningJourneyTimeline />
+          </div>
+
+          {/* Training Progress Section */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.25s' }}>
             <DashboardTrainingProgress />
           </div>
 
