@@ -155,7 +155,7 @@ export const useLandingABTest = () => {
 
   // Track conversion
   const trackConversion = useCallback(async (
-    conversionType: 'cta_click' | 'signup_started' | 'signup_completed' | 'demo_started',
+    conversionType: 'cta_click' | 'signup_started' | 'signup_completed' | 'demo_started' | 'snapshot_started' | 'snapshot_completed',
     userId?: string
   ) => {
     const visitId = getVisitId();

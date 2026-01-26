@@ -55,8 +55,8 @@ export default function LandingABTest() {
   const handleCTAClick = async () => {
     setIsNavigating(true);
     await trackConversion('cta_click');
-    await trackConversion('signup_started');
-    navigate('/auth?mode=signup');
+    await trackConversion('snapshot_started');
+    navigate('/snapshot');
   };
 
   const handleDemoClick = async () => {
