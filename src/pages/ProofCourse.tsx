@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Lock, Play, Clock, Lightbulb, CheckCircle2, BookOpen, Mail, ArrowRight, FileDown, Users } from 'lucide-react';
+import { Lock, Play, Clock, Lightbulb, CheckCircle2, BookOpen, FileDown, Users } from 'lucide-react';
 import { SEOHead } from '@/components/SEOHead';
 import { useToast } from '@/hooks/use-toast';
+import { useSubscription } from '@/hooks/use-subscription';
 import { ListenButton } from '@/components/ListenButton';
 import { FaithAuthoritySection } from '@/components/proof/FaithAuthoritySection';
 import { BeliefTeachingAudio } from '@/components/proof/BeliefTeachingAudio';
@@ -432,37 +432,16 @@ Remember: Being Greek doesn't make you righteous, and being anti-Greek doesn't m
 
 const ProofCourse = () => {
   const { toast } = useToast();
-  const [email, setEmail] = useState('');
-  const [isUnlocked, setIsUnlocked] = useState(false);
+  const { subscribed, tier, loading: subLoading } = useSubscription();
   const [activeLesson, setActiveLesson] = useState<number | null>(null);
   const [completedLessons, setCompletedLessons] = useState<number[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleUnlock = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email.trim()) {
-      toast({
-        title: 'Email required',
-        description: 'Please enter your email to unlock the course.',
-        variant: 'destructive',
-      });
-      return;
-    }
-
-    setIsLoading(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setIsUnlocked(true);
-    setIsLoading(false);
-    toast({
-      title: 'Course Unlocked!',
-      description: 'You now have access to all 5 lessons. Start learning!',
-    });
-  };
+  // Check if user has premium access (Pro or Ministry tier)
+  const hasPremiumAccess = subscribed && (tier === 'pro' || tier === 'ministry');
 
   const startLesson = (lessonId: number) => {
     const lesson = lessons.find(l => l.id === lessonId);
-    if (lesson && (lesson.id === 1 || isUnlocked || !lesson.isLocked)) {
+    if (lesson && (lesson.id === 1 || hasPremiumAccess)) {
       setActiveLesson(lessonId);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -598,7 +577,7 @@ const ProofCourse = () => {
             {/* Lessons List */}
             <div className="space-y-4 mb-8">
               {lessons.map((lesson) => {
-                const isAccessible = lesson.id === 1 || isUnlocked || !lesson.isLocked;
+                const isAccessible = lesson.id === 1 || hasPremiumAccess;
                 const isCompleted = completedLessons.includes(lesson.id);
 
                   const colors = getColorForLesson(lesson.id);
@@ -756,40 +735,6 @@ const ProofCourse = () => {
                 </CardContent>
               </Card>
             </div>
-
-            {/* Unlock CTA */}
-            {!isUnlocked && (
-              <Card className="border-sacred/30 bg-gradient-to-br from-sacred/5 to-transparent">
-                <CardContent className="py-8">
-                  <div className="text-center max-w-md mx-auto">
-                    <div className="w-16 h-16 rounded-full bg-sacred/10 flex items-center justify-center mx-auto mb-4">
-                      <BookOpen className="w-8 h-8 text-sacred" />
-                    </div>
-                    <h3 className="text-xl font-semibold mb-2">Unlock All 5 Lessons Free</h3>
-                    <p className="text-muted-foreground mb-6">
-                      Enter your email to get instant access to the complete P.R.O.O.F. Framework course 
-                      and start your journey of faith-based discernment today.
-                    </p>
-                    <form onSubmit={handleUnlock} className="flex flex-col sm:flex-row gap-3">
-                      <div className="relative flex-1">
-                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                        <Input
-                          type="email"
-                          placeholder="Enter your email"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          className="pl-10"
-                        />
-                      </div>
-                      <Button type="submit" disabled={isLoading} className="gap-2">
-                        {isLoading ? 'Unlocking...' : 'Get Free Access Now'}
-                        <ArrowRight className="w-4 h-4" />
-                      </Button>
-                    </form>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
 
             {/* PROOF Framework Audio Overview */}
             <div className="mt-8 mb-8">
