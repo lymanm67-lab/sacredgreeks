@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -11,7 +11,9 @@ import { useSubscription } from '@/hooks/use-subscription';
 import { ListenButton } from '@/components/ListenButton';
 import { ProofFrameworkAudio } from '@/components/proof/ProofFrameworkAudio';
 import { ProofCourseOnboarding } from '@/components/proof/ProofCourseOnboarding';
+import { ProofAchievementBadges } from '@/components/proof/ProofAchievementBadges';
 import { useCourseCompletion } from '@/hooks/use-course-celebration';
+import { useLessonCelebration } from '@/hooks/use-lesson-celebration';
 import { generateProofLessonPDF, generateAllProofLessonsPDF } from '@/lib/proof-lesson-pdf';
 import { generateLessonWorksheetPDF, generateAllWorksheetsPDF } from '@/lib/proof-worksheet-pdf';
 import { Link } from 'react-router-dom';
@@ -457,6 +459,36 @@ const ProofCourse = () => {
     totalLessons: lessons.length,
   });
 
+  // Lesson celebration hook
+  const { triggerLessonComplete, triggerMilestone } = useLessonCelebration();
+  const previousCompletedRef = useRef<number[]>([]);
+
+  // Track lesson completions for celebrations
+  useEffect(() => {
+    const prevCompleted = previousCompletedRef.current;
+    const newlyCompleted = completedLessons.filter(id => !prevCompleted.includes(id));
+    
+    if (newlyCompleted.length > 0) {
+      const lessonId = newlyCompleted[0];
+      const lesson = lessons.find(l => l.id === lessonId);
+      if (lesson) {
+        // Trigger lesson celebration
+        triggerLessonComplete(lessonId, lesson.title.split(':')[0] || lesson.title);
+
+        // Check for milestones
+        if (completedLessons.length === 1) {
+          setTimeout(() => triggerMilestone('first'), 2500);
+        } else if (completedLessons.length === 3) {
+          setTimeout(() => triggerMilestone('halfway'), 2500);
+        } else if (completedLessons.length === 5) {
+          setTimeout(() => triggerMilestone('complete'), 2500);
+        }
+      }
+    }
+    
+    previousCompletedRef.current = [...completedLessons];
+  }, [completedLessons, triggerLessonComplete, triggerMilestone]);
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead 
@@ -465,6 +497,15 @@ const ProofCourse = () => {
       />
 
       <div className="container mx-auto px-4 py-8 max-w-5xl">
+        {/* Achievement Badges Section */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-6"
+        >
+          <ProofAchievementBadges completedLessons={completedLessons} />
+        </motion.div>
+
         {/* Onboarding Hero Section */}
         <ProofCourseOnboarding 
           onStartCourse={() => startLesson(completedLessons.length > 0 ? Math.min(completedLessons.length + 1, 5) : 1)}
@@ -509,10 +550,10 @@ const ProofCourse = () => {
             </Card>
           </motion.div>
 
-          {/* Subscription Status Card - Always Dynamic with Features */}
+          {/* Ministry Access Card - Audio Overview Format */}
           <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
             <Card className={`relative overflow-hidden border-2 h-full ${hasPremiumAccess ? 'bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-yellow-500/10 border-amber-500/30 hover:border-amber-500/50 shadow-lg shadow-amber-500/10' : 'bg-gradient-to-br from-amber-500/5 via-orange-400/5 to-yellow-500/10 border-amber-400/20 hover:border-amber-500/40 shadow-lg shadow-amber-400/10'}`}>
-              {/* Animated background glow - Always visible */}
+              {/* Animated background glow */}
               <div className={`absolute -top-12 -right-12 w-32 h-32 ${hasPremiumAccess ? 'bg-amber-500/20' : 'bg-amber-400/15'} rounded-full blur-2xl`} />
               <div className={`absolute -bottom-8 -left-8 w-24 h-24 ${hasPremiumAccess ? 'bg-orange-500/20' : 'bg-orange-400/15'} rounded-full blur-2xl`} />
               
@@ -553,25 +594,35 @@ const ProofCourse = () => {
                   </div>
                 </div>
                 
-                {/* Features List */}
-                <div className="mt-3 space-y-1.5">
-                  {[
-                    { label: 'All 5 PROOF Lessons', included: hasPremiumAccess },
-                    { label: 'Premium Audio Player', included: hasPremiumAccess },
-                    { label: 'Ancient Guild Training', included: hasPremiumAccess },
-                    { label: 'AI Response Coach', included: hasPremiumAccess },
-                  ].map((feature, i) => (
-                    <div key={i} className="flex items-center gap-2 text-xs">
-                      {feature.included ? (
-                        <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
-                      ) : (
-                        <Lock className="w-3 h-3 text-muted-foreground/50" />
-                      )}
-                      <span className={feature.included ? 'text-foreground' : 'text-muted-foreground/70'}>
-                        {feature.label}
-                      </span>
-                    </div>
-                  ))}
+                {/* Inner Box with Features List - Matching Audio Overview */}
+                <div className={`mt-4 rounded-lg p-3 ${hasPremiumAccess ? 'bg-amber-500/5 border border-amber-500/20' : 'bg-muted/30 border border-border/50'}`}>
+                  <div className="space-y-2">
+                    {[
+                      { label: 'All 5 PROOF Lessons', included: hasPremiumAccess },
+                      { label: 'Premium Audio Player', included: hasPremiumAccess },
+                      { label: 'Ancient Guild Training', included: hasPremiumAccess },
+                      { label: 'AI Response Coach', included: hasPremiumAccess },
+                    ].map((feature, i) => (
+                      <motion.div 
+                        key={i} 
+                        className="flex items-center gap-2.5"
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: i * 0.1 }}
+                      >
+                        <div className={`w-6 h-6 rounded-md flex items-center justify-center ${feature.included ? 'bg-gradient-to-br from-amber-500/20 to-orange-500/20' : 'bg-muted/50'}`}>
+                          {feature.included ? (
+                            <CheckCircle2 className="w-3.5 h-3.5 text-amber-500" />
+                          ) : (
+                            <Lock className="w-3 h-3 text-muted-foreground/50" />
+                          )}
+                        </div>
+                        <span className={`text-sm ${feature.included ? 'text-foreground font-medium' : 'text-muted-foreground/70'}`}>
+                          {feature.label}
+                        </span>
+                      </motion.div>
+                    ))}
+                  </div>
                 </div>
                 
                 {!hasPremiumAccess && (
@@ -586,13 +637,12 @@ const ProofCourse = () => {
             </Card>
           </motion.div>
 
-          {/* Resources Card - Dynamic with featured PDFs */}
+          {/* Resources Card - Audio Overview Format with Inner Box */}
           <motion.div whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
             <Card className="relative overflow-hidden bg-gradient-to-br from-blue-500/10 via-cyan-500/5 to-teal-500/10 border-2 border-blue-500/30 hover:border-blue-500/50 transition-all shadow-lg shadow-blue-500/10 h-full">
               {/* Animated background glow */}
               <div className="absolute -top-12 -right-12 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl" />
               <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-cyan-500/20 rounded-full blur-2xl" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-teal-500/10 rounded-full blur-xl" />
               
               {/* Floating decorative sparkles */}
               <motion.div
@@ -604,7 +654,7 @@ const ProofCourse = () => {
               </motion.div>
               
               <CardContent className="relative p-4">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-center gap-3">
                   <motion.div 
                     className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/30"
                     animate={{ scale: [1, 1.05, 1] }}
@@ -623,33 +673,49 @@ const ProofCourse = () => {
                   </div>
                 </div>
                 
-                {/* Featured PDFs List */}
-                <div className="space-y-1.5 mb-3">
-                  {['Pledge Response Guide', 'Ritual Discernment', 'Oath Analysis'].map((pdf, i) => (
-                    <div key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <FileDown className="w-3 h-3 text-blue-400" />
-                      <span>{pdf}</span>
-                    </div>
-                  ))}
+                {/* Inner Box with PDFs List - Matching Audio Overview */}
+                <div className="mt-4 rounded-lg p-3 bg-blue-500/5 border border-blue-500/20">
+                  <div className="space-y-2">
+                    {[
+                      { name: 'Pledge Response Guide', icon: FileDown },
+                      { name: 'Ritual Discernment Framework', icon: FileDown },
+                      { name: 'Oath Analysis Worksheet', icon: Printer },
+                      { name: 'Obscurity & Light Guide', icon: FileDown },
+                      { name: 'Founders History PDF', icon: FileDown },
+                    ].map((pdf, i) => (
+                      <motion.div 
+                        key={i} 
+                        className="flex items-center gap-2.5"
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: i * 0.08 }}
+                      >
+                        <div className="w-6 h-6 rounded-md bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center">
+                          <pdf.icon className="w-3.5 h-3.5 text-blue-400" />
+                        </div>
+                        <span className="text-sm text-foreground">{pdf.name}</span>
+                      </motion.div>
+                    ))}
+                  </div>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 gap-2 mt-3">
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="text-xs h-8 border-blue-500/30 hover:bg-blue-500/10 hover:border-blue-500/50 group transition-all"
+                    className="text-xs h-9 border-blue-500/30 hover:bg-blue-500/10 hover:border-blue-500/50 group transition-all"
                     onClick={() => generateAllProofLessonsPDF()}
                   >
-                    <FileDown className="w-3.5 h-3.5 mr-1 text-blue-400 group-hover:scale-110 transition-transform" />
+                    <Download className="w-3.5 h-3.5 mr-1.5 text-blue-400 group-hover:scale-110 transition-transform" />
                     All PDFs
                   </Button>
                   <Button 
                     variant="outline" 
                     size="sm"
-                    className="text-xs h-8 border-cyan-500/30 hover:bg-cyan-500/10 hover:border-cyan-500/50 group transition-all"
+                    className="text-xs h-9 border-cyan-500/30 hover:bg-cyan-500/10 hover:border-cyan-500/50 group transition-all"
                     onClick={() => generateAllWorksheetsPDF()}
                   >
-                    <Printer className="w-3.5 h-3.5 mr-1 text-cyan-400 group-hover:scale-110 transition-transform" />
+                    <Printer className="w-3.5 h-3.5 mr-1.5 text-cyan-400 group-hover:scale-110 transition-transform" />
                     Worksheets
                   </Button>
                 </div>
