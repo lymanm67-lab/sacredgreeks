@@ -12,11 +12,13 @@ import { FaithAuthoritySection } from '@/components/proof/FaithAuthoritySection'
 import { BeliefTeachingAudio } from '@/components/proof/BeliefTeachingAudio';
 import { ProofFrameworkAudio } from '@/components/proof/ProofFrameworkAudio';
 import { GuildJourneyDiagram, GuildAudioPlayer } from '@/components/ancient-guilds';
+import { GuildPracticesSection } from '@/components/ancient-guilds/GuildPracticesSection';
 import { generateGuildOnePagerPDF } from '@/lib/guild-onepager-pdf';
 import { generateGuildComparisonPDF } from '@/lib/guild-comparison-pdf';
 import { generateJesusMasterCarpenterPDF } from '@/lib/jesus-master-carpenter-pdf';
 import { generateProofLessonPDF, generateAllProofLessonsPDF } from '@/lib/proof-lesson-pdf';
 import { generateEconomicHistoryPDF } from '@/lib/economic-history-pdf';
+import { generateGuildWorksheetPDF } from '@/lib/guild-worksheet-pdf';
 import { Link } from 'react-router-dom';
 
 interface Lesson {
@@ -718,6 +720,9 @@ const ProofCourse = () => {
               {/* Guild Audio Player */}
               <GuildAudioPlayer className="mb-6" />
 
+              {/* Historical Guild Practices - Oaths, Handshakes, Phrases, Rituals */}
+              <GuildPracticesSection className="mb-6" />
+
               {/* PDF Downloads */}
               <Card className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-amber-500/30">
                 <CardContent className="p-6">
@@ -781,7 +786,7 @@ const ProofCourse = () => {
                       </Link>
                     </Button>
                   </div>
-                  <div className="mt-4 pt-4 border-t border-amber-500/20">
+                    <div className="mt-4 pt-4 border-t border-amber-500/20">
                     <h4 className="font-medium text-foreground mb-3 text-sm">P.R.O.O.F. Lesson Summaries</h4>
                     <div className="flex flex-wrap gap-2">
                       <Button
@@ -807,6 +812,18 @@ const ProofCourse = () => {
                       >
                         <FileDown className="w-4 h-4 mr-2 text-amber-500" />
                         Economic History PDF
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          generateGuildWorksheetPDF();
+                          toast({ title: 'Guild Practices Worksheet downloaded!' });
+                        }}
+                        className="border-amber-500/30 hover:bg-amber-500/10"
+                      >
+                        <FileDown className="w-4 h-4 mr-2 text-amber-500" />
+                        Guild Worksheet
                       </Button>
                     </div>
                   </div>
