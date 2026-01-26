@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const ONBOARDING_KEY = 'sacred_greeks_onboarding_completed';
 
