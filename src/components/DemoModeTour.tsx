@@ -24,16 +24,16 @@ const TOUR_STEPS: TourStep[] = [
     feature: 'overview',
   },
   {
-    title: 'Daily Devotionals',
-    description: 'Start each day with scripture-based devotionals designed for Greeks navigating faith. Tap the highlighted card to explore!',
+    title: 'Daily Scripture & Devotions',
+    description: 'Start each day with scripture-based devotionals designed for Greeks navigating faith. Look for the blue highlighted card!',
     icon: <BookOpen className="w-8 h-8 text-blue-500" />,
     feature: 'devotional',
     route: '/devotional',
     targetSelector: '[data-tour="devotional"]',
   },
   {
-    title: 'Myth Buster Library',
-    description: 'Get biblical answers to common objections about Greek life and faith compatibility.',
+    title: 'Mythbuster Library',
+    description: 'Get biblical answers to common objections about Greek life and faith compatibility. Look for the purple highlighted card!',
     icon: <Library className="w-8 h-8 text-purple-500" />,
     feature: 'mythbuster',
     route: '/myth-buster',
@@ -191,19 +191,7 @@ export function DemoModeTour() {
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
           className="fixed left-1/2 bottom-4 -translate-x-1/2 z-50 w-full max-w-md px-4 pointer-events-none"
         >
-          {/* Pointer arrow - only show when there's a target element */}
-          {hasTarget && (
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="flex justify-center mb-2"
-            >
-              <div className="flex flex-col items-center text-primary">
-                <ChevronUp className="w-6 h-6 animate-bounce" />
-                <div className="w-0.5 h-8 bg-gradient-to-b from-primary to-transparent" />
-              </div>
-            </motion.div>
-          )}
+          {/* Removed misleading pointer arrow - the highlight on the card is sufficient */}
           
           <Card className="border-2 border-primary/30 shadow-2xl bg-card/95 backdrop-blur-md overflow-hidden pointer-events-auto">
             {/* Progress bar */}
