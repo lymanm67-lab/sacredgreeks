@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { useLandingABTest } from "@/hooks/use-landing-ab-test";
+import { AssessmentTTS } from "@/components/assessment/AssessmentTTS";
 import logo from "@/assets/sacred-greeks-logo.png";
 import { 
   ArrowLeft, 
@@ -190,6 +191,19 @@ const calculateResults = (answers: Record<number, string | string[]>): SnapshotR
   };
 };
 
+// TTS content for the assessment
+const introTTSText = `Welcome to the Faith Snapshot Assessment. This quick 6-question assessment will help you discover where you are on your faith journey as a member of Greek life. We'll identify your biggest challenges, understand the criticisms you face, and create a personalized path to help you confidently integrate your faith with your fraternity or sorority experience. There are no wrong answers. Just be honest and we'll meet you exactly where you are.`;
+
+const generateResultsTTSText = (result: SnapshotResult) => {
+  const scoreInterpretation = result.faithScore >= 70 
+    ? "You have a strong foundation that we'll help make unshakeable." 
+    : result.faithScore >= 40 
+      ? "You're on the right track, and we'll help you grow in confidence." 
+      : "Perfect timing! We're here to equip you with the answers you need.";
+
+  return `Your Faith Snapshot Results. Based on your responses, you are identified as: ${result.archetype}. Your primary focus area is: ${result.primaryFocus}. ${result.focusDescription}. Your Faith Confidence Score is ${result.faithScore} percent. ${scoreInterpretation}. We've created a personalized path for you, including: ${result.recommendedPath.join(', ')}. Create your free account to access your personalized dashboard and start your journey.`;
+};
+
 export default function FaithSnapshot() {
   const navigate = useNavigate();
   const { trackConversion } = useLandingABTest();
@@ -200,6 +214,21 @@ export default function FaithSnapshot() {
 
   const question = questions[currentQuestion];
   const progress = ((currentQuestion + 1) / questions.length) * 100;
+
+  // Generate question TTS text
+  const questionTTSText = useMemo(() => {
+    const q = questions[currentQuestion];
+    const optionsText = q.options.map((opt, i) => `Option ${i + 1}: ${opt.text}`).join('. ');
+    return `Question ${currentQuestion + 1} of ${questions.length}. ${q.text}. ${q.subtext || ''}. ${q.multiSelect ? 'You can select multiple options.' : 'Choose one option.'} ${optionsText}`;
+  }, [currentQuestion]);
+
+  // Generate results TTS text
+  const resultsTTSText = useMemo(() => {
+    if (results) {
+      return generateResultsTTSText(results);
+    }
+    return '';
+  }, [results]);
 
   const handleSelect = (value: string) => {
     const q = questions[currentQuestion];
@@ -282,6 +311,18 @@ export default function FaithSnapshot() {
                     <Sparkles className="w-8 h-8 text-white" />
                   </div>
                 </div>
+                
+                {/* TTS Button for Results */}
+                <div className="flex justify-center mb-3">
+                  <AssessmentTTS 
+                    text={resultsTTSText} 
+                    itemId="results-explanation" 
+                    title="Your Faith Snapshot Results"
+                    variant="button"
+                    label="Listen to Results"
+                  />
+                </div>
+
                 <Badge className="w-fit mx-auto mb-2 bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-400 border-amber-500/30">
                   {results.archetype}
                 </Badge>
@@ -395,7 +436,14 @@ export default function FaithSnapshot() {
             >
               <Card className="bg-gradient-to-br from-slate-800/80 to-purple-900/30 border-purple-500/30 shadow-xl">
                 <CardHeader>
-                  <CardTitle className="text-xl text-white">{question.text}</CardTitle>
+                  <div className="flex items-start justify-between gap-2">
+                    <CardTitle className="text-xl text-white flex-1">{question.text}</CardTitle>
+                    <AssessmentTTS 
+                      text={currentQuestion === 0 ? `${introTTSText} ${questionTTSText}` : questionTTSText} 
+                      itemId={`question-${currentQuestion}`} 
+                      title={`Question ${currentQuestion + 1}`}
+                    />
+                  </div>
                   {question.subtext && (
                     <CardDescription className="text-purple-200/80">
                       {question.subtext}
