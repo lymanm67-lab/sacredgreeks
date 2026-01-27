@@ -58,12 +58,14 @@ const testimonial = {
 // Upcoming webinars for lead generation
 const upcomingWebinars = [
   {
+    id: "faith-and-frat",
     title: "Faith & Frat: Biblical Clarity on Greek Life",
     date: "Every Tuesday, 7 PM EST",
     description: "Live Q&A with campus ministers and Greek alumni on navigating faith in fraternity/sorority life.",
     spots: "Limited Spots"
   },
   {
+    id: "handling-hard-questions",
     title: "Handling the Hard Questions",
     date: "February 8, 2026 • 8 PM EST",
     description: "How to respond when family, church, or friends challenge your Greek membership.",
@@ -307,7 +309,7 @@ export default function LandingABTest() {
                     <Button 
                       variant="outline" 
                       size="sm"
-                      onClick={handleCTAClick}
+                      onClick={() => navigate(`/webinar/${webinar.id}`)}
                       className="w-full border-purple-500/30 text-purple-300 hover:bg-purple-500/20 hover:text-white transition-all"
                     >
                       Reserve Your Spot

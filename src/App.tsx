@@ -100,6 +100,7 @@ const NotificationPreferences = lazy(() => import("./pages/NotificationPreferenc
 const CoachingApplication = lazy(() => import("./pages/CoachingApplication"));
 const AntiHazing = lazy(() => import("./pages/AntiHazing"));
 const MeetDrLyman = lazy(() => import("./pages/MeetDrLyman"));
+const WebinarRegister = lazy(() => import("./pages/WebinarRegister"));
 const TheChallenge = lazy(() => import("./pages/TheChallenge"));
 const BiblicalGuides = lazy(() => import("./pages/BiblicalGuides"));
 const TheBook = lazy(() => import("./pages/TheBook"));
@@ -192,6 +193,7 @@ const App = () => (
                     <Route path="/index" element={<Navigate to="/" replace />} />
                     <Route path="/land" element={<LandingABTest />} />
                     <Route path="/snapshot" element={<FaithSnapshot />} />
+                    <Route path="/webinar/:webinarId" element={<WebinarRegister />} />
                     <Route path="/auth" element={<Auth />} />
                     <Route path="/au" element={<Navigate to="/auth" replace />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
