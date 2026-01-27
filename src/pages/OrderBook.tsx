@@ -77,7 +77,7 @@ const OrderBook = () => {
             </Button>
 
             <p className="text-xs text-muted-foreground text-center">
-              Available in paperback and Kindle formats
+              Available in paperback, hardcover, and Kindle formats — audio coming soon!
             </p>
           </CardContent>
         </div>
