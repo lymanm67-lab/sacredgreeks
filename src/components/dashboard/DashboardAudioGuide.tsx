@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Volume2, HelpCircle, Navigation, LayoutDashboard, Users, Share2, Sparkles } from 'lucide-react';
 import { ListenButton } from '@/components/ListenButton';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useDemoMode } from '@/contexts/DemoModeContext';
+import { useFeaturePreferences } from '@/hooks/use-feature-preferences';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Popover,
@@ -17,53 +18,174 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 
-const GUIDE_SECTIONS = [
-  {
-    id: 'welcome',
-    title: 'Welcome & Overview',
-    icon: LayoutDashboard,
-    content: `Welcome to Sacred Greeks! This audio guide will help you navigate your dashboard and discover all the features available to you. Let me walk you through each section so you can make the most of your spiritual journey.`
-  },
-  {
-    id: 'navigation',
-    title: 'Navigation Panel',
-    icon: Navigation,
-    content: `The navigation panel on the left side of your screen gives you quick access to all areas of the app. At the top, you'll find the Dashboard link which brings you here. Below that, the Learning Path section contains your training courses including the PROOF Course, PROOF Quiz, Greek Life and Guild, Myth Busters, and Faith and Authority modules. The Spiritual Practices section includes your Daily Devotional, Prayer Journal, and other spiritual tools. On mobile devices, the navigation appears as a bottom bar for easy thumb access.`
-  },
-  {
-    id: 'demo',
-    title: 'Demo Mode & Sample Data',
-    icon: Sparkles,
-    content: `If you're exploring as a guest or haven't logged in yet, you're viewing the app in Demo Mode. This means you're seeing sample data that demonstrates how the app works. The demo includes example progress stats, sample learning paths, and placeholder content. Once you create an account and log in, all demo data will be replaced with your personal progress, prayers, and achievements. Look for the Preview Mode banner at the top of the page to know when you're in demo mode.`
-  },
-  {
-    id: 'dashboard',
-    title: 'Dashboard Sections',
-    icon: LayoutDashboard,
-    content: `Your dashboard is organized into several key sections. At the top, you'll see a welcome message and your Greek organization's personalized greeting. Below that is the Get Started section with three featured actions: Daily Scripture and Devotions for your spiritual nourishment, Mythbusters to address common misconceptions about Greek life and faith, and Handle Greek Life Objections to help you respond to questions about your organization with biblical wisdom. Your Progress section displays your current streak, assessment count, and today's devotional status. The Learning Paths Map shows your training roadmap across four tracks. The Greek Community section helps you connect with other members, and the AI Assistant is ready to answer your questions. Finally, the Explore More section at the bottom contains quick links to additional resources.`
-  },
-  {
-    id: 'sharing',
-    title: 'Invite & Share',
-    icon: Share2,
-    content: `Sacred Greeks is designed to be shared with your Greek organization, chapter, or faith community. To invite others, look for the Share button in your profile or settings area. You can send invitation links via email or copy a shareable link to send through text or social media. When you invite someone, they'll be able to join your organization's community and see shared content. Encourage your chapter members to join so you can track collective progress, share prayer requests, and grow together in faith. The more members who participate, the stronger your Greek community becomes.`
-  },
-  {
-    id: 'tips',
-    title: 'Quick Tips & Profile',
-    icon: Users,
-    content: `Here are some quick tips to enhance your experience. You can collapse dashboard sections by clicking their headers to customize your view. Pull down on mobile to refresh your dashboard data. Use the audio listen buttons throughout the app to have content read aloud. To make changes to your account, Greek organization affiliation, or personalize your experience, click the Profile button in the header. From your profile, you can update your name, chapter information, notification preferences, and more. And remember, the AI Assistant on your dashboard can answer questions about faith, Greek life, and using the app.`
-  }
-];
+// Feature ID to friendly name mapping for audio narration
+const FEATURE_AUDIO_NAMES: Record<string, string> = {
+  'daily-devotional': 'Daily Devotional for scripture-based reflections',
+  'myth-buster': 'Mythbusters to address common misconceptions about Greek life',
+  'bglo-objections': 'Handle Greek Life Objections with biblical responses',
+  '30-day-journey': '30-Day Journey to build your faith foundation',
+  'prayer-journal': 'Prayer Journal to track your prayers',
+  'prayer-wall': 'Prayer Wall for community prayer requests',
+  'bible-study': 'Bible Study tools and reading plans',
+  'symbol-guide': 'Symbol Guide for Christian perspectives on Greek symbolism',
+  'achievements': 'Achievements to track your progress',
+  'bookmarks': 'Bookmarks for saved resources',
+  'did-you-know': 'Did You Know educational content',
+  'content-hub': 'Content Hub with podcasts and videos',
+  'family-fallout': 'Family and Ministry Fallout resources',
+  'service-hours': 'Service Hours tracking',
+  'org-community': 'Greek Community connections',
+  'forum': 'Discussion Forum',
+  'ask-dr-lyman': 'Ask Dr. Lyman AI assistant',
+  'prayer-guide': 'AI Prayer Guide',
+  'response-coach': 'Response Coach for conversation practice',
+  'coaching': 'Coaching Application',
+  'chapter-resources': 'Chapter Resources for leaders',
+  'chapter-meeting-notes': 'Chapter Meeting Notes',
+  'new-assessment': 'Faith Assessment',
+  'proof-assessment': 'P.R.O.O.F. Quiz',
+  'shattered-masks': 'Shattered Masks archetype discovery',
+  'assessment-history': 'My Assessments history',
+};
 
-// Full combined script for the complete audio guide
-const FULL_AUDIO_SCRIPT = GUIDE_SECTIONS.map(s => s.content).join(' ');
+// Category groupings for audio narration
+const CATEGORY_INTROS: Record<string, string> = {
+  core: 'Core features include',
+  study: 'For study and learning, you have',
+  prayer: 'Your prayer tools include',
+  community: 'Community features include',
+  ai: 'AI-powered tools include',
+  chapter: 'Chapter leadership tools include',
+};
+
+interface GuideSection {
+  id: string;
+  title: string;
+  icon: React.ComponentType<{ className?: string }>;
+  content: string;
+}
+
+function generateDynamicSections(
+  visibleFeatureIds: string[],
+  isDemoMode: boolean
+): GuideSection[] {
+  // Build dynamic feature list for the dashboard section
+  const featuredFeatures = ['daily-devotional', 'myth-buster', 'bglo-objections'];
+  const visibleFeatured = featuredFeatures.filter(id => visibleFeatureIds.includes(id));
+  
+  let featuredContent = '';
+  if (visibleFeatured.length > 0) {
+    const featuredNames = visibleFeatured.map(id => FEATURE_AUDIO_NAMES[id] || id).join(', ');
+    featuredContent = `The Get Started section shows: ${featuredNames}.`;
+  } else {
+    featuredContent = 'The Get Started section shows quick access to your enabled features.';
+  }
+
+  // Group other visible features by type for navigation section
+  const learningFeatures = visibleFeatureIds.filter(id => 
+    ['proof-assessment', 'myth-buster', 'symbol-guide', 'bglo-objections', 'did-you-know', 'content-hub'].includes(id)
+  );
+  const spiritualFeatures = visibleFeatureIds.filter(id => 
+    ['daily-devotional', 'prayer-journal', 'prayer-wall', 'bible-study', '30-day-journey'].includes(id)
+  );
+  const communityFeatures = visibleFeatureIds.filter(id => 
+    ['org-community', 'forum', 'prayer-wall'].includes(id)
+  );
+  const aiFeatures = visibleFeatureIds.filter(id => 
+    ['ask-dr-lyman', 'response-coach', 'prayer-guide', 'coaching'].includes(id)
+  );
+
+  let navContent = 'The navigation panel on the left side gives you quick access to your enabled features.';
+  
+  if (learningFeatures.length > 0) {
+    const names = learningFeatures.slice(0, 3).map(id => FEATURE_AUDIO_NAMES[id]?.split(' ')[0] || id).join(', ');
+    navContent += ` Your Learning Path includes ${names}${learningFeatures.length > 3 ? ' and more' : ''}.`;
+  }
+  
+  if (spiritualFeatures.length > 0) {
+    const names = spiritualFeatures.slice(0, 3).map(id => FEATURE_AUDIO_NAMES[id]?.split(' for')[0]?.split(' to')[0] || id).join(', ');
+    navContent += ` Spiritual Practices includes ${names}${spiritualFeatures.length > 3 ? ' and more' : ''}.`;
+  }
+
+  if (aiFeatures.length > 0) {
+    const names = aiFeatures.map(id => FEATURE_AUDIO_NAMES[id]?.split(' for')[0] || id).join(', ');
+    navContent += ` AI-powered tools available: ${names}.`;
+  }
+
+  navContent += ' On mobile devices, the navigation appears as a bottom bar for easy thumb access.';
+
+  const sections: GuideSection[] = [
+    {
+      id: 'welcome',
+      title: 'Welcome & Overview',
+      icon: LayoutDashboard,
+      content: `Welcome to Sacred Greeks! This audio guide will help you navigate your dashboard and discover the features you have enabled. ${visibleFeatureIds.length > 10 ? 'You have many features active.' : visibleFeatureIds.length < 5 ? 'You have a focused set of features enabled.' : 'You have a balanced selection of features.'} Let me walk you through each section.`
+    },
+    {
+      id: 'navigation',
+      title: 'Navigation Panel',
+      icon: Navigation,
+      content: navContent
+    },
+  ];
+
+  // Only add demo section if in demo mode
+  if (isDemoMode) {
+    sections.push({
+      id: 'demo',
+      title: 'Demo Mode & Sample Data',
+      icon: Sparkles,
+      content: `You're viewing the app in Demo Mode with sample data. The demo includes example progress stats, sample learning paths, and placeholder content. Once you create an account and log in, all demo data will be replaced with your personal progress, prayers, and achievements. Look for the Preview Mode banner at the top of the page.`
+    });
+  }
+
+  sections.push(
+    {
+      id: 'dashboard',
+      title: 'Dashboard Sections',
+      icon: LayoutDashboard,
+      content: `Your dashboard is personalized based on features you've enabled. At the top, you'll see a welcome message and your Greek organization's greeting. ${featuredContent} Your Progress section displays your current streak, assessment count, and today's devotional status. ${communityFeatures.length > 0 ? 'The Greek Community section helps you connect with other members.' : ''} ${aiFeatures.includes('ask-dr-lyman') ? 'The AI Assistant is ready to answer your questions.' : ''} The Explore More section at the bottom contains quick links to additional resources you've enabled.`
+    },
+    {
+      id: 'sharing',
+      title: 'Invite & Share',
+      icon: Share2,
+      content: `Sacred Greeks is designed to be shared with your Greek organization, chapter, or faith community. To invite others, look for the Share button in your profile or settings area. You can send invitation links via email or copy a shareable link. The more members who participate, the stronger your Greek community becomes.`
+    },
+    {
+      id: 'tips',
+      title: 'Quick Tips & Profile',
+      icon: Users,
+      content: `Here are some quick tips. You can customize which features appear on your dashboard by going to Profile and selecting Feature Customization. ${visibleFeatureIds.length > 15 ? 'You have many features enabled - consider hiding ones you dont use often.' : ''} Pull down on mobile to refresh your data. Use the audio listen buttons throughout the app to have content read aloud. To make changes to your account or Greek organization affiliation, click the Profile button in the header.`
+    }
+  );
+
+  return sections;
+}
 
 export function DashboardAudioGuide() {
   const [isOpen, setIsOpen] = useState(false);
   const [expandedSection, setExpandedSection] = useState<string | undefined>(undefined);
   const isMobile = useIsMobile();
   const { isDemoMode } = useDemoMode();
+  const { getVisibleFeatures, loading: prefsLoading } = useFeaturePreferences();
+
+  // Get visible feature IDs
+  const visibleFeatureIds = useMemo(() => {
+    if (prefsLoading) return [];
+    const features = getVisibleFeatures();
+    return features.map(f => f.id);
+  }, [getVisibleFeatures, prefsLoading]);
+
+  // Generate dynamic sections based on visible features
+  const GUIDE_SECTIONS = useMemo(() => {
+    return generateDynamicSections(visibleFeatureIds, isDemoMode);
+  }, [visibleFeatureIds, isDemoMode]);
+
+  // Full combined script for the complete audio guide
+  const FULL_AUDIO_SCRIPT = useMemo(() => {
+    return GUIDE_SECTIONS.map(s => s.content).join(' ');
+  }, [GUIDE_SECTIONS]);
 
   // Auto-expand first section in demo mode on tablet/desktop
   useEffect(() => {
@@ -71,6 +193,7 @@ export function DashboardAudioGuide() {
       setExpandedSection('welcome');
     }
   }, [isDemoMode, isOpen, isMobile, expandedSection]);
+
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
@@ -102,7 +225,9 @@ export function DashboardAudioGuide() {
                   </span>
                 )}
               </div>
-              <p className="text-xs text-muted-foreground">Learn how to navigate and use the app</p>
+              <p className="text-xs text-muted-foreground">
+                Personalized guide based on your enabled features
+              </p>
             </div>
           </div>
         </div>
@@ -111,11 +236,11 @@ export function DashboardAudioGuide() {
         <div className="p-4 border-b border-border bg-muted/30">
           <div className="flex flex-col gap-2">
             <p className="text-sm text-muted-foreground">
-              Listen to the complete guided tour of all dashboard features.
+              Listen to the complete guided tour of your dashboard.
             </p>
             <ListenButton
               text={FULL_AUDIO_SCRIPT}
-              itemId="dashboard-full-audio-guide"
+              itemId={`dashboard-full-audio-guide-${visibleFeatureIds.length}`}
               title="Complete Dashboard Guide"
               voice="onyx"
               className="w-full justify-center"
@@ -158,7 +283,7 @@ export function DashboardAudioGuide() {
                         </p>
                         <ListenButton
                           text={section.content}
-                          itemId={`dashboard-guide-${section.id}`}
+                          itemId={`dashboard-guide-${section.id}-${visibleFeatureIds.length}`}
                           title={section.title}
                           voice="onyx"
                           size="sm"
@@ -193,7 +318,7 @@ export function DashboardAudioGuide() {
                   </div>
                   <ListenButton
                     text={section.content}
-                    itemId={`dashboard-guide-${section.id}`}
+                    itemId={`dashboard-guide-${section.id}-${visibleFeatureIds.length}`}
                     title={section.title}
                     voice="onyx"
                     size="sm"
@@ -208,7 +333,7 @@ export function DashboardAudioGuide() {
 
         <div className="p-3 border-t border-border bg-muted/20">
           <p className="text-[10px] text-muted-foreground text-center">
-            Powered by ElevenLabs TTS • Tap any section to learn more
+            Powered by ElevenLabs TTS • Personalized to your feature settings
           </p>
         </div>
       </PopoverContent>
