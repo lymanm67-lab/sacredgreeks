@@ -207,9 +207,6 @@ const Dashboard = () => {
         canRefresh={canRefresh}
       />
       
-      {/* Audio Navigation Guide */}
-      <DashboardAudioGuide />
-      
       {/* Header - Desktop only since AppLayout handles mobile nav */}
       <header className="border-b border-border bg-background sticky top-0 z-50 hidden md:block">
         <div className="container mx-auto px-4">
@@ -221,6 +218,7 @@ const Dashboard = () => {
             {/* Desktop Navigation */}
             <div className="flex items-center gap-1.5 flex-shrink-0">
               <SubscriptionBadge />
+              <DashboardAudioGuide />
               <Link to="/profile">
                 <Button variant="ghost" size="sm" className="gap-2">
                   <User className="w-4 h-4" />
