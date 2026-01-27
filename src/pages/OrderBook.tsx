@@ -2,9 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { BookOpen, ExternalLink, Star, CheckCircle2, Quote } from "lucide-react";
+import { useExternalLinks } from "@/hooks/use-external-links";
 import bookCover from "@/assets/sacred-not-sinful-cover.jpg";
 
 const OrderBook = () => {
+  const { openExternalLink } = useExternalLinks();
   const bookUrl = "https://a.co/d/aAtPGAM";
 
   const bookHighlights = [
@@ -69,7 +71,7 @@ const OrderBook = () => {
             <Button 
               size="lg" 
               className="w-full bg-sacred hover:bg-sacred/90"
-              onClick={() => window.open(bookUrl, '_blank')}
+              onClick={() => openExternalLink(bookUrl)}
             >
               <BookOpen className="mr-2 h-5 w-5" />
               Order on Amazon
