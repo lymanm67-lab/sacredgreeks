@@ -48,14 +48,14 @@ export const HeroSection = () => {
   const firstName = user?.user_metadata?.full_name?.split(' ')[0] || 'Friend';
 
   return (
-    <div className="relative overflow-hidden rounded-3xl shadow-2xl">
+    <div className="relative w-full max-w-full overflow-hidden rounded-3xl shadow-2xl isolate">
       {/* Background with animated gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-[hsl(225,50%,12%)] via-[hsl(225,60%,18%)] to-[hsl(210,80%,25%)]" />
       
-      {/* Animated orbs - contained within bounds */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Animated orbs - clipped so blur/scale can’t create page overflow */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none [clip-path:inset(0_round_24px)]">
         <motion.div 
-          className="absolute top-4 right-4 w-32 h-32 md:w-72 md:h-72 md:top-10 md:right-10 bg-blue-500/20 rounded-full blur-3xl"
+          className="absolute top-4 right-4 w-32 h-32 md:w-72 md:h-72 md:top-10 md:right-10 bg-blue-500/20 rounded-full blur-2xl md:blur-3xl"
           animate={{ 
             scale: [1, 1.1, 1],
             opacity: [0.3, 0.5, 0.3]
@@ -63,7 +63,7 @@ export const HeroSection = () => {
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div 
-          className="absolute bottom-4 left-4 w-40 h-40 md:w-64 md:h-64 bg-purple-500/15 rounded-full blur-3xl"
+          className="absolute bottom-4 left-4 w-40 h-40 md:w-64 md:h-64 bg-purple-500/15 rounded-full blur-2xl md:blur-3xl"
           animate={{ 
             scale: [1.1, 1, 1.1],
             opacity: [0.2, 0.4, 0.2]
@@ -71,7 +71,7 @@ export const HeroSection = () => {
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div 
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 md:w-64 md:h-64 bg-cyan-500/10 rounded-full blur-3xl"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 md:w-64 md:h-64 bg-cyan-500/10 rounded-full blur-2xl md:blur-3xl"
           animate={{ 
             opacity: [0.1, 0.2, 0.1]
           }}
