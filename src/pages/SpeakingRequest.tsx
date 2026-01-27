@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar, MapPin, Users, Mic, CheckCircle, ArrowLeft, Sparkles, Target, Flame } from "lucide-react";
+import { Calendar, MapPin, Users, Mic, CheckCircle, ArrowLeft, Sparkles, Target, Flame, DollarSign, AlertCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
@@ -26,6 +26,7 @@ const speakingRequestSchema = z.object({
   eventDate: z.string().min(1, "Event date is required"),
   eventLocation: z.string().min(2, "Event location is required").max(300),
   expectedAttendees: z.string().min(1, "Please select expected attendance"),
+  budgetRange: z.string().min(1, "Please select a budget range"),
   topicRequested: z.string().min(10, "Please describe the topic (at least 10 characters)").max(1000),
   additionalDetails: z.string().max(2000).optional(),
 });
@@ -52,7 +53,7 @@ const SpeakingRequest = () => {
         full_name: data.organizerName,
         email: data.organizerEmail,
         organization: data.organizationName,
-        goals: `SPEAKING REQUEST: ${data.eventName} | Type: ${data.eventType} | Date: ${data.eventDate} | Location: ${data.eventLocation} | Attendees: ${data.expectedAttendees} | Topic: ${data.topicRequested} | Phone: ${data.organizerPhone} | Additional: ${data.additionalDetails || "N/A"}`,
+        goals: `SPEAKING REQUEST: ${data.eventName} | Type: ${data.eventType} | Date: ${data.eventDate} | Location: ${data.eventLocation} | Attendees: ${data.expectedAttendees} | Budget: ${data.budgetRange} | Topic: ${data.topicRequested} | Phone: ${data.organizerPhone} | Additional: ${data.additionalDetails || "N/A"}`,
         status: "pending",
       });
 
@@ -427,18 +428,53 @@ const SpeakingRequest = () => {
                     {errors.expectedAttendees && <p className="text-red-400 text-sm">{errors.expectedAttendees.message}</p>}
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="eventLocation" className="text-gray-300 flex items-center gap-2">
-                    <MapPin className="w-4 h-4" />
-                    Event Location *
-                  </Label>
-                  <Input
-                    id="eventLocation"
-                    {...register("eventLocation")}
-                    placeholder="City, State or 'Virtual'"
-                    className="bg-white/5 border-white/20 text-white placeholder:text-gray-500"
-                  />
-                  {errors.eventLocation && <p className="text-red-400 text-sm">{errors.eventLocation.message}</p>}
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="eventLocation" className="text-gray-300 flex items-center gap-2">
+                      <MapPin className="w-4 h-4" />
+                      Event Location *
+                    </Label>
+                    <Input
+                      id="eventLocation"
+                      {...register("eventLocation")}
+                      placeholder="City, State or 'Virtual'"
+                      className="bg-white/5 border-white/20 text-white placeholder:text-gray-500"
+                    />
+                    {errors.eventLocation && <p className="text-red-400 text-sm">{errors.eventLocation.message}</p>}
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="budgetRange" className="text-gray-300 flex items-center gap-2">
+                      <DollarSign className="w-4 h-4" />
+                      Budget Range *
+                    </Label>
+                    <Select onValueChange={(value) => setValue("budgetRange", value)}>
+                      <SelectTrigger className="bg-white/5 border-white/20 text-white">
+                        <SelectValue placeholder="Select budget range" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="under-2500">Under $2,500</SelectItem>
+                        <SelectItem value="2500-5000">$2,500 - $5,000</SelectItem>
+                        <SelectItem value="5000-7500">$5,000 - $7,500</SelectItem>
+                        <SelectItem value="7500-10000">$7,500 - $10,000</SelectItem>
+                        <SelectItem value="10000-plus">$10,000+</SelectItem>
+                        <SelectItem value="negotiable">Negotiable / TBD</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    {errors.budgetRange && <p className="text-red-400 text-sm">{errors.budgetRange.message}</p>}
+                  </div>
+                </div>
+
+                {/* Travel Policy Note */}
+                <div className="p-4 bg-amber-900/30 border border-amber-500/30 rounded-lg">
+                  <div className="flex items-start gap-3">
+                    <AlertCircle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+                    <div className="text-sm text-amber-200">
+                      <p className="font-semibold text-amber-300 mb-1">Travel Policy</p>
+                      <p>
+                        The hosting organization is responsible for covering all travel expenses including flights, accommodations, and meals — in addition to speaking fees — unless otherwise agreed upon in writing.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
 
