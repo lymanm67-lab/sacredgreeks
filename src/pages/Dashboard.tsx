@@ -234,45 +234,47 @@ const Dashboard = () => {
 
       <main className="w-full min-w-fit px-4 py-8">
         <div className="max-w-5xl mx-auto space-y-8 w-full">
-          {/* Hero Section with Welcome & Video */}
+          {/* 1. Hero Section - Welcome & Introduction */}
           <div className="animate-fade-in">
             <HeroSection />
           </div>
 
-          {/* Organization Welcome Card */}
+          {/* 2. Organization Welcome Card - Context */}
           <div className="animate-fade-in" style={{ animationDelay: '0.05s' }}>
             <OrgWelcomeCard />
           </div>
 
-          {/* Greek Community Section */}
+          {/* 3. Featured Actions - Get Started / Core Tools */}
           <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
-            <GreekCommunitySection />
+            <FeaturedActions isLoading={loading} />
           </div>
 
-          {/* AI Assistant - below NPHC Community */}
+          {/* 4. Stats Section - Your Progress */}
           <div className="animate-fade-in" style={{ animationDelay: '0.15s' }}>
-            <DashboardAIAssistant />
+            <StatsSection stats={stats} isDemoStats={isDemoStats} />
           </div>
 
-          {/* Learning Paths Map - Consolidated Learning Journey */}
+          {/* 5. Learning Paths Map - Training Roadmap */}
           <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <LearningPathsMap />
           </div>
 
-          {/* Path Completion Achievements */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.27s' }}>
+          {/* 6. Path Completion Achievements */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.25s' }}>
             <PathCompletionAchievements />
           </div>
 
-          {/* Featured Actions - The 3 Core Tools */}
-          <FeaturedActions isLoading={loading} />
-
-          {/* Stats Section */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.35s' }}>
-            <StatsSection stats={stats} isDemoStats={isDemoStats} />
+          {/* 7. Greek Community Section */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <GreekCommunitySection />
           </div>
 
-          {/* Quick Links Section */}
+          {/* 8. AI Assistant */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.35s' }}>
+            <DashboardAIAssistant />
+          </div>
+
+          {/* 9. Quick Links - Explore More */}
           <div className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
             <QuickLinksSection />
           </div>
