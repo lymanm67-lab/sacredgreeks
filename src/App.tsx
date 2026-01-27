@@ -121,6 +121,7 @@ const GuestPanelistApplication = lazy(() => import("./pages/GuestPanelistApplica
 const AboutCreator = lazy(() => import("./pages/AboutCreator"));
 const OrderBook = lazy(() => import("./pages/OrderBook"));
 const SpeakingRequest = lazy(() => import("./pages/SpeakingRequest"));
+const ParentsFamily = lazy(() => import("./pages/ParentsFamily"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -259,6 +260,7 @@ const App = () => (
                     <Route path="/proof-course" element={<ProofCourse />} />
                     <Route path="/proof-assessment" element={<ProofAssessment />} />
                     <Route path="/church-leaders" element={<ChurchLeaders />} />
+                    <Route path="/parents-family" element={<ParentsFamily />} />
                     <Route path="/faith-authority" element={<FaithAuthority />} />
                     <Route path="/chapter-kit" element={<ChapterKit />} />
                     <Route path="/economic-history" element={<EconomicHistory />} />
