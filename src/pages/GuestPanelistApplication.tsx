@@ -39,6 +39,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 const greekOrganizations = [
+  // Divine Nine
   "Alpha Phi Alpha",
   "Alpha Kappa Alpha",
   "Kappa Alpha Psi",
@@ -48,10 +49,17 @@ const greekOrganizations = [
   "Zeta Phi Beta",
   "Sigma Gamma Rho",
   "Iota Phi Theta",
+  // Other Greek
   "Alpha Phi Omega",
   "Other NPHC Organization",
   "Other Greek Organization",
-  "Greek Life Advisor/Professional"
+  "Greek Life Advisor/Professional",
+  // Non-Greek & Former Members
+  "Non-Greek (Never Joined)",
+  "Renounced Membership (Left Organization)",
+  "Denounced Greek Life (Publicly Opposed)",
+  "Anti-Greek Life Advocate",
+  "Former Member (Inactive/Expelled)"
 ];
 
 const GuestPanelistApplication = () => {
