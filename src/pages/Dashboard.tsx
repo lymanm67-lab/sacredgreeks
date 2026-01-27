@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { LogOut, User, BookOpen, Calendar, Menu, Home, Heart, MessageSquare, TrendingUp } from 'lucide-react';
-
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { LogOut, User } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import logo from '@/assets/sacred-greeks-logo.png';
 import { Onboarding } from '@/components/Onboarding';
@@ -210,8 +208,8 @@ const Dashboard = () => {
         canRefresh={canRefresh}
       />
       
-      {/* Header */}
-      <header className="border-b border-border bg-background sticky top-0 z-50">
+      {/* Header - Desktop only since AppLayout handles mobile nav */}
+      <header className="border-b border-border bg-background sticky top-0 z-50 hidden md:block">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-14">
             <Link to="/" className="flex items-center flex-shrink-0">
@@ -219,7 +217,7 @@ const Dashboard = () => {
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-1.5 flex-shrink-0">
+            <div className="flex items-center gap-1.5 flex-shrink-0">
               <SubscriptionBadge />
               <Link to="/profile">
                 <Button variant="ghost" size="sm" className="gap-2">
@@ -231,79 +229,6 @@ const Dashboard = () => {
                 <LogOut className="w-4 h-4" />
                 <span className="hidden lg:inline">Sign Out</span>
               </Button>
-            </div>
-
-            {/* Mobile Hamburger Menu */}
-            <div className="md:hidden">
-              <Sheet>
-                <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <Menu className="w-5 h-5" />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="right" className="w-72 bg-background">
-                  <SheetHeader>
-                    <SheetTitle className="flex items-center gap-2">
-                      <img src={logo} alt="Sacred Greeks" className="h-6 w-auto" />
-                      Menu
-                    </SheetTitle>
-                  </SheetHeader>
-                  <nav className="flex flex-col gap-2 mt-6">
-                    <Link to="/dashboard">
-                      <Button variant="ghost" className="w-full justify-start gap-3">
-                        <Home className="w-4 h-4" />
-                        Dashboard
-                      </Button>
-                    </Link>
-                    <Link to="/devotional">
-                      <Button variant="ghost" className="w-full justify-start gap-3">
-                        <BookOpen className="w-4 h-4" />
-                        Daily Devotional
-                      </Button>
-                    </Link>
-                    <Link to="/myth-buster">
-                      <Button variant="ghost" className="w-full justify-start gap-3">
-                        <MessageSquare className="w-4 h-4" />
-                        Myth Buster
-                      </Button>
-                    </Link>
-                    <Link to="/journey">
-                      <Button variant="ghost" className="w-full justify-start gap-3">
-                        <Calendar className="w-4 h-4" />
-                        30-Day Journey
-                      </Button>
-                    </Link>
-                    <Link to="/prayer-wall">
-                      <Button variant="ghost" className="w-full justify-start gap-3">
-                        <Heart className="w-4 h-4" />
-                        Prayer Wall
-                      </Button>
-                    </Link>
-                    
-                    <div className="border-t border-border my-4" />
-                    
-                    <Link to="/profile">
-                      <Button variant="ghost" className="w-full justify-start gap-3">
-                        <User className="w-4 h-4" />
-                        Profile
-                      </Button>
-                    </Link>
-                    <Link to="/progress">
-                      <Button variant="ghost" className="w-full justify-start gap-3">
-                        <TrendingUp className="w-4 h-4" />
-                        Progress
-                      </Button>
-                    </Link>
-                    
-                    <div className="border-t border-border my-4" />
-                    
-                    <Button variant="outline" className="w-full justify-start gap-3" onClick={handleSignOut}>
-                      <LogOut className="w-4 h-4" />
-                      Sign Out
-                    </Button>
-                  </nav>
-                </SheetContent>
-              </Sheet>
             </div>
           </div>
         </div>
