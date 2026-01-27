@@ -41,14 +41,14 @@ export function MediaInquiryForm({ trigger }: MediaInquiryFormProps) {
       const validated = inquirySchema.parse(formData);
 
       const { error } = await supabase
-        .from('resource_suggestions')
+        .from('media_inquiries')
         .insert({
-          title: `Media Inquiry: ${validated.inquiryType}`,
-          description: validated.message,
-          category: 'media-inquiry',
-          resource_type: validated.inquiryType,
-          url: validated.email,
-          user_id: (await supabase.auth.getUser()).data.user?.id || 'anonymous'
+          name: validated.name,
+          email: validated.email,
+          organization: validated.organization || null,
+          inquiry_type: validated.inquiryType,
+          message: validated.message,
+          user_id: (await supabase.auth.getUser()).data.user?.id || null
         });
 
       if (error) throw error;

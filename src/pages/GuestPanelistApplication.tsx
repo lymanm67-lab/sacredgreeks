@@ -77,13 +77,18 @@ const GuestPanelistApplication = () => {
   const onSubmit = async (values: FormValues) => {
     setIsSubmitting(true);
     try {
-      // Store in coaching_waitlist table with a specific status for panelist applications
-      const { error } = await supabase.from("coaching_waitlist").insert({
+      // Store in dedicated podcast_guest_applications table
+      const { error } = await supabase.from("podcast_guest_applications").insert({
         full_name: values.fullName,
         email: values.email,
-        organization: values.greekOrganization + (values.chapterName ? ` - ${values.chapterName}` : ''),
-        goals: `GUEST PANELIST APPLICATION\n\nTopic Expertise: ${values.topicExpertise}\n\nWhy They'd Be Great: ${values.whyGuest}\n\nPrevious Speaking: ${values.previousSpeaking || 'N/A'}\n\nLinkedIn: ${values.linkedIn || 'N/A'}\n\nPhone: ${values.phone || 'N/A'}`,
-        status: "panelist_pending"
+        phone: values.phone || null,
+        greek_organization: values.greekOrganization,
+        chapter_name: values.chapterName || null,
+        topic_expertise: values.topicExpertise,
+        why_guest: values.whyGuest,
+        previous_speaking: values.previousSpeaking || null,
+        linkedin_url: values.linkedIn || null,
+        application_type: 'panelist'
       });
 
       if (error) throw error;
