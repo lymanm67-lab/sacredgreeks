@@ -183,7 +183,6 @@ const App = () => (
                     <BrowserRouter>
                       <GlobalSEO />
                       <DemoBanner />
-                      <DemoModeTour />
                       <DemoOverlayWithTemplate />
                       <DemoComparisonWrapper />
                       <DemoAnalyticsDashboardWrapper />
@@ -193,6 +192,7 @@ const App = () => (
                       <WhatsNewModal />
                       <UpdateNotification />
                       <AnalyticsProvider>
+                  <DemoModeTour />
                   <Suspense fallback={<PageLoader />}>
                     <Routes>
                     {/* Public routes - no sidebar */}
