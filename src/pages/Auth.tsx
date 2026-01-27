@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Home, Eye, EyeOff, RefreshCw, AlertTriangle, BookOpen, Heart, Shield, Quote, Star, Users, ChevronRight, ChevronDown, ChevronUp, Sparkles, Play, User, Moon, Zap, Video, UserCheck, FileDown, Headphones } from 'lucide-react';
+import { Home, Eye, EyeOff, AlertTriangle, BookOpen, Heart, Shield, Quote, ChevronRight, ChevronDown, ChevronUp, Sparkles, Play, User, Moon, Zap, Video, UserCheck, FileDown, Headphones } from 'lucide-react';
 import logo from '@/assets/sacred-greeks-logo.png';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -871,9 +871,12 @@ const Auth = () => {
               variant="outline" 
               size="lg"
               className="border-white/30 text-white hover:bg-white/10"
-              asChild
+              onClick={() => {
+                setDemoMode(true);
+                navigate('/dashboard');
+              }}
             >
-              <Link to="/demo">Try Demo First</Link>
+              Try Demo First
             </Button>
           </div>
         </div>
