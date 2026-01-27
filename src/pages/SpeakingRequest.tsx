@@ -5,8 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar, MapPin, Users, Mic, CheckCircle, ArrowLeft } from "lucide-react";
+import { Calendar, MapPin, Users, Mic, CheckCircle, ArrowLeft, Sparkles, Target, Flame } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Badge } from "@/components/ui/badge";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -135,6 +137,163 @@ const SpeakingRequest = () => {
                 </p>
               </div>
             </div>
+          </CardContent>
+        </Card>
+
+        {/* Featured Presentations */}
+        <Card className="bg-gradient-to-br from-indigo-900/50 to-purple-900/40 border-purple-500/30 backdrop-blur-sm">
+          <CardHeader>
+            <CardTitle className="text-white flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-amber-400" />
+              Featured Presentations
+            </CardTitle>
+            <CardDescription className="text-gray-300">
+              Dr. Montgomery's most requested keynotes and workshops
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Accordion type="single" collapsible className="space-y-3">
+              {/* Presentation 1 */}
+              <AccordionItem value="presentation-1" className="border border-blue-500/30 rounded-lg bg-blue-950/40 px-4">
+                <AccordionTrigger className="hover:no-underline py-4">
+                  <div className="flex items-start gap-3 text-left">
+                    <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 shrink-0">
+                      <Target className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-white text-base leading-tight">
+                        Understanding the Sacred Side of Greek Life
+                      </h4>
+                      <Badge variant="outline" className="mt-2 text-xs border-blue-400/50 text-blue-300">
+                        Keynote
+                      </Badge>
+                    </div>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-300 space-y-4 pb-4">
+                  <p>
+                    Through vivid storytelling and historical insight, Dr. Montgomery reveals how these organizations were never just social groups, but engines of justice, scholarship, and service that transformed both campuses and communities.
+                  </p>
+                  <p>
+                    Many outsiders misunderstand Greek Life, missing its legacy of faith-infused service. This keynote fills that knowledge gap with compelling narrative and historical truth. Dr. Montgomery weaves together moments from campus life, civil rights history, and personal experience to reveal how Greek Life has served as a bridge between faith, identity, and community progress.
+                  </p>
+                  <p className="text-sky-200">
+                    Rather than focusing on division or controversy, this keynote reframes Greek Life as a living force for unity, character development, and cultural pride.
+                  </p>
+                  <div className="mt-4 p-4 bg-blue-900/40 rounded-lg border border-blue-500/20">
+                    <h5 className="font-semibold text-sky-300 mb-2">Learning Objectives:</h5>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+                        <span>Deeper understanding of the sacred mission embedded in Greek Life traditions and the transformative power of these organizations throughout history.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+                        <span>Enhanced community understanding that opens pathways for partnership between Greek and non-Greek students in pursuit of shared campus goals.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+                        <span>Clear recognition of BGLOs as incubators for leadership development and faith in action, producing generations of changemakers.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* Presentation 2 */}
+              <AccordionItem value="presentation-2" className="border border-purple-500/30 rounded-lg bg-purple-950/40 px-4">
+                <AccordionTrigger className="hover:no-underline py-4">
+                  <div className="flex items-start gap-3 text-left">
+                    <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500 to-fuchsia-500 shrink-0">
+                      <Users className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-white text-base leading-tight">
+                        Bridging the Divide: Faith, Culture, and the Future of Black Greek Life
+                      </h4>
+                      <Badge variant="outline" className="mt-2 text-xs border-purple-400/50 text-purple-300">
+                        Workshop / Training
+                      </Badge>
+                    </div>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-300 space-y-4 pb-4">
+                  <p>
+                    Today's students stand on the frontlines of some of the most complex identity conversations happening on college campuses today. For many students, especially those within the Divine Nine, the question of how to reconcile faith with fraternity or sorority membership runs deep.
+                  </p>
+                  <p>
+                    In this session, Dr. Montgomery takes students beyond surface-level programming into the heart of purpose-driven mentorship. Through historical insight, lived experience, and practical frameworks, he helps students understand the spiritual and cultural layers that shape Greek Life identity.
+                  </p>
+                  <p className="text-purple-200">
+                    Attendees will walk away with the vocabulary, perspective, and tools to help honor their beliefs without abandoning the sense of belonging, tradition, and service that Greek Life provides. This is not just about building student organizations; it is about mentoring whole people.
+                  </p>
+                  <div className="mt-4 p-4 bg-purple-900/40 rounded-lg border border-purple-500/20">
+                    <h5 className="font-semibold text-purple-300 mb-2">Learning Objectives:</h5>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+                        <span>A practical guide for navigating faith-related concerns with confidence.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+                        <span>Increased confidence in handling sensitive student conversations.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+                        <span>A replicable model for inclusive, purpose-driven Greek Life leadership.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* Presentation 3 */}
+              <AccordionItem value="presentation-3" className="border border-amber-500/30 rounded-lg bg-amber-950/40 px-4">
+                <AccordionTrigger className="hover:no-underline py-4">
+                  <div className="flex items-start gap-3 text-left">
+                    <div className="p-2 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 shrink-0">
+                      <Flame className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-white text-base leading-tight">
+                        Reclaim the Fire: Intake with Purpose, Passion, and Pride in BGLOs
+                      </h4>
+                      <Badge variant="outline" className="mt-2 text-xs border-amber-400/50 text-amber-300">
+                        High-Energy Session
+                      </Badge>
+                    </div>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-300 space-y-4 pb-4">
+                  <p>
+                    This high-energy session speaks directly to the heart of every undergraduate member who has ever wondered if their letters still carry the same meaning they once did. Dr. Montgomery helps students reconnect with the founding principles of brotherhood, sisterhood, scholarship, and service, while exploring how to live those ideals in a modern world.
+                  </p>
+                  <p>
+                    Through humor, transparency, and truth, Dr. Montgomery shows how reclaiming the original mission of Black Greek Letter Organizations can reignite passion, deepen engagement, and rebuild pride within chapters.
+                  </p>
+                  <p className="text-amber-200">
+                    This is not about nostalgia; it's about bringing timeless values into contemporary campus culture with authenticity and excellence.
+                  </p>
+                  <div className="mt-4 p-4 bg-amber-900/40 rounded-lg border border-amber-500/20">
+                    <h5 className="font-semibold text-amber-300 mb-2">Learning Objectives:</h5>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+                        <span>Rediscover founding principles and the revolutionary vision that birthed your organization.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+                        <span>Apply values-based intake strategies that attract mission-aligned members.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-400 shrink-0 mt-0.5" />
+                        <span>Build chapter cultures that sustain engagement, excellence, and authentic brotherhood/sisterhood.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </CardContent>
         </Card>
 
