@@ -21,7 +21,6 @@ import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
 import { prefetchCommonRoutes } from '@/hooks/use-prefetch';
 import { useRealtimeNotifications } from '@/hooks/use-realtime-notifications';
 import { SkeletonDashboard } from '@/components/ui/SkeletonCard';
-import { DashboardTrainingProgress } from '@/components/training/DashboardTrainingProgress';
 import { DashboardAIAssistant } from '@/components/dashboard/DashboardAIAssistant';
 import { LearningPathsMap } from '@/components/dashboard/LearningPathsMap';
 import { PathCompletionAchievements } from '@/components/dashboard/PathCompletionAchievements';
@@ -263,11 +262,6 @@ const Dashboard = () => {
           {/* Path Completion Achievements */}
           <div className="animate-fade-in" style={{ animationDelay: '0.27s' }}>
             <PathCompletionAchievements />
-          </div>
-
-          {/* Training Progress Section */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
-            <DashboardTrainingProgress />
           </div>
 
           {/* Featured Actions - The 3 Core Tools */}
