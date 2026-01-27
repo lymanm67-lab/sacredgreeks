@@ -596,6 +596,24 @@ const SpeakingRequest = () => {
                 </div>
               </div>
 
+              {/* Terms & Disclosures */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-sky-300 border-b border-sky-800/50 pb-2">
+                  Terms & Disclosures
+                </h3>
+                <div className="rounded-md border border-sky-500/20 p-4 bg-sky-900/20 space-y-3">
+                  <p className="text-sky-200/80 text-sm leading-relaxed">
+                    <strong className="text-sky-100">Media Usage Notice:</strong> By submitting this request, you acknowledge that the host (your organization) grants Dr. Lyman T. Montgomery and Sacred Greeks the right to record, photograph, and use all media from the speaking engagement for promotional purposes, including social media, website content, marketing materials, and future broadcast distribution.
+                  </p>
+                  <p className="text-sky-200/80 text-sm leading-relaxed">
+                    <strong className="text-sky-100">Cancellation Policy:</strong> Cancellations made less than 30 days before the event may be subject to a cancellation fee. Rescheduling requests should be made as early as possible.
+                  </p>
+                  <p className="text-sky-200/80 text-sm leading-relaxed">
+                    <strong className="text-sky-100">Travel & Accommodations:</strong> Host organization is responsible for all travel expenses (airfare, lodging, ground transportation, and meals) in addition to the speaking fee.
+                  </p>
+                </div>
+              </div>
+
               <Button
                 type="submit"
                 disabled={isSubmitting}
