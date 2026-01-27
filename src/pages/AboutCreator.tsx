@@ -178,7 +178,7 @@ const AboutCreator = () => {
                       Invite Dr. Montgomery to your next event
                     </p>
                     <Button variant="outline" size="sm" asChild className="border-sky-400 text-sky-300 hover:bg-sky-500/20">
-                      <Link to="/guest-panelist-application">
+                      <Link to="/speaking-request">
                         Request Invite <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>
