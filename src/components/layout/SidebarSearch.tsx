@@ -31,6 +31,7 @@ import {
   BarChart3,
   Shield,
   Wifi,
+  Headphones,
 } from "lucide-react";
 
 const navigationItems = [
@@ -45,6 +46,7 @@ const navigationItems = [
   { title: "Resources", url: "/resources", icon: Library, keywords: ["documents", "pdfs", "guides"] },
   { title: "Symbol Guide", url: "/symbol-guide", icon: Shapes, keywords: ["meanings", "greek", "symbols"] },
   { title: "Video Library", url: "/video-library", icon: Video, keywords: ["watch", "training"] },
+  { title: "Podcast", url: "/podcast", icon: Headphones, keywords: ["audio", "listen", "episodes", "rss", "sacred greeks"] },
   { title: "Study Guide", url: "/study", icon: ClipboardList, keywords: ["lessons", "curriculum"] },
   { title: "Achievements", url: "/achievements", icon: Trophy, keywords: ["badges", "rewards", "points"] },
   { title: "Profile", url: "/profile", icon: User, keywords: ["account", "settings", "personal"] },
@@ -54,6 +56,7 @@ const navigationItems = [
   { title: "FAQ", url: "/faq", icon: HelpCircle, keywords: ["help", "questions", "support"] },
   { title: "Offline Settings", url: "/offline-settings", icon: Wifi, keywords: ["download", "sync"] },
   { title: "Admin", url: "/admin", icon: Shield, keywords: ["manage", "administration"] },
+  { title: "Guest Panelist Application", url: "/guest-panelist-application", icon: User, keywords: ["apply", "speaker", "webinar", "panelist"] },
 ];
 
 interface SidebarSearchProps {
