@@ -156,11 +156,22 @@ All colors MUST be HSL.
 
 body {
   @apply bg-background text-foreground;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 /* Smooth scroll behavior */
 html {
   scroll-behavior: smooth;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Prevent any component (blur/glow/absolute) from creating horizontal scroll */
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 /* Scroll animations for mobile */
