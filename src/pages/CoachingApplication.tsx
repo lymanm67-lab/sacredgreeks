@@ -279,6 +279,19 @@ export default function CoachingApplication() {
                 />
               </div>
 
+              {/* Disclosures */}
+              <div className="rounded-md border border-border/50 p-4 bg-muted/30 space-y-2">
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  <strong className="text-foreground">Confidentiality:</strong> All coaching conversations are confidential. Information shared will not be disclosed without your consent, except as required by law.
+                </p>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  <strong className="text-foreground">No Guarantee of Acceptance:</strong> Submitting this application does not guarantee placement in a coaching program. We review all applications and will contact you regarding next steps.
+                </p>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  <strong className="text-foreground">Response Timeline:</strong> Expect to hear back within 48 business hours regarding your application status.
+                </p>
+              </div>
+
               <Button
                 type="submit"
                 disabled={isSubmitting}
@@ -295,7 +308,7 @@ export default function CoachingApplication() {
               </Button>
 
               <p className="text-xs text-center text-muted-foreground">
-                By submitting this form, you agree to be contacted regarding coaching opportunities.
+                By submitting this form, you agree to the terms above and consent to be contacted regarding coaching opportunities.
               </p>
             </form>
           </CardContent>

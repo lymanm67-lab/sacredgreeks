@@ -165,6 +165,16 @@ export function MediaInquiryForm({ trigger }: MediaInquiryFormProps) {
             </p>
           </div>
 
+          {/* Disclosures */}
+          <div className="rounded-md border border-border/50 p-3 bg-muted/30 space-y-1">
+            <p className="text-muted-foreground text-xs leading-relaxed">
+              <strong className="text-foreground">Response Timeline:</strong> We typically respond to inquiries within 24-48 business hours.
+            </p>
+            <p className="text-muted-foreground text-xs leading-relaxed">
+              <strong className="text-foreground">Media Use:</strong> Information shared may be used to evaluate partnership opportunities. We will contact you before any public use of your inquiry details.
+            </p>
+          </div>
+
           <div className="flex gap-3 justify-end pt-4">
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
               Cancel
