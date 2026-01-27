@@ -11,17 +11,19 @@ import {
   MessageSquare,
   Users, 
   GraduationCap,
-  AlertTriangle,
-  Shield,
+  ShieldAlert,
+  Compass,
   Zap,
   Trophy,
   Bell,
   Settings, 
   LogOut,
-  UserCheck,
+  Church,
   Video,
-  Building2,
-  X,
+  User,
+  ShoppingBag,
+  Headphones,
+  Mic,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -48,13 +50,22 @@ const communityNavItems = [
   { title: "Group Coaching", url: "/community", icon: GraduationCap, featureId: null, iconColor: "text-orange-500" },
 ];
 
+// Organized logically - Dr. Lyman, Podcast, Resources, System
 const toolsNavItems = [
-  { title: "Greek Life", url: "/greek-life", icon: Building2, featureId: null, iconColor: "text-violet-500" },
-  { title: "Anti-Hazing", url: "/anti-hazing", icon: AlertTriangle, featureId: null, iconColor: "text-red-500" },
-  { title: "Symbol Guide", url: "/symbol-guide", icon: Shield, featureId: null, iconColor: "text-fuchsia-500" },
+  // About Dr. Lyman group
+  { title: "About Creator", url: "/about-creator", icon: User, featureId: null, iconColor: "text-sacred" },
+  { title: "Order Book", url: "/order-book", icon: ShoppingBag, featureId: null, iconColor: "text-amber-500" },
+  { title: "Book Dr. Lyman", url: "/speaking-request", icon: Calendar, featureId: null, iconColor: "text-fuchsia-500" },
+  // Podcast group
+  { title: "Podcast", url: "/podcast", icon: Headphones, featureId: null, iconColor: "text-purple-500" },
+  { title: "Be on Podcast", url: "/guest-panelist-application", icon: Mic, featureId: null, iconColor: "text-purple-500" },
+  // Resources group
+  { title: "Symbol Guide", url: "/symbol-guide", icon: Compass, featureId: null, iconColor: "text-teal-500" },
+  { title: "Video Library", url: "/video-library", icon: Video, featureId: null, iconColor: "text-sky-500" },
   { title: "Myth Busters", url: "/myth-buster", icon: Zap, featureId: null, iconColor: "text-orange-500" },
-  { title: "Video Library", url: "/video-library", icon: Video, featureId: null, iconColor: "text-pink-500" },
-  { title: "Church Leaders", url: "/church-leaders", icon: UserCheck, featureId: null, iconColor: "text-purple-500" },
+  { title: "Anti-Hazing", url: "/anti-hazing", icon: ShieldAlert, featureId: null, iconColor: "text-red-500" },
+  { title: "Church Leaders", url: "/church-leaders", icon: Church, featureId: null, iconColor: "text-lime-500" },
+  // System group
   { title: "Achievements", url: "/achievements", icon: Trophy, featureId: 'achievements', iconColor: "text-amber-400" },
   { title: "Notifications", url: "/notification-preferences", icon: Bell, featureId: null, iconColor: "text-fuchsia-500" },
   { title: "Settings", url: "/profile", icon: Settings, featureId: null, iconColor: "text-slate-500" },

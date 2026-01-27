@@ -44,10 +44,18 @@ const navigationItems = [
   { title: "Forum", url: "/forum", icon: MessageSquare, keywords: ["discussions", "community", "chat"] },
   { title: "Community", url: "/community", icon: Users, keywords: ["organization", "chapter"] },
   { title: "Resources", url: "/resources", icon: Library, keywords: ["documents", "pdfs", "guides"] },
+  // About Dr. Lyman
+  { title: "About Creator", url: "/about-creator", icon: User, keywords: ["dr lyman", "author", "founder"] },
+  { title: "Order Book", url: "/order-book", icon: Book, keywords: ["sacred not sinful", "purchase", "amazon"] },
+  { title: "Book Dr. Lyman", url: "/speaking-request", icon: User, keywords: ["speak", "invite", "event"] },
+  // Podcast
+  { title: "Podcast", url: "/podcast", icon: Headphones, keywords: ["audio", "listen", "episodes", "rss", "sacred greeks"] },
+  { title: "Be on Podcast", url: "/guest-panelist-application", icon: User, keywords: ["apply", "speaker", "webinar", "panelist", "guest"] },
+  // Resources
   { title: "Symbol Guide", url: "/symbol-guide", icon: Shapes, keywords: ["meanings", "greek", "symbols"] },
   { title: "Video Library", url: "/video-library", icon: Video, keywords: ["watch", "training"] },
-  { title: "Podcast", url: "/podcast", icon: Headphones, keywords: ["audio", "listen", "episodes", "rss", "sacred greeks"] },
   { title: "Study Guide", url: "/study", icon: ClipboardList, keywords: ["lessons", "curriculum"] },
+  // System
   { title: "Achievements", url: "/achievements", icon: Trophy, keywords: ["badges", "rewards", "points"] },
   { title: "Profile", url: "/profile", icon: User, keywords: ["account", "settings", "personal"] },
   { title: "Bookmarks", url: "/bookmarks", icon: Bookmark, keywords: ["saved", "favorites"] },
@@ -56,7 +64,6 @@ const navigationItems = [
   { title: "FAQ", url: "/faq", icon: HelpCircle, keywords: ["help", "questions", "support"] },
   { title: "Offline Settings", url: "/offline-settings", icon: Wifi, keywords: ["download", "sync"] },
   { title: "Admin", url: "/admin", icon: Shield, keywords: ["manage", "administration"] },
-  { title: "Guest Panelist Application", url: "/guest-panelist-application", icon: User, keywords: ["apply", "speaker", "webinar", "panelist"] },
 ];
 
 interface SidebarSearchProps {
