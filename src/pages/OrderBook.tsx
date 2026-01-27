@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { BookOpen, ExternalLink, Star, CheckCircle2, Quote } from "lucide-react";
-import { useExternalLinks } from "@/hooks/use-external-links";
+import { ExternalContentModal } from "@/components/ui/ExternalContentModal";
 import bookCover from "@/assets/sacred-not-sinful-cover.jpg";
 
 const OrderBook = () => {
-  const { openExternalLink } = useExternalLinks();
   const bookUrl = "https://a.co/d/aAtPGAM";
 
   const bookHighlights = [
@@ -68,15 +67,22 @@ const OrderBook = () => {
               </ul>
             </div>
 
-            <Button 
-              size="lg" 
-              className="w-full bg-sacred hover:bg-sacred/90"
-              onClick={() => openExternalLink(bookUrl)}
-            >
-              <BookOpen className="mr-2 h-5 w-5" />
-              Order on Amazon
-              <ExternalLink className="ml-2 h-4 w-4" />
-            </Button>
+            <ExternalContentModal
+              url={bookUrl}
+              title="Sacred Not Sinful - Order on Amazon"
+              description="Order your copy of Sacred Not Sinful by Dr. Lyman Montgomery"
+              category="Book"
+              trigger={
+                <Button 
+                  size="lg" 
+                  className="w-full bg-sacred hover:bg-sacred/90"
+                >
+                  <BookOpen className="mr-2 h-5 w-5" />
+                  Order on Amazon
+                  <ExternalLink className="ml-2 h-4 w-4" />
+                </Button>
+              }
+            />
 
             <p className="text-xs text-muted-foreground text-center">
               Available in paperback, hardcover, and Kindle formats — audio coming soon!
