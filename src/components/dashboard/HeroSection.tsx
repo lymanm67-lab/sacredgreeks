@@ -150,7 +150,7 @@ export const HeroSection = () => {
 
             {/* Quick Action Buttons */}
             <motion.div 
-              className="flex flex-nowrap gap-3 overflow-x-auto pb-2"
+              className="flex flex-nowrap gap-2"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
@@ -164,12 +164,10 @@ export const HeroSection = () => {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className={`bg-gradient-to-r ${action.color} text-white border-0 shadow-lg hover:shadow-xl hover:brightness-110 transition-all group text-xs px-2.5 py-1.5 h-auto`}
+                      className={`bg-gradient-to-r ${action.color} text-white border-0 shadow-lg hover:shadow-xl hover:brightness-110 transition-all group text-[11px] sm:text-xs px-2 sm:px-3 py-1 h-auto whitespace-nowrap`}
                     >
-                      <action.icon className="w-3.5 h-3.5 mr-1.5" />
-                      <span className="hidden sm:inline">{action.label}</span>
-                      <span className="sm:hidden">{action.label.split(' ')[0]}</span>
-                      <ChevronRight className="w-3 h-3 ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all hidden sm:block" />
+                      <action.icon className="w-3 h-3 sm:w-3.5 sm:h-3.5 mr-1" />
+                      {action.label}
                     </Button>
                   </motion.div>
                 </Link>
