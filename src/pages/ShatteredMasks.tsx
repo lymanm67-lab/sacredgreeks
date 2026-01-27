@@ -1,59 +1,365 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Heart, ArrowLeft, Drama, ExternalLink, Save, Trash2, Calendar, Sparkles, CheckCircle2, Printer, Download } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import { Progress } from '@/components/ui/progress';
+import { 
+  Heart, 
+  ArrowLeft, 
+  ArrowRight,
+  Drama, 
+  Save, 
+  Trash2, 
+  Calendar, 
+  Sparkles, 
+  CheckCircle2, 
+  Printer, 
+  Download,
+  Shield,
+  Users,
+  MessageCircle,
+  Eye,
+  Brain,
+  Lightbulb,
+  Target,
+  RotateCcw,
+  Home,
+  LogIn
+} from 'lucide-react';
+import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { AssessmentInstructions } from '@/components/assessment/AssessmentInstructions';
 import { AssessmentResultsPanel } from '@/components/assessment/AssessmentResultsPanel';
+import { SavedAssessmentPrompt } from '@/components/assessment/SavedAssessmentPrompt';
+import { useSavedAssessment } from '@/hooks/use-saved-assessment';
 import jsPDF from 'jspdf';
 
-// Archetype definitions
+// Archetype definitions with scoring weights
 const archetypes = [
   {
     name: "The Defender",
     description: "You stand firm in your faith while actively defending your choice to be in Greek life. You're confident in your ability to integrate both identities.",
     strengths: ["Strong convictions", "Articulate in expressing beliefs", "Confident under pressure"],
-    growthAreas: ["May come across as defensive", "Could benefit from more listening", "Balance assertiveness with humility"]
+    growthAreas: ["May come across as defensive", "Could benefit from more listening", "Balance assertiveness with humility"],
+    icon: Shield
   },
   {
     name: "The Bridge Builder",
     description: "You seek to create harmony between your faith community and Greek life. You're a natural mediator who helps others see common ground.",
     strengths: ["Diplomatic", "Empathetic", "Skilled at finding common ground"],
-    growthAreas: ["May avoid necessary conflict", "Could struggle with firm boundaries", "May over-compromise on values"]
+    growthAreas: ["May avoid necessary conflict", "Could struggle with firm boundaries", "May over-compromise on values"],
+    icon: Users
   },
   {
     name: "The Silent Struggler",
     description: "You internalize the tension between your faith and Greek life, often keeping your struggles private. You may feel isolated in your journey.",
     strengths: ["Reflective", "Thoughtful", "Non-judgmental of others"],
-    growthAreas: ["Need to find trusted confidants", "Should express feelings more openly", "May benefit from community support"]
+    growthAreas: ["Need to find trusted confidants", "Should express feelings more openly", "May benefit from community support"],
+    icon: MessageCircle
   },
   {
     name: "The Compartmentalizer",
     description: "You keep your faith and Greek life in separate boxes, rarely allowing them to interact. This helps you navigate both worlds but may create internal tension.",
     strengths: ["Adaptable", "Able to relate to different groups", "Practical"],
-    growthAreas: ["Integration of identity", "Authenticity across contexts", "Addressing internal contradictions"]
+    growthAreas: ["Integration of identity", "Authenticity across contexts", "Addressing internal contradictions"],
+    icon: Eye
   },
   {
     name: "The Questioner",
     description: "You're actively wrestling with questions about how faith and Greek life can coexist. You're on a journey of discovery and open to new perspectives.",
     strengths: ["Intellectually curious", "Open-minded", "Growth-oriented"],
-    growthAreas: ["May experience analysis paralysis", "Could benefit from decisive action", "Finding peace amid uncertainty"]
+    growthAreas: ["May experience analysis paralysis", "Could benefit from decisive action", "Finding peace amid uncertainty"],
+    icon: Brain
   },
   {
     name: "The Integrator",
     description: "You've found ways to seamlessly blend your faith and Greek life into a unified identity. You see both as complementary rather than conflicting.",
     strengths: ["Holistic worldview", "Authentic", "Role model for others"],
-    growthAreas: ["May not relate to those still struggling", "Could become complacent", "Continuing growth and learning"]
+    growthAreas: ["May not relate to those still struggling", "Could become complacent", "Continuing growth and learning"],
+    icon: Lightbulb
   }
+];
+
+interface Question {
+  id: number;
+  text: string;
+  subtext?: string;
+  options: {
+    text: string;
+    value: string;
+    scores: {
+      defender: number;
+      bridgeBuilder: number;
+      silentStruggler: number;
+      compartmentalizer: number;
+      questioner: number;
+      integrator: number;
+    };
+  }[];
+}
+
+// Assessment questions designed to identify archetype
+const questions: Question[] = [
+  {
+    id: 1,
+    text: "When someone criticizes Greek life as being 'un-Christian,' how do you typically respond?",
+    subtext: "Think about your natural reaction",
+    options: [
+      { 
+        text: "I immediately share biblical principles that support my involvement", 
+        value: "defend",
+        scores: { defender: 3, bridgeBuilder: 1, silentStruggler: 0, compartmentalizer: 0, questioner: 0, integrator: 1 }
+      },
+      { 
+        text: "I try to find common ground and help them understand my perspective", 
+        value: "bridge",
+        scores: { defender: 0, bridgeBuilder: 3, silentStruggler: 0, compartmentalizer: 0, questioner: 1, integrator: 1 }
+      },
+      { 
+        text: "I usually stay quiet and process my feelings later", 
+        value: "silent",
+        scores: { defender: 0, bridgeBuilder: 0, silentStruggler: 3, compartmentalizer: 1, questioner: 1, integrator: 0 }
+      },
+      { 
+        text: "I keep those conversations separate from my Greek life activities", 
+        value: "separate",
+        scores: { defender: 0, bridgeBuilder: 0, silentStruggler: 1, compartmentalizer: 3, questioner: 0, integrator: 0 }
+      },
+      { 
+        text: "I genuinely want to understand their concerns and explore them together", 
+        value: "question",
+        scores: { defender: 0, bridgeBuilder: 1, silentStruggler: 0, compartmentalizer: 0, questioner: 3, integrator: 1 }
+      },
+    ],
+  },
+  {
+    id: 2,
+    text: "How do you typically introduce your Greek life involvement to church friends?",
+    subtext: "Consider how you present this part of your life",
+    options: [
+      { 
+        text: "I proudly share how it strengthens my leadership and service to God", 
+        value: "proud",
+        scores: { defender: 2, bridgeBuilder: 1, silentStruggler: 0, compartmentalizer: 0, questioner: 0, integrator: 3 }
+      },
+      { 
+        text: "I carefully explain the positive aspects while acknowledging concerns", 
+        value: "careful",
+        scores: { defender: 1, bridgeBuilder: 3, silentStruggler: 0, compartmentalizer: 0, questioner: 1, integrator: 1 }
+      },
+      { 
+        text: "I rarely bring it up unless directly asked", 
+        value: "avoid",
+        scores: { defender: 0, bridgeBuilder: 0, silentStruggler: 3, compartmentalizer: 2, questioner: 0, integrator: 0 }
+      },
+      { 
+        text: "I keep my church and Greek friendships mostly separate", 
+        value: "separate",
+        scores: { defender: 0, bridgeBuilder: 0, silentStruggler: 1, compartmentalizer: 3, questioner: 0, integrator: 0 }
+      },
+      { 
+        text: "I share honestly, including my own questions and journey", 
+        value: "honest",
+        scores: { defender: 0, bridgeBuilder: 1, silentStruggler: 0, compartmentalizer: 0, questioner: 3, integrator: 1 }
+      },
+    ],
+  },
+  {
+    id: 3,
+    text: "When you encounter a ritual or tradition you're unsure about spiritually, what do you do?",
+    subtext: "Think about your approach to uncertain situations",
+    options: [
+      { 
+        text: "Research it thoroughly and form a confident position I can defend", 
+        value: "research",
+        scores: { defender: 3, bridgeBuilder: 0, silentStruggler: 0, compartmentalizer: 0, questioner: 2, integrator: 1 }
+      },
+      { 
+        text: "Discuss it with both faith mentors and Greek advisors to find balance", 
+        value: "discuss",
+        scores: { defender: 0, bridgeBuilder: 3, silentStruggler: 0, compartmentalizer: 0, questioner: 1, integrator: 2 }
+      },
+      { 
+        text: "Participate but keep my concerns to myself", 
+        value: "participate_quiet",
+        scores: { defender: 0, bridgeBuilder: 0, silentStruggler: 3, compartmentalizer: 2, questioner: 0, integrator: 0 }
+      },
+      { 
+        text: "Go through the motions without deeply analyzing the meaning", 
+        value: "motions",
+        scores: { defender: 0, bridgeBuilder: 0, silentStruggler: 1, compartmentalizer: 3, questioner: 0, integrator: 0 }
+      },
+      { 
+        text: "Sit with the uncertainty and explore what it might mean for me", 
+        value: "explore",
+        scores: { defender: 0, bridgeBuilder: 1, silentStruggler: 0, compartmentalizer: 0, questioner: 3, integrator: 1 }
+      },
+    ],
+  },
+  {
+    id: 4,
+    text: "How do you feel about being a Christian in Greek life?",
+    subtext: "Your honest emotional response",
+    options: [
+      { 
+        text: "Confident — I see no conflict and can articulate why", 
+        value: "confident",
+        scores: { defender: 2, bridgeBuilder: 1, silentStruggler: 0, compartmentalizer: 0, questioner: 0, integrator: 3 }
+      },
+      { 
+        text: "Hopeful — I believe both can be harmonized with effort", 
+        value: "hopeful",
+        scores: { defender: 0, bridgeBuilder: 3, silentStruggler: 0, compartmentalizer: 0, questioner: 1, integrator: 2 }
+      },
+      { 
+        text: "Conflicted — I often feel torn but keep it to myself", 
+        value: "conflicted",
+        scores: { defender: 0, bridgeBuilder: 0, silentStruggler: 3, compartmentalizer: 1, questioner: 1, integrator: 0 }
+      },
+      { 
+        text: "Pragmatic — I handle each world separately and it works", 
+        value: "pragmatic",
+        scores: { defender: 0, bridgeBuilder: 0, silentStruggler: 0, compartmentalizer: 3, questioner: 0, integrator: 0 }
+      },
+      { 
+        text: "Curious — I'm still exploring what this means for me", 
+        value: "curious",
+        scores: { defender: 0, bridgeBuilder: 0, silentStruggler: 0, compartmentalizer: 0, questioner: 3, integrator: 0 }
+      },
+    ],
+  },
+  {
+    id: 5,
+    text: "When a chapter event conflicts with a church commitment, what's your typical approach?",
+    subtext: "Think about how you navigate competing priorities",
+    options: [
+      { 
+        text: "I confidently prioritize faith and explain my values to my chapter", 
+        value: "faith_first",
+        scores: { defender: 3, bridgeBuilder: 1, silentStruggler: 0, compartmentalizer: 0, questioner: 0, integrator: 1 }
+      },
+      { 
+        text: "I try to find a way to honor both commitments creatively", 
+        value: "creative",
+        scores: { defender: 0, bridgeBuilder: 3, silentStruggler: 0, compartmentalizer: 0, questioner: 0, integrator: 3 }
+      },
+      { 
+        text: "I feel stressed but make a decision without discussing my conflict", 
+        value: "stressed",
+        scores: { defender: 0, bridgeBuilder: 0, silentStruggler: 3, compartmentalizer: 1, questioner: 1, integrator: 0 }
+      },
+      { 
+        text: "I pick whichever fits that week without much internal struggle", 
+        value: "flexible",
+        scores: { defender: 0, bridgeBuilder: 0, silentStruggler: 0, compartmentalizer: 3, questioner: 0, integrator: 0 }
+      },
+      { 
+        text: "I use it as an opportunity to reflect on my priorities", 
+        value: "reflect",
+        scores: { defender: 0, bridgeBuilder: 1, silentStruggler: 0, compartmentalizer: 0, questioner: 3, integrator: 1 }
+      },
+    ],
+  },
+  {
+    id: 6,
+    text: "How often do you think about the relationship between your faith and Greek life?",
+    subtext: "Your level of conscious reflection",
+    options: [
+      { 
+        text: "Often — it's important to me to have clear answers", 
+        value: "often_clear",
+        scores: { defender: 3, bridgeBuilder: 1, silentStruggler: 0, compartmentalizer: 0, questioner: 1, integrator: 1 }
+      },
+      { 
+        text: "Regularly — I actively work to bring them together", 
+        value: "regularly",
+        scores: { defender: 0, bridgeBuilder: 2, silentStruggler: 0, compartmentalizer: 0, questioner: 1, integrator: 3 }
+      },
+      { 
+        text: "Sometimes — usually when something triggers the question", 
+        value: "sometimes",
+        scores: { defender: 0, bridgeBuilder: 1, silentStruggler: 2, compartmentalizer: 1, questioner: 2, integrator: 0 }
+      },
+      { 
+        text: "Rarely — I prefer to keep them as separate experiences", 
+        value: "rarely",
+        scores: { defender: 0, bridgeBuilder: 0, silentStruggler: 0, compartmentalizer: 3, questioner: 0, integrator: 0 }
+      },
+      { 
+        text: "Constantly — I'm on an active journey of discovery", 
+        value: "constantly",
+        scores: { defender: 0, bridgeBuilder: 0, silentStruggler: 1, compartmentalizer: 0, questioner: 3, integrator: 0 }
+      },
+    ],
+  },
+  {
+    id: 7,
+    text: "What role does your Greek organization play in your spiritual growth?",
+    subtext: "Consider the impact on your faith journey",
+    options: [
+      { 
+        text: "It's a platform where I can boldly live out my faith", 
+        value: "platform",
+        scores: { defender: 3, bridgeBuilder: 1, silentStruggler: 0, compartmentalizer: 0, questioner: 0, integrator: 2 }
+      },
+      { 
+        text: "It provides opportunities to practice Christian virtues like service and love", 
+        value: "virtues",
+        scores: { defender: 1, bridgeBuilder: 2, silentStruggler: 0, compartmentalizer: 0, questioner: 0, integrator: 3 }
+      },
+      { 
+        text: "It's complicated — sometimes it helps, sometimes it challenges", 
+        value: "complicated",
+        scores: { defender: 0, bridgeBuilder: 0, silentStruggler: 3, compartmentalizer: 0, questioner: 2, integrator: 0 }
+      },
+      { 
+        text: "It's neutral — I grow spiritually elsewhere", 
+        value: "neutral",
+        scores: { defender: 0, bridgeBuilder: 0, silentStruggler: 1, compartmentalizer: 3, questioner: 0, integrator: 0 }
+      },
+      { 
+        text: "It raises questions that push my faith in new directions", 
+        value: "questions",
+        scores: { defender: 0, bridgeBuilder: 1, silentStruggler: 0, compartmentalizer: 0, questioner: 3, integrator: 1 }
+      },
+    ],
+  },
+  {
+    id: 8,
+    text: "How do you respond when a fellow Greek asks about your faith?",
+    subtext: "Your approach to faith conversations within Greek life",
+    options: [
+      { 
+        text: "I welcome it as an opportunity to share my testimony confidently", 
+        value: "welcome",
+        scores: { defender: 3, bridgeBuilder: 1, silentStruggler: 0, compartmentalizer: 0, questioner: 0, integrator: 2 }
+      },
+      { 
+        text: "I share openly and ask about their beliefs too — it's a two-way conversation", 
+        value: "dialogue",
+        scores: { defender: 0, bridgeBuilder: 3, silentStruggler: 0, compartmentalizer: 0, questioner: 1, integrator: 2 }
+      },
+      { 
+        text: "I feel uncomfortable and give a brief answer", 
+        value: "brief",
+        scores: { defender: 0, bridgeBuilder: 0, silentStruggler: 3, compartmentalizer: 2, questioner: 0, integrator: 0 }
+      },
+      { 
+        text: "I mention it casually but don't go deep — it's not the context", 
+        value: "casual",
+        scores: { defender: 0, bridgeBuilder: 0, silentStruggler: 1, compartmentalizer: 3, questioner: 0, integrator: 0 }
+      },
+      { 
+        text: "I'm honest about being on a journey and invite them into the conversation", 
+        value: "journey",
+        scores: { defender: 0, bridgeBuilder: 1, silentStruggler: 0, compartmentalizer: 0, questioner: 3, integrator: 1 }
+      },
+    ],
+  },
 ];
 
 interface SavedResult {
@@ -68,9 +374,9 @@ interface SavedResult {
 
 const instructionsConfig = {
   title: "Shattered Masks Assessment",
-  description: "Discover your archetype and understand how you navigate identity, faith, and Greek life. This external assessment helps reveal your unique approach to integrating multiple aspects of your identity.",
-  estimatedTime: "5-10 minutes",
-  questionCount: 15,
+  description: "Discover your archetype and understand how you navigate identity, faith, and Greek life. This assessment reveals your unique approach to integrating multiple aspects of your identity.",
+  estimatedTime: "5-7 minutes",
+  questionCount: 8,
   benefits: [
     "Discover your unique identity archetype",
     "Understand your strengths and growth areas",
@@ -78,22 +384,76 @@ const instructionsConfig = {
     "Get personalized insights for personal development"
   ],
   howToComplete: [
-    "Click 'Start Assessment' to open the external assessment",
-    "Complete all questions honestly",
-    "Note your archetype result when finished",
-    "Return here to save and track your results"
+    "Answer each question honestly based on your typical behavior",
+    "There are no right or wrong answers",
+    "Your archetype reveals your natural approach",
+    "Save your results to track your growth over time"
   ],
   whatResultsMean: "Your archetype reveals your primary approach to integrating faith and Greek life. Understanding your archetype helps you leverage your strengths while being aware of potential growth areas."
 };
 
+const calculateArchetype = (answers: Record<number, string>): { archetype: typeof archetypes[0], scores: Record<string, number>, confidence: number } => {
+  const totalScores = {
+    defender: 0,
+    bridgeBuilder: 0,
+    silentStruggler: 0,
+    compartmentalizer: 0,
+    questioner: 0,
+    integrator: 0
+  };
+
+  // Calculate scores from all answers
+  Object.entries(answers).forEach(([questionId, answerValue]) => {
+    const question = questions.find(q => q.id === parseInt(questionId));
+    if (question) {
+      const selectedOption = question.options.find(o => o.value === answerValue);
+      if (selectedOption) {
+        Object.entries(selectedOption.scores).forEach(([key, score]) => {
+          totalScores[key as keyof typeof totalScores] += score;
+        });
+      }
+    }
+  });
+
+  // Find the archetype with highest score
+  const archetypeMap: Record<string, typeof archetypes[0]> = {
+    defender: archetypes[0],
+    bridgeBuilder: archetypes[1],
+    silentStruggler: archetypes[2],
+    compartmentalizer: archetypes[3],
+    questioner: archetypes[4],
+    integrator: archetypes[5]
+  };
+
+  const maxScore = Math.max(...Object.values(totalScores));
+  const totalPossible = questions.length * 3; // Max 3 points per question
+  const confidence = Math.round((maxScore / totalPossible) * 100);
+  
+  const winningKey = Object.entries(totalScores).find(([_, score]) => score === maxScore)?.[0] || 'integrator';
+  
+  return {
+    archetype: archetypeMap[winningKey],
+    scores: totalScores,
+    confidence: Math.min(confidence + 40, 100) // Add base confidence
+  };
+};
+
 const ShatteredMasks = () => {
   const { user } = useAuth();
-  const { toast } = useToast();
-  const [selectedArchetype, setSelectedArchetype] = useState('');
-  const [notes, setNotes] = useState('');
+  const navigate = useNavigate();
+  
+  // Assessment state
+  const [showInstructions, setShowInstructions] = useState(true);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [answers, setAnswers] = useState<Record<number, string>>({});
+  const [showResults, setShowResults] = useState(false);
+  
+  // Saved results state
   const [savedResults, setSavedResults] = useState<SavedResult[]>([]);
   const [loading, setLoading] = useState(false);
-  const [saving, setSaving] = useState(false);
+
+  // Check for existing assessment
+  const { savedAssessment, isLoading: loadingSaved, hasSavedAssessment } = useSavedAssessment('shattered-masks');
 
   useEffect(() => {
     if (user) {
@@ -120,225 +480,78 @@ const ShatteredMasks = () => {
     }
   };
 
-  const handleSaveResult = async () => {
-    if (!user || !selectedArchetype) {
-      toast({
-        title: 'Please select an archetype',
-        description: 'Choose your archetype from the dropdown to save your result.',
-        variant: 'destructive'
-      });
-      return;
-    }
+  const handleStartAssessment = () => {
+    setShowInstructions(false);
+    setCurrentQuestion(0);
+    setAnswers({});
+    setShowResults(false);
+  };
 
-    setSaving(true);
-    try {
-      const archetype = archetypes.find(a => a.name === selectedArchetype);
-      
-      const { error } = await supabase
-        .from('shattered_masks_results')
-        .insert({
-          user_id: user.id,
-          archetype: selectedArchetype,
-          archetype_description: archetype?.description || null,
-          strengths: archetype?.strengths || null,
-          growth_areas: archetype?.growthAreas || null,
-          notes: notes || null
-        });
+  const handleAnswer = (value: string) => {
+    const newAnswers = { ...answers, [questions[currentQuestion].id]: value };
+    setAnswers(newAnswers);
+    
+    // Auto-advance after short delay
+    setTimeout(() => {
+      if (currentQuestion < questions.length - 1) {
+        setCurrentQuestion(currentQuestion + 1);
+      } else {
+        setShowResults(true);
+      }
+    }, 300);
+  };
 
-      if (error) throw error;
-
-      toast({
-        title: 'Result saved!',
-        description: 'Your Shattered Masks archetype has been saved to your profile.',
-      });
-
-      setSelectedArchetype('');
-      setNotes('');
-      await loadSavedResults();
-    } catch (error) {
-      console.error('Error saving result:', error);
-      toast({
-        title: 'Error saving result',
-        description: 'Please try again later.',
-        variant: 'destructive'
-      });
-    } finally {
-      setSaving(false);
+  const handlePrevious = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion(currentQuestion - 1);
     }
   };
 
-  const handleDeleteResult = async (id: string) => {
-    try {
-      const { error } = await supabase
-        .from('shattered_masks_results')
-        .delete()
-        .eq('id', id);
-
-      if (error) throw error;
-
-      toast({
-        title: 'Result deleted',
-        description: 'Your assessment result has been removed.',
-      });
-
-      await loadSavedResults();
-    } catch (error) {
-      console.error('Error deleting result:', error);
-      toast({
-        title: 'Error deleting result',
-        description: 'Please try again later.',
-        variant: 'destructive'
-      });
-    }
+  const handleRestart = () => {
+    setShowInstructions(true);
+    setCurrentQuestion(0);
+    setAnswers({});
+    setShowResults(false);
   };
 
-  const handlePrintResult = (result: SavedResult) => {
-    const printContent = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <title>Shattered Masks Assessment - ${result.archetype}</title>
-        <style>
-          body { font-family: system-ui, -apple-system, sans-serif; max-width: 800px; margin: 0 auto; padding: 40px; }
-          h1 { color: #d946ef; margin-bottom: 8px; }
-          .meta { color: #6b7280; margin-bottom: 24px; }
-          .section { margin-bottom: 20px; padding: 16px; background: #f9fafb; border-radius: 8px; }
-          ul { margin: 8px 0; padding-left: 20px; }
-          .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 12px; }
-        </style>
-      </head>
-      <body>
-        <h1>Shattered Masks Assessment</h1>
-        <p class="meta">Completed on ${format(new Date(result.created_at), 'MMMM d, yyyy')}</p>
-        
-        <div class="section">
-          <h2>${result.archetype}</h2>
-          <p>${result.archetype_description || ''}</p>
-        </div>
-
-        ${result.strengths ? `
-          <div class="section">
-            <h3>Strengths</h3>
-            <ul>${result.strengths.map(s => `<li>${s}</li>`).join('')}</ul>
-          </div>
-        ` : ''}
-
-        ${result.growth_areas ? `
-          <div class="section">
-            <h3>Growth Areas</h3>
-            <ul>${result.growth_areas.map(g => `<li>${g}</li>`).join('')}</ul>
-          </div>
-        ` : ''}
-
-        ${result.notes ? `
-          <div class="section">
-            <h3>Personal Notes</h3>
-            <p>${result.notes}</p>
-          </div>
-        ` : ''}
-
-        <div class="footer">
-          <p>Sacred Greeks - Faith & Greek Life Resources</p>
-        </div>
-      </body>
-      </html>
-    `;
-
-    const printWindow = window.open('', '_blank');
-    if (printWindow) {
-      printWindow.document.write(printContent);
-      printWindow.document.close();
-      printWindow.print();
+  const result = useMemo(() => {
+    if (Object.keys(answers).length === questions.length) {
+      return calculateArchetype(answers);
     }
-  };
+    return null;
+  }, [answers]);
 
-  const handleDownloadPDF = (result: SavedResult) => {
-    const doc = new jsPDF();
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const margin = 20;
-    let yPos = 20;
+  const progress = ((currentQuestion + 1) / questions.length) * 100;
 
-    doc.setFontSize(20);
-    doc.setFont("helvetica", "bold");
-    doc.text("Shattered Masks Assessment", margin, yPos);
-    yPos += 10;
+  const resultsTTSText = result ? `
+    Congratulations on completing the Shattered Masks Assessment! 
+    Your archetype is: ${result.archetype.name}.
+    ${result.archetype.description}
+    Your confidence score is ${result.confidence} percent.
+    Your key strengths include: ${result.archetype.strengths.join(', ')}.
+    Areas for growth include: ${result.archetype.growthAreas.join(', ')}.
+  ` : '';
 
-    doc.setFontSize(10);
-    doc.setFont("helvetica", "normal");
-    doc.text(`Completed: ${format(new Date(result.created_at), "MMMM d, yyyy")}`, margin, yPos);
-    yPos += 15;
-
-    doc.setFontSize(16);
-    doc.setFont("helvetica", "bold");
-    doc.text(result.archetype, margin, yPos);
-    yPos += 10;
-
-    if (result.archetype_description) {
-      doc.setFontSize(10);
-      doc.setFont("helvetica", "normal");
-      const descLines = doc.splitTextToSize(result.archetype_description, pageWidth - margin * 2);
-      doc.text(descLines, margin, yPos);
-      yPos += descLines.length * 5 + 10;
+  const resultSections = result ? [
+    {
+      title: "Your Strengths",
+      content: result.archetype.strengths.join(", "),
+      items: result.archetype.strengths
+    },
+    {
+      title: "Growth Opportunities", 
+      content: result.archetype.growthAreas.join(", "),
+      items: result.archetype.growthAreas
     }
+  ] : [];
 
-    if (result.strengths && result.strengths.length > 0) {
-      doc.setFontSize(12);
-      doc.setFont("helvetica", "bold");
-      doc.text("Strengths", margin, yPos);
-      yPos += 8;
-
-      doc.setFontSize(10);
-      doc.setFont("helvetica", "normal");
-      result.strengths.forEach(s => {
-        doc.text(`• ${s}`, margin + 5, yPos);
-        yPos += 6;
-      });
-      yPos += 5;
-    }
-
-    if (result.growth_areas && result.growth_areas.length > 0) {
-      doc.setFontSize(12);
-      doc.setFont("helvetica", "bold");
-      doc.text("Growth Areas", margin, yPos);
-      yPos += 8;
-
-      doc.setFontSize(10);
-      doc.setFont("helvetica", "normal");
-      result.growth_areas.forEach(g => {
-        doc.text(`• ${g}`, margin + 5, yPos);
-        yPos += 6;
-      });
-      yPos += 5;
-    }
-
-    if (result.notes) {
-      doc.setFontSize(12);
-      doc.setFont("helvetica", "bold");
-      doc.text("Personal Notes", margin, yPos);
-      yPos += 8;
-
-      doc.setFontSize(10);
-      doc.setFont("helvetica", "normal");
-      const noteLines = doc.splitTextToSize(result.notes, pageWidth - margin * 2);
-      doc.text(noteLines, margin, yPos);
-    }
-
-    doc.setFontSize(8);
-    doc.setFont("helvetica", "italic");
-    doc.text("Sacred Greeks - Faith & Greek Life Resources", margin, 285);
-
-    doc.save(`shattered-masks-${result.archetype.toLowerCase().replace(/\s+/g, '-')}-${format(new Date(result.created_at), "yyyy-MM-dd")}.pdf`);
-    toast({ title: 'PDF downloaded!' });
-  };
-
-  const selectedArchetypeData = archetypes.find(a => a.name === selectedArchetype);
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
-      {/* Header */}
-      <header className="border-b border-border/50 bg-card/50 backdrop-blur-lg sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+  // Show saved assessment prompt if user has completed before
+  if (!loadingSaved && savedAssessment && showInstructions && savedResults.length > 0) {
+    const latestResult = savedResults[0];
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-fuchsia-950/5 to-background">
+        <header className="border-b border-border/50 bg-card/50 backdrop-blur-lg sticky top-0 z-50">
+          <div className="container mx-auto px-4 py-4">
             <Link to="/dashboard" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group">
               <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
               <Heart className="w-5 h-5 text-sacred" />
@@ -347,293 +560,246 @@ const ShatteredMasks = () => {
               </span>
             </Link>
           </div>
+        </header>
+
+        <main className="container mx-auto px-4 py-12 flex items-center justify-center min-h-[calc(100vh-80px)]">
+          <div className="w-full max-w-lg">
+            <SavedAssessmentPrompt
+              assessmentTitle="Shattered Masks Assessment"
+              resultTitle={latestResult.archetype}
+              archetype={latestResult.archetype}
+              completedAt={latestResult.created_at}
+              onViewResults={() => setShowResults(true)}
+              onRetake={handleStartAssessment}
+              colorScheme="fuchsia"
+              ttsText={`You previously completed the Shattered Masks Assessment. Your archetype was ${latestResult.archetype}. ${latestResult.archetype_description || ''}`}
+            />
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // Show results
+  if (showResults && result) {
+    const ArchetypeIcon = result.archetype.icon;
+    
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-fuchsia-950/5 to-background flex flex-col">
+        <header className="border-b border-border/50 bg-card/50 backdrop-blur-lg sticky top-0 z-50">
+          <div className="container mx-auto px-4 py-4">
+            <Link to="/dashboard" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group">
+              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+              <Heart className="w-5 h-5 text-sacred" />
+              <span className="font-semibold bg-gradient-to-r from-sacred to-warm-blue bg-clip-text text-transparent">
+                Back to Dashboard
+              </span>
+            </Link>
+          </div>
+        </header>
+
+        <main className="flex-1 flex items-center justify-center px-4 py-12">
+          <div className="w-full max-w-lg space-y-6">
+            <AssessmentResultsPanel
+              assessmentType="shattered-masks"
+              assessmentTitle="Shattered Masks Assessment"
+              resultTitle={result.archetype.name}
+              resultSubtitle={result.archetype.description}
+              score={result.confidence}
+              scoreLabel="Confidence Score"
+              archetype={result.archetype.name}
+              sections={resultSections}
+              recommendations={[
+                "Reflect on how your archetype shows up in daily interactions",
+                "Consider how your strengths can support others in your chapter",
+                "Work on one growth area this month"
+              ]}
+              ttsText={resultsTTSText}
+              icon={<ArchetypeIcon className="w-8 h-8 text-white" />}
+              colorScheme="fuchsia"
+              additionalData={{ answers, scores: result.scores }}
+            />
+
+            <div className="flex gap-3">
+              <Button
+                variant="outline"
+                onClick={handleRestart}
+                className="flex-1 gap-2"
+              >
+                <RotateCcw className="w-4 h-4" />
+                Retake
+              </Button>
+              <Button
+                onClick={() => navigate('/dashboard')}
+                className="flex-1 gap-2"
+              >
+                <Target className="w-4 h-4" />
+                View Dashboard
+              </Button>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // Show instructions
+  if (showInstructions) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-fuchsia-950/5 to-background">
+        <header className="border-b border-border/50 bg-card/50 backdrop-blur-lg sticky top-0 z-50">
+          <div className="container mx-auto px-4 py-4">
+            <Link to="/dashboard" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group">
+              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+              <Heart className="w-5 h-5 text-sacred" />
+              <span className="font-semibold bg-gradient-to-r from-sacred to-warm-blue bg-clip-text text-transparent">
+                Back to Dashboard
+              </span>
+            </Link>
+          </div>
+        </header>
+
+        <main className="container mx-auto px-4 py-8">
+          <div className="max-w-2xl mx-auto space-y-8">
+            <div className="text-center space-y-4 animate-fade-in">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-fuchsia-500/20 to-pink-600/20 mb-4">
+                <Drama className="w-10 h-10 text-fuchsia-500" />
+              </div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-fuchsia-500 to-pink-600 bg-clip-text text-transparent">
+                Shattered Masks Assessment
+              </h1>
+              <p className="text-muted-foreground max-w-xl mx-auto">
+                Discover your archetype and understand how you navigate identity, faith, and Greek life
+              </p>
+            </div>
+
+            <AssessmentInstructions
+              {...instructionsConfig}
+              ttsText={`${instructionsConfig.description} ${instructionsConfig.whatResultsMean}`}
+            />
+
+            <Button
+              size="lg"
+              onClick={handleStartAssessment}
+              className="w-full bg-gradient-to-r from-fuchsia-500 to-pink-600 hover:from-fuchsia-600 hover:to-pink-700 text-white font-semibold py-6 text-lg rounded-xl shadow-lg shadow-fuchsia-500/25"
+            >
+              Start Assessment
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </Button>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // Show questions
+  const question = questions[currentQuestion];
+  const selectedAnswer = answers[question.id];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-background via-fuchsia-950/5 to-background flex flex-col">
+      <header className="border-b border-border/50 bg-card/50 backdrop-blur-lg sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <button 
+              onClick={handleRestart}
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
+            >
+              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+              <span className="text-sm">Start Over</span>
+            </button>
+            <Badge variant="outline" className="bg-fuchsia-500/10 text-fuchsia-400 border-fuchsia-500/30">
+              {currentQuestion + 1} of {questions.length}
+            </Badge>
+          </div>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto space-y-8">
-          {/* Page Header */}
-          <div className="text-center space-y-4 animate-fade-in">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-fuchsia-500/20 to-pink-600/20 mb-4">
-              <Drama className="w-10 h-10 text-fuchsia-500" />
-            </div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-fuchsia-500 to-pink-600 bg-clip-text text-transparent">
-              Shattered Masks Assessment
-            </h1>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Discover your archetype and understand how you navigate identity, faith, and Greek life
+      <main className="flex-1 flex flex-col items-center justify-center px-4 py-8">
+        <div className="w-full max-w-2xl space-y-8">
+          {/* Progress */}
+          <div className="space-y-2">
+            <Progress value={progress} className="h-2" />
+            <p className="text-xs text-muted-foreground text-center">
+              {Math.round(progress)}% complete
             </p>
           </div>
 
-          {/* Instructions */}
-          <AssessmentInstructions
-            {...instructionsConfig}
-            ttsText={`${instructionsConfig.description} ${instructionsConfig.whatResultsMean}`}
-          />
+          {/* Question */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={question.id}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+              className="space-y-6"
+            >
+              <div className="text-center space-y-2">
+                <h2 className="text-2xl font-bold">{question.text}</h2>
+                {question.subtext && (
+                  <p className="text-muted-foreground">{question.subtext}</p>
+                )}
+              </div>
 
-          <Tabs defaultValue="assessment" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="assessment">Take Assessment</TabsTrigger>
-              <TabsTrigger value="results">My Results ({savedResults.length})</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="assessment" className="space-y-6">
-              {/* Take Assessment Card */}
-              <Card className="border-fuchsia-500/20 bg-gradient-to-br from-fuchsia-500/5 to-pink-600/5">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-fuchsia-500" />
-                    Take the Assessment
-                  </CardTitle>
-                  <CardDescription>
-                    Click below to take the Shattered Masks Archetype Assessment. After completing it, return here to save your results.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <a 
-                    href="https://drlymanmontgomery.involve.me/shattered-masks-archetype-assessment"
-                    target="_blank"
-                    rel="noopener noreferrer"
+              <div className="space-y-3">
+                {question.options.map((option) => (
+                  <motion.button
+                    key={option.value}
+                    onClick={() => handleAnswer(option.value)}
+                    className={`w-full p-4 rounded-xl border text-left transition-all ${
+                      selectedAnswer === option.value
+                        ? 'bg-fuchsia-500/20 border-fuchsia-500 text-foreground'
+                        : 'bg-card/50 border-border hover:border-fuchsia-500/50 hover:bg-fuchsia-500/5'
+                    }`}
+                    whileHover={{ scale: 1.01 }}
+                    whileTap={{ scale: 0.99 }}
                   >
-                    <Button className="w-full bg-gradient-to-r from-fuchsia-500 to-pink-600 hover:from-fuchsia-600 hover:to-pink-700 text-white">
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      Start Assessment
-                    </Button>
-                  </a>
-                </CardContent>
-              </Card>
-
-              {/* Save Results Card */}
-              {user ? (
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Save className="w-5 h-5 text-sacred" />
-                      Save Your Results
-                    </CardTitle>
-                    <CardDescription>
-                      After completing the assessment, select your archetype below to save it to your profile
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-6">
-                    <div className="space-y-2">
-                      <Label>Your Archetype</Label>
-                      <Select value={selectedArchetype} onValueChange={setSelectedArchetype}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select your archetype..." />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {archetypes.map((archetype) => (
-                            <SelectItem key={archetype.name} value={archetype.name}>
-                              {archetype.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    {selectedArchetypeData && (
-                      <Card className="bg-muted/50">
-                        <CardContent className="pt-6 space-y-4">
-                          <div>
-                            <h4 className="font-semibold text-lg text-fuchsia-500">{selectedArchetypeData.name}</h4>
-                            <p className="text-sm text-muted-foreground mt-1">{selectedArchetypeData.description}</p>
-                          </div>
-                          <div className="grid md:grid-cols-2 gap-4">
-                            <div>
-                              <h5 className="font-medium text-sm text-green-600 dark:text-green-400 mb-2">Strengths</h5>
-                              <ul className="space-y-1">
-                                {selectedArchetypeData.strengths.map((s, i) => (
-                                  <li key={i} className="text-sm flex items-center gap-2">
-                                    <CheckCircle2 className="w-3 h-3 text-green-500" />
-                                    {s}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                            <div>
-                              <h5 className="font-medium text-sm text-amber-600 dark:text-amber-400 mb-2">Growth Areas</h5>
-                              <ul className="space-y-1">
-                                {selectedArchetypeData.growthAreas.map((g, i) => (
-                                  <li key={i} className="text-sm flex items-center gap-2">
-                                    <Sparkles className="w-3 h-3 text-amber-500" />
-                                    {g}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    )}
-
-                    <div className="space-y-2">
-                      <Label>Personal Notes (Optional)</Label>
-                      <Textarea
-                        placeholder="Add any personal reflections or insights from your assessment..."
-                        value={notes}
-                        onChange={(e) => setNotes(e.target.value)}
-                        rows={4}
-                      />
-                    </div>
-
-                    <Button 
-                      onClick={handleSaveResult} 
-                      disabled={saving || !selectedArchetype}
-                      className="w-full"
-                    >
-                      {saving ? 'Saving...' : 'Save My Result'}
-                    </Button>
-                  </CardContent>
-                </Card>
-              ) : (
-                <Card className="border-amber-500/30 bg-amber-500/5">
-                  <CardContent className="pt-6 text-center">
-                    <p className="text-muted-foreground mb-4">Sign in to save your assessment results to your profile</p>
-                    <Link to="/auth">
-                      <Button>Sign In to Save Results</Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-              )}
-
-              {/* Archetypes Overview */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>The Six Archetypes</CardTitle>
-                  <CardDescription>
-                    Learn about the different ways people navigate identity, faith, and Greek life
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {archetypes.map((archetype) => (
-                      <div 
-                        key={archetype.name} 
-                        className="p-4 rounded-lg border bg-card hover:bg-muted/50 transition-colors"
-                      >
-                        <h4 className="font-semibold text-fuchsia-500">{archetype.name}</h4>
-                        <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
-                          {archetype.description}
-                        </p>
+                    <div className="flex items-center gap-3">
+                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                        selectedAnswer === option.value
+                          ? 'border-fuchsia-500 bg-fuchsia-500'
+                          : 'border-muted-foreground'
+                      }`}>
+                        {selectedAnswer === option.value && (
+                          <CheckCircle2 className="w-3 h-3 text-white" />
+                        )}
                       </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
+                      <span className="flex-1">{option.text}</span>
+                    </div>
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
+          </AnimatePresence>
 
-            <TabsContent value="results" className="space-y-6">
-              {loading ? (
-                <div className="flex items-center justify-center py-12">
-                  <div className="w-8 h-8 border-4 border-sacred border-t-transparent rounded-full animate-spin"></div>
-                </div>
-              ) : savedResults.length === 0 ? (
-                <Card>
-                  <CardContent className="pt-6 text-center py-12">
-                    <Drama className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="font-semibold text-lg mb-2">No Saved Results</h3>
-                    <p className="text-muted-foreground mb-4">
-                      Take the assessment and save your archetype to see it here
-                    </p>
-                  </CardContent>
-                </Card>
-              ) : (
-                <div className="space-y-4">
-                  {savedResults.map((result) => (
-                    <Card key={result.id} className="overflow-hidden">
-                      <div className="h-1 bg-gradient-to-r from-fuchsia-500 to-pink-600" />
-                      <CardHeader>
-                        <div className="flex items-start justify-between">
-                          <div>
-                            <CardTitle className="text-fuchsia-500">{result.archetype}</CardTitle>
-                            <CardDescription className="flex items-center gap-2 mt-1">
-                              <Calendar className="w-4 h-4" />
-                              {format(new Date(result.created_at), 'MMMM d, yyyy')}
-                            </CardDescription>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Button 
-                              variant="ghost" 
-                              size="icon"
-                              onClick={() => handlePrintResult(result)}
-                              title="Print Report"
-                            >
-                              <Printer className="w-4 h-4" />
-                            </Button>
-                            <Button 
-                              variant="ghost" 
-                              size="icon"
-                              onClick={() => handleDownloadPDF(result)}
-                              title="Download PDF"
-                            >
-                              <Download className="w-4 h-4" />
-                            </Button>
-                            <Button 
-                              variant="ghost" 
-                              size="icon"
-                              onClick={() => handleDeleteResult(result.id)}
-                              className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </Button>
-                          </div>
-                        </div>
-                      </CardHeader>
-                      <CardContent className="space-y-4">
-                        {result.archetype_description && (
-                          <p className="text-sm text-muted-foreground">
-                            {result.archetype_description}
-                          </p>
-                        )}
-                        
-                        <div className="grid md:grid-cols-2 gap-4">
-                          {result.strengths && result.strengths.length > 0 && (
-                            <div>
-                              <h5 className="font-medium text-sm text-green-600 dark:text-green-400 mb-2">
-                                Strengths
-                              </h5>
-                              <ul className="space-y-1">
-                                {result.strengths.map((s, i) => (
-                                  <li key={i} className="text-sm flex items-center gap-2">
-                                    <CheckCircle2 className="w-3 h-3 text-green-500" />
-                                    {s}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-                          
-                          {result.growth_areas && result.growth_areas.length > 0 && (
-                            <div>
-                              <h5 className="font-medium text-sm text-amber-600 dark:text-amber-400 mb-2">
-                                Growth Areas
-                              </h5>
-                              <ul className="space-y-1">
-                                {result.growth_areas.map((g, i) => (
-                                  <li key={i} className="text-sm flex items-center gap-2">
-                                    <Sparkles className="w-3 h-3 text-amber-500" />
-                                    {g}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-                        </div>
-
-                        {result.notes && (
-                          <div className="p-3 rounded-lg bg-muted/50">
-                            <h5 className="font-medium text-sm mb-1">Personal Notes</h5>
-                            <p className="text-sm text-muted-foreground">{result.notes}</p>
-                          </div>
-                        )}
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              )}
-            </TabsContent>
-          </Tabs>
+          {/* Navigation */}
+          <div className="flex justify-between">
+            <Button
+              variant="ghost"
+              onClick={handlePrevious}
+              disabled={currentQuestion === 0}
+              className="gap-2"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Previous
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => {
+                if (selectedAnswer && currentQuestion < questions.length - 1) {
+                  setCurrentQuestion(currentQuestion + 1);
+                } else if (selectedAnswer && currentQuestion === questions.length - 1) {
+                  setShowResults(true);
+                }
+              }}
+              disabled={!selectedAnswer}
+              className="gap-2"
+            >
+              {currentQuestion === questions.length - 1 ? 'See Results' : 'Next'}
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
       </main>
     </div>
