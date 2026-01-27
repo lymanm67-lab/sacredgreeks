@@ -567,6 +567,16 @@ const Auth = () => {
                 </div>
               </div>
 
+              {/* Podcast CTA */}
+              <Link 
+                to="/podcast"
+                className="flex items-center justify-center gap-2 mt-6 py-2 px-4 rounded-full bg-gradient-to-r from-purple-500/20 to-fuchsia-500/20 border border-purple-500/30 hover:from-purple-500/30 hover:to-fuchsia-500/30 transition-all group"
+              >
+                <Headphones className="w-4 h-4 text-purple-400 group-hover:scale-110 transition-transform" />
+                <span className="text-sm text-purple-300">Listen to our Podcast</span>
+                <ChevronRight className="w-4 h-4 text-purple-400/60 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+
               {/* Action Buttons as Cards */}
               <div className="space-y-3 pt-4">
                 {/* Try Demo First */}
