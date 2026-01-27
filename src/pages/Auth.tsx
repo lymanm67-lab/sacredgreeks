@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
 import { useDemoMode } from '@/contexts/DemoModeContext';
 import { DemoModeControl } from '@/components/GlobalDemoIndicator';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Home, Eye, EyeOff, RefreshCw, AlertTriangle, BookOpen, Heart, Shield, Quote, Star, Users, ChevronRight, ChevronDown, ChevronUp, Sparkles, Play, User, Moon, Zap, Video, UserCheck, FileDown, Headphones } from 'lucide-react';
 import logo from '@/assets/sacred-greeks-logo.png';
@@ -17,7 +14,6 @@ import { supabase } from '@/integrations/supabase/client';
 import { z } from 'zod';
 import { PasswordStrengthIndicator } from '@/components/PasswordStrengthIndicator';
 import { usePasswordBreachCheck } from '@/hooks/use-password-breach-check';
-import { useDisposableEmailCheck } from '@/hooks/use-disposable-email-check';
 import { cn } from '@/lib/utils';
 
 import { ProofLetterAudio } from '@/components/proof/ProofLetterAudio';
@@ -164,188 +160,20 @@ const Auth = () => {
   const [expandedProof, setExpandedProof] = useState<number | null>(null);
   const [allProofExpanded, setAllProofExpanded] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [signupPassword, setSignupPassword] = useState('');
   const [resetPassword, setResetPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
-  const [savedEmail, setSavedEmail] = useState('');
-  const [pendingVerification, setPendingVerification] = useState<string | null>(null);
-  const [resendingEmail, setResendingEmail] = useState(false);
-  const [signupEmail, setSignupEmail] = useState('');
   const [showMoreTools, setShowMoreTools] = useState(false);
-  const [showAuthForm, setShowAuthForm] = useState<'signin' | 'signup' | null>(null);
-  const { signUp, signIn } = useAuth();
   const { isDemoMode, setDemoMode } = useDemoMode();
   const navigate = useNavigate();
   const { toast } = useToast();
   const { checkPassword, isChecking: isCheckingBreach, breachCount, reset: resetBreachCheck } = usePasswordBreachCheck();
-  const { checkEmail, isDisposable, checkedDomain, reset: resetDisposableCheck } = useDisposableEmailCheck();
 
   useEffect(() => {
     const mode = searchParams.get('mode');
     if (mode === 'reset') {
       setIsResetMode(true);
     }
-    
-    const savedEmailValue = localStorage.getItem('rememberedEmail');
-    if (savedEmailValue) {
-      setSavedEmail(savedEmailValue);
-      setRememberMe(true);
-    }
   }, [searchParams]);
 
-  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
-    const fullName = formData.get('fullName') as string;
-    const redirectUrl = searchParams.get('redirect') || '/dashboard';
-
-    try {
-      const validated = authSchema.parse({ email, password, fullName });
-
-      const { isDisposable: isDisposableEmail } = checkEmail(validated.email);
-      if (isDisposableEmail) {
-        toast({
-          title: 'Disposable email not allowed',
-          description: 'Please use a permanent email address.',
-          variant: 'destructive',
-        });
-        setIsLoading(false);
-        return;
-      }
-
-      const { isBreached, count } = await checkPassword(validated.password);
-      
-      if (isBreached) {
-        toast({
-          title: 'Password has been exposed',
-          description: `This password appeared in ${count.toLocaleString()} data breaches. Please choose a different one.`,
-          variant: 'destructive',
-        });
-        setIsLoading(false);
-        return;
-      }
-
-      const { error } = await signUp(validated.email, validated.password, validated.fullName);
-
-      if (error) {
-        if (error.message?.includes('already registered')) {
-          toast({
-            title: 'Account exists',
-            description: 'This email is already registered. Please sign in instead.',
-            variant: 'destructive',
-          });
-        } else {
-          toast({
-            title: 'Error signing up',
-            description: error.message,
-            variant: 'destructive',
-          });
-        }
-      } else {
-        setPendingVerification(validated.email);
-        toast({
-          title: 'Check your email!',
-          description: 'We sent you a verification link.',
-        });
-      }
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        toast({
-          title: 'Validation Error',
-          description: error.errors[0].message,
-          variant: 'destructive',
-        });
-      }
-    }
-
-    setIsLoading(false);
-  };
-
-  const handleResendVerification = async () => {
-    if (!pendingVerification) return;
-    
-    setResendingEmail(true);
-    try {
-      const { error } = await supabase.auth.resend({
-        type: 'signup',
-        email: pendingVerification,
-        options: {
-          emailRedirectTo: `${window.location.origin}/dashboard`
-        }
-      });
-
-      if (error) {
-        toast({
-          title: 'Error',
-          description: error.message,
-          variant: 'destructive',
-        });
-      } else {
-        toast({
-          title: 'Email sent!',
-          description: 'We sent a new verification link.',
-        });
-      }
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to resend verification email',
-        variant: 'destructive',
-      });
-    } finally {
-      setResendingEmail(false);
-    }
-  };
-
-  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
-    const redirectUrl = searchParams.get('redirect') || '/dashboard';
-
-    try {
-      const validated = authSchema.parse({ email, password });
-
-      if (rememberMe) {
-        localStorage.setItem('rememberedEmail', validated.email);
-      } else {
-        localStorage.removeItem('rememberedEmail');
-      }
-
-      const { error } = await signIn(validated.email, validated.password);
-
-      if (error) {
-        toast({
-          title: 'Error signing in',
-          description: error.message,
-          variant: 'destructive',
-        });
-      } else {
-        toast({
-          title: 'Welcome back!',
-          description: 'You have been signed in successfully.',
-        });
-        navigate(redirectUrl);
-      }
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        toast({
-          title: 'Validation Error',
-          description: error.errors[0].message,
-          variant: 'destructive',
-        });
-      }
-    }
-
-    setIsLoading(false);
-  };
 
   const handlePasswordUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -514,8 +342,8 @@ const Auth = () => {
           </Link>
           <div className="flex items-center gap-4">
             <DemoModeControl />
-            <Button variant="ghost" size="sm" className="text-slate-300 hover:text-white hover:bg-slate-800" onClick={() => setShowAuthForm('signin')}>
-              Sign In
+            <Button variant="ghost" size="sm" className="text-slate-300 hover:text-white hover:bg-slate-800" asChild>
+              <Link to="/signin">Sign In</Link>
             </Button>
             <Button variant="ghost" size="icon" className="text-slate-400 hover:text-white hover:bg-slate-800">
               <Moon className="w-5 h-5" />
@@ -600,15 +428,7 @@ const Auth = () => {
                 </button>
 
                 {/* Create Your Account - Highlighted */}
-                <button 
-                  onClick={() => {
-                    setShowAuthForm('signup');
-                    setTimeout(() => {
-                      document.getElementById('auth-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 100);
-                  }} 
-                  className="w-full"
-                >
+                <Link to="/signin?tab=signup" className="block">
                   <div className="flex items-center gap-4 p-4 bg-slate-700/50 hover:bg-slate-700 border border-teal-500/50 rounded-lg transition-colors group">
                     <div className="w-10 h-10 rounded-full bg-teal-500/20 flex items-center justify-center">
                       <Sparkles className="w-5 h-5 text-teal-400" />
@@ -619,18 +439,10 @@ const Auth = () => {
                     </div>
                     <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-teal-400 transition-colors" />
                   </div>
-                </button>
+                </Link>
 
                 {/* Sign In */}
-                <button 
-                  onClick={() => {
-                    setShowAuthForm('signin');
-                    setTimeout(() => {
-                      document.getElementById('auth-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 100);
-                  }} 
-                  className="w-full"
-                >
+                <Link to="/signin" className="block">
                   <div className="flex items-center gap-4 p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600 rounded-lg transition-colors group">
                     <div className="w-10 h-10 rounded-full bg-slate-600 flex items-center justify-center">
                       <User className="w-5 h-5 text-slate-300" />
@@ -641,271 +453,13 @@ const Auth = () => {
                     </div>
                     <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-slate-300 transition-colors" />
                   </div>
-                </button>
+                </Link>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Auth Forms Section */}
-      {showAuthForm && (
-        <section className="py-12 bg-[hsl(225,50%,8%)]" id="auth-form">
-          <div className="container mx-auto px-4">
-            {pendingVerification ? (
-              <div className="max-w-md mx-auto">
-                <div className="bg-slate-800/50 border border-slate-700 rounded-xl overflow-hidden">
-                  <div className="h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500" />
-                  <div className="p-8 text-center space-y-4">
-                    <div className="w-16 h-16 mx-auto bg-blue-500/20 rounded-full flex items-center justify-center">
-                      <RefreshCw className="w-8 h-8 text-blue-400" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">Check Your Email</h3>
-                      <p className="text-slate-400 text-sm mt-2">
-                        We sent a verification link to <span className="text-blue-400">{pendingVerification}</span>
-                      </p>
-                    </div>
-                    <Button
-                      variant="outline"
-                      onClick={handleResendVerification}
-                      disabled={resendingEmail}
-                      className="w-full border-slate-600 text-white hover:bg-slate-700"
-                    >
-                      {resendingEmail ? (
-                        <>
-                          <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
-                          Sending...
-                        </>
-                      ) : (
-                        'Resend Verification Email'
-                      )}
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      className="w-full text-slate-400 hover:text-white hover:bg-slate-700"
-                      onClick={() => setPendingVerification(null)}
-                    >
-                      Use a different email
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="max-w-md mx-auto">
-                <div className="bg-slate-800/50 border border-slate-700 rounded-xl overflow-hidden">
-                  {/* Blue-cyan gradient top border */}
-                  <div className="h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500" />
-                  
-                  <div className="p-8">
-                    {/* Header */}
-                    <div className="text-center mb-6">
-                      <div className="w-16 h-16 mx-auto rounded-full bg-slate-700 border-2 border-slate-600 flex items-center justify-center mb-4">
-                        <img src={logo} alt="Sacred Greeks" className="w-10 h-10 rounded-full object-cover" />
-                      </div>
-                      <h2 className="text-xl font-bold text-white">
-                        {showAuthForm === 'signup' ? 'Create Your Account' : 'Welcome Back'}
-                      </h2>
-                      <p className="text-slate-400 text-sm mt-1">
-                        {showAuthForm === 'signup' 
-                          ? 'Start your personalized faith journey today' 
-                          : 'Sign in to continue your journey'}
-                      </p>
-                    </div>
-
-                    {/* Tabs */}
-                    <Tabs value={showAuthForm} onValueChange={(v) => setShowAuthForm(v as 'signin' | 'signup')}>
-                      <TabsList className="grid w-full grid-cols-2 mb-6 bg-slate-700/50 border border-slate-600 p-1 rounded-lg">
-                        <TabsTrigger 
-                          value="signin" 
-                          className="text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white rounded-md transition-all"
-                        >
-                          Sign In
-                        </TabsTrigger>
-                        <TabsTrigger 
-                          value="signup" 
-                          className="text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white rounded-md transition-all"
-                        >
-                          Sign Up
-                        </TabsTrigger>
-                      </TabsList>
-                      
-                      {/* Sign In Tab */}
-                      <TabsContent value="signin" className="mt-0">
-                        <form onSubmit={handleSignIn} className="space-y-4">
-                          <div className="space-y-2">
-                            <Label htmlFor="signin-email" className="text-slate-300">Email</Label>
-                            <Input
-                              id="signin-email"
-                              name="email"
-                              type="email"
-                              placeholder="you@example.com"
-                              defaultValue={savedEmail}
-                              autoComplete="email"
-                              required
-                              className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-blue-500 focus:ring-blue-500/20"
-                            />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="signin-password" className="text-slate-300">Password</Label>
-                            <div className="relative">
-                              <Input
-                                id="signin-password"
-                                name="password"
-                                type={showPassword ? "text" : "password"}
-                                placeholder="••••••••"
-                                autoComplete="current-password"
-                                required
-                                className="pr-10 bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-cyan-500 focus:ring-cyan-500/20"
-                              />
-                              <button
-                                type="button"
-                                onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white"
-                              >
-                                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                              </button>
-                            </div>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <Checkbox
-                                id="remember"
-                                checked={rememberMe}
-                                onCheckedChange={(checked) => setRememberMe(checked as boolean)}
-                                className="border-slate-500 data-[state=checked]:bg-cyan-500 data-[state=checked]:border-cyan-500"
-                              />
-                              <Label htmlFor="remember" className="text-sm cursor-pointer text-slate-400">
-                                Remember me
-                              </Label>
-                            </div>
-                            <Link 
-                              to="/forgot-password" 
-                              className="text-sm text-cyan-400 hover:underline"
-                            >
-                              Forgot password?
-                            </Link>
-                          </div>
-                          <Button
-                            type="submit"
-                            className="w-full bg-cyan-500 hover:bg-cyan-600 text-white"
-                            disabled={isLoading}
-                          >
-                            {isLoading ? 'Signing in...' : 'Sign In'}
-                            <ChevronRight className="w-4 h-4 ml-1" />
-                          </Button>
-                        </form>
-                      </TabsContent>
-                      
-                      {/* Sign Up Tab */}
-                      <TabsContent value="signup" className="mt-0">
-                        <form onSubmit={handleSignUp} className="space-y-4">
-                          <div className="space-y-2">
-                            <Label htmlFor="signup-name" className="text-slate-300">Full Name</Label>
-                            <Input
-                              id="signup-name"
-                              name="fullName"
-                              type="text"
-                              placeholder="John Smith"
-                              autoComplete="name"
-                              required
-                              className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-cyan-500 focus:ring-cyan-500/20"
-                            />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="signup-email" className="text-slate-300">Email</Label>
-                            <Input
-                              id="signup-email"
-                              name="email"
-                              type="email"
-                              placeholder="you@example.com"
-                              autoComplete="email"
-                              required
-                              value={signupEmail}
-                              onChange={(e) => {
-                                setSignupEmail(e.target.value);
-                                resetDisposableCheck();
-                              }}
-                              className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-cyan-500 focus:ring-cyan-500/20"
-                            />
-                            {isDisposable && checkedDomain && (
-                              <div className="flex items-start gap-2 p-2 bg-red-500/20 border border-red-500/30 rounded-md">
-                                <AlertTriangle className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
-                                <p className="text-xs text-red-400">
-                                  Disposable emails are not allowed
-                                </p>
-                              </div>
-                            )}
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="signup-password" className="text-slate-300">Password</Label>
-                            <div className="relative">
-                              <Input
-                                id="signup-password"
-                                name="password"
-                                type={showPassword ? "text" : "password"}
-                                placeholder="••••••••"
-                                autoComplete="new-password"
-                                minLength={8}
-                                required
-                                value={signupPassword}
-                                onChange={(e) => {
-                                  setSignupPassword(e.target.value);
-                                  resetBreachCheck();
-                                }}
-                                className="pr-10 bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-cyan-500 focus:ring-cyan-500/20"
-                              />
-                              <button
-                                type="button"
-                                onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white"
-                              >
-                                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                              </button>
-                            </div>
-                            <PasswordStrengthIndicator password={signupPassword} />
-                            {breachCount !== null && breachCount > 0 && (
-                              <div className="flex items-start gap-2 p-2 bg-red-500/20 border border-red-500/30 rounded-md">
-                                <AlertTriangle className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
-                                <p className="text-xs text-red-400">
-                                  Password exposed in {breachCount.toLocaleString()} breaches
-                                </p>
-                              </div>
-                            )}
-                          </div>
-                          <Button
-                            type="submit"
-                            className="w-full bg-cyan-500 hover:bg-cyan-600 text-white"
-                            disabled={isLoading || isCheckingBreach}
-                          >
-                            {isCheckingBreach ? 'Checking...' : isLoading ? 'Creating account...' : 'Create Account'}
-                            <ChevronRight className="w-4 h-4 ml-1" />
-                          </Button>
-                        </form>
-                      </TabsContent>
-                    </Tabs>
-                    
-                    <div className="mt-6 text-center">
-                      <Button variant="link" className="text-slate-400 hover:text-white" onClick={() => setShowAuthForm(null)}>
-                        ← Back to options
-                      </Button>
-                    </div>
-                    
-                    <div className="mt-4 text-center text-sm text-slate-500">
-                      <p>
-                        By continuing, you agree to our{' '}
-                        <Link to="/terms" className="text-cyan-400 hover:underline">Terms</Link>
-                        {' '}and{' '}
-                        <Link to="/privacy" className="text-cyan-400 hover:underline">Privacy Policy</Link>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </section>
-      )}
 
       {/* Featured Tools Section */}
       <section className="py-16 md:py-24 bg-slate-900">
@@ -1309,12 +863,9 @@ const Auth = () => {
               variant="secondary" 
               size="lg"
               className="bg-white text-emerald-600 hover:bg-white/90"
-              onClick={() => {
-                setShowAuthForm('signup');
-                document.getElementById('auth-form')?.scrollIntoView({ behavior: 'smooth' });
-              }}
+              asChild
             >
-              Create Free Account
+              <Link to="/signin?tab=signup">Create Free Account</Link>
             </Button>
             <Button 
               variant="outline" 

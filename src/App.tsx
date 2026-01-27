@@ -32,6 +32,7 @@ import { Loader2 } from "lucide-react";
 // Eager load critical pages
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
+import SignIn from "./pages/SignIn";
 
 // Lazy load non-critical pages for better performance
 const Dashboard = lazy(() => import("./pages/Dashboard"));
@@ -196,6 +197,8 @@ const App = () => (
                     <Route path="/snapshot" element={<FaithSnapshot />} />
                     <Route path="/webinar/:webinarId" element={<WebinarRegister />} />
                     <Route path="/auth" element={<Auth />} />
+                    <Route path="/signin" element={<SignIn />} />
+                    <Route path="/login" element={<Navigate to="/signin" replace />} />
                     <Route path="/au" element={<Navigate to="/auth" replace />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
                     <Route path="/faq" element={<FAQ />} />
