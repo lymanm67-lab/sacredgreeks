@@ -5,14 +5,16 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Heart, ArrowLeft, Drama, ExternalLink, Save, Trash2, Calendar, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Heart, ArrowLeft, Drama, ExternalLink, Save, Trash2, Calendar, Sparkles, CheckCircle2, Printer, Download } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
+import { AssessmentInstructions } from '@/components/assessment/AssessmentInstructions';
+import { AssessmentResultsPanel } from '@/components/assessment/AssessmentResultsPanel';
+import jsPDF from 'jspdf';
 
 // Archetype definitions
 const archetypes = [
@@ -63,6 +65,26 @@ interface SavedResult {
   notes: string | null;
   created_at: string;
 }
+
+const instructionsConfig = {
+  title: "Shattered Masks Assessment",
+  description: "Discover your archetype and understand how you navigate identity, faith, and Greek life. This external assessment helps reveal your unique approach to integrating multiple aspects of your identity.",
+  estimatedTime: "5-10 minutes",
+  questionCount: 15,
+  benefits: [
+    "Discover your unique identity archetype",
+    "Understand your strengths and growth areas",
+    "Learn how you navigate faith and Greek life",
+    "Get personalized insights for personal development"
+  ],
+  howToComplete: [
+    "Click 'Start Assessment' to open the external assessment",
+    "Complete all questions honestly",
+    "Note your archetype result when finished",
+    "Return here to save and track your results"
+  ],
+  whatResultsMean: "Your archetype reveals your primary approach to integrating faith and Greek life. Understanding your archetype helps you leverage your strengths while being aware of potential growth areas."
+};
 
 const ShatteredMasks = () => {
   const { user } = useAuth();
@@ -170,6 +192,145 @@ const ShatteredMasks = () => {
     }
   };
 
+  const handlePrintResult = (result: SavedResult) => {
+    const printContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Shattered Masks Assessment - ${result.archetype}</title>
+        <style>
+          body { font-family: system-ui, -apple-system, sans-serif; max-width: 800px; margin: 0 auto; padding: 40px; }
+          h1 { color: #d946ef; margin-bottom: 8px; }
+          .meta { color: #6b7280; margin-bottom: 24px; }
+          .section { margin-bottom: 20px; padding: 16px; background: #f9fafb; border-radius: 8px; }
+          ul { margin: 8px 0; padding-left: 20px; }
+          .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 12px; }
+        </style>
+      </head>
+      <body>
+        <h1>Shattered Masks Assessment</h1>
+        <p class="meta">Completed on ${format(new Date(result.created_at), 'MMMM d, yyyy')}</p>
+        
+        <div class="section">
+          <h2>${result.archetype}</h2>
+          <p>${result.archetype_description || ''}</p>
+        </div>
+
+        ${result.strengths ? `
+          <div class="section">
+            <h3>Strengths</h3>
+            <ul>${result.strengths.map(s => `<li>${s}</li>`).join('')}</ul>
+          </div>
+        ` : ''}
+
+        ${result.growth_areas ? `
+          <div class="section">
+            <h3>Growth Areas</h3>
+            <ul>${result.growth_areas.map(g => `<li>${g}</li>`).join('')}</ul>
+          </div>
+        ` : ''}
+
+        ${result.notes ? `
+          <div class="section">
+            <h3>Personal Notes</h3>
+            <p>${result.notes}</p>
+          </div>
+        ` : ''}
+
+        <div class="footer">
+          <p>Sacred Greeks - Faith & Greek Life Resources</p>
+        </div>
+      </body>
+      </html>
+    `;
+
+    const printWindow = window.open('', '_blank');
+    if (printWindow) {
+      printWindow.document.write(printContent);
+      printWindow.document.close();
+      printWindow.print();
+    }
+  };
+
+  const handleDownloadPDF = (result: SavedResult) => {
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 20;
+    let yPos = 20;
+
+    doc.setFontSize(20);
+    doc.setFont("helvetica", "bold");
+    doc.text("Shattered Masks Assessment", margin, yPos);
+    yPos += 10;
+
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.text(`Completed: ${format(new Date(result.created_at), "MMMM d, yyyy")}`, margin, yPos);
+    yPos += 15;
+
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "bold");
+    doc.text(result.archetype, margin, yPos);
+    yPos += 10;
+
+    if (result.archetype_description) {
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      const descLines = doc.splitTextToSize(result.archetype_description, pageWidth - margin * 2);
+      doc.text(descLines, margin, yPos);
+      yPos += descLines.length * 5 + 10;
+    }
+
+    if (result.strengths && result.strengths.length > 0) {
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "bold");
+      doc.text("Strengths", margin, yPos);
+      yPos += 8;
+
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      result.strengths.forEach(s => {
+        doc.text(`• ${s}`, margin + 5, yPos);
+        yPos += 6;
+      });
+      yPos += 5;
+    }
+
+    if (result.growth_areas && result.growth_areas.length > 0) {
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "bold");
+      doc.text("Growth Areas", margin, yPos);
+      yPos += 8;
+
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      result.growth_areas.forEach(g => {
+        doc.text(`• ${g}`, margin + 5, yPos);
+        yPos += 6;
+      });
+      yPos += 5;
+    }
+
+    if (result.notes) {
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "bold");
+      doc.text("Personal Notes", margin, yPos);
+      yPos += 8;
+
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      const noteLines = doc.splitTextToSize(result.notes, pageWidth - margin * 2);
+      doc.text(noteLines, margin, yPos);
+    }
+
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "italic");
+    doc.text("Sacred Greeks - Faith & Greek Life Resources", margin, 285);
+
+    doc.save(`shattered-masks-${result.archetype.toLowerCase().replace(/\s+/g, '-')}-${format(new Date(result.created_at), "yyyy-MM-dd")}.pdf`);
+    toast({ title: 'PDF downloaded!' });
+  };
+
   const selectedArchetypeData = archetypes.find(a => a.name === selectedArchetype);
 
   return (
@@ -203,6 +364,12 @@ const ShatteredMasks = () => {
               Discover your archetype and understand how you navigate identity, faith, and Greek life
             </p>
           </div>
+
+          {/* Instructions */}
+          <AssessmentInstructions
+            {...instructionsConfig}
+            ttsText={`${instructionsConfig.description} ${instructionsConfig.whatResultsMean}`}
+          />
 
           <Tabs defaultValue="assessment" className="space-y-6">
             <TabsList className="grid w-full grid-cols-2">
@@ -340,7 +507,7 @@ const ShatteredMasks = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="grid md:grid-cols-2 gap-4">
-                    {archetypes.map((archetype, index) => (
+                    {archetypes.map((archetype) => (
                       <div 
                         key={archetype.name} 
                         className="p-4 rounded-lg border bg-card hover:bg-muted/50 transition-colors"
@@ -385,25 +552,47 @@ const ShatteredMasks = () => {
                               {format(new Date(result.created_at), 'MMMM d, yyyy')}
                             </CardDescription>
                           </div>
-                          <Button 
-                            variant="ghost" 
-                            size="icon"
-                            onClick={() => handleDeleteResult(result.id)}
-                            className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
+                          <div className="flex items-center gap-2">
+                            <Button 
+                              variant="ghost" 
+                              size="icon"
+                              onClick={() => handlePrintResult(result)}
+                              title="Print Report"
+                            >
+                              <Printer className="w-4 h-4" />
+                            </Button>
+                            <Button 
+                              variant="ghost" 
+                              size="icon"
+                              onClick={() => handleDownloadPDF(result)}
+                              title="Download PDF"
+                            >
+                              <Download className="w-4 h-4" />
+                            </Button>
+                            <Button 
+                              variant="ghost" 
+                              size="icon"
+                              onClick={() => handleDeleteResult(result.id)}
+                              className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </div>
                         </div>
                       </CardHeader>
                       <CardContent className="space-y-4">
                         {result.archetype_description && (
-                          <p className="text-sm text-muted-foreground">{result.archetype_description}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {result.archetype_description}
+                          </p>
                         )}
                         
                         <div className="grid md:grid-cols-2 gap-4">
                           {result.strengths && result.strengths.length > 0 && (
                             <div>
-                              <h5 className="font-medium text-sm text-green-600 dark:text-green-400 mb-2">Strengths</h5>
+                              <h5 className="font-medium text-sm text-green-600 dark:text-green-400 mb-2">
+                                Strengths
+                              </h5>
                               <ul className="space-y-1">
                                 {result.strengths.map((s, i) => (
                                   <li key={i} className="text-sm flex items-center gap-2">
@@ -414,9 +603,12 @@ const ShatteredMasks = () => {
                               </ul>
                             </div>
                           )}
+                          
                           {result.growth_areas && result.growth_areas.length > 0 && (
                             <div>
-                              <h5 className="font-medium text-sm text-amber-600 dark:text-amber-400 mb-2">Growth Areas</h5>
+                              <h5 className="font-medium text-sm text-amber-600 dark:text-amber-400 mb-2">
+                                Growth Areas
+                              </h5>
                               <ul className="space-y-1">
                                 {result.growth_areas.map((g, i) => (
                                   <li key={i} className="text-sm flex items-center gap-2">
@@ -430,8 +622,8 @@ const ShatteredMasks = () => {
                         </div>
 
                         {result.notes && (
-                          <div className="p-3 bg-muted/50 rounded-lg">
-                            <h5 className="font-medium text-sm mb-1">My Notes</h5>
+                          <div className="p-3 rounded-lg bg-muted/50">
+                            <h5 className="font-medium text-sm mb-1">Personal Notes</h5>
                             <p className="text-sm text-muted-foreground">{result.notes}</p>
                           </div>
                         )}

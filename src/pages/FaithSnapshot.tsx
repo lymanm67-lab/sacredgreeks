@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { useLandingABTest } from "@/hooks/use-landing-ab-test";
 import { AssessmentTTS } from "@/components/assessment/AssessmentTTS";
+import { AssessmentInstructions } from "@/components/assessment/AssessmentInstructions";
+import { AssessmentResultsPanel } from "@/components/assessment/AssessmentResultsPanel";
 import logo from "@/assets/sacred-greeks-logo.png";
 import { 
   ArrowLeft, 
@@ -204,9 +205,30 @@ const generateResultsTTSText = (result: SnapshotResult) => {
   return `Your Faith Snapshot Results. Based on your responses, you are identified as: ${result.archetype}. Your primary focus area is: ${result.primaryFocus}. ${result.focusDescription}. Your Faith Confidence Score is ${result.faithScore} percent. ${scoreInterpretation}. We've created a personalized path for you, including: ${result.recommendedPath.join(', ')}. Create your free account to access your personalized dashboard and start your journey.`;
 };
 
+const instructionsConfig = {
+  title: "Faith Snapshot Assessment",
+  description: "This quick 6-question assessment helps you discover where you are on your faith journey as a Greek life member. We'll identify your biggest challenges and create a personalized path forward.",
+  estimatedTime: "2-3 minutes",
+  questionCount: 6,
+  benefits: [
+    "Discover your unique faith archetype",
+    "Get your Faith Confidence Score",
+    "Receive personalized resource recommendations",
+    "Understand your specific challenges and strengths"
+  ],
+  howToComplete: [
+    "Answer honestly — there are no wrong answers",
+    "Some questions allow multiple selections",
+    "Consider your real experiences and concerns",
+    "Your results will guide your personalized learning path"
+  ],
+  whatResultsMean: "Your Faith Confidence Score (0-100%) reflects how equipped you are to integrate faith with Greek life. Your archetype identifies your primary challenge area, and your personalized path provides resources tailored to your specific needs."
+};
+
 export default function FaithSnapshot() {
   const navigate = useNavigate();
   const { trackConversion } = useLandingABTest();
+  const [started, setStarted] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string | string[]>>({});
   const [showResults, setShowResults] = useState(false);
@@ -286,7 +308,8 @@ export default function FaithSnapshot() {
     navigate('/auth?mode=signup');
   };
 
-  if (showResults && results) {
+  // Show instructions first
+  if (!started) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[hsl(225,50%,8%)] via-[hsl(250,40%,12%)] to-[hsl(225,50%,8%)] flex flex-col">
         <header className="border-b border-purple-500/20 bg-[hsl(225,50%,8%)]/95 backdrop-blur-sm">
@@ -299,92 +322,82 @@ export default function FaithSnapshot() {
         </header>
 
         <main className="flex-1 flex items-center justify-center px-4 py-12">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="w-full max-w-lg"
-          >
-            <Card className="bg-gradient-to-br from-slate-800/80 to-purple-900/30 border-purple-500/30 shadow-2xl shadow-purple-500/10">
-              <CardHeader className="text-center pb-4">
-                <div className="flex justify-center mb-4">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-500 via-orange-500 to-pink-500 flex items-center justify-center animate-pulse">
-                    <Sparkles className="w-8 h-8 text-white" />
-                  </div>
-                </div>
-                
-                {/* TTS Button for Results */}
-                <div className="flex justify-center mb-3">
-                  <AssessmentTTS 
-                    text={resultsTTSText} 
-                    itemId="results-explanation" 
-                    title="Your Faith Snapshot Results"
-                    variant="button"
-                    label="Listen to Results"
-                  />
-                </div>
+          <div className="w-full max-w-lg">
+            <AssessmentInstructions
+              {...instructionsConfig}
+              ttsText={introTTSText}
+              onStart={() => setStarted(true)}
+            />
+          </div>
+        </main>
+      </div>
+    );
+  }
 
-                <Badge className="w-fit mx-auto mb-2 bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-400 border-amber-500/30">
-                  {results.archetype}
-                </Badge>
-                <CardTitle className="text-2xl bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
-                  {results.primaryFocus}
-                </CardTitle>
-                <CardDescription className="text-slate-300">
-                  {results.focusDescription}
-                </CardDescription>
-              </CardHeader>
+  if (showResults && results) {
+    const sections = [
+      {
+        title: "Your Focus Area",
+        content: results.focusDescription
+      },
+      {
+        title: "Score Interpretation",
+        content: results.faithScore >= 70 
+          ? "You have a strong foundation — let's make it unshakeable." 
+          : results.faithScore >= 40 
+            ? "You're on the right track. We'll help you grow in confidence." 
+            : "Perfect timing! We're here to equip you with answers."
+      },
+      {
+        title: "Your Personalized Path",
+        content: "Based on your responses, we recommend focusing on these resources:",
+        items: results.recommendedPath
+      }
+    ];
 
-              <CardContent className="space-y-6">
-                {/* Faith Confidence Score */}
-                <div className="p-4 rounded-lg bg-gradient-to-r from-purple-900/50 to-blue-900/50 border border-purple-500/30">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm text-purple-200">Faith Confidence Score</span>
-                    <span className="text-lg font-bold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
-                      {results.faithScore}%
-                    </span>
-                  </div>
-                  <Progress value={results.faithScore} className="h-2" />
-                  <p className="text-xs text-purple-300/80 mt-2">
-                    {results.faithScore >= 70 
-                      ? "You have a strong foundation — let's make it unshakeable." 
-                      : results.faithScore >= 40 
-                        ? "You're on the right track. We'll help you grow in confidence." 
-                        : "Perfect timing! We're here to equip you with answers."}
-                  </p>
-                </div>
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[hsl(225,50%,8%)] via-[hsl(250,40%,12%)] to-[hsl(225,50%,8%)] flex flex-col">
+        <header className="border-b border-purple-500/20 bg-[hsl(225,50%,8%)]/95 backdrop-blur-sm">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center gap-2 h-14">
+              <img src={logo} alt="Sacred Greeks" className="h-8 w-8 rounded-full object-cover" />
+              <span className="font-semibold text-white">Sacred Greeks</span>
+            </div>
+          </div>
+        </header>
 
-                {/* Recommended Path */}
-                <div>
-                  <h3 className="text-sm font-medium text-white mb-3">Your Personalized Path</h3>
-                  <div className="space-y-2">
-                    {results.recommendedPath.map((item, index) => (
-                      <div 
-                        key={index}
-                        className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20"
-                      >
-                        <CheckCircle2 className="w-5 h-5 text-amber-400 flex-shrink-0" />
-                        <span className="text-slate-200">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+        <main className="flex-1 flex items-center justify-center px-4 py-12">
+          <div className="w-full max-w-lg space-y-6">
+            <AssessmentResultsPanel
+              assessmentType="faith-snapshot"
+              assessmentTitle="Faith Snapshot Assessment"
+              resultTitle={results.primaryFocus}
+              resultSubtitle={results.focusDescription}
+              score={results.faithScore}
+              scoreLabel="Faith Confidence Score"
+              archetype={results.archetype}
+              sections={sections}
+              recommendations={results.recommendedPath}
+              ttsText={resultsTTSText}
+              icon={<Sparkles className="w-8 h-8 text-white" />}
+              colorScheme="amber"
+              additionalData={{ answers }}
+            />
 
-                {/* CTA */}
-                <Button
-                  size="lg"
-                  onClick={handleSignup}
-                  className="w-full bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 hover:from-amber-600 hover:via-orange-600 hover:to-pink-600 text-white font-semibold py-6 text-lg rounded-xl shadow-lg shadow-orange-500/25"
-                >
-                  Get Your Free Access
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
+            {/* CTA */}
+            <Button
+              size="lg"
+              onClick={handleSignup}
+              className="w-full bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 hover:from-amber-600 hover:via-orange-600 hover:to-pink-600 text-white font-semibold py-6 text-lg rounded-xl shadow-lg shadow-orange-500/25"
+            >
+              Get Your Free Access
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </Button>
 
-                <p className="text-center text-sm text-slate-400">
-                  Your personalized dashboard is ready — create your free account to access it
-                </p>
-              </CardContent>
-            </Card>
-          </motion.div>
+            <p className="text-center text-sm text-slate-400">
+              Your personalized dashboard is ready — create your free account to access it
+            </p>
+          </div>
         </main>
       </div>
     );

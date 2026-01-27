@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { 
   Target, 
@@ -13,13 +12,12 @@ import {
   Building, 
   ArrowRight, 
   ArrowLeft,
-  CheckCircle,
   BookOpen,
-  Share2,
   RotateCcw
 } from "lucide-react";
-import { Link } from "react-router-dom";
-import { toast } from "sonner";
+import { AssessmentInstructions } from "@/components/assessment/AssessmentInstructions";
+import { AssessmentResultsPanel } from "@/components/assessment/AssessmentResultsPanel";
+import { AssessmentTTS } from "@/components/assessment/AssessmentTTS";
 
 type ProofCategory = 'pledge-process' | 'rituals' | 'oaths' | 'obscurity' | 'founders';
 
@@ -161,7 +159,28 @@ const categoryInfo: Record<ProofCategory, {
   },
 };
 
+const instructionsConfig = {
+  title: "P.R.O.O.F. Assessment",
+  description: "This assessment helps identify which aspects of Greek life you're most often asked to defend, so you can focus your biblical study and preparation on the areas that matter most to you.",
+  estimatedTime: "3-5 minutes",
+  questionCount: 5,
+  benefits: [
+    "Identify your primary area of criticism or concern",
+    "Get personalized resource recommendations",
+    "Build confidence in defending your Greek life decision",
+    "Learn which P.R.O.O.F. framework pillar to focus on first"
+  ],
+  howToComplete: [
+    "Read each question carefully and consider your real experiences",
+    "Select the answer that best represents criticism you've encountered",
+    "Be honest — there are no wrong answers",
+    "Your result will guide your learning path"
+  ],
+  whatResultsMean: "Your result reveals which of the 5 P.R.O.O.F. pillars (Pledge Process, Rituals, Oaths, Obscurity, Founders) you encounter most often. This helps you prioritize your learning and prepare biblical responses for the specific criticisms you face."
+};
+
 export default function ProofAssessment() {
+  const [started, setStarted] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<ProofCategory[]>([]);
   const [showResults, setShowResults] = useState(false);
@@ -191,6 +210,7 @@ export default function ProofAssessment() {
     setCurrentQuestion(0);
     setAnswers([]);
     setShowResults(false);
+    setStarted(false);
   };
 
   const getTopCategory = (): ProofCategory => {
@@ -209,116 +229,90 @@ export default function ProofAssessment() {
     return (Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0] as ProofCategory);
   };
 
-  const handleShare = async () => {
-    const result = categoryInfo[getTopCategory()];
-    const text = `I took the P.R.O.O.F. Assessment on Sacred Greeks! My primary focus area is "${result.word}" - ${result.criticism}. Take the quiz to discover yours!`;
-
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: "My P.R.O.O.F. Assessment Result",
-          text,
-        });
-      } catch {
-        // User cancelled
-      }
-    } else {
-      await navigator.clipboard.writeText(text);
-      toast.success("Copied to clipboard for sharing!");
-    }
+  const generateTTSText = (result: typeof categoryInfo[ProofCategory]) => {
+    return `Your P.R.O.O.F. Assessment Results. Your primary focus area is ${result.word}, which addresses ${result.criticism}. ${result.description}. We recommend starting with these resources: ${result.resources.map(r => r.title).join(", ")}.`;
   };
+
+  // Show instructions first
+  if (!started) {
+    return (
+      <div className="min-h-screen bg-background">
+        <div className="container mx-auto px-4 py-8 max-w-2xl">
+          <AssessmentInstructions
+            {...instructionsConfig}
+            ttsText={`${instructionsConfig.description} ${instructionsConfig.whatResultsMean}`}
+            onStart={() => setStarted(true)}
+          />
+        </div>
+      </div>
+    );
+  }
 
   if (showResults) {
     const topCategory = getTopCategory();
     const result = categoryInfo[topCategory];
     const Icon = result.icon;
 
+    const sections = [
+      {
+        title: "Your Focus Area",
+        content: result.description
+      },
+      {
+        title: "Common Criticism",
+        content: `People often challenge you with concerns about "${result.criticism}". The P.R.O.O.F. framework's "${result.letter}" pillar provides biblical responses for this.`
+      }
+    ];
+
+    const recommendations = result.resources.map(r => r.title);
+
     return (
       <div className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-8 max-w-2xl">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Card className="border-primary/20">
-              <CardHeader className="text-center pb-4">
-                <div className="flex justify-center mb-4">
-                  <div
-                    className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${result.color} flex items-center justify-center shadow-lg`}
-                  >
-                    <span className="text-3xl font-bold text-white">{result.letter}</span>
-                  </div>
-                </div>
-                <Badge className="w-fit mx-auto mb-2" variant="secondary">
-                  Your Primary Focus Area
-                </Badge>
-                <CardTitle className="text-2xl">{result.word}</CardTitle>
-                <CardDescription className="text-base">
-                  {result.criticism}
-                </CardDescription>
-              </CardHeader>
+          <AssessmentResultsPanel
+            assessmentType="proof-quiz"
+            assessmentTitle="P.R.O.O.F. Assessment"
+            resultTitle={result.word}
+            resultSubtitle={result.criticism}
+            archetype={`${result.letter} - ${result.word}`}
+            sections={sections}
+            recommendations={recommendations}
+            ttsText={generateTTSText(result)}
+            icon={<span className="text-3xl font-bold text-white">{result.letter}</span>}
+            colorScheme={
+              topCategory === "pledge-process" ? "blue" :
+              topCategory === "rituals" ? "purple" :
+              topCategory === "oaths" ? "amber" :
+              topCategory === "obscurity" ? "green" :
+              "fuchsia"
+            }
+            additionalData={{ answers, topCategory }}
+          />
 
-              <CardContent className="space-y-6">
-                <div className="p-4 rounded-lg bg-muted/50 border border-border/50">
-                  <p className="text-sm text-foreground leading-relaxed">
-                    {result.description}
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-sm mb-3 flex items-center gap-2">
-                    <BookOpen className="w-4 h-4 text-primary" />
-                    Recommended Resources
-                  </h3>
-                  <div className="space-y-2">
-                    {result.resources.map((resource) => (
-                      <Link
-                        key={resource.path}
-                        to={resource.path}
-                        className="flex items-center justify-between p-3 rounded-lg bg-background border border-border/50 hover:border-primary/30 hover:bg-muted/30 transition-colors"
-                      >
-                        <span className="text-sm font-medium">{resource.title}</span>
-                        <ArrowRight className="w-4 h-4 text-muted-foreground" />
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex gap-3 pt-4">
-                  <Button
-                    variant="outline"
-                    onClick={handleRestart}
-                    className="flex-1 gap-2"
-                  >
-                    <RotateCcw className="w-4 h-4" />
-                    Retake
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={handleShare}
-                    className="flex-1 gap-2"
-                  >
-                    <Share2 className="w-4 h-4" />
-                    Share
-                  </Button>
-                  <Button
-                    onClick={() => navigate('/proof-course')}
-                    className="flex-1 gap-2"
-                  >
-                    <BookOpen className="w-4 h-4" />
-                    Study
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
+          <div className="flex gap-3 mt-6">
+            <Button
+              variant="outline"
+              onClick={handleRestart}
+              className="flex-1 gap-2"
+            >
+              <RotateCcw className="w-4 h-4" />
+              Retake
+            </Button>
+            <Button
+              onClick={() => navigate('/proof-course')}
+              className="flex-1 gap-2"
+            >
+              <BookOpen className="w-4 h-4" />
+              Study P.R.O.O.F.
+            </Button>
+          </div>
         </div>
       </div>
     );
   }
 
   const question = questions[currentQuestion];
+  const questionTTSText = `Question ${currentQuestion + 1} of ${questions.length}. ${question.text}. ${question.options.map((opt, i) => `Option ${i + 1}: ${opt.text}`).join(". ")}`;
 
   return (
     <div className="min-h-screen bg-background">
@@ -343,9 +337,16 @@ export default function ProofAssessment() {
           >
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg leading-relaxed">
-                  {question.text}
-                </CardTitle>
+                <div className="flex items-start justify-between gap-2">
+                  <CardTitle className="text-lg leading-relaxed flex-1">
+                    {question.text}
+                  </CardTitle>
+                  <AssessmentTTS 
+                    text={questionTTSText} 
+                    itemId={`question-${currentQuestion}`} 
+                    title={`Question ${currentQuestion + 1}`}
+                  />
+                </div>
               </CardHeader>
 
               <CardContent className="space-y-3">
