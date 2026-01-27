@@ -8,8 +8,9 @@ import { useLandingABTest } from "@/hooks/use-landing-ab-test";
 import { AssessmentTTS } from "@/components/assessment/AssessmentTTS";
 import { AssessmentInstructions } from "@/components/assessment/AssessmentInstructions";
 import { AssessmentResultsPanel } from "@/components/assessment/AssessmentResultsPanel";
+import { useAuth } from "@/contexts/AuthContext";
 import logo from "@/assets/sacred-greeks-logo.png";
-import { 
+import {
   ArrowLeft, 
   ArrowRight, 
   CheckCircle2, 
@@ -227,6 +228,7 @@ const instructionsConfig = {
 
 export default function FaithSnapshot() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const { trackConversion } = useLandingABTest();
   const [started, setStarted] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -384,19 +386,32 @@ export default function FaithSnapshot() {
               additionalData={{ answers }}
             />
 
-            {/* CTA */}
-            <Button
-              size="lg"
-              onClick={handleSignup}
-              className="w-full bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 hover:from-amber-600 hover:via-orange-600 hover:to-pink-600 text-white font-semibold py-6 text-lg rounded-xl shadow-lg shadow-orange-500/25"
-            >
-              Get Your Free Access
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
+            {/* CTA - Show different options for logged in vs logged out users */}
+            {user ? (
+              <Button
+                size="lg"
+                onClick={() => navigate('/dashboard')}
+                className="w-full bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 hover:from-amber-600 hover:via-orange-600 hover:to-pink-600 text-white font-semibold py-6 text-lg rounded-xl shadow-lg shadow-orange-500/25"
+              >
+                Go to Dashboard
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+            ) : (
+              <>
+                <Button
+                  size="lg"
+                  onClick={handleSignup}
+                  className="w-full bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 hover:from-amber-600 hover:via-orange-600 hover:to-pink-600 text-white font-semibold py-6 text-lg rounded-xl shadow-lg shadow-orange-500/25"
+                >
+                  Get Your Free Access
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
 
-            <p className="text-center text-sm text-slate-400">
-              Your personalized dashboard is ready — create your free account to access it
-            </p>
+                <p className="text-center text-sm text-slate-400">
+                  Your personalized dashboard is ready — create your free account to access it
+                </p>
+              </>
+            )}
           </div>
         </main>
       </div>
