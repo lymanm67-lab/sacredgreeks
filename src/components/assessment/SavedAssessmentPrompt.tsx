@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { Calendar, Eye, RotateCcw, ChevronRight, Trophy } from "lucide-react";
+import { ListenButton } from "@/components/ListenButton";
 
 interface SavedAssessmentPromptProps {
   assessmentTitle: string;
@@ -14,6 +15,7 @@ interface SavedAssessmentPromptProps {
   onViewResults: () => void;
   onRetake: () => void;
   colorScheme?: "purple" | "amber" | "fuchsia" | "blue" | "green";
+  ttsText?: string;
 }
 
 const colorSchemes = {
@@ -62,9 +64,14 @@ export function SavedAssessmentPrompt({
   score,
   onViewResults,
   onRetake,
-  colorScheme = "purple"
+  colorScheme = "purple",
+  ttsText
 }: SavedAssessmentPromptProps) {
   const colors = colorSchemes[colorScheme];
+  
+  // Generate TTS text if not provided
+  const defaultTtsText = `You previously completed the ${assessmentTitle}. Your result was: ${resultTitle}${archetype ? `, with the archetype: ${archetype}` : ''}${score !== undefined ? `. You scored ${score} percent.` : ''} You completed this assessment on ${format(new Date(completedAt), "MMMM d, yyyy")}.`;
+  const audioText = ttsText || defaultTtsText;
 
   return (
     <motion.div
@@ -115,14 +122,23 @@ export function SavedAssessmentPrompt({
 
           {/* Action Buttons */}
           <div className="grid gap-3">
-            <Button
-              onClick={onViewResults}
-              className={`w-full bg-gradient-to-r ${colors.gradient} hover:opacity-90`}
-            >
-              <Eye className="w-4 h-4 mr-2" />
-              View Full Report
-              <ChevronRight className="w-4 h-4 ml-2" />
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                onClick={onViewResults}
+                className={`flex-1 bg-gradient-to-r ${colors.gradient} hover:opacity-90`}
+              >
+                <Eye className="w-4 h-4 mr-2" />
+                View Full Report
+                <ChevronRight className="w-4 h-4 ml-2" />
+              </Button>
+              <ListenButton
+                text={audioText}
+                itemId={`saved-assessment-${completedAt}`}
+                title={`${assessmentTitle} Results`}
+                showLabel={false}
+                size="default"
+              />
+            </div>
 
             <Button
               variant="outline"
