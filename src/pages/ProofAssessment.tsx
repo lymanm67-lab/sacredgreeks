@@ -412,21 +412,31 @@ export default function ProofAssessment() {
             additionalData={{ answers, topCategory }}
           />
 
-          <div className="flex gap-3 mt-6">
+          <div className="flex flex-col gap-3 mt-6">
+            <div className="flex gap-3">
+              <Button
+                variant="outline"
+                onClick={handleRestart}
+                className="flex-1 gap-2"
+              >
+                <RotateCcw className="w-4 h-4" />
+                Retake
+              </Button>
+              <Button
+                onClick={() => navigate('/proof-course')}
+                className="flex-1 gap-2"
+              >
+                <BookOpen className="w-4 h-4" />
+                Study P.R.O.O.F.
+              </Button>
+            </div>
             <Button
-              variant="outline"
-              onClick={handleRestart}
-              className="flex-1 gap-2"
+              variant="ghost"
+              onClick={() => navigate('/dashboard')}
+              className="w-full gap-2"
             >
-              <RotateCcw className="w-4 h-4" />
-              Retake
-            </Button>
-            <Button
-              onClick={() => navigate('/proof-course')}
-              className="flex-1 gap-2"
-            >
-              <BookOpen className="w-4 h-4" />
-              Study P.R.O.O.F.
+              <ArrowLeft className="w-4 h-4" />
+              Back to Dashboard
             </Button>
           </div>
         </div>
