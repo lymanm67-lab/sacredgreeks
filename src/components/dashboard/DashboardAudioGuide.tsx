@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
-import { Volume2, HelpCircle, Navigation, LayoutDashboard, Users, Share2, Sparkles } from 'lucide-react';
+import { Volume2, HelpCircle, Navigation, LayoutDashboard, Users, Share2, Sparkles, BookOpen, Podcast } from 'lucide-react';
 import { ListenButton } from '@/components/ListenButton';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useDemoMode } from '@/contexts/DemoModeContext';
@@ -46,16 +46,6 @@ const FEATURE_AUDIO_NAMES: Record<string, string> = {
   'proof-assessment': 'P.R.O.O.F. Quiz',
   'shattered-masks': 'Shattered Masks archetype discovery',
   'assessment-history': 'My Assessments history',
-};
-
-// Category groupings for audio narration
-const CATEGORY_INTROS: Record<string, string> = {
-  core: 'Core features include',
-  study: 'For study and learning, you have',
-  prayer: 'Your prayer tools include',
-  community: 'Community features include',
-  ai: 'AI-powered tools include',
-  chapter: 'Chapter leadership tools include',
 };
 
 interface GuideSection {
@@ -140,6 +130,18 @@ function generateDynamicSections(
   }
 
   sections.push(
+    {
+      id: 'about',
+      title: 'About the Creator',
+      icon: BookOpen,
+      content: `Sacred Greeks was created by Dr. Lyman Montgomery, a devoted scholar and minister who understands the unique challenges Christians face when navigating Black Greek Letter Organization membership. After years of witnessing the pain, confusion, and division caused by the faith versus fraternity debate, Dr. Montgomery set out to provide biblical clarity and healing for Greek-affiliated believers. His mission is to equip you with sound theology, historical context, and practical tools to live confidently in both your faith and your Greek identity.`
+    },
+    {
+      id: 'resources',
+      title: 'Book & Podcast',
+      icon: Podcast,
+      content: `For a deeper dive into these topics, be sure to get Dr. Montgomery's book: Sacred Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate. This comprehensive resource provides the theological foundation for everything you'll find in this app. Also, subscribe to the Sacred Greeks Podcast where Dr. Montgomery and guests discuss faith, Greek life, and practical wisdom for navigating both. You can find the podcast in the Content Hub or on your favorite podcast platform.`
+    },
     {
       id: 'dashboard',
       title: 'Dashboard Sections',
