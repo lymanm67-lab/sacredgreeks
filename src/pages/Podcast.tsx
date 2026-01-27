@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, Headphones, Play, Download, BookOpen, Rss, ExternalLink, Search, X, Clock, RotateCcw, Mic, FileText } from "lucide-react";
+import { ArrowLeft, Headphones, Play, Download, BookOpen, Rss, ExternalLink, Search, X, Clock, RotateCcw, Mic, FileText, Home } from "lucide-react";
 import { generatePodcastStudyGuidePDF } from "@/lib/podcast-study-guide-pdf";
 import { useEffect, useState, useMemo, useRef, useCallback } from "react";
 import { useAuth } from "@/contexts/AuthContext";
@@ -303,12 +303,21 @@ const Podcast = () => {
       <header className="border-b border-purple-500/20 bg-gradient-to-r from-purple-900/10 via-card/80 to-sacred/10 backdrop-blur sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Link to="/study">
-              <Button variant="ghost" size="sm" className="hover:bg-purple-500/10">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Study Guide
-              </Button>
-            </Link>
+            <div className="flex items-center gap-2">
+              <Link to="/dashboard">
+                <Button variant="ghost" size="sm" className="hover:bg-purple-500/10">
+                  <Home className="w-4 h-4 mr-2" />
+                  Dashboard
+                </Button>
+              </Link>
+              <span className="text-muted-foreground/50">|</span>
+              <Link to="/study">
+                <Button variant="ghost" size="sm" className="hover:bg-purple-500/10">
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Study Guide
+                </Button>
+              </Link>
+            </div>
             <Badge className="bg-gradient-to-r from-purple-500/20 to-sacred/20 text-purple-300 hover:from-purple-500/30 hover:to-sacred/30 border-purple-500/30" variant="outline">
               🎙️ Audio Study Guide
             </Badge>

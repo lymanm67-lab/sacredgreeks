@@ -20,7 +20,8 @@ import {
   User,
   Phone,
   MessageSquare,
-  Sparkles
+  Sparkles,
+  Home
 } from "lucide-react";
 
 const formSchema = z.object({
@@ -162,11 +163,18 @@ const GuestPanelistApplication = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[hsl(220,60%,6%)] via-[hsl(225,55%,10%)] to-[hsl(230,50%,8%)]">
       {/* Header */}
-      <header className="border-b border-blue-500/10 bg-slate-950/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-4">
-          <Link to="/land" className="inline-flex items-center text-sky-300 hover:text-white transition-colors">
+      <header className="border-b border-blue-500/10 bg-slate-950/50 backdrop-blur-sm sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4 flex items-center gap-3">
+          <Link to="/dashboard">
+            <Button variant="ghost" size="sm" className="text-sky-300 hover:text-white hover:bg-blue-500/20">
+              <Home className="w-4 h-4 mr-2" />
+              Dashboard
+            </Button>
+          </Link>
+          <span className="text-muted-foreground/50">|</span>
+          <Link to="/land" className="inline-flex items-center text-sky-300 hover:text-white transition-colors text-sm">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Home
+            Home
           </Link>
         </div>
       </header>
