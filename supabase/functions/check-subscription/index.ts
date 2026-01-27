@@ -46,9 +46,31 @@ serve(async (req) => {
     logStep("Authenticating user with token");
     
     const { data: userData, error: userError } = await supabaseClient.auth.getUser(token);
-    if (userError) throw new Error(`Authentication error: ${userError.message}`);
+    if (userError) {
+      logStep("Authentication failed, returning unsubscribed state", { error: userError.message });
+      return new Response(JSON.stringify({ 
+        subscribed: false,
+        tier: null,
+        subscription_end: null,
+        is_trialing: false
+      }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      });
+    }
     const user = userData.user;
-    if (!user?.email) throw new Error("User not authenticated or email not available");
+    if (!user?.email) {
+      logStep("No user email found, returning unsubscribed state");
+      return new Response(JSON.stringify({ 
+        subscribed: false,
+        tier: null,
+        subscription_end: null,
+        is_trialing: false
+      }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      });
+    }
     logStep("User authenticated", { userId: user.id, email: user.email });
 
     // Check for gifted subscriptions first
