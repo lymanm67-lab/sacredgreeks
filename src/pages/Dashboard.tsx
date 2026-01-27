@@ -23,7 +23,6 @@ import { useRealtimeNotifications } from '@/hooks/use-realtime-notifications';
 import { SkeletonDashboard } from '@/components/ui/SkeletonCard';
 import { DashboardTrainingProgress } from '@/components/training/DashboardTrainingProgress';
 import { DashboardAIAssistant } from '@/components/dashboard/DashboardAIAssistant';
-import { LearningJourneyTimeline } from '@/components/dashboard/LearningJourneyTimeline';
 import { LearningPathsMap } from '@/components/dashboard/LearningPathsMap';
 import { PathCompletionAchievements } from '@/components/dashboard/PathCompletionAchievements';
 import { StatsSection } from '@/components/dashboard/StatsSection';
@@ -256,13 +255,8 @@ const Dashboard = () => {
             <DashboardAIAssistant />
           </div>
 
-          {/* Learning Journey Timeline */}
+          {/* Learning Paths Map - Consolidated Learning Journey */}
           <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <LearningJourneyTimeline />
-          </div>
-
-          {/* Learning Paths Map */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.25s' }}>
             <LearningPathsMap />
           </div>
 
