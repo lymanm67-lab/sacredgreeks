@@ -311,24 +311,24 @@ const Dashboard = () => {
 
       <main className="w-full min-w-fit px-4 py-8">
         <div className="max-w-5xl mx-auto space-y-8 w-full">
-          {/* AI Assistant */}
-          <div className="animate-fade-in">
-            <DashboardAIAssistant />
-          </div>
-
           {/* Hero Section with Welcome & Video */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.05s' }}>
+          <div className="animate-fade-in">
             <HeroSection />
           </div>
 
           {/* Organization Welcome Card */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
+          <div className="animate-fade-in" style={{ animationDelay: '0.05s' }}>
             <OrgWelcomeCard />
           </div>
 
           {/* Greek Community Section */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.15s' }}>
+          <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
             <GreekCommunitySection />
+          </div>
+
+          {/* AI Assistant - below NPHC Community */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.15s' }}>
+            <DashboardAIAssistant />
           </div>
 
           {/* Learning Journey Timeline */}
