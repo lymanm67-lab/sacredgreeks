@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -13,7 +14,10 @@ import {
   Loader2,
   Volume2,
   FileText,
-  Sparkles
+  Sparkles,
+  LogIn,
+  ArrowRight,
+  Home
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -102,6 +106,7 @@ export function AssessmentResultsPanel({
   additionalData
 }: AssessmentResultsPanelProps) {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const reportRef = useRef<HTMLDivElement>(null);
@@ -461,6 +466,48 @@ export function AssessmentResultsPanel({
 
           <Separator />
 
+          {/* Auth-aware CTA Section */}
+          {user ? (
+            <Button
+              onClick={() => navigate('/dashboard')}
+              className="w-full gap-2"
+              size="lg"
+            >
+              <Home className="w-4 h-4" />
+              Go to Dashboard
+              <ArrowRight className="w-4 h-4 ml-auto" />
+            </Button>
+          ) : (
+            <div className="space-y-3">
+              <div className="text-center p-4 rounded-lg bg-gradient-to-r from-primary/10 to-purple-500/10 border border-primary/20">
+                <LogIn className="w-8 h-8 mx-auto mb-2 text-primary" />
+                <h4 className="font-semibold mb-1">Save Your Results</h4>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Sign in or create a free account to save your results and access your personalized dashboard
+                </p>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => navigate('/signin')}
+                    className="flex-1 gap-2"
+                  >
+                    <LogIn className="w-4 h-4" />
+                    Sign In
+                  </Button>
+                  <Button
+                    onClick={() => navigate('/signin?tab=signup')}
+                    className="flex-1 gap-2"
+                  >
+                    Get Free Access
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <Separator />
+
           {/* Action Buttons */}
           <div className="grid grid-cols-2 gap-3">
             <Button
@@ -508,8 +555,8 @@ export function AssessmentResultsPanel({
           </div>
 
           {!user && (
-            <p className="text-center text-sm text-muted-foreground">
-              Sign in to save your results to your profile
+            <p className="text-center text-xs text-muted-foreground">
+              You can still download or print your results without signing in
             </p>
           )}
         </CardContent>

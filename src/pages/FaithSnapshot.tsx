@@ -517,22 +517,6 @@ export default function FaithSnapshot() {
               colorScheme="amber"
               additionalData={{ answers }}
             />
-
-            {/* CTA - Show dashboard button for logged in users */}
-            <Button
-              size="lg"
-              onClick={() => user ? navigate('/dashboard') : handleSignup()}
-              className="w-full bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 hover:from-amber-600 hover:via-orange-600 hover:to-pink-600 text-white font-semibold py-6 text-lg rounded-xl shadow-lg shadow-orange-500/25"
-            >
-              {user ? 'Go to Dashboard' : 'Get Your Free Access'}
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
-
-            {!user && (
-              <p className="text-center text-sm text-slate-400">
-                Your personalized dashboard is ready — create your free account to access it
-              </p>
-            )}
           </div>
         </main>
       </div>
