@@ -163,11 +163,13 @@ export const HeroSection = () => {
                   >
                     <Button
                       variant="ghost"
-                      className={`bg-gradient-to-r ${action.color} text-white border-0 shadow-lg hover:shadow-xl hover:brightness-110 transition-all group`}
+                      size="sm"
+                      className={`bg-gradient-to-r ${action.color} text-white border-0 shadow-lg hover:shadow-xl hover:brightness-110 transition-all group text-xs px-2.5 py-1.5 h-auto`}
                     >
-                      <action.icon className="w-4 h-4 mr-2" />
-                      {action.label}
-                      <ChevronRight className="w-4 h-4 ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                      <action.icon className="w-3.5 h-3.5 mr-1.5" />
+                      <span className="hidden sm:inline">{action.label}</span>
+                      <span className="sm:hidden">{action.label.split(' ')[0]}</span>
+                      <ChevronRight className="w-3 h-3 ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all hidden sm:block" />
                     </Button>
                   </motion.div>
                 </Link>
