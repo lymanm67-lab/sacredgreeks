@@ -386,13 +386,19 @@ const GuestPanelistApplication = () => {
                     )}
                   />
 
-                  {/* Media Usage Rights & Terms Notice */}
+                  {/* Terms & Disclosures */}
                   <div className="rounded-md border border-sky-500/20 p-4 bg-sky-900/20 space-y-3">
                     <p className="text-sky-200/80 text-sm leading-relaxed">
                       <strong className="text-sky-100">Non-Paid Appearance:</strong> Guest panelist appearances are non-paid volunteer opportunities. Selected guests participate to share their expertise and perspective with the Sacred Greeks community.
                     </p>
                     <p className="text-sky-200/80 text-sm leading-relaxed">
-                      <strong className="text-sky-100">Media Usage Notice:</strong> By submitting this application, you acknowledge that the host retains the right to use all recorded media (audio, video, photographs, and transcripts) from your appearance for promotional purposes, including but not limited to social media, website content, marketing materials, and future broadcast distribution.
+                      <strong className="text-sky-100">Recording Consent:</strong> All sessions are recorded for podcast, video, and promotional use. By participating, you consent to being recorded via audio and video.
+                    </p>
+                    <p className="text-sky-200/80 text-sm leading-relaxed">
+                      <strong className="text-sky-100">Media Usage Notice:</strong> The host retains the right to use all recorded media (audio, video, photographs, and transcripts) from your appearance for promotional purposes, including social media, website content, marketing materials, and future broadcast distribution.
+                    </p>
+                    <p className="text-sky-200/80 text-sm leading-relaxed">
+                      <strong className="text-sky-100">Scheduling Flexibility:</strong> Selected guests may need to accommodate date/time changes. We will work with you to find a mutually convenient time, but flexibility is appreciated.
                     </p>
                   </div>
 

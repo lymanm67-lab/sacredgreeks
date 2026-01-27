@@ -375,6 +375,16 @@ export default function WebinarRegister() {
                     )}
                   />
 
+                  {/* Disclosures */}
+                  <div className="rounded-md border border-sky-500/20 p-3 bg-sky-900/20 space-y-2">
+                    <p className="text-sky-200/70 text-xs leading-relaxed">
+                      <strong className="text-sky-100">Recording Notice:</strong> This webinar will be recorded. By registering, you consent to appear in the recording which may be used for replay and promotional purposes.
+                    </p>
+                    <p className="text-sky-200/70 text-xs leading-relaxed">
+                      <strong className="text-sky-100">Privacy:</strong> Your information will only be used to send webinar details and Sacred Greeks updates. You can unsubscribe at any time.
+                    </p>
+                  </div>
+
                   <Button 
                     type="submit" 
                     disabled={isSubmitting}
