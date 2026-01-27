@@ -115,6 +115,18 @@ export default function WebinarRegister() {
 
       if (error) throw error;
 
+      // Send admin notification email (fire and forget - don't block on this)
+      supabase.functions.invoke('notify-webinar-registration', {
+        body: {
+          webinarTitle: webinar.title,
+          fullName: values.fullName,
+          email: values.email,
+          phone: values.phone,
+          greekOrganization: values.greekOrganization,
+          howHeard: values.howHeard
+        }
+      }).catch(err => console.error('Failed to send admin notification:', err));
+
       setIsRegistered(true);
       toast.success("You're registered! Check your email for details.");
     } catch (error) {
