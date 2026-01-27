@@ -1151,6 +1151,48 @@ export type Database = {
           },
         ]
       }
+      media_inquiries: {
+        Row: {
+          admin_notes: string | null
+          created_at: string
+          email: string
+          id: string
+          inquiry_type: string
+          message: string
+          name: string
+          organization: string | null
+          status: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          inquiry_type: string
+          message: string
+          name: string
+          organization?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          inquiry_type?: string
+          message?: string
+          name?: string
+          organization?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       morning_notification_settings: {
         Row: {
           created_at: string | null
@@ -1262,6 +1304,60 @@ export type Database = {
           status?: string
           target_segments?: string[]
           updated_at?: string
+        }
+        Relationships: []
+      }
+      podcast_guest_applications: {
+        Row: {
+          admin_notes: string | null
+          application_type: string
+          chapter_name: string | null
+          created_at: string
+          email: string
+          full_name: string
+          greek_organization: string
+          id: string
+          linkedin_url: string | null
+          phone: string | null
+          previous_speaking: string | null
+          status: string
+          topic_expertise: string
+          updated_at: string
+          why_guest: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          application_type?: string
+          chapter_name?: string | null
+          created_at?: string
+          email: string
+          full_name: string
+          greek_organization: string
+          id?: string
+          linkedin_url?: string | null
+          phone?: string | null
+          previous_speaking?: string | null
+          status?: string
+          topic_expertise: string
+          updated_at?: string
+          why_guest: string
+        }
+        Update: {
+          admin_notes?: string | null
+          application_type?: string
+          chapter_name?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          greek_organization?: string
+          id?: string
+          linkedin_url?: string | null
+          phone?: string | null
+          previous_speaking?: string | null
+          status?: string
+          topic_expertise?: string
+          updated_at?: string
+          why_guest?: string
         }
         Relationships: []
       }
