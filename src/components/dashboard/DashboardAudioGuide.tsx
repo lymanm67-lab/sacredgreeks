@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Volume2, HelpCircle, Navigation, LayoutDashboard, Users, Share2, Sparkles, ChevronRight } from 'lucide-react';
+import { Volume2, HelpCircle, Navigation, LayoutDashboard, Users, Share2, Sparkles } from 'lucide-react';
 import { ListenButton } from '@/components/ListenButton';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useDemoMode } from '@/contexts/DemoModeContext';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Popover,
@@ -62,7 +63,14 @@ export function DashboardAudioGuide() {
   const [isOpen, setIsOpen] = useState(false);
   const [expandedSection, setExpandedSection] = useState<string | undefined>(undefined);
   const isMobile = useIsMobile();
+  const { isDemoMode } = useDemoMode();
 
+  // Auto-expand first section in demo mode on tablet/desktop
+  useEffect(() => {
+    if (isDemoMode && isOpen && !isMobile && !expandedSection) {
+      setExpandedSection('welcome');
+    }
+  }, [isDemoMode, isOpen, isMobile, expandedSection]);
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
@@ -86,7 +94,14 @@ export function DashboardAudioGuide() {
               <Volume2 className="w-5 h-5 text-sacred" />
             </div>
             <div className="flex-1">
-              <h3 className="font-semibold">Dashboard Audio Guide</h3>
+              <div className="flex items-center gap-2">
+                <h3 className="font-semibold">Dashboard Audio Guide</h3>
+                {isDemoMode && (
+                  <span className="px-1.5 py-0.5 text-[10px] font-medium bg-accent text-accent-foreground rounded">
+                    Demo
+                  </span>
+                )}
+              </div>
               <p className="text-xs text-muted-foreground">Learn how to navigate and use the app</p>
             </div>
           </div>
