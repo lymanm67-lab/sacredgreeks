@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { GamificationBar } from "@/components/GamificationBar";
 import { AchievementsList } from "@/components/AchievementsList";
 import { OrgAchievementsList } from "@/components/OrgAchievementsList";
+import { NextLevelMotivation } from "@/components/NextLevelMotivation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useGamification } from "@/hooks/use-gamification";
 
@@ -38,6 +39,8 @@ const Achievements = () => {
 
         <div className="space-y-6">
           <GamificationBar />
+          
+          <NextLevelMotivation />
           
           <Tabs defaultValue="all" className="w-full">
             <TabsList className="grid w-full grid-cols-2 max-w-md">
