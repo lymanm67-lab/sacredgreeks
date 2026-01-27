@@ -28,19 +28,19 @@ const painPoints = [
     icon: MessageCircle,
     title: '"Are fraternities even Christian?"',
     description: "Get biblical clarity on Greek life — no judgment, just truth.",
-    gradient: "from-teal-500 to-cyan-500"
+    gradient: "from-blue-500 to-sky-500"
   },
   {
     icon: Shield,
     title: "Handle Criticism Confidently",
     description: "Learn how to respond when family, church, or friends question your decision.",
-    gradient: "from-purple-500 to-violet-500"
+    gradient: "from-purple-500 to-indigo-500"
   },
   {
     icon: Heart,
     title: "Faith + Fraternity, United",
     description: "You don't have to choose. We'll show you how to thrive in both.",
-    gradient: "from-emerald-500 to-teal-500"
+    gradient: "from-indigo-500 to-blue-500"
   }
 ];
 
@@ -73,33 +73,33 @@ export default function LandingABTest() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[hsl(210,60%,6%)] via-[hsl(220,50%,10%)] to-[hsl(180,40%,8%)] flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-teal-400" />
+      <div className="min-h-screen bg-gradient-to-br from-[hsl(220,60%,6%)] via-[hsl(230,50%,10%)] to-[hsl(240,40%,8%)] flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-blue-400" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[hsl(210,60%,6%)] via-[hsl(220,50%,10%)] to-[hsl(180,40%,8%)] flex flex-col overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[hsl(220,60%,6%)] via-[hsl(230,50%,10%)] to-[hsl(240,40%,8%)] flex flex-col overflow-hidden">
       {/* Animated background elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-teal-500/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-40 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
-        <div className="absolute bottom-20 left-1/4 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '3s' }} />
+        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+        <div className="absolute bottom-20 left-1/4 w-48 h-48 bg-sky-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '3s' }} />
       </div>
 
       {/* Header */}
-      <header className="border-b border-teal-500/20 bg-[hsl(210,60%,6%)]/80 backdrop-blur-md sticky top-0 z-50">
+      <header className="border-b border-blue-500/20 bg-[hsl(220,60%,6%)]/80 backdrop-blur-md sticky top-0 z-50">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-14">
             <div className="flex items-center gap-2">
               <img
                 src={logo}
                 alt="Sacred Greeks"
-                className="h-8 w-8 rounded-full object-cover ring-2 ring-teal-500/30"
+                className="h-8 w-8 rounded-full object-cover ring-2 ring-blue-500/30"
               />
-              <span className="font-semibold bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent">
+              <span className="font-semibold bg-gradient-to-r from-white to-sky-200 bg-clip-text text-transparent">
                 Sacred Greeks
               </span>
             </div>
@@ -108,7 +108,7 @@ export default function LandingABTest() {
                 variant="ghost" 
                 size="sm"
                 onClick={() => navigate('/auth')}
-                className="text-cyan-200 hover:text-white hover:bg-teal-900/50"
+                className="text-sky-200 hover:text-white hover:bg-blue-900/50"
               >
                 Sign In
               </Button>
@@ -123,20 +123,20 @@ export default function LandingABTest() {
         <section className="py-16 md:py-24 px-4">
           <div className="container mx-auto max-w-4xl text-center">
             {/* Badge */}
-            <Badge className="mb-6 bg-gradient-to-r from-teal-500/20 to-emerald-500/20 text-teal-400 border-teal-500/30 hover:bg-teal-500/30 animate-bounce">
+            <Badge className="mb-6 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 text-blue-400 border-blue-500/30 hover:bg-blue-500/30 animate-bounce">
               <Sparkles className="w-3 h-3 mr-1" />
               Free Faith Snapshot Assessment
             </Badge>
 
             {/* A/B Tested Headline with gradient */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-white via-cyan-200 to-teal-200 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-white via-sky-200 to-blue-200 bg-clip-text text-transparent">
                 {variant?.headline || "Faith + Greek Life, United"}
               </span>
             </h1>
 
             {/* A/B Tested Subheadline */}
-            <p className="text-lg sm:text-xl text-cyan-200/90 mb-10 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl text-sky-200/90 mb-10 max-w-2xl mx-auto leading-relaxed">
               {variant?.subheadline || "Stop feeling torn. Get biblical clarity on Greek life, handle criticism with confidence, and thrive in both worlds."}
             </p>
 
@@ -146,9 +146,9 @@ export default function LandingABTest() {
                 size="lg"
                 onClick={handleCTAClick}
                 disabled={isNavigating}
-                className="relative bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 hover:from-teal-600 hover:via-emerald-600 hover:to-cyan-600 text-white font-semibold px-10 py-7 text-xl rounded-2xl shadow-2xl shadow-teal-500/30 transition-all hover:shadow-teal-500/50 hover:scale-105 group"
+                className="relative bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 hover:from-blue-600 hover:via-indigo-600 hover:to-purple-600 text-white font-semibold px-10 py-7 text-xl rounded-2xl shadow-2xl shadow-blue-500/30 transition-all hover:shadow-blue-500/50 hover:scale-105 group"
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-teal-400 via-emerald-400 to-cyan-400 rounded-2xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity" />
+                <span className="absolute inset-0 bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 rounded-2xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity" />
                 <span className="relative flex items-center">
                   {isNavigating ? (
                     <Loader2 className="w-6 h-6 mr-2 animate-spin" />
@@ -162,24 +162,24 @@ export default function LandingABTest() {
             </div>
 
             {/* Secondary action */}
-            <p className="text-sm text-cyan-300/70">
+            <p className="text-sm text-sky-300/70">
               or{" "}
               <button 
                 onClick={handleDemoClick}
-                className="text-teal-400 hover:text-teal-300 underline underline-offset-2 transition-colors"
+                className="text-blue-400 hover:text-blue-300 underline underline-offset-2 transition-colors"
               >
                 explore with sample data first
               </button>
             </p>
 
             {/* Trust indicators with colored icons */}
-            <div className="flex flex-wrap items-center justify-center gap-6 mt-10 text-sm text-cyan-200">
-              <div className="flex items-center gap-2 bg-emerald-500/10 px-4 py-2 rounded-full border border-emerald-500/20">
-                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+            <div className="flex flex-wrap items-center justify-center gap-6 mt-10 text-sm text-sky-200">
+              <div className="flex items-center gap-2 bg-green-500/10 px-4 py-2 rounded-full border border-green-500/20">
+                <CheckCircle2 className="w-5 h-5 text-green-400" />
                 <span>100% Free</span>
               </div>
-              <div className="flex items-center gap-2 bg-cyan-500/10 px-4 py-2 rounded-full border border-cyan-500/20">
-                <Clock className="w-5 h-5 text-cyan-400" />
+              <div className="flex items-center gap-2 bg-blue-500/10 px-4 py-2 rounded-full border border-blue-500/20">
+                <Clock className="w-5 h-5 text-blue-400" />
                 <span>3 Minutes</span>
               </div>
               <div className="flex items-center gap-2 bg-purple-500/10 px-4 py-2 rounded-full border border-purple-500/20">
@@ -191,14 +191,14 @@ export default function LandingABTest() {
         </section>
 
         {/* Pain Points Section with colorful cards */}
-        <section className="py-16 px-4 bg-gradient-to-b from-transparent via-teal-900/10 to-transparent">
+        <section className="py-16 px-4 bg-gradient-to-b from-transparent via-blue-900/10 to-transparent">
           <div className="container mx-auto max-w-5xl">
             <h2 className="text-3xl font-bold text-center mb-4">
-              <span className="bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-blue-400 to-sky-400 bg-clip-text text-transparent">
                 We Get It.
               </span>
             </h2>
-            <p className="text-center text-cyan-200/80 mb-12 max-w-2xl mx-auto">
+            <p className="text-center text-sky-200/80 mb-12 max-w-2xl mx-auto">
               Being a Christian in Greek life comes with questions. We're here with answers.
             </p>
             <div className="grid md:grid-cols-3 gap-6">
@@ -213,7 +213,7 @@ export default function LandingABTest() {
                       <point.icon className="w-7 h-7 text-white" />
                     </div>
                     <h3 className="font-semibold text-white mb-2 text-lg">{point.title}</h3>
-                    <p className="text-sm text-cyan-200/80">{point.description}</p>
+                    <p className="text-sm text-sky-200/80">{point.description}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -224,20 +224,20 @@ export default function LandingABTest() {
         {/* Social Proof Testimonial with gradient border */}
         <section className="py-16 px-4">
           <div className="container mx-auto max-w-3xl">
-            <div className="relative p-1 rounded-3xl bg-gradient-to-r from-teal-500 via-purple-500 to-emerald-500">
-              <Card className="bg-gradient-to-br from-slate-950 to-teal-950 border-0 rounded-[22px] overflow-hidden">
+            <div className="relative p-1 rounded-3xl bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500">
+              <Card className="bg-gradient-to-br from-slate-950 to-blue-950 border-0 rounded-[22px] overflow-hidden">
                 <CardContent className="p-10">
-                  <Quote className="w-12 h-12 text-teal-400/50 mb-6" />
+                  <Quote className="w-12 h-12 text-blue-400/50 mb-6" />
                   <blockquote className="text-xl sm:text-2xl text-white mb-8 leading-relaxed font-light">
                     "{testimonial.quote}"
                   </blockquote>
                   <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-teal-500 via-purple-500 to-emerald-500 flex items-center justify-center text-2xl shadow-lg">
+                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-500 flex items-center justify-center text-2xl shadow-lg">
                       {testimonial.avatar}
                     </div>
                     <div>
                       <div className="font-semibold text-white text-lg">{testimonial.author}</div>
-                      <div className="text-cyan-300">{testimonial.org}</div>
+                      <div className="text-sky-300">{testimonial.org}</div>
                     </div>
                   </div>
                 </CardContent>
@@ -250,23 +250,23 @@ export default function LandingABTest() {
         <section className="py-12 px-4">
           <div className="container mx-auto max-w-4xl">
             <div className="grid grid-cols-3 gap-4 text-center">
-              <div className="p-6 rounded-2xl bg-gradient-to-br from-cyan-500/10 to-teal-500/10 border border-cyan-500/20">
-                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 to-teal-400 bg-clip-text text-transparent">
+              <div className="p-6 rounded-2xl bg-gradient-to-br from-blue-500/10 to-sky-500/10 border border-blue-500/20">
+                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-sky-400 bg-clip-text text-transparent">
                   1,000+
                 </div>
-                <div className="text-cyan-200/80 text-sm mt-1">Greeks Growing</div>
+                <div className="text-sky-200/80 text-sm mt-1">Greeks Growing</div>
               </div>
-              <div className="p-6 rounded-2xl bg-gradient-to-br from-purple-500/10 to-violet-500/10 border border-purple-500/20">
-                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-400 to-violet-400 bg-clip-text text-transparent">
+              <div className="p-6 rounded-2xl bg-gradient-to-br from-purple-500/10 to-indigo-500/10 border border-purple-500/20">
+                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
                   50+
                 </div>
-                <div className="text-cyan-200/80 text-sm mt-1">Organizations</div>
+                <div className="text-sky-200/80 text-sm mt-1">Organizations</div>
               </div>
-              <div className="p-6 rounded-2xl bg-gradient-to-br from-emerald-500/10 to-green-500/10 border border-emerald-500/20">
-                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-emerald-400 to-green-400 bg-clip-text text-transparent">
+              <div className="p-6 rounded-2xl bg-gradient-to-br from-indigo-500/10 to-blue-500/10 border border-indigo-500/20">
+                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-indigo-400 to-blue-400 bg-clip-text text-transparent">
                   100%
                 </div>
-                <div className="text-cyan-200/80 text-sm mt-1">Free to Start</div>
+                <div className="text-sky-200/80 text-sm mt-1">Free to Start</div>
               </div>
             </div>
           </div>
@@ -274,22 +274,22 @@ export default function LandingABTest() {
 
         {/* Final CTA with dramatic gradient */}
         <section className="py-20 px-4 relative">
-          <div className="absolute inset-0 bg-gradient-to-t from-teal-900/30 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-blue-900/30 via-transparent to-transparent" />
           <div className="container mx-auto max-w-xl text-center relative z-10">
-            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-teal-500 via-emerald-500 to-cyan-500 flex items-center justify-center mx-auto mb-6 animate-pulse">
+            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-500 flex items-center justify-center mx-auto mb-6 animate-pulse">
               <Church className="w-10 h-10 text-white" />
             </div>
             <h2 className="text-3xl font-bold text-white mb-4">
               Ready to Find Your Balance?
             </h2>
-            <p className="text-cyan-200/80 mb-8 text-lg">
+            <p className="text-sky-200/80 mb-8 text-lg">
               Take the Faith Snapshot and discover your personalized path to thriving in faith and Greek life.
             </p>
             <Button
               size="lg"
               onClick={handleCTAClick}
               disabled={isNavigating}
-              className="bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 hover:from-teal-600 hover:via-emerald-600 hover:to-cyan-600 text-white font-semibold px-10 py-7 text-xl rounded-2xl shadow-2xl shadow-teal-500/30"
+              className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 hover:from-blue-600 hover:via-indigo-600 hover:to-purple-600 text-white font-semibold px-10 py-7 text-xl rounded-2xl shadow-2xl shadow-blue-500/30"
             >
               {variant?.cta_text || "Start Free Snapshot"}
               <ArrowRight className="w-6 h-6 ml-2" />
@@ -299,15 +299,15 @@ export default function LandingABTest() {
       </main>
 
       {/* Footer */}
-      <footer className="py-8 px-4 border-t border-teal-500/20 relative z-10">
-        <div className="container mx-auto text-center text-sm text-cyan-300/60">
+      <footer className="py-8 px-4 border-t border-blue-500/20 relative z-10">
+        <div className="container mx-auto text-center text-sm text-sky-300/60">
           © 2026 Sacred Greeks. Faith + Greek Life, United.
         </div>
       </footer>
 
       {/* Variant indicator (dev only) */}
       {variant && import.meta.env.DEV && (
-        <div className="fixed bottom-4 left-4 bg-teal-900/90 text-xs text-cyan-300 px-3 py-1.5 rounded-full border border-teal-500/50 z-50">
+        <div className="fixed bottom-4 left-4 bg-blue-900/90 text-xs text-sky-300 px-3 py-1.5 rounded-full border border-blue-500/50 z-50">
           Variant: {variant.variant_key}
         </div>
       )}
