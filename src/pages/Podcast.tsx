@@ -5,7 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, Headphones, Play, Download, BookOpen, Rss, ExternalLink, Search, X, Clock, RotateCcw, Mic } from "lucide-react";
+import { ArrowLeft, Headphones, Play, Download, BookOpen, Rss, ExternalLink, Search, X, Clock, RotateCcw, Mic, FileText } from "lucide-react";
+import { generatePodcastStudyGuidePDF } from "@/lib/podcast-study-guide-pdf";
 import { useEffect, useState, useMemo, useRef, useCallback } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -411,13 +412,21 @@ const Podcast = () => {
                         Your browser does not support the audio element.
                       </audio>
                     ) : (
-                      <div className="flex items-center gap-3">
+                      <div className="flex flex-wrap items-center gap-3">
                         <Button 
                           onClick={() => handlePlay(featuredEpisode.audioUrl, featuredEpisode)}
                           className="bg-gradient-to-r from-purple-500 to-fuchsia-500 hover:from-purple-600 hover:to-fuchsia-600 text-white shadow-lg shadow-purple-500/30"
                         >
                           <Play className="w-5 h-5 mr-2" />
                           Play Sample
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          onClick={() => generatePodcastStudyGuidePDF(featuredEpisode.title, 1, featuredEpisode.pubDate)}
+                          className="border-emerald-500/30 hover:bg-emerald-500/10 text-emerald-400"
+                        >
+                          <FileText className="w-4 h-4 mr-2" />
+                          Study Guide
                         </Button>
                         <a 
                           href={featuredEpisode.audioUrl} 
@@ -566,6 +575,22 @@ const Podcast = () => {
               )}
             </CardHeader>
             <CardContent>
+              {/* Study Guide Info Banner */}
+              <div className="mb-6 p-4 rounded-xl bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-500/20">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center shrink-0">
+                    <FileText className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-emerald-300 mb-1">Study Guide Companions Available!</h4>
+                    <p className="text-sm text-muted-foreground">
+                      Each episode includes a downloadable PDF study guide with key scriptures, discussion questions, and action steps. 
+                      Click the <FileText className="w-3 h-3 inline text-emerald-400" /> icon next to any episode to download.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
               {loading ? (
                 <div className="flex items-center justify-center py-12">
                   <div className="animate-pulse text-muted-foreground">
@@ -614,6 +639,15 @@ const Podcast = () => {
                               }
                             >
                               <Play className="w-4 h-4" />
+                            </Button>
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              onClick={() => generatePodcastStudyGuidePDF(episode.title, index + 2, episode.pubDate)}
+                              title="Download Study Guide"
+                              className="border-emerald-500/30 hover:bg-emerald-500/10 text-emerald-400"
+                            >
+                              <FileText className="w-4 h-4" />
                             </Button>
                             <a 
                               href={episode.audioUrl} 
