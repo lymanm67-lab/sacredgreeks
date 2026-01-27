@@ -21,6 +21,9 @@ interface SpeakingRequest {
   eventLocation: string;
   expectedAttendees: string;
   budgetRange: string;
+  eventPromotion: string;
+  merchandiseSales: string;
+  bookTableRequested: boolean;
   topicRequested: string;
   additionalDetails?: string;
 }
@@ -35,6 +38,30 @@ const formatBudgetRange = (range: string): string => {
     "negotiable": "Negotiable / TBD",
   };
   return budgetMap[range] || range;
+};
+
+const formatEventPromotion = (promo: string): string => {
+  const promoMap: Record<string, string> = {
+    "social-media": "Social Media Only",
+    "email-newsletter": "Email / Newsletter",
+    "flyers-posters": "Flyers / Posters",
+    "multi-channel": "Multi-Channel (Social, Email, Print)",
+    "internal-only": "Internal / Members Only",
+    "press-media": "Press / Media Coverage",
+    "other": "Other",
+  };
+  return promoMap[promo] || promo;
+};
+
+const formatMerchandiseSales = (merch: string): string => {
+  const merchMap: Record<string, string> = {
+    "yes-books-merch": "Yes - Books & Merchandise",
+    "yes-books-only": "Yes - Books Only",
+    "yes-merch-only": "Yes - Merchandise Only",
+    "no": "No - Not at this event",
+    "discuss": "Needs Discussion",
+  };
+  return merchMap[merch] || merch;
 };
 
 const formatEventType = (type: string): string => {
@@ -115,6 +142,22 @@ const handler = async (req: Request): Promise<Response> => {
             <tr>
               <td style="padding: 8px 0; color: #666;"><strong>Budget Range:</strong></td>
               <td style="padding: 8px 0; color: #333; font-weight: bold;">${formatBudgetRange(data.budgetRange)}</td>
+            </tr>
+          </table>
+          
+          <h2 style="color: #1e3a5f; border-bottom: 2px solid #e9ecef; padding-bottom: 10px; margin-top: 30px;">Promotion & Merchandise</h2>
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+              <td style="padding: 8px 0; color: #666; width: 140px;"><strong>Event Promotion:</strong></td>
+              <td style="padding: 8px 0; color: #333;">${formatEventPromotion(data.eventPromotion)}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;"><strong>Merchandise Sales:</strong></td>
+              <td style="padding: 8px 0; color: #333;">${formatMerchandiseSales(data.merchandiseSales)}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #666;"><strong>Book Signing Table:</strong></td>
+              <td style="padding: 8px 0; color: #333;">${data.bookTableRequested ? '✅ Yes - Requested' : '❌ No'}</td>
             </tr>
           </table>
           

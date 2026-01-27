@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calendar, MapPin, Users, Mic, CheckCircle, ArrowLeft, Sparkles, Target, Flame, DollarSign, AlertCircle } from "lucide-react";
+import { Calendar, MapPin, Users, Mic, CheckCircle, ArrowLeft, Sparkles, Target, Flame, DollarSign, AlertCircle, Megaphone, ShoppingBag, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
@@ -27,6 +27,9 @@ const speakingRequestSchema = z.object({
   eventLocation: z.string().min(2, "Event location is required").max(300),
   expectedAttendees: z.string().min(1, "Please select expected attendance"),
   budgetRange: z.string().min(1, "Please select a budget range"),
+  eventPromotion: z.string().min(1, "Please select how the event will be promoted"),
+  merchandiseSales: z.string().min(1, "Please select a merchandise option"),
+  bookTableRequested: z.boolean().default(false),
   topicRequested: z.string().min(10, "Please describe the topic (at least 10 characters)").max(1000),
   additionalDetails: z.string().max(2000).optional(),
 });
@@ -61,6 +64,9 @@ const SpeakingRequest = () => {
         event_location: data.eventLocation,
         expected_attendees: data.expectedAttendees,
         budget_range: data.budgetRange,
+        event_promotion: data.eventPromotion,
+        merchandise_sales: data.merchandiseSales,
+        book_table_requested: data.bookTableRequested,
         topic_requested: data.topicRequested,
         additional_details: data.additionalDetails || null,
       });
@@ -492,6 +498,73 @@ const SpeakingRequest = () => {
                         The hosting organization is responsible for covering all travel expenses including flights, accommodations, and meals — in addition to speaking fees — unless otherwise agreed upon in writing.
                       </p>
                     </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Promotion & Merchandise */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-sky-300 border-b border-sky-800/50 pb-2 flex items-center gap-2">
+                  <Megaphone className="w-4 h-4" />
+                  Promotion & Merchandise
+                </h3>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="eventPromotion" className="text-gray-300 flex items-center gap-2">
+                      <Megaphone className="w-4 h-4" />
+                      Event Promotion *
+                    </Label>
+                    <Select onValueChange={(value) => setValue("eventPromotion", value)}>
+                      <SelectTrigger className="bg-white/5 border-white/20 text-white">
+                        <SelectValue placeholder="How will the event be promoted?" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="social-media">Social Media Only</SelectItem>
+                        <SelectItem value="email-newsletter">Email / Newsletter</SelectItem>
+                        <SelectItem value="flyers-posters">Flyers / Posters</SelectItem>
+                        <SelectItem value="multi-channel">Multi-Channel (Social, Email, Print)</SelectItem>
+                        <SelectItem value="internal-only">Internal / Members Only</SelectItem>
+                        <SelectItem value="press-media">Press / Media Coverage</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    {errors.eventPromotion && <p className="text-red-400 text-sm">{errors.eventPromotion.message}</p>}
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="merchandiseSales" className="text-gray-300 flex items-center gap-2">
+                      <ShoppingBag className="w-4 h-4" />
+                      Merchandise / Book Sales *
+                    </Label>
+                    <Select onValueChange={(value) => setValue("merchandiseSales", value)}>
+                      <SelectTrigger className="bg-white/5 border-white/20 text-white">
+                        <SelectValue placeholder="Select merchandise option" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="yes-books-merch">Yes - Books & Merchandise</SelectItem>
+                        <SelectItem value="yes-books-only">Yes - Books Only</SelectItem>
+                        <SelectItem value="yes-merch-only">Yes - Merchandise Only</SelectItem>
+                        <SelectItem value="no">No - Not at this event</SelectItem>
+                        <SelectItem value="discuss">Needs Discussion</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    {errors.merchandiseSales && <p className="text-red-400 text-sm">{errors.merchandiseSales.message}</p>}
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 p-4 bg-blue-900/30 border border-blue-500/30 rounded-lg">
+                  <input
+                    type="checkbox"
+                    id="bookTableRequested"
+                    {...register("bookTableRequested")}
+                    className="mt-1 w-4 h-4 rounded border-white/20 bg-white/5 text-blue-600 focus:ring-blue-500"
+                  />
+                  <div>
+                    <Label htmlFor="bookTableRequested" className="text-gray-200 flex items-center gap-2 cursor-pointer">
+                      <BookOpen className="w-4 h-4 text-blue-400" />
+                      Request a Book Signing Table
+                    </Label>
+                    <p className="text-sm text-gray-400 mt-1">
+                      Check this box if you'd like to provide a table/space for Dr. Montgomery to sign books and meet attendees after the presentation.
+                    </p>
                   </div>
                 </div>
               </div>

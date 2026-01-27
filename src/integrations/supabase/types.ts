@@ -2004,14 +2004,17 @@ export type Database = {
       speaking_requests: {
         Row: {
           additional_details: string | null
+          book_table_requested: boolean | null
           budget_range: string
           created_at: string
           event_date: string
           event_location: string
           event_name: string
+          event_promotion: string | null
           event_type: string
           expected_attendees: string
           id: string
+          merchandise_sales: string | null
           organization_name: string
           organizer_email: string
           organizer_name: string
@@ -2022,14 +2025,17 @@ export type Database = {
         }
         Insert: {
           additional_details?: string | null
+          book_table_requested?: boolean | null
           budget_range: string
           created_at?: string
           event_date: string
           event_location: string
           event_name: string
+          event_promotion?: string | null
           event_type: string
           expected_attendees: string
           id?: string
+          merchandise_sales?: string | null
           organization_name: string
           organizer_email: string
           organizer_name: string
@@ -2040,14 +2046,17 @@ export type Database = {
         }
         Update: {
           additional_details?: string | null
+          book_table_requested?: boolean | null
           budget_range?: string
           created_at?: string
           event_date?: string
           event_location?: string
           event_name?: string
+          event_promotion?: string | null
           event_type?: string
           expected_attendees?: string
           id?: string
+          merchandise_sales?: string | null
           organization_name?: string
           organizer_email?: string
           organizer_name?: string
