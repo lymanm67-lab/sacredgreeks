@@ -232,9 +232,12 @@ const instructionsConfig = {
 
 export default function FaithSnapshot() {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const { trackConversion } = useLandingABTest();
   const { savedAssessment, hasSavedAssessment, isLoading: loadingSaved } = useSavedAssessment("faith-snapshot");
+  
+  // Log user state for debugging
+  console.log('[FaithSnapshot] Auth state:', { user: !!user, authLoading });
   
   const [started, setStarted] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -515,31 +518,20 @@ export default function FaithSnapshot() {
               additionalData={{ answers }}
             />
 
-            {/* CTA - Show different options for logged in vs logged out users */}
-            {user ? (
-              <Button
-                size="lg"
-                onClick={() => navigate('/dashboard')}
-                className="w-full bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 hover:from-amber-600 hover:via-orange-600 hover:to-pink-600 text-white font-semibold py-6 text-lg rounded-xl shadow-lg shadow-orange-500/25"
-              >
-                Go to Dashboard
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-            ) : (
-              <>
-                <Button
-                  size="lg"
-                  onClick={handleSignup}
-                  className="w-full bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 hover:from-amber-600 hover:via-orange-600 hover:to-pink-600 text-white font-semibold py-6 text-lg rounded-xl shadow-lg shadow-orange-500/25"
-                >
-                  Get Your Free Access
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
+            {/* CTA - Show dashboard button for logged in users */}
+            <Button
+              size="lg"
+              onClick={() => user ? navigate('/dashboard') : handleSignup()}
+              className="w-full bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 hover:from-amber-600 hover:via-orange-600 hover:to-pink-600 text-white font-semibold py-6 text-lg rounded-xl shadow-lg shadow-orange-500/25"
+            >
+              {user ? 'Go to Dashboard' : 'Get Your Free Access'}
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </Button>
 
-                <p className="text-center text-sm text-slate-400">
-                  Your personalized dashboard is ready — create your free account to access it
-                </p>
-              </>
+            {!user && (
+              <p className="text-center text-sm text-slate-400">
+                Your personalized dashboard is ready — create your free account to access it
+              </p>
             )}
           </div>
         </main>
