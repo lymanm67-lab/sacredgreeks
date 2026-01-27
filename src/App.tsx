@@ -115,6 +115,7 @@ const FaithAuthority = lazy(() => import("./pages/FaithAuthority"));
 const ChapterKit = lazy(() => import("./pages/ChapterKit"));
 const EconomicHistory = lazy(() => import("./pages/EconomicHistory"));
 const GreekLifeTraining = lazy(() => import("./pages/GreekLifeTraining"));
+const GuestPanelistApplication = lazy(() => import("./pages/GuestPanelistApplication"));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -255,6 +256,7 @@ const App = () => (
                     <Route path="/economic-history" element={<EconomicHistory />} />
                     <Route path="/ancient-guild-training" element={<Navigate to="/greek-life-training" replace />} />
                     <Route path="/greek-life-training" element={<GreekLifeTraining />} />
+                    <Route path="/guest-panelist-application" element={<GuestPanelistApplication />} />
                     
                     {/* Protected routes - with sidebar */}
                     <Route
