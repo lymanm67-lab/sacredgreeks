@@ -18,6 +18,7 @@ import { DemoModeProvider } from "@/contexts/DemoModeContext";
 import { BetaFeedbackWidget } from "@/components/BetaFeedbackWidget";
 import { GlobalDemoIndicator } from "@/components/GlobalDemoIndicator";
 import { DemoBanner } from "@/components/DemoBanner";
+import { DemoModeTour } from "@/components/DemoModeTour";
 import { DemoComparisonWrapper } from "@/components/demo/DemoComparisonWrapper";
 import { DemoAnalyticsDashboardWrapper } from "@/components/demo/DemoAnalyticsDashboardWrapper";
 import { DemoTemplateSelectorProvider } from "@/components/demo/DemoTemplateSelectorWrapper";
@@ -179,6 +180,7 @@ const App = () => (
                     <BrowserRouter>
                       <GlobalSEO />
                       <DemoBanner />
+                      <DemoModeTour />
                       <DemoOverlayWithTemplate />
                       <DemoComparisonWrapper />
                       <DemoAnalyticsDashboardWrapper />
