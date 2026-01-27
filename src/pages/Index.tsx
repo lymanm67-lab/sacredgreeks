@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useDemoMode } from "@/contexts/DemoModeContext";
 import { useLandingSurvey } from "@/hooks/use-landing-survey";
@@ -32,15 +33,16 @@ const Index = () => {
     navigate('/auth');
   };
 
-  // If user is logged in, redirect to dashboard
-  if (user) {
-    navigate('/dashboard');
-    return null;
-  }
+  // If user is logged in, redirect to dashboard (avoid navigate during render)
+  useEffect(() => {
+    if (user) navigate('/dashboard', { replace: true });
+  }, [user, navigate]);
+
+  if (user) return null;
 
   return (
     <div className={cn(
-      "min-h-screen bg-[hsl(225,50%,8%)] flex flex-col",
+      "min-h-screen bg-[hsl(225,50%,8%)] flex flex-col w-full max-w-full overflow-x-hidden",
       isDemoMode && "pt-11"
     )}>
       {/* Dark Navy Header */}
@@ -75,7 +77,7 @@ const Index = () => {
       </header>
 
       {/* Main Content - Scrollable on mobile */}
-      <main className="flex-1 flex flex-col items-center px-3 sm:px-4 py-6 sm:py-8 md:py-12 overflow-y-auto bg-[hsl(225,50%,8%)]">
+      <main className="flex-1 flex flex-col items-center px-3 sm:px-4 py-6 sm:py-8 md:py-12 overflow-y-auto overflow-x-hidden w-full max-w-full bg-[hsl(225,50%,8%)]">
         {/* Hero Card */}
         <Card className="w-full max-w-lg shadow-xl border-slate-700/50 overflow-hidden animate-fade-in bg-slate-800/50">
           {/* Decorative top gradient bar - Blue accent */}
