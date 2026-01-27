@@ -10,6 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, Send, UsersRound, UserCog, CheckCircle } from 'lucide-react';
 import { useLandingSurvey } from '@/hooks/use-landing-survey';
 import { cn } from '@/lib/utils';
+import { supabase } from '@/integrations/supabase/client';
 
 export default function CoachingApplication() {
   const navigate = useNavigate();
@@ -48,16 +49,45 @@ export default function CoachingApplication() {
 
     setIsSubmitting(true);
     
-    // Simulate form submission - in production, this would send to your backend
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    
-    toast({
-      title: 'Application submitted!',
-      description: 'We\'ll review your application and get back to you within 48 hours.',
-    });
+    try {
+      // Save to database
+      const { error } = await supabase.from('coaching_waitlist').insert({
+        full_name: formData.fullName,
+        email: formData.email,
+        organization: formData.greekOrganization || null,
+        goals: `COACHING APPLICATION (${formData.coachingType})\n\nCurrent Situation: ${formData.currentSituation}\n\nGoals: ${formData.goals}\n\nAvailability: ${formData.availability || 'N/A'}\n\nHow Heard: ${formData.howHeard || 'N/A'}\n\nPhone: ${formData.phone || 'N/A'}`,
+        status: 'coaching_pending'
+      });
+
+      if (error) throw error;
+
+      // Send admin notification email
+      supabase.functions.invoke('notify-webinar-registration', {
+        body: {
+          webinarTitle: `📚 COACHING APPLICATION (${formData.coachingType === 'group' ? 'Group' : '1-on-1'})`,
+          fullName: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          greekOrganization: formData.greekOrganization,
+          howHeard: formData.howHeard
+        }
+      }).catch(err => console.error('Failed to send admin notification:', err));
+
+      setIsSubmitted(true);
+      toast({
+        title: 'Application submitted!',
+        description: 'We\'ll review your application and get back to you within 48 hours.',
+      });
+    } catch (error) {
+      console.error('Submission error:', error);
+      toast({
+        title: 'Submission failed',
+        description: 'Please try again or contact us directly.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSubmitted) {
