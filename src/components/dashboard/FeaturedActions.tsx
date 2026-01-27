@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Card } from '@/components/ui/card';
-import { BookOpen, Library, MessageCircle } from 'lucide-react';
+import { BookOpen, Library, MessageCircle, Sparkles, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { FeatureCardSkeleton } from '@/components/ui/CardSkeleton';
 
@@ -13,6 +12,8 @@ const featuredActions = [
     icon: BookOpen,
     href: '/devotional',
     gradient: 'from-blue-500 to-indigo-600',
+    accentColor: 'bg-blue-500/10',
+    borderColor: 'border-blue-500/30',
   },
   {
     id: 'myth-buster',
@@ -22,6 +23,8 @@ const featuredActions = [
     icon: Library,
     href: '/myth-buster',
     gradient: 'from-purple-500 to-violet-600',
+    accentColor: 'bg-purple-500/10',
+    borderColor: 'border-purple-500/30',
   },
   {
     id: 'bglo-objections',
@@ -31,20 +34,10 @@ const featuredActions = [
     icon: MessageCircle,
     href: '/guide',
     gradient: 'from-amber-500 to-orange-600',
+    accentColor: 'bg-amber-500/10',
+    borderColor: 'border-amber-500/30',
   },
 ];
-
-const iconAnimationVariants = {
-  initial: { scale: 1, rotate: 0 },
-  hover: { 
-    scale: 1.15, 
-    rotate: [0, -10, 10, -5, 5, 0],
-    transition: { 
-      rotate: { duration: 0.5, ease: "easeInOut" as const },
-      scale: { duration: 0.2 }
-    }
-  }
-};
 
 interface FeaturedActionsProps {
   isLoading?: boolean;
@@ -54,11 +47,14 @@ export const FeaturedActions = ({ isLoading = false }: FeaturedActionsProps) => 
   if (isLoading) {
     return (
       <div className="space-y-4">
-        <div>
-          <h2 className="text-2xl font-semibold text-foreground mb-2">
-            Get Started
-          </h2>
-          <p className="text-muted-foreground">Choose an action to begin your spiritual journey today</p>
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg">
+            <Sparkles className="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-foreground">Get Started</h2>
+            <p className="text-sm text-muted-foreground">Choose an action to begin your spiritual journey</p>
+          </div>
         </div>
         <div className="grid gap-4 md:grid-cols-3">
           {Array.from({ length: 3 }).map((_, i) => (
@@ -71,11 +67,14 @@ export const FeaturedActions = ({ isLoading = false }: FeaturedActionsProps) => 
 
   return (
     <div className="space-y-4">
-      <div>
-        <h2 className="text-2xl font-semibold text-foreground mb-2">
-          Get Started
-        </h2>
-        <p className="text-muted-foreground">Choose an action to begin your spiritual journey today</p>
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg">
+          <Sparkles className="w-5 h-5 text-white" />
+        </div>
+        <div>
+          <h2 className="text-xl font-bold text-foreground">Get Started</h2>
+          <p className="text-sm text-muted-foreground">Choose an action to begin your spiritual journey</p>
+        </div>
       </div>
       
       <div className="grid gap-4 md:grid-cols-3">
@@ -86,33 +85,40 @@ export const FeaturedActions = ({ isLoading = false }: FeaturedActionsProps) => 
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
           >
-            <Link to={action.href} className="block">
-              <Card 
+            <Link to={action.href} className="block h-full">
+              <motion.div
                 data-tour={action.tourId || undefined}
-                className="group relative overflow-hidden border border-border bg-background hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer h-full"
+                className={`group relative overflow-hidden rounded-2xl border-2 ${action.borderColor} bg-card hover:border-primary/50 transition-all duration-300 cursor-pointer h-full`}
+                whileHover={{ y: -6, transition: { duration: 0.2 } }}
               >
-                <div className="p-6 space-y-4">
-                  {/* Icon */}
+                {/* Gradient overlay on hover */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${action.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
+                
+                {/* Glow effect */}
+                <div className={`absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br ${action.gradient} opacity-10 rounded-full blur-3xl group-hover:opacity-20 transition-opacity`} />
+                
+                <div className="relative p-6 space-y-4">
+                  {/* Icon with animation */}
                   <motion.div 
-                    className={`w-12 h-12 rounded-xl bg-gradient-to-br ${action.gradient} flex items-center justify-center`}
-                    variants={iconAnimationVariants}
-                    initial="initial"
-                    whileHover="hover"
+                    className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${action.gradient} flex items-center justify-center shadow-lg`}
+                    whileHover={{ scale: 1.1, rotate: -5 }}
+                    transition={{ type: "spring", stiffness: 400 }}
                   >
-                    <action.icon className="w-6 h-6 text-white" />
+                    <action.icon className="w-7 h-7 text-white" />
                   </motion.div>
                   
                   {/* Content */}
                   <div className="space-y-2">
-                    <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+                    <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors flex items-center gap-2">
                       {action.title}
+                      <ChevronRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                     </h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">
                       {action.description}
                     </p>
                   </div>
                 </div>
-              </Card>
+              </motion.div>
             </Link>
           </motion.div>
         ))}
