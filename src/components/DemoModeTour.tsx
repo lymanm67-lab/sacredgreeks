@@ -81,18 +81,31 @@ export function DemoModeTour() {
   const { isDemoMode, hasSeenTour, setHasSeenTour } = useDemoMode();
   const [currentStep, setCurrentStep] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [wasTriggered, setWasTriggered] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Sync isOpen with hasSeenTour - when hasSeenTour becomes false, open the tour
+  // Only open the tour when explicitly triggered (hasSeenTour goes from true to false)
+  // Track previous value to detect the trigger
+  const prevHasSeenTour = React.useRef(hasSeenTour);
+  
   useEffect(() => {
-    if (isDemoMode && !hasSeenTour) {
+    // Only open if user explicitly clicked "Take Demo Tour" (hasSeenTour changed from true to false)
+    if (isDemoMode && !hasSeenTour && prevHasSeenTour.current === true) {
       setIsOpen(true);
-      setCurrentStep(0); // Reset to first step when reopening
-    } else {
-      setIsOpen(false);
+      setCurrentStep(0);
+      setWasTriggered(true);
     }
+    prevHasSeenTour.current = hasSeenTour;
   }, [isDemoMode, hasSeenTour]);
+
+  // Close tour when demo mode is turned off
+  useEffect(() => {
+    if (!isDemoMode) {
+      setIsOpen(false);
+      setWasTriggered(false);
+    }
+  }, [isDemoMode]);
 
   const currentTourStep = TOUR_STEPS[currentStep];
   const isOnDashboard = location.pathname === '/dashboard';
