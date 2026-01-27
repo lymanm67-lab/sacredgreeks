@@ -94,8 +94,10 @@ export const FeaturedActions = ({ isLoading = false }: FeaturedActionsProps) => 
                 {/* Gradient overlay on hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${action.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
                 
-                {/* Glow effect */}
-                <div className={`absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br ${action.gradient} opacity-10 rounded-full blur-3xl group-hover:opacity-20 transition-opacity`} />
+                {/* Glow effect - contained */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                  <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${action.gradient} opacity-10 rounded-full blur-2xl group-hover:opacity-20 transition-opacity`} />
+                </div>
                 
                 <div className="relative p-6 space-y-4">
                   {/* Icon with animation */}

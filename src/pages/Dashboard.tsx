@@ -201,7 +201,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-muted/30">
+    <div className="min-h-screen bg-muted/30 overflow-x-hidden w-full max-w-full">
       <SEOHead {...pageSEO.dashboard} />
       <PullToRefreshIndicator 
         isPulling={isPulling}
@@ -309,8 +309,8 @@ const Dashboard = () => {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
-        <div className="max-w-5xl mx-auto space-y-8">
+      <main className="w-full max-w-full overflow-x-hidden px-4 py-8">
+        <div className="max-w-5xl mx-auto space-y-8 w-full">
           {/* AI Assistant */}
           <div className="animate-fade-in">
             <DashboardAIAssistant />
