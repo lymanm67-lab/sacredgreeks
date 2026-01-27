@@ -16,36 +16,44 @@ const AboutCreator = () => {
         <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl animate-pulse delay-500" />
       </div>
 
-      <div className="container max-w-4xl py-8 px-4 space-y-8 relative">
-        {/* Hero Section with Photo */}
-        <div className="text-center space-y-6">
-          {/* Profile Image */}
-          <div className="relative inline-block">
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-sky-400 to-cyan-500 rounded-full blur-md opacity-75 animate-pulse" />
-            <div className="relative w-40 h-40 md:w-48 md:h-48 mx-auto rounded-full overflow-hidden border-4 border-white/20 shadow-2xl">
-              <img 
-                src={drLymanImage} 
-                alt="Dr. Lyman Montgomery" 
-                className="w-full h-full object-cover object-top"
-              />
-            </div>
-          </div>
+      <div className="container max-w-5xl py-8 px-4 space-y-8 relative">
+        {/* Hero Section - Image Inline with Text */}
+        <Card className="bg-gradient-to-br from-blue-900/60 to-indigo-900/40 border-blue-500/30 backdrop-blur-sm overflow-hidden">
+          <CardContent className="p-0">
+            <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8 p-6 md:p-8">
+              {/* Profile Image */}
+              <div className="relative shrink-0">
+                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-sky-400 to-cyan-500 rounded-full blur-md opacity-75 animate-pulse" />
+                <div className="relative w-44 h-44 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-white/20 shadow-2xl">
+                  <img 
+                    src={drLymanImage} 
+                    alt="Dr. Lyman Montgomery" 
+                    className="w-full h-full object-cover object-top"
+                  />
+                </div>
+              </div>
 
-          <div className="space-y-4">
-            <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-white via-sky-200 to-cyan-300 bg-clip-text text-transparent">
-              Dr. Lyman Montgomery
-            </h1>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Badge className="bg-gradient-to-r from-blue-600 to-blue-500 text-white border-0">Scholar</Badge>
-              <Badge className="bg-gradient-to-r from-sky-600 to-cyan-500 text-white border-0">Minister</Badge>
-              <Badge className="bg-gradient-to-r from-indigo-600 to-blue-500 text-white border-0">Author</Badge>
-              <Badge className="bg-gradient-to-r from-blue-700 to-indigo-600 text-white border-0">Phi Beta Sigma</Badge>
+              {/* Text Content */}
+              <div className="flex-1 text-center md:text-left space-y-4">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-white via-sky-200 to-cyan-300 bg-clip-text text-transparent">
+                  Dr. Lyman Montgomery
+                </h1>
+                <div className="flex flex-wrap justify-center md:justify-start gap-2">
+                  <Badge className="bg-gradient-to-r from-blue-600 to-blue-500 text-white border-0">Scholar</Badge>
+                  <Badge className="bg-gradient-to-r from-sky-600 to-cyan-500 text-white border-0">Minister</Badge>
+                  <Badge className="bg-gradient-to-r from-indigo-600 to-blue-500 text-white border-0">Author</Badge>
+                  <Badge className="bg-gradient-to-r from-blue-700 to-indigo-600 text-white border-0">Phi Beta Sigma</Badge>
+                </div>
+                <p className="text-lg text-sky-200">
+                  Founder of Sacred Greeks & Author of "Sacred Not Sinful"
+                </p>
+                <p className="text-gray-300 leading-relaxed">
+                  Dr. Lyman Montgomery is a devoted scholar and minister who understands the unique challenges Christians face when navigating Black Greek Letter Organization membership. His mission is to provide biblical clarity and healing for Greek-affiliated believers.
+                </p>
+              </div>
             </div>
-            <p className="text-lg text-sky-200 max-w-2xl mx-auto">
-              Founder of Sacred Greeks & Author of "Sacred Not Sinful"
-            </p>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
 
         {/* Personal & Family Card */}
         <Card className="bg-gradient-to-br from-blue-900/50 to-indigo-900/30 border-blue-500/30 backdrop-blur-sm">
