@@ -40,7 +40,7 @@ const GUIDE_SECTIONS = [
     id: 'dashboard',
     title: 'Dashboard Sections',
     icon: LayoutDashboard,
-    content: `Your dashboard is organized into several key sections. At the top, you'll see a welcome message and your organization's personalized greeting. The Featured Actions section shows three core tools: the PROOF Assessment to understand your faith identity, the Daily Devotional for scripture meditation, and your Prayer Journal for recording prayers. Your Progress section displays your current streak, assessment count, and today's devotional status. The Learning Paths Map shows your training roadmap across four tracks. The Greek Community section helps you connect with other members, and the AI Assistant is ready to answer your questions. Finally, the Explore More section at the bottom contains quick links to additional resources.`
+    content: `Your dashboard is organized into several key sections. At the top, you'll see a welcome message and your Greek organization's personalized greeting. Below that is the Get Started section with three featured actions: Daily Scripture and Devotions for your spiritual nourishment, Mythbusters to address common misconceptions about Greek life and faith, and Handle Greek Life Objections to help you respond to questions about your organization with biblical wisdom. Your Progress section displays your current streak, assessment count, and today's devotional status. The Learning Paths Map shows your training roadmap across four tracks. The Greek Community section helps you connect with other members, and the AI Assistant is ready to answer your questions. Finally, the Explore More section at the bottom contains quick links to additional resources.`
   },
   {
     id: 'sharing',
@@ -50,9 +50,9 @@ const GUIDE_SECTIONS = [
   },
   {
     id: 'tips',
-    title: 'Quick Tips',
+    title: 'Quick Tips & Profile',
     icon: Users,
-    content: `Here are some quick tips to enhance your experience. You can collapse dashboard sections by clicking their headers to customize your view. Pull down on mobile to refresh your dashboard data. Use the audio listen buttons throughout the app to have content read aloud. Check your notifications bell for updates from your community. Visit your profile to update your Greek organization affiliation and personalize your experience. And remember, the AI Assistant on your dashboard can answer questions about faith, Greek life, and using the app.`
+    content: `Here are some quick tips to enhance your experience. You can collapse dashboard sections by clicking their headers to customize your view. Pull down on mobile to refresh your dashboard data. Use the audio listen buttons throughout the app to have content read aloud. To make changes to your account, Greek organization affiliation, or personalize your experience, click the Profile button in the header. From your profile, you can update your name, chapter information, notification preferences, and more. And remember, the AI Assistant on your dashboard can answer questions about faith, Greek life, and using the app.`
   }
 ];
 
