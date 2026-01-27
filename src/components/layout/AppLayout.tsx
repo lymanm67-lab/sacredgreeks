@@ -40,7 +40,7 @@ export function AppLayout({ children }: AppLayoutProps) {
             </div>
           </header>
           <main className={cn(
-            "flex-1 overflow-auto",
+            "flex-1 overflow-y-auto overflow-x-hidden",
             isMobile && "pb-20" // Add padding for bottom nav
           )}>
             {children}
