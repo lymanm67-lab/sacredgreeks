@@ -4,6 +4,7 @@ import { AppSidebar } from "./AppSidebar";
 import { MobileNav } from "./MobileNav";
 import { MobileBottomNav } from "./MobileBottomNav";
 import { PageTitle } from "./PageTitle";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useSidebarPreferences } from "@/hooks/use-sidebar-preferences";
 import { useDemoMode } from "@/contexts/DemoModeContext";
@@ -36,7 +37,7 @@ export function AppLayout({ children }: AppLayoutProps) {
             {isMobile ? <MobileNav /> : <SidebarTrigger className="-ml-1" />}
             <PageTitle />
             <div className="ml-auto flex items-center gap-2">
-              {/* Demo and Upgrade buttons are now in sidebar header */}
+              <ThemeToggle />
             </div>
           </header>
           <main className={cn(
