@@ -49,15 +49,33 @@ const SpeakingRequest = () => {
   const onSubmit = async (data: SpeakingRequestForm) => {
     setIsSubmitting(true);
     try {
-      const { error } = await supabase.from("coaching_waitlist").insert({
-        full_name: data.organizerName,
-        email: data.organizerEmail,
-        organization: data.organizationName,
-        goals: `SPEAKING REQUEST: ${data.eventName} | Type: ${data.eventType} | Date: ${data.eventDate} | Location: ${data.eventLocation} | Attendees: ${data.expectedAttendees} | Budget: ${data.budgetRange} | Topic: ${data.topicRequested} | Phone: ${data.organizerPhone} | Additional: ${data.additionalDetails || "N/A"}`,
-        status: "pending",
+      // Save to database
+      const { error: dbError } = await supabase.from("speaking_requests").insert({
+        organizer_name: data.organizerName,
+        organizer_email: data.organizerEmail,
+        organizer_phone: data.organizerPhone,
+        organization_name: data.organizationName,
+        event_name: data.eventName,
+        event_type: data.eventType,
+        event_date: data.eventDate,
+        event_location: data.eventLocation,
+        expected_attendees: data.expectedAttendees,
+        budget_range: data.budgetRange,
+        topic_requested: data.topicRequested,
+        additional_details: data.additionalDetails || null,
       });
 
-      if (error) throw error;
+      if (dbError) throw dbError;
+
+      // Send email notification
+      try {
+        await supabase.functions.invoke("notify-speaking-request", {
+          body: data,
+        });
+      } catch (emailError) {
+        console.error("Email notification failed:", emailError);
+        // Don't fail the submission if email fails
+      }
 
       setIsSubmitted(true);
       toast.success("Speaking request submitted successfully!");
