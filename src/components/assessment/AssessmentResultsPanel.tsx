@@ -120,6 +120,13 @@ export function AssessmentResultsPanel({
 
     setIsSaving(true);
     try {
+      // Verify we have a valid session before saving
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.user) {
+        toast.error("Your session has expired. Please sign in again.");
+        return;
+      }
+
       // Build scores_json with all relevant data for visual reports
       const scoresData = {
         score,
@@ -130,7 +137,7 @@ export function AssessmentResultsPanel({
       };
 
       const { error } = await supabase.from("assessment_submissions").insert([{
-        user_id: user.id,
+        user_id: session.user.id,
         track: assessmentType,
         scenario: resultTitle,
         result_type: archetype || resultTitle,
@@ -139,13 +146,17 @@ export function AssessmentResultsPanel({
         consent_to_contact: false
       }]);
 
-      if (error) throw error;
+      if (error) {
+        console.error("Supabase insert error:", error);
+        throw error;
+      }
 
       setIsSaved(true);
       toast.success("Results saved successfully!");
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error saving results:", error);
-      toast.error("Failed to save results. Please try again.");
+      const errorMessage = error instanceof Error ? error.message : "Unknown error";
+      toast.error(`Failed to save: ${errorMessage}`);
     } finally {
       setIsSaving(false);
     }
