@@ -2001,6 +2001,63 @@ export type Database = {
         }
         Relationships: []
       }
+      speaking_requests: {
+        Row: {
+          additional_details: string | null
+          budget_range: string
+          created_at: string
+          event_date: string
+          event_location: string
+          event_name: string
+          event_type: string
+          expected_attendees: string
+          id: string
+          organization_name: string
+          organizer_email: string
+          organizer_name: string
+          organizer_phone: string
+          status: string
+          topic_requested: string
+          updated_at: string
+        }
+        Insert: {
+          additional_details?: string | null
+          budget_range: string
+          created_at?: string
+          event_date: string
+          event_location: string
+          event_name: string
+          event_type: string
+          expected_attendees: string
+          id?: string
+          organization_name: string
+          organizer_email: string
+          organizer_name: string
+          organizer_phone: string
+          status?: string
+          topic_requested: string
+          updated_at?: string
+        }
+        Update: {
+          additional_details?: string | null
+          budget_range?: string
+          created_at?: string
+          event_date?: string
+          event_location?: string
+          event_name?: string
+          event_type?: string
+          expected_attendees?: string
+          id?: string
+          organization_name?: string
+          organizer_email?: string
+          organizer_name?: string
+          organizer_phone?: string
+          status?: string
+          topic_requested?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       study_session_progress: {
         Row: {
           completed: boolean
