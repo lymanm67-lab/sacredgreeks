@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { 
   Home, 
   Target,
@@ -21,6 +22,7 @@ import {
   Building2,
   Landmark,
   Headphones,
+  ChevronDown,
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -34,6 +36,11 @@ import { useFeaturePreferences } from "@/hooks/use-feature-preferences";
 import { useNavigationProgress } from "@/hooks/use-navigation-progress";
 import { SubscriptionBadge } from "@/components/dashboard/SubscriptionBadge";
 import { DemoModeControl } from "@/components/GlobalDemoIndicator";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import {
   Sidebar,
   SidebarContent,
@@ -93,6 +100,7 @@ export function AppSidebar() {
   const { preferences } = useSidebarPreferences();
   const { isFeatureVisible } = useFeaturePreferences();
   const { getProgressForPath } = useNavigationProgress();
+  const [learningPathOpen, setLearningPathOpen] = useState(true);
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -194,20 +202,32 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* Learning Path Section */}
+        {/* Learning Path Section - Collapsible */}
         {preferences.showMain && filteredLearningPath.length > 0 && (
-          <SidebarGroup>
-            <SidebarGroupLabel className="!mb-4">Learning Path</SidebarGroupLabel>
-            <SidebarGroupContent className="pt-2">
-              <SidebarMenu>
-                {filteredLearningPath.map((item, index) => (
-                  <div key={item.url} className={item.url === '/proof-assessment' ? '!mb-2' : ''}>
-                    <NavItem item={item} showProgress />
-                  </div>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
+          <Collapsible open={learningPathOpen} onOpenChange={setLearningPathOpen}>
+            <SidebarGroup>
+              <CollapsibleTrigger className="w-full">
+                <SidebarGroupLabel className="!mb-4 flex items-center justify-between cursor-pointer hover:text-foreground transition-colors">
+                  <span>Learning Path</span>
+                  <ChevronDown className={cn(
+                    "h-4 w-4 transition-transform duration-200",
+                    learningPathOpen ? "rotate-0" : "-rotate-90"
+                  )} />
+                </SidebarGroupLabel>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <SidebarGroupContent className="pt-2">
+                  <SidebarMenu>
+                    {filteredLearningPath.map((item, index) => (
+                      <div key={item.url} className={item.url === '/proof-assessment' ? '!mb-2' : ''}>
+                        <NavItem item={item} showProgress />
+                      </div>
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </CollapsibleContent>
+            </SidebarGroup>
+          </Collapsible>
         )}
 
         {/* Spiritual Practices Section */}
