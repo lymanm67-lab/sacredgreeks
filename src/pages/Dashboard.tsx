@@ -26,6 +26,7 @@ import { LearningPathsMap } from '@/components/dashboard/LearningPathsMap';
 import { PathCompletionAchievements } from '@/components/dashboard/PathCompletionAchievements';
 import { StatsSection } from '@/components/dashboard/StatsSection';
 import { QuickLinksSection } from '@/components/dashboard/QuickLinksSection';
+import { DashboardAudioGuide } from '@/components/dashboard/DashboardAudioGuide';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -205,6 +206,9 @@ const Dashboard = () => {
         pullDistance={pullDistance}
         canRefresh={canRefresh}
       />
+      
+      {/* Audio Navigation Guide */}
+      <DashboardAudioGuide />
       
       {/* Header - Desktop only since AppLayout handles mobile nav */}
       <header className="border-b border-border bg-background sticky top-0 z-50 hidden md:block">
