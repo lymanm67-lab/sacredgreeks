@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { BookOpen, ExternalLink, Star, CheckCircle2, Quote } from "lucide-react";
+import bookCover from "@/assets/sacred-not-sinful-cover.jpg";
 
 const OrderBook = () => {
   const bookUrl = "https://a.co/d/aAtPGAM";
@@ -32,11 +33,16 @@ const OrderBook = () => {
       {/* Main Content Card */}
       <Card className="overflow-hidden">
         <div className="grid md:grid-cols-2 gap-6">
-          {/* Book Cover Placeholder */}
-          <div className="bg-gradient-to-br from-sacred/20 to-sacred/5 p-8 flex items-center justify-center min-h-[300px]">
+          {/* Book Cover */}
+          <div className="bg-gradient-to-br from-amber-900/30 to-black p-6 flex items-center justify-center min-h-[400px]">
             <div className="text-center space-y-4">
-              <div className="w-32 h-44 mx-auto bg-gradient-to-br from-sacred to-sacred/70 rounded-lg shadow-xl flex items-center justify-center">
-                <BookOpen className="h-16 w-16 text-white" />
+              <div className="relative group">
+                <div className="absolute -inset-2 bg-gradient-to-r from-amber-500/30 to-sacred/30 rounded-lg blur-lg opacity-75 group-hover:opacity-100 transition-opacity" />
+                <img 
+                  src={bookCover} 
+                  alt="Sacred Not Sinful Book Cover" 
+                  className="relative w-48 md:w-56 h-auto rounded-lg shadow-2xl border border-white/10"
+                />
               </div>
               <div className="flex items-center justify-center gap-1">
                 {[...Array(5)].map((_, i) => (
