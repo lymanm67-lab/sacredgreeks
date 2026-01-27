@@ -13,11 +13,16 @@ import {
   ArrowRight, 
   ArrowLeft,
   BookOpen,
-  RotateCcw
+  RotateCcw,
+  Loader2
 } from "lucide-react";
 import { AssessmentInstructions } from "@/components/assessment/AssessmentInstructions";
 import { AssessmentResultsPanel } from "@/components/assessment/AssessmentResultsPanel";
+import { AssessmentVisualReport } from "@/components/assessment/AssessmentVisualReport";
+import { SavedAssessmentPrompt } from "@/components/assessment/SavedAssessmentPrompt";
 import { AssessmentTTS } from "@/components/assessment/AssessmentTTS";
+import { useSavedAssessment } from "@/hooks/use-saved-assessment";
+import { useAuth } from "@/contexts/AuthContext";
 
 type ProofCategory = 'pledge-process' | 'rituals' | 'oaths' | 'obscurity' | 'founders';
 
@@ -180,11 +185,16 @@ const instructionsConfig = {
 };
 
 export default function ProofAssessment() {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const { savedAssessment, hasSavedAssessment, isLoading: loadingSaved } = useSavedAssessment("proof-quiz");
+  
   const [started, setStarted] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<ProofCategory[]>([]);
   const [showResults, setShowResults] = useState(false);
-  const navigate = useNavigate();
+  const [viewingSavedResults, setViewingSavedResults] = useState(false);
+  const [forceRetake, setForceRetake] = useState(false);
 
   const progress = ((currentQuestion + 1) / questions.length) * 100;
 
@@ -211,6 +221,7 @@ export default function ProofAssessment() {
     setAnswers([]);
     setShowResults(false);
     setStarted(false);
+    setForceRetake(false);
   };
 
   const getTopCategory = (): ProofCategory => {
@@ -232,6 +243,118 @@ export default function ProofAssessment() {
   const generateTTSText = (result: typeof categoryInfo[ProofCategory]) => {
     return `Your P.R.O.O.F. Assessment Results. Your primary focus area is ${result.word}, which addresses ${result.criticism}. ${result.description}. We recommend starting with these resources: ${result.resources.map(r => r.title).join(", ")}.`;
   };
+
+  const getColorScheme = (category: ProofCategory) => {
+    switch (category) {
+      case "pledge-process": return "blue";
+      case "rituals": return "purple";
+      case "oaths": return "amber";
+      case "obscurity": return "green";
+      case "founders": return "fuchsia";
+      default: return "purple";
+    }
+  };
+
+  // Loading state
+  if (loadingSaved && user) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <Loader2 className="w-10 h-10 animate-spin mx-auto text-primary" />
+          <p className="text-muted-foreground">Loading your assessment...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show saved results for logged-in users
+  if (viewingSavedResults && savedAssessment) {
+    const scoresJson = savedAssessment.scores_json as { topCategory?: ProofCategory };
+    const topCategory = scoresJson.topCategory || "rituals";
+    const result = categoryInfo[topCategory];
+    
+    const chartData = Object.entries(categoryInfo).map(([key, info]) => ({
+      name: info.letter,
+      value: key === topCategory ? 80 : Math.floor(Math.random() * 40) + 20,
+      fullMark: 100
+    }));
+
+    return (
+      <div className="min-h-screen bg-background">
+        <div className="container mx-auto px-4 py-8 max-w-2xl">
+          <Button 
+            variant="ghost" 
+            onClick={() => setViewingSavedResults(false)}
+            className="mb-4"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back
+          </Button>
+          
+          <AssessmentVisualReport
+            assessmentTitle="P.R.O.O.F. Assessment"
+            assessmentType="proof-quiz"
+            resultTitle={result.word}
+            resultSubtitle={result.criticism}
+            archetype={`${result.letter} - ${result.word}`}
+            completedAt={savedAssessment.created_at}
+            chartData={chartData}
+            chartType="bar"
+            sections={[
+              { title: "Your Focus Area", content: result.description },
+              { title: "Common Criticism", content: `People often challenge you with concerns about "${result.criticism}".` }
+            ]}
+            recommendations={result.resources.map(r => r.title)}
+            colorScheme={getColorScheme(topCategory) as "purple" | "amber" | "fuchsia" | "blue" | "green"}
+          />
+          
+          <div className="mt-6 flex gap-3">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setViewingSavedResults(false);
+                setForceRetake(true);
+              }}
+              className="flex-1"
+            >
+              <RotateCcw className="w-4 h-4 mr-2" />
+              Retake
+            </Button>
+            <Button
+              onClick={() => navigate('/proof-course')}
+              className="flex-1"
+            >
+              <BookOpen className="w-4 h-4 mr-2" />
+              Study P.R.O.O.F.
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show prompt for returning users with saved results
+  if (hasSavedAssessment && !forceRetake && !started && savedAssessment) {
+    const scoresJson = savedAssessment.scores_json as { topCategory?: ProofCategory };
+    const topCategory = scoresJson.topCategory || "rituals";
+    const result = categoryInfo[topCategory];
+    
+    return (
+      <div className="min-h-screen bg-background">
+        <div className="container mx-auto px-4 py-8 max-w-2xl">
+          <SavedAssessmentPrompt
+            assessmentTitle="P.R.O.O.F. Assessment"
+            resultTitle={result.word}
+            archetype={`${result.letter} - ${result.word}`}
+            completedAt={savedAssessment.created_at}
+            onViewResults={() => setViewingSavedResults(true)}
+            onRetake={() => setForceRetake(true)}
+            colorScheme={getColorScheme(topCategory) as "purple" | "amber" | "fuchsia" | "blue" | "green"}
+          />
+        </div>
+      </div>
+    );
+  }
 
   // Show instructions first
   if (!started) {

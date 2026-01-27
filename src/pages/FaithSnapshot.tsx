@@ -5,9 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useLandingABTest } from "@/hooks/use-landing-ab-test";
+import { useSavedAssessment } from "@/hooks/use-saved-assessment";
 import { AssessmentTTS } from "@/components/assessment/AssessmentTTS";
 import { AssessmentInstructions } from "@/components/assessment/AssessmentInstructions";
 import { AssessmentResultsPanel } from "@/components/assessment/AssessmentResultsPanel";
+import { AssessmentVisualReport } from "@/components/assessment/AssessmentVisualReport";
+import { SavedAssessmentPrompt } from "@/components/assessment/SavedAssessmentPrompt";
 import { useAuth } from "@/contexts/AuthContext";
 import logo from "@/assets/sacred-greeks-logo.png";
 import {
@@ -25,7 +28,8 @@ import {
   Home,
   Church,
   HelpCircle,
-  Compass
+  Compass,
+  Loader2
 } from "lucide-react";
 
 interface Question {
@@ -230,11 +234,15 @@ export default function FaithSnapshot() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { trackConversion } = useLandingABTest();
+  const { savedAssessment, hasSavedAssessment, isLoading: loadingSaved } = useSavedAssessment("faith-snapshot");
+  
   const [started, setStarted] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string | string[]>>({});
   const [showResults, setShowResults] = useState(false);
   const [results, setResults] = useState<SnapshotResult | null>(null);
+  const [viewingSavedResults, setViewingSavedResults] = useState(false);
+  const [forceRetake, setForceRetake] = useState(false);
 
   const question = questions[currentQuestion];
   const progress = ((currentQuestion + 1) / questions.length) * 100;
@@ -309,6 +317,127 @@ export default function FaithSnapshot() {
     sessionStorage.setItem('snapshot_results', JSON.stringify(results));
     navigate('/auth?mode=signup');
   };
+
+  // Loading state
+  if (loadingSaved && user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[hsl(225,50%,8%)] via-[hsl(250,40%,12%)] to-[hsl(225,50%,8%)] flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <Loader2 className="w-10 h-10 animate-spin mx-auto text-purple-400" />
+          <p className="text-white/70">Loading your assessment...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show saved results for logged-in users who have completed before
+  if (viewingSavedResults && savedAssessment) {
+    const scoresJson = savedAssessment.scores_json as { score?: number; sections?: { title: string; content: string; items?: string[] }[] };
+    const chartData = [
+      { name: "Faith", value: scoresJson.score || 0, fullMark: 100 },
+      { name: "Confidence", value: Math.min((scoresJson.score || 0) + 10, 100), fullMark: 100 },
+      { name: "Knowledge", value: Math.max((scoresJson.score || 0) - 10, 0), fullMark: 100 },
+      { name: "Community", value: (scoresJson.score || 0) * 0.8, fullMark: 100 },
+      { name: "Practice", value: (scoresJson.score || 0) * 0.9, fullMark: 100 },
+    ];
+
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[hsl(225,50%,8%)] via-[hsl(250,40%,12%)] to-[hsl(225,50%,8%)] flex flex-col">
+        <header className="border-b border-purple-500/20 bg-[hsl(225,50%,8%)]/95 backdrop-blur-sm">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center gap-2 h-14">
+              <img src={logo} alt="Sacred Greeks" className="h-8 w-8 rounded-full object-cover" />
+              <span className="font-semibold text-white">Sacred Greeks</span>
+            </div>
+          </div>
+        </header>
+
+        <main className="flex-1 px-4 py-8">
+          <div className="container mx-auto max-w-2xl">
+            <Button 
+              variant="ghost" 
+              onClick={() => setViewingSavedResults(false)}
+              className="mb-4 text-white/70 hover:text-white"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Button>
+            
+            <AssessmentVisualReport
+              assessmentTitle="Faith Snapshot Assessment"
+              assessmentType="faith-snapshot"
+              resultTitle={savedAssessment.scenario}
+              archetype={savedAssessment.result_type}
+              score={scoresJson.score}
+              scoreLabel="Faith Confidence Score"
+              completedAt={savedAssessment.created_at}
+              chartData={chartData}
+              chartType="radar"
+              sections={scoresJson.sections || []}
+              recommendations={[
+                "Continue with the PROOF Course",
+                "Join the community forums",
+                "Complete daily devotionals"
+              ]}
+              colorScheme="amber"
+            />
+            
+            <div className="mt-6 flex gap-3">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setViewingSavedResults(false);
+                  setForceRetake(true);
+                }}
+                className="flex-1"
+              >
+                Retake Assessment
+              </Button>
+              <Button
+                onClick={() => navigate('/dashboard')}
+                className="flex-1 bg-gradient-to-r from-amber-500 to-orange-600"
+              >
+                Go to Dashboard
+              </Button>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // Show prompt for returning users with saved results
+  if (hasSavedAssessment && !forceRetake && !started && savedAssessment) {
+    const scoresJson = savedAssessment.scores_json as { score?: number };
+    
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[hsl(225,50%,8%)] via-[hsl(250,40%,12%)] to-[hsl(225,50%,8%)] flex flex-col">
+        <header className="border-b border-purple-500/20 bg-[hsl(225,50%,8%)]/95 backdrop-blur-sm">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center gap-2 h-14">
+              <img src={logo} alt="Sacred Greeks" className="h-8 w-8 rounded-full object-cover" />
+              <span className="font-semibold text-white">Sacred Greeks</span>
+            </div>
+          </div>
+        </header>
+
+        <main className="flex-1 flex items-center justify-center px-4 py-12">
+          <div className="w-full max-w-lg">
+            <SavedAssessmentPrompt
+              assessmentTitle="Faith Snapshot"
+              resultTitle={savedAssessment.scenario}
+              archetype={savedAssessment.result_type}
+              completedAt={savedAssessment.created_at}
+              score={scoresJson.score}
+              onViewResults={() => setViewingSavedResults(true)}
+              onRetake={() => setForceRetake(true)}
+              colorScheme="amber"
+            />
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   // Show instructions first
   if (!started) {
