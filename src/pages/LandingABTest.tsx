@@ -19,7 +19,10 @@ import {
   Loader2,
   MessageCircle,
   Church,
-  Heart
+  Heart,
+  Video,
+  CalendarDays,
+  Play
 } from "lucide-react";
 
 // Pain points that address survey anxiety and criticisms
@@ -51,6 +54,22 @@ const testimonial = {
   org: "Delta Sigma Theta, Spelman College",
   avatar: "✨"
 };
+
+// Upcoming webinars for lead generation
+const upcomingWebinars = [
+  {
+    title: "Faith & Frat: Biblical Clarity on Greek Life",
+    date: "Every Tuesday, 7 PM EST",
+    description: "Live Q&A with campus ministers and Greek alumni on navigating faith in fraternity/sorority life.",
+    spots: "Limited Spots"
+  },
+  {
+    title: "Handling the Hard Questions",
+    date: "February 8, 2026 • 8 PM EST",
+    description: "How to respond when family, church, or friends challenge your Greek membership.",
+    spots: "Free to Join"
+  }
+];
 
 export default function LandingABTest() {
   const navigate = useNavigate();
@@ -243,6 +262,72 @@ export default function LandingABTest() {
                 </CardContent>
               </Card>
             </div>
+          </div>
+        </section>
+
+        {/* Webinar Lead Generation Section */}
+        <section className="py-16 px-4 bg-gradient-to-b from-transparent via-indigo-900/10 to-transparent">
+          <div className="container mx-auto max-w-4xl">
+            <div className="text-center mb-10">
+              <Badge className="mb-4 bg-gradient-to-r from-purple-500/20 to-blue-500/20 text-purple-300 border-purple-500/30">
+                <Video className="w-3 h-3 mr-1" />
+                Free Live Webinars
+              </Badge>
+              <h2 className="text-3xl font-bold mb-3">
+                <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                  Learn From Greeks Who've Been There
+                </span>
+              </h2>
+              <p className="text-sky-200/80 max-w-2xl mx-auto">
+                Join our live sessions with campus ministers, Greek alumni, and faith leaders who understand both worlds.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {upcomingWebinars.map((webinar, index) => (
+                <Card 
+                  key={index}
+                  className="bg-slate-900/60 border border-purple-500/20 hover:border-blue-500/40 transition-all duration-300 hover:scale-[1.02] group overflow-hidden"
+                >
+                  <CardContent className="p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                        <Play className="w-6 h-6 text-white" />
+                      </div>
+                      <Badge className="bg-green-500/20 text-green-300 border-green-500/30 text-xs">
+                        {webinar.spots}
+                      </Badge>
+                    </div>
+                    <h3 className="font-semibold text-white text-lg mb-2">{webinar.title}</h3>
+                    <div className="flex items-center gap-2 text-blue-300 text-sm mb-3">
+                      <CalendarDays className="w-4 h-4" />
+                      {webinar.date}
+                    </div>
+                    <p className="text-sky-200/70 text-sm mb-4">{webinar.description}</p>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={handleCTAClick}
+                      className="w-full border-purple-500/30 text-purple-300 hover:bg-purple-500/20 hover:text-white transition-all"
+                    >
+                      Reserve Your Spot
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <p className="text-center mt-8 text-sky-300/60 text-sm">
+              Can't make it live? Start with your{" "}
+              <button 
+                onClick={handleCTAClick}
+                className="text-blue-400 hover:text-blue-300 underline underline-offset-2"
+              >
+                free Faith Snapshot
+              </button>
+              {" "}to get personalized recommendations.
+            </p>
           </div>
         </section>
 
