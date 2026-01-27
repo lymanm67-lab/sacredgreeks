@@ -120,12 +120,21 @@ export function AssessmentResultsPanel({
 
     setIsSaving(true);
     try {
+      // Build scores_json with all relevant data for visual reports
+      const scoresData = {
+        score,
+        sections: sections.map(s => ({ title: s.title, content: s.content, items: s.items })),
+        archetype,
+        recommendations,
+        ...(additionalData?.topCategory && { topCategory: additionalData.topCategory })
+      };
+
       const { error } = await supabase.from("assessment_submissions").insert([{
         user_id: user.id,
         track: assessmentType,
         scenario: resultTitle,
         result_type: archetype || resultTitle,
-        scores_json: JSON.parse(JSON.stringify({ score, sections: sections.map(s => ({ title: s.title, content: s.content })) })),
+        scores_json: JSON.parse(JSON.stringify(scoresData)),
         answers_json: JSON.parse(JSON.stringify(additionalData || {})),
         consent_to_contact: false
       }]);
