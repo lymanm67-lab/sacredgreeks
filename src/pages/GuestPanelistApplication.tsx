@@ -386,6 +386,13 @@ const GuestPanelistApplication = () => {
                     )}
                   />
 
+                  {/* Media Usage Rights Notice */}
+                  <div className="rounded-md border border-sky-500/20 p-4 bg-sky-900/20">
+                    <p className="text-sky-200/80 text-sm leading-relaxed">
+                      <strong className="text-sky-100">Media Usage Notice:</strong> By submitting this application, you acknowledge that the host retains the right to use all recorded media (audio, video, photographs, and transcripts) from your appearance for promotional purposes, including but not limited to social media, website content, marketing materials, and future broadcast distribution.
+                    </p>
+                  </div>
+
                   <FormField
                     control={form.control}
                     name="agreeToTerms"
@@ -400,7 +407,7 @@ const GuestPanelistApplication = () => {
                         </FormControl>
                         <div className="space-y-1 leading-none">
                           <FormLabel className="text-sky-200 text-sm">
-                            I agree to be contacted about panelist opportunities and understand that submitting this application does not guarantee selection. *
+                            I agree to be contacted about panelist opportunities, consent to the media usage terms above, and understand that submitting this application does not guarantee selection. *
                           </FormLabel>
                         </div>
                         <FormMessage />
