@@ -54,10 +54,10 @@ const PodcastAppearances = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Link to="/">
+              <Link to="/dashboard">
                 <Button variant="ghost" size="sm" className="gap-2">
                   <Home className="w-4 h-4" />
-                  Home
+                  Dashboard
                 </Button>
               </Link>
               <div className="h-6 w-px bg-border" />

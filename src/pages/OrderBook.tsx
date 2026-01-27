@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, ExternalLink, Star, CheckCircle2, Quote } from "lucide-react";
+import { BookOpen, ExternalLink, Star, CheckCircle2, Quote, Home } from "lucide-react";
 import { useExternalLinks } from "@/hooks/use-external-links";
+import { Link } from "react-router-dom";
 import bookCover from "@/assets/sacred-not-sinful-cover.jpg";
 
 const OrderBook = () => {
@@ -18,7 +19,20 @@ const OrderBook = () => {
   ];
 
   return (
-    <div className="container max-w-4xl py-8 px-4 space-y-8">
+    <div className="min-h-screen bg-background">
+      {/* Header with Back to Dashboard */}
+      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4">
+          <Link to="/dashboard">
+            <Button variant="ghost" size="sm">
+              <Home className="w-4 h-4 mr-2" />
+              Back to Dashboard
+            </Button>
+          </Link>
+        </div>
+      </header>
+
+      <div className="container max-w-4xl py-8 px-4 space-y-8">
       {/* Hero Section */}
       <div className="text-center space-y-4">
         <Badge variant="secondary" className="text-sm">
@@ -119,6 +133,7 @@ const OrderBook = () => {
           </p>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, Headphones, Heart, GraduationCap, Church, ArrowRight, Mic, Calendar, Users } from "lucide-react";
+import { BookOpen, Headphones, Heart, GraduationCap, Church, ArrowRight, Mic, Calendar, Users, Home } from "lucide-react";
 import { Link } from "react-router-dom";
 import drLymanImage from "@/assets/dr-lyman-montgomery.png";
 
@@ -15,6 +15,18 @@ const AboutCreator = () => {
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-sky-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
         <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl animate-pulse delay-500" />
       </div>
+
+      {/* Header with Back to Dashboard */}
+      <header className="border-b border-blue-500/20 bg-slate-950/50 backdrop-blur-sm sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4">
+          <Link to="/dashboard">
+            <Button variant="ghost" size="sm" className="text-sky-300 hover:text-white hover:bg-blue-500/20">
+              <Home className="w-4 h-4 mr-2" />
+              Back to Dashboard
+            </Button>
+          </Link>
+        </div>
+      </header>
 
       <div className="container max-w-5xl py-8 px-4 space-y-8 relative">
         {/* Hero Section - Image Inline with Text */}
