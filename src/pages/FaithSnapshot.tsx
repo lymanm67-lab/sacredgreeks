@@ -17,7 +17,12 @@ import {
   BookOpen,
   Shield,
   Flame,
-  Target
+  Target,
+  MessageCircle,
+  Home,
+  Church,
+  HelpCircle,
+  Compass
 } from "lucide-react";
 
 interface Question {
@@ -32,59 +37,74 @@ interface Question {
   multiSelect?: boolean;
 }
 
+// Revised questions focusing on faith journey and handling criticisms
 const questions: Question[] = [
   {
     id: 1,
-    text: "Where are you on your faith journey?",
-    subtext: "No judgment — just want to meet you where you are",
+    text: "Where are you in your Greek life journey?",
+    subtext: "We want to meet you exactly where you are",
     options: [
-      { text: "Strong and steady", value: "strong", icon: Flame },
-      { text: "Growing but struggling", value: "growing", icon: Target },
-      { text: "Curious but uncertain", value: "curious", icon: BookOpen },
-      { text: "Feeling disconnected", value: "disconnected", icon: Heart },
+      { text: "Active member of a fraternity/sorority", value: "active", icon: Users },
+      { text: "Thinking about joining (rushing/intake)", value: "interested", icon: Compass },
+      { text: "Alumni who's still connected", value: "alumni", icon: Home },
+      { text: "Just exploring what Greek life is about", value: "exploring", icon: HelpCircle },
     ],
   },
   {
     id: 2,
-    text: "What's your biggest challenge in Greek life?",
-    subtext: "Select the one that resonates most",
+    text: "What's your biggest faith-related struggle with Greek life?",
+    subtext: "Be honest — this is a judgment-free zone",
     options: [
-      { text: "Balancing chapter expectations with my faith", value: "balance" },
-      { text: "Finding brothers/sisters who share my values", value: "community" },
-      { text: "Defending my decision to join to family/church", value: "defending" },
-      { text: "Staying consistent in my spiritual practices", value: "consistency" },
+      { text: "Family or church members criticizing my decision", value: "family_criticism", icon: Home },
+      { text: "Feeling like I have to choose between faith and fraternity", value: "torn", icon: Heart },
+      { text: "Defending Greek life to people who don't understand", value: "defending", icon: Shield },
+      { text: "Wondering if it's spiritually okay to join/stay", value: "questioning", icon: Church },
     ],
   },
   {
     id: 3,
-    text: "What would help you most right now?",
-    subtext: "We'll personalize your experience based on this",
+    text: "What criticism have you faced (or worry about facing)?",
+    subtext: "Select all that apply",
     multiSelect: true,
     options: [
-      { text: "Daily devotionals for Greeks", value: "devotionals", icon: BookOpen },
-      { text: "Biblical responses to criticisms", value: "responses", icon: Shield },
-      { text: "Community of like-minded Greeks", value: "community", icon: Users },
-      { text: "Practical faith integration tips", value: "practical", icon: Target },
+      { text: '"Greek life is just about partying"', value: "partying", icon: MessageCircle },
+      { text: '"Those rituals seem un-Christian"', value: "rituals", icon: Shield },
+      { text: '"You\'re paying for friends"', value: "paying", icon: MessageCircle },
+      { text: '"It\'s a distraction from your faith"', value: "distraction", icon: Church },
     ],
   },
   {
     id: 4,
-    text: "How often do you engage with Scripture?",
+    text: "How confident are you defending your Greek life decision?",
+    subtext: "When someone challenges you about being in a fraternity/sorority...",
     options: [
-      { text: "Daily", value: "daily" },
-      { text: "A few times a week", value: "weekly" },
-      { text: "Occasionally", value: "occasionally" },
-      { text: "Rarely / trying to start", value: "rarely" },
+      { text: "Very confident — I have solid biblical backing", value: "confident", icon: Shield },
+      { text: "Somewhat confident — I believe it's fine but struggle to explain", value: "somewhat", icon: Target },
+      { text: "Not confident — I avoid the conversation", value: "not_confident", icon: MessageCircle },
+      { text: "Honestly unsure — I'm still figuring it out myself", value: "unsure", icon: Compass },
     ],
   },
   {
     id: 5,
-    text: "Are you part of a Greek organization?",
+    text: "What would help you most right now?",
+    subtext: "We'll customize your experience based on this",
+    multiSelect: true,
     options: [
-      { text: "Yes, active member", value: "active" },
-      { text: "Yes, alumni", value: "alumni" },
-      { text: "Going through intake/pledging", value: "pledging" },
-      { text: "Interested / rushing", value: "interested" },
+      { text: "Biblical responses to common criticisms", value: "responses", icon: BookOpen },
+      { text: "Understanding which symbols/rituals are okay", value: "symbols", icon: Shield },
+      { text: "Connecting with other faith-focused Greeks", value: "community", icon: Users },
+      { text: "Daily devotionals that relate to Greek life", value: "devotionals", icon: Flame },
+    ],
+  },
+  {
+    id: 6,
+    text: "Where are you on your personal faith journey?",
+    subtext: "No right or wrong answer here",
+    options: [
+      { text: "Strong and growing — faith is central to my life", value: "strong", icon: Flame },
+      { text: "Solid but struggling — life's been challenging lately", value: "struggling", icon: Target },
+      { text: "Exploring — trying to figure out what I believe", value: "exploring", icon: Compass },
+      { text: "Distant — used to be closer to God", value: "distant", icon: Heart },
     ],
   },
 ];
@@ -94,48 +114,71 @@ interface SnapshotResult {
   focusDescription: string;
   recommendedPath: string[];
   faithScore: number;
+  archetype: string;
 }
 
 const calculateResults = (answers: Record<number, string | string[]>): SnapshotResult => {
-  const journeyStage = answers[1] as string;
-  const challenge = answers[2] as string;
-  const needs = answers[3] as string[];
-  const scriptureFreq = answers[4] as string;
+  const greekStatus = answers[1] as string;
+  const struggle = answers[2] as string;
+  const criticisms = answers[3] as string[];
+  const confidence = answers[4] as string;
+  const needs = answers[5] as string[];
+  const faithJourney = answers[6] as string;
 
-  // Calculate faith engagement score (0-100)
-  let score = 50;
-  if (journeyStage === "strong") score += 20;
-  else if (journeyStage === "growing") score += 10;
-  else if (journeyStage === "curious") score += 5;
+  // Calculate confidence and faith score
+  let score = 40;
   
-  if (scriptureFreq === "daily") score += 25;
-  else if (scriptureFreq === "weekly") score += 15;
-  else if (scriptureFreq === "occasionally") score += 5;
+  // Faith journey contribution
+  if (faithJourney === "strong") score += 30;
+  else if (faithJourney === "struggling") score += 20;
+  else if (faithJourney === "exploring") score += 10;
+  else score += 5;
 
-  // Determine primary focus
-  let primaryFocus = "Spiritual Foundation";
-  let focusDescription = "Building a stronger daily connection with God while thriving in Greek life.";
-  
-  if (challenge === "defending") {
-    primaryFocus = "Apologetics & Confidence";
-    focusDescription = "Equipping you with biblical wisdom to confidently navigate tough conversations.";
-  } else if (challenge === "community") {
-    primaryFocus = "Faith Community";
-    focusDescription = "Connecting you with like-minded Greeks who share your values and journey.";
-  } else if (challenge === "balance") {
-    primaryFocus = "Integration & Balance";
-    focusDescription = "Practical strategies to honor both your faith and fraternity commitments.";
+  // Confidence contribution  
+  if (confidence === "confident") score += 25;
+  else if (confidence === "somewhat") score += 15;
+  else if (confidence === "not_confident") score += 5;
+  else score += 0;
+
+  // Determine archetype and primary focus
+  let archetype = "Faith Seeker";
+  let primaryFocus = "Building Your Foundation";
+  let focusDescription = "You're at the perfect starting point to integrate faith with Greek life.";
+
+  if (struggle === "family_criticism" || struggle === "defending") {
+    archetype = "Apologetics Ready";
+    primaryFocus = "Confident Defense";
+    focusDescription = "You need clear, biblical responses to handle criticism from family, church, or others.";
+  } else if (struggle === "torn" || struggle === "questioning") {
+    archetype = "Seeking Clarity";
+    primaryFocus = "Faith Integration";
+    focusDescription = "You're wrestling with important questions about faith and Greek life — and we're here to help.";
   }
 
-  // Build recommended path
+  // If rituals criticism is selected, emphasize symbol understanding
+  if (criticisms?.includes("rituals")) {
+    primaryFocus = "Symbol & Ritual Understanding";
+    focusDescription = "You need clarity on what's spiritually acceptable in Greek life symbols and ceremonies.";
+  }
+
+  // Build recommended path based on needs
   const recommendedPath: string[] = [];
-  if (needs?.includes("devotionals")) recommendedPath.push("Daily Devotionals");
-  if (needs?.includes("responses")) recommendedPath.push("PROOF Framework Course");
-  if (needs?.includes("community")) recommendedPath.push("Prayer Community");
-  if (needs?.includes("practical")) recommendedPath.push("Faith Integration Guide");
+  
+  if (needs?.includes("responses")) {
+    recommendedPath.push("PROOF Framework: Biblical Responses to Critics");
+  }
+  if (needs?.includes("symbols")) {
+    recommendedPath.push("Greek Symbols Guide: What's Okay & What's Not");
+  }
+  if (needs?.includes("community")) {
+    recommendedPath.push("Connect with Faith-Focused Greeks");
+  }
+  if (needs?.includes("devotionals")) {
+    recommendedPath.push("Daily Devotionals for Greeks");
+  }
   
   if (recommendedPath.length === 0) {
-    recommendedPath.push("Daily Devotionals", "Getting Started Guide");
+    recommendedPath.push("Getting Started Guide", "Daily Devotionals");
   }
 
   return {
@@ -143,6 +186,7 @@ const calculateResults = (answers: Record<number, string | string[]>): SnapshotR
     focusDescription,
     recommendedPath,
     faithScore: Math.min(100, Math.max(0, score)),
+    archetype,
   };
 };
 
@@ -215,8 +259,8 @@ export default function FaithSnapshot() {
 
   if (showResults && results) {
     return (
-      <div className="min-h-screen bg-[hsl(225,50%,8%)] flex flex-col">
-        <header className="border-b border-slate-700/50 bg-[hsl(225,50%,8%)]/95 backdrop-blur-sm">
+      <div className="min-h-screen bg-gradient-to-br from-[hsl(225,50%,8%)] via-[hsl(250,40%,12%)] to-[hsl(225,50%,8%)] flex flex-col">
+        <header className="border-b border-purple-500/20 bg-[hsl(225,50%,8%)]/95 backdrop-blur-sm">
           <div className="container mx-auto px-4">
             <div className="flex items-center gap-2 h-14">
               <img src={logo} alt="Sacred Greeks" className="h-8 w-8 rounded-full object-cover" />
@@ -231,50 +275,54 @@ export default function FaithSnapshot() {
             animate={{ opacity: 1, scale: 1 }}
             className="w-full max-w-lg"
           >
-            <Card className="bg-slate-800/50 border-slate-700/50">
+            <Card className="bg-gradient-to-br from-slate-800/80 to-purple-900/30 border-purple-500/30 shadow-2xl shadow-purple-500/10">
               <CardHeader className="text-center pb-4">
                 <div className="flex justify-center mb-4">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-500 via-orange-500 to-pink-500 flex items-center justify-center animate-pulse">
                     <Sparkles className="w-8 h-8 text-white" />
                   </div>
                 </div>
-                <Badge className="w-fit mx-auto mb-2 bg-green-500/20 text-green-400 border-green-500/30">
-                  Your Faith Snapshot
+                <Badge className="w-fit mx-auto mb-2 bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-400 border-amber-500/30">
+                  {results.archetype}
                 </Badge>
-                <CardTitle className="text-2xl text-white">{results.primaryFocus}</CardTitle>
-                <CardDescription className="text-slate-400">
+                <CardTitle className="text-2xl bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+                  {results.primaryFocus}
+                </CardTitle>
+                <CardDescription className="text-slate-300">
                   {results.focusDescription}
                 </CardDescription>
               </CardHeader>
 
               <CardContent className="space-y-6">
-                {/* Faith Engagement Score */}
-                <div className="p-4 rounded-lg bg-slate-900/50 border border-slate-700/50">
+                {/* Faith Confidence Score */}
+                <div className="p-4 rounded-lg bg-gradient-to-r from-purple-900/50 to-blue-900/50 border border-purple-500/30">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm text-slate-400">Faith Engagement Score</span>
-                    <span className="text-lg font-bold text-white">{results.faithScore}%</span>
+                    <span className="text-sm text-purple-200">Faith Confidence Score</span>
+                    <span className="text-lg font-bold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
+                      {results.faithScore}%
+                    </span>
                   </div>
                   <Progress value={results.faithScore} className="h-2" />
-                  <p className="text-xs text-slate-500 mt-2">
+                  <p className="text-xs text-purple-300/80 mt-2">
                     {results.faithScore >= 70 
-                      ? "You're on a strong path! Let's help you go deeper." 
+                      ? "You have a strong foundation — let's make it unshakeable." 
                       : results.faithScore >= 40 
-                        ? "Great foundation! We'll help you build consistency." 
-                        : "Perfect time to start! We're here to guide you."}
+                        ? "You're on the right track. We'll help you grow in confidence." 
+                        : "Perfect timing! We're here to equip you with answers."}
                   </p>
                 </div>
 
                 {/* Recommended Path */}
                 <div>
-                  <h3 className="text-sm font-medium text-white mb-3">Your Recommended Path</h3>
+                  <h3 className="text-sm font-medium text-white mb-3">Your Personalized Path</h3>
                   <div className="space-y-2">
                     {results.recommendedPath.map((item, index) => (
                       <div 
                         key={index}
-                        className="flex items-center gap-3 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20"
+                        className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20"
                       >
-                        <CheckCircle2 className="w-5 h-5 text-blue-400 flex-shrink-0" />
-                        <span className="text-slate-300">{item}</span>
+                        <CheckCircle2 className="w-5 h-5 text-amber-400 flex-shrink-0" />
+                        <span className="text-slate-200">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -284,14 +332,14 @@ export default function FaithSnapshot() {
                 <Button
                   size="lg"
                   onClick={handleSignup}
-                  className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold py-6 text-lg rounded-xl"
+                  className="w-full bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 hover:from-amber-600 hover:via-orange-600 hover:to-pink-600 text-white font-semibold py-6 text-lg rounded-xl shadow-lg shadow-orange-500/25"
                 >
-                  Create Free Account
+                  Get Your Free Access
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
 
-                <p className="text-center text-sm text-slate-500">
-                  Your personalized dashboard is ready — just sign up to access it
+                <p className="text-center text-sm text-slate-400">
+                  Your personalized dashboard is ready — create your free account to access it
                 </p>
               </CardContent>
             </Card>
@@ -302,18 +350,18 @@ export default function FaithSnapshot() {
   }
 
   return (
-    <div className="min-h-screen bg-[hsl(225,50%,8%)] flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-[hsl(225,50%,8%)] via-[hsl(250,40%,12%)] to-[hsl(225,50%,8%)] flex flex-col">
       {/* Header */}
-      <header className="border-b border-slate-700/50 bg-[hsl(225,50%,8%)]/95 backdrop-blur-sm">
+      <header className="border-b border-purple-500/20 bg-[hsl(225,50%,8%)]/95 backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-14">
             <div className="flex items-center gap-2">
               <img src={logo} alt="Sacred Greeks" className="h-8 w-8 rounded-full object-cover" />
               <span className="font-semibold text-white">Sacred Greeks</span>
             </div>
-            <span className="text-sm text-slate-400">
-              Faith Snapshot Assessment
-            </span>
+            <Badge variant="outline" className="text-purple-300 border-purple-500/50">
+              Faith Snapshot
+            </Badge>
           </div>
         </div>
       </header>
@@ -322,11 +370,18 @@ export default function FaithSnapshot() {
         <div className="w-full max-w-lg">
           {/* Progress */}
           <div className="mb-6">
-            <div className="flex justify-between text-sm text-slate-400 mb-2">
+            <div className="flex justify-between text-sm text-purple-300 mb-2">
               <span>Question {currentQuestion + 1} of {questions.length}</span>
               <span>{Math.round(progress)}% complete</span>
             </div>
-            <Progress value={progress} className="h-2" />
+            <div className="h-2 bg-purple-900/50 rounded-full overflow-hidden">
+              <motion.div 
+                className="h-full bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500"
+                initial={{ width: 0 }}
+                animate={{ width: `${progress}%` }}
+                transition={{ duration: 0.3 }}
+              />
+            </div>
           </div>
 
           {/* Question Card */}
@@ -338,16 +393,16 @@ export default function FaithSnapshot() {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.2 }}
             >
-              <Card className="bg-slate-800/50 border-slate-700/50">
+              <Card className="bg-gradient-to-br from-slate-800/80 to-purple-900/30 border-purple-500/30 shadow-xl">
                 <CardHeader>
                   <CardTitle className="text-xl text-white">{question.text}</CardTitle>
                   {question.subtext && (
-                    <CardDescription className="text-slate-400">
+                    <CardDescription className="text-purple-200/80">
                       {question.subtext}
                     </CardDescription>
                   )}
                   {question.multiSelect && (
-                    <Badge variant="outline" className="w-fit text-blue-400 border-blue-400/50">
+                    <Badge variant="outline" className="w-fit text-amber-400 border-amber-400/50">
                       Select all that apply
                     </Badge>
                   )}
@@ -364,13 +419,13 @@ export default function FaithSnapshot() {
                         onClick={() => handleSelect(option.value)}
                         className={`w-full p-4 rounded-lg border text-left transition-all flex items-center gap-3 ${
                           selected
-                            ? "bg-blue-500/20 border-blue-500/50 text-white"
-                            : "bg-slate-900/50 border-slate-700/50 text-slate-300 hover:border-slate-600"
+                            ? "bg-gradient-to-r from-amber-500/20 to-orange-500/20 border-amber-500/50 text-white"
+                            : "bg-purple-900/30 border-purple-500/30 text-slate-300 hover:border-purple-400/50 hover:bg-purple-900/50"
                         }`}
                       >
-                        {Icon && <Icon className={`w-5 h-5 ${selected ? "text-blue-400" : "text-slate-500"}`} />}
+                        {Icon && <Icon className={`w-5 h-5 ${selected ? "text-amber-400" : "text-purple-400"}`} />}
                         <span className="flex-1">{option.text}</span>
-                        {selected && <CheckCircle2 className="w-5 h-5 text-blue-400" />}
+                        {selected && <CheckCircle2 className="w-5 h-5 text-amber-400" />}
                       </button>
                     );
                   })}
@@ -385,7 +440,7 @@ export default function FaithSnapshot() {
               variant="ghost"
               onClick={handleBack}
               disabled={currentQuestion === 0}
-              className="text-slate-400 hover:text-white"
+              className="text-purple-300 hover:text-white hover:bg-purple-900/50"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -393,9 +448,9 @@ export default function FaithSnapshot() {
             <Button
               onClick={handleNext}
               disabled={!canProceed()}
-              className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white"
+              className="bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 hover:from-amber-600 hover:via-orange-600 hover:to-pink-600 text-white"
             >
-              {currentQuestion === questions.length - 1 ? "See Results" : "Continue"}
+              {currentQuestion === questions.length - 1 ? "See My Results" : "Continue"}
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </div>

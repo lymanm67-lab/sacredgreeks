@@ -6,11 +6,12 @@ import { Badge } from "@/components/ui/badge";
 import { useLandingAnalytics, useLandingTrends, useLandingVariants } from "@/hooks/use-landing-ab-test";
 import { StatisticalSignificance } from "@/components/admin/StatisticalSignificance";
 import { EmailCampaignBuilder } from "@/components/admin/EmailCampaignBuilder";
+import { EmailTemplateEditor } from "@/components/admin/EmailTemplateEditor";
 import { AdCopyGenerator } from "@/components/admin/AdCopyGenerator";
 import { ConversionRatesDashboard } from "@/components/admin/ConversionRatesDashboard";
 import { 
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  BarChart, Bar, FunnelChart, Funnel, LabelList, Cell
+  BarChart, Bar
 } from "recharts";
 import { 
   ArrowLeft, 
@@ -22,7 +23,8 @@ import {
   Mail,
   Sparkles,
   Target,
-  Loader2
+  Loader2,
+  Paintbrush
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -103,7 +105,7 @@ export default function MarketingDashboard() {
           </div>
         ) : (
           <Tabs defaultValue="overview" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-5 lg:w-auto lg:inline-grid">
+            <TabsList className="grid w-full grid-cols-6 lg:w-auto lg:inline-grid">
               <TabsTrigger value="overview">
                 <BarChart3 className="w-4 h-4 mr-2" />
                 Overview
@@ -118,7 +120,11 @@ export default function MarketingDashboard() {
               </TabsTrigger>
               <TabsTrigger value="email">
                 <Mail className="w-4 h-4 mr-2" />
-                Email
+                Campaigns
+              </TabsTrigger>
+              <TabsTrigger value="template-editor">
+                <Paintbrush className="w-4 h-4 mr-2" />
+                Templates
               </TabsTrigger>
               <TabsTrigger value="ads">
                 <Sparkles className="w-4 h-4 mr-2" />
@@ -313,6 +319,11 @@ export default function MarketingDashboard() {
             {/* Email Tab */}
             <TabsContent value="email">
               <EmailCampaignBuilder />
+            </TabsContent>
+
+            {/* Template Editor Tab */}
+            <TabsContent value="template-editor">
+              <EmailTemplateEditor />
             </TabsContent>
 
             {/* Ad Copy Tab */}

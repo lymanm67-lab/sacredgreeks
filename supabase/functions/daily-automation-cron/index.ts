@@ -40,7 +40,7 @@ const followUpTemplates: Record<string, { subject: string; html: string }> = {
         </p>
         <div style="text-align: center; margin: 30px 0;">
           <a href="https://sacredgreeks.lovable.app/snapshot" 
-             style="background: linear-gradient(135deg, #3b82f6, #06b6d4); color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600;">
+             style="background: linear-gradient(135deg, #f59e0b, #ec4899); color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600;">
             Take the Faith Snapshot
           </a>
         </div>
@@ -62,13 +62,13 @@ const followUpTemplates: Record<string, { subject: string; html: string }> = {
           <strong>Here's what you're missing:</strong>
         </p>
         <ul style="color: #4a4a4a; line-height: 1.8;">
-          <li>Daily devotionals written specifically for Greek life</li>
+          <li>Biblical responses to criticisms of Greek life</li>
           <li>The PROOF Framework to confidently defend your faith</li>
           <li>A community of 1,000+ Greeks who get it</li>
         </ul>
         <div style="text-align: center; margin: 30px 0;">
           <a href="https://sacredgreeks.lovable.app/auth?mode=signup" 
-             style="background: linear-gradient(135deg, #3b82f6, #06b6d4); color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600;">
+             style="background: linear-gradient(135deg, #f59e0b, #ec4899); color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600;">
             Complete Your Signup
           </a>
         </div>
@@ -89,7 +89,7 @@ const followUpTemplates: Record<string, { subject: string; html: string }> = {
         <p style="color: #4a4a4a; line-height: 1.6;">
           But your spiritual growth matters, and we're here whenever you're ready.
         </p>
-        <div style="background: #f8f5ff; border-radius: 8px; padding: 20px; margin: 20px 0;">
+        <div style="background: #fef3c7; border-radius: 8px; padding: 20px; margin: 20px 0;">
           <p style="margin: 0; color: #1a1a1a; font-weight: 500;">
             ✨ New since you've been gone:
           </p>
@@ -101,8 +101,36 @@ const followUpTemplates: Record<string, { subject: string; html: string }> = {
         </div>
         <div style="text-align: center; margin: 30px 0;">
           <a href="https://sacredgreeks.lovable.app/dashboard" 
-             style="background: linear-gradient(135deg, #3b82f6, #06b6d4); color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600;">
+             style="background: linear-gradient(135deg, #f59e0b, #ec4899); color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600;">
             Come Back & Catch Up
+          </a>
+        </div>
+      </div>
+    `,
+  },
+  snapshot_started_not_completed: {
+    subject: "You started something important... 🌟",
+    html: `
+      <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <h2 style="color: #1a1a1a;">Your Faith Snapshot is waiting</h2>
+        <p style="color: #4a4a4a; line-height: 1.6;">
+          You started the Faith Snapshot assessment but didn't finish. We get it — sometimes life interrupts.
+        </p>
+        <p style="color: #4a4a4a; line-height: 1.6;">
+          But here's the thing: those 3 minutes could change how you see your faith in Greek life.
+        </p>
+        <div style="background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%); border-radius: 12px; padding: 25px; margin: 20px 0; text-align: center;">
+          <p style="color: white; font-size: 18px; margin: 0 0 10px 0; font-weight: 600;">
+            Ready to pick up where you left off?
+          </p>
+          <p style="color: rgba(255,255,255,0.9); margin: 0; font-size: 14px;">
+            It only takes 3 minutes to complete.
+          </p>
+        </div>
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="https://sacredgreeks.lovable.app/snapshot" 
+             style="background: linear-gradient(135deg, #f59e0b, #ec4899); color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600;">
+            Finish Your Snapshot
           </a>
         </div>
       </div>
@@ -139,7 +167,8 @@ serve(async (req: Request): Promise<Response> => {
     console.log(`Found ${workflows?.length || 0} active workflows`);
 
     let emailsSent = 0;
-    let errors: string[] = [];
+    let leadsSegmented = 0;
+    const errors: string[] = [];
 
     // Process each workflow
     for (const workflow of (workflows || []) as AutomationWorkflow[]) {
@@ -194,7 +223,7 @@ serve(async (req: Request): Promise<Response> => {
             .update({ last_activity_at: new Date().toISOString() })
             .eq("id", lead.id);
 
-        } catch (sendError) {
+        } catch (sendError: any) {
           errors.push(`Failed to send to ${lead.email}: ${sendError.message}`);
         }
       }
@@ -203,7 +232,7 @@ serve(async (req: Request): Promise<Response> => {
     // Run behavioral segmentation
     console.log("Running behavioral segmentation...");
 
-    // Find leads who opened but didn't click (from email_opens but not in email_clicks)
+    // 1. Segment: Opened but didn't click
     const { data: openedNoClick } = await supabase
       .from("email_opens")
       .select(`
@@ -215,21 +244,16 @@ serve(async (req: Request): Promise<Response> => {
       .order("opened_at", { ascending: false })
       .limit(100);
 
-    // Get clicks to filter
     const { data: clicks } = await supabase
       .from("email_clicks")
       .select("send_id");
 
     const clickedSendIds = new Set(clicks?.map(c => c.send_id) || []);
-    
-    // Filter to only those who opened but didn't click
     const openedNotClicked = (openedNoClick || []).filter(o => !clickedSendIds.has(o.send_id));
 
-    // Upsert into lead_segments
     for (const record of openedNotClicked) {
       const email = (record.email_sends as any)?.recipient_email;
       if (email) {
-        // Check if already in a "better" segment (clicked or converted)
         const { data: existing } = await supabase
           .from("lead_segments")
           .select("segment_type")
@@ -244,23 +268,80 @@ serve(async (req: Request): Promise<Response> => {
               segment_type: "opened_no_click",
               last_activity_at: new Date().toISOString(),
             }, { onConflict: "email" });
+          leadsSegmented++;
         }
       }
     }
 
-    console.log(`Daily automation complete. Emails sent: ${emailsSent}`);
+    // 2. Segment: Clicked but didn't convert (snapshot_started but no signup)
+    const { data: landingVisits } = await supabase
+      .from("landing_page_conversions")
+      .select("*")
+      .eq("conversion_type", "snapshot_started")
+      .order("converted_at", { ascending: false })
+      .limit(100);
+
+    const { data: signups } = await supabase
+      .from("landing_page_conversions")
+      .select("visit_id")
+      .eq("conversion_type", "signup_started");
+
+    const signupVisitIds = new Set(signups?.map(s => s.visit_id) || []);
+    
+    for (const visit of (landingVisits || [])) {
+      if (!signupVisitIds.has(visit.visit_id)) {
+        // This visitor started snapshot but didn't sign up
+        // We'd need email from session, for now log it
+        console.log(`Visitor ${visit.visit_id} started snapshot but didn't sign up`);
+      }
+    }
+
+    // 3. Segment: Inactive users (no activity in 7 days)
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+    const { data: inactiveProfiles } = await supabase
+      .from("profiles")
+      .select("email, updated_at")
+      .lt("updated_at", sevenDaysAgo.toISOString())
+      .limit(50);
+
+    for (const profile of (inactiveProfiles || [])) {
+      if (profile.email) {
+        const { data: existing } = await supabase
+          .from("lead_segments")
+          .select("segment_type")
+          .eq("email", profile.email)
+          .single();
+
+        // Only mark as inactive if not in a more specific segment
+        if (!existing) {
+          await supabase
+            .from("lead_segments")
+            .upsert({
+              email: profile.email,
+              segment_type: "inactive",
+              last_activity_at: profile.updated_at,
+            }, { onConflict: "email" });
+          leadsSegmented++;
+        }
+      }
+    }
+
+    console.log(`Daily automation complete. Emails sent: ${emailsSent}, Leads segmented: ${leadsSegmented}`);
 
     return new Response(
       JSON.stringify({
         success: true,
         emailsSent,
+        leadsSegmented,
         workflowsProcessed: workflows?.length || 0,
         errors: errors.length > 0 ? errors : undefined,
       }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
 
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error in daily automation:", error);
     return new Response(
       JSON.stringify({ error: error.message }),
