@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, Headphones, Play, Download, BookOpen, Rss, ExternalLink, Search, X, Clock, RotateCcw } from "lucide-react";
+import { ArrowLeft, Headphones, Play, Download, BookOpen, Rss, ExternalLink, Search, X, Clock, RotateCcw, Mic } from "lucide-react";
 import { useEffect, useState, useMemo, useRef, useCallback } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -46,7 +46,9 @@ const Podcast = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Sacred Greeks Podcast RSS Feed
   const RSS_URL = "https://sacredgreeks.jellypod.ai/rss";
+  const WEBINAR_REGISTRATION_URL = "https://event.webinarjam.com/nkygr/register/97165cgr";
 
   // Fetch listening progress for signed-in users
   useEffect(() => {
@@ -615,6 +617,54 @@ const Podcast = () => {
                 <p className="text-sm text-muted-foreground">
                   <strong className="text-foreground">Tip:</strong> Combine the audio sessions with the written study guide for a complete learning experience. Listen to episodes first, then dive deeper with the written questions and reflections.
                 </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Sacred Greeks Podcast Registration CTA */}
+          <Card className="border-2 border-sacred/30 bg-gradient-to-br from-sacred/10 to-sacred/5">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Mic className="w-5 h-5 text-sacred" />
+                Join Our Live Podcast Sessions
+              </CardTitle>
+              <CardDescription>
+                Be part of the Sacred Greeks Podcast community
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-sm text-muted-foreground">
+                Want to be part of a live recording or ask questions directly? Register for our upcoming podcast sessions and join the conversation about faith and Greek life.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-3">
+                <a
+                  href={WEBINAR_REGISTRATION_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1"
+                >
+                  <Button className="w-full bg-sacred hover:bg-sacred/90 text-sacred-foreground gap-2">
+                    <ExternalLink className="w-4 h-4" />
+                    Register for Live Sessions
+                  </Button>
+                </a>
+              </div>
+              
+              <div className="bg-background/50 rounded-lg p-4 mt-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-full bg-sacred/20 flex items-center justify-center flex-shrink-0">
+                    <Mic className="w-4 h-4 text-sacred" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-sm">What to expect:</p>
+                    <ul className="text-sm text-muted-foreground mt-1 space-y-1">
+                      <li>• Live Q&A with Dr. Lyman Montgomery</li>
+                      <li>• Deep dives into faith and Greek life topics</li>
+                      <li>• Community discussion and shared experiences</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
