@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { TrendingUp, LogOut, FileText, User, BookOpen, FlaskConical, Calendar, Menu, Home, Heart, MessageSquare, GraduationCap } from 'lucide-react';
+import { LogOut, User, BookOpen, Calendar, Menu, Home, Heart, MessageSquare, TrendingUp } from 'lucide-react';
 
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useToast } from '@/hooks/use-toast';
@@ -24,13 +22,14 @@ import { useDemoMode } from '@/contexts/DemoModeContext';
 import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
 import { prefetchCommonRoutes } from '@/hooks/use-prefetch';
 import { useRealtimeNotifications } from '@/hooks/use-realtime-notifications';
-import { GuidedTour } from '@/components/GuidedTour';
 import { SkeletonDashboard } from '@/components/ui/SkeletonCard';
 import { DashboardTrainingProgress } from '@/components/training/DashboardTrainingProgress';
 import { DashboardAIAssistant } from '@/components/dashboard/DashboardAIAssistant';
 import { LearningJourneyTimeline } from '@/components/dashboard/LearningJourneyTimeline';
 import { LearningPathsMap } from '@/components/dashboard/LearningPathsMap';
 import { PathCompletionAchievements } from '@/components/dashboard/PathCompletionAchievements';
+import { StatsSection } from '@/components/dashboard/StatsSection';
+import { QuickLinksSection } from '@/components/dashboard/QuickLinksSection';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -355,95 +354,19 @@ const Dashboard = () => {
           {/* Featured Actions - The 3 Core Tools */}
           <FeaturedActions isLoading={loading} />
 
-          {/* Quick Stats */}
-          <div className="space-y-3">
-            {isDemoStats && (
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <span className="px-2 py-0.5 bg-amber-500/10 text-amber-600 rounded text-xs font-medium">Sample Data</span>
-                <span>Complete activities to see your real stats</span>
-              </div>
-            )}
-            <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
-              <Card className="border border-border bg-background">
-                <CardContent className="pt-6">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <TrendingUp className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold text-foreground">{stats.currentStreak}</p>
-                      <p className="text-sm text-muted-foreground">{isDemoStats ? "Sample streak" : "Day Streak"}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card className="border border-border bg-background">
-                <CardContent className="pt-6">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <FileText className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold text-foreground">{stats.assessmentCount}</p>
-                      <p className="text-sm text-muted-foreground">{isDemoStats ? "Sample count" : "Assessments"}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card className="border border-border bg-background">
-                <CardContent className="pt-6">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <BookOpen className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold text-foreground">{stats.devotionalCompleted ? '✓' : '○'}</p>
-                      <p className="text-sm text-muted-foreground">{isDemoStats ? "Sample status" : stats.devotionalCompleted ? 'Devotional Done' : 'Not Yet'}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+          {/* Stats Section */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.35s' }}>
+            <StatsSection stats={stats} isDemoStats={isDemoStats} />
           </div>
 
-          {/* Quick Links */}
-          <div className="grid gap-4 md:grid-cols-2">
-            <Link to="/journey">
-              <Card data-tour="journey" className="border border-border bg-background hover:border-primary/50 transition-all cursor-pointer h-full">
-                <CardContent className="pt-6">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-sacred to-warm-blue flex items-center justify-center">
-                      <Calendar className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground">30-Day Journey</h3>
-                      <p className="text-sm text-muted-foreground">Daily readings through P.R.O.O.F. framework</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-            <Link to="/progress">
-              <Card className="border border-border bg-background hover:border-primary/50 transition-all cursor-pointer h-full">
-                <CardContent className="pt-6">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
-                      <TrendingUp className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground">Track Your Growth</h3>
-                      <p className="text-sm text-muted-foreground">View charts and insights about your journey</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
+          {/* Quick Links Section */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
+            <QuickLinksSection />
           </div>
         </div>
       </main>
 
       {showOnboarding && <Onboarding open={showOnboarding} onComplete={completeOnboarding} />}
-      <GuidedTour />
     </div>
   );
 };
