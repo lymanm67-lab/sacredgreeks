@@ -584,7 +584,15 @@ const Auth = () => {
                 </Link>
 
                 {/* Create Your Account - Highlighted */}
-                <button onClick={() => setShowAuthForm('signup')} className="w-full">
+                <button 
+                  onClick={() => {
+                    setShowAuthForm('signup');
+                    setTimeout(() => {
+                      document.getElementById('auth-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
+                  }} 
+                  className="w-full"
+                >
                   <div className="flex items-center gap-4 p-4 bg-slate-700/50 hover:bg-slate-700 border border-teal-500/50 rounded-lg transition-colors group">
                     <div className="w-10 h-10 rounded-full bg-teal-500/20 flex items-center justify-center">
                       <Sparkles className="w-5 h-5 text-teal-400" />
@@ -598,7 +606,15 @@ const Auth = () => {
                 </button>
 
                 {/* Sign In */}
-                <button onClick={() => setShowAuthForm('signin')} className="w-full">
+                <button 
+                  onClick={() => {
+                    setShowAuthForm('signin');
+                    setTimeout(() => {
+                      document.getElementById('auth-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
+                  }} 
+                  className="w-full"
+                >
                   <div className="flex items-center gap-4 p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600 rounded-lg transition-colors group">
                     <div className="w-10 h-10 rounded-full bg-slate-600 flex items-center justify-center">
                       <User className="w-5 h-5 text-slate-300" />
