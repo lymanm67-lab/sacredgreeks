@@ -335,7 +335,7 @@ export default function LandingABTest() {
                     <div className="w-32 h-32 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-blue-500 flex items-center justify-center shadow-2xl shadow-purple-500/40">
                       <Video className="w-16 h-16 text-white" />
                     </div>
-                    <p className="mt-4 text-sky-300/60 text-sm text-center">Live on Zoom</p>
+                    <p className="mt-4 text-sky-300/60 text-sm text-center">Live on WebinarJam</p>
                   </div>
                 </div>
               </CardContent>
