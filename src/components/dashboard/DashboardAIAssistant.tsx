@@ -227,10 +227,12 @@ export const DashboardAIAssistant = () => {
   };
 
   return (
-    <Card className="relative overflow-hidden border-2 border-primary/20 bg-gradient-to-br from-primary/5 via-background to-primary/5">
-      {/* Animated background glow */}
-      <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-3xl" />
-      <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-primary/10 rounded-full blur-2xl" />
+    <Card className="relative overflow-hidden border-2 border-primary/20 bg-gradient-to-br from-primary/5 via-background to-primary/5 isolate">
+      {/* Animated background glow - clipped to card */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none [clip-path:inset(0_round_12px)]">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-2xl" />
+        <div className="absolute bottom-0 left-0 w-24 h-24 bg-primary/10 rounded-full blur-2xl" />
+      </div>
       
       <CardHeader className="relative pb-2">
         <div className="flex items-center justify-between">
