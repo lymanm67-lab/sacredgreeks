@@ -2288,6 +2288,48 @@ export type Database = {
         }
         Relationships: []
       }
+      webinar_registrations: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          greek_organization: string | null
+          how_heard: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+          user_id: string | null
+          webinar_id: string
+          webinar_title: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name: string
+          greek_organization?: string | null
+          how_heard?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+          user_id?: string | null
+          webinar_id: string
+          webinar_title: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          greek_organization?: string | null
+          how_heard?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+          user_id?: string | null
+          webinar_id?: string
+          webinar_title?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       assessment_submissions_safe: {
