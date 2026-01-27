@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Home, Eye, EyeOff, RefreshCw, AlertTriangle, BookOpen, Heart, Shield, Quote, Star, Users, ChevronRight, ChevronDown, ChevronUp, Sparkles, Play, User, Moon, Zap, Video, UserCheck, FileDown } from 'lucide-react';
+import { Home, Eye, EyeOff, RefreshCw, AlertTriangle, BookOpen, Heart, Shield, Quote, Star, Users, ChevronRight, ChevronDown, ChevronUp, Sparkles, Play, User, Moon, Zap, Video, UserCheck, FileDown, Headphones } from 'lucide-react';
 import logo from '@/assets/sacred-greeks-logo.png';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -70,6 +70,19 @@ const FEATURED_TOOLS = [
 
 const SECONDARY_TOOLS = [
   {
+    icon: Headphones,
+    title: "Sacred Greeks Podcast",
+    subtitle: "Listen & Learn On The Go",
+    description: "Stream audio study sessions, teachings, and discussions perfect for commutes and workouts.",
+    tags: ["Audio Episodes", "RSS Feed", "Live Sessions"],
+    link: "/podcast",
+    bgColor: "bg-purple-500/20",
+    hoverBgColor: "bg-purple-500/30",
+    iconColor: "text-purple-400",
+    borderColor: "border-purple-500/70",
+    topBorderColor: "bg-purple-500"
+  },
+  {
     icon: BookOpen,
     title: "Greek Life Bible Study",
     subtitle: "Faith Foundations for Greeks",
@@ -102,11 +115,11 @@ const SECONDARY_TOOLS = [
     description: "Connect with pastors and ministry leaders who understand the unique challenges of Greek life.",
     tags: ["Expert Insights", "Ministry Resources", "Leadership Tips"],
     link: "/church-leaders",
-    bgColor: "bg-purple-500/20",
-    hoverBgColor: "bg-purple-500/30",
-    iconColor: "text-purple-400",
-    borderColor: "border-purple-500/70",
-    topBorderColor: "bg-purple-500"
+    bgColor: "bg-teal-500/20",
+    hoverBgColor: "bg-teal-500/30",
+    iconColor: "text-teal-400",
+    borderColor: "border-teal-500/70",
+    topBorderColor: "bg-teal-500"
   }
 ];
 
