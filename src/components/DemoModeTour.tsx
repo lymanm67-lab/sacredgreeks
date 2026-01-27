@@ -80,9 +80,19 @@ const TOUR_STEPS: TourStep[] = [
 export function DemoModeTour() {
   const { isDemoMode, hasSeenTour, setHasSeenTour } = useDemoMode();
   const [currentStep, setCurrentStep] = useState(0);
-  const [isOpen, setIsOpen] = useState(!hasSeenTour && isDemoMode);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Sync isOpen with hasSeenTour - when hasSeenTour becomes false, open the tour
+  useEffect(() => {
+    if (isDemoMode && !hasSeenTour) {
+      setIsOpen(true);
+      setCurrentStep(0); // Reset to first step when reopening
+    } else {
+      setIsOpen(false);
+    }
+  }, [isDemoMode, hasSeenTour]);
 
   const currentTourStep = TOUR_STEPS[currentStep];
   const isOnDashboard = location.pathname === '/dashboard';
