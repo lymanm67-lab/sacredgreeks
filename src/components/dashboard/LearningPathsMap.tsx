@@ -15,11 +15,13 @@ import {
   ArrowRight,
   Sparkles,
   Map,
-  Award
+  Award,
+  ChevronDown
 } from 'lucide-react';
 import { useNavigationProgress } from '@/hooks/use-navigation-progress';
 import { cn } from '@/lib/utils';
 import { MasterCertificateDialog } from './MasterCertificateDialog';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 interface LearningPath {
   id: string;
@@ -93,6 +95,7 @@ const learningPaths: LearningPath[] = [
 export function LearningPathsMap() {
   const { progressData, isLoading } = useNavigationProgress();
   const [showCertificate, setShowCertificate] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const getCompletedCount = (path: LearningPath): number => {
     if (!progressData) return 0;
@@ -110,27 +113,35 @@ export function LearningPathsMap() {
     : 0;
 
   return (
-    <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-accent/5 overflow-hidden">
-      <CardHeader className="pb-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-lg shadow-primary/20">
-              <Map className="w-5 h-5 text-primary-foreground" />
+    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+      <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-accent/5 overflow-hidden">
+        <CollapsibleTrigger className="w-full text-left">
+          <CardHeader className="pb-4 cursor-pointer">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-lg shadow-primary/20">
+                  <Map className="w-5 h-5 text-primary-foreground" />
+                </div>
+                <div>
+                  <CardTitle className="text-lg">Learning Paths</CardTitle>
+                  <p className="text-sm text-muted-foreground">Your journey through Sacred Greeks</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
+                  {totalProgress}% Complete
+                </Badge>
+                <ChevronDown className={cn(
+                  "h-5 w-5 text-muted-foreground transition-transform duration-200",
+                  isOpen ? "rotate-0" : "-rotate-90"
+                )} />
+              </div>
             </div>
-            <div>
-              <CardTitle className="text-lg">Learning Paths</CardTitle>
-              <p className="text-sm text-muted-foreground">Your journey through Sacred Greeks</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">
-              {totalProgress}% Complete
-            </Badge>
-          </div>
-        </div>
-      </CardHeader>
+          </CardHeader>
+        </CollapsibleTrigger>
 
-      <CardContent className="space-y-4">
+        <CollapsibleContent>
+          <CardContent className="space-y-4">
         {/* Progress Path Visualization */}
         <div className="relative">
           {/* Connection Lines */}
@@ -276,13 +287,15 @@ export function LearningPathsMap() {
             </Button>
           </motion.div>
         )}
-      </CardContent>
+        </CardContent>
+        </CollapsibleContent>
 
-      <MasterCertificateDialog
-        open={showCertificate}
-        onOpenChange={setShowCertificate}
-        completedPaths={learningPaths.map(p => p.title)}
-      />
-    </Card>
+        <MasterCertificateDialog
+          open={showCertificate}
+          onOpenChange={setShowCertificate}
+          completedPaths={learningPaths.map(p => p.title)}
+        />
+      </Card>
+    </Collapsible>
   );
 }
