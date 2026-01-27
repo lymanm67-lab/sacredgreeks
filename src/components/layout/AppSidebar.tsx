@@ -83,21 +83,29 @@ const communityNavItems = [
   { title: "Group Coaching", url: "/community", icon: GraduationCap, featureId: null, iconColor: "text-orange-500", hasProgress: false },
 ];
 
-// Tools & Resources section - organized logically
-const toolsNavItems = [
-  // About Dr. Lyman group
+// About Dr. Lyman section
+const aboutDrLymanItems = [
   { title: "About Creator", url: "/about-creator", icon: User, featureId: null, iconColor: "text-sacred", hasProgress: false },
   { title: "Order Book", url: "/order-book", icon: ShoppingBag, featureId: null, iconColor: "text-amber-500", hasProgress: false },
   { title: "Book Dr. Lyman", url: "/speaking-request", icon: Calendar, featureId: null, iconColor: "text-fuchsia-500", hasProgress: false },
-  // Podcast group
+];
+
+// Podcast section
+const podcastItems = [
   { title: "Podcast", url: "/podcast", icon: Headphones, featureId: null, iconColor: "text-purple-500", hasProgress: false },
   { title: "Be on Podcast", url: "/guest-panelist-application", icon: Mic, featureId: null, iconColor: "text-purple-500", hasProgress: false },
-  // Resources group
+];
+
+// Resources section
+const resourcesItems = [
   { title: "Symbol Guide", url: "/symbol-guide", icon: Compass, featureId: null, iconColor: "text-teal-500", hasProgress: false },
   { title: "Video Library", url: "/video-library", icon: Video, featureId: null, iconColor: "text-sky-500", hasProgress: false },
   { title: "Anti-Hazing", url: "/anti-hazing", icon: ShieldAlert, featureId: null, iconColor: "text-red-500", hasProgress: false },
   { title: "Church Leaders", url: "/church-leaders", icon: Church, featureId: null, iconColor: "text-lime-500", hasProgress: false },
-  // System group
+];
+
+// System section
+const systemItems = [
   { title: "Achievements", url: "/achievements", icon: Trophy, featureId: 'achievements', iconColor: "text-amber-400", hasProgress: false },
   { title: "Notifications", url: "/notification-preferences", icon: Bell, featureId: null, iconColor: "text-fuchsia-500", hasProgress: false },
   { title: "Settings", url: "/profile", icon: Settings, featureId: null, iconColor: "text-slate-500", hasProgress: false },
@@ -126,7 +134,10 @@ export function AppSidebar() {
   const filteredLearningPath = filterNavItems(learningPathItems);
   const filteredSpiritualPractices = filterNavItems(spiritualPracticesItems);
   const filteredCommunityNav = filterNavItems(communityNavItems);
-  const filteredToolsNav = filterNavItems(toolsNavItems);
+  const filteredAboutDrLyman = filterNavItems(aboutDrLymanItems);
+  const filteredPodcast = filterNavItems(podcastItems);
+  const filteredResources = filterNavItems(resourcesItems);
+  const filteredSystem = filterNavItems(systemItems);
 
   const getInitials = () => {
     if (profile?.full_name) {
@@ -269,13 +280,55 @@ export function AppSidebar() {
           </SidebarGroup>
         )}
 
-        {/* Tools & Resources Section */}
-        {filteredToolsNav.length > 0 && (
+        {/* About Dr. Lyman Section */}
+        {filteredAboutDrLyman.length > 0 && (
           <SidebarGroup>
-            <SidebarGroupLabel>Tools & Resources</SidebarGroupLabel>
+            <SidebarGroupLabel>About Dr. Lyman</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {filteredToolsNav.map((item) => (
+                {filteredAboutDrLyman.map((item) => (
+                  <NavItem key={item.url} item={item} />
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
+
+        {/* Podcast Section */}
+        {filteredPodcast.length > 0 && (
+          <SidebarGroup>
+            <SidebarGroupLabel>Podcast</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {filteredPodcast.map((item) => (
+                  <NavItem key={item.url} item={item} />
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
+
+        {/* Resources Section */}
+        {filteredResources.length > 0 && (
+          <SidebarGroup>
+            <SidebarGroupLabel>Resources</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {filteredResources.map((item) => (
+                  <NavItem key={item.url} item={item} />
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
+
+        {/* System Section */}
+        {filteredSystem.length > 0 && (
+          <SidebarGroup>
+            <SidebarGroupLabel>System</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {filteredSystem.map((item) => (
                   <NavItem key={item.url} item={item} />
                 ))}
               </SidebarMenu>
