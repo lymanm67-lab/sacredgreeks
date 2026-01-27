@@ -21,7 +21,8 @@ import {
   Sparkles,
   Mail,
   User,
-  Phone
+  Phone,
+  Mic2
 } from "lucide-react";
 
 // Webinar data
@@ -177,6 +178,12 @@ export default function WebinarRegister() {
                 <Button className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600">
                   <Sparkles className="w-4 h-4 mr-2" />
                   Take Your Faith Snapshot While You Wait
+                </Button>
+              </Link>
+              <Link to="/guest-panelist-application">
+                <Button variant="outline" className="w-full border-amber-500/40 text-amber-300 hover:bg-amber-500/10 hover:text-amber-200">
+                  <Mic2 className="w-4 h-4 mr-2" />
+                  Apply to Be a Guest Panelist
                 </Button>
               </Link>
               <Link to="/land">
