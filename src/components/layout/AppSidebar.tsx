@@ -25,6 +25,7 @@ import {
   ChevronDown,
   User,
   ShoppingBag,
+  Mic,
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -86,6 +87,8 @@ const communityNavItems = [
 const toolsNavItems = [
   { title: "About Creator", url: "/about-creator", icon: User, featureId: null, iconColor: "text-sacred", hasProgress: false },
   { title: "Order Book", url: "/order-book", icon: ShoppingBag, featureId: null, iconColor: "text-amber-500", hasProgress: false },
+  { title: "Be on Podcast", url: "/guest-panelist-application", icon: Mic, featureId: null, iconColor: "text-purple-500", hasProgress: false },
+  { title: "Speak at Event", url: "/guest-panelist-application", icon: Calendar, featureId: null, iconColor: "text-fuchsia-500", hasProgress: false },
   { title: "Anti-Hazing", url: "/anti-hazing", icon: ShieldAlert, featureId: null, iconColor: "text-red-500", hasProgress: false },
   { title: "Symbol Guide", url: "/symbol-guide", icon: Compass, featureId: null, iconColor: "text-teal-500", hasProgress: false },
   { title: "Video Library", url: "/video-library", icon: Video, featureId: null, iconColor: "text-sky-500", hasProgress: false },
