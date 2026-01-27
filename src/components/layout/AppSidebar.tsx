@@ -26,6 +26,9 @@ import {
   User,
   ShoppingBag,
   Mic,
+  Sparkles,
+  Drama,
+  History,
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -62,10 +65,17 @@ import {
 // Learning Path section - items with progress tracking
 const learningPathItems = [
   { title: "PROOF Course", url: "/proof-course", icon: Target, featureId: null, iconColor: "text-amber-500", hasProgress: true },
-  { title: "PROOF Quiz", url: "/proof-assessment", icon: ClipboardCheck, featureId: null, iconColor: "text-emerald-500", hasProgress: true },
   { title: "Greek Life & Guild", url: "/greek-life-training", icon: Building2, featureId: null, iconColor: "text-violet-500", hasProgress: true },
   { title: "Myth Busters", url: "/myth-buster", icon: Zap, featureId: null, iconColor: "text-yellow-500", hasProgress: true },
   { title: "Faith & Authority", url: "/faith-authority", icon: BookOpen, featureId: null, iconColor: "text-amber-500", hasProgress: true },
+];
+
+// Assessments section - easy access to all quizzes and assessments for earning points
+const assessmentItems = [
+  { title: "Faith Snapshot", url: "/snapshot", icon: Sparkles, featureId: null, iconColor: "text-blue-500", hasProgress: false, points: "+20 pts" },
+  { title: "PROOF Quiz", url: "/proof-assessment", icon: ClipboardCheck, featureId: null, iconColor: "text-emerald-500", hasProgress: false, points: "+20 pts" },
+  { title: "Shattered Masks", url: "/shattered-masks", icon: Drama, featureId: null, iconColor: "text-purple-500", hasProgress: false, points: "+25 pts" },
+  { title: "Assessment History", url: "/assessment-history", icon: History, featureId: null, iconColor: "text-slate-500", hasProgress: false },
 ];
 
 // Spiritual Practices section - items with progress tracking
@@ -132,6 +142,7 @@ export function AppSidebar() {
   };
 
   const filteredLearningPath = filterNavItems(learningPathItems);
+  const filteredAssessments = filterNavItems(assessmentItems);
   const filteredSpiritualPractices = filterNavItems(spiritualPracticesItems);
   const filteredCommunityNav = filterNavItems(communityNavItems);
   const filteredAboutDrLyman = filterNavItems(aboutDrLymanItems);
@@ -240,16 +251,33 @@ export function AppSidebar() {
               <CollapsibleContent>
                 <SidebarGroupContent className="pt-2">
                   <SidebarMenu>
-                    {filteredLearningPath.map((item, index) => (
-                      <div key={item.url} className={item.url === '/proof-assessment' ? '!mb-2' : ''}>
-                        <NavItem item={item} showProgress />
-                      </div>
+                    {filteredLearningPath.map((item) => (
+                      <NavItem key={item.url} item={item} showProgress />
                     ))}
                   </SidebarMenu>
                 </SidebarGroupContent>
               </CollapsibleContent>
             </SidebarGroup>
           </Collapsible>
+        )}
+
+        {/* Assessments Section - Earn Points */}
+        {filteredAssessments.length > 0 && (
+          <SidebarGroup>
+            <SidebarGroupLabel className="flex items-center gap-2">
+              <span>Assessments</span>
+              <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 bg-primary/10 text-primary">
+                Earn Points
+              </Badge>
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {filteredAssessments.map((item) => (
+                  <NavItem key={item.url} item={item} />
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
         )}
 
         {/* Spiritual Practices Section */}
