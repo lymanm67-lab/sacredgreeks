@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDemoMode } from "@/contexts/DemoModeContext";
 import { useLandingABTest } from "@/hooks/use-landing-ab-test";
@@ -22,7 +22,9 @@ import {
   Heart,
   Video,
   CalendarDays,
-  Play
+  Play,
+  ExternalLink,
+  Flame
 } from "lucide-react";
 
 // Pain points that address survey anxiety and criticisms
@@ -55,29 +57,30 @@ const testimonial = {
   avatar: "✨"
 };
 
-// Upcoming webinars for lead generation
-const upcomingWebinars = [
-  {
-    id: "renounce-retreat-redeem",
-    title: "Should I Renounce, Retreat, or Redeem My Greek Letter Organization?",
-    date: "February 17 • 7 PM EST",
-    description: "Explore the biblical framework for making this critical decision about your Greek membership.",
-    spots: "Register Now",
-    externalUrl: "https://event.webinarjam.com/nkygr/register/97165cgr"
-  },
+// Featured webinar (hero spotlight)
+const featuredWebinar = {
+  id: "renounce-retreat-redeem",
+  title: "Should I Renounce, Retreat, or Redeem My Greek Letter Organization?",
+  date: "February 17, 2026",
+  time: "7:00 PM EST",
+  description: "Explore the biblical framework for making this critical decision about your Greek membership.",
+  longDescription: "Many Christians struggle with this pivotal question. Join us for a powerful session where we'll explore Scripture, share testimonies, and provide a clear framework for discerning God's will for your Greek involvement.",
+  externalUrl: "https://event.webinarjam.com/nkygr/register/97165cgr"
+};
+
+// Secondary webinars
+const secondaryWebinars = [
   {
     id: "faith-and-frat",
-    title: "Faith & Frat: Biblical Clarity on Greek Life",
+    title: "Faith & Frat: Biblical Clarity",
     date: "Every Tuesday, 7 PM EST",
-    description: "Live Q&A with campus ministers and Greek alumni on navigating faith in fraternity/sorority life.",
-    spots: "Limited Spots"
+    description: "Weekly live Q&A with campus ministers and Greek alumni."
   },
   {
     id: "handling-hard-questions",
     title: "Handling the Hard Questions",
     date: "February 8, 2026 • 8 PM EST",
-    description: "How to respond when family, church, or friends challenge your Greek membership.",
-    spots: "Free to Join"
+    description: "How to respond when family or church challenges your membership."
   }
 ];
 
@@ -275,63 +278,98 @@ export default function LandingABTest() {
           </div>
         </section>
 
-        {/* Webinar Lead Generation Section */}
-        <section className="py-16 px-4 bg-gradient-to-b from-transparent via-indigo-900/10 to-transparent">
+        {/* Featured Webinar Hero Section */}
+        <section className="py-16 px-4 bg-gradient-to-b from-transparent via-indigo-900/15 to-transparent">
           <div className="container mx-auto max-w-4xl">
-            <div className="text-center mb-10">
-              <Badge className="mb-4 bg-gradient-to-r from-purple-500/20 to-blue-500/20 text-purple-300 border-purple-500/30">
-                <Video className="w-3 h-3 mr-1" />
-                Free Live Webinars
-              </Badge>
-              <h2 className="text-3xl font-bold mb-3">
-                <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
-                  Learn From Greeks Who've Been There
-                </span>
-              </h2>
-              <p className="text-sky-200/80 max-w-2xl mx-auto">
-                Join our live sessions with campus ministers, Greek alumni, and faith leaders who understand both worlds.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              {upcomingWebinars.map((webinar, index) => (
-                <Card 
-                  key={index}
-                  className="bg-slate-900/60 border border-purple-500/20 hover:border-blue-500/40 transition-all duration-300 hover:scale-[1.02] group overflow-hidden"
-                >
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                        <Play className="w-6 h-6 text-white" />
-                      </div>
-                      <Badge className="bg-green-500/20 text-green-300 border-green-500/30 text-xs">
-                        {webinar.spots}
+            {/* Featured Webinar Card */}
+            <Card className="relative overflow-hidden bg-gradient-to-br from-slate-900/90 via-indigo-950/50 to-slate-900/90 border-2 border-indigo-500/40 shadow-2xl shadow-indigo-500/20">
+              {/* Animated glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-blue-500/10 animate-pulse" />
+              
+              <CardContent className="relative p-8 md:p-10">
+                <div className="flex flex-col md:flex-row gap-8 items-start">
+                  {/* Left: Content */}
+                  <div className="flex-1 space-y-6">
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <Badge className="bg-gradient-to-r from-orange-500/20 to-red-500/20 text-orange-300 border-orange-500/40 animate-pulse">
+                        <Flame className="w-3 h-3 mr-1" />
+                        Featured Event
+                      </Badge>
+                      <Badge className="bg-green-500/20 text-green-300 border-green-500/30">
+                        Free to Join
                       </Badge>
                     </div>
-                    <h3 className="font-semibold text-white text-lg mb-2">{webinar.title}</h3>
-                    <div className="flex items-center gap-2 text-blue-300 text-sm mb-3">
-                      <CalendarDays className="w-4 h-4" />
-                      {webinar.date}
+
+                    <div>
+                      <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 leading-tight">
+                        {featuredWebinar.title}
+                      </h2>
+                      <p className="text-sky-200/80 text-base md:text-lg">
+                        {featuredWebinar.longDescription}
+                      </p>
                     </div>
-                    <p className="text-sky-200/70 text-sm mb-4">{webinar.description}</p>
+
+                    <div className="flex flex-wrap gap-4 text-sm">
+                      <div className="flex items-center gap-2 text-blue-300 bg-blue-500/10 px-3 py-1.5 rounded-full">
+                        <CalendarDays className="w-4 h-4" />
+                        {featuredWebinar.date}
+                      </div>
+                      <div className="flex items-center gap-2 text-purple-300 bg-purple-500/10 px-3 py-1.5 rounded-full">
+                        <Clock className="w-4 h-4" />
+                        {featuredWebinar.time}
+                      </div>
+                    </div>
+
                     <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={() => {
-                        if (webinar.externalUrl) {
-                          window.open(webinar.externalUrl, '_blank', 'noopener,noreferrer');
-                        } else {
-                          navigate(`/webinar/${webinar.id}`);
-                        }
-                      }}
-                      className="w-full border-purple-500/30 text-purple-300 hover:bg-purple-500/20 hover:text-white transition-all"
+                      size="lg"
+                      onClick={() => window.open(featuredWebinar.externalUrl, '_blank', 'noopener,noreferrer')}
+                      className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold px-8 py-6 text-lg shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 transition-all"
                     >
-                      Reserve Your Spot
-                      <ArrowRight className="w-4 h-4 ml-2" />
+                      Register Now — It's Free
+                      <ExternalLink className="w-5 h-5 ml-2" />
                     </Button>
-                  </CardContent>
-                </Card>
-              ))}
+                  </div>
+
+                  {/* Right: Visual */}
+                  <div className="hidden md:flex flex-col items-center justify-center">
+                    <div className="w-32 h-32 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-blue-500 flex items-center justify-center shadow-2xl shadow-purple-500/40">
+                      <Video className="w-16 h-16 text-white" />
+                    </div>
+                    <p className="mt-4 text-sky-300/60 text-sm text-center">Live on Zoom</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Secondary Webinars */}
+            <div className="mt-10">
+              <h3 className="text-lg font-semibold text-sky-200 mb-4 text-center">More Upcoming Sessions</h3>
+              <div className="grid md:grid-cols-2 gap-4">
+                {secondaryWebinars.map((webinar, index) => (
+                  <Card 
+                    key={index}
+                    className="bg-slate-900/50 border border-blue-500/20 hover:border-blue-500/40 transition-all duration-300 group"
+                  >
+                    <CardContent className="p-5 flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-indigo-500/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                        <Play className="w-5 h-5 text-blue-400" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-medium text-white text-sm truncate">{webinar.title}</h4>
+                        <p className="text-sky-300/60 text-xs">{webinar.date}</p>
+                      </div>
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => navigate(`/webinar/${webinar.id}`)}
+                        className="text-blue-400 hover:text-white hover:bg-blue-500/20 flex-shrink-0"
+                      >
+                        <ArrowRight className="w-4 h-4" />
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
             </div>
 
             <p className="text-center mt-8 text-sky-300/60 text-sm">
