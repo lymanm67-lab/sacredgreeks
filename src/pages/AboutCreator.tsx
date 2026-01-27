@@ -165,9 +165,9 @@ const AboutCreator = () => {
                     <Calendar className="h-6 w-6 text-white" />
                   </div>
                   <div className="flex-1 space-y-2">
-                    <h3 className="font-semibold text-white">Speak at Next Event</h3>
+                    <h3 className="font-semibold text-white">Have Dr. Lyman Speak</h3>
                     <p className="text-sm text-sky-200">
-                      Request to speak at our next training event
+                      Invite Dr. Montgomery to your next event
                     </p>
                     <Button variant="outline" size="sm" asChild className="border-sky-400 text-sky-300 hover:bg-sky-500/20">
                       <Link to="/guest-panelist-application">
