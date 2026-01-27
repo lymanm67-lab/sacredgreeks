@@ -58,6 +58,14 @@ const testimonial = {
 // Upcoming webinars for lead generation
 const upcomingWebinars = [
   {
+    id: "renounce-retreat-redeem",
+    title: "Should I Renounce, Retreat, or Redeem My Greek Letter Organization?",
+    date: "February 17 • 7 PM EST",
+    description: "Explore the biblical framework for making this critical decision about your Greek membership.",
+    spots: "Register Now",
+    externalUrl: "https://event.webinarjam.com/nkygr/register/97165cgr"
+  },
+  {
     id: "faith-and-frat",
     title: "Faith & Frat: Biblical Clarity on Greek Life",
     date: "Every Tuesday, 7 PM EST",
@@ -309,7 +317,13 @@ export default function LandingABTest() {
                     <Button 
                       variant="outline" 
                       size="sm"
-                      onClick={() => navigate(`/webinar/${webinar.id}`)}
+                      onClick={() => {
+                        if (webinar.externalUrl) {
+                          window.open(webinar.externalUrl, '_blank', 'noopener,noreferrer');
+                        } else {
+                          navigate(`/webinar/${webinar.id}`);
+                        }
+                      }}
                       className="w-full border-purple-500/30 text-purple-300 hover:bg-purple-500/20 hover:text-white transition-all"
                     >
                       Reserve Your Spot
