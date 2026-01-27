@@ -174,7 +174,7 @@ const Auth = () => {
   const [showMoreTools, setShowMoreTools] = useState(false);
   const [showAuthForm, setShowAuthForm] = useState<'signin' | 'signup' | null>(null);
   const { signUp, signIn } = useAuth();
-  const { isDemoMode } = useDemoMode();
+  const { isDemoMode, setDemoMode } = useDemoMode();
   const navigate = useNavigate();
   const { toast } = useToast();
   const { checkPassword, isChecking: isCheckingBreach, breachCount, reset: resetBreachCheck } = usePasswordBreachCheck();
@@ -580,7 +580,13 @@ const Auth = () => {
               {/* Action Buttons as Cards */}
               <div className="space-y-3 pt-4">
                 {/* Try Demo First */}
-                <Link to="/demo" className="block">
+                <button 
+                  onClick={() => {
+                    setDemoMode(true);
+                    navigate('/dashboard');
+                  }}
+                  className="w-full"
+                >
                   <div className="flex items-center gap-4 p-4 bg-slate-700/50 hover:bg-slate-700 border border-slate-600 rounded-lg transition-colors group">
                     <div className="w-10 h-10 rounded-full bg-slate-600 flex items-center justify-center">
                       <Play className="w-5 h-5 text-slate-300" />
@@ -591,7 +597,7 @@ const Auth = () => {
                     </div>
                     <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-slate-300 transition-colors" />
                   </div>
-                </Link>
+                </button>
 
                 {/* Create Your Account - Highlighted */}
                 <button 
