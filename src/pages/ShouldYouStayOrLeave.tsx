@@ -40,6 +40,7 @@ import {
   VolumeX,
   Download,
   FileText,
+  Loader2,
 } from "lucide-react";
 import { useStudyProgress } from "@/hooks/use-study-progress";
 import { useGamification } from "@/hooks/use-gamification";
@@ -277,10 +278,31 @@ const MODULES = [
   },
 ];
 
+// Helper function to get module TTS content
+const getModuleTTSContent = (moduleId: string): string => {
+  switch (moduleId) {
+    case "caseStudy":
+      return `The Case Study: ${CASE_STUDY_SCENARIO.title}. ${CASE_STUDY_SCENARIO.scenario}`;
+    case "reveal":
+      return `The Reveal: ${REVEAL_CONTENT.title}. ${REVEAL_CONTENT.explanation}. ${REVEAL_CONTENT.keyPoints.map(p => `${p.title}: ${p.content}`).join(". ")}`;
+    case "contextMatters":
+      return `${CONTEXT_MATTERS_CONTENT.title}. ${CONTEXT_MATTERS_CONTENT.mainPoint}. ${CONTEXT_MATTERS_CONTENT.sections.map(s => `${s.title}: ${s.content}`).join(". ")}`;
+    case "ritualAsLearning":
+      return `${RITUAL_AS_LEARNING_CONTENT.title}. ${RITUAL_AS_LEARNING_CONTENT.introduction}. ${RITUAL_AS_LEARNING_CONTENT.points.map(p => `${p.title}: ${p.content}`).join(". ")}. ${RITUAL_AS_LEARNING_CONTENT.conclusion}`;
+    case "application":
+      return `${APPLICATION_CONTENT.title}. ${APPLICATION_CONTENT.questions.map(q => `${q.question} ${q.answers.join(". ")}`).join(". ")}. ${APPLICATION_CONTENT.finalThought}`;
+    case "conclusion":
+      return `${CONCLUSION_CONTENT.title}. ${CONCLUSION_CONTENT.keyTakeaways.map(t => `${t.title}: ${t.content}`).join(". ")}. ${CONCLUSION_CONTENT.callToAction}`;
+    default:
+      return "";
+  }
+};
+
 export default function ShouldYouStayOrLeave() {
   const { isSessionComplete, toggleSession, progress: studyProgress, isAuthenticated } = useStudyProgress();
   const { awardPoints } = useGamification();
-  const { speak, stop, isPlaying } = useTTS();
+  const { speak, stop, isPlaying, isLoading } = useTTS();
+  const [playingModuleId, setPlayingModuleId] = useState<string | null>(null);
   const [activeModule, setActiveModule] = useState<string | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [hasRevealed, setHasRevealed] = useState(false);
@@ -301,8 +323,22 @@ export default function ShouldYouStayOrLeave() {
   const handlePlayInstructions = () => {
     if (isPlaying) {
       stop();
+      setPlayingModuleId(null);
     } else {
+      setPlayingModuleId("instructions");
       speak(COURSE_INSTRUCTIONS);
+    }
+  };
+
+  const handlePlayModuleTTS = (e: React.MouseEvent, moduleId: string) => {
+    e.stopPropagation(); // Prevent card click
+    if (isPlaying && playingModuleId === moduleId) {
+      stop();
+      setPlayingModuleId(null);
+    } else {
+      setPlayingModuleId(moduleId);
+      const content = getModuleTTSContent(moduleId);
+      speak(content);
     }
   };
 
@@ -857,13 +893,36 @@ export default function ShouldYouStayOrLeave() {
                             <div className={cn("p-3 rounded-lg", module.bgColor)}>
                               <Icon className="w-6 h-6" />
                             </div>
-                            {isComplete ? (
-                              <CheckCircle2 className="w-6 h-6 text-green-500" />
-                            ) : isLocked ? (
-                              <Lock className="w-6 h-6 text-muted-foreground" />
-                            ) : (
-                              <ChevronRight className="w-6 h-6 text-muted-foreground" />
-                            )}
+                            <div className="flex items-center gap-2">
+                              {/* TTS Button */}
+                              <button
+                                onClick={(e) => handlePlayModuleTTS(e, module.id)}
+                                disabled={isLocked || (isLoading && playingModuleId === module.id)}
+                                className={cn(
+                                  "p-2 rounded-full transition-all",
+                                  isPlaying && playingModuleId === module.id
+                                    ? "bg-amber-500/20 text-amber-500"
+                                    : "text-muted-foreground hover:text-foreground hover:bg-muted",
+                                  isLocked && "opacity-50 cursor-not-allowed"
+                                )}
+                                title={isPlaying && playingModuleId === module.id ? "Stop audio" : "Listen to module"}
+                              >
+                                {isLoading && playingModuleId === module.id ? (
+                                  <Loader2 className="w-5 h-5 animate-spin" />
+                                ) : isPlaying && playingModuleId === module.id ? (
+                                  <VolumeX className="w-5 h-5" />
+                                ) : (
+                                  <Volume2 className="w-5 h-5" />
+                                )}
+                              </button>
+                              {isComplete ? (
+                                <CheckCircle2 className="w-6 h-6 text-green-500" />
+                              ) : isLocked ? (
+                                <Lock className="w-6 h-6 text-muted-foreground" />
+                              ) : (
+                                <ChevronRight className="w-6 h-6 text-muted-foreground" />
+                              )}
+                            </div>
                           </div>
                           <CardTitle className="text-lg">{module.title}</CardTitle>
                           <CardDescription>{module.description}</CardDescription>
