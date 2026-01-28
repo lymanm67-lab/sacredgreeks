@@ -21,9 +21,11 @@ import {
 } from "lucide-react";
 import { useNavigationProgress } from "@/hooks/use-navigation-progress";
 import { useStudyProgress } from "@/hooks/use-study-progress";
+import { useGamification } from "@/hooks/use-gamification";
 import { BELIEF_SCRIPTURES } from "@/lib/proofFrameworkData";
 import { ListenButton } from "@/components/ListenButton";
 import { useLessonCelebration } from "@/hooks/use-lesson-celebration";
+import { toast } from "sonner";
 
 // Session IDs 16-21 are for Faith & Authority
 const FAITH_SESSION_IDS = {
@@ -337,7 +339,9 @@ const getColorForModule = (id: string) => {
 export default function FaithAuthority() {
   const { progressData } = useNavigationProgress();
   const { isSessionComplete, toggleSession, progress: studyProgress, isAuthenticated } = useStudyProgress();
+  const { awardPoints } = useGamification();
   const [activeModule, setActiveModule] = useState<string | null>(null);
+  const [pointsAwarded, setPointsAwarded] = useState(false);
   
   // Get completed modules
   const completedModules = studyProgress
@@ -352,7 +356,7 @@ export default function FaithAuthority() {
   const { triggerLessonComplete, triggerMilestone } = useLessonCelebration();
   const previousCompletedRef = useRef<number[]>([]);
 
-  // Track module completions for celebrations
+  // Track module completions for celebrations and award points
   useEffect(() => {
     const prevCompleted = previousCompletedRef.current;
     const newlyCompleted = completedModules.filter(id => !prevCompleted.includes(id));
@@ -367,14 +371,18 @@ export default function FaithAuthority() {
           setTimeout(() => triggerMilestone('first'), 2500);
         } else if (completedModules.length === 3) {
           setTimeout(() => triggerMilestone('halfway'), 2500);
-        } else if (completedModules.length === 6) {
+        } else if (completedModules.length === 6 && !pointsAwarded) {
+          // Award 70 points for completing all modules
+          awardPoints({ points: 70, actionType: 'faith_authority_completion' });
+          setPointsAwarded(true);
+          toast.success("🏆 Faith & Authority Complete! +70 points earned!");
           setTimeout(() => triggerMilestone('complete'), 2500);
         }
       }
     }
     
     previousCompletedRef.current = [...completedModules];
-  }, [completedModules, triggerLessonComplete, triggerMilestone]);
+  }, [completedModules, triggerLessonComplete, triggerMilestone, awardPoints, pointsAwarded]);
 
   const startModule = (moduleId: string) => {
     setActiveModule(moduleId);
@@ -457,7 +465,7 @@ export default function FaithAuthority() {
               <span className="text-amber-600 dark:text-amber-400 ml-2 font-medium">Mark 6:5-6 • Hebrews 11:6 • 1 Corinthians 8</span>
             </div>
             <div className="px-4 py-2 rounded-lg bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30">
-              <span className="text-amber-600 dark:text-amber-400 font-semibold">🏆 Earn 50 Points</span>
+              <span className="text-amber-600 dark:text-amber-400 font-semibold">🏆 Earn 70 Points</span>
               <span className="text-muted-foreground ml-2">upon completion</span>
             </div>
           </div>
