@@ -795,7 +795,7 @@ export default function ShouldYouStayOrLeave() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 pt-8 pb-28">
         {/* Progress Section */}
         <Card className="mb-8">
           <CardHeader>
@@ -852,7 +852,7 @@ export default function ShouldYouStayOrLeave() {
                     </Button>
                   </div>
                 </CardHeader>
-                <CardContent className="overflow-visible">
+                <CardContent className="overflow-visible pb-10">
                   <div className="space-y-6">
                     {renderModuleContent()}
                   </div>
