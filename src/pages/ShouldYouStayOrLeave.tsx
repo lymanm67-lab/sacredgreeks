@@ -852,12 +852,10 @@ export default function ShouldYouStayOrLeave() {
                     </Button>
                   </div>
                 </CardHeader>
-                <CardContent>
-                  <ScrollArea className="max-h-[70vh] pr-4">
-                    <div className="pb-4">
-                      {renderModuleContent()}
-                    </div>
-                  </ScrollArea>
+                <CardContent className="overflow-visible">
+                  <div className="space-y-6">
+                    {renderModuleContent()}
+                  </div>
                 </CardContent>
               </Card>
             </motion.div>
