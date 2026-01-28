@@ -38,9 +38,11 @@ const Journey = () => {
     else setLoading(false);
   }, [user]);
 
-  // Use demo progress when demo mode is enabled or no real progress
-  const displayProgress = isDemoMode ? DEMO_PROGRESS : (Object.keys(progress).length > 0 ? progress : DEMO_PROGRESS);
-  const isShowingDemo = isDemoMode || Object.keys(progress).length === 0;
+  // Use demo progress when demo mode is enabled OR user is not logged in and has no progress
+  // Logged-in users should always be able to edit, even with empty progress
+  const hasRealProgress = Object.keys(progress).length > 0;
+  const displayProgress = isDemoMode ? DEMO_PROGRESS : (hasRealProgress ? progress : (user ? {} : DEMO_PROGRESS));
+  const isShowingDemo = isDemoMode || (!user && !hasRealProgress);
 
   const loadProgress = async () => {
     if (!user) return;
