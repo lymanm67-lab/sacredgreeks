@@ -24,6 +24,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { format } from "date-fns";
 import { AssessmentTTS } from "./AssessmentTTS";
+import { useGamification } from "@/hooks/use-gamification";
 import jsPDF from "jspdf";
 
 interface ResultSection {
@@ -107,6 +108,7 @@ export function AssessmentResultsPanel({
 }: AssessmentResultsPanelProps) {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { awardPoints } = useGamification();
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const reportRef = useRef<HTMLDivElement>(null);
@@ -156,8 +158,11 @@ export function AssessmentResultsPanel({
         throw error;
       }
 
+      // Award 20 points for completing an assessment
+      awardPoints({ points: 20, actionType: 'assessment_completed' });
+
       setIsSaved(true);
-      toast.success("Results saved successfully!");
+      toast.success("Results saved successfully! +20 points");
     } catch (error: unknown) {
       console.error("Error saving results:", error);
       const errorMessage = error instanceof Error ? error.message : "Unknown error";
