@@ -64,15 +64,29 @@ export function GuildAudioPlayer({ className }: GuildAudioPlayerProps) {
     }
 
     // If we already have audio loaded, just play/pause
-    if (audioRef.current && audioUrl) {
-      if (isPlaying) {
-        audioRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        audioRef.current.play();
-        setIsPlaying(true);
+    if (audioUrl) {
+      if (audioUrl === 'browser-tts') {
+        // Handle browser TTS
+        if (isPlaying) {
+          window.speechSynthesis.pause();
+          setIsPlaying(false);
+        } else {
+          window.speechSynthesis.resume();
+          setIsPlaying(true);
+        }
+        return;
       }
-      return;
+      
+      if (audioRef.current) {
+        if (isPlaying) {
+          audioRef.current.pause();
+          setIsPlaying(false);
+        } else {
+          audioRef.current.play();
+          setIsPlaying(true);
+        }
+        return;
+      }
     }
 
     // Generate new audio
@@ -95,6 +109,16 @@ export function GuildAudioPlayer({ className }: GuildAudioPlayerProps) {
           }),
         }
       );
+
+      // Check for quota exceeded - use browser fallback
+      if (response.status === 402) {
+        const errorData = await response.json();
+        if (errorData.code === 'quota_exceeded') {
+          toast.info("Using browser voice (ElevenLabs quota reached)");
+          useBrowserTTS();
+          return;
+        }
+      }
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -133,10 +157,39 @@ export function GuildAudioPlayer({ className }: GuildAudioPlayerProps) {
       setIsPlaying(true);
     } catch (error) {
       console.error("TTS error:", error);
-      toast.error(error instanceof Error ? error.message : "Failed to generate audio");
+      // Fallback to browser TTS on any error
+      toast.info("Using browser voice");
+      useBrowserTTS();
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const useBrowserTTS = () => {
+    if (!('speechSynthesis' in window)) {
+      toast.error("Browser speech not supported");
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(GUILD_AUDIO_TEXT);
+    utterance.rate = playbackRate;
+    
+    utterance.onstart = () => {
+      setIsPlaying(true);
+      setAudioUrl('browser-tts'); // Mark as browser TTS
+    };
+    
+    utterance.onend = () => {
+      setIsPlaying(false);
+      setProgress(100);
+    };
+    
+    utterance.onerror = () => {
+      toast.error("Browser speech error");
+      setIsPlaying(false);
+    };
+
+    window.speechSynthesis.speak(utterance);
   };
 
   const handleSeek = (value: number[]) => {
