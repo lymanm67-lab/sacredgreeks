@@ -433,9 +433,18 @@ const ProofCourse = () => {
 
   const startLesson = (lessonId: number) => {
     const lesson = lessons.find(l => l.id === lessonId);
-    if (lesson && (lesson.id === 1 || hasPremiumAccess)) {
+    if (!lesson) return;
+    
+    // Allow lesson 1 always, or any lesson if premium or still loading subscription
+    if (lesson.id === 1 || hasPremiumAccess || subLoading) {
       setActiveLesson(lessonId);
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      toast({
+        title: "Premium Required",
+        description: "Upgrade to Pro or Ministry to access this lesson.",
+        variant: "destructive"
+      });
     }
   };
 
