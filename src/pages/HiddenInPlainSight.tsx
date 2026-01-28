@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -40,6 +40,8 @@ import {
 import { useStudyProgress } from "@/hooks/use-study-progress";
 import { useGamification } from "@/hooks/use-gamification";
 import { useLessonCelebration } from "@/hooks/use-lesson-celebration";
+import { useCelebration } from "@/contexts/CelebrationContext";
+import confetti from "canvas-confetti";
 import { useTTS } from "@/hooks/use-tts";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -471,8 +473,65 @@ export default function HiddenInPlainSight() {
   const completedCount = completedModules.length;
   const progressPercentage = (completedCount / 9) * 100;
 
-  const { triggerLessonComplete, triggerMilestone } = useLessonCelebration();
+  const { triggerMilestone } = useLessonCelebration();
+  const { celebrate } = useCelebration();
   const previousCompletedRef = useRef<number[]>([]);
+
+  // Custom celebration for this course (22 points per module, 24 for final = 200 total)
+  const triggerModuleComplete = useCallback((moduleIndex: number, moduleTitle: string) => {
+    const isLastModule = moduleIndex === 9;
+    const points = isLastModule ? 24 : 22;
+    
+    // Module-specific colors
+    const moduleColors: Record<number, string[]> = {
+      1: ['#F59E0B', '#FBBF24', '#FCD34D'], // Amber for Case Study
+      2: ['#EC4899', '#F472B6', '#F9A8D4'], // Pink for Reveal
+      3: ['#8B5CF6', '#A78BFA', '#C4B5FD'], // Purple for Context
+      4: ['#3B82F6', '#60A5FA', '#93C5FD'], // Blue for Symbols
+      5: ['#D946EF', '#E879F9', '#F0ABFC'], // Fuchsia for Cosmetics
+      6: ['#6366F1', '#818CF8', '#A5B4FC'], // Indigo for Architecture
+      7: ['#F97316', '#FB923C', '#FDBA74'], // Orange for Language
+      8: ['#22C55E', '#4ADE80', '#86EFAC'], // Green for Application
+      9: ['#14B8A6', '#2DD4BF', '#5EEAD4'], // Teal for Conclusion
+    };
+    
+    const colors = moduleColors[moduleIndex] || ['#FFD700', '#FFA500', '#FF6347'];
+
+    // Burst from the sides
+    confetti({
+      particleCount: 60,
+      spread: 55,
+      origin: { x: 0.1, y: 0.6 },
+      colors,
+      startVelocity: 35,
+    });
+
+    confetti({
+      particleCount: 60,
+      spread: 55,
+      origin: { x: 0.9, y: 0.6 },
+      colors,
+      startVelocity: 35,
+    });
+
+    // Center star burst
+    setTimeout(() => {
+      confetti({
+        particleCount: 30,
+        spread: 100,
+        origin: { x: 0.5, y: 0.5 },
+        shapes: ['star'],
+        colors: ['#FFD700', '#FFA500'],
+        scalar: 1.3,
+      });
+    }, 200);
+
+    // Trigger the celebration overlay with correct points
+    celebrate({
+      points,
+      title: `${moduleTitle} Complete!`,
+    });
+  }, [celebrate]);
 
   // TTS handlers
   const handlePlayInstructions = () => {
@@ -507,7 +566,7 @@ export default function HiddenInPlainSight() {
         const moduleIndex = sessionId - 40;
         const module = MODULES[moduleIndex];
         const moduleTitle = module?.title || `Module ${moduleIndex + 1}`;
-        setTimeout(() => triggerLessonComplete(moduleIndex + 1, moduleTitle), index * 500);
+        setTimeout(() => triggerModuleComplete(moduleIndex + 1, moduleTitle), index * 500);
       });
 
       if (prevCompleted.length < completedModules.length) {
@@ -526,7 +585,7 @@ export default function HiddenInPlainSight() {
     }
 
     previousCompletedRef.current = [...completedModules];
-  }, [completedModules, triggerLessonComplete, triggerMilestone, awardPoints, pointsAwarded]);
+  }, [completedModules, triggerModuleComplete, triggerMilestone, awardPoints, pointsAwarded]);
 
   // Stop TTS when component unmounts or active module changes
   useEffect(() => {
