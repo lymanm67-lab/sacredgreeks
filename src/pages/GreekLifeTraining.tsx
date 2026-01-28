@@ -19,6 +19,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
 import { useEarnedCertificates, CERTIFICATE_TYPES } from '@/hooks/use-earned-certificates';
+import { useGamification } from '@/hooks/use-gamification';
 import { 
   GuildJourneyDiagram, 
   GuildAudioPlayer, 
@@ -100,6 +101,7 @@ export default function GreekLifeTraining() {
   const { progressData } = useNavigationProgress();
   const navigate = useNavigate();
   const { awardCertificate, hasCertificate } = useEarnedCertificates();
+  const { awardPoints } = useGamification();
   const [completedModules, setCompletedModules] = useState<number[]>([]);
   const [completedFoundation, setCompletedFoundation] = useState<number[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -214,6 +216,9 @@ export default function GreekLifeTraining() {
 
       frame();
       
+      // Award points for completing the training (50 points)
+      awardPoints({ points: 50, actionType: 'training_completion' });
+      
       // Award certificate if not already earned
       if (!hasCertificate(CERTIFICATE_TYPES.GREEK_LIFE_TRAINING)) {
         awardCertificate.mutate({
@@ -233,7 +238,7 @@ export default function GreekLifeTraining() {
         });
       }
     }
-  }, [overallProgress, celebrationShown, isLoading, hasCertificate, awardCertificate]);
+  }, [overallProgress, celebrationShown, isLoading, hasCertificate, awardCertificate, awardPoints]);
 
   const handlePrintFoundation = () => {
     const printWindow = window.open('', '_blank');
