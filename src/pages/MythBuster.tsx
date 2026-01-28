@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
-import { ArrowLeft, Search, BookOpen, ExternalLink, Filter, Copy, Check, MessageSquare, ChevronDown, Download, FileText, Target, Sparkles, Scale, Eye, Building, X, CheckCircle2, Save, Printer, Info } from 'lucide-react';
+import { ArrowLeft, Search, BookOpen, ExternalLink, Filter, Copy, Check, MessageSquare, ChevronDown, Download, FileText, Target, Sparkles, Scale, Eye, Building, X, CheckCircle2, Save, Printer, Info, Trophy, Flame } from 'lucide-react';
 import { mythBusterContent, mythCategories, mythScenarios, mythOrganizations, ProofCategory } from '@/data/mythBusterContent';
 import { ListenButton } from '@/components/ListenButton';
 import { FISTFramework } from '@/components/myth-buster/FISTFramework';
@@ -21,6 +21,9 @@ import { PreviewBanner } from '@/components/PreviewBanner';
 import { DemoAudioGuide } from '@/components/DemoAudioGuide';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
+import { useGamification } from '@/hooks/use-gamification';
+import { useCourseCompletion } from '@/hooks/use-course-celebration';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const categoryIcons: Record<string, string> = {
   identity: '✝️',
@@ -54,6 +57,7 @@ const proofCategories: { id: ProofCategory | 'all'; label: string; icon: React.C
 
 const MythBuster = () => {
   const { user } = useAuth();
+  const { awardPoints } = useGamification();
   const [search, setSearch] = useState('');
   const [scenario, setScenario] = useState('all');
   const [organization, setOrganization] = useState('all');
@@ -62,6 +66,35 @@ const MythBuster = () => {
   const [isDownloading, setIsDownloading] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [reviewedMyths, setReviewedMyths] = useState<string[]>([]);
+  const [pointsAwarded, setPointsAwarded] = useState(false);
+  
+  const totalMyths = mythBusterContent.length;
+  
+  // Course completion celebration hook
+  const { celebrate, isComplete } = useCourseCompletion({
+    completedLessons: reviewedMyths.length,
+    totalLessons: totalMyths
+  });
+  
+  const previousReviewedRef = useRef<string[]>([]);
+  
+  // Track progress milestones and award points
+  useEffect(() => {
+    if (previousReviewedRef.current.length === reviewedMyths.length) return;
+    
+    const previousCount = previousReviewedRef.current.length;
+    const currentCount = reviewedMyths.length;
+    
+    // Award points on completion (all myths reviewed)
+    if (currentCount === totalMyths && previousCount < totalMyths && !pointsAwarded && user) {
+      awardPoints({ points: 350, actionType: 'myth_buster_completion' });
+      setPointsAwarded(true);
+      celebrate();
+      toast.success("🏆 Myth Buster Complete! +350 points earned!");
+    }
+    
+    previousReviewedRef.current = [...reviewedMyths];
+  }, [reviewedMyths, totalMyths, awardPoints, pointsAwarded, celebrate, user]);
 
   // Load reviewed myths on mount
   useEffect(() => {
@@ -261,7 +294,32 @@ const MythBuster = () => {
           <div className="flex items-center gap-4">
             <Link to="/dashboard"><Button variant="ghost" size="sm" className="gap-2"><ArrowLeft className="w-4 h-4" />Back to Dashboard</Button></Link>
             <div className="flex-1">
-              <h1 className="text-xl font-bold">Myth Buster Library</h1>
+              <div className="flex items-center gap-3">
+                <h1 className="text-xl font-bold">Myth Buster Library</h1>
+                {/* Points Badge */}
+                <AnimatePresence>
+                  {isComplete ? (
+                    <motion.div
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0, opacity: 0 }}
+                      className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border border-amber-500/40"
+                    >
+                      <Trophy className="w-4 h-4 text-amber-500" />
+                      <span className="text-xs font-bold text-amber-600">350 pts</span>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-muted/50 border border-border"
+                    >
+                      <Target className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-xs font-medium text-muted-foreground">350 pts</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
               <p className="text-sm text-muted-foreground">Biblical responses with ready-to-use scripts</p>
             </div>
             {user && (
@@ -269,6 +327,9 @@ const MythBuster = () => {
                 <div className="text-sm text-muted-foreground">Progress</div>
                 <Progress value={reviewProgress} className="w-24 h-2" />
                 <Badge variant="secondary" className="text-xs">{reviewedMyths.length}/{mythBusterContent.length}</Badge>
+                {reviewProgress >= 50 && reviewProgress < 100 && (
+                  <Flame className="w-4 h-4 text-orange-500 animate-pulse" />
+                )}
               </div>
             )}
           </div>
@@ -277,6 +338,9 @@ const MythBuster = () => {
               <div className="text-sm text-muted-foreground">Progress</div>
               <Progress value={reviewProgress} className="flex-1 h-2" />
               <Badge variant="secondary" className="text-xs">{reviewedMyths.length}/{mythBusterContent.length}</Badge>
+              {reviewProgress >= 50 && reviewProgress < 100 && (
+                <Flame className="w-4 h-4 text-orange-500 animate-pulse" />
+              )}
             </div>
           )}
         </div>
