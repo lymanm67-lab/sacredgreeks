@@ -264,7 +264,7 @@ const CONCLUSION_CONTENT = {
   callToAction: "Armed with this understanding, you can now evaluate ritual practices consistently—whether birthday parties, wedding ceremonies, holiday celebrations, or organizational rituals. The standard must be theological content, not cultural familiarity.",
 };
 
-const COURSE_INSTRUCTIONS = `Welcome to "Hidden in Plain Sight"—a course that will challenge how you evaluate cultural practices. You'll discover that many beloved American and Christian traditions have direct pagan origins that we've accepted as "normal." Through an eye-opening case study format, you'll see how birthday candles, wedding traditions, holidays, architecture, language, and everyday symbols all trace to pagan sources. By the end, you'll have tools to evaluate practices consistently rather than selectively. Complete all eight modules to earn 120 points (15 points each). Let's uncover what's been hidden in plain sight!`;
+const COURSE_INSTRUCTIONS = `Welcome to "Hidden in Plain Sight"—a course that will challenge how you evaluate cultural practices. You'll discover that many beloved American and Christian traditions have direct pagan origins that we've accepted as "normal." Through an eye-opening case study format, you'll see how birthday candles, wedding traditions, holidays, architecture, language, and everyday symbols all trace to pagan sources. By the end, you'll have tools to evaluate practices consistently rather than selectively. Complete all eight modules to earn 200 points (25 points each). Let's uncover what's been hidden in plain sight!`;
 
 const MODULES = [
   {
@@ -446,9 +446,9 @@ export default function HiddenInPlainSight() {
         } else if (completedModules.length === 4) {
           setTimeout(() => triggerMilestone('halfway'), 2500);
         } else if (completedModules.length === 8 && !pointsAwarded) {
-          awardPoints({ points: 120, actionType: 'hidden_plain_sight_completion' });
+          awardPoints({ points: 200, actionType: 'hidden_plain_sight_completion' });
           setPointsAwarded(true);
-          toast.success("🏆 Course Complete! +120 points earned!");
+          toast.success("🏆 Course Complete! +200 points earned!");
           setTimeout(() => triggerMilestone('complete'), 2500);
         }
       }
@@ -885,14 +885,14 @@ export default function HiddenInPlainSight() {
               disabled={isSessionComplete(COURSE_SESSION_IDS.conclusion)}
               className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600"
             >
-              {isSessionComplete(COURSE_SESSION_IDS.conclusion) ? (
+            {isSessionComplete(COURSE_SESSION_IDS.conclusion) ? (
                 <>
                   <Trophy className="h-4 w-4 mr-2" />
-                  Course Completed! +120 Points
+                  Course Completed! +200 Points
                 </>
               ) : (
                 <>
-                  Complete Course & Earn 120 Points
+                  Complete Course & Earn 200 Points
                   <Trophy className="h-4 w-4 ml-2" />
                 </>
               )}
@@ -920,12 +920,12 @@ export default function HiddenInPlainSight() {
               {progressPercentage === 100 ? (
                 <Badge className="bg-gradient-to-r from-amber-500 to-orange-500 text-white">
                   <Trophy className="w-3 h-3 mr-1" />
-                  120 Points Earned
+                  200 Points Earned
                 </Badge>
               ) : (
                 <Badge variant="outline" className="border-amber-500/50 text-amber-600">
                   <Trophy className="w-3 h-3 mr-1" />
-                  Earn 120 Points
+                  Earn 200 Points
                 </Badge>
               )}
             </div>
