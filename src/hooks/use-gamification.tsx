@@ -182,11 +182,17 @@ export const useGamification = () => {
     },
   });
 
-  // Use demo data when demo mode is enabled or no real data
-  const displayStats = showDemoData ? DEMO_STATS : (stats || DEMO_STATS);
-  const displayAchievements = showDemoData ? DEMO_USER_ACHIEVEMENTS : (achievements.length > 0 ? achievements : DEMO_USER_ACHIEVEMENTS);
+  // Use demo data ONLY when demo mode is explicitly enabled
+  // Real user data should always take priority when available
+  const hasRealStats = !!stats;
+  const hasRealAchievements = achievements.length > 0;
+  
+  const displayStats = showDemoData ? DEMO_STATS : (stats || null);
+  const displayAchievements = showDemoData ? DEMO_USER_ACHIEVEMENTS : achievements;
   const displayAllAchievements = allAchievements.length > 0 ? allAchievements : DEMO_ALL_ACHIEVEMENTS;
-  const isShowingDemo = showDemoData || !stats || achievements.length === 0;
+  
+  // Only show demo badge if explicitly in demo mode, not just because user has no achievements yet
+  const isShowingDemo = showDemoData;
 
   const pointsToNextLevel = displayStats
     ? Math.max(0, (displayStats.current_level * 100) - displayStats.total_points)
