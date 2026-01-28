@@ -14,6 +14,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { PremiumGate } from "@/components/PremiumGate";
 import { getScenariosForCouncil, getCouncilContent } from "@/data/orgSpecificContent";
 import { Badge } from "@/components/ui/badge";
+import { invokeCheckAchievements } from "@/lib/invoke-check-achievements";
 
 const steps = [
   { label: "Scenario", description: "Choose your situation" },
@@ -101,9 +102,7 @@ const Guide = () => {
           _action_type: "assessment",
         });
 
-        await supabase.functions.invoke('check-achievements', {
-          body: { userId: user.id, actionType: 'assessment' }
-        });
+        await invokeCheckAchievements({ userId: user.id, actionType: "assessment" });
 
         toast({
           title: "Assessment Saved!",

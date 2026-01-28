@@ -1,6 +1,7 @@
 import { ArrowLeft, Users, Trophy, FlaskConical } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { GamificationBar } from "@/components/GamificationBar";
@@ -12,12 +13,30 @@ import { NextStepCard } from "@/components/gamification/NextStepCard";
 import { LevelUpCelebration } from "@/components/gamification/LevelUpCelebration";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useGamification } from "@/hooks/use-gamification";
+import { useAuth } from "@/contexts/AuthContext";
+import { invokeCheckAchievements } from "@/lib/invoke-check-achievements";
 
 const Achievements = () => {
   const { isShowingDemo, stats } = useGamification();
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
   const [showLevelUp, setShowLevelUp] = useState(false);
   const [celebratedLevel, setCelebratedLevel] = useState<number>(1);
   const previousLevelRef = useRef<number | null>(null);
+
+  // On load, re-check study-related achievements (includes training completions like PROOF 1-5)
+  useEffect(() => {
+    if (!user || isShowingDemo) return;
+
+    (async () => {
+      try {
+        await invokeCheckAchievements({ userId: user.id, actionType: "study" });
+        queryClient.invalidateQueries({ queryKey: ["user-achievements"] });
+      } catch {
+        // Silent: don't block the page if the check fails
+      }
+    })();
+  }, [user?.id, isShowingDemo, queryClient]);
 
   // Detect level-up from stats change
   useEffect(() => {

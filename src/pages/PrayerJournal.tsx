@@ -34,6 +34,7 @@ import { VoiceInputButton } from '@/components/VoiceInputButton';
 import { ListenButton } from '@/components/ListenButton';
 import { useDemoMode } from '@/contexts/DemoModeContext';
 import { DEMO_PRAYERS } from '@/data/demoPrayerJournalData';
+import { invokeCheckAchievements } from '@/lib/invoke-check-achievements';
 
 interface Prayer {
   id: string;
@@ -175,9 +176,7 @@ const PrayerJournal = () => {
       await completeChallenge('prayer');
 
       // Check for achievements via edge function
-      await supabase.functions.invoke('check-achievements', {
-        body: { userId: user.id, actionType: 'prayer' }
-      });
+      await invokeCheckAchievements({ userId: user.id, actionType: 'prayer' });
 
       toast({
         title: 'Prayer added',
