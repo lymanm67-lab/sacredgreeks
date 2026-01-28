@@ -22,7 +22,7 @@ interface ChangelogEntry {
 const recentChanges: ChangelogEntry[] = [
   {
     version: '2.4.0',
-    date: '2024-12-03',
+    date: '2025-12-03',
     highlights: ['Admin Gift Subscriptions', 'Feature Customization', 'Tiered Access'],
     features: [
       'Admin gift subscription manager - gift Pro or Ministry access to users',
@@ -37,7 +37,7 @@ const recentChanges: ChangelogEntry[] = [
   },
   {
     version: '2.3.0',
-    date: '2024-12-02',
+    date: '2025-12-02',
     highlights: ['Personalization', 'Dashboard Updates', 'Mobile Improvements'],
     features: [
       'Personalization survey for new users',
@@ -51,7 +51,7 @@ const recentChanges: ChangelogEntry[] = [
   },
   {
     version: '2.2.0',
-    date: '2024-12-01',
+    date: '2025-12-01',
     highlights: ['Demo Mode', 'Guided Tour', 'Onboarding'],
     features: [
       'Interactive demo mode for exploring features without signup',
