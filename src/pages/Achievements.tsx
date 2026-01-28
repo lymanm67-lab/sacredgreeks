@@ -8,6 +8,7 @@ import { AchievementsList } from "@/components/AchievementsList";
 import { OrgAchievementsList } from "@/components/OrgAchievementsList";
 import { NextLevelMotivation } from "@/components/NextLevelMotivation";
 import { PointsRoadmap } from "@/components/gamification/PointsRoadmap";
+import { NextStepCard } from "@/components/gamification/NextStepCard";
 import { LevelUpCelebration } from "@/components/gamification/LevelUpCelebration";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useGamification } from "@/hooks/use-gamification";
@@ -67,6 +68,9 @@ const Achievements = () => {
 
         <div className="space-y-6">
           <GamificationBar />
+          
+          {/* Next Step - Primary CTA */}
+          <NextStepCard />
           
           {/* Points Roadmap */}
           <PointsRoadmap />
