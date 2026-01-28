@@ -18,6 +18,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
+import { useEarnedCertificates, CERTIFICATE_TYPES } from '@/hooks/use-earned-certificates';
 import { 
   GuildJourneyDiagram, 
   GuildAudioPlayer, 
@@ -98,6 +99,7 @@ export default function GreekLifeTraining() {
   const { user } = useAuth();
   const { progressData } = useNavigationProgress();
   const navigate = useNavigate();
+  const { awardCertificate, hasCertificate } = useEarnedCertificates();
   const [completedModules, setCompletedModules] = useState<number[]>([]);
   const [completedFoundation, setCompletedFoundation] = useState<number[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -212,11 +214,26 @@ export default function GreekLifeTraining() {
 
       frame();
       
-      toast.success('🎉 Congratulations! You completed Greek Life Training!', {
-        duration: 5000,
-      });
+      // Award certificate if not already earned
+      if (!hasCertificate(CERTIFICATE_TYPES.GREEK_LIFE_TRAINING)) {
+        awardCertificate.mutate({
+          certificate_type: CERTIFICATE_TYPES.GREEK_LIFE_TRAINING,
+          title: 'Greek Life & Guild Training',
+          description: 'Successfully completed all 14 sections of Greek Life & Guild Training, mastering the biblical foundation for fraternal organizations.',
+          certificate_data: {
+            icon: 'Building2',
+            color: 'violet',
+            completedSections: 14,
+            totalSections: 14,
+          },
+        });
+      } else {
+        toast.success('🎉 Congratulations! You completed Greek Life Training!', {
+          duration: 5000,
+        });
+      }
     }
-  }, [overallProgress, celebrationShown, isLoading]);
+  }, [overallProgress, celebrationShown, isLoading, hasCertificate, awardCertificate]);
 
   const handlePrintFoundation = () => {
     const printWindow = window.open('', '_blank');
@@ -371,18 +388,29 @@ export default function GreekLifeTraining() {
                         <div>
                           <h3 className="text-xl font-bold text-foreground">🎉 Training Complete!</h3>
                           <p className="text-sm text-muted-foreground">
-                            You've mastered all 14 sections of Greek Life & Guild Training
+                            You've earned a certificate! View it in your Training Success Vault.
                           </p>
                         </div>
                       </div>
-                      <Button 
-                        onClick={() => navigate('/dashboard')}
-                        className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white gap-2 shadow-lg"
-                        size="lg"
-                      >
-                        <Home className="w-5 h-5" />
-                        Back to Dashboard
-                      </Button>
+                      <div className="flex flex-col sm:flex-row gap-2">
+                        <Button 
+                          onClick={() => navigate('/training-vault')}
+                          className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white gap-2 shadow-lg"
+                          size="lg"
+                        >
+                          <Trophy className="w-5 h-5" />
+                          View Certificate
+                        </Button>
+                        <Button 
+                          variant="outline"
+                          onClick={() => navigate('/dashboard')}
+                          className="gap-2"
+                          size="lg"
+                        >
+                          <Home className="w-5 h-5" />
+                          Dashboard
+                        </Button>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>

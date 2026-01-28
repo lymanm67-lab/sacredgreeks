@@ -122,8 +122,8 @@ const AboutCreator = lazy(() => import("./pages/AboutCreator"));
 const OrderBook = lazy(() => import("./pages/OrderBook"));
 const SpeakingRequest = lazy(() => import("./pages/SpeakingRequest"));
 const ParentsFamily = lazy(() => import("./pages/ParentsFamily"));
+const TrainingSuccessVault = lazy(() => import("./pages/TrainingSuccessVault"));
 
-// Loading fallback component
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
     <div className="flex flex-col items-center gap-4">
@@ -267,6 +267,7 @@ const App = () => (
                     <Route path="/ancient-guild-training" element={<Navigate to="/greek-life-training" replace />} />
                     <Route path="/training" element={<Navigate to="/greek-life-training" replace />} />
                     <Route path="/greek-life-training" element={<GreekLifeTraining />} />
+                    <Route path="/training-vault" element={<TrainingSuccessVault />} />
                     <Route path="/guest-panelist-application" element={<GuestPanelistApplication />} />
                     <Route path="/about-creator" element={<AboutCreator />} />
                     <Route path="/order-book" element={<OrderBook />} />
