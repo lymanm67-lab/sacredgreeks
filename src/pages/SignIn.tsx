@@ -387,9 +387,19 @@ const SignIn = () => {
                             className="border-slate-600 data-[state=checked]:bg-blue-500"
                           />
                           <label htmlFor="remember" className="text-sm text-slate-400 cursor-pointer">
-                            Remember my email
+                            Remember me
                           </label>
                         </div>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const emailInput = document.getElementById('signin-email') as HTMLInputElement;
+                            handleForgotPassword(emailInput?.value || '');
+                          }}
+                          className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
+                        >
+                          Forgot password?
+                        </button>
                       </div>
 
                       <Button
@@ -400,16 +410,6 @@ const SignIn = () => {
                         {isLoading ? 'Signing in...' : 'Sign In'}
                       </Button>
 
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const emailInput = document.getElementById('signin-email') as HTMLInputElement;
-                          handleForgotPassword(emailInput?.value || '');
-                        }}
-                        className="w-full text-sm text-slate-400 hover:text-blue-400 transition-colors"
-                      >
-                        Forgot password?
-                      </button>
                     </form>
                   </TabsContent>
 
