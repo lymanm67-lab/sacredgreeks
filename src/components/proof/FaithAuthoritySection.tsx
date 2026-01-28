@@ -12,11 +12,14 @@ import {
   ChevronUp,
   Zap,
   Shield,
-  Heart
+  Heart,
+  CheckCircle2,
+  Circle
 } from "lucide-react";
 import { BELIEF_SCRIPTURES } from "@/lib/proofFrameworkData";
 import { toast } from "sonner";
 import { captureElementAsImage } from "@/lib/demo-export";
+import { useStudyProgress } from "@/hooks/use-study-progress";
 
 interface ScriptureCardProps {
   reference: string;
@@ -125,14 +128,25 @@ interface FaithAuthoritySectionProps {
   className?: string;
 }
 
+// Session IDs 16-20 are for Faith & Authority
+const FAITH_SESSION_IDS = {
+  intro: 16,
+  jesusLimitedByUnbelief: 17,
+  faithAsChannel: 18,
+  beliefAndAuthority: 19,
+  fearRequiresBelief: 20,
+};
+
 export function FaithAuthoritySection({ className }: FaithAuthoritySectionProps) {
   const [expandedCategory, setExpandedCategory] = useState<string | null>("jesusLimitedByUnbelief");
   const cardRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+  const { isSessionComplete, toggleSession, isAuthenticated } = useStudyProgress();
 
   const categories = [
     {
       id: "jesusLimitedByUnbelief",
-      title: "Jesus Limited by Unbelief",
+      sessionId: FAITH_SESSION_IDS.jesusLimitedByUnbelief,
+      title: "Module 1: Jesus Limited by Unbelief",
       subtitle: "Power was present, but access was blocked",
       icon: <Zap className="w-5 h-5 text-yellow-400" />,
       color: "from-yellow-500/10 to-orange-500/10",
@@ -140,7 +154,8 @@ export function FaithAuthoritySection({ className }: FaithAuthoritySectionProps)
     },
     {
       id: "faithAsChannel",
-      title: "Faith as the Channel",
+      sessionId: FAITH_SESSION_IDS.faithAsChannel,
+      title: "Module 2: Faith as the Channel",
       subtitle: "The operating system of the kingdom",
       icon: <Sparkles className="w-5 h-5 text-cyan-400" />,
       color: "from-cyan-500/10 to-blue-500/10",
@@ -148,7 +163,8 @@ export function FaithAuthoritySection({ className }: FaithAuthoritySectionProps)
     },
     {
       id: "beliefAndAuthority",
-      title: "Belief & Authority",
+      sessionId: FAITH_SESSION_IDS.beliefAndAuthority,
+      title: "Module 3: Belief & Authority",
       subtitle: "What you don't believe cannot govern you",
       icon: <Shield className="w-5 h-5 text-purple-400" />,
       color: "from-purple-500/10 to-pink-500/10",
@@ -156,7 +172,8 @@ export function FaithAuthoritySection({ className }: FaithAuthoritySectionProps)
     },
     {
       id: "fearRequiresBelief",
-      title: "Fear Requires Belief",
+      sessionId: FAITH_SESSION_IDS.fearRequiresBelief,
+      title: "Module 4: Fear Requires Belief",
       subtitle: "Fear operates like faith in reverse",
       icon: <Heart className="w-5 h-5 text-red-400" />,
       color: "from-red-500/10 to-orange-500/10",
@@ -193,6 +210,18 @@ export function FaithAuthoritySection({ className }: FaithAuthoritySectionProps)
     }
   };
 
+  const handleToggleComplete = (sessionId: number) => {
+    if (!isAuthenticated) {
+      toast.error("Please sign in to track your progress");
+      return;
+    }
+    const isComplete = isSessionComplete(sessionId);
+    toggleSession({ sessionId, completed: !isComplete });
+  };
+
+  const completedModules = categories.filter(c => isSessionComplete(c.sessionId)).length;
+  const introComplete = isSessionComplete(FAITH_SESSION_IDS.intro);
+
   return (
     <section className={`py-12 ${className}`}>
       <div className="container mx-auto px-4">
@@ -200,18 +229,24 @@ export function FaithAuthoritySection({ className }: FaithAuthoritySectionProps)
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 mb-4">
             <BookOpen className="w-4 h-4 text-amber-400" />
-            <span className="text-amber-300 text-sm font-medium">Faith & Authority</span>
+            <span className="text-amber-300 text-sm font-medium">Faith & Authority Training</span>
           </div>
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
             How Faith Unlocks Spiritual Access
           </h2>
-          <p className="text-white/60 max-w-2xl mx-auto text-sm">
+          <p className="text-white/60 max-w-2xl mx-auto text-sm mb-4">
             Scripture reveals a powerful truth: faith is the operating system of the spiritual realm. 
             What you don't believe cannot hold power over you.
           </p>
+          
+          {/* Progress indicator */}
+          <div className="flex items-center justify-center gap-2 text-sm">
+            <span className="text-white/50">Progress:</span>
+            <span className="text-amber-400 font-semibold">{completedModules + (introComplete ? 1 : 0)}/5 modules</span>
+          </div>
         </div>
 
-        {/* Key Principle Banner */}
+        {/* Key Principle Banner (Intro Module) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -223,13 +258,37 @@ export function FaithAuthoritySection({ className }: FaithAuthoritySectionProps)
               <div className="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
                 <Zap className="w-6 h-6 text-amber-400" />
               </div>
-              <div>
-                <h3 className="text-amber-300 font-semibold mb-2">The Core Principle</h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-2">
+                  <h3 className="text-amber-300 font-semibold">Introduction: The Core Principle</h3>
+                  {introComplete && <CheckCircle2 className="w-4 h-4 text-green-400" />}
+                </div>
+                <p className="text-white/80 text-sm leading-relaxed mb-4">
                   If you mentioned a deity's name during a ritual but <strong className="text-amber-300">did not know it was a deity</strong> and 
                   <strong className="text-amber-300"> do not believe it to be a deity</strong>... it holds no authority over you. 
                   Paul wrote that an idol is "nothing in the world" (1 Cor 8:4). The false god has no real existence.
                 </p>
+                <Button
+                  size="sm"
+                  variant={introComplete ? "outline" : "default"}
+                  onClick={() => handleToggleComplete(FAITH_SESSION_IDS.intro)}
+                  className={introComplete 
+                    ? "border-green-500/50 text-green-400 hover:bg-green-500/10" 
+                    : "bg-amber-500 hover:bg-amber-600 text-black"
+                  }
+                >
+                  {introComplete ? (
+                    <>
+                      <CheckCircle2 className="w-4 h-4 mr-2" />
+                      Completed
+                    </>
+                  ) : (
+                    <>
+                      <Circle className="w-4 h-4 mr-2" />
+                      Mark as Complete
+                    </>
+                  )}
+                </Button>
               </div>
             </div>
           </div>
@@ -237,66 +296,105 @@ export function FaithAuthoritySection({ className }: FaithAuthoritySectionProps)
 
         {/* Category Accordions with Scripture Cards */}
         <div className="max-w-4xl mx-auto space-y-4">
-          {categories.map((category) => (
-            <motion.div
-              key={category.id}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="rounded-xl bg-white/5 border border-white/10 overflow-hidden"
-            >
-              <button
-                onClick={() => setExpandedCategory(expandedCategory === category.id ? null : category.id)}
-                className="w-full flex items-center gap-4 p-4 text-left hover:bg-white/5 transition-colors"
+          {categories.map((category) => {
+            const isComplete = isSessionComplete(category.sessionId);
+            
+            return (
+              <motion.div
+                key={category.id}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className={`rounded-xl bg-white/5 border overflow-hidden transition-colors ${
+                  isComplete ? 'border-green-500/30' : 'border-white/10'
+                }`}
               >
-                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
-                  {category.icon}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-white">{category.title}</h3>
-                  <p className="text-white/50 text-sm">{category.subtitle}</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-white/40 hidden sm:inline">
-                    {category.scriptures.length} scripture{category.scriptures.length > 1 ? 's' : ''}
-                  </span>
-                  {expandedCategory === category.id ? (
-                    <ChevronUp className="w-5 h-5 text-white/50" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-white/50" />
-                  )}
-                </div>
-              </button>
+                <button
+                  onClick={() => setExpandedCategory(expandedCategory === category.id ? null : category.id)}
+                  className="w-full flex items-center gap-4 p-4 text-left hover:bg-white/5 transition-colors"
+                >
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+                    isComplete ? 'bg-green-500/20' : 'bg-white/10'
+                  }`}>
+                    {isComplete ? (
+                      <CheckCircle2 className="w-5 h-5 text-green-400" />
+                    ) : (
+                      category.icon
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-white">{category.title}</h3>
+                    <p className="text-white/50 text-sm">{category.subtitle}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-white/40 hidden sm:inline">
+                      {category.scriptures.length} scripture{category.scriptures.length > 1 ? 's' : ''}
+                    </span>
+                    {expandedCategory === category.id ? (
+                      <ChevronUp className="w-5 h-5 text-white/50" />
+                    ) : (
+                      <ChevronDown className="w-5 h-5 text-white/50" />
+                    )}
+                  </div>
+                </button>
 
-              <AnimatePresence>
-                {expandedCategory === category.id && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="p-4 pt-0 grid md:grid-cols-2 gap-4">
-                      {category.scriptures.map((scripture, idx) => (
-                        <ScriptureCard
-                          key={idx}
-                          reference={scripture.reference}
-                          text={scripture.text}
-                          principle={scripture.principle}
-                          categoryColor={category.color}
-                          categoryIcon={category.icon}
-                          onShare={() => {}}
-                          onDownload={() => handleDownloadCard(scripture.reference)}
-                          cardRef={{ current: null } as React.RefObject<HTMLDivElement>}
-                        />
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
+                <AnimatePresence>
+                  {expandedCategory === category.id && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="p-4 pt-0">
+                        <div className="grid md:grid-cols-2 gap-4 mb-4">
+                          {category.scriptures.map((scripture, idx) => (
+                            <ScriptureCard
+                              key={idx}
+                              reference={scripture.reference}
+                              text={scripture.text}
+                              principle={scripture.principle}
+                              categoryColor={category.color}
+                              categoryIcon={category.icon}
+                              onShare={() => {}}
+                              onDownload={() => handleDownloadCard(scripture.reference)}
+                              cardRef={{ current: null } as React.RefObject<HTMLDivElement>}
+                            />
+                          ))}
+                        </div>
+                        
+                        {/* Complete button */}
+                        <div className="flex justify-center pt-4 border-t border-white/10">
+                          <Button
+                            size="sm"
+                            variant={isComplete ? "outline" : "default"}
+                            onClick={() => handleToggleComplete(category.sessionId)}
+                            className={isComplete 
+                              ? "border-green-500/50 text-green-400 hover:bg-green-500/10" 
+                              : "bg-amber-500 hover:bg-amber-600 text-black"
+                            }
+                          >
+                            {isComplete ? (
+                              <>
+                                <CheckCircle2 className="w-4 h-4 mr-2" />
+                                Module Completed
+                              </>
+                            ) : (
+                              <>
+                                <Circle className="w-4 h-4 mr-2" />
+                                Mark Module as Complete
+                              </>
+                            )}
+                          </Button>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Summary Note */}
