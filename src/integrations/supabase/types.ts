@@ -482,6 +482,39 @@ export type Database = {
         }
         Relationships: []
       }
+      earned_certificates: {
+        Row: {
+          certificate_data: Json | null
+          certificate_type: string
+          created_at: string
+          description: string | null
+          earned_at: string
+          id: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          certificate_data?: Json | null
+          certificate_type: string
+          created_at?: string
+          description?: string | null
+          earned_at?: string
+          id?: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          certificate_data?: Json | null
+          certificate_type?: string
+          created_at?: string
+          description?: string | null
+          earned_at?: string
+          id?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       email_automation_workflows: {
         Row: {
           created_at: string
