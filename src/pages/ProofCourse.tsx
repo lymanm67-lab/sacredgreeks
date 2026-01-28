@@ -438,7 +438,15 @@ const ProofCourse = () => {
     // Allow lesson 1 always, or any lesson if premium or still loading subscription
     if (lesson.id === 1 || hasPremiumAccess || subLoading) {
       setActiveLesson(lessonId);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Scroll to the lesson content section
+      setTimeout(() => {
+        const lessonSection = document.getElementById('lesson-content');
+        if (lessonSection) {
+          lessonSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 100);
     } else {
       toast({
         title: "Premium Required",
@@ -737,7 +745,7 @@ const ProofCourse = () => {
         {currentLesson && (() => {
           const lessonColors = getColorForLesson(currentLesson.id);
           return (
-          <Card className={`mb-8 border-2 ${lessonColors.border}`}>
+          <Card id="lesson-content" className={`mb-8 border-2 ${lessonColors.border}`}>
             <CardHeader className={`${lessonColors.bgLight} border-b ${lessonColors.border}`}>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
