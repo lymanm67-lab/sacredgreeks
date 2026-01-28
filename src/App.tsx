@@ -123,6 +123,7 @@ const OrderBook = lazy(() => import("./pages/OrderBook"));
 const SpeakingRequest = lazy(() => import("./pages/SpeakingRequest"));
 const ParentsFamily = lazy(() => import("./pages/ParentsFamily"));
 const TrainingSuccessVault = lazy(() => import("./pages/TrainingSuccessVault"));
+const ShouldYouStayOrLeave = lazy(() => import("./pages/ShouldYouStayOrLeave"));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -262,6 +263,7 @@ const App = () => (
                     <Route path="/church-leaders" element={<ChurchLeaders />} />
                     <Route path="/parents-family" element={<ParentsFamily />} />
                     <Route path="/faith-authority" element={<FaithAuthority />} />
+                    <Route path="/should-you-stay-or-leave" element={<ShouldYouStayOrLeave />} />
                     <Route path="/chapter-kit" element={<ChapterKit />} />
                     <Route path="/economic-history" element={<EconomicHistory />} />
                     <Route path="/ancient-guild-training" element={<Navigate to="/greek-life-training" replace />} />
