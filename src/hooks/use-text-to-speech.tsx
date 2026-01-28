@@ -117,11 +117,23 @@ export const useTextToSpeech = () => {
         body: { text, voice },
       });
 
-      // Check for quota exceeded - use browser TTS fallback
-      if (error || data?.code === 'quota_exceeded') {
-        console.log('ElevenLabs unavailable, using browser TTS fallback');
+      // Check for quota exceeded or errors - use browser TTS fallback
+      const isQuotaError = error?.message?.includes('quota_exceeded') || 
+                          error?.message?.includes('402') ||
+                          data?.code === 'quota_exceeded' ||
+                          data?.error?.includes('quota_exceeded');
+      
+      if (isQuotaError) {
+        console.log('ElevenLabs quota exceeded, using browser TTS fallback');
+        setIsLoading(null);
+        setIsPlaying(itemId);
         await speakWithBrowserTTS(text, itemId);
+        setIsPlaying(null);
         return;
+      }
+
+      if (error) {
+        throw error;
       }
 
       if (!data?.audioContent) {
