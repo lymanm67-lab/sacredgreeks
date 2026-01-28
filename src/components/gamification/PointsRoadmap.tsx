@@ -196,6 +196,7 @@ export const PointsRoadmap = () => {
 
   const completedCount = ROADMAP_STEPS.filter(step => getCompletionStatus(step)).length;
   const allCompleted = completedCount === ROADMAP_STEPS.length;
+  const totalAvailablePoints = ROADMAP_STEPS.reduce((sum, step) => sum + step.points, 0);
 
   const generateRoadmapScript = () => {
     const completed = ROADMAP_STEPS.filter(step => getCompletionStatus(step));
@@ -246,6 +247,9 @@ export const PointsRoadmap = () => {
           </h4>
         </div>
         <div className="flex items-center gap-2">
+          <Badge variant="outline" className="bg-secondary/10 text-secondary border-secondary/30">
+            {totalAvailablePoints} pts available
+          </Badge>
           <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30">
             {completedCount}/{ROADMAP_STEPS.length} Complete
           </Badge>
