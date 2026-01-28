@@ -139,6 +139,18 @@ const ROADMAP_STEPS: RoadmapStep[] = [
     completedKey: "hiddenInPlainSight",
     isTraining: true,
     progressKey: "hiddenInPlainSight"
+  },
+  {
+    id: "myth-buster",
+    title: "Myth Buster Library",
+    description: "Review all myths and master biblical responses",
+    points: 350,
+    icon: Target,
+    color: "purple",
+    link: "/myth-buster",
+    completedKey: "mythBuster",
+    isTraining: true,
+    progressKey: "mythBuster"
   }
 ];
 
