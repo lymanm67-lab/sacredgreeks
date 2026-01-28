@@ -2,6 +2,33 @@ import { useState, useRef, useCallback } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
+function speakWithBrowserTTS(text: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (!("speechSynthesis" in window)) {
+      reject(new Error("Browser does not support text-to-speech"));
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    // pick a decent English voice if available
+    const voices = window.speechSynthesis.getVoices();
+    const preferredVoice =
+      voices.find((v) => v.lang.startsWith("en") && (v.name.includes("Male") || v.name.includes("Google"))) ||
+      voices.find((v) => v.lang.startsWith("en")) ||
+      voices[0];
+
+    if (preferredVoice) utterance.voice = preferredVoice;
+
+    utterance.rate = 0.95;
+    utterance.onend = () => resolve();
+    utterance.onerror = (event) => reject(new Error(`Speech error: ${event.error}`));
+
+    window.speechSynthesis.speak(utterance);
+  });
+}
+
 export function useTextToSpeech() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -12,6 +39,9 @@ export function useTextToSpeech() {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
       audioRef.current = null;
+    }
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
     }
     setIsPlaying(false);
   }, []);
@@ -50,7 +80,24 @@ export function useTextToSpeech() {
       );
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
+        const errorData = await response.json().catch(() => ({} as any));
+
+        const isQuotaExceeded =
+          response.status === 402 ||
+          errorData?.code === "quota_exceeded" ||
+          (typeof errorData?.error === "string" && errorData.error.includes("quota_exceeded"));
+
+        if (isQuotaExceeded) {
+          toast.info("Using browser voice (premium voice unavailable)");
+          setIsPlaying(true);
+          try {
+            await speakWithBrowserTTS(text);
+          } finally {
+            setIsPlaying(false);
+          }
+          return;
+        }
+
         throw new Error(errorData.error || "Failed to generate speech");
       }
 
