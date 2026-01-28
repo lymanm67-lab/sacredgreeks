@@ -9,14 +9,15 @@ import { useToast } from '@/hooks/use-toast';
 import { ListenButton } from '@/components/ListenButton';
 import { 
   FileDown, Users, Landmark, BookOpen, ArrowLeft, Target, CheckCircle2, Circle, 
-  BookHeart, Scroll, Building2, ChevronRight, Star, Printer, ChevronsUpDown
+  BookHeart, Scroll, Building2, ChevronRight, Star, Printer, ChevronsUpDown, Home, Trophy
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { Link, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigationProgress } from '@/hooks/use-navigation-progress';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import confetti from 'canvas-confetti';
 import { 
   GuildJourneyDiagram, 
   GuildAudioPlayer, 
@@ -96,12 +97,15 @@ export default function GreekLifeTraining() {
   const { toast: showToast } = useToast();
   const { user } = useAuth();
   const { progressData } = useNavigationProgress();
+  const navigate = useNavigate();
   const [completedModules, setCompletedModules] = useState<number[]>([]);
   const [completedFoundation, setCompletedFoundation] = useState<number[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('foundation');
   const [allModulesExpanded, setAllModulesExpanded] = useState(false);
   const timelineRef = useRef<HistoricalTimelineRef>(null);
+  const [celebrationShown, setCelebrationShown] = useState(false);
+  const [showCompletionBanner, setShowCompletionBanner] = useState(false);
 
   // Load completed modules and foundation sections
   useEffect(() => {
@@ -175,6 +179,45 @@ export default function GreekLifeTraining() {
   const foundationProgress = Math.round((completedFoundation.length / 4) * 100);
   const modulesProgress = Math.round((completedModules.length / 10) * 100);
 
+  // Celebration effect when training is 100% complete
+  useEffect(() => {
+    if (overallProgress >= 100 && !celebrationShown && !isLoading) {
+      setCelebrationShown(true);
+      setShowCompletionBanner(true);
+      
+      // Trigger confetti celebration
+      const duration = 3000;
+      const end = Date.now() + duration;
+
+      const frame = () => {
+        confetti({
+          particleCount: 4,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#8B5CF6', '#D4AF37', '#10B981', '#EC4899'],
+        });
+        confetti({
+          particleCount: 4,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#8B5CF6', '#D4AF37', '#10B981', '#EC4899'],
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      };
+
+      frame();
+      
+      toast.success('🎉 Congratulations! You completed Greek Life Training!', {
+        duration: 5000,
+      });
+    }
+  }, [overallProgress, celebrationShown, isLoading]);
+
   const handlePrintFoundation = () => {
     const printWindow = window.open('', '_blank');
     if (!printWindow) {
@@ -229,10 +272,22 @@ export default function GreekLifeTraining() {
         <div className="max-w-5xl mx-auto px-4 py-8">
           {/* Header with Progress Widget */}
           <div className="mb-8">
-            <Link to="/proof-course" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4">
-              <ArrowLeft className="w-4 h-4" />
-              Back to Learning Path
-            </Link>
+            <div className="flex items-center gap-4 mb-4">
+              <Link to="/proof-course" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <ArrowLeft className="w-4 h-4" />
+                Back to Learning Path
+              </Link>
+              <span className="text-muted-foreground">|</span>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => navigate('/dashboard')}
+                className="gap-2"
+              >
+                <Home className="w-4 h-4" />
+                Back to Dashboard
+              </Button>
+            </div>
             
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div className="flex items-center gap-4">
@@ -289,6 +344,51 @@ export default function GreekLifeTraining() {
               />
             </div>
           </div>
+
+          {/* Completion Celebration Banner */}
+          <AnimatePresence>
+            {showCompletionBanner && overallProgress >= 100 && (
+              <motion.div
+                initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                className="mb-8"
+              >
+                <Card className="border-2 border-green-500/50 bg-gradient-to-r from-green-500/10 via-emerald-500/10 to-teal-500/10 overflow-hidden">
+                  <CardContent className="p-6">
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                      <div className="flex items-center gap-4">
+                        <motion.div
+                          className="w-16 h-16 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-xl shadow-green-500/30"
+                          animate={{ 
+                            scale: [1, 1.1, 1],
+                            rotate: [0, 5, -5, 0]
+                          }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                        >
+                          <Trophy className="w-8 h-8 text-white" />
+                        </motion.div>
+                        <div>
+                          <h3 className="text-xl font-bold text-foreground">🎉 Training Complete!</h3>
+                          <p className="text-sm text-muted-foreground">
+                            You've mastered all 14 sections of Greek Life & Guild Training
+                          </p>
+                        </div>
+                      </div>
+                      <Button 
+                        onClick={() => navigate('/dashboard')}
+                        className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white gap-2 shadow-lg"
+                        size="lg"
+                      >
+                        <Home className="w-5 h-5" />
+                        Back to Dashboard
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Course Introduction */}
           <Card className="mb-8 border-violet-500/30 bg-gradient-to-r from-violet-500/5 to-purple-500/5">
