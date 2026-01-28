@@ -145,28 +145,37 @@ serve(async (req) => {
       }
     }
 
-    if (actionType === "study" && !earnedKeys.has("first_study")) {
-      const { data: achievement } = await supabase
-        .from("achievements")
-        .select("*")
-        .eq("achievement_key", "first_study")
-        .single();
+    if (actionType === "study") {
+      // Check for first_study achievement
+      if (!earnedKeys.has("first_study")) {
+        const { data: achievement } = await supabase
+          .from("achievements")
+          .select("*")
+          .eq("achievement_key", "first_study")
+          .single();
 
-      if (achievement) {
-        await supabase.from("user_achievements").insert({
-          user_id: userId,
-          achievement_id: achievement.id,
-        });
-        newAchievements.push(achievement);
+        if (achievement) {
+          await supabase.from("user_achievements").insert({
+            user_id: userId,
+            achievement_id: achievement.id,
+          });
+          newAchievements.push(achievement);
+        }
       }
 
-      // Check for all studies completed
+      // Fetch study progress for all training checks
       const { data: progress } = await supabase
         .from("study_session_progress")
         .select("session_id")
         .eq("user_id", userId)
         .eq("completed", true);
 
+      logStep("Study progress fetched", { 
+        progressCount: progress?.length || 0,
+        sessionIds: progress?.map((p: any) => p.session_id) || []
+      });
+
+      // Check for all_studies achievement (5+ completed)
       if (progress && progress.length >= 5 && !earnedKeys.has("all_studies")) {
         const { data: achievement } = await supabase
           .from("achievements")
@@ -201,6 +210,14 @@ serve(async (req) => {
       };
 
       const completedIds = (progress ?? []).map((p: any) => p.session_id);
+
+      logStep("Checking training completions", {
+        completedIds,
+        hasStayOrLeave: hasAll(completedIds, STAY_OR_LEAVE_SESSIONS),
+        hasSaintsOrSellouts: hasAll(completedIds, SAINTS_SELLOUTS_SESSIONS),
+        alreadyHasStayOrLeave: earnedKeys.has("stay_or_leave_complete"),
+        alreadyHasSaintsOrSellouts: earnedKeys.has("saints_sellouts_complete")
+      });
 
       if (hasAll(completedIds, PROOF_SESSIONS)) {
         await awardAchievementByKey("proof_course_complete");
