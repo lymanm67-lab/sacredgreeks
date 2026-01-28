@@ -222,7 +222,7 @@ export const NextLevelMotivation = () => {
           <div className="grid grid-cols-2 gap-3">
             {[
               { action: "Daily Devotional", points: 10, icon: BookOpen, count: activityCounts?.devotionals || 0, color: "blue" },
-              { action: "Prayer Journal", points: 10, icon: Heart, count: activityCounts?.prayers || 0, color: "rose" },
+              { action: "Prayer Journal", points: 10, icon: Heart, count: activityCounts?.prayers || 0, color: "teal" },
               { action: "Complete Assessment", points: 20, icon: Target, count: activityCounts?.assessments || 0, color: "amber" },
               { action: "Study Session", points: 25, icon: GraduationCap, count: activityCounts?.studySessions || 0, color: "purple" },
             ].map((item, index) => {
@@ -231,7 +231,7 @@ export const NextLevelMotivation = () => {
               
               const colorClasses: Record<string, { bg: string; border: string; text: string; icon: string }> = {
                 blue: { bg: "bg-blue-500/10", border: "border-blue-500/30", text: "text-blue-500", icon: "bg-blue-500" },
-                rose: { bg: "bg-rose-500/10", border: "border-rose-500/30", text: "text-rose-500", icon: "bg-rose-500" },
+                teal: { bg: "bg-teal-500/10", border: "border-teal-500/30", text: "text-teal-500", icon: "bg-teal-500" },
                 amber: { bg: "bg-amber-500/10", border: "border-amber-500/30", text: "text-amber-500", icon: "bg-amber-500" },
                 purple: { bg: "bg-purple-500/10", border: "border-purple-500/30", text: "text-purple-500", icon: "bg-purple-500" },
               };

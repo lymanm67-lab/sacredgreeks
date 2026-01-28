@@ -153,21 +153,27 @@ export const useGamification = () => {
 
       // Show notifications
       if (data.level_up) {
-        toast.success(`Level Up! You reached level ${data.new_level}!`, {
+        toast.success(`🎉 Level Up! You reached level ${data.new_level}!`, {
           duration: 5000,
+          description: "Check your achievements page to celebrate!",
         });
+        
+        // Dispatch custom event for level-up celebration
+        window.dispatchEvent(new CustomEvent('level-up', { 
+          detail: { newLevel: data.new_level } 
+        }));
       }
 
       if (data.new_achievements && data.new_achievements.length > 0) {
         data.new_achievements.forEach((achievement: any) => {
-          toast.success(`Achievement Unlocked: ${achievement.title}!`, {
+          toast.success(`🏆 Achievement Unlocked: ${achievement.title}!`, {
             description: achievement.description,
             duration: 5000,
           });
         });
       }
 
-      if (data.points_awarded > 0) {
+      if (data.points_awarded > 0 && !data.level_up) {
         toast.success(`+${data.points_awarded} points earned!`);
       }
     },
