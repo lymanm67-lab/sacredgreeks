@@ -61,7 +61,7 @@ const COURSE_SESSION_IDS = {
 
 const CASE_STUDY_SCENARIO = {
   title: "The Birthday Celebration at Church",
-  setting: "A family gathering in the church fellowship hall, 2024",
+  setting: "A family gathering in the church fellowship hall, 2026",
   scenario: `Your family is celebrating a child's birthday at the church. The party is held in the fellowship hall—a grand space with soaring dome ceilings, majestic Greek-style columns (Corinthian capitals adorning the sanctuary entrance), and a towering steeple visible through the windows.
 
 As the cake is brought out with lit candles, the child is encouraged to:
