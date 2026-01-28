@@ -6,20 +6,60 @@ interface UseTTSOptions {
   voice?: string;
 }
 
+// Browser Speech Synthesis fallback
+function speakWithBrowserTTS(text: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (!('speechSynthesis' in window)) {
+      reject(new Error('Browser does not support text-to-speech'));
+      return;
+    }
+
+    // Cancel any ongoing speech
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    // Try to find a good voice
+    const voices = window.speechSynthesis.getVoices();
+    const preferredVoice = voices.find(v => 
+      v.lang.startsWith('en') && (v.name.includes('Female') || v.name.includes('Samantha') || v.name.includes('Google'))
+    ) || voices.find(v => v.lang.startsWith('en')) || voices[0];
+    
+    if (preferredVoice) {
+      utterance.voice = preferredVoice;
+    }
+    
+    utterance.rate = 0.95;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+
+    utterance.onend = () => resolve();
+    utterance.onerror = (event) => reject(new Error(`Speech error: ${event.error}`));
+
+    window.speechSynthesis.speak(utterance);
+  });
+}
+
 export function useTTS(options: UseTTSOptions = {}) {
   const { voice = 'nicole' } = options; // Default to Nicole - warm African-American female voice
   const [isLoading, setIsLoading] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [usingFallback, setUsingFallback] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const stop = useCallback(() => {
+    // Stop ElevenLabs audio
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
       audioRef.current = null;
-      setIsPlaying(false);
     }
+    // Stop browser speech synthesis
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+    setIsPlaying(false);
   }, []);
 
   const speak = useCallback(async (text: string) => {
@@ -33,6 +73,7 @@ export function useTTS(options: UseTTSOptions = {}) {
     
     setIsLoading(true);
     setError(null);
+    setUsingFallback(false);
 
     try {
       const { data: { session } } = await supabase.auth.getSession();
@@ -58,9 +99,23 @@ export function useTTS(options: UseTTSOptions = {}) {
         const errorData = await response.json();
         const errorMessage = errorData.error || 'Failed to generate speech';
         
-        // Check for quota exceeded error
+        // Check for quota exceeded error - use browser fallback
         if (errorMessage.includes('quota_exceeded') || errorMessage.includes('credits remaining')) {
-          throw new Error('Voice credits exhausted. The text-to-speech feature is temporarily unavailable. Please try again later or read the content instead.');
+          console.log('ElevenLabs quota exceeded, falling back to browser TTS');
+          setUsingFallback(true);
+          setIsLoading(false);
+          setIsPlaying(true);
+          
+          toast.info('Using browser voice (premium voice unavailable)');
+          
+          try {
+            await speakWithBrowserTTS(text);
+            setIsPlaying(false);
+            return;
+          } catch (fallbackErr) {
+            setIsPlaying(false);
+            throw new Error('Voice unavailable. Please read the content instead.');
+          }
         }
         
         throw new Error(errorMessage);
@@ -104,5 +159,6 @@ export function useTTS(options: UseTTSOptions = {}) {
     isLoading,
     isPlaying,
     error,
+    usingFallback,
   };
 }
