@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
-import { ArrowLeft, Search, BookOpen, ExternalLink, Filter, Copy, Check, MessageSquare, ChevronDown, Download, FileText, Target, Sparkles, Scale, Eye, Building, X, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Search, BookOpen, ExternalLink, Filter, Copy, Check, MessageSquare, ChevronDown, Download, FileText, Target, Sparkles, Scale, Eye, Building, X, CheckCircle2, Save, Printer, Info } from 'lucide-react';
 import { mythBusterContent, mythCategories, mythScenarios, mythOrganizations, ProofCategory } from '@/data/mythBusterContent';
 import { ListenButton } from '@/components/ListenButton';
 import { FISTFramework } from '@/components/myth-buster/FISTFramework';
@@ -182,6 +182,72 @@ const MythBuster = () => {
     return `${myth.detailedResponse}\n\nScripture: ${scripture.ref} - "${scripture.text}"`;
   };
 
+  // Generate TTS text for a category section
+  const generateCategoryTTSText = (group: { label: string; myths: typeof mythBusterContent }) => {
+    let text = `${group.label}. This section covers ${group.myths.length} topics. `;
+    group.myths.forEach((myth, index) => {
+      text += `Topic ${index + 1}: ${myth.myth}. Response: ${myth.shortAnswer} `;
+    });
+    return text;
+  };
+
+  // Print a single category section
+  const printCategory = (group: { id: string; label: string; myths: typeof mythBusterContent }) => {
+    const printContent = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>${group.label} - Myth Buster Library</title>
+          <style>
+            body { font-family: 'Georgia', serif; max-width: 800px; margin: 40px auto; padding: 20px; line-height: 1.6; }
+            h1 { color: #8B4513; border-bottom: 2px solid #8B4513; padding-bottom: 10px; }
+            .myth { margin-bottom: 30px; padding: 15px; border-left: 4px solid #8B4513; background: #f9f9f9; }
+            .myth-title { font-weight: bold; color: #333; margin-bottom: 10px; }
+            .accusation { color: #c0392b; font-style: italic; margin-bottom: 10px; }
+            .response { color: #27ae60; margin-bottom: 10px; }
+            .scripture { background: #fff; padding: 10px; border-radius: 4px; margin-top: 10px; }
+            .scripture-ref { font-weight: bold; color: #8B4513; }
+            @media print { body { margin: 20px; } }
+          </style>
+        </head>
+        <body>
+          <h1>${categoryIcons[group.id] || '📋'} ${group.label}</h1>
+          <p><em>${categoryDescriptions[group.id]}</em></p>
+          <p><strong>${group.myths.length} topics in this section</strong></p>
+          <hr/>
+          ${group.myths.map((myth, index) => `
+            <div class="myth">
+              <div class="myth-title">${index + 1}. ${myth.myth}</div>
+              <div class="accusation"><strong>What They Say:</strong> "${myth.shortAnswer}"</div>
+              <div class="response"><strong>Your Response:</strong> ${myth.detailedResponse}</div>
+              ${myth.scriptures.map(s => `
+                <div class="scripture">
+                  <span class="scripture-ref">${s.ref}:</span> "${s.text}"
+                </div>
+              `).join('')}
+            </div>
+          `).join('')}
+          <footer style="margin-top: 40px; text-align: center; color: #666; font-size: 12px;">
+            <p>Sacred Greeks - Myth Buster Library</p>
+            <p>Printed on ${new Date().toLocaleDateString()}</p>
+          </footer>
+        </body>
+      </html>
+    `;
+    
+    const printWindow = window.open('', '_blank');
+    if (printWindow) {
+      printWindow.document.write(printContent);
+      printWindow.document.close();
+      printWindow.print();
+    }
+  };
+
+  // Save category notes (placeholder - shows toast for now)
+  const saveCategory = (group: { label: string }) => {
+    toast.success(`${group.label} section saved to your study notes!`);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
       <PreviewBanner featureName="Myth Buster Library" />
@@ -217,6 +283,56 @@ const MythBuster = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8 max-w-4xl">
+        {/* Instructions Card */}
+        <Card className="mb-8 border-sacred/30 bg-sacred/5">
+          <CardHeader className="pb-3">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-sacred/10">
+                  <Info className="w-5 h-5 text-sacred" />
+                </div>
+                <div>
+                  <CardTitle className="text-lg">How to Use This Library</CardTitle>
+                  <p className="text-sm text-muted-foreground mt-1">Your guide to navigating and responding to common criticisms</p>
+                </div>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="grid gap-3 text-sm">
+              <div className="flex items-start gap-2">
+                <span className="font-bold text-sacred">1.</span>
+                <span><strong>Browse by Category:</strong> Each section groups related myths together. Click to expand or collapse sections.</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="font-bold text-sacred">2.</span>
+                <span><strong>Use the Filters:</strong> Search by keyword, scenario, or P.R.O.O.F. criticism type to find specific responses.</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="font-bold text-sacred">3.</span>
+                <span><strong>Listen & Learn:</strong> Use the TTS button to hear responses read aloud for better memorization.</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="font-bold text-sacred">4.</span>
+                <span><strong>Copy Responses:</strong> Use the copy button to quickly share prepared responses in conversations.</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="font-bold text-sacred">5. </span>
+                <span><strong>Track Progress:</strong> Mark myths as reviewed to track your learning journey.</span>
+              </div>
+            </div>
+            <div className="pt-2">
+              <ListenButton 
+                text="Welcome to the Myth Buster Library. This resource helps you respond biblically to common criticisms about Greek life and faith. Browse by category to find related myths grouped together. Use the search and filters to find specific responses. Listen to responses with text-to-speech for better memorization. Copy prepared responses to share in conversations. And mark myths as reviewed to track your learning progress."
+                itemId="myth-buster-instructions"
+                title="Myth Buster Instructions"
+                voice="onyx"
+                showLabel={true}
+              />
+            </div>
+          </CardContent>
+        </Card>
+
         {/* F.I.S.T. Framework */}
         <FISTFramework />
 
@@ -353,7 +469,36 @@ const MythBuster = () => {
                   </CollapsibleTrigger>
                   
                   <CollapsibleContent>
-                    <CardContent className="pt-0 space-y-3">
+                    {/* Section Action Buttons */}
+                    <div className="px-6 pb-3 pt-2 flex flex-wrap items-center gap-2 border-b bg-muted/30">
+                      <ListenButton 
+                        text={generateCategoryTTSText(group)}
+                        itemId={`category-${group.id}`}
+                        title={`${group.label} Overview`}
+                        voice="onyx"
+                        size="sm"
+                        showLabel={true}
+                      />
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={(e) => { e.stopPropagation(); saveCategory(group); }}
+                        className="gap-1.5"
+                      >
+                        <Save className="w-4 h-4" />
+                        Save
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={(e) => { e.stopPropagation(); printCategory(group); }}
+                        className="gap-1.5"
+                      >
+                        <Printer className="w-4 h-4" />
+                        Print
+                      </Button>
+                    </div>
+                    <CardContent className="pt-3 space-y-3">
                       {group.myths.map(myth => (
                         <div key={myth.id} className="border rounded-lg overflow-hidden">
                           <Accordion type="single" collapsible>
