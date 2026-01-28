@@ -25,13 +25,14 @@ import { BELIEF_SCRIPTURES } from "@/lib/proofFrameworkData";
 import { ListenButton } from "@/components/ListenButton";
 import { useLessonCelebration } from "@/hooks/use-lesson-celebration";
 
-// Session IDs 16-20 are for Faith & Authority
+// Session IDs 16-21 are for Faith & Authority
 const FAITH_SESSION_IDS = {
   intro: 16,
   jesusLimitedByUnbelief: 17,
   faithAsChannel: 18,
   beliefAndAuthority: 19,
   fearRequiresBelief: 20,
+  proverbs1821: 21,
 };
 
 // Module color scheme
@@ -41,6 +42,7 @@ const MODULE_COLORS = {
   faithAsChannel: { bg: 'bg-cyan-500', bgLight: 'bg-cyan-500/10', border: 'border-cyan-500/30', text: 'text-cyan-500', gradient: 'from-cyan-500 to-blue-500' },
   beliefAndAuthority: { bg: 'bg-purple-500', bgLight: 'bg-purple-500/10', border: 'border-purple-500/30', text: 'text-purple-500', gradient: 'from-purple-500 to-pink-500' },
   fearRequiresBelief: { bg: 'bg-rose-500', bgLight: 'bg-rose-500/10', border: 'border-rose-500/30', text: 'text-rose-500', gradient: 'from-rose-500 to-red-500' },
+  proverbs1821: { bg: 'bg-emerald-500', bgLight: 'bg-emerald-500/10', border: 'border-emerald-500/30', text: 'text-emerald-500', gradient: 'from-emerald-500 to-teal-500' },
 };
 
 interface Module {
@@ -240,7 +242,7 @@ Many believers unknowingly empower things through fear that they never empowered
 
 **Key Scriptures in This Module:**
 
-${BELIEF_SCRIPTURES.fearRequiresBelief.map(s => `• **${s.reference}**: "${s.text}"\n  💡 ${s.principle}`).join('\n\n')}
+See the scripture cards below for detailed references.
 
 **The Romans 8 Declaration:**
 
@@ -252,7 +254,75 @@ No ritual. No symbol. No word spoken in ignorance. NOTHING can separate you from
 
 • Have I been giving power through fear to things I never believed in?
 • Do I understand that my security in Christ is not threatened by past ignorance?
-• Am I ready to walk in the freedom and authority Christ has given me?
+• Am I ready to walk in the freedom and authority Christ has given me?`
+  },
+  {
+    id: "proverbs1821",
+    sessionId: FAITH_SESSION_IDS.proverbs1821,
+    number: 5,
+    title: "Module 5: Proverbs 18:21 in Context",
+    subtitle: "Words, wisdom, and the nature of spiritual power",
+    icon: <BookOpen className="w-6 h-6 text-white" />,
+    duration: "10 min",
+    takeaways: 5,
+    content: `**Understanding "Death and Life in the Power of the Tongue"**
+
+The phrase "death and life are in the power of the tongue" (Proverbs 18:21) is frequently cited to argue that spoken words in rituals automatically create spiritual consequences. However, this interpretation lifts the verse out of its wisdom literature context and applies it in a way Scripture itself does not support.
+
+**The Wisdom Literature Context:**
+
+Proverbs is not teaching that words possess autonomous spiritual power or magical force. Rather, it describes the **relational and social impact of speech**—how words can harm, heal, influence, or reconcile within human community.
+
+**Scholarly Insight:**
+
+Old Testament scholars such as Bruce Waltke and Tremper Longman emphasize that Proverbs uses **poetic exaggeration** to communicate moral truth, not metaphysical mechanics. The genre of wisdom literature employs vivid imagery to teach practical wisdom, not to establish doctrines about how the spiritual realm operates.
+
+**The Biblical Framework for Spiritual Power:**
+
+Scripture consistently teaches that spiritual power flows from:
+
+• **Belief** — Romans 10:10: "For it is with your heart that you believe and are justified"
+• **Covenant** — Relationship with God through Christ
+• **Worship** — Intentional direction of faith and adoration
+
+Not from speech alone. Mark 6:5–6 demonstrates that even Jesus's power was channeled through faith, not merely words.
+
+**Application to Greek Life:**
+
+In Greek Life rituals, spoken words function as:
+
+• **Symbolic instruction** — Teaching organizational values and history
+• **Communal commitment** — Pledging loyalty to brothers/sisters
+• **Ceremonial tradition** — Preserving organizational heritage
+
+They are **not** invocations of spiritual authority or divine power. Without belief, intent, or worship directed toward a deity, words remain descriptive, not spiritually operative.
+
+**The Pauline Framework:**
+
+This aligns with Paul's teaching:
+
+• **1 Corinthians 8:4** — "An idol is nothing" apart from belief
+• **Romans 14:14** — "Nothing is unclean in itself, but if anyone regards something as unclean, then for that person it is unclean"
+
+Conscience, not vocabulary, determines spiritual consequence.
+
+**The Conclusion:**
+
+Proverbs 18:21 **cannot** be used to claim that ritual language in Greek organizations carries inherent spiritual power, because Scripture locates spiritual authority in the **heart and faith of the speaker**, not in the words themselves.
+
+**Scholarly References:**
+
+• Waltke, Bruce K. *The Book of Proverbs: Chapters 15–31*. Eerdmans
+• Longman III, Tremper. *Proverbs*. Baker Academic
+• Fee, Gordon D. *Pauline Christology*. Baker Academic
+• Wright, N. T. *Paul and the Faithfulness of God*. Fortress Press
+
+**Reflection Questions:**
+
+• Have I been taught that spoken words have automatic spiritual power?
+• How does understanding the wisdom literature genre change my interpretation of Proverbs 18:21?
+• Do I recognize the difference between relational impact and metaphysical power?
+• Am I grounding my understanding of spiritual authority in the full counsel of Scripture?
 
 **Course Completion:**
 
@@ -271,7 +341,7 @@ export default function FaithAuthority() {
   
   // Get completed modules
   const completedModules = studyProgress
-    .filter(p => p.session_id >= 16 && p.session_id <= 20 && p.completed)
+    .filter(p => p.session_id >= 16 && p.session_id <= 21 && p.completed)
     .map(p => p.session_id);
   
   const progress = (completedModules.length / modules.length) * 100;
@@ -297,7 +367,7 @@ export default function FaithAuthority() {
           setTimeout(() => triggerMilestone('first'), 2500);
         } else if (completedModules.length === 3) {
           setTimeout(() => triggerMilestone('halfway'), 2500);
-        } else if (completedModules.length === 5) {
+        } else if (completedModules.length === 6) {
           setTimeout(() => triggerMilestone('complete'), 2500);
         }
       }
