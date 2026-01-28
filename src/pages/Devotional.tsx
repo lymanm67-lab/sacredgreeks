@@ -20,6 +20,7 @@ import { ListenButton } from '@/components/ListenButton';
 import { VoiceInputButton } from '@/components/VoiceInputButton';
 import { OrgDevotionalContent } from '@/components/devotional/OrgDevotionalContent';
 import { useDemoMode } from '@/contexts/DemoModeContext';
+import { invokeCheckAchievements } from '@/lib/invoke-check-achievements';
 
 // Demo devotional data
 const DEMO_DEVOTIONAL: Devotional = {
@@ -171,9 +172,7 @@ const Devotional = () => {
       await completeChallenge('devotional');
 
       // Check for achievements via edge function
-      await supabase.functions.invoke('check-achievements', {
-        body: { userId: user.id, actionType: 'devotional' }
-      });
+      await invokeCheckAchievements({ userId: user.id, actionType: 'devotional' });
 
       toast({
         title: 'Devotional completed!',

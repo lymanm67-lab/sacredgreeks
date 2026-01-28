@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import { invokeCheckAchievements } from "@/lib/invoke-check-achievements";
 
 export interface StudyProgress {
   id: string;
@@ -69,15 +70,13 @@ export const useStudyProgress = () => {
         // Award points for completing study session
         try {
           await supabase.rpc("award_points", {
-            _user_id: user?.id,
+            _user_id: user!.id,
             _points: 15,
             _action_type: "study",
           });
 
           // Check for achievements
-          await supabase.functions.invoke('check-achievements', {
-            body: { userId: user?.id, actionType: 'study' }
-          });
+          await invokeCheckAchievements({ userId: user!.id, actionType: "study" });
         } catch (error) {
           console.error("Error awarding points:", error);
         }

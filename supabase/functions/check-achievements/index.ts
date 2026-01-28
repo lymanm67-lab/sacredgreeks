@@ -100,6 +100,34 @@ serve(async (req) => {
 
     const newAchievements = [];
 
+    const awardAchievementByKey = async (achievementKey: string) => {
+      if (earnedKeys.has(achievementKey)) return;
+
+      const { data: achievement } = await supabase
+        .from("achievements")
+        .select("*")
+        .eq("achievement_key", achievementKey)
+        .maybeSingle();
+
+      if (!achievement) return;
+
+      const { error: insertError } = await supabase.from("user_achievements").insert({
+        user_id: userId,
+        achievement_id: achievement.id,
+      });
+
+      if (!insertError) {
+        earnedKeys.add(achievementKey);
+        newAchievements.push(achievement);
+      } else {
+        // If it's a duplicate insert, ignore; otherwise surface in logs.
+        logStep("Failed to insert user_achievement", {
+          achievementKey,
+          error: insertError.message,
+        });
+      }
+    };
+
     // Check for first-time achievements
     if (actionType === "devotional" && !earnedKeys.has("first_devotional")) {
       const { data: achievement } = await supabase
@@ -153,6 +181,33 @@ serve(async (req) => {
           });
           newAchievements.push(achievement);
         }
+      }
+
+      // ===== Training module completion achievements =====
+      // PROOF Course: sessions 1-5
+      const PROOF_SESSIONS = [1, 2, 3, 4, 5];
+      // Greek Life & Guild: sessions 6-15
+      const GREEK_LIFE_SESSIONS = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+      // Faith & Authority: sessions 16-20
+      const FAITH_AUTH_SESSIONS = [16, 17, 18, 19, 20];
+
+      const hasAll = (completedSessionIds: number[], required: number[]) => {
+        const set = new Set(completedSessionIds);
+        return required.every((id) => set.has(id));
+      };
+
+      const completedIds = (progress ?? []).map((p: any) => p.session_id);
+
+      if (hasAll(completedIds, PROOF_SESSIONS)) {
+        await awardAchievementByKey("proof_course_complete");
+      }
+
+      if (hasAll(completedIds, GREEK_LIFE_SESSIONS)) {
+        await awardAchievementByKey("greek_life_training_complete");
+      }
+
+      if (hasAll(completedIds, FAITH_AUTH_SESSIONS)) {
+        await awardAchievementByKey("faith_authority_complete");
       }
     }
 
