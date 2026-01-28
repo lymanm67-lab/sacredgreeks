@@ -386,6 +386,10 @@ export default function FaithAuthority() {
               <span className="text-muted-foreground">Based on</span>
               <span className="text-amber-600 dark:text-amber-400 ml-2 font-medium">Mark 6:5-6 • Hebrews 11:6 • 1 Corinthians 8</span>
             </div>
+            <div className="px-4 py-2 rounded-lg bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30">
+              <span className="text-amber-600 dark:text-amber-400 font-semibold">🏆 Earn 50 Points</span>
+              <span className="text-muted-foreground ml-2">upon completion</span>
+            </div>
           </div>
         </motion.div>
 
