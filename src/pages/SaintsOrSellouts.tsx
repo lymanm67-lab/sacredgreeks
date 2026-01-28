@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -51,6 +50,7 @@ import { useStudyProgress } from "@/hooks/use-study-progress";
 import { useGamification } from "@/hooks/use-gamification";
 import { useLessonCelebration } from "@/hooks/use-lesson-celebration";
 import { useTTS } from "@/hooks/use-tts";
+import { CourseRecommendations } from "@/components/courses/CourseRecommendations";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -1118,18 +1118,10 @@ export default function SaintsOrSellouts() {
                         <p className="text-muted-foreground max-w-md mx-auto">
                           You've gained a biblical framework for understanding cultural engagement through the lives of Joseph, Daniel, and Esther.
                         </p>
-                        <div className="flex justify-center gap-4 mt-6">
-                          <Link to="/proof-course">
-                            <Button variant="outline" className="gap-2">
-                              <BookOpen className="w-4 h-4" /> Take PROOF Course
-                            </Button>
-                          </Link>
-                          <Link to="/greek-life-training">
-                            <Button className="gap-2">
-                              <GraduationCap className="w-4 h-4" /> Continue Training
-                            </Button>
-                          </Link>
-                        </div>
+                        <CourseRecommendations 
+                          excludePaths={["/saints-or-sellouts"]} 
+                          maxRecommendations={2}
+                        />
                       </CardContent>
                     </Card>
                   </motion.div>
