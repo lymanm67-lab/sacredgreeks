@@ -5,6 +5,35 @@ import { useBackgroundAudio } from "./use-background-audio";
 
 export type PlaybackSpeed = 0.5 | 0.75 | 1 | 1.25 | 1.5 | 2;
 
+// Browser Speech Synthesis fallback
+const speakWithBrowserTTS = (text: string, itemId: string): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    if (!('speechSynthesis' in window)) {
+      reject(new Error('Browser does not support text-to-speech'));
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    const voices = window.speechSynthesis.getVoices();
+    const preferredVoice = voices.find(v => 
+      v.lang.startsWith('en') && (v.name.includes('Male') || v.name.includes('Daniel') || v.name.includes('Google'))
+    ) || voices.find(v => v.lang.startsWith('en')) || voices[0];
+    
+    if (preferredVoice) utterance.voice = preferredVoice;
+    utterance.rate = 0.95;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+
+    utterance.onend = () => resolve();
+    utterance.onerror = (event) => reject(new Error(`Speech error: ${event.error}`));
+
+    toast.info('Using browser voice (premium voice unavailable)');
+    window.speechSynthesis.speak(utterance);
+  });
+};
+
 export const useTextToSpeech = () => {
   const [isPlaying, setIsPlaying] = useState<string | null>(null);
   const [isPaused, setIsPaused] = useState<boolean>(false);
@@ -88,7 +117,12 @@ export const useTextToSpeech = () => {
         body: { text, voice },
       });
 
-      if (error) throw error;
+      // Check for quota exceeded - use browser TTS fallback
+      if (error || data?.code === 'quota_exceeded') {
+        console.log('ElevenLabs unavailable, using browser TTS fallback');
+        await speakWithBrowserTTS(text, itemId);
+        return;
+      }
 
       if (!data?.audioContent) {
         throw new Error("No audio content received");
