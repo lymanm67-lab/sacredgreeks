@@ -184,20 +184,20 @@ export function AppSidebar() {
           <NavLink 
             to={item.url} 
             className={cn(
-              "flex items-center gap-3 transition-colors py-3 px-3 -mx-3 rounded-md",
+              "flex flex-col transition-colors py-2 px-3 -mx-3 rounded-md",
               isActive(item.url) && "text-primary font-medium"
             )}
           >
-            <item.icon className={cn("h-4 w-4 shrink-0", item.iconColor)} />
-            <div className="flex-1 min-w-0 flex flex-col">
+            <div className="flex items-center gap-3">
+              <item.icon className={cn("h-4 w-4 shrink-0", item.iconColor)} />
               <span className="truncate">{item.title}</span>
-              {hasProgressBar && (
-                <div className="flex items-center gap-1.5 mt-1 w-full">
-                  <Progress value={progress} className="h-1 flex-1 max-w-[80px]" />
-                  <span className="text-[10px] text-muted-foreground shrink-0">{progress}%</span>
-                </div>
-              )}
             </div>
+            {hasProgressBar && (
+              <div className="flex items-center gap-1.5 mt-1.5 ml-7">
+                <Progress value={progress} className="h-1 w-16" />
+                <span className="text-[10px] text-muted-foreground">{progress}%</span>
+              </div>
+            )}
           </NavLink>
         </SidebarMenuButton>
       </SidebarMenuItem>
