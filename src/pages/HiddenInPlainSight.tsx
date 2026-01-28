@@ -238,6 +238,10 @@ const LANGUAGE_CONTENT = {
       content: "Some Christian leaders have taken Proverbs 18:21 ('Death and life are in the power of the tongue') out of context, teaching that spoken words have autonomous magical power. If this interpretation were true, merely saying words would invoke magic spells—making every pagan phrase Christians speak a genuine spiritual danger. But the verse describes the relational and social impact of speech, not incantation magic.",
     },
     {
+      title: "Sympathetic Witchcraft Warning",
+      content: "If you believe that uttering words has power without faith or belief behind them, you are guilty of practicing sympathetic witchcraft—the casting of spells. Sympathetic magic operates on the principle that 'like produces like' and that words or symbols automatically produce effects regardless of intent. This is sorcery, not biblical faith. Scripture teaches that faith activates spiritual reality (Hebrews 11:1), not the mere pronunciation of syllables.",
+    },
+    {
       title: "If Words Were Magic Spells...",
       content: "If words automatically invoked spiritual power, then saying 'Thursday' (Thor's Day), 'cereal' (goddess Ceres), or 'good luck' (the Fates) would be actual pagan worship. The fact that Christians say these words without spiritual consequence proves that context and intent matter—not the mere utterance of sounds.",
     },
