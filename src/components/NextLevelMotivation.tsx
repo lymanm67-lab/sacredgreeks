@@ -221,10 +221,10 @@ export const NextLevelMotivation = () => {
           
           <div className="grid grid-cols-2 gap-3">
             {[
-              { action: "Daily Devotional", points: 10, icon: BookOpen, count: activityCounts?.devotionals || 0, color: "blue" },
-              { action: "Prayer Journal", points: 10, icon: Heart, count: activityCounts?.prayers || 0, color: "teal" },
-              { action: "Complete Assessment", points: 20, icon: Target, count: activityCounts?.assessments || 0, color: "amber" },
-              { action: "Study Session", points: 25, icon: GraduationCap, count: activityCounts?.studySessions || 0, color: "purple" },
+              { action: "Completed your first devotional", points: 10, icon: BookOpen, count: activityCounts?.devotionals || 0, color: "blue" },
+              { action: "Completed your first prayer to the journal", points: 10, icon: Heart, count: activityCounts?.prayers || 0, color: "teal" },
+              { action: "Completed your first Sacred Greeks Assessment", points: 20, icon: Target, count: activityCounts?.assessments || 0, color: "amber" },
+              { action: "Completed your first study session", points: 25, icon: GraduationCap, count: activityCounts?.studySessions || 0, color: "purple" },
             ].map((item, index) => {
               const isCompleted = item.count > 0;
               const earnedPoints = item.count * item.points;
