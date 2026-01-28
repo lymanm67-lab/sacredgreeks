@@ -95,6 +95,27 @@ function splitTextIntoChunks(text: string, maxLength: number): string[] {
 }
 
 // Generate speech for a single chunk with optional context for stitching
+type ChunkAudioResult =
+  | { ok: true; audio: ArrayBuffer }
+  | {
+      ok: false;
+      status: number;
+      errorText: string;
+      quotaExceeded: boolean;
+    };
+
+function isQuotaExceededErrorText(errorText: string): boolean {
+  if (!errorText) return false;
+  if (errorText.includes("quota_exceeded")) return true;
+  // ElevenLabs sometimes returns a JSON error payload with detail.status
+  try {
+    const parsed = JSON.parse(errorText);
+    return parsed?.detail?.status === "quota_exceeded";
+  } catch {
+    return false;
+  }
+}
+
 async function generateChunkAudio(
   text: string,
   voiceId: string,
@@ -102,7 +123,7 @@ async function generateChunkAudio(
   apiKey: string,
   previousText?: string,
   nextText?: string
-): Promise<ArrayBuffer> {
+): Promise<ChunkAudioResult> {
   const body: Record<string, unknown> = {
     text,
     model_id: "eleven_turbo_v2_5", // Use turbo for faster multi-chunk processing
@@ -139,10 +160,15 @@ async function generateChunkAudio(
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`ElevenLabs API error: ${response.status} - ${errorText}`);
+    return {
+      ok: false,
+      status: response.status,
+      errorText,
+      quotaExceeded: isQuotaExceededErrorText(errorText),
+    };
   }
 
-  return response.arrayBuffer();
+  return { ok: true, audio: await response.arrayBuffer() };
 }
 
 // Concatenate MP3 audio buffers into a single ArrayBuffer
@@ -216,7 +242,32 @@ serve(async (req) => {
 
     if (chunks.length === 1) {
       // Single chunk - simple request
-      finalAudioBuffer = await generateChunkAudio(chunks[0], voiceId, voice, ELEVENLABS_API_KEY);
+      const result = await generateChunkAudio(
+        chunks[0],
+        voiceId,
+        voice,
+        ELEVENLABS_API_KEY
+      );
+
+      if (!result.ok) {
+        if (result.quotaExceeded) {
+          return new Response(
+            JSON.stringify({
+              error: `ElevenLabs quota exceeded: ${result.errorText}`,
+              code: "quota_exceeded",
+            }),
+            { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+        return new Response(
+          JSON.stringify({
+            error: `ElevenLabs API error: ${result.status} - ${result.errorText}`,
+          }),
+          { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      finalAudioBuffer = result.audio;
     } else {
       // Multiple chunks - use request stitching for natural flow
       const audioBuffers: ArrayBuffer[] = [];
@@ -227,7 +278,7 @@ serve(async (req) => {
 
         console.log(`Processing chunk ${i + 1}/${chunks.length} (${chunks[i].length} chars)`);
 
-        const buffer = await generateChunkAudio(
+        const result = await generateChunkAudio(
           chunks[i],
           voiceId,
           voice,
@@ -236,7 +287,25 @@ serve(async (req) => {
           nextText
         );
 
-        audioBuffers.push(buffer);
+        if (!result.ok) {
+          if (result.quotaExceeded) {
+            return new Response(
+              JSON.stringify({
+                error: `ElevenLabs quota exceeded: ${result.errorText}`,
+                code: "quota_exceeded",
+              }),
+              { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+            );
+          }
+          return new Response(
+            JSON.stringify({
+              error: `ElevenLabs API error: ${result.status} - ${result.errorText}`,
+            }),
+            { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          );
+        }
+
+        audioBuffers.push(result.audio);
       }
 
       // Concatenate all audio buffers
@@ -255,18 +324,6 @@ serve(async (req) => {
 
     const message = error instanceof Error ? error.message : "Unknown error";
 
-    // Avoid returning 500 for expected upstream conditions (prevents app-level crash overlays).
-    // ElevenLabs quota errors sometimes come back as 401 with a payload containing status=quota_exceeded.
-    if (message.includes("quota_exceeded")) {
-      return new Response(
-        JSON.stringify({
-          error: message,
-          code: "quota_exceeded",
-        }),
-        { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
-    
     if (message.includes("429")) {
       return new Response(
         JSON.stringify({ error: "Rate limit exceeded. Please try again in a moment." }),
