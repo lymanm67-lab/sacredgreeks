@@ -25,6 +25,7 @@ import { toast } from "sonner";
 import { format } from "date-fns";
 import { AssessmentTTS } from "./AssessmentTTS";
 import { useGamification } from "@/hooks/use-gamification";
+import { useMicroCelebration } from "@/hooks/use-micro-celebration";
 import jsPDF from "jspdf";
 
 interface ResultSection {
@@ -109,6 +110,7 @@ export function AssessmentResultsPanel({
   const { user } = useAuth();
   const navigate = useNavigate();
   const { awardPoints } = useGamification();
+  const { celebrateAchievement } = useMicroCelebration();
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const reportRef = useRef<HTMLDivElement>(null);
@@ -160,6 +162,9 @@ export function AssessmentResultsPanel({
 
       // Award 20 points for completing an assessment
       awardPoints({ points: 20, actionType: 'assessment_completed' });
+
+      // Trigger confetti celebration
+      celebrateAchievement();
 
       setIsSaved(true);
       toast.success("Results saved successfully! +20 points");
