@@ -12,6 +12,7 @@ export default function FaithAuthority() {
   const { progressData } = useNavigationProgress();
   const progress = progressData?.faithAuthority || 0;
   const completedSections = Math.round((progress / 100) * 5);
+  const isProofComplete = (progressData?.proofCourse || 0) >= 100;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
@@ -104,9 +105,18 @@ export default function FaithAuthority() {
             Explore the P.R.O.O.F. Framework to understand how these principles apply to Greek life and faith.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button asChild className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600">
-              <Link to="/proof-course">Explore P.R.O.O.F. Framework</Link>
-            </Button>
+            {isProofComplete ? (
+              <Button asChild className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600">
+                <Link to="/greek-life-training">
+                  <CheckCircle2 className="w-4 h-4 mr-2" />
+                  Continue Greek Life Training
+                </Link>
+              </Button>
+            ) : (
+              <Button asChild className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600">
+                <Link to="/proof-course">Explore P.R.O.O.F. Framework</Link>
+              </Button>
+            )}
             <Button asChild variant="outline" className="border-white/20 text-white hover:bg-white/10">
               <Link to="/myth-buster">View MythBusters</Link>
             </Button>
