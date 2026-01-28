@@ -1,13 +1,19 @@
 import { motion } from "framer-motion";
-import { BookOpen, CheckCircle2, Play, Sparkles, GraduationCap, Star, Zap } from "lucide-react";
+import { BookOpen, CheckCircle2, Play, Sparkles, GraduationCap, Star, Zap, ArrowLeft, Trophy, Download, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { Link } from "react-router-dom";
+import { generateAllProofLessonsPDF } from "@/lib/proof-lesson-pdf";
+import { generateAllWorksheetsPDF } from "@/lib/proof-worksheet-pdf";
 
 interface ProofCourseOnboardingProps {
   onStartCourse: () => void;
   completedLessons: number;
   totalLessons: number;
 }
+
+// Total course point value
+const COURSE_POINTS = 500;
 
 // PROOF letter data with colors
 const PROOF_LETTERS = [
@@ -61,20 +67,50 @@ export function ProofCourseOnboarding({
       </div>
 
       <div className="relative z-10 p-6 md:p-8 lg:p-10">
+        {/* Back to Dashboard Button */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="mb-4"
+        >
+          <Button variant="ghost" size="sm" asChild className="text-white/70 hover:text-white hover:bg-white/10">
+            <Link to="/dashboard">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Dashboard
+            </Link>
+          </Button>
+        </motion.div>
+
         <div className="flex flex-col lg:flex-row items-center gap-8">
           {/* Left: Content */}
           <div className="flex-1 text-center lg:text-left">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.1 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 mb-4"
-            >
-              <Sparkles className="w-4 h-4 text-amber-400" />
-              <span className="text-amber-300 text-sm font-medium">
-                {isComplete ? "Course Complete!" : hasStarted ? "Continue Your Journey" : "Start Your Journey"}
-              </span>
-            </motion.div>
+            {/* Badges Row */}
+            <div className="flex flex-wrap justify-center lg:justify-start gap-2 mb-4">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.1 }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30"
+              >
+                <Sparkles className="w-4 h-4 text-amber-400" />
+                <span className="text-amber-300 text-sm font-medium">
+                  {isComplete ? "Course Complete!" : hasStarted ? "Continue Your Journey" : "Start Your Journey"}
+                </span>
+              </motion.div>
+              
+              {/* Point Value Badge */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.15 }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/30"
+              >
+                <Trophy className="w-4 h-4 text-green-400" />
+                <span className="text-green-300 text-sm font-medium">
+                  {COURSE_POINTS} Points
+                </span>
+              </motion.div>
+            </div>
 
             <motion.h1 
               initial={{ opacity: 0, y: 10 }}
@@ -119,11 +155,12 @@ export function ProofCourseOnboarding({
               </div>
             </motion.div>
 
-            {/* CTA Button */}
+            {/* CTA Buttons Row */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
+              className="flex flex-wrap justify-center lg:justify-start gap-3"
             >
               <Button 
                 size="lg"
@@ -132,6 +169,26 @@ export function ProofCourseOnboarding({
               >
                 <Play className="w-5 h-5 mr-2" />
                 {isComplete ? "Review Course" : hasStarted ? "Continue Learning" : "Start Lesson"}
+              </Button>
+              
+              {/* Save & Print Options */}
+              <Button 
+                variant="outline"
+                size="lg"
+                onClick={() => generateAllProofLessonsPDF()}
+                className="border-white/20 text-white hover:bg-white/10 hover:border-white/30"
+              >
+                <Download className="w-5 h-5 mr-2" />
+                Save All PDFs
+              </Button>
+              <Button 
+                variant="outline"
+                size="lg"
+                onClick={() => generateAllWorksheetsPDF()}
+                className="border-white/20 text-white hover:bg-white/10 hover:border-white/30"
+              >
+                <Printer className="w-5 h-5 mr-2" />
+                Print Worksheets
               </Button>
             </motion.div>
           </div>
