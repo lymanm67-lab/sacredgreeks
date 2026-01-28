@@ -18,6 +18,7 @@ import {
   Crown,
   Lock,
   Users,
+  Scale,
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GREEK_COUNCILS } from "@/data/greekOrganizations";
@@ -35,6 +36,7 @@ const iconMap: Record<string, any> = {
   Star,
   Crown,
   Users,
+  Scale,
 };
 
 interface OrgAchievement {

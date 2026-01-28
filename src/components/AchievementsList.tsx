@@ -24,6 +24,7 @@ import {
   Landmark,
   Scroll,
   Church,
+  Scale,
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
@@ -43,6 +44,7 @@ const iconMap: Record<string, any> = {
   Landmark,
   Scroll,
   Church,
+  Scale,
 };
 
 const achievementColors: Record<string, { bg: string; border: string; icon: string; glow: string }> = {
