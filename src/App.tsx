@@ -125,6 +125,7 @@ const ParentsFamily = lazy(() => import("./pages/ParentsFamily"));
 const TrainingSuccessVault = lazy(() => import("./pages/TrainingSuccessVault"));
 const ShouldYouStayOrLeave = lazy(() => import("./pages/ShouldYouStayOrLeave"));
 const SaintsOrSellouts = lazy(() => import("./pages/SaintsOrSellouts"));
+const HiddenInPlainSight = lazy(() => import("./pages/HiddenInPlainSight"));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -266,6 +267,7 @@ const App = () => (
                     <Route path="/faith-authority" element={<FaithAuthority />} />
                     <Route path="/should-you-stay-or-leave" element={<ShouldYouStayOrLeave />} />
                     <Route path="/saints-or-sellouts" element={<SaintsOrSellouts />} />
+                    <Route path="/hidden-in-plain-sight" element={<HiddenInPlainSight />} />
                     <Route path="/chapter-kit" element={<ChapterKit />} />
                     <Route path="/economic-history" element={<EconomicHistory />} />
                     <Route path="/ancient-guild-training" element={<Navigate to="/greek-life-training" replace />} />

@@ -19,6 +19,19 @@ interface ChangelogEntry {
 
 const changelog: ChangelogEntry[] = [
   {
+    version: "2.5.0",
+    date: "2026-01-28",
+    title: "Hidden in Plain Sight Course",
+    type: "minor",
+    changes: [
+      { category: "feature", description: "New 'Hidden in Plain Sight' course exploring pagan roots in American & Christian traditions" },
+      { category: "feature", description: "6 interactive modules covering birthdays, weddings, holidays, symbols, and more" },
+      { category: "feature", description: "Case study format with TTS narration using Marcus voice" },
+      { category: "feature", description: "100 points awarded upon course completion" },
+      { category: "improvement", description: "Achievement tracking for course completion on Achievements page" },
+    ]
+  },
+  {
     version: "2.4.0",
     date: "2025-12-03",
     title: "Admin Gifting & Feature Customization",

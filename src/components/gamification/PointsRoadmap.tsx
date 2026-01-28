@@ -6,6 +6,7 @@ import {
   GraduationCap, 
   Scale,
   Crown,
+  Eye,
   CheckCircle2, 
   Circle,
   ChevronRight,
@@ -126,6 +127,18 @@ const ROADMAP_STEPS: RoadmapStep[] = [
     completedKey: "saintsOrSellouts",
     isTraining: true,
     progressKey: "saintsOrSellouts"
+  },
+  {
+    id: "hidden-in-plain-sight",
+    title: "Hidden in Plain Sight",
+    description: "Complete all 6 modules exploring pagan roots in modern customs",
+    points: 100,
+    icon: Eye,
+    color: "amber",
+    link: "/hidden-in-plain-sight",
+    completedKey: "hiddenInPlainSight",
+    isTraining: true,
+    progressKey: "hiddenInPlainSight"
   }
 ];
 
