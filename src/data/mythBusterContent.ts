@@ -245,6 +245,23 @@ export const mythBusterContent: MythEntry[] = [
     tags: ["pledging", "intake", "bondage", "freedom"]
   },
   {
+    id: "greek-oaths-sinful",
+    myth: "Greek Oaths and Vows Are Sinful",
+    category: "rituals",
+    proofCategory: "oaths",
+    scenario: "Church Challenge",
+    organization: "BGLO",
+    shortAnswer: "Taking oaths in Greek organizations violates Scripture's commands against swearing oaths.",
+    detailedResponse: "Jesus' teaching on oaths (Matthew 5:33-37) addresses dishonest oath-taking and manipulation—not all commitments. Marriage vows, court testimony, military oaths, and baptismal confessions are all forms of solemn commitment Christians regularly make. The issue is whether an oath requires you to promise something sinful, worship something other than God, or make commitments you cannot keep. Greek organizational oaths typically involve commitments to scholarship, service, and brotherhood/sisterhood—values consistent with Christian living. Evaluate the content of specific oaths, not the concept of making commitments.",
+    scriptures: [
+      { ref: "Matthew 5:33-37", text: "Again, you have heard that it was said to the people long ago, 'Do not break your oath, but fulfill to the Lord the vows you have made.' But I tell you, do not swear an oath at all... All you need to say is simply 'Yes' or 'No'; anything beyond this comes from the evil one." },
+      { ref: "Ecclesiastes 5:4-5", text: "When you make a vow to God, do not delay to fulfill it. He has no pleasure in fools; fulfill your vow. It is better not to make a vow than to make one and not fulfill it." },
+      { ref: "Numbers 30:2", text: "When a man makes a vow to the Lord or takes an oath to obligate himself by a pledge, he must not break his word but must do everything he said." },
+      { ref: "Hebrews 6:16-17", text: "People swear by someone greater than themselves, and the oath confirms what is said and puts an end to all argument. Because God wanted to make the unchanging nature of his purpose very clear to the heirs of what was promised, he confirmed it with an oath." }
+    ],
+    tags: ["oaths", "vows", "swearing", "commitment", "promises", "pledges"]
+  },
+  {
     id: "greeks-have-spirits",
     myth: "Greeks Are Bound by Spirits Attached to Organizations",
     category: "rituals",
