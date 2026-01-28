@@ -1,9 +1,12 @@
 import { motion } from "framer-motion";
-import { Flame, Target, Sparkles, ChevronRight, Zap } from "lucide-react";
+import { Flame, Target, Sparkles, ChevronRight, Zap, CheckCircle2 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { useGamification } from "@/hooks/use-gamification";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   BookOpen,
   Award,
@@ -40,7 +43,31 @@ const MOTIVATIONAL_MESSAGES = [
 ];
 
 export const NextLevelMotivation = () => {
+  const { user } = useAuth();
   const { stats, achievements, allAchievements, levelProgress, pointsToNextLevel } = useGamification();
+
+  // Fetch user activity counts to determine completion status
+  const { data: activityCounts } = useQuery({
+    queryKey: ['user-activity-counts', user?.id],
+    queryFn: async () => {
+      if (!user) return null;
+      
+      const [assessments, devotionals, prayers, studySessions] = await Promise.all([
+        supabase.from('assessment_submissions').select('id', { count: 'exact', head: true }).eq('user_id', user.id),
+        supabase.from('user_progress').select('id', { count: 'exact', head: true }).eq('user_id', user.id).eq('devotional_completed', true),
+        supabase.from('prayer_journal').select('id', { count: 'exact', head: true }).eq('user_id', user.id),
+        supabase.from('study_session_progress').select('id', { count: 'exact', head: true }).eq('user_id', user.id),
+      ]);
+      
+      return {
+        assessments: assessments.count || 0,
+        devotionals: devotionals.count || 0,
+        prayers: prayers.count || 0,
+        studySessions: studySessions.count || 0,
+      };
+    },
+    enabled: !!user,
+  });
 
   if (!stats) return null;
 
@@ -187,25 +214,42 @@ export const NextLevelMotivation = () => {
           
           <div className="grid grid-cols-2 gap-2">
             {[
-              { action: "Daily Devotional", points: "+10 pts", icon: BookOpen },
-              { action: "Prayer Journal", points: "+10 pts", icon: Heart },
-              { action: "Complete Assessment", points: "+20 pts", icon: Target },
-              { action: "Study Session", points: "+25 pts", icon: GraduationCap },
-            ].map((item, index) => (
-              <motion.div
-                key={item.action}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5 + (index * 0.1) }}
-                className="flex items-center gap-2 p-2 rounded-lg bg-background/50"
-              >
-                <item.icon className="w-4 h-4 text-secondary" />
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs font-medium truncate">{item.action}</p>
-                  <p className="text-xs text-secondary font-bold">{item.points}</p>
-                </div>
-              </motion.div>
-            ))}
+              { action: "Daily Devotional", points: 10, icon: BookOpen, count: activityCounts?.devotionals || 0 },
+              { action: "Prayer Journal", points: 10, icon: Heart, count: activityCounts?.prayers || 0 },
+              { action: "Complete Assessment", points: 20, icon: Target, count: activityCounts?.assessments || 0 },
+              { action: "Study Session", points: 25, icon: GraduationCap, count: activityCounts?.studySessions || 0 },
+            ].map((item, index) => {
+              const isCompleted = item.count > 0;
+              const earnedPoints = item.count * item.points;
+              
+              return (
+                <motion.div
+                  key={item.action}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.5 + (index * 0.1) }}
+                  className={`flex items-center gap-2 p-2 rounded-lg ${isCompleted ? 'bg-primary/10 border border-primary/20' : 'bg-background/50'}`}
+                >
+                  <div className="relative">
+                    <item.icon className={`w-4 h-4 ${isCompleted ? 'text-primary' : 'text-secondary'}`} />
+                    {isCompleted && (
+                      <CheckCircle2 className="w-3 h-3 text-primary absolute -bottom-1 -right-1 fill-background" />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className={`text-xs font-medium truncate ${isCompleted ? 'text-primary' : ''}`}>{item.action}</p>
+                    <div className="flex items-center gap-1">
+                      <p className={`text-xs font-bold ${isCompleted ? 'text-primary' : 'text-secondary'}`}>+{item.points} pts</p>
+                      {isCompleted && (
+                        <Badge variant="secondary" className="text-[9px] px-1 py-0 h-3.5 bg-primary/20 text-primary">
+                          {earnedPoints} earned ({item.count}×)
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </Card>
       </motion.div>
