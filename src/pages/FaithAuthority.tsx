@@ -136,6 +136,7 @@ ${BELIEF_SCRIPTURES.jesusLimitedByUnbelief.map(s => `• **${s.reference}**: "${
 
 **Scholarly References:**
 
+• Montgomery, Lyman. *Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate*. 2025.
 • France, R.T. *The Gospel of Mark* (NIGTC). Eerdmans, 2002.
 • Guelich, Robert A. *Mark 1–8:26* (WBC). Thomas Nelson, 1989.
 • Keener, Craig S. *Miracles: The Credibility of the New Testament Accounts*. Baker Academic, 2011.
@@ -185,6 +186,7 @@ Jesus said, "If you have faith as small as a mustard seed, you can say to this m
 
 **Scholarly References:**
 
+• Montgomery, Lyman. *Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate*. 2025.
 • Lane, William L. *Hebrews 9–13* (WBC). Thomas Nelson, 1991.
 • Hagner, Donald A. *Hebrews* (NIBC). Hendrickson, 1990.
 • Marshall, I. Howard. *New Testament Theology*. IVP Academic, 2004.
@@ -238,6 +240,7 @@ Paul does warn that if someone believes the idol is real and eats anyway, their 
 
 **Scholarly References:**
 
+• Montgomery, Lyman. *Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate*. 2025.
 • Fee, Gordon D. *The First Epistle to the Corinthians* (NICNT). Eerdmans, 1987.
 • Thiselton, Anthony C. *The First Epistle to the Corinthians* (NIGTC). Eerdmans, 2000.
 • Hays, Richard B. *First Corinthians* (Interpretation). Westminster John Knox, 1997.
@@ -292,6 +295,7 @@ No ritual. No symbol. No word spoken in ignorance. NOTHING can separate you from
 
 **Scholarly References:**
 
+• Montgomery, Lyman. *Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate*. 2025.
 • Barth, Karl. *Church Dogmatics III/3*. T&T Clark, 1960.
 • Boyd, Gregory A. *God at War: The Bible and Spiritual Conflict*. IVP Academic, 1997.
 • Arnold, Clinton E. *Powers of Darkness: Principalities and Powers in Paul's Letters*. IVP Academic, 1992.
@@ -358,6 +362,7 @@ Proverbs 18:21 **cannot** be used to claim that ritual language in Greek organiz
 
 **Scholarly References:**
 
+• Montgomery, Lyman. *Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate*. 2025.
 • Waltke, Bruce K. *The Book of Proverbs: Chapters 15–31*. Eerdmans
 • Longman III, Tremper. *Proverbs*. Baker Academic
 • Fee, Gordon D. *Pauline Christology*. Baker Academic

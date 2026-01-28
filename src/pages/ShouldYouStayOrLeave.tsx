@@ -206,6 +206,7 @@ const CONCLUSION_CONTENT = {
   ],
   callToAction: "Armed with this understanding, you can now evaluate ritual practices—whether in Greek Life, church tradition, or cultural ceremonies—with theological clarity rather than cultural assumption.",
   scholarlyReferences: [
+    "Montgomery, Lyman. *Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate*. 2025.",
     "Milgrom, Jacob. *Numbers* (JPS Torah Commentary). Jewish Publication Society, 1990.",
     "Ashley, Timothy R. *The Book of Numbers* (NICOT). Eerdmans, 1993.",
     "Wenham, Gordon J. *Numbers* (TOTC). IVP Academic, 1981.",

@@ -169,6 +169,7 @@ const JOSEPH_CONTENT = {
     ],
   },
   scholarlyReferences: [
+    "Montgomery, Lyman. *Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate*. 2025.",
     "Waltke, Bruce K. *Genesis: A Commentary*. Zondervan, 2001.",
     "Wenham, Gordon J. *Genesis 16–50* (WBC). Thomas Nelson, 1994.",
     "Sarna, Nahum M. *Genesis* (JPS Torah Commentary). Jewish Publication Society, 1989.",
@@ -253,6 +254,7 @@ const DANIEL_CONTENT = {
     ],
   },
   scholarlyReferences: [
+    "Montgomery, Lyman. *Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate*. 2025.",
     "Longman III, Tremper. *Daniel* (NIVAC). Zondervan, 1999.",
     "Goldingay, John E. *Daniel* (WBC). Thomas Nelson, 1989.",
     "Collins, John J. *Daniel* (Hermeneia). Fortress Press, 1993.",
@@ -337,6 +339,7 @@ const ESTHER_CONTENT = {
     ],
   },
   scholarlyReferences: [
+    "Montgomery, Lyman. *Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate*. 2025.",
     "Jobes, Karen H. *Esther* (NIVAC). Zondervan, 1999.",
     "Berlin, Adele. *Esther* (JPS Bible Commentary). Jewish Publication Society, 2001.",
     "Bush, Frederic W. *Ruth, Esther* (WBC). Thomas Nelson, 1996.",
@@ -391,6 +394,7 @@ const CONCLUSION_CONTENT = {
   ],
   callToAction: "The next time someone questions whether a Christian can faithfully participate in Greek Life, remember: the Bible's greatest examples of cultural faithfulness looked a lot more like 'sellouts' than we're comfortable admitting. Saints and sellouts aren't as easy to distinguish as we think—and that's exactly the point.",
   scholarlyReferences: [
+    "Montgomery, Lyman. *Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate*. 2025.",
     "Waltke, Bruce K. *Genesis: A Commentary*. Zondervan, 2001.",
     "Wenham, Gordon J. *Genesis 16–50* (WBC). Thomas Nelson, 1994.",
     "Longman III, Tremper. *Daniel* (NIVAC). Zondervan, 1999.",
