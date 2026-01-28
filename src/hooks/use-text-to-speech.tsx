@@ -120,17 +120,25 @@ export const useTextToSpeech = () => {
         body: { text, voice },
       });
 
-      // Robust quota detection without relying on instanceof (can break with duplicate bundles)
+      // Robust quota detection - check multiple patterns
       const anyErr = error as any;
       let errorJson: any = null;
+      
+      // Try to parse error context if available
       if (anyErr?.context?.json) {
-        errorJson = await anyErr.context.json().catch(() => null);
+        try {
+          errorJson = await anyErr.context.json();
+        } catch {
+          errorJson = null;
+        }
       }
 
+      // Check for quota exceeded in multiple places
       const isQuotaError =
         anyErr?.context?.status === 402 ||
         anyErr?.message?.includes("quota_exceeded") ||
         anyErr?.message?.includes("Edge function returned 402") ||
+        anyErr?.message?.includes("402") ||
         errorJson?.code === "quota_exceeded" ||
         (typeof errorJson?.error === "string" && errorJson.error.includes("quota_exceeded")) ||
         data?.code === "quota_exceeded" ||
@@ -143,6 +151,9 @@ export const useTextToSpeech = () => {
         setUsingBrowserTTS(true);
         try {
           await speakWithBrowserTTS(text, itemId);
+        } catch (browserErr) {
+          console.error('Browser TTS also failed:', browserErr);
+          toast.error('Voice playback unavailable');
         } finally {
           setUsingBrowserTTS(false);
           setIsPlaying(null);
@@ -152,6 +163,27 @@ export const useTextToSpeech = () => {
       }
 
       if (error) {
+        // Check if error message contains quota info before throwing
+        const errMsg = typeof error === 'object' && error !== null && 'message' in error 
+          ? (error as any).message 
+          : String(error);
+        if (errMsg.includes('402') || errMsg.includes('quota')) {
+          console.log('Quota error detected in error message, falling back to browser TTS');
+          setIsLoading(null);
+          setIsPlaying(itemId);
+          setUsingBrowserTTS(true);
+          try {
+            await speakWithBrowserTTS(text, itemId);
+          } catch (browserErr) {
+            console.error('Browser TTS also failed:', browserErr);
+            toast.error('Voice playback unavailable');
+          } finally {
+            setUsingBrowserTTS(false);
+            setIsPlaying(null);
+            setIsPaused(false);
+          }
+          return;
+        }
         throw error;
       }
 
