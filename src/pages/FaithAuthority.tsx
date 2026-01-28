@@ -39,9 +39,9 @@ export default function FaithAuthority() {
             {progress >= 100 && <CheckCircle2 className="w-4 h-4 text-green-400" />}
           </motion.div>
           
-          <Link to="/auth">
+          <Link to="/">
             <Button size="sm" className="bg-amber-500 hover:bg-amber-600 text-black font-semibold">
-              Get Started
+              Back to Dashboard
             </Button>
           </Link>
         </div>
