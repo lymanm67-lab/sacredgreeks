@@ -27,7 +27,7 @@ const changelog: ChangelogEntry[] = [
       { category: "feature", description: "New 'Hidden in Plain Sight' course exploring pagan roots in American & Christian traditions" },
       { category: "feature", description: "8 interactive modules covering birthdays, weddings, holidays, symbols, architecture, language, and more" },
       { category: "feature", description: "Case study format with TTS narration using Marcus voice" },
-      { category: "feature", description: "120 points awarded upon course completion (15 points per module)" },
+      { category: "feature", description: "200 points awarded upon course completion (25 points per module)" },
       { category: "improvement", description: "Achievement tracking for course completion on Achievements page" },
     ]
   },
