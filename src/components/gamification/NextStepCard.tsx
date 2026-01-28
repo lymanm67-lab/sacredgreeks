@@ -113,8 +113,8 @@ const STEPS: NextStepInfo[] = [
   {
     id: "faith-authority",
     title: "Faith & Authority",
-    description: "Power of belief teaching - 5 modules",
-    points: 50,
+    description: "Power of belief teaching - 6 modules",
+    points: 70,
     icon: Shield,
     color: "text-purple-500",
     bgGradient: "from-purple-500 to-pink-500",

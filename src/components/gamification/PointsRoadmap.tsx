@@ -92,8 +92,8 @@ const ROADMAP_STEPS: RoadmapStep[] = [
   {
     id: "faith-authority",
     title: "Faith & Authority",
-    description: "Complete all 5 teaching modules",
-    points: 50,
+    description: "Complete all 6 teaching modules",
+    points: 70,
     icon: GraduationCap,
     color: "teal",
     link: "/faith-authority",
