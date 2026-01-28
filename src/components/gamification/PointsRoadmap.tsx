@@ -19,6 +19,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTTS } from "@/hooks/use-tts";
+import { useNavigationProgress } from "@/hooks/use-navigation-progress";
 
 interface RoadmapStep {
   id: string;
@@ -29,6 +30,8 @@ interface RoadmapStep {
   color: string;
   link: string;
   completedKey: string;
+  isTraining?: boolean;
+  progressKey?: string;
 }
 
 const ROADMAP_STEPS: RoadmapStep[] = [
@@ -63,14 +66,40 @@ const ROADMAP_STEPS: RoadmapStep[] = [
     completedKey: "assessments"
   },
   {
-    id: "study",
-    title: "Study Session",
-    description: "Complete a training module to deepen your faith knowledge",
-    points: 25,
+    id: "proof-course",
+    title: "P.R.O.O.F. Course",
+    description: "Complete all 5 lessons in the biblical framework course",
+    points: 50,
     icon: GraduationCap,
     color: "purple",
-    link: "/training",
-    completedKey: "studySessions"
+    link: "/proof-course",
+    completedKey: "proofCourse",
+    isTraining: true,
+    progressKey: "proofCourse"
+  },
+  {
+    id: "greek-life-training",
+    title: "Greek Life & Guild Training",
+    description: "Complete all 14 modules on trade associations",
+    points: 50,
+    icon: GraduationCap,
+    color: "blue",
+    link: "/greek-life-training",
+    completedKey: "greekLifeTraining",
+    isTraining: true,
+    progressKey: "greekLifeTraining"
+  },
+  {
+    id: "faith-authority",
+    title: "Faith & Authority",
+    description: "Complete all 5 teaching modules",
+    points: 50,
+    icon: GraduationCap,
+    color: "teal",
+    link: "/faith-authority",
+    completedKey: "faithAuthority",
+    isTraining: true,
+    progressKey: "faithAuthority"
   }
 ];
 
@@ -84,6 +113,7 @@ const colorClasses: Record<string, { bg: string; border: string; text: string; i
 export const PointsRoadmap = () => {
   const { user } = useAuth();
   const { speak, isLoading: ttsLoading, isPlaying, stop } = useTTS();
+  const { progressData } = useNavigationProgress();
   const [expandedStep, setExpandedStep] = useState<string | null>(null);
 
   const { data: activityCounts } = useQuery({
@@ -109,8 +139,20 @@ export const PointsRoadmap = () => {
   });
 
   const getCompletionStatus = (step: RoadmapStep): boolean => {
+    // For training courses, check progress data for 100% completion
+    if (step.isTraining && step.progressKey && progressData) {
+      const progress = progressData[step.progressKey as keyof typeof progressData];
+      return typeof progress === 'number' && progress >= 100;
+    }
+    // For non-training activities, check activity counts
     if (!activityCounts) return false;
     return (activityCounts[step.completedKey as keyof typeof activityCounts] || 0) > 0;
+  };
+
+  const getTrainingProgress = (step: RoadmapStep): number => {
+    if (!step.isTraining || !step.progressKey || !progressData) return 0;
+    const progress = progressData[step.progressKey as keyof typeof progressData];
+    return typeof progress === 'number' ? progress : 0;
   };
 
   const completedCount = ROADMAP_STEPS.filter(step => getCompletionStatus(step)).length;
@@ -197,6 +239,7 @@ export const PointsRoadmap = () => {
             const colors = colorClasses[step.color];
             const isExpanded = expandedStep === step.id;
             const Icon = step.icon;
+            const trainingProgress = getTrainingProgress(step);
 
             return (
               <motion.div
@@ -239,11 +282,25 @@ export const PointsRoadmap = () => {
                       <div className={`w-10 h-10 rounded-lg ${isCompleted ? colors.icon : 'bg-muted'} flex items-center justify-center`}>
                         <Icon className={`w-5 h-5 ${isCompleted ? 'text-white' : 'text-muted-foreground'}`} />
                       </div>
-                      <div>
+                      <div className="flex-1">
                         <h5 className={`font-semibold ${isCompleted ? colors.text : 'text-foreground'}`}>
                           {step.title}
                         </h5>
                         <p className="text-xs text-muted-foreground">{step.description}</p>
+                        {/* Progress bar for training courses */}
+                        {step.isTraining && trainingProgress > 0 && !isCompleted && (
+                          <div className="mt-2 flex items-center gap-2">
+                            <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
+                              <motion.div 
+                                className={`h-full ${colors.icon} rounded-full`}
+                                initial={{ width: 0 }}
+                                animate={{ width: `${trainingProgress}%` }}
+                                transition={{ duration: 0.5 }}
+                              />
+                            </div>
+                            <span className="text-xs text-muted-foreground font-medium">{trainingProgress}%</span>
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
