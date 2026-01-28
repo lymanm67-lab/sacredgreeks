@@ -62,7 +62,7 @@ const COURSE_SESSION_IDS = {
 const CASE_STUDY_SCENARIO = {
   title: "The Birthday Celebration at Church",
   setting: "A family gathering in the church fellowship hall, 2026",
-  scenario: `Your family is celebrating a child's birthday at the church. The party is held in the fellowship hall—a grand space with soaring dome ceilings, majestic Greek-style columns (Corinthian capitals adorning the sanctuary entrance), a towering steeple visible through the windows, and stunning stained glass windows depicting biblical scenes with figures surrounded by golden halos and radiating sunbeams.
+  scenario: `Your family is celebrating a child's birthday at the church. The party is held in the fellowship hall—a grand space with soaring dome ceilings, majestic columns with ornate capitals adorning the sanctuary entrance, a towering steeple visible through the windows, and stunning stained glass windows depicting biblical scenes with figures surrounded by golden halos and radiating sunbeams.
 
 As the cake is brought out with lit candles, the child is encouraged to:
 
@@ -70,34 +70,36 @@ As the cake is brought out with lit candles, the child is encouraged to:
 2. Blow out all the flames in one breath to "seal" the wish
 3. Keep the wish completely secret, or it "won't come true"
 
-Everyone gathers in a circle beneath the dome—an architectural feature borrowed from Roman temples dedicated to the gods—singing a traditional song, while the candles' flames flicker. Sunlight streams through the stained glass, casting colored shadows of saints wearing solar disc halos—the same artistic convention used to depict Apollo, Helios, and Roman emperors as divine beings.
+Everyone gathers in a circle beneath the dome, singing a traditional song, while the candles' flames flicker. Sunlight streams through the stained glass, casting colored shadows of saints wearing glowing halos.
 
 The child closes their eyes, concentrates on their deepest desire, then attempts to extinguish all flames simultaneously.
 
 If successful, the gathered witnesses clap and affirm that the wish will be granted. The child receives a crown or special hat, sits in a place of honor, and receives offerings (gifts) from all present.
 
-The irony is profound: this pagan birthday ritual is performed in a building whose dome represents the "Eye of Zeus" from the Pantheon, whose Greek columns mirror temples to Athena and Apollo, whose steeple evolved from Egyptian obelisks dedicated to the sun god Ra, and whose stained glass windows employ halos derived from solar worship of Helios and Apollo. Yet no one questions the spiritual implications of either the ritual or the architecture.`,
-  initialQuestion: "Based on what you've just read, how would you classify this ritual and setting?",
+This scene feels completely normal—a beloved tradition in a sacred space. But what if we examined the origins of both the ritual and the building?`,
+  initialQuestion: "Based on what you've just read, how would you classify this celebration?",
   options: [
     { id: "normal", label: "This is a normal, harmless tradition", icon: ThumbsUp },
     { id: "unsure", label: "I never thought about it this way", icon: HelpCircle },
     { id: "concerning", label: "This does sound ritualistic when described this way", icon: Eye },
-    { id: "pagan", label: "Both the ritual and architecture have pagan origins", icon: ThumbsDown },
+    { id: "pagan", label: "I wonder about the origins of these traditions", icon: ThumbsDown },
   ],
 };
 
 const REVEAL_CONTENT = {
   source: "Historical & Anthropological Research",
-  title: "The Pagan Origins of Birthday Celebrations",
-  explanation: `What you just read is a description of a typical American birthday party—but with the ritualistic elements highlighted.
+  title: "The Pagan Origins Revealed",
+  explanation: `What you just read is a description of a typical American birthday party held in a typical American church—but every element has pagan origins.
 
-The tradition of birthday candles traces directly to ancient Greece, where round cakes with lit candles were offered to Artemis, goddess of the moon and the hunt. The candles represented moonlight, and blowing them out sent prayers to the goddess.
+THE BIRTHDAY RITUAL:
+The tradition of birthday candles traces directly to ancient Greece, where round cakes with lit candles were offered to Artemis, goddess of the moon and the hunt. The candles represented moonlight, and blowing them out sent prayers to the goddess. The Germans later developed "Kinderfest" where a single candle represented the "light of life." The practice of making wishes and keeping them secret is a form of sympathetic magic—the belief that speaking a desire aloud breaks its power.
 
-The Germans later developed "Kinderfest" (children's festival) where a single candle represented the "light of life." The practice of making wishes and keeping them secret is a form of sympathetic magic—the belief that speaking a desire aloud breaks its power.`,
+THE CHURCH BUILDING:
+The dome ceiling represents the "Eye of Zeus" from the Pantheon—Rome's temple to "all gods." The ornate columns are Greek temple architecture, originally built to honor Zeus, Athena, and Apollo. The steeple evolved from Egyptian obelisks dedicated to the sun god Ra. And those beautiful stained glass windows with halos? The golden disc (nimbus) behind saints' heads was borrowed directly from depictions of Helios (Greek sun god), Apollo, and Roman emperors who claimed divine status.`,
   keyPoints: [
     {
       title: "Artemis & Moon Worship",
-      content: "Ancient Greeks placed candles on round cakes offered to Artemis. The circular shape represented the full moon, and the candles' smoke carried prayers upward to the goddess. This is the direct ancestor of the modern birthday cake.",
+      content: "Ancient Greeks placed candles on round cakes offered to Artemis, goddess of the moon. The circular shape represented the full moon, and the candles' smoke carried prayers upward to the goddess. This is the direct ancestor of the modern birthday cake.",
     },
     {
       title: "Wish Magic & Secrecy",
@@ -108,12 +110,24 @@ The Germans later developed "Kinderfest" (children's festival) where a single ca
       content: "Placing birthday children in positions of honor with crowns mirrors ancient practices of honoring individuals on their 'name day' as temporarily elevated beings worthy of tribute and offerings.",
     },
     {
-      title: "The Survival of Ritual Form",
-      content: "Despite Christian influence, these pagan elements survived relatively intact because they were seen as 'harmless fun' rather than religious practice—the same argument used against Greek Life rituals.",
+      title: "Church Domes: The Eye of Zeus",
+      content: "The dome structure traces to the Roman Pantheon (temple to 'all gods'). The central opening (oculus) represented the 'Eye of Zeus' or the heavens watching down. St. Peter's Basilica and countless churches feature this pagan architectural element.",
     },
     {
-      title: "Stained Glass & Solar Worship",
-      content: "The church's stained glass windows depict saints with golden halos—solar discs borrowed directly from Greek and Roman depictions of Apollo (god of the sun), Helios (personification of the sun), and Roman emperors who claimed divine status. This 'nimbus' or 'aureole' was the signature mark of pagan deities before Christians adopted it for Jesus and the saints. The light filtering through colored glass was designed to create a 'heavenly' atmosphere—a technique perfected in Roman temples and later Islamic mosques before European adoption.",
+      title: "Greek Columns: Temples to the Gods",
+      content: "The columned facades featuring Doric, Ionic, and Corinthian orders were designed for Greek temples worshipping Zeus, Athena, and Apollo. The Parthenon (temple to Athena) serves as the direct architectural ancestor of Christian sanctuaries.",
+    },
+    {
+      title: "Steeples: Egyptian Sun Worship",
+      content: "Church steeples evolved from Egyptian obelisks dedicated to the sun god Ra. The pointed spire reaching toward heaven mirrors pagan 'axis mundi' concepts—the connection between earth and the divine realm.",
+    },
+    {
+      title: "Stained Glass & Solar Halos",
+      content: "The golden halos (nimbus) around saints' heads were borrowed directly from Greek and Roman depictions of Apollo (god of the sun), Helios (personification of the sun), and Roman emperors who claimed divine status. This was the signature mark of pagan deities before Christians adopted it. The stained glass technique itself was perfected in Roman temples and Islamic mosques before European adoption.",
+    },
+    {
+      title: "The Survival of Ritual Form",
+      content: "Despite Christian influence, these pagan elements survived because they were 'baptized' and seen as harmless cultural forms rather than religious practice—the same argument used against Greek Life rituals.",
     },
   ],
   scholarlyReferences: [
@@ -121,6 +135,7 @@ The Germans later developed "Kinderfest" (children's festival) where a single ca
     "Schmidt, Leigh Eric. Consumer Rites: The Buying and Selling of American Holidays. Princeton University Press, 1995.",
     "Pleck, Elizabeth. Celebrating the Family: Ethnicity, Consumer Culture, and Family Rituals. Harvard University Press, 2000.",
     "Hutton, Ronald. The Stations of the Sun: A History of the Ritual Year in Britain. Oxford University Press, 1996.",
+    "Krautheimer, Richard. Early Christian and Byzantine Architecture. Yale University Press, 1986.",
   ],
 };
 
