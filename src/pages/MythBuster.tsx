@@ -14,7 +14,7 @@ import { FISTFramework } from '@/components/myth-buster/FISTFramework';
 import { ScholarlyReferences } from '@/components/myth-buster/ScholarlyReferences';
 import { MythSubGroup, chunkArray } from '@/components/myth-buster/MythSubGroup';
 
-import { MythBusterDownloads } from '@/components/myth-buster/MythBusterDownloads';
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { toast } from 'sonner';
@@ -805,10 +805,7 @@ const MythBuster = () => {
           </div>
         )}
 
-        {/* Downloadable Resources */}
-        <div className="mt-12">
-          <MythBusterDownloads />
-        </div>
+        {/* Downloadable Resources - Removed as content is now fully integrated in myth library above */}
       </main>
     </div>
   );
