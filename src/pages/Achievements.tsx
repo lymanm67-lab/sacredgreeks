@@ -15,7 +15,7 @@ import { useGamification } from "@/hooks/use-gamification";
 const Achievements = () => {
   const { isShowingDemo, stats } = useGamification();
   const [showLevelUp, setShowLevelUp] = useState(false);
-  const [celebratedLevel, setCelebratedLevel] = useState<number>(0);
+  const [celebratedLevel, setCelebratedLevel] = useState<number>(1);
   const previousLevelRef = useRef<number | null>(null);
 
   // Detect level-up from stats change
@@ -95,11 +95,13 @@ const Achievements = () => {
       </div>
 
       {/* Level Up Celebration Modal */}
-      <LevelUpCelebration 
-        show={showLevelUp} 
-        newLevel={celebratedLevel} 
-        onClose={() => setShowLevelUp(false)} 
-      />
+      {showLevelUp && celebratedLevel > 0 && (
+        <LevelUpCelebration 
+          show={showLevelUp} 
+          newLevel={celebratedLevel} 
+          onClose={() => setShowLevelUp(false)} 
+        />
+      )}
     </div>
   );
 };

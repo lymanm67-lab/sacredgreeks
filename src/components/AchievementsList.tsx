@@ -45,6 +45,12 @@ const achievementColors: Record<string, { bg: string; border: string; icon: stri
   learning: { bg: "from-blue-500/20 to-cyan-500/20", border: "border-blue-500/40", icon: "bg-gradient-to-br from-blue-500 to-cyan-500", glow: "shadow-blue-500/30" },
   community: { bg: "from-purple-500/20 to-pink-500/20", border: "border-purple-500/40", icon: "bg-gradient-to-br from-purple-500 to-pink-500", glow: "shadow-purple-500/30" },
   special: { bg: "from-emerald-500/20 to-teal-500/20", border: "border-emerald-500/40", icon: "bg-gradient-to-br from-emerald-500 to-teal-500", glow: "shadow-emerald-500/30" },
+  assessment: { bg: "from-amber-500/20 to-orange-500/20", border: "border-amber-500/40", icon: "bg-gradient-to-br from-amber-500 to-orange-500", glow: "shadow-amber-500/30" },
+  devotional: { bg: "from-indigo-500/20 to-blue-500/20", border: "border-indigo-500/40", icon: "bg-gradient-to-br from-indigo-500 to-blue-500", glow: "shadow-indigo-500/30" },
+  prayer: { bg: "from-teal-500/20 to-emerald-500/20", border: "border-teal-500/40", icon: "bg-gradient-to-br from-teal-500 to-emerald-500", glow: "shadow-teal-500/30" },
+  study: { bg: "from-purple-500/20 to-violet-500/20", border: "border-purple-500/40", icon: "bg-gradient-to-br from-purple-500 to-violet-500", glow: "shadow-purple-500/30" },
+  service: { bg: "from-rose-500/20 to-pink-500/20", border: "border-rose-500/40", icon: "bg-gradient-to-br from-rose-500 to-pink-500", glow: "shadow-rose-500/30" },
+  bible: { bg: "from-cyan-500/20 to-sky-500/20", border: "border-cyan-500/40", icon: "bg-gradient-to-br from-cyan-500 to-sky-500", glow: "shadow-cyan-500/30" },
   default: { bg: "from-primary/20 to-secondary/20", border: "border-primary/40", icon: "bg-gradient-to-br from-primary to-secondary", glow: "shadow-primary/30" },
 };
 
