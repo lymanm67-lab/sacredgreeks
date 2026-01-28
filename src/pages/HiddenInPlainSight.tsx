@@ -546,10 +546,11 @@ export default function HiddenInPlainSight() {
   const { celebrate } = useCelebration();
   const previousCompletedRef = useRef<number[]>([]);
 
-  // Custom celebration for this course (22 points per module, 24 for final = 200 total)
+  // Custom celebration for this course (22 points per module, 200 total shown for final)
   const triggerModuleComplete = useCallback((moduleIndex: number, moduleTitle: string) => {
     const isLastModule = moduleIndex === 9;
-    const points = isLastModule ? 24 : 22;
+    // Show 200 total for final celebration, 22 for individual modules
+    const points = isLastModule ? 200 : 22;
     
     // Module-specific colors
     const moduleColors: Record<number, string[]> = {
