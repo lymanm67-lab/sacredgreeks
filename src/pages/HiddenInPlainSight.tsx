@@ -1163,6 +1163,31 @@ export default function HiddenInPlainSight() {
           </CardContent>
         </Card>
 
+        {/* Scholarly Context */}
+        <Card className="mb-6 bg-card/50 border-muted">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg flex items-center gap-2">
+              <BookOpen className="h-5 w-5 text-primary" />
+              Scholarly Context
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              A substantial portion of Christian <em>cultural practices</em> and <em>calendar observances</em>—some scholars suggest 40-60%—adopted forms from Greco-Roman society, while the theological core remained distinctly Jewish-Christian. This pattern of "Christianizing" existing cultural frameworks mirrors what Paul modeled in Acts 17 at Mars Hill.
+            </p>
+            <div className="bg-muted/50 rounded-lg p-4">
+              <h4 className="text-sm font-semibold mb-2">Academic References:</h4>
+              <ul className="text-xs text-muted-foreground space-y-1.5">
+                <li>• MacMullen, Ramsay. <em>Christianity and Paganism in the Fourth to Eighth Centuries</em>. Yale University Press, 1997.</li>
+                <li>• Brown, Peter. <em>The Rise of Western Christendom: Triumph and Diversity, A.D. 200-1000</em>. Wiley-Blackwell, 2003.</li>
+                <li>• Salzman, Michele Renee. <em>The Making of a Christian Aristocracy: Social and Religious Change in the Western Roman Empire</em>. Harvard University Press, 2002.</li>
+                <li>• Markus, Robert A. <em>The End of Ancient Christianity</em>. Cambridge University Press, 1990.</li>
+                <li>• Stroumsa, Guy G. <em>The End of Sacrifice: Religious Transformations in Late Antiquity</em>. University of Chicago Press, 2009.</li>
+              </ul>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Modules */}
         <div className="space-y-4">
           {MODULES.map((module, index) => {
