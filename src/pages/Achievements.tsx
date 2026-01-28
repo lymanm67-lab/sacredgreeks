@@ -1,16 +1,44 @@
 import { ArrowLeft, Users, Trophy, FlaskConical } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { GamificationBar } from "@/components/GamificationBar";
 import { AchievementsList } from "@/components/AchievementsList";
 import { OrgAchievementsList } from "@/components/OrgAchievementsList";
 import { NextLevelMotivation } from "@/components/NextLevelMotivation";
+import { PointsRoadmap } from "@/components/gamification/PointsRoadmap";
+import { LevelUpCelebration } from "@/components/gamification/LevelUpCelebration";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useGamification } from "@/hooks/use-gamification";
 
 const Achievements = () => {
-  const { isShowingDemo } = useGamification();
+  const { isShowingDemo, stats } = useGamification();
+  const [showLevelUp, setShowLevelUp] = useState(false);
+  const [celebratedLevel, setCelebratedLevel] = useState<number>(0);
+  const previousLevelRef = useRef<number | null>(null);
+
+  // Detect level-up from stats change
+  useEffect(() => {
+    if (stats?.current_level) {
+      if (previousLevelRef.current !== null && stats.current_level > previousLevelRef.current) {
+        setCelebratedLevel(stats.current_level);
+        setShowLevelUp(true);
+      }
+      previousLevelRef.current = stats.current_level;
+    }
+  }, [stats?.current_level]);
+
+  // Listen for level-up events from other parts of the app
+  useEffect(() => {
+    const handleLevelUp = (event: CustomEvent<{ newLevel: number }>) => {
+      setCelebratedLevel(event.detail.newLevel);
+      setShowLevelUp(true);
+    };
+
+    window.addEventListener('level-up', handleLevelUp as EventListener);
+    return () => window.removeEventListener('level-up', handleLevelUp as EventListener);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -40,6 +68,9 @@ const Achievements = () => {
         <div className="space-y-6">
           <GamificationBar />
           
+          {/* Points Roadmap */}
+          <PointsRoadmap />
+          
           <NextLevelMotivation />
           
           <Tabs defaultValue="all" className="w-full">
@@ -62,6 +93,13 @@ const Achievements = () => {
           </Tabs>
         </div>
       </div>
+
+      {/* Level Up Celebration Modal */}
+      <LevelUpCelebration 
+        show={showLevelUp} 
+        newLevel={celebratedLevel} 
+        onClose={() => setShowLevelUp(false)} 
+      />
     </div>
   );
 };
