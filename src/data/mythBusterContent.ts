@@ -79,22 +79,6 @@ export const mythBusterContent: MythEntry[] = [
     tags: ["service", "time", "ministry", "balance"]
   },
   {
-    id: "greek-rituals-concern",
-    myth: "What About Greek Rituals and Ceremonies?",
-    category: "rituals",
-    proofCategory: "rituals",
-    scenario: "Prospective Member Question",
-    organization: "BGLO",
-    shortAnswer: "I'm concerned about participating in Greek rituals. Will they conflict with my faith?",
-    detailedResponse: "Ritual content varies by organization. Many focus on history, commitment, and values—not religious practice. Before joining, ask questions about ceremony content. Trust your conscience led by Scripture. If anything clearly violates biblical principles, you can respectfully decline that element.",
-    scriptures: [
-      { ref: "Romans 14:5", text: "One person considers one day more sacred than another; another considers every day alike. Each of them should be fully convinced in their own mind." },
-      { ref: "1 Corinthians 10:23-31", text: "I have the right to do anything, you say—but not everything is beneficial. I have the right to do anything—but not everything is constructive." },
-      { ref: "Acts 17:11", text: "Now the Berean Jews were of more noble character than those in Thessalonica, for they received the message with great eagerness and examined the Scriptures every day." }
-    ],
-    tags: ["rituals", "ceremonies", "joining", "discernment"]
-  },
-  {
     id: "honor-god-greek",
     myth: "Can I Honor God in a Greek Organization?",
     category: "identity",
@@ -181,22 +165,101 @@ export const mythBusterContent: MythEntry[] = [
     ],
     tags: ["community", "loyalty", "small groups", "church"]
   },
+  // RITUALS - Consolidated Section
+  {
+    id: "rituals-and-ceremonies",
+    myth: "Greek Rituals and Ceremonies Conflict With Christianity",
+    category: "rituals",
+    proofCategory: "rituals",
+    scenario: "Prospective Member Question",
+    organization: "BGLO",
+    shortAnswer: "I'm concerned about participating in Greek rituals. Will they conflict with my faith?",
+    detailedResponse: "Ritual content varies by organization. Many focus on history, commitment, and values—not religious worship. Before joining, ask questions about ceremony content. Trust your conscience led by Scripture. Many faith traditions have sacred ceremonies (communion, baptism, weddings). Privacy doesn't equal evil—what matters is the content and purpose. If anything clearly violates biblical principles, you can respectfully decline that element.",
+    scriptures: [
+      { ref: "Romans 14:5", text: "One person considers one day more sacred than another; another considers every day alike. Each of them should be fully convinced in their own mind." },
+      { ref: "1 Thessalonians 5:21", text: "Test everything; hold fast what is good." },
+      { ref: "Acts 17:11", text: "Now the Berean Jews were of more noble character than those in Thessalonica, for they received the message with great eagerness and examined the Scriptures every day." }
+    ],
+    tags: ["rituals", "ceremonies", "joining", "discernment"]
+  },
+  {
+    id: "secret-rituals-concern",
+    myth: "Why Would a Christian Join Something With Private Ceremonies?",
+    category: "rituals",
+    proofCategory: "obscurity",
+    scenario: "Church Challenge",
+    shortAnswer: "Christians shouldn't join organizations with private ceremonies because secrecy equals deception.",
+    detailedResponse: "Privacy is not the same as secrecy. Jesus had inner circle moments with Peter, James, and John. Private ceremonies can simply mean membership-only experiences, like many professional organizations. The question is whether the content violates Scripture, not whether it's public. Many Greek rituals focus on history, values, and community bonds—similar to how even Jesus taught some things privately to His disciples.",
+    scriptures: [
+      { ref: "Mark 5:37", text: "He did not let anyone follow him except Peter, James and John the brother of James." },
+      { ref: "Mark 9:2", text: "After six days Jesus took Peter, James and John with him and led them up a high mountain, where they were all alone. There he was transfigured before them." },
+      { ref: "Matthew 6:6", text: "But when you pray, go into your room, close the door and pray to your Father, who is unseen. Then your Father, who sees what is done in secret, will reward you." }
+    ],
+    tags: ["secrecy", "privacy", "rituals", "transparency"]
+  },
   {
     id: "symbols-demonic",
-    myth: "Greek Symbols Are Demonic",
+    myth: "Greek Symbols and Letters Are Demonic",
     category: "rituals",
     proofCategory: "rituals",
     scenario: "Social Media Defense",
     organization: "BGLO",
-    shortAnswer: "All the Greek symbols and hand signs are actually demonic symbols.",
-    detailedResponse: "This claim ignores context and intent. Greek letters are simply alphabet characters. Hand signs typically represent organizational identity, not occult meanings. Similar logic would condemn the 'OK' sign or peace symbol. Judge symbols by their actual use and meaning within context, not conspiracy theories.",
+    shortAnswer: "All the Greek symbols, hand signs, and letters are actually demonic symbols or idols.",
+    detailedResponse: "This claim ignores context and intent. Greek letters are simply alphabet characters—Paul wrote in Greek! Hand signs typically represent organizational identity, not occult meanings. Similar logic would condemn the 'OK' sign or peace symbol. God himself instructed Israel to use colors, stones, and designs in the tabernacle. The danger comes when any symbol is exalted above the Savior. Judge symbols by their actual use and meaning within context, not conspiracy theories.",
     scriptures: [
       { ref: "Romans 14:14", text: "I am convinced, being fully persuaded in the Lord Jesus, that nothing is unclean in itself. But if anyone regards something as unclean, then for that person it is unclean." },
       { ref: "1 Corinthians 8:4-6", text: "We know that 'An idol is nothing at all in the world' and that 'There is no God but one.' For even if there are so-called gods, whether in heaven or on earth... yet for us there is but one God." },
-      { ref: "Titus 1:15", text: "To the pure, all things are pure, but to those who are corrupted and do not believe, nothing is pure. In fact, both their minds and consciences are corrupted." }
+      { ref: "Exodus 28:2-5", text: "Make sacred garments for your brother Aaron to give him dignity and honor... These are the garments they are to make: a breastpiece, an ephod, a robe, a woven tunic, a turban and a sash." }
     ],
-    tags: ["symbols", "demonic", "signs", "conspiracy"]
+    tags: ["symbols", "demonic", "signs", "conspiracy", "letters", "idols"]
   },
+  {
+    id: "step-shows-pagan",
+    myth: "Greek Step Shows and Strolling Are Pagan Worship",
+    category: "rituals",
+    proofCategory: "rituals",
+    scenario: "Church Setting",
+    organization: "BGLO",
+    shortAnswer: "When Greeks step or stroll, they're performing pagan rituals that invite demons.",
+    detailedResponse: "Movement and rhythm do not belong to the devil. Stepping and strolling are cultural art forms expressing unity and organizational pride—not worship rituals. David danced before the Lord with abandon. Israel marched in processions. African and African American worship has always involved the body. The question is what is being celebrated and spoken in those moments. Cultural expression can be reclaimed as instruments of worship and witness.",
+    scriptures: [
+      { ref: "2 Samuel 6:14", text: "Wearing a linen ephod, David was dancing before the Lord with all his might." },
+      { ref: "Psalm 149:3", text: "Let them praise his name with dancing and make music to him with timbrel and harp." },
+      { ref: "Romans 12:1", text: "Therefore, I urge you, brothers and sisters, in view of God's mercy, to offer your bodies as a living sacrifice, holy and pleasing to God—this is your true and proper worship." }
+    ],
+    tags: ["stepping", "strolling", "dance", "culture", "movement"]
+  },
+  {
+    id: "pledging-bondage",
+    myth: "Pledging or Intake Is Spiritual Bondage",
+    category: "rituals",
+    proofCategory: "pledge-process",
+    scenario: "Personal Doubt",
+    shortAnswer: "The pledging or intake process is always spiritual bondage.",
+    detailedResponse: "Spiritual bondage refers to being enslaved to sin, darkness, or demonic influence—not any form of commitment or structured process. Baptism is a pledge. Marriage is a covenant. The military has boot camp. The question is whether the intake process requires sin, abuse, or worship of anything besides God. If it does, refuse. If it does not, discern and engage wisely. Many chapters have reformed their processes to focus on education, mentorship, and service.",
+    scriptures: [
+      { ref: "Galatians 5:1", text: "It is for freedom that Christ has set us free. Stand firm, then, and do not let yourselves be burdened again by a yoke of slavery." },
+      { ref: "Romans 6:16-18", text: "Don't you know that when you offer yourselves to someone as obedient slaves, you are slaves of the one you obey... You have been set free from sin and have become slaves to righteousness." },
+      { ref: "1 Peter 2:16", text: "Live as free people, but do not use your freedom as a cover-up for evil; live as God's slaves." }
+    ],
+    tags: ["pledging", "intake", "bondage", "freedom"]
+  },
+  {
+    id: "greeks-have-spirits",
+    myth: "Greeks Are Bound by Spirits Attached to Organizations",
+    category: "rituals",
+    scenario: "Church Challenge",
+    organization: "BGLO",
+    shortAnswer: "Greeks are bound by spirits attached to their organizations.",
+    detailedResponse: "The claim that blanket demonic attachment occurs at membership is not supported by Scripture. Believers are sealed by the Holy Spirit. Demons are not attached to acronyms—they influence through sin, deception, and unrepentance. If a believer in Christ is walking in the light, they are protected by the blood of Jesus and the power of the Holy Spirit, regardless of any past or present group affiliation.",
+    scriptures: [
+      { ref: "Ephesians 1:13-14", text: "When you believed, you were marked in him with a seal, the promised Holy Spirit, who is a deposit guaranteeing our inheritance until the redemption of those who are God's possession." },
+      { ref: "1 John 5:18", text: "We know that anyone born of God does not continue to sin; the One who was born of God keeps them safe, and the evil one cannot harm them." },
+      { ref: "Romans 8:1-2", text: "Therefore, there is now no condemnation for those who are in Christ Jesus, because through Christ Jesus the law of the Spirit who gives life has set you free." }
+    ],
+    tags: ["spirits", "demons", "bondage", "protection"]
+  },
+  // End Rituals Section
   {
     id: "worldly-influences",
     myth: "Greek Members Bring Worldly Influences Into Church",
@@ -227,22 +290,6 @@ export const mythBusterContent: MythEntry[] = [
     tags: ["service", "selfish", "community", "impact"]
   },
   {
-    id: "rituals-satanic",
-    myth: "Greek Rituals Are Satanic",
-    category: "rituals",
-    proofCategory: "rituals",
-    scenario: "Family Objection",
-    organization: "BGLO",
-    shortAnswer: "Greek organizations practice satanic rituals behind closed doors.",
-    detailedResponse: "This accusation is typically based on rumor, not evidence. Closed ceremonies are not evidence of satanic activity. Many professional organizations have private meetings. Instead of believing sensational claims, evaluate based on the actual lives of members you know. Do they bear fruit of the Spirit?",
-    scriptures: [
-      { ref: "Matthew 7:15-20", text: "Watch out for false prophets. They come to you in sheep's clothing, but inwardly they are ferocious wolves. By their fruit you will recognize them." },
-      { ref: "Galatians 5:22-23", text: "But the fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness and self-control. Against such things there is no law." },
-      { ref: "Proverbs 14:15", text: "The simple believe anything, but the prudent give thought to their steps." }
-    ],
-    tags: ["satanic", "rituals", "rumors", "discernment"]
-  },
-  {
     id: "career-help",
     myth: "Joining Won't Help Your Career or Community",
     category: "community",
@@ -255,22 +302,6 @@ export const mythBusterContent: MythEntry[] = [
       { ref: "Hebrews 10:24", text: "And let us consider how we may spur one another on toward love and good deeds." }
     ],
     tags: ["career", "network", "service", "community"]
-  },
-  {
-    id: "unchristian-ceremonies",
-    myth: "Greek Ceremonies Involve Unchristian Rituals",
-    category: "rituals",
-    proofCategory: "rituals",
-    scenario: "Family Discussion",
-    organization: "BGLO",
-    shortAnswer: "I've heard Greek ceremonies involve rituals that Christians shouldn't participate in.",
-    detailedResponse: "Ceremony content varies significantly between organizations and even chapters. Rather than believing rumors, seek factual information about specific practices. Many Greek ceremonies focus on history, values, and commitment—similar to wedding or graduation ceremonies. Discern based on facts, not fear.",
-    scriptures: [
-      { ref: "Proverbs 18:13", text: "To answer before listening—that is folly and shame." },
-      { ref: "1 Thessalonians 5:21", text: "Test them all; hold on to what is good." },
-      { ref: "1 John 4:1", text: "Dear friends, do not believe every spirit, but test the spirits to see whether they are from God, because many false prophets have gone out into the world." }
-    ],
-    tags: ["ceremonies", "rituals", "family concerns", "discernment"]
   },
   {
     id: "ungodly-values",
@@ -302,37 +333,6 @@ export const mythBusterContent: MythEntry[] = [
     tags: ["events", "ministry", "service", "balance"]
   },
   {
-    id: "ungodly-founder-backgrounds",
-    myth: "Greek Founders Had Ungodly Backgrounds",
-    category: "history",
-    proofCategory: "founders",
-    scenario: "Church Setting",
-    shortAnswer: "The founders of Greek organizations were not Christians, so the organizations are spiritually compromised.",
-    detailedResponse: "Many institutions we use daily were founded by non-Christians. This doesn't make them inherently evil. God uses imperfect vessels and can redeem any organization for His purposes. Focus on current leadership, values, and how members live out their faith today.",
-    scriptures: [
-      { ref: "Romans 8:28", text: "And we know that in all things God works for the good of those who love him, who have been called according to his purpose." },
-      { ref: "Genesis 50:20", text: "You intended to harm me, but God intended it for good to accomplish what is now being done, the saving of many lives." },
-      { ref: "Acts 17:28", text: "For in him we live and move and have our being. As some of your own poets have said, 'We are his offspring.'" }
-    ],
-    tags: ["founders", "history", "redemption"]
-  },
-  {
-    id: "step-shows-pagan",
-    myth: "Greek Step Shows Are Pagan Worship",
-    category: "rituals",
-    proofCategory: "rituals",
-    scenario: "Church Setting",
-    organization: "BGLO",
-    shortAnswer: "When Greeks step or stroll at church events, they're performing pagan rituals.",
-    detailedResponse: "Stepping and strolling are cultural art forms expressing unity and organizational pride—not worship rituals. African and African American communities have rich traditions of rhythmic expression. David danced before the Lord with abandon. Cultural expression is not inherently pagan.",
-    scriptures: [
-      { ref: "2 Samuel 6:14", text: "Wearing a linen ephod, David was dancing before the Lord with all his might." },
-      { ref: "Psalm 149:3", text: "Let them praise his name with dancing and make music to him with timbrel and harp." },
-      { ref: "Psalm 150:4", text: "Praise him with timbrel and dancing, praise him with the strings and pipe." }
-    ],
-    tags: ["stepping", "strolling", "dance", "culture"]
-  },
-  {
     id: "recruiting-at-church",
     myth: "Greeks in Church Are Just Recruiting",
     category: "lifestyle",
@@ -350,7 +350,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "wearing-letters-church",
     myth: "Should Greeks Wear Letters to Church?",
-    category: "faith",
+    category: "lifestyle",
     scenario: "Church Setting",
     shortAnswer: "Wearing Greek paraphernalia to church is inappropriate and distracting from worship.",
     detailedResponse: "Churches have varying dress expectations, but wearing organizational clothing is not inherently sinful. We wear school logos, sports jerseys, and professional attire without issue. The heart posture in worship matters more than apparel. Address this graciously as a preference issue, not a spiritual mandate.",
@@ -360,21 +360,6 @@ export const mythBusterContent: MythEntry[] = [
       { ref: "Romans 14:13", text: "Therefore let us stop passing judgment on one another. Instead, make up your mind not to put any stumbling block or obstacle in the way of a brother or sister." }
     ],
     tags: ["church", "letters", "worship", "dress code"]
-  },
-  {
-    id: "secret-rituals-concern",
-    myth: "Why Would a Christian Join Something With Secret Rituals?",
-    category: "rituals",
-    proofCategory: "obscurity",
-    scenario: "Church Challenge",
-    shortAnswer: "Christians shouldn't join organizations with private ceremonies because secrecy equals deception.",
-    detailedResponse: "Privacy is not the same as secrecy. Jesus had inner circle moments with Peter, James, and John. Private ceremonies can simply mean membership-only experiences, like many professional organizations. The question is whether the content violates Scripture, not whether it's public. Many Greek rituals focus on history, values, and community bonds.",
-    scriptures: [
-      { ref: "Mark 5:37", text: "He did not let anyone follow him except Peter, James and John the brother of James." },
-      { ref: "Mark 9:2", text: "After six days Jesus took Peter, James and John with him and led them up a high mountain, where they were all alone. There he was transfigured before them." },
-      { ref: "Matthew 6:6", text: "But when you pray, go into your room, close the door and pray to your Father, who is unseen. Then your Father, who sees what is done in secret, will reward you." }
-    ],
-    tags: ["secrecy", "privacy", "rituals", "transparency"]
   },
   {
     id: "time-away-church",
@@ -454,49 +439,35 @@ export const mythBusterContent: MythEntry[] = [
     category: "ministry",
     scenario: "Ministry Leader Concern",
     organization: "BGLO",
-    shortAnswer: "People in Greek organizations shouldn't serve in church leadership because of potential spiritual compromise.",
-    detailedResponse: "Church leadership qualifications in Scripture focus on character, doctrine, and conduct—not organizational affiliations. Many Greek members demonstrate the fruit of the Spirit and sound doctrine. Excluding them based on membership alone creates an unbiblical standard. Evaluate each person based on biblical criteria, not categorical assumptions.",
+    shortAnswer: "Greek members shouldn't hold positions in church leadership because of their divided loyalties.",
+    detailedResponse: "Leadership qualification should be based on biblical criteria: character, gifting, and faithfulness. The New Testament never disqualifies someone based on external associations but on spiritual fruit and maturity. Many Greeks demonstrate exceptional leadership, service, and spiritual depth. Evaluate individuals, not affiliations.",
     scriptures: [
-      { ref: "1 Timothy 3:1-7", text: "Here is a trustworthy saying: Whoever aspires to be an overseer desires a noble task. Now the overseer is to be above reproach, faithful to his wife, temperate, self-controlled, respectable, hospitable, able to teach." },
-      { ref: "Titus 1:6-9", text: "An elder must be blameless, faithful to his wife, a man whose children believe and are not open to the charge of being wild and disobedient." },
-      { ref: "Galatians 3:28", text: "There is neither Jew nor Gentile, neither slave nor free, nor is there male and female, for you are all one in Christ Jesus." }
+      { ref: "1 Timothy 3:1-13", text: "Here is a trustworthy saying: Whoever aspires to be an overseer desires a noble task. Now the overseer is to be above reproach..." },
+      { ref: "Galatians 3:28", text: "There is neither Jew nor Gentile, neither slave nor free, nor is there male and female, for you are all one in Christ Jesus." },
+      { ref: "Matthew 7:16", text: "By their fruit you will recognize them. Do people pick grapes from thornbushes, or figs from thistles?" }
     ],
-    tags: ["leadership", "church", "ministry", "qualifications"]
+    tags: ["leadership", "church", "exclusion", "qualifications"]
   },
   {
-    id: "rituals-dangerous-congregation",
-    myth: "Are Greek Rituals Spiritually Dangerous for Our Congregation?",
-    category: "rituals",
-    scenario: "Ministry Leader Concern",
-    shortAnswer: "Having Greek members in our church exposes us to spiritual darkness from their rituals.",
-    detailedResponse: "The power of Christ in a believer is greater than any cultural practice. Greek rituals vary widely, and most are ceremonial traditions rather than spiritual rites. Rather than fearing our members, we should disciple them in biblical discernment. The church should be a place of grace and growth, not suspicion.",
-    scriptures: [
-      { ref: "1 John 4:4", text: "You, dear children, are from God and have overcome them, because the one who is in you is greater than the one who is in the world." },
-      { ref: "Romans 8:37-39", text: "No, in all these things we are more than conquerors through him who loved us. For I am convinced that neither death nor life... nor anything else in all creation, will be able to separate us from the love of God." },
-      { ref: "2 Timothy 1:7", text: "For the Spirit God gave us does not make us timid, but gives us power, love and self-discipline." }
-    ],
-    tags: ["rituals", "church", "spiritual warfare", "fear"]
-  },
-  {
-    id: "counsel-greek-members",
-    myth: "How Do We Counsel Members Questioning Their Greek Involvement?",
+    id: "counsel-to-leave",
+    myth: "We Should Counsel All Greeks to Leave Their Organizations",
     category: "ministry",
     scenario: "Ministry Leader Concern",
-    shortAnswer: "We should always counsel Greek members to leave their organizations if they want to grow spiritually.",
-    detailedResponse: "Blanket counsel to leave ignores individual context and conscience. Romans 14 teaches us that matters of conscience require wisdom, not uniform rules. Some may feel convicted to step away; others may sense a call to remain as witnesses. Walk with each person prayerfully, helping them discern God's unique direction for their situation.",
+    shortAnswer: "The church should require Greek members to renounce their letters to be in good standing.",
+    detailedResponse: "Adding requirements beyond faith in Christ creates a different gospel. Paul confronted Peter for exactly this kind of addition. Each believer must examine their conscience before the Lord. Some may feel convicted to leave; others may feel called to stay and shine. Both can be honoring God. Uniformity isn't required.",
     scriptures: [
-      { ref: "Romans 14:1-5", text: "Accept the one whose faith is weak, without quarreling over disputable matters... Who are you to judge someone else's servant? To their own master, servants stand or fall." },
-      { ref: "Romans 14:22-23", text: "So whatever you believe about these things keep between yourself and God. Blessed is the one who does not condemn himself by what he approves." },
-      { ref: "1 Corinthians 10:27-29", text: "If an unbeliever invites you to a meal and you want to go, eat whatever is put before you without raising questions of conscience." }
+      { ref: "Galatians 2:11-14", text: "When Cephas came to Antioch, I opposed him to his face, because he stood condemned. For before certain men came from James, he used to eat with the Gentiles. But when they arrived, he began to draw back and separate himself." },
+      { ref: "Romans 14:1-4", text: "Accept the one whose faith is weak, without quarreling over disputable matters... Who are you to judge someone else's servant? To their own master, servants stand or fall." },
+      { ref: "1 Corinthians 7:17", text: "Nevertheless, each person should live as a believer in whatever situation the Lord has assigned to them, just as God has called them." }
     ],
-    tags: ["counseling", "conscience", "discipleship", "wisdom"]
+    tags: ["leaving", "requirements", "counsel", "legalism"]
   },
   {
-    id: "hurt-testimony",
-    myth: "Will Joining Hurt My Christian Testimony?",
-    category: "lifestyle",
+    id: "hurt-witness",
+    myth: "Joining Will Hurt My Christian Witness",
+    category: "ministry",
     scenario: "Prospective Member Question",
-    shortAnswer: "Joining a Greek organization will damage your witness and make people think you're not really a Christian.",
+    shortAnswer: "If I join a fraternity or sorority, people will question my faith and testimony.",
     detailedResponse: "Jesus was criticized for eating with tax collectors and sinners, yet His testimony remained powerful because His character was consistent. Your witness depends on how you live, not where you hold membership. Greeks with strong testimonies can actually enhance their witness by bringing light into spaces that need it most.",
     scriptures: [
       { ref: "Matthew 11:19", text: "The Son of Man came eating and drinking, and they say, 'Here is a glutton and a drunkard, a friend of tax collectors and sinners.' But wisdom is proved right by her deeds." },
@@ -508,7 +479,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "worship-false-gods",
     myth: "Is It True Greeks Worship False Gods?",
-    category: "history",
+    category: "worship",
     scenario: "Prospective Member Question",
     organization: "BGLO",
     shortAnswer: "Greek organizations secretly worship Egyptian or Greek gods during their ceremonies.",
@@ -537,7 +508,7 @@ export const mythBusterContent: MythEntry[] = [
   {
     id: "just-about-partying",
     myth: "Greek Organizations Are Just About Partying",
-    category: "community",
+    category: "lifestyle",
     scenario: "Social Media Defense",
     organization: "BGLO",
     shortAnswer: "All Greeks do is party and engage in ungodly behavior—there's no redeeming value.",
@@ -570,7 +541,7 @@ export const mythBusterContent: MythEntry[] = [
     category: "ministry",
     scenario: "Church Challenge",
     shortAnswer: "God cannot possibly use Greek Life for his purposes.",
-    detailedResponse: "God has used pagan kings, corrupt governments, and secular systems to position his people and advance his plans. He used Pharaoh to display his power. He used Cyrus to send Israel home. He used Roman roads and Greek language to spread the gospel in the first century. If God can do that with empires, he can certainly use a small Greek chapter full of flawed but willing young adults. The question is not 'Can God.' The question is 'Will we be available.'",
+    detailedResponse: "God has used pagan kings, corrupt governments, and secular systems to position his people and advance his plans. He used Pharaoh to display his power. He used Cyrus to send Israel home. He used Roman roads and Greek language to spread the gospel. If God can do that with empires, he can certainly use a small Greek chapter full of flawed but willing young adults. The question is not 'Can God.' The question is 'Will we be available.'",
     scriptures: [
       { ref: "Romans 8:28", text: "And we know that in all things God works for the good of those who love him, who have been called according to his purpose." },
       { ref: "Genesis 50:20", text: "You intended to harm me, but God intended it for good to accomplish what is now being done, the saving of many lives." },
@@ -580,7 +551,7 @@ export const mythBusterContent: MythEntry[] = [
   },
   {
     id: "unequally-yoked-bglo",
-    myth: "BGLOs Violate Unequally Yoked",
+    myth: "BGLOs Violate 'Unequally Yoked'",
     category: "identity",
     scenario: "Church Challenge",
     shortAnswer: "Being in a BGLO automatically violates 'do not be unequally yoked.'",
@@ -607,48 +578,6 @@ export const mythBusterContent: MythEntry[] = [
     tags: ["evangelism", "discipleship", "witness", "Great Commission"]
   },
   {
-    id: "colors-shields-idols",
-    myth: "Colors, Shields, and Symbols Are Idols",
-    category: "worship",
-    scenario: "Personal Doubt",
-    shortAnswer: "Colors, shields, and symbols are idols.",
-    detailedResponse: "Color and design communicate meaning, but they are not gods. God himself instructed Israel to use colors, stones, and designs in the tabernacle and priestly garments. The danger comes when the symbol is exalted above the Savior, or when people hold a shield more tightly than the cross. Believers can appreciate symbols while being willing to lay them down if they ever compete with obedience.",
-    scriptures: [
-      { ref: "Exodus 28:2-5", text: "Make sacred garments for your brother Aaron to give him dignity and honor... These are the garments they are to make: a breastpiece, an ephod, a robe, a woven tunic, a turban and a sash." },
-      { ref: "Numbers 15:38-41", text: "Speak to the Israelites and say to them: 'Throughout the generations to come you are to make tassels on the corners of your garments, with a blue cord on each tassel.'" },
-      { ref: "Philippians 3:7-8", text: "But whatever were gains to me I now consider loss for the sake of Christ. What is more, I consider everything a loss because of the surpassing worth of knowing Christ Jesus my Lord." }
-    ],
-    tags: ["colors", "symbols", "shields", "tabernacle"]
-  },
-  {
-    id: "only-sex-drinking",
-    myth: "Greek Life Is Only Sex, Drinking, and Parties",
-    category: "lifestyle",
-    scenario: "Family Objection",
-    shortAnswer: "Greek Life is only sex, drinking, and parties.",
-    detailedResponse: "Sinful behavior does happen in Greek contexts, just like it happens in marching bands, athletic teams, dorm rooms, and sometimes choir stands. Stereotypes focus on the loudest extremes. They ignore the study halls, mentoring sessions, community service, leadership training, and lifelong support networks that also exist. Believers should be honest about real temptations, while also honest about real opportunities. The goal is not denial. The goal is discernment.",
-    scriptures: [
-      { ref: "Ephesians 5:15-18", text: "Be very careful, then, how you live—not as unwise but as wise, making the most of every opportunity... Do not get drunk on wine, which leads to debauchery. Instead, be filled with the Spirit." },
-      { ref: "Romans 13:12-14", text: "The night is nearly over; the day is almost here. So let us put aside the deeds of darkness and put on the armor of light... clothe yourselves with the Lord Jesus Christ." },
-      { ref: "John 7:24", text: "Stop judging by mere appearances, but instead judge correctly." }
-    ],
-    tags: ["parties", "drinking", "stereotypes", "discernment"]
-  },
-  {
-    id: "service-not-ministry",
-    myth: "BGLO Service Does Not Count As Ministry",
-    category: "lifestyle",
-    scenario: "Church Challenge",
-    shortAnswer: "Service through BGLOs does not 'count' as Christian ministry.",
-    detailedResponse: "Jesus never said ministry only counts if it is done under a church logo. He described ministry as feeding the hungry, clothing the naked, visiting the sick and imprisoned, and caring for 'the least of these.' If you do that in his name, with his heart, it matters. If Greek Life opens doors for mentorship, scholarships, voter education, and community uplift, a believer can see that as a sacred assignment as long as they are clear who they are ultimately serving.",
-    scriptures: [
-      { ref: "Matthew 25:34-40", text: "Then the King will say to those on his right, 'Come, you who are blessed by my Father'... 'For I was hungry and you gave me something to eat, I was thirsty and you gave me something to drink.'" },
-      { ref: "Colossians 3:23-24", text: "Whatever you do, work at it with all your heart, as working for the Lord, not for human masters... It is the Lord Christ you are serving." },
-      { ref: "Ephesians 2:10", text: "For we are God's handiwork, created in Christ Jesus to do good works, which God prepared in advance for us to do." }
-    ],
-    tags: ["service", "ministry", "community service", "good works"]
-  },
-  {
     id: "brotherhood-idolatrous",
     myth: "Brotherhood and Sisterhood Are Always Idolatrous",
     category: "worship",
@@ -663,89 +592,18 @@ export const mythBusterContent: MythEntry[] = [
     tags: ["brotherhood", "sisterhood", "fellowship", "community"]
   },
   {
-    id: "pledging-bondage",
-    myth: "Pledging Is Always Spiritual Bondage",
-    category: "rituals",
-    scenario: "Personal Doubt",
-    shortAnswer: "The pledging or intake process is always spiritual bondage.",
-    detailedResponse: "Spiritual bondage refers to being enslaved to sin, darkness, or demonic influence. It does not mean any form of commitment or structured process. Baptism is a pledge. Marriage is a covenant. The military has boot camp. The question is whether the intake process requires sin, abuse, or worship of anything besides God. If it does, refuse. If it does not, discern and engage wisely. Many chapters have reformed their processes to focus on education, mentorship, and service.",
-    scriptures: [
-      { ref: "Galatians 5:1", text: "It is for freedom that Christ has set us free. Stand firm, then, and do not let yourselves be burdened again by a yoke of slavery." },
-      { ref: "Romans 6:16-18", text: "Don't you know that when you offer yourselves to someone as obedient slaves, you are slaves of the one you obey... You have been set free from sin and have become slaves to righteousness." },
-      { ref: "1 Peter 2:16", text: "Live as free people, but do not use your freedom as a cover-up for evil; live as God's slaves." }
-    ],
-    tags: ["pledging", "intake", "bondage", "freedom"]
-  },
-  {
-    id: "greeks-have-spirits",
-    myth: "Greeks Are Bound by Spirits",
-    category: "rituals",
+    id: "service-not-ministry",
+    myth: "BGLO Service Does Not Count As Ministry",
+    category: "ministry",
     scenario: "Church Challenge",
-    organization: "BGLO",
-    shortAnswer: "Greeks are bound by spirits attached to their organizations.",
-    detailedResponse: "The claim that blanket demonic attachment occurs at membership is not supported by Scripture. Believers are sealed by the Holy Spirit. Demons are not attached to acronyms. They influence through sin, deception, and unrepentance. If a believer in Christ is walking in the light, they are protected by the blood of Jesus and the power of the Holy Spirit, regardless of any past or present group affiliation.",
+    shortAnswer: "Service through BGLOs does not 'count' as Christian ministry.",
+    detailedResponse: "Jesus never said ministry only counts if it is done under a church logo. He described ministry as feeding the hungry, clothing the naked, visiting the sick and imprisoned, and caring for 'the least of these.' If you do that in his name, with his heart, it matters. If Greek Life opens doors for mentorship, scholarships, voter education, and community uplift, a believer can see that as a sacred assignment as long as they are clear who they are ultimately serving.",
     scriptures: [
-      { ref: "Ephesians 1:13-14", text: "When you believed, you were marked in him with a seal, the promised Holy Spirit, who is a deposit guaranteeing our inheritance until the redemption of those who are God's possession." },
-      { ref: "1 John 5:18", text: "We know that anyone born of God does not continue to sin; the One who was born of God keeps them safe, and the evil one cannot harm them." },
-      { ref: "Romans 8:1-2", text: "Therefore, there is now no condemnation for those who are in Christ Jesus, because through Christ Jesus the law of the Spirit who gives life has set you free." }
+      { ref: "Matthew 25:34-40", text: "Then the King will say to those on his right, 'Come, you who are blessed by my Father'... 'For I was hungry and you gave me something to eat, I was thirsty and you gave me something to drink.'" },
+      { ref: "Colossians 3:23-24", text: "Whatever you do, work at it with all your heart, as working for the Lord, not for human masters... It is the Lord Christ you are serving." },
+      { ref: "Ephesians 2:10", text: "For we are God's handiwork, created in Christ Jesus to do good works, which God prepared in advance for us to do." }
     ],
-    tags: ["spirits", "demons", "bondage", "protection"]
-  },
-  {
-    id: "greek-letters-idols",
-    myth: "Greek Letters Are Idols",
-    category: "worship",
-    scenario: "Family Objection",
-    shortAnswer: "Greek letters are idols.",
-    detailedResponse: "An idol is not a letter from the alphabet. An idol is anything we love, serve, fear, or obey more than God. Greek letters are symbols, just like a cross, a flag, or a wedding ring. They can be used well or badly. The danger is never the ink or fabric. The danger is a heart that confuses the symbol with the Savior. If letters become a source of ultimate identity, pride, or superiority, then they are functioning as idols. If they become a reminder of responsibility, service, and character, surrendered under Christ, they are tools.",
-    scriptures: [
-      { ref: "Exodus 20:3-5", text: "You shall have no other gods before me. You shall not make for yourself an image in the form of anything in heaven above or on the earth beneath or in the waters below." },
-      { ref: "1 Corinthians 10:14", text: "Therefore, my dear friends, flee from idolatry." },
-      { ref: "Colossians 3:5", text: "Put to death, therefore, whatever belongs to your earthly nature: sexual immorality, impurity, lust, evil desires and greed, which is idolatry." }
-    ],
-    tags: ["idols", "symbols", "letters", "identity"]
-  },
-  {
-    id: "ritual-is-witchcraft",
-    myth: "Ritual Is The Same As Witchcraft",
-    category: "rituals",
-    scenario: "Church Challenge",
-    shortAnswer: "Ritual is the same as witchcraft.",
-    detailedResponse: "Ritual simply means a repeated pattern of words or actions that carry meaning. Communion is a ritual. Baptism is a ritual. Laying on of hands is a ritual. The Bible warns about sorcery, divination, and attempts to manipulate spiritual power apart from God. That is witchcraft. Ritual becomes a problem when the symbol replaces obedience or when it is tied to powers and spirits that are not of God. Ritual used to remind people of service, sacrifice, excellence, and brother or sisterhood can be redeemed and aligned with Christ.",
-    scriptures: [
-      { ref: "1 Corinthians 11:23-26", text: "For I received from the Lord what I also passed on to you: The Lord Jesus, on the night he was betrayed, took bread... 'Do this in remembrance of me.'" },
-      { ref: "Romans 6:3-4", text: "Or don't you know that all of us who were baptized into Christ Jesus were baptized into his death? We were therefore buried with him through baptism into death." },
-      { ref: "Deuteronomy 18:9-14", text: "When you enter the land the Lord your God is giving you, do not learn to imitate the detestable ways of the nations there. Let no one be found among you who... practices divination or sorcery." }
-    ],
-    tags: ["ritual", "witchcraft", "communion", "baptism"]
-  },
-  {
-    id: "oath-outside-church",
-    myth: "Taking Any Oath Outside Church Is Sinful",
-    category: "rituals",
-    scenario: "Personal Doubt",
-    shortAnswer: "Taking any oath outside of church is sinful.",
-    detailedResponse: "Jesus warns against careless, manipulative oath taking. Scripture is clear that our yes should mean yes and our no should mean no. That does not mean every pledge, promise, or membership covenant is automatically wicked. Marriage vows, employment contracts, and citizenship oaths all exist outside church walls. The real issue is content and allegiance. If a vow asks you to worship something instead of God or to sin against your neighbor, you cannot take or keep that vow. If a promise is about service, honor, and integrity, many believers see that as consistent with Christian discipleship.",
-    scriptures: [
-      { ref: "Matthew 5:33-37", text: "Again, you have heard that it was said to the people long ago, 'Do not break your oath, but fulfill to the Lord the vows you have made.' But I tell you... All you need to say is simply 'Yes' or 'No.'" },
-      { ref: "Psalm 15:1-4", text: "Lord, who may dwell in your sacred tent? Who may live on your holy mountain? The one whose walk is blameless... who keeps an oath even when it hurts, and does not change their mind." },
-      { ref: "Acts 5:29", text: "Peter and the other apostles replied: 'We must obey God rather than human beings!'" }
-    ],
-    tags: ["oaths", "vows", "promises", "allegiance"]
-  },
-  {
-    id: "serve-jesus-and-greek",
-    myth: "You Cannot Serve Jesus and Be Greek",
-    category: "identity",
-    scenario: "Church Challenge",
-    shortAnswer: "You cannot serve Jesus and be in a fraternity or sorority.",
-    detailedResponse: "Scripture is full of believers who served God while moving inside very imperfect systems. Think of Joseph in Egypt, Daniel in Babylon, Esther in Persia. They did not withdraw from those environments, they walked wisely inside them, drew a line when they had to, and represented God in the middle of the culture. You can follow Jesus in a dorm, in a locker room, on a job, or in a chapter house. Your calling is to stay loyal to Christ, not to run from every complex space where he might want a witness.",
-    scriptures: [
-      { ref: "Daniel 1", text: "But Daniel resolved not to defile himself with the royal food and wine... God had caused the official to show favor and compassion to Daniel." },
-      { ref: "John 17:15-18", text: "My prayer is not that you take them out of the world but that you protect them from the evil one... As you sent me into the world, I have sent them into the world." },
-      { ref: "Colossians 3:17", text: "And whatever you do, whether in word or deed, do it all in the name of the Lord Jesus, giving thanks to God the Father through him." }
-    ],
-    tags: ["loyalty", "witness", "Daniel", "Esther"]
+    tags: ["service", "ministry", "community service", "good works"]
   },
   {
     id: "all-pagan-demonic",
@@ -805,20 +663,6 @@ export const mythBusterContent: MythEntry[] = [
     tags: ["distraction", "priorities", "maturity", "wisdom"]
   },
   {
-    id: "stepping-strolling-demons",
-    myth: "Stepping and Strolling Invite Demons",
-    category: "rituals",
-    scenario: "Church Challenge",
-    shortAnswer: "Stepping and strolling invite demons.",
-    detailedResponse: "Movement and rhythm do not belong to the devil. David danced before the Lord. Israel marched in processions. African and African American worship has always involved the body. The question is what is being celebrated, glorified, and spoken in those moments. If the content is degrading, sexually explicit, or violently prideful, then believers need to step back and change the script. If the content highlights unity, history, and positive values, believers can reclaim their bodies and movements as instruments of worship and witness.",
-    scriptures: [
-      { ref: "2 Samuel 6:14-21", text: "Wearing a linen ephod, David was dancing before the Lord with all his might, while he and all Israel were bringing up the ark of the Lord with shouts and the sound of trumpets." },
-      { ref: "Psalm 149:3", text: "Let them praise his name with dancing and make music to him with timbrel and harp." },
-      { ref: "Romans 12:1", text: "Therefore, I urge you, brothers and sisters, in view of God's mercy, to offer your bodies as a living sacrifice, holy and pleasing to God—this is your true and proper worship." }
-    ],
-    tags: ["stepping", "strolling", "dance", "movement"]
-  },
-  {
     id: "masons-evil-bglo",
     myth: "Because Founders Were Masons, All BGLOs Are Evil",
     category: "history",
@@ -837,6 +681,7 @@ export const mythBusterContent: MythEntry[] = [
     id: "hazing-standard",
     myth: "Hazing is Standard Practice",
     category: "lifestyle",
+    proofCategory: "pledge-process",
     scenario: "Prospective Member Question",
     shortAnswer: "All Greek organizations engage in harmful hazing.",
     detailedResponse: "Modern Greek organizations have strict anti-hazing policies with legal and organizational consequences. Many focus on member education, mentorship, and development. Christians should advocate for dignity and safety in all contexts.",
@@ -862,48 +707,6 @@ export const mythBusterContent: MythEntry[] = [
     tags: ["loyalty", "commitment", "priorities"]
   },
   {
-    id: "excessive-partying",
-    myth: "Greeks Promote Excessive Partying",
-    category: "lifestyle",
-    scenario: "Social Media Defense",
-    shortAnswer: "Greek life is just about partying and drinking.",
-    detailedResponse: "While social events exist, Greek organizations emphasize scholarship (many require minimum GPAs), community service (billions raised annually), and leadership development. Christians are called to be in the world, not of it, maintaining witness wherever they are.",
-    scriptures: [
-      { ref: "1 Peter 2:12", text: "Live such good lives among the pagans that, though they accuse you of doing wrong, they may see your good deeds and glorify God on the day he visits us." },
-      { ref: "Romans 12:2", text: "Do not conform to the pattern of this world, but be transformed by the renewing of your mind." },
-      { ref: "Titus 2:11-12", text: "For the grace of God has appeared that offers salvation to all people. It teaches us to say 'No' to ungodliness and worldly passions, and to live self-controlled, upright and godly lives." }
-    ],
-    tags: ["partying", "drinking", "lifestyle"]
-  },
-  {
-    id: "idolatry-letters",
-    myth: "Greek Life is Idolatry",
-    category: "worship",
-    scenario: "Family Discussion",
-    shortAnswer: "Joining a fraternity or sorority means you're putting Greek letters before God.",
-    detailedResponse: "Fellowship and community are biblical principles. Just as Paul met in synagogues and homes, believers can participate in organizations while maintaining Christ as Lord. The key is priority and worship direction.",
-    scriptures: [
-      { ref: "1 Corinthians 10:31", text: "So whether you eat or drink or whatever you do, do it all for the glory of God." },
-      { ref: "Colossians 3:17", text: "And whatever you do, whether in word or deed, do it all in the name of the Lord Jesus, giving thanks to God the Father through him." },
-      { ref: "Matthew 6:33", text: "But seek first his kingdom and his righteousness, and all these things will be given to you as well." }
-    ],
-    tags: ["idolatry", "priorities", "worship"]
-  },
-  {
-    id: "secret-rituals-demonic",
-    myth: "Secret Rituals are Demonic",
-    category: "rituals",
-    scenario: "Church Setting",
-    shortAnswer: "The private rituals of Greek organizations are occult practices.",
-    detailedResponse: "Many faith traditions have sacred ceremonies (communion, baptism, weddings). Privacy doesn't equal evil. What matters is the content and purpose. Most Greek rituals focus on values like scholarship, service, and sisterhood/brotherhood.",
-    scriptures: [
-      { ref: "1 Corinthians 14:33", text: "For God is not a God of disorder but of peace—as in all the congregations of the Lord's people." },
-      { ref: "Matthew 18:20", text: "For where two or three gather in my name, there am I with them." },
-      { ref: "Hebrews 10:24-25", text: "And let us consider how we may spur one another on toward love and good deeds, not giving up meeting together." }
-    ],
-    tags: ["rituals", "secrecy", "traditions"]
-  },
-  {
     id: "divine-nine-elitism",
     myth: "Divine Nine Status is Elitism",
     category: "community",
@@ -920,7 +723,7 @@ export const mythBusterContent: MythEntry[] = [
   },
   {
     id: "unnecessary-for-christians",
-    myth: "It's Unnecessary for Christians",
+    myth: "Greek Organizations Are Unnecessary for Christians",
     category: "ministry",
     scenario: "Ministry Leader Concern",
     shortAnswer: "Christians don't need Greek organizations for community.",
@@ -936,6 +739,7 @@ export const mythBusterContent: MythEntry[] = [
     id: "pagan-principles-founding",
     myth: "BGLOs Were Founded on Pagan Principles",
     category: "history",
+    proofCategory: "founders",
     scenario: "Prospective Member Question",
     organization: "BGLO",
     shortAnswer: "Black Greek organizations have roots in non-Christian traditions.",
