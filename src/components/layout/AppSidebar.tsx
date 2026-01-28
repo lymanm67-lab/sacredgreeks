@@ -31,6 +31,7 @@ import {
   Drama,
   History,
   Scale,
+  Crown,
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -71,6 +72,7 @@ const learningPathItems = [
   { title: "Myth Busters", url: "/myth-buster", icon: Zap, featureId: null, iconColor: "text-yellow-500", hasProgress: true },
   { title: "Faith & Authority", url: "/faith-authority", icon: BookOpen, featureId: null, iconColor: "text-amber-500", hasProgress: true },
   { title: "Stay or Leave?", url: "/should-you-stay-or-leave", icon: Scale, featureId: null, iconColor: "text-teal-500", hasProgress: true },
+  { title: "Saints or Sellouts?", url: "/saints-or-sellouts", icon: Crown, featureId: null, iconColor: "text-orange-500", hasProgress: true },
 ];
 
 // Assessments section - easy access to all quizzes and assessments for earning points
