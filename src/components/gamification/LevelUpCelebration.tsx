@@ -36,7 +36,9 @@ export const LevelUpCelebration = ({ show, newLevel, onClose }: LevelUpCelebrati
   const { speak, isPlaying, stop } = useTTS();
   const [hasPlayedAudio, setHasPlayedAudio] = useState(false);
 
-  const levelData = LEVEL_BADGES[newLevel] || LEVEL_BADGES[Math.min(newLevel, 10)];
+  // Guard against invalid level - default to level 1
+  const safeLevel = newLevel > 0 ? newLevel : 1;
+  const levelData = LEVEL_BADGES[safeLevel] || LEVEL_BADGES[Math.min(safeLevel, 10)] || LEVEL_BADGES[1];
   const Icon = levelData.icon;
 
   useEffect(() => {
