@@ -26,7 +26,7 @@ const latestUpdate: UpdateInfo = {
     'Structured data for rich search snippets',
     'PWA validation tests to prevent future issues'
   ],
-  date: '2024-11-30'
+  date: '2025-11-30'
 };
 
 const STORAGE_KEY = 'sacred-greeks-last-seen-version';
