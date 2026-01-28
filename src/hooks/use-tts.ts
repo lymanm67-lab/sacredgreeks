@@ -7,7 +7,7 @@ interface UseTTSOptions {
 }
 
 export function useTTS(options: UseTTSOptions = {}) {
-  const { voice = 'shimmer' } = options;
+  const { voice = 'nicole' } = options; // Default to Nicole - warm African-American female voice
   const [isLoading, setIsLoading] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [error, setError] = useState<string | null>(null);
