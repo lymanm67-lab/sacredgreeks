@@ -190,6 +190,8 @@ serve(async (req) => {
       const GREEK_LIFE_SESSIONS = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
       // Faith & Authority: sessions 16-20
       const FAITH_AUTH_SESSIONS = [16, 17, 18, 19, 20];
+      // Stay or Leave: sessions 21-26
+      const STAY_OR_LEAVE_SESSIONS = [21, 22, 23, 24, 25, 26];
 
       const hasAll = (completedSessionIds: number[], required: number[]) => {
         const set = new Set(completedSessionIds);
@@ -208,6 +210,10 @@ serve(async (req) => {
 
       if (hasAll(completedIds, FAITH_AUTH_SESSIONS)) {
         await awardAchievementByKey("faith_authority_complete");
+      }
+
+      if (hasAll(completedIds, STAY_OR_LEAVE_SESSIONS)) {
+        await awardAchievementByKey("stay_or_leave_complete");
       }
     }
 
