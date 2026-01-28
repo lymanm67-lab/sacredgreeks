@@ -44,16 +44,17 @@ import { useTTS } from "@/hooks/use-tts";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
-// Session IDs 40-47 for Hidden in Plain Sight course (8 modules)
+// Session IDs 40-48 for Hidden in Plain Sight course (9 modules)
 const COURSE_SESSION_IDS = {
   caseStudy: 40,
   reveal: 41,
   contextMatters: 42,
   doubleStandard: 43,
-  architecture: 44,
-  language: 45,
-  application: 46,
-  conclusion: 47,
+  cosmetics: 44,
+  architecture: 45,
+  language: 46,
+  application: 47,
+  conclusion: 48,
 };
 
 const CASE_STUDY_SCENARIO = {
@@ -133,16 +134,24 @@ const DOUBLE_STANDARD_CONTENT = {
       content: "The Nike 'swoosh' represents the wing of Nike, Greek goddess of victory. This pagan deity adorns millions of Christians' clothing, shoes, and accessories—yet wearing Greek letters is condemned as 'worldly.'",
     },
     {
+      title: "Mercedes-Benz: Ruler of Three Realms",
+      content: "The iconic three-pointed star hood ornament symbolizes the company's ambition to dominate air, land, and sea transportation. This triad symbol echoes ancient pagan cosmology dividing existence into three realms ruled by different deities—yet Christians proudly display it on their vehicles.",
+    },
+    {
+      title: "Volkswagen & Sundials",
+      content: "The Volkswagen emblem contains overlapping V and W letters forming a design reminiscent of ancient solar symbols. Sundials, still used decoratively in Christian gardens and churches, are direct relics of sun worship—yet no one questions their presence on church grounds.",
+    },
+    {
+      title: "Pharmacy: The Art of Sorcery",
+      content: "The word 'pharmacy' derives from the Greek 'pharmakeia'—the same word translated as 'sorcery' or 'witchcraft' in Galatians 5:20 and Revelation 18:23. The Rx symbol traces to the Eye of Horus. Christians fill prescriptions at 'sorcery shops' without perceiving spiritual danger.",
+    },
+    {
       title: "Days of the Week",
       content: "Sunday (Sun god), Monday (Moon goddess), Tuesday (Tiw/Mars), Wednesday (Odin/Mercury), Thursday (Thor/Jupiter), Friday (Freya/Venus), Saturday (Saturn). Christians use pagan god names daily without spiritual concern.",
     },
     {
       title: "Months of the Year",
       content: "January (Janus), March (Mars), May (Maia), June (Juno)—Roman gods embedded in our calendar. We write these names, schedule church events around them, and never question their origins.",
-    },
-    {
-      title: "Medical & Pharmaceutical Symbols",
-      content: "The caduceus (Hermes' staff with serpents), the Rod of Asclepius (Greek god of healing), and the Rx symbol (derived from the Eye of Horus) all appear in Christian hospitals and pharmacies without objection.",
     },
     {
       title: "Currency & Government",
@@ -156,10 +165,50 @@ const DOUBLE_STANDARD_CONTENT = {
   conclusion: "The selective application of 'pagan origins' criticism reveals cultural bias rather than consistent theological principle. Either all pagan-derived practices are spiritually dangerous, or context and intent matter for all of them.",
 };
 
+const COSMETICS_CONTENT = {
+  title: "Beauty Rituals of the Ancients",
+  introduction: "Discover how modern beauty practices trace directly to ancient Egyptian religious rituals honoring pagan deities.",
+  points: [
+    {
+      title: "Wigs: The Crown of Isis",
+      content: "Ancient Egyptians wore wigs as symbols of status and religious devotion, particularly to the goddess Isis who was depicted with elaborate hairstyles. Pharaohs and priests wore wigs during religious ceremonies. Today, wigs remain popular in churches, fashion, and entertainment—yet this Egyptian religious practice raises no spiritual concerns.",
+    },
+    {
+      title: "Eyeliner: The Eye of Horus",
+      content: "The distinctive Egyptian kohl eyeliner was applied to honor and invoke the protection of Horus, god of the sky. The iconic 'cat eye' shape mimics the Eye of Horus symbol believed to ward off evil. Modern makeup tutorials teach this exact technique to Christians who would never consider it 'pagan worship.'",
+    },
+    {
+      title: "Braids: The River Nile & Fertility",
+      content: "Egyptian braiding patterns symbolized the flowing Nile River and were associated with fertility goddesses like Isis and Hathor. Intricate cornrows and braids held religious significance, connecting the wearer to divine feminine power and agricultural abundance. These same styles are worn in churches every Sunday.",
+    },
+    {
+      title: "Perfumes & Anointing Oils",
+      content: "The cosmetics industry's foundation lies in Egyptian temple practices. Perfumes were offerings to deities, and anointing oils were used in pagan rituals long before they were adopted into Jewish and Christian practice. The word 'cosmetic' itself derives from 'kosmos'—the Greek concept of divine order.",
+    },
+    {
+      title: "Mirrors: Portal to the Divine",
+      content: "Ancient Egyptians believed mirrors were magical objects that could capture the soul and provide access to the spiritual realm. Mirrors were sacred to Hathor, goddess of beauty and love. Christians use mirrors daily without perceiving any spiritual danger in this 'pagan technology.'",
+    },
+  ],
+  conclusion: "The beauty industry is built on Egyptian religious practices honoring Isis, Horus, Hathor, and other deities. If wearing Greek letters is spiritually dangerous, then eyeliner, wigs, braids, and perfume should be equally concerning—yet they are not.",
+};
+
 const ARCHITECTURE_CONTENT = {
-  title: "Sacred Architecture & Art",
+  title: "Sacred Spaces & Design",
   introduction: "Examine how pagan design elements permeate Christian worship spaces and religious art.",
   points: [
+    {
+      title: "Church Domes: Eyes of Zeus",
+      content: "The dome structure in Christian architecture traces to Roman temples dedicated to the gods, particularly the Pantheon (temple to 'all gods'). The oculus (central opening) represented the 'Eye of Zeus' or the heavens watching down. St. Peter's Basilica and countless churches feature this pagan architectural element.",
+    },
+    {
+      title: "Pulpits: From the Roman Senate",
+      content: "The elevated pulpit where pastors preach derives from the Roman rostra—the raised platform in the Senate where orators addressed crowds. This political symbol of authority was adopted by churches, yet the 'pagan government' origin is never questioned.",
+    },
+    {
+      title: "Church Altars: Pagan Sacrifice Tables",
+      content: "The rectangular altar at the front of churches mirrors the design of ancient pagan sacrifice tables. Greek, Roman, and other temples featured identical rectangular stone structures for offerings to deities. The Christian altar maintains this exact form.",
+    },
     {
       title: "Church Steeples & Obelisks",
       content: "Church steeples evolved from Egyptian obelisks dedicated to the sun god Ra. The pointed spire reaching toward heaven mirrors pagan 'axis mundi' concepts—the connection between earth and the divine realm.",
@@ -173,21 +222,25 @@ const ARCHITECTURE_CONTENT = {
       content: "Medieval churches feature pagan creatures—dragons, demons, and hybrid beasts—carved into their facades. Originally protective spirits from pre-Christian religions, they were 'baptized' into Christian architecture.",
     },
     {
-      title: "Christmas Tree in Church",
-      content: "Evergreen trees decorated in sanctuaries derive from Germanic Yule traditions honoring tree spirits. The practice was condemned by church councils for centuries before being accepted as 'Christian.'",
-    },
-    {
       title: "Cathedral Floor Labyrinths",
       content: "Circular labyrinths in cathedral floors (like Chartres) trace to Greek mythology's Cretan labyrinth. Walking these patterns was a pagan meditative practice adapted for Christian pilgrimage.",
     },
   ],
-  conclusion: "Christians worship in buildings designed with pagan architectural elements, viewing religious art with pagan symbols, yet these 'baptized' elements raise no concern while Greek organizational symbols face condemnation.",
+  conclusion: "Christians worship in buildings featuring Zeus's eye (domes), Roman Senate platforms (pulpits), and pagan sacrifice tables (altars)—yet these 'baptized' elements raise no concern while Greek organizational symbols face condemnation.",
 };
 
 const LANGUAGE_CONTENT = {
   title: "Everyday Pagan Phrases",
-  introduction: "Discover the pagan origins hidden in common English expressions Christians use daily.",
+  introduction: "Discover the pagan origins hidden in common English expressions—and a common misinterpretation of Proverbs 18:21.",
   points: [
+    {
+      title: "The 'Power of Death and Life' Misinterpretation",
+      content: "Some Christian leaders have taken Proverbs 18:21 ('Death and life are in the power of the tongue') out of context, teaching that spoken words have autonomous magical power. If this interpretation were true, merely saying words would invoke magic spells—making every pagan phrase Christians speak a genuine spiritual danger. But the verse describes the relational and social impact of speech, not incantation magic.",
+    },
+    {
+      title: "If Words Were Magic Spells...",
+      content: "If words automatically invoked spiritual power, then saying 'Thursday' (Thor's Day), 'cereal' (goddess Ceres), or 'good luck' (the Fates) would be actual pagan worship. The fact that Christians say these words without spiritual consequence proves that context and intent matter—not the mere utterance of sounds.",
+    },
     {
       title: "'Knock on Wood'",
       content: "This phrase comes from Celtic tree worship—knocking to awaken protective spirits living in trees. Christians say this without perceiving spiritual danger, yet similar protective gestures in other contexts are condemned.",
@@ -213,7 +266,7 @@ const LANGUAGE_CONTENT = {
       content: "'Panic' derives from Pan, the Greek god who caused sudden fear. 'Echo' was a nymph cursed by Hera. These mythological references saturate English without spiritual concern.",
     },
   ],
-  conclusion: "The English language is saturated with pagan deity references, mythological concepts, and superstitious phrases. If words have power, Christians using these terms daily are as 'compromised' as any Greek organization.",
+  conclusion: "The English language is saturated with pagan deity references, mythological concepts, and superstitious phrases. If Proverbs 18:21 meant words have magical power, Christians using these terms daily would be practicing sorcery. The consistent application proves context and intent matter—not the words themselves.",
 };
 
 const APPLICATION_CONTENT = {
@@ -264,7 +317,7 @@ const CONCLUSION_CONTENT = {
   callToAction: "Armed with this understanding, you can now evaluate ritual practices consistently—whether birthday parties, wedding ceremonies, holiday celebrations, or organizational rituals. The standard must be theological content, not cultural familiarity.",
 };
 
-const COURSE_INSTRUCTIONS = `Welcome to "Hidden in Plain Sight"—a course that will challenge how you evaluate cultural practices. You'll discover that many beloved American and Christian traditions have direct pagan origins that we've accepted as "normal." Through an eye-opening case study format, you'll see how birthday candles, wedding traditions, holidays, architecture, language, and everyday symbols all trace to pagan sources. By the end, you'll have tools to evaluate practices consistently rather than selectively. Complete all eight modules to earn 200 points (25 points each). Let's uncover what's been hidden in plain sight!`;
+const COURSE_INSTRUCTIONS = `Welcome to "Hidden in Plain Sight"—a course that will challenge how you evaluate cultural practices. You'll discover that many beloved American and Christian traditions have direct pagan origins that we've accepted as "normal." Through an eye-opening case study format, you'll see how birthday candles, wedding traditions, holidays, cosmetics, architecture, language, and everyday symbols all trace to pagan sources. By the end, you'll have tools to evaluate practices consistently rather than selectively. Complete all nine modules to earn 200 points (22 points each, 24 for final). Let's uncover what's been hidden in plain sight!`;
 
 const MODULES = [
   {
@@ -304,7 +357,7 @@ const MODULES = [
     id: "doubleStandard",
     sessionId: COURSE_SESSION_IDS.doubleStandard,
     title: "Hidden Symbols",
-    subtitle: "Nike, Calendar & Currency",
+    subtitle: "Logos, Pharmacy & Calendar",
     icon: Target,
     color: "from-blue-500 to-cyan-500",
     bgColor: "bg-blue-500/10",
@@ -312,10 +365,21 @@ const MODULES = [
     description: "See pagan symbols in everyday American life",
   },
   {
+    id: "cosmetics",
+    sessionId: COURSE_SESSION_IDS.cosmetics,
+    title: "Beauty Rituals",
+    subtitle: "Cosmetics & Egyptian Origins",
+    icon: Sparkles,
+    color: "from-fuchsia-500 to-pink-500",
+    bgColor: "bg-fuchsia-500/10",
+    borderColor: "border-fuchsia-500/30",
+    description: "Explore Egyptian religious origins of wigs, eyeliner, and braids",
+  },
+  {
     id: "architecture",
     sessionId: COURSE_SESSION_IDS.architecture,
     title: "Sacred Spaces",
-    subtitle: "Architecture & Art",
+    subtitle: "Domes, Pulpits & Altars",
     icon: Church,
     color: "from-indigo-500 to-purple-500",
     bgColor: "bg-indigo-500/10",
@@ -326,12 +390,12 @@ const MODULES = [
     id: "language",
     sessionId: COURSE_SESSION_IDS.language,
     title: "Hidden Words",
-    subtitle: "Language & Phrases",
+    subtitle: "Language & 'Power of the Tongue'",
     icon: BookMarked,
     color: "from-orange-500 to-red-500",
     bgColor: "bg-orange-500/10",
     borderColor: "border-orange-500/30",
-    description: "Discover pagan origins in everyday English expressions",
+    description: "Discover pagan phrases and the Proverbs 18:21 misinterpretation",
   },
   {
     id: "application",
@@ -368,6 +432,8 @@ const getModuleTTSContent = (moduleId: string): string => {
       return `${CONTEXT_MATTERS_CONTENT.title}. ${CONTEXT_MATTERS_CONTENT.mainPoint}. ${CONTEXT_MATTERS_CONTENT.sections.map(s => `${s.title}: ${s.content}`).join(". ")}`;
     case "doubleStandard":
       return `${DOUBLE_STANDARD_CONTENT.title}. ${DOUBLE_STANDARD_CONTENT.introduction}. ${DOUBLE_STANDARD_CONTENT.points.map(p => `${p.title}: ${p.content}`).join(". ")}. ${DOUBLE_STANDARD_CONTENT.conclusion}`;
+    case "cosmetics":
+      return `${COSMETICS_CONTENT.title}. ${COSMETICS_CONTENT.introduction}. ${COSMETICS_CONTENT.points.map(p => `${p.title}: ${p.content}`).join(". ")}. ${COSMETICS_CONTENT.conclusion}`;
     case "architecture":
       return `${ARCHITECTURE_CONTENT.title}. ${ARCHITECTURE_CONTENT.introduction}. ${ARCHITECTURE_CONTENT.points.map(p => `${p.title}: ${p.content}`).join(". ")}. ${ARCHITECTURE_CONTENT.conclusion}`;
     case "language":
@@ -393,13 +459,13 @@ export default function HiddenInPlainSight() {
   const [hasRevealed, setHasRevealed] = useState(false);
   const [pointsAwarded, setPointsAwarded] = useState(false);
 
-  // Get completed modules
+  // Get completed modules (now 40-48 for 9 modules)
   const completedModules = studyProgress
-    .filter(p => p.session_id >= 40 && p.session_id <= 47 && p.completed)
+    .filter(p => p.session_id >= 40 && p.session_id <= 48 && p.completed)
     .map(p => p.session_id);
 
   const completedCount = completedModules.length;
-  const progressPercentage = (completedCount / 8) * 100;
+  const progressPercentage = (completedCount / 9) * 100;
 
   const { triggerLessonComplete, triggerMilestone } = useLessonCelebration();
   const previousCompletedRef = useRef<number[]>([]);
@@ -443,9 +509,10 @@ export default function HiddenInPlainSight() {
       if (prevCompleted.length < completedModules.length) {
         if (completedModules.length === 1 && prevCompleted.length === 0) {
           setTimeout(() => triggerMilestone('first'), 2500);
-        } else if (completedModules.length === 4) {
+        } else if (completedModules.length === 5) {
+          // Halfway at 5 of 9 modules
           setTimeout(() => triggerMilestone('halfway'), 2500);
-        } else if (completedModules.length === 8 && !pointsAwarded) {
+        } else if (completedModules.length === 9 && !pointsAwarded) {
           awardPoints({ points: 200, actionType: 'hidden_plain_sight_completion' });
           setPointsAwarded(true);
           toast.success("🏆 Course Complete! +200 points earned!");
@@ -694,6 +761,53 @@ export default function HiddenInPlainSight() {
               className="w-full"
             >
               {isSessionComplete(COURSE_SESSION_IDS.doubleStandard) ? (
+                <>
+                  <CheckCircle2 className="h-4 w-4 mr-2" />
+                  Completed
+                </>
+              ) : (
+                <>
+                  Continue to Beauty Rituals
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </>
+              )}
+            </Button>
+          </div>
+        );
+
+      case "cosmetics":
+        return (
+          <div className="space-y-6">
+            <div className="bg-fuchsia-500/10 border border-fuchsia-500/30 rounded-lg p-4">
+              <h4 className="font-semibold text-lg mb-2">{COSMETICS_CONTENT.title}</h4>
+              <p className="text-sm text-muted-foreground">
+                {COSMETICS_CONTENT.introduction}
+              </p>
+            </div>
+
+            <div className="grid gap-4">
+              {COSMETICS_CONTENT.points.map((point, index) => (
+                <Card key={index} className="bg-card/50">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-base">{point.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground">{point.content}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
+              <p className="text-sm font-medium">{COSMETICS_CONTENT.conclusion}</p>
+            </div>
+
+            <Button
+              onClick={() => handleComplete("cosmetics", COURSE_SESSION_IDS.cosmetics)}
+              disabled={isSessionComplete(COURSE_SESSION_IDS.cosmetics)}
+              className="w-full"
+            >
+              {isSessionComplete(COURSE_SESSION_IDS.cosmetics) ? (
                 <>
                   <CheckCircle2 className="h-4 w-4 mr-2" />
                   Completed

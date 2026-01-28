@@ -70,9 +70,9 @@ export const useNavigationProgress = () => {
       const saintsOrSelloutsSessions = studyProgress?.filter(p => p.session_id >= 31 && p.session_id <= 36 && p.completed) || [];
       const saintsOrSellouts = Math.round((saintsOrSelloutsSessions.length / 6) * 100);
 
-      // Hidden in Plain Sight course (sessions 40-47, 8 modules)
-      const hiddenInPlainSightSessions = studyProgress?.filter(p => p.session_id >= 40 && p.session_id <= 47 && p.completed) || [];
-      const hiddenInPlainSight = Math.round((hiddenInPlainSightSessions.length / 8) * 100);
+      // Hidden in Plain Sight course (sessions 40-48, 9 modules)
+      const hiddenInPlainSightSessions = studyProgress?.filter(p => p.session_id >= 40 && p.session_id <= 48 && p.completed) || [];
+      const hiddenInPlainSight = Math.round((hiddenInPlainSightSessions.length / 9) * 100);
 
       // Myth Buster progress (sessions 100+)
       const mythSessions = studyProgress?.filter(p => p.session_id >= 100 && p.session_id < 200 && p.completed) || [];
