@@ -13,7 +13,7 @@ interface ProofCourseOnboardingProps {
 }
 
 // Total course point value
-const COURSE_POINTS = 500;
+const COURSE_POINTS = 50;
 
 // PROOF letter data with colors
 const PROOF_LETTERS = [
