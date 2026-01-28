@@ -160,35 +160,35 @@ export function ProofCourseOnboarding({
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="flex flex-wrap justify-center lg:justify-start gap-3"
+              className="flex items-center justify-center lg:justify-start gap-2 md:gap-3"
             >
               <Button 
-                size="lg"
+                size="sm"
                 onClick={onStartCourse}
-                className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black font-semibold shadow-lg shadow-amber-500/25"
+                className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black font-semibold shadow-lg shadow-amber-500/25 h-9 md:h-10 px-3 md:px-4 text-xs md:text-sm"
               >
-                <Play className="w-5 h-5 mr-2" />
-                {isComplete ? "Review Course" : hasStarted ? "Continue Learning" : "Start Lesson"}
+                <Play className="w-4 h-4 mr-1.5" />
+                {isComplete ? "Review" : hasStarted ? "Continue" : "Start"}
               </Button>
               
               {/* Save & Print Options */}
               <Button 
                 variant="outline"
-                size="lg"
+                size="sm"
                 onClick={() => generateAllProofLessonsPDF()}
-                className="border-white/20 text-white hover:bg-white/10 hover:border-white/30"
+                className="border-white/20 text-white hover:bg-white/10 hover:border-white/30 h-9 md:h-10 px-3 md:px-4 text-xs md:text-sm"
               >
-                <Download className="w-5 h-5 mr-2" />
-                Save All PDFs
+                <Download className="w-4 h-4 mr-1.5" />
+                <span className="hidden sm:inline">Save</span> PDFs
               </Button>
               <Button 
                 variant="outline"
-                size="lg"
+                size="sm"
                 onClick={() => generateAllWorksheetsPDF()}
-                className="border-white/20 text-white hover:bg-white/10 hover:border-white/30"
+                className="border-white/20 text-white hover:bg-white/10 hover:border-white/30 h-9 md:h-10 px-3 md:px-4 text-xs md:text-sm"
               >
-                <Printer className="w-5 h-5 mr-2" />
-                Print Worksheets
+                <Printer className="w-4 h-4 mr-1.5" />
+                <span className="hidden sm:inline">Print</span> Worksheets
               </Button>
             </motion.div>
           </div>
