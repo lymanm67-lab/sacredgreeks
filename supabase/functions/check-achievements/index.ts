@@ -233,8 +233,8 @@ serve(async (req) => {
       const STAY_OR_LEAVE_SESSIONS = [25, 26, 27, 28, 29, 30];
       // Saints or Sellouts: sessions 31-36
       const SAINTS_SELLOUTS_SESSIONS = [31, 32, 33, 34, 35, 36];
-      // Hidden in Plain Sight: sessions 40-45
-      const HIDDEN_PLAIN_SIGHT_SESSIONS = [40, 41, 42, 43, 44, 45];
+      // Hidden in Plain Sight: sessions 40-47 (8 modules)
+      const HIDDEN_PLAIN_SIGHT_SESSIONS = [40, 41, 42, 43, 44, 45, 46, 47];
 
       const hasAll = (completedSessionIds: number[], required: number[]) => {
         const set = new Set(completedSessionIds);
