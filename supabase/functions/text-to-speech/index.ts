@@ -252,8 +252,22 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error("Text-to-speech error:", error);
+
+    const message = error instanceof Error ? error.message : "Unknown error";
+
+    // Avoid returning 500 for expected upstream conditions (prevents app-level crash overlays).
+    // ElevenLabs quota errors sometimes come back as 401 with a payload containing status=quota_exceeded.
+    if (message.includes("quota_exceeded")) {
+      return new Response(
+        JSON.stringify({
+          error: message,
+          code: "quota_exceeded",
+        }),
+        { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
     
-    if (error instanceof Error && error.message.includes("429")) {
+    if (message.includes("429")) {
       return new Response(
         JSON.stringify({ error: "Rate limit exceeded. Please try again in a moment." }),
         { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -262,7 +276,7 @@ serve(async (req) => {
     
     return new Response(
       JSON.stringify({
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: message,
       }),
       {
         status: 500,
