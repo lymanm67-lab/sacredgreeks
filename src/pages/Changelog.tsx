@@ -20,7 +20,7 @@ interface ChangelogEntry {
 const changelog: ChangelogEntry[] = [
   {
     version: "2.4.0",
-    date: "2024-12-03",
+    date: "2025-12-03",
     title: "Admin Gifting & Feature Customization",
     type: "minor",
     changes: [
@@ -33,7 +33,7 @@ const changelog: ChangelogEntry[] = [
   },
   {
     version: "2.3.0",
-    date: "2024-12-02",
+    date: "2025-12-02",
     title: "Enhanced Dashboard & Personalization",
     type: "minor",
     changes: [
@@ -45,7 +45,7 @@ const changelog: ChangelogEntry[] = [
   },
   {
     version: "2.2.0",
-    date: "2024-12-01",
+    date: "2025-12-01",
     title: "Demo Mode & Onboarding Improvements",
     type: "minor",
     changes: [
@@ -57,7 +57,7 @@ const changelog: ChangelogEntry[] = [
   },
   {
     version: "2.1.0",
-    date: "2024-11-30",
+    date: "2025-11-30",
     title: "iOS Installation Fix & SEO Improvements",
     type: "minor",
     changes: [
@@ -72,7 +72,7 @@ const changelog: ChangelogEntry[] = [
   },
   {
     version: "2.0.0",
-    date: "2024-11-28",
+    date: "2025-11-28",
     title: "Real-Time Community Features",
     type: "major",
     changes: [
@@ -87,7 +87,7 @@ const changelog: ChangelogEntry[] = [
   },
   {
     version: "1.5.0",
-    date: "2024-11-25",
+    date: "2025-11-25",
     title: "Enhanced User Experience",
     type: "minor",
     changes: [
@@ -100,7 +100,7 @@ const changelog: ChangelogEntry[] = [
   },
   {
     version: "1.4.0",
-    date: "2024-11-20",
+    date: "2025-11-20",
     title: "Community Forum Launch",
     type: "minor",
     changes: [
@@ -112,7 +112,7 @@ const changelog: ChangelogEntry[] = [
   },
   {
     version: "1.3.0",
-    date: "2024-11-15",
+    date: "2025-11-15",
     title: "Prayer Wall Enhancements",
     type: "minor",
     changes: [
@@ -124,7 +124,7 @@ const changelog: ChangelogEntry[] = [
   },
   {
     version: "1.2.0",
-    date: "2024-11-10",
+    date: "2025-11-10",
     title: "Gamification System",
     type: "minor",
     changes: [
@@ -136,7 +136,7 @@ const changelog: ChangelogEntry[] = [
   },
   {
     version: "1.1.0",
-    date: "2024-11-05",
+    date: "2025-11-05",
     title: "Daily Devotionals",
     type: "minor",
     changes: [
@@ -148,7 +148,7 @@ const changelog: ChangelogEntry[] = [
   },
   {
     version: "1.0.0",
-    date: "2024-11-01",
+    date: "2025-11-01",
     title: "Initial Launch",
     type: "major",
     changes: [
