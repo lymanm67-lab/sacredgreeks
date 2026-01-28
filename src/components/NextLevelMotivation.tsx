@@ -206,21 +206,36 @@ export const NextLevelMotivation = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
       >
-        <Card className="p-4 bg-gradient-to-r from-secondary/10 to-accent/10 border-secondary/20">
+        <Card className="p-4 bg-gradient-to-br from-amber-500/10 via-orange-500/10 to-rose-500/10 border-amber-500/30">
           <div className="flex items-center gap-2 mb-3">
-            <Target className="w-5 h-5 text-secondary" />
-            <h4 className="font-semibold text-secondary">Ways to Earn Points</h4>
+            <motion.div
+              animate={{ rotate: [0, 15, -15, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <Target className="w-5 h-5 text-amber-500" />
+            </motion.div>
+            <h4 className="font-semibold bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">
+              Ways to Earn Points
+            </h4>
           </div>
           
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-3">
             {[
-              { action: "Daily Devotional", points: 10, icon: BookOpen, count: activityCounts?.devotionals || 0 },
-              { action: "Prayer Journal", points: 10, icon: Heart, count: activityCounts?.prayers || 0 },
-              { action: "Complete Assessment", points: 20, icon: Target, count: activityCounts?.assessments || 0 },
-              { action: "Study Session", points: 25, icon: GraduationCap, count: activityCounts?.studySessions || 0 },
+              { action: "Daily Devotional", points: 10, icon: BookOpen, count: activityCounts?.devotionals || 0, color: "blue" },
+              { action: "Prayer Journal", points: 10, icon: Heart, count: activityCounts?.prayers || 0, color: "rose" },
+              { action: "Complete Assessment", points: 20, icon: Target, count: activityCounts?.assessments || 0, color: "amber" },
+              { action: "Study Session", points: 25, icon: GraduationCap, count: activityCounts?.studySessions || 0, color: "purple" },
             ].map((item, index) => {
               const isCompleted = item.count > 0;
               const earnedPoints = item.count * item.points;
+              
+              const colorClasses: Record<string, { bg: string; border: string; text: string; icon: string }> = {
+                blue: { bg: "bg-blue-500/10", border: "border-blue-500/30", text: "text-blue-500", icon: "bg-blue-500" },
+                rose: { bg: "bg-rose-500/10", border: "border-rose-500/30", text: "text-rose-500", icon: "bg-rose-500" },
+                amber: { bg: "bg-amber-500/10", border: "border-amber-500/30", text: "text-amber-500", icon: "bg-amber-500" },
+                purple: { bg: "bg-purple-500/10", border: "border-purple-500/30", text: "text-purple-500", icon: "bg-purple-500" },
+              };
+              const colors = colorClasses[item.color];
               
               return (
                 <motion.div
@@ -228,21 +243,34 @@ export const NextLevelMotivation = () => {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.5 + (index * 0.1) }}
-                  className={`flex items-center gap-2 p-2 rounded-lg ${isCompleted ? 'bg-primary/10 border border-primary/20' : 'bg-background/50'}`}
+                  whileHover={{ scale: 1.03 }}
+                  className={`flex items-center gap-2 p-3 rounded-xl border ${isCompleted ? `${colors.bg} ${colors.border}` : 'bg-background/80 border-border/50'}`}
                 >
                   <div className="relative">
-                    <item.icon className={`w-4 h-4 ${isCompleted ? 'text-primary' : 'text-secondary'}`} />
+                    <div className={`w-8 h-8 rounded-lg ${isCompleted ? colors.icon : 'bg-muted'} flex items-center justify-center`}>
+                      <item.icon className={`w-4 h-4 ${isCompleted ? 'text-white' : 'text-muted-foreground'}`} />
+                    </div>
                     {isCompleted && (
-                      <CheckCircle2 className="w-3 h-3 text-primary absolute -bottom-1 -right-1 fill-background" />
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        className="absolute -bottom-1 -right-1"
+                      >
+                        <CheckCircle2 className={`w-4 h-4 ${colors.text} fill-background`} />
+                      </motion.div>
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className={`text-xs font-medium truncate ${isCompleted ? 'text-primary' : ''}`}>{item.action}</p>
-                    <div className="flex items-center gap-1">
-                      <p className={`text-xs font-bold ${isCompleted ? 'text-primary' : 'text-secondary'}`}>+{item.points} pts</p>
+                    <p className={`text-xs font-semibold truncate ${isCompleted ? colors.text : 'text-foreground'}`}>
+                      {item.action}
+                    </p>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <span className={`text-xs font-bold ${isCompleted ? colors.text : 'text-muted-foreground'}`}>
+                        +{item.points} pts
+                      </span>
                       {isCompleted && (
-                        <Badge variant="secondary" className="text-[9px] px-1 py-0 h-3.5 bg-primary/20 text-primary">
-                          {earnedPoints} earned ({item.count}×)
+                        <Badge className={`text-[9px] px-1.5 py-0 h-4 ${colors.bg} ${colors.text} border-0`}>
+                          ✓ {earnedPoints} pts
                         </Badge>
                       )}
                     </div>
