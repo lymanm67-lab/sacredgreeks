@@ -44,14 +44,16 @@ import { useTTS } from "@/hooks/use-tts";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
-// Session IDs 40-45 for Hidden in Plain Sight course
+// Session IDs 40-47 for Hidden in Plain Sight course (8 modules)
 const COURSE_SESSION_IDS = {
   caseStudy: 40,
   reveal: 41,
   contextMatters: 42,
   doubleStandard: 43,
-  application: 44,
-  conclusion: 45,
+  architecture: 44,
+  language: 45,
+  application: 46,
+  conclusion: 47,
 };
 
 const CASE_STUDY_SCENARIO = {
@@ -154,6 +156,66 @@ const DOUBLE_STANDARD_CONTENT = {
   conclusion: "The selective application of 'pagan origins' criticism reveals cultural bias rather than consistent theological principle. Either all pagan-derived practices are spiritually dangerous, or context and intent matter for all of them.",
 };
 
+const ARCHITECTURE_CONTENT = {
+  title: "Sacred Architecture & Art",
+  introduction: "Examine how pagan design elements permeate Christian worship spaces and religious art.",
+  points: [
+    {
+      title: "Church Steeples & Obelisks",
+      content: "Church steeples evolved from Egyptian obelisks dedicated to the sun god Ra. The pointed spire reaching toward heaven mirrors pagan 'axis mundi' concepts—the connection between earth and the divine realm.",
+    },
+    {
+      title: "Halos in Religious Art",
+      content: "The golden disc behind saints' heads derives from sun worship. Roman emperors, Persian kings, and Greek gods were depicted with solar halos long before Christians adopted the symbol for Jesus and saints.",
+    },
+    {
+      title: "Gargoyles & Grotesques",
+      content: "Medieval churches feature pagan creatures—dragons, demons, and hybrid beasts—carved into their facades. Originally protective spirits from pre-Christian religions, they were 'baptized' into Christian architecture.",
+    },
+    {
+      title: "Christmas Tree in Church",
+      content: "Evergreen trees decorated in sanctuaries derive from Germanic Yule traditions honoring tree spirits. The practice was condemned by church councils for centuries before being accepted as 'Christian.'",
+    },
+    {
+      title: "Cathedral Floor Labyrinths",
+      content: "Circular labyrinths in cathedral floors (like Chartres) trace to Greek mythology's Cretan labyrinth. Walking these patterns was a pagan meditative practice adapted for Christian pilgrimage.",
+    },
+  ],
+  conclusion: "Christians worship in buildings designed with pagan architectural elements, viewing religious art with pagan symbols, yet these 'baptized' elements raise no concern while Greek organizational symbols face condemnation.",
+};
+
+const LANGUAGE_CONTENT = {
+  title: "Everyday Pagan Phrases",
+  introduction: "Discover the pagan origins hidden in common English expressions Christians use daily.",
+  points: [
+    {
+      title: "'Knock on Wood'",
+      content: "This phrase comes from Celtic tree worship—knocking to awaken protective spirits living in trees. Christians say this without perceiving spiritual danger, yet similar protective gestures in other contexts are condemned.",
+    },
+    {
+      title: "'Bless You' (Sneezing)",
+      content: "Originally said to prevent evil spirits from entering through the open mouth, or to keep the soul from escaping. Pope Gregory I popularized it during plague years, but the practice predates Christianity.",
+    },
+    {
+      title: "'Good Luck' & 'Lucky'",
+      content: "Derived from 'Lachesis,' one of the Greek Fates who determined destiny. Wishing someone 'good luck' invokes pagan concepts of fortune and fate that contradict Christian providence theology.",
+    },
+    {
+      title: "'Nightmare'",
+      content: "From 'mare'—a Germanic demon believed to sit on sleepers' chests causing bad dreams. Using this word perpetuates belief in pagan night demons, yet no one considers it spiritually compromising.",
+    },
+    {
+      title: "'Cereal' & 'Jovial'",
+      content: "'Cereal' honors Ceres, Roman goddess of grain. 'Jovial' refers to Jupiter's supposed influence on mood. Christians eat cereal and describe friends as jovial without invoking pagan deities.",
+    },
+    {
+      title: "'Panic' & 'Echo'",
+      content: "'Panic' derives from Pan, the Greek god who caused sudden fear. 'Echo' was a nymph cursed by Hera. These mythological references saturate English without spiritual concern.",
+    },
+  ],
+  conclusion: "The English language is saturated with pagan deity references, mythological concepts, and superstitious phrases. If words have power, Christians using these terms daily are as 'compromised' as any Greek organization.",
+};
+
 const APPLICATION_CONTENT = {
   title: "Applying Consistent Standards",
   questions: [
@@ -202,7 +264,7 @@ const CONCLUSION_CONTENT = {
   callToAction: "Armed with this understanding, you can now evaluate ritual practices consistently—whether birthday parties, wedding ceremonies, holiday celebrations, or organizational rituals. The standard must be theological content, not cultural familiarity.",
 };
 
-const COURSE_INSTRUCTIONS = `Welcome to "Hidden in Plain Sight"—a course that will challenge how you evaluate cultural practices. You'll discover that many beloved American and Christian traditions have direct pagan origins that we've accepted as "normal." Through an eye-opening case study format, you'll see how birthday candles, wedding traditions, holidays, and everyday symbols all trace to pagan sources. By the end, you'll have tools to evaluate practices consistently rather than selectively. Complete all six modules to earn 100 points. Let's uncover what's been hidden in plain sight!`;
+const COURSE_INSTRUCTIONS = `Welcome to "Hidden in Plain Sight"—a course that will challenge how you evaluate cultural practices. You'll discover that many beloved American and Christian traditions have direct pagan origins that we've accepted as "normal." Through an eye-opening case study format, you'll see how birthday candles, wedding traditions, holidays, architecture, language, and everyday symbols all trace to pagan sources. By the end, you'll have tools to evaluate practices consistently rather than selectively. Complete all eight modules to earn 120 points (15 points each). Let's uncover what's been hidden in plain sight!`;
 
 const MODULES = [
   {
@@ -250,6 +312,28 @@ const MODULES = [
     description: "See pagan symbols in everyday American life",
   },
   {
+    id: "architecture",
+    sessionId: COURSE_SESSION_IDS.architecture,
+    title: "Sacred Spaces",
+    subtitle: "Architecture & Art",
+    icon: Church,
+    color: "from-indigo-500 to-purple-500",
+    bgColor: "bg-indigo-500/10",
+    borderColor: "border-indigo-500/30",
+    description: "Examine pagan elements in Christian architecture and art",
+  },
+  {
+    id: "language",
+    sessionId: COURSE_SESSION_IDS.language,
+    title: "Hidden Words",
+    subtitle: "Language & Phrases",
+    icon: BookMarked,
+    color: "from-orange-500 to-red-500",
+    bgColor: "bg-orange-500/10",
+    borderColor: "border-orange-500/30",
+    description: "Discover pagan origins in everyday English expressions",
+  },
+  {
     id: "application",
     sessionId: COURSE_SESSION_IDS.application,
     title: "Application",
@@ -284,6 +368,10 @@ const getModuleTTSContent = (moduleId: string): string => {
       return `${CONTEXT_MATTERS_CONTENT.title}. ${CONTEXT_MATTERS_CONTENT.mainPoint}. ${CONTEXT_MATTERS_CONTENT.sections.map(s => `${s.title}: ${s.content}`).join(". ")}`;
     case "doubleStandard":
       return `${DOUBLE_STANDARD_CONTENT.title}. ${DOUBLE_STANDARD_CONTENT.introduction}. ${DOUBLE_STANDARD_CONTENT.points.map(p => `${p.title}: ${p.content}`).join(". ")}. ${DOUBLE_STANDARD_CONTENT.conclusion}`;
+    case "architecture":
+      return `${ARCHITECTURE_CONTENT.title}. ${ARCHITECTURE_CONTENT.introduction}. ${ARCHITECTURE_CONTENT.points.map(p => `${p.title}: ${p.content}`).join(". ")}. ${ARCHITECTURE_CONTENT.conclusion}`;
+    case "language":
+      return `${LANGUAGE_CONTENT.title}. ${LANGUAGE_CONTENT.introduction}. ${LANGUAGE_CONTENT.points.map(p => `${p.title}: ${p.content}`).join(". ")}. ${LANGUAGE_CONTENT.conclusion}`;
     case "application":
       return `${APPLICATION_CONTENT.title}. ${APPLICATION_CONTENT.questions.map(q => `${q.question} ${q.answers.join(". ")}`).join(". ")}. ${APPLICATION_CONTENT.finalThought}`;
     case "conclusion":
@@ -307,11 +395,11 @@ export default function HiddenInPlainSight() {
 
   // Get completed modules
   const completedModules = studyProgress
-    .filter(p => p.session_id >= 40 && p.session_id <= 45 && p.completed)
+    .filter(p => p.session_id >= 40 && p.session_id <= 47 && p.completed)
     .map(p => p.session_id);
 
   const completedCount = completedModules.length;
-  const progressPercentage = (completedCount / 6) * 100;
+  const progressPercentage = (completedCount / 8) * 100;
 
   const { triggerLessonComplete, triggerMilestone } = useLessonCelebration();
   const previousCompletedRef = useRef<number[]>([]);
@@ -355,12 +443,12 @@ export default function HiddenInPlainSight() {
       if (prevCompleted.length < completedModules.length) {
         if (completedModules.length === 1 && prevCompleted.length === 0) {
           setTimeout(() => triggerMilestone('first'), 2500);
-        } else if (completedModules.length === 3) {
+        } else if (completedModules.length === 4) {
           setTimeout(() => triggerMilestone('halfway'), 2500);
-        } else if (completedModules.length === 6 && !pointsAwarded) {
-          awardPoints({ points: 100, actionType: 'hidden_plain_sight_completion' });
+        } else if (completedModules.length === 8 && !pointsAwarded) {
+          awardPoints({ points: 120, actionType: 'hidden_plain_sight_completion' });
           setPointsAwarded(true);
-          toast.success("🏆 Course Complete! +100 points earned!");
+          toast.success("🏆 Course Complete! +120 points earned!");
           setTimeout(() => triggerMilestone('complete'), 2500);
         }
       }
@@ -606,6 +694,100 @@ export default function HiddenInPlainSight() {
               className="w-full"
             >
               {isSessionComplete(COURSE_SESSION_IDS.doubleStandard) ? (
+                <>
+                  <CheckCircle2 className="h-4 w-4 mr-2" />
+                  Completed
+                </>
+              ) : (
+                <>
+                  Continue to Sacred Spaces
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </>
+              )}
+            </Button>
+          </div>
+        );
+
+      case "architecture":
+        return (
+          <div className="space-y-6">
+            <div className="bg-indigo-500/10 border border-indigo-500/30 rounded-lg p-4">
+              <h4 className="font-semibold text-lg mb-2">{ARCHITECTURE_CONTENT.title}</h4>
+              <p className="text-sm text-muted-foreground">
+                {ARCHITECTURE_CONTENT.introduction}
+              </p>
+            </div>
+
+            <div className="grid gap-4">
+              {ARCHITECTURE_CONTENT.points.map((point, index) => (
+                <Card key={index} className="bg-card/50">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-base">{point.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground">{point.content}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
+              <p className="text-sm font-medium">{ARCHITECTURE_CONTENT.conclusion}</p>
+            </div>
+
+            <Button
+              onClick={() => handleComplete("architecture", COURSE_SESSION_IDS.architecture)}
+              disabled={isSessionComplete(COURSE_SESSION_IDS.architecture)}
+              className="w-full"
+            >
+              {isSessionComplete(COURSE_SESSION_IDS.architecture) ? (
+                <>
+                  <CheckCircle2 className="h-4 w-4 mr-2" />
+                  Completed
+                </>
+              ) : (
+                <>
+                  Continue to Hidden Words
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </>
+              )}
+            </Button>
+          </div>
+        );
+
+      case "language":
+        return (
+          <div className="space-y-6">
+            <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-4">
+              <h4 className="font-semibold text-lg mb-2">{LANGUAGE_CONTENT.title}</h4>
+              <p className="text-sm text-muted-foreground">
+                {LANGUAGE_CONTENT.introduction}
+              </p>
+            </div>
+
+            <div className="grid gap-4">
+              {LANGUAGE_CONTENT.points.map((point, index) => (
+                <Card key={index} className="bg-card/50">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-base">{point.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground">{point.content}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
+              <p className="text-sm font-medium">{LANGUAGE_CONTENT.conclusion}</p>
+            </div>
+
+            <Button
+              onClick={() => handleComplete("language", COURSE_SESSION_IDS.language)}
+              disabled={isSessionComplete(COURSE_SESSION_IDS.language)}
+              className="w-full"
+            >
+              {isSessionComplete(COURSE_SESSION_IDS.language) ? (
                 <>
                   <CheckCircle2 className="h-4 w-4 mr-2" />
                   Completed
