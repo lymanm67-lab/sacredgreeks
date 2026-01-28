@@ -4,6 +4,7 @@ import {
   Menu,
   Home, 
   Target,
+  ClipboardCheck,
   Calendar,
   BookHeart,
   BookOpen, 
@@ -15,15 +16,22 @@ import {
   Compass,
   Zap,
   Trophy,
+  Award,
   Bell,
   Settings, 
   LogOut,
   Church,
   Video,
+  Building2,
   User,
   ShoppingBag,
   Headphones,
   Mic,
+  Sparkles,
+  Drama,
+  History,
+  Scale,
+  Crown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -33,16 +41,40 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useAuth } from "@/contexts/AuthContext";
 import { useFeaturePreferences } from "@/hooks/use-feature-preferences";
 import { SubscriptionBadge } from "@/components/dashboard/SubscriptionBadge";
+import { DemoModeControl } from "@/components/GlobalDemoIndicator";
 import { cn } from "@/lib/utils";
 
-const mainNavItems = [
+// Dashboard - Always first
+const dashboardItem = [
   { title: "Dashboard", url: "/dashboard", icon: Home, featureId: null, iconColor: "text-blue-500" },
-  { title: "PROOF Course", url: "/proof-course", icon: Target, featureId: null, iconColor: "text-amber-500" },
-  { title: "30-Day Journey", url: "/journey", icon: Calendar, featureId: null, iconColor: "text-emerald-500" },
-  { title: "Prayer Journal", url: "/prayer-journal", icon: BookHeart, featureId: null, iconColor: "text-rose-500" },
-  { title: "Bible Study", url: "/bible-study", icon: BookOpen, featureId: null, iconColor: "text-purple-500" },
 ];
 
+// Learning Path section - matches AppSidebar
+const learningPathItems = [
+  { title: "PROOF Course", url: "/proof-course", icon: Target, featureId: null, iconColor: "text-amber-500" },
+  { title: "Greek Life & Guild", url: "/greek-life-training", icon: Building2, featureId: null, iconColor: "text-violet-500" },
+  { title: "Myth Busters", url: "/myth-buster", icon: Zap, featureId: null, iconColor: "text-yellow-500" },
+  { title: "Faith & Authority", url: "/faith-authority", icon: BookOpen, featureId: null, iconColor: "text-amber-500" },
+  { title: "Stay or Leave?", url: "/should-you-stay-or-leave", icon: Scale, featureId: null, iconColor: "text-teal-500" },
+  { title: "Saints or Sellouts?", url: "/saints-or-sellouts", icon: Crown, featureId: null, iconColor: "text-orange-500" },
+];
+
+// Assessments section - matches AppSidebar
+const assessmentItems = [
+  { title: "Faith Snapshot", url: "/snapshot", icon: Sparkles, featureId: null, iconColor: "text-blue-500" },
+  { title: "PROOF Quiz", url: "/proof-assessment", icon: ClipboardCheck, featureId: null, iconColor: "text-emerald-500" },
+  { title: "Shattered Masks", url: "/shattered-masks", icon: Drama, featureId: null, iconColor: "text-purple-500" },
+  { title: "Assessment History", url: "/assessment-history", icon: History, featureId: null, iconColor: "text-slate-500" },
+];
+
+// Spiritual Practices section - matches AppSidebar
+const spiritualPracticesItems = [
+  { title: "30-Day Journey", url: "/journey", icon: Calendar, featureId: null, iconColor: "text-cyan-500" },
+  { title: "Bible Study", url: "/bible-study", icon: BookOpen, featureId: null, iconColor: "text-purple-500" },
+  { title: "Prayer Journal", url: "/prayer-journal", icon: BookHeart, featureId: null, iconColor: "text-rose-500" },
+];
+
+// Community section - matches AppSidebar
 const communityNavItems = [
   { title: "Prayer Wall", url: "/prayer-wall", icon: Heart, featureId: null, iconColor: "text-pink-500" },
   { title: "Forum", url: "/forum", icon: MessageSquare, featureId: null, iconColor: "text-cyan-500" },
@@ -50,23 +82,32 @@ const communityNavItems = [
   { title: "Group Coaching", url: "/community", icon: GraduationCap, featureId: null, iconColor: "text-orange-500" },
 ];
 
-// Organized logically - Dr. Lyman, Podcast, Resources, System
-const toolsNavItems = [
-  // About Dr. Lyman group
+// About Dr. Lyman section - matches AppSidebar
+const aboutDrLymanItems = [
   { title: "About Creator", url: "/about-creator", icon: User, featureId: null, iconColor: "text-sacred" },
   { title: "Order Book", url: "/order-book", icon: ShoppingBag, featureId: null, iconColor: "text-amber-500" },
   { title: "Book Dr. Lyman", url: "/speaking-request", icon: Calendar, featureId: null, iconColor: "text-fuchsia-500" },
-  // Podcast group
+];
+
+// Podcast section - matches AppSidebar
+const podcastItems = [
   { title: "Podcast", url: "/podcast", icon: Headphones, featureId: null, iconColor: "text-purple-500" },
   { title: "Be on Podcast", url: "/guest-panelist-application", icon: Mic, featureId: null, iconColor: "text-purple-500" },
-  // Resources group
+];
+
+// Resources section - matches AppSidebar
+const resourcesItems = [
   { title: "Symbol Guide", url: "/symbol-guide", icon: Compass, featureId: null, iconColor: "text-teal-500" },
   { title: "Video Library", url: "/video-library", icon: Video, featureId: null, iconColor: "text-sky-500" },
-  { title: "Myth Busters", url: "/myth-buster", icon: Zap, featureId: null, iconColor: "text-orange-500" },
+  { title: "Parents & Family", url: "/parents-family", icon: Heart, featureId: null, iconColor: "text-rose-500" },
   { title: "Anti-Hazing", url: "/anti-hazing", icon: ShieldAlert, featureId: null, iconColor: "text-red-500" },
   { title: "Church Leaders", url: "/church-leaders", icon: Church, featureId: null, iconColor: "text-lime-500" },
-  // System group
-  { title: "Achievements", url: "/achievements", icon: Trophy, featureId: 'achievements', iconColor: "text-amber-400" },
+];
+
+// System section - matches AppSidebar
+const systemItems = [
+  { title: "Achievements", url: "/achievements", icon: Trophy, featureId: null, iconColor: "text-amber-400" },
+  { title: "Training Vault", url: "/training-vault", icon: Award, featureId: null, iconColor: "text-emerald-500" },
   { title: "Notifications", url: "/notification-preferences", icon: Bell, featureId: null, iconColor: "text-fuchsia-500" },
   { title: "Settings", url: "/profile", icon: Settings, featureId: null, iconColor: "text-slate-500" },
 ];
@@ -79,16 +120,22 @@ export function MobileNav() {
 
   const isActive = (path: string) => location.pathname === path;
 
-  const filterNavItems = (items: typeof mainNavItems) => {
+  const filterNavItems = (items: typeof dashboardItem) => {
     return items.filter(item => {
       if (!item.featureId) return true;
       return isFeatureVisible(item.featureId);
     });
   };
 
-  const filteredMainNav = filterNavItems(mainNavItems);
+  const filteredDashboard = filterNavItems(dashboardItem);
+  const filteredLearningPath = filterNavItems(learningPathItems);
+  const filteredAssessments = filterNavItems(assessmentItems);
+  const filteredSpiritualPractices = filterNavItems(spiritualPracticesItems);
   const filteredCommunityNav = filterNavItems(communityNavItems);
-  const filteredToolsNav = filterNavItems(toolsNavItems);
+  const filteredAboutDrLyman = filterNavItems(aboutDrLymanItems);
+  const filteredPodcast = filterNavItems(podcastItems);
+  const filteredResources = filterNavItems(resourcesItems);
+  const filteredSystem = filterNavItems(systemItems);
 
   const getInitials = () => {
     if (profile?.full_name) {
@@ -104,10 +151,15 @@ export function MobileNav() {
     setOpen(false);
   };
 
-  const NavSection = ({ title, items }: { title: string; items: typeof mainNavItems }) => (
+  const NavSection = ({ title, items, badge }: { title: string; items: typeof dashboardItem; badge?: string }) => (
     <div className="space-y-1">
-      <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-3 py-2">
+      <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-3 py-2 flex items-center gap-2">
         {title}
+        {badge && (
+          <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 bg-primary/10 text-primary">
+            {badge}
+          </Badge>
+        )}
       </h3>
       {items.map((item) => (
         <NavLink
@@ -151,21 +203,40 @@ export function MobileNav() {
               )}
             </div>
           </div>
-          <div className="mt-3">
+          <div className="mt-3 flex items-center gap-2">
             <SubscriptionBadge />
+            <DemoModeControl />
           </div>
         </SheetHeader>
 
         <ScrollArea className="h-[calc(100vh-180px)]">
           <div className="p-4 space-y-6">
-            {filteredMainNav.length > 0 && (
-              <NavSection title="Main" items={filteredMainNav} />
+            {filteredDashboard.length > 0 && (
+              <NavSection title="Dashboard" items={filteredDashboard} />
+            )}
+            {filteredLearningPath.length > 0 && (
+              <NavSection title="Learning Path" items={filteredLearningPath} />
+            )}
+            {filteredAssessments.length > 0 && (
+              <NavSection title="Assessments" items={filteredAssessments} badge="Earn Points" />
+            )}
+            {filteredSpiritualPractices.length > 0 && (
+              <NavSection title="Spiritual Practices" items={filteredSpiritualPractices} />
             )}
             {filteredCommunityNav.length > 0 && (
               <NavSection title="Community" items={filteredCommunityNav} />
             )}
-            {filteredToolsNav.length > 0 && (
-              <NavSection title="Tools & Resources" items={filteredToolsNav} />
+            {filteredAboutDrLyman.length > 0 && (
+              <NavSection title="About Dr. Lyman" items={filteredAboutDrLyman} />
+            )}
+            {filteredPodcast.length > 0 && (
+              <NavSection title="Podcast" items={filteredPodcast} />
+            )}
+            {filteredResources.length > 0 && (
+              <NavSection title="Resources" items={filteredResources} />
+            )}
+            {filteredSystem.length > 0 && (
+              <NavSection title="System" items={filteredSystem} />
             )}
           </div>
         </ScrollArea>
