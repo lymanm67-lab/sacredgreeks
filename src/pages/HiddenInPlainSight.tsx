@@ -141,7 +141,7 @@ const DOUBLE_STANDARD_CONTENT = {
     },
     {
       title: "Volkswagen & Sundials",
-      content: "The Volkswagen emblem contains overlapping V and W letters forming a design reminiscent of ancient solar symbols. Sundials, still used decoratively in Christian gardens and churches, are direct relics of sun worship—yet no one questions their presence on church grounds.",
+      content: "The Volkswagen emblem was designed during Nazi Germany under Adolf Hitler's regime. Ferdinand Porsche, who created the 'People's Car' (Volkswagen), was a Nazi party member. The company used forced labor from concentration camps during WWII. Yet today, Christians drive Volkswagens without moral concern—while simultaneously questioning whether Greek letter organization founders had Masonic affiliations. Sundials, still used decoratively in Christian gardens and churches, are direct relics of sun worship—yet no one questions their presence on church grounds. The double standard is glaring: a car brand with documented Nazi origins receives no scrutiny, while organizations founded by Black Americans for mutual aid face endless interrogation about their founders' lodge memberships.",
     },
     {
       title: "Pharmacy: The Art of Sorcery",
