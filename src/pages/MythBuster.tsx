@@ -11,6 +11,7 @@ import { ArrowLeft, Search, BookOpen, ExternalLink, Filter, Copy, Check, Message
 import { mythBusterContent, mythCategories, mythScenarios, mythOrganizations, ProofCategory } from '@/data/mythBusterContent';
 import { ListenButton } from '@/components/ListenButton';
 import { FISTFramework } from '@/components/myth-buster/FISTFramework';
+import { ScholarlyReferences } from '@/components/myth-buster/ScholarlyReferences';
 
 import { MythBusterDownloads } from '@/components/myth-buster/MythBusterDownloads';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -597,6 +598,11 @@ const MythBuster = () => {
                         <Printer className="w-4 h-4" />
                         Print
                       </Button>
+                    </div>
+                    
+                    {/* Scholarly References for this category */}
+                    <div className="px-6 py-3 border-b bg-muted/10">
+                      <ScholarlyReferences categoryId={group.id} compact />
                     </div>
                     <CardContent className="pt-3 space-y-3">
                       {group.myths.map(myth => (
