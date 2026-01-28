@@ -39,7 +39,24 @@ export default defineConfig(({ mode }) => ({
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        // Skip waiting and claim clients immediately for faster updates
+        skipWaiting: true,
+        clientsClaim: true,
+        // Clean old caches on activate
+        cleanupOutdatedCaches: true,
         runtimeCaching: [
+          {
+            // Use NetworkFirst for HTML pages to always get fresh content
+            urlPattern: /\.html$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'html-cache',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 // 1 hour
+              }
+            }
+          },
           {
             urlPattern: /^https:\/\/.*\.supabase\.co\/.*/i,
             handler: 'NetworkFirst',
@@ -47,7 +64,19 @@ export default defineConfig(({ mode }) => ({
               cacheName: 'supabase-cache',
               expiration: {
                 maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24 * 7
+                maxAgeSeconds: 60 * 60 // 1 hour instead of 7 days
+              }
+            }
+          },
+          {
+            // JS/CSS files - stale while revalidate for faster loads but fresh content
+            urlPattern: /\.(js|css)$/,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'assets-cache',
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24 // 24 hours
               }
             }
           }
