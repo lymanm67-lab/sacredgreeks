@@ -62,7 +62,7 @@ const COURSE_SESSION_IDS = {
 const CASE_STUDY_SCENARIO = {
   title: "The Birthday Celebration at Church",
   setting: "A family gathering in the church fellowship hall, 2026",
-  scenario: `Your family is celebrating a child's birthday at the church. The party is held in the fellowship hall—a grand space with soaring dome ceilings, majestic Greek-style columns (Corinthian capitals adorning the sanctuary entrance), and a towering steeple visible through the windows.
+  scenario: `Your family is celebrating a child's birthday at the church. The party is held in the fellowship hall—a grand space with soaring dome ceilings, majestic Greek-style columns (Corinthian capitals adorning the sanctuary entrance), a towering steeple visible through the windows, and stunning stained glass windows casting colored light across the room.
 
 As the cake is brought out with lit candles, the child is encouraged to:
 
@@ -74,7 +74,7 @@ Everyone gathers in a circle beneath the dome—an architectural feature borrowe
 
 If successful, the gathered witnesses clap and affirm that the wish will be granted. The child receives a crown or special hat, sits in a place of honor, and receives offerings (gifts) from all present.
 
-The irony is profound: this pagan birthday ritual is performed in a building whose dome represents the "Eye of Zeus" from the Pantheon, whose Greek columns mirror temples to Athena and Apollo, and whose steeple evolved from Egyptian obelisks dedicated to the sun god Ra. Yet no one questions the spiritual implications of either the ritual or the architecture.`,
+The irony is profound: this pagan birthday ritual is performed in a building whose dome represents the "Eye of Zeus" from the Pantheon, whose Greek columns mirror temples to Athena and Apollo, whose steeple evolved from Egyptian obelisks dedicated to the sun god Ra, and whose stained glass windows derive from Islamic mosques and ancient Roman window art. Yet no one questions the spiritual implications of either the ritual or the architecture.`,
   initialQuestion: "Based on what you've just read, how would you classify this ritual and setting?",
   options: [
     { id: "normal", label: "This is a normal, harmless tradition", icon: ThumbsUp },
@@ -267,8 +267,12 @@ const ARCHITECTURE_CONTENT = {
       title: "Cathedral Floor Labyrinths",
       content: "Circular labyrinths in cathedral floors (like Chartres) trace to Greek mythology's Cretan labyrinth. Walking these patterns was a pagan meditative practice adapted for Christian pilgrimage.",
     },
+    {
+      title: "Stained Glass Windows: From Islamic Mosques to Christian Churches",
+      content: "The iconic stained glass windows of medieval cathedrals were not a Christian invention. The technique of colored glass set in lead frameworks was perfected by Islamic artisans in mosques across the Middle East centuries before European adoption. Crusaders returning from the Holy Land brought this 'pagan' art form back to Europe, where it was incorporated into Gothic cathedrals. The Romans also used colored glass in windows, including in temples and wealthy homes. The very concept of using light filtering through colored glass to create a 'sacred' atmosphere originated in non-Christian worship spaces. Notre-Dame's rose windows, Canterbury's biblical scenes, and countless church windows worldwide all employ this Islamic-derived technology—yet no one questions worshipping beneath 'mosque-inspired' artistry. (Sources: Raguin, Virginia Chieffo. 'Stained Glass: From Its Origins to the Present.' Thames & Hudson, 2003; Marks, Richard. 'Stained Glass in England During the Middle Ages.' University of Toronto Press, 1993)",
+    },
   ],
-  conclusion: "Christians worship in buildings featuring Zeus's eye (domes), Roman Senate platforms (pulpits), and pagan sacrifice tables (altars)—yet these 'baptized' elements raise no concern while Greek organizational symbols face condemnation.",
+  conclusion: "Christians worship in buildings featuring Zeus's eye (domes), Roman Senate platforms (pulpits), pagan sacrifice tables (altars), and Islamic-derived stained glass windows—yet these 'baptized' elements raise no concern while Greek organizational symbols face condemnation.",
   scholarlyReferences: [
     "Montgomery, Lyman. Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate. 2025.",
     "Krautheimer, Richard. Early Christian and Byzantine Architecture. Yale University Press, 1986.",
