@@ -8,11 +8,11 @@ interface ProofAchievementBadgesProps {
 }
 
 const PROOF_LETTERS = [
-  { id: 1, letter: 'P', name: 'Pledge', color: 'green', gradient: 'from-green-500 to-green-600' },
-  { id: 2, letter: 'R', name: 'Rituals', color: 'green', gradient: 'from-green-500 to-green-600' },
-  { id: 3, letter: 'O', name: 'Oaths', color: 'green', gradient: 'from-green-500 to-green-600' },
-  { id: 4, letter: 'O', name: 'Obscurity', color: 'green', gradient: 'from-green-500 to-green-600' },
-  { id: 5, letter: 'F', name: 'Founders', color: 'green', gradient: 'from-green-500 to-green-600' },
+  { id: 1, letter: 'P', name: 'Pledge', color: 'emerald', gradient: 'from-emerald-700 to-emerald-800' },
+  { id: 2, letter: 'R', name: 'Rituals', color: 'emerald', gradient: 'from-emerald-700 to-emerald-800' },
+  { id: 3, letter: 'O', name: 'Oaths', color: 'emerald', gradient: 'from-emerald-700 to-emerald-800' },
+  { id: 4, letter: 'O', name: 'Obscurity', color: 'emerald', gradient: 'from-emerald-700 to-emerald-800' },
+  { id: 5, letter: 'F', name: 'Founders', color: 'emerald', gradient: 'from-emerald-700 to-emerald-800' },
 ];
 
 export const ProofAchievementBadges = ({ completedLessons, className }: ProofAchievementBadgesProps) => {
