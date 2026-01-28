@@ -1166,10 +1166,36 @@ export default function HiddenInPlainSight() {
         {/* Scholarly Context */}
         <Card className="mb-6 bg-card/50 border-muted">
           <CardHeader className="pb-3">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-primary" />
-              Scholarly Context
-            </CardTitle>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <BookOpen className="h-5 w-5 text-primary" />
+                Scholarly Context
+              </CardTitle>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  if (isPlaying && playingModuleId === "scholarlyContext") {
+                    stop();
+                    setPlayingModuleId(null);
+                  } else {
+                    setPlayingModuleId("scholarlyContext");
+                    speak("Scholarly Context. A substantial portion of Christian cultural practices and calendar observances—some scholars suggest 40 to 60 percent—adopted forms from Greco-Roman society, while the theological core remained distinctly Jewish-Christian. This pattern of Christianizing existing cultural frameworks mirrors what Paul modeled in Acts 17 at Mars Hill. Key academic references include: MacMullen's Christianity and Paganism in the Fourth to Eighth Centuries, Peter Brown's The Rise of Western Christendom, Salzman's The Making of a Christian Aristocracy, Markus's The End of Ancient Christianity, and Stroumsa's The End of Sacrifice.");
+                  }
+                }}
+                disabled={isLoading && playingModuleId === "scholarlyContext"}
+                className="gap-2"
+              >
+                {isLoading && playingModuleId === "scholarlyContext" ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : isPlaying && playingModuleId === "scholarlyContext" ? (
+                  <VolumeX className="h-4 w-4" />
+                ) : (
+                  <Volume2 className="h-4 w-4" />
+                )}
+                {isPlaying && playingModuleId === "scholarlyContext" ? "Stop" : "Listen"}
+              </Button>
+            </div>
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-sm leading-relaxed text-muted-foreground">
