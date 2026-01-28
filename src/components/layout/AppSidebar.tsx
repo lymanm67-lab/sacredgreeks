@@ -15,6 +15,7 @@ import {
   Zap,
   Trophy,
   Award,
+  FileText,
   Bell,
   Settings, 
   LogOut,
@@ -126,6 +127,7 @@ const systemItems = [
   { title: "Achievements", url: "/achievements", icon: Trophy, featureId: null, iconColor: "text-amber-400", hasProgress: false },
   { title: "Training Vault", url: "/training-vault", icon: Award, featureId: null, iconColor: "text-emerald-500", hasProgress: false },
   { title: "Notifications", url: "/notification-preferences", icon: Bell, featureId: null, iconColor: "text-fuchsia-500", hasProgress: false },
+  { title: "Changelog", url: "/changelog", icon: FileText, featureId: null, iconColor: "text-sky-500", hasProgress: false },
   { title: "Settings", url: "/profile", icon: Settings, featureId: null, iconColor: "text-slate-500", hasProgress: false },
 ];
 
