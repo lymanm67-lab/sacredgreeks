@@ -21,6 +21,9 @@ import {
   Sparkles,
   Share2,
   X,
+  Landmark,
+  Scroll,
+  Church,
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
@@ -37,6 +40,9 @@ const iconMap: Record<string, any> = {
   Shield,
   Star,
   Crown,
+  Landmark,
+  Scroll,
+  Church,
 };
 
 const achievementColors: Record<string, { bg: string; border: string; icon: string; glow: string }> = {
@@ -51,6 +57,7 @@ const achievementColors: Record<string, { bg: string; border: string; icon: stri
   study: { bg: "from-purple-500/20 to-violet-500/20", border: "border-purple-500/40", icon: "bg-gradient-to-br from-purple-500 to-violet-500", glow: "shadow-purple-500/30" },
   service: { bg: "from-rose-500/20 to-pink-500/20", border: "border-rose-500/40", icon: "bg-gradient-to-br from-rose-500 to-pink-500", glow: "shadow-rose-500/30" },
   bible: { bg: "from-cyan-500/20 to-sky-500/20", border: "border-cyan-500/40", icon: "bg-gradient-to-br from-cyan-500 to-sky-500", glow: "shadow-cyan-500/30" },
+  training: { bg: "from-green-500/20 to-emerald-500/20", border: "border-green-500/40", icon: "bg-gradient-to-br from-green-500 to-emerald-500", glow: "shadow-green-500/30" },
   default: { bg: "from-primary/20 to-secondary/20", border: "border-primary/40", icon: "bg-gradient-to-br from-primary to-secondary", glow: "shadow-primary/30" },
 };
 
