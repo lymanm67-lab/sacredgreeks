@@ -8,6 +8,7 @@ import { Lock, Play, Clock, Lightbulb, CheckCircle2, BookOpen, FileDown, Users, 
 import { SEOHead } from '@/components/SEOHead';
 import { useToast } from '@/hooks/use-toast';
 import { useSubscription } from '@/hooks/use-subscription';
+import { useNavigationProgress } from '@/hooks/use-navigation-progress';
 import { ListenButton } from '@/components/ListenButton';
 import { ProofFrameworkAudio } from '@/components/proof/ProofFrameworkAudio';
 import { ProofCourseOnboarding } from '@/components/proof/ProofCourseOnboarding';
@@ -425,11 +426,16 @@ Remember: Being Greek doesn't make you righteous, and being anti-Greek doesn't m
 const ProofCourse = () => {
   const { toast } = useToast();
   const { subscribed, tier, loading: subLoading } = useSubscription();
+  const { progressData } = useNavigationProgress();
   const [activeLesson, setActiveLesson] = useState<number | null>(null);
   const [completedLessons, setCompletedLessons] = useState<number[]>([]);
 
   // Check if user has premium access (Pro or Ministry tier)
   const hasPremiumAccess = subscribed && (tier === 'pro' || tier === 'ministry');
+
+  // Check if other trainings are complete
+  const isGuildTrainingComplete = progressData?.guildTraining === 100;
+  const isFaithAuthorityComplete = progressData?.faithAuthority === 100;
 
   const startLesson = (lessonId: number) => {
     const lesson = lessons.find(l => l.id === lessonId);
@@ -980,23 +986,51 @@ const ProofCourse = () => {
               
               <div className="grid md:grid-cols-2 gap-4">
                 {/* Ancient Guild Training Card */}
-                <Card className="border-orange-500/20 bg-gradient-to-br from-orange-500/5 to-amber-500/5 hover:border-orange-500/40 transition-all group">
+                <Card className={`border-orange-500/20 bg-gradient-to-br from-orange-500/5 to-amber-500/5 transition-all group ${
+                  isGuildTrainingComplete 
+                    ? 'opacity-60 border-green-500/30 bg-green-500/5' 
+                    : 'hover:border-orange-500/40'
+                }`}>
                   <CardContent className="p-5">
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center shadow-lg shrink-0 group-hover:scale-105 transition-transform">
-                        <Users className="w-6 h-6 text-white" />
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-lg shrink-0 transition-transform ${
+                        isGuildTrainingComplete 
+                          ? 'bg-green-500/20' 
+                          : 'bg-gradient-to-br from-orange-500 to-amber-600 group-hover:scale-105'
+                      }`}>
+                        {isGuildTrainingComplete ? (
+                          <CheckCircle2 className="w-6 h-6 text-green-500" />
+                        ) : (
+                          <Users className="w-6 h-6 text-white" />
+                        )}
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-bold text-foreground mb-1">Ancient Guild Training</h3>
+                        <div className="flex items-center gap-2 mb-1">
+                          <h3 className={`font-bold ${isGuildTrainingComplete ? 'text-muted-foreground' : 'text-foreground'}`}>
+                            Ancient Guild Training
+                          </h3>
+                          {isGuildTrainingComplete && (
+                            <Badge variant="outline" className="text-xs bg-green-500/10 text-green-600 border-green-500/30">
+                              Complete
+                            </Badge>
+                          )}
+                        </div>
                         <p className="text-sm text-muted-foreground mb-3">
                           Jesus & Paul's trade guild membership • 10 interactive modules
                         </p>
                         <div className="flex flex-wrap gap-1.5 mb-3">
-                          <Badge variant="outline" className="text-xs border-orange-500/30 text-orange-600">Catacomb Gallery</Badge>
-                          <Badge variant="outline" className="text-xs border-orange-500/30 text-orange-600">Ichthys Trace</Badge>
+                          <Badge variant="outline" className={`text-xs ${isGuildTrainingComplete ? 'border-muted text-muted-foreground' : 'border-orange-500/30 text-orange-600'}`}>Catacomb Gallery</Badge>
+                          <Badge variant="outline" className={`text-xs ${isGuildTrainingComplete ? 'border-muted text-muted-foreground' : 'border-orange-500/30 text-orange-600'}`}>Ichthys Trace</Badge>
                         </div>
-                        <Button asChild size="sm" className="bg-orange-500 hover:bg-orange-600 text-white">
-                          <Link to="/ancient-guild-training">Start Training →</Link>
+                        <Button 
+                          asChild 
+                          size="sm" 
+                          variant={isGuildTrainingComplete ? "outline" : "default"}
+                          className={isGuildTrainingComplete ? "border-green-500/30 text-green-600 hover:bg-green-500/10" : "bg-orange-500 hover:bg-orange-600 text-white"}
+                        >
+                          <Link to="/greek-life-training">
+                            {isGuildTrainingComplete ? "Review Training" : "Start Training →"}
+                          </Link>
                         </Button>
                       </div>
                     </div>
@@ -1004,29 +1038,58 @@ const ProofCourse = () => {
                 </Card>
 
                 {/* Faith & Authority Card */}
-                <Card className="border-amber-500/20 bg-gradient-to-br from-amber-500/5 to-yellow-500/5 hover:border-amber-500/40 transition-all group">
+                <Card className={`border-amber-500/20 bg-gradient-to-br from-amber-500/5 to-yellow-500/5 transition-all group ${
+                  isFaithAuthorityComplete 
+                    ? 'opacity-60 border-green-500/30 bg-green-500/5' 
+                    : 'hover:border-amber-500/40'
+                }`}>
                   <CardContent className="p-5">
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center shadow-lg shrink-0 group-hover:scale-105 transition-transform">
-                        <Sparkles className="w-6 h-6 text-white" />
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-lg shrink-0 transition-transform ${
+                        isFaithAuthorityComplete 
+                          ? 'bg-green-500/20' 
+                          : 'bg-gradient-to-br from-amber-500 to-yellow-600 group-hover:scale-105'
+                      }`}>
+                        {isFaithAuthorityComplete ? (
+                          <CheckCircle2 className="w-6 h-6 text-green-500" />
+                        ) : (
+                          <Sparkles className="w-6 h-6 text-white" />
+                        )}
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-bold text-foreground mb-1">Faith & Authority</h3>
+                        <div className="flex items-center gap-2 mb-1">
+                          <h3 className={`font-bold ${isFaithAuthorityComplete ? 'text-muted-foreground' : 'text-foreground'}`}>
+                            Faith & Authority
+                          </h3>
+                          {isFaithAuthorityComplete && (
+                            <Badge variant="outline" className="text-xs bg-green-500/10 text-green-600 border-green-500/30">
+                              Complete
+                            </Badge>
+                          )}
+                        </div>
                         <p className="text-sm text-muted-foreground mb-3">
                           How faith unlocks spiritual access • Power of Belief teaching
                         </p>
                         <div className="flex flex-wrap gap-1.5 mb-3">
-                          <Badge variant="outline" className="text-xs border-amber-500/30 text-amber-600">Scripture Cards</Badge>
-                          <Badge variant="outline" className="text-xs border-amber-500/30 text-amber-600">Audio Teaching</Badge>
+                          <Badge variant="outline" className={`text-xs ${isFaithAuthorityComplete ? 'border-muted text-muted-foreground' : 'border-amber-500/30 text-amber-600'}`}>Scripture Cards</Badge>
+                          <Badge variant="outline" className={`text-xs ${isFaithAuthorityComplete ? 'border-muted text-muted-foreground' : 'border-amber-500/30 text-amber-600'}`}>Audio Teaching</Badge>
                         </div>
-                        <Button asChild size="sm" className="bg-amber-500 hover:bg-amber-600 text-black">
-                          <Link to="/faith-authority">Explore Teaching →</Link>
+                        <Button 
+                          asChild 
+                          size="sm" 
+                          variant={isFaithAuthorityComplete ? "outline" : "default"}
+                          className={isFaithAuthorityComplete ? "border-green-500/30 text-green-600 hover:bg-green-500/10" : "bg-amber-500 hover:bg-amber-600 text-black"}
+                        >
+                          <Link to="/faith-authority">
+                            {isFaithAuthorityComplete ? "Review Teaching" : "Explore Teaching →"}
+                          </Link>
                         </Button>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
               </div>
+
             </motion.div>
           </>
         )}
