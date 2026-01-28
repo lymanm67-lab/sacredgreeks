@@ -2,11 +2,6 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useBackgroundAudio } from "./use-background-audio";
-import {
-  FunctionsFetchError,
-  FunctionsHttpError,
-  FunctionsRelayError,
-} from "@supabase/supabase-js";
 
 export type PlaybackSpeed = 0.5 | 0.75 | 1 | 1.25 | 1.5 | 2;
 
@@ -45,6 +40,7 @@ export const useTextToSpeech = () => {
   const [isLoading, setIsLoading] = useState<string | null>(null);
   const [currentTitle, setCurrentTitle] = useState<string>("");
   const [playbackSpeed, setPlaybackSpeed] = useState<PlaybackSpeed>(1);
+  const [usingBrowserTTS, setUsingBrowserTTS] = useState<boolean>(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const { setAudioRef, updatePlaybackState, updatePositionState } = useBackgroundAudio({
@@ -116,22 +112,25 @@ export const useTextToSpeech = () => {
     }
 
     setIsLoading(itemId);
+    setIsPaused(false);
+    setUsingBrowserTTS(false);
 
     try {
       const { data, error } = await supabase.functions.invoke("text-to-speech", {
         body: { text, voice },
       });
 
-      // Robust quota detection for supabase-js invoke()
+      // Robust quota detection without relying on instanceof (can break with duplicate bundles)
+      const anyErr = error as any;
       let errorJson: any = null;
-      if (error instanceof FunctionsHttpError) {
-        errorJson = await error.context.json().catch(() => null);
+      if (anyErr?.context?.json) {
+        errorJson = await anyErr.context.json().catch(() => null);
       }
 
       const isQuotaError =
-        (error instanceof FunctionsHttpError && error.context?.status === 402) ||
-        error?.message?.includes("quota_exceeded") ||
-        error?.message?.includes("Edge function returned 402") ||
+        anyErr?.context?.status === 402 ||
+        anyErr?.message?.includes("quota_exceeded") ||
+        anyErr?.message?.includes("Edge function returned 402") ||
         errorJson?.code === "quota_exceeded" ||
         (typeof errorJson?.error === "string" && errorJson.error.includes("quota_exceeded")) ||
         data?.code === "quota_exceeded" ||
@@ -141,8 +140,14 @@ export const useTextToSpeech = () => {
         console.log('ElevenLabs quota exceeded, using browser TTS fallback');
         setIsLoading(null);
         setIsPlaying(itemId);
-        await speakWithBrowserTTS(text, itemId);
-        setIsPlaying(null);
+        setUsingBrowserTTS(true);
+        try {
+          await speakWithBrowserTTS(text, itemId);
+        } finally {
+          setUsingBrowserTTS(false);
+          setIsPlaying(null);
+          setIsPaused(false);
+        }
         return;
       }
 
@@ -183,6 +188,7 @@ export const useTextToSpeech = () => {
         if (playPromise !== undefined) {
           await playPromise;
           setIsPlaying(itemId);
+          setIsPaused(false);
           updatePlaybackState("playing");
         }
       } catch (playError) {
@@ -200,29 +206,30 @@ export const useTextToSpeech = () => {
     } catch (error) {
       console.error("Text-to-speech error:", error);
 
-      // If invoke threw an HTTP error (rather than returning { error }), still allow fallback.
-      if (error instanceof FunctionsHttpError) {
-        const body = await error.context.json().catch(() => null);
-        const isQuota =
-          error.context?.status === 402 ||
-          body?.code === "quota_exceeded" ||
-          (typeof body?.error === "string" && body.error.includes("quota_exceeded"));
-        if (isQuota) {
-          try {
-            setIsPlaying(itemId);
-            await speakWithBrowserTTS(text, itemId);
-          } finally {
-            setIsPlaying(null);
-            setIsLoading(null);
-          }
-          return;
-        }
+      // If invoke threw (rare), try same quota fallback detection via duck-typing
+      const anyErr = error as any;
+      const status = anyErr?.context?.status;
+      let body: any = null;
+      if (anyErr?.context?.json) {
+        body = await anyErr.context.json().catch(() => null);
       }
-
-      if (error instanceof FunctionsRelayError || error instanceof FunctionsFetchError) {
-        // Network/relay errors shouldn't blank screen; just toast.
-        toast.error(error.message);
-        setIsPlaying(null);
+      const isQuota =
+        status === 402 ||
+        anyErr?.message?.includes("quota_exceeded") ||
+        body?.code === "quota_exceeded" ||
+        (typeof body?.error === "string" && body.error.includes("quota_exceeded"));
+      if (isQuota) {
+        toast.info("Using browser voice (premium voice unavailable)");
+        setUsingBrowserTTS(true);
+        try {
+          setIsPlaying(itemId);
+          await speakWithBrowserTTS(text, itemId);
+        } finally {
+          setUsingBrowserTTS(false);
+          setIsPlaying(null);
+          setIsPaused(false);
+          setIsLoading(null);
+        }
         return;
       }
 
@@ -236,6 +243,13 @@ export const useTextToSpeech = () => {
   };
 
   const pause = () => {
+    if (usingBrowserTTS && 'speechSynthesis' in window) {
+      window.speechSynthesis.pause();
+      setIsPaused(true);
+      updatePlaybackState("paused");
+      return;
+    }
+
     if (audioRef.current && !audioRef.current.paused) {
       audioRef.current.pause();
       setIsPaused(true);
@@ -244,6 +258,13 @@ export const useTextToSpeech = () => {
   };
 
   const resume = () => {
+    if (usingBrowserTTS && 'speechSynthesis' in window) {
+      window.speechSynthesis.resume();
+      setIsPaused(false);
+      updatePlaybackState("playing");
+      return;
+    }
+
     if (audioRef.current && audioRef.current.paused) {
       audioRef.current.play().catch((error) => {
         console.error("Resume error:", error);
@@ -260,8 +281,14 @@ export const useTextToSpeech = () => {
       audioRef.current.currentTime = 0;
       audioRef.current = null;
     }
+
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+
     setIsPlaying(null);
     setIsPaused(false);
+    setUsingBrowserTTS(false);
     updatePlaybackState("none");
   };
 
