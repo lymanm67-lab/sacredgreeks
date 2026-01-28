@@ -192,6 +192,8 @@ serve(async (req) => {
       const FAITH_AUTH_SESSIONS = [16, 17, 18, 19, 20];
       // Stay or Leave: sessions 21-26
       const STAY_OR_LEAVE_SESSIONS = [21, 22, 23, 24, 25, 26];
+      // Saints or Sellouts: sessions 31-36
+      const SAINTS_SELLOUTS_SESSIONS = [31, 32, 33, 34, 35, 36];
 
       const hasAll = (completedSessionIds: number[], required: number[]) => {
         const set = new Set(completedSessionIds);
@@ -214,6 +216,10 @@ serve(async (req) => {
 
       if (hasAll(completedIds, STAY_OR_LEAVE_SESSIONS)) {
         await awardAchievementByKey("stay_or_leave_complete");
+      }
+
+      if (hasAll(completedIds, SAINTS_SELLOUTS_SESSIONS)) {
+        await awardAchievementByKey("saints_sellouts_complete");
       }
     }
 
