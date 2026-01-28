@@ -172,6 +172,7 @@ export function AppSidebar() {
 
   const NavItem = ({ item, showProgress = false }: { item: { title: string; url: string; icon: React.ComponentType<{ className?: string }>; iconColor?: string; hasProgress?: boolean }; showProgress?: boolean }) => {
     const progress = showProgress && item.hasProgress ? getProgressForPath(item.url) : 0;
+    const hasProgressBar = showProgress && item.hasProgress && !collapsed && progress > 0;
     
     return (
       <SidebarMenuItem className="isolate mb-1">
@@ -188,12 +189,12 @@ export function AppSidebar() {
             )}
           >
             <item.icon className={cn("h-4 w-4 shrink-0", item.iconColor)} />
-            <div className="flex-1 min-w-0 overflow-hidden">
-              <span className="block truncate">{item.title}</span>
-              {showProgress && item.hasProgress && !collapsed && progress > 0 && (
-                <div className="flex items-center gap-2 mt-1">
-                  <Progress value={progress} className="h-1 flex-1" />
-                  <span className="text-[10px] text-muted-foreground w-7 shrink-0">{progress}%</span>
+            <div className="flex-1 min-w-0 flex flex-col">
+              <span className="truncate">{item.title}</span>
+              {hasProgressBar && (
+                <div className="flex items-center gap-1.5 mt-1 w-full">
+                  <Progress value={progress} className="h-1 flex-1 max-w-[80px]" />
+                  <span className="text-[10px] text-muted-foreground shrink-0">{progress}%</span>
                 </div>
               )}
             </div>
