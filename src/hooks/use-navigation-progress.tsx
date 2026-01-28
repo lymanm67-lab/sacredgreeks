@@ -9,6 +9,7 @@ interface NavProgressData {
   greekLifeTraining: number;
   mythBuster: number;
   faithAuthority: number;
+  stayOrLeave: number;
   journey: number;
   bibleStudy: number;
   prayerJournal: number;
@@ -28,6 +29,7 @@ export const useNavigationProgress = () => {
           greekLifeTraining: 0,
           mythBuster: 0,
           faithAuthority: 0,
+          stayOrLeave: 0,
           journey: 0,
           bibleStudy: 0,
           prayerJournal: 0,
@@ -55,6 +57,10 @@ export const useNavigationProgress = () => {
       // Faith & Authority (sessions 16-20)
       const faithSessions = studyProgress?.filter(p => p.session_id >= 16 && p.session_id <= 20 && p.completed) || [];
       const faithAuthority = Math.round((faithSessions.length / 5) * 100);
+
+      // Stay or Leave course (sessions 25-30)
+      const stayOrLeaveSessions = studyProgress?.filter(p => p.session_id >= 25 && p.session_id <= 30 && p.completed) || [];
+      const stayOrLeave = Math.round((stayOrLeaveSessions.length / 6) * 100);
 
       // Myth Buster progress (sessions 100+)
       const mythSessions = studyProgress?.filter(p => p.session_id >= 100 && p.session_id < 200 && p.completed) || [];
@@ -103,6 +109,7 @@ export const useNavigationProgress = () => {
         greekLifeTraining,
         mythBuster,
         faithAuthority,
+        stayOrLeave,
         journey,
         bibleStudy,
         prayerJournal,
@@ -128,6 +135,8 @@ export const useNavigationProgress = () => {
         return progressData.mythBuster;
       case "/faith-authority":
         return progressData.faithAuthority;
+      case "/should-you-stay-or-leave":
+        return progressData.stayOrLeave;
       case "/journey":
         return progressData.journey;
       case "/bible-study":
