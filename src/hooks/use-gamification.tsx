@@ -66,7 +66,9 @@ export const useGamification = () => {
   const { isDemoMode, demoFeatures } = useDemoMode();
 
   // Determine if showing demo data for achievements
-  const showDemoData = isDemoMode && demoFeatures.achievements;
+  // Demo mode is only for unauthenticated previewing.
+  // If a user is logged in, always prefer real data.
+  const showDemoData = !user && isDemoMode && demoFeatures.achievements;
 
   const { data: stats, isLoading: statsLoading } = useQuery({
     queryKey: ["gamification-stats", user?.id],
