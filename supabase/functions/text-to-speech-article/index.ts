@@ -52,6 +52,18 @@ serve(async (req) => {
     if (!response.ok) {
       const errorText = await response.text();
       console.error('ElevenLabs API error:', errorText);
+      
+      // Check for quota exceeded - return 402 to trigger browser fallback
+      if (errorText.includes('quota_exceeded') || errorText.includes('credits remaining')) {
+        return new Response(JSON.stringify({ 
+          error: `ElevenLabs API error: ${response.status} - ${errorText}`,
+          code: 'quota_exceeded'
+        }), {
+          status: 402,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+      
       throw new Error(`ElevenLabs API error: ${response.status}`);
     }
 
