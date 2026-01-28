@@ -12,6 +12,7 @@ import { mythBusterContent, mythCategories, mythScenarios, mythOrganizations, Pr
 import { ListenButton } from '@/components/ListenButton';
 import { FISTFramework } from '@/components/myth-buster/FISTFramework';
 import { ScholarlyReferences } from '@/components/myth-buster/ScholarlyReferences';
+import { MythSubGroup, chunkArray } from '@/components/myth-buster/MythSubGroup';
 
 import { MythBusterDownloads } from '@/components/myth-buster/MythBusterDownloads';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -70,6 +71,7 @@ const MythBuster = () => {
   const [organization, setOrganization] = useState('all');
   const [proofFilter, setProofFilter] = useState<ProofCategory | 'all'>('all');
   const [expandedCategories, setExpandedCategories] = useState<string[]>(['identity']);
+  const [expandedSubGroups, setExpandedSubGroups] = useState<string[]>([]);
   const [isDownloading, setIsDownloading] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [reviewedMyths, setReviewedMyths] = useState<string[]>([]);
@@ -215,6 +217,26 @@ const MythBuster = () => {
         ? prev.filter(c => c !== categoryId)
         : [...prev, categoryId]
     );
+  };
+
+  const toggleSubGroup = (subGroupId: string) => {
+    setExpandedSubGroups(prev => 
+      prev.includes(subGroupId) 
+        ? prev.filter(id => id !== subGroupId)
+        : [...prev, subGroupId]
+    );
+  };
+
+  // Auto-expand first incomplete sub-group when category opens
+  const getFirstIncompleteSubGroup = (categoryId: string, mythChunks: (typeof mythBusterContent[number])[][]) => {
+    for (let i = 0; i < mythChunks.length; i++) {
+      const chunk = mythChunks[i];
+      const reviewedInChunk = chunk.filter(m => reviewedMyths.includes(m.id)).length;
+      if (reviewedInChunk < chunk.length) {
+        return `${categoryId}-${i}`;
+      }
+    }
+    return `${categoryId}-0`; // Default to first if all complete
   };
 
   const handleDownloadPDF = async () => {
@@ -604,143 +626,177 @@ const MythBuster = () => {
                     <div className="px-6 py-3 border-b bg-muted/10">
                       <ScholarlyReferences categoryId={group.id} compact />
                     </div>
-                    <CardContent className="pt-3 space-y-3">
-                      {group.myths.map(myth => (
-                        <div key={myth.id} className="border rounded-lg overflow-hidden">
-                          <Accordion type="single" collapsible>
-                            <AccordionItem value={myth.id} className="border-none">
-                              <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-muted/30">
-                                <div className="flex items-start gap-3 text-left flex-1">
-                                  {reviewedMyths.includes(myth.id) ? (
-                                    <CheckCircle2 className="w-4 h-4 mt-1 text-green-500 shrink-0" />
-                                  ) : (
-                                    <MessageSquare className="w-4 h-4 mt-1 text-sacred shrink-0" />
-                                  )}
-                                  <div className="flex-1">
-                                    <p className="font-medium text-sm">{myth.myth}</p>
-                                    <div className="flex items-center gap-2 mt-1">
-                                      {myth.scenario && (
-                                        <Badge variant="outline" className="text-xs">{myth.scenario}</Badge>
-                                      )}
-                                      {reviewedMyths.includes(myth.id) && (
-                                        <Badge variant="secondary" className="text-xs bg-green-500/10 text-green-600 border-green-500/30">Reviewed</Badge>
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-                              </AccordionTrigger>
-                              <AccordionContent className="px-4 pb-4">
-                                <div className="space-y-4">
-                                  {/* The Accusation */}
-                                  <div className="bg-destructive/5 border border-destructive/20 rounded-lg p-3">
-                                    <p className="text-xs font-semibold text-destructive mb-1">What They Say:</p>
-                                    <p className="text-sm italic text-muted-foreground">"{myth.shortAnswer}"</p>
-                                  </div>
-                                  
-                                  {/* Quick Response Script */}
-                                  <div className="bg-sacred/5 border border-sacred/20 rounded-lg p-3">
-                                    <div className="flex items-center justify-between mb-2">
-                                      <p className="text-xs font-semibold text-sacred">Your Response:</p>
-                                      <div className="flex gap-1">
-                                        <Button
-                                          variant="ghost"
-                                          size="sm"
-                                          className="h-7 px-2"
-                                          onClick={(e) => {
-                                            e.stopPropagation();
-                                            handleCopy(generateQuickResponse(myth), myth.id);
-                                          }}
-                                        >
-                                          {copiedId === myth.id ? (
-                                            <Check className="w-3 h-3 text-green-500" />
+                    <CardContent className="pt-4 space-y-3">
+                      {/* Chunk myths into sub-groups of 4 for easier consumption */}
+                      {(() => {
+                        const CHUNK_SIZE = 4;
+                        const mythChunks = chunkArray(group.myths, CHUNK_SIZE);
+                        
+                        return mythChunks.map((chunk, chunkIndex) => {
+                          const subGroupId = `${group.id}-${chunkIndex}`;
+                          const reviewedInChunk = chunk.filter(m => reviewedMyths.includes(m.id)).length;
+                          const isFirstIncomplete = expandedSubGroups.length === 0 && 
+                            getFirstIncompleteSubGroup(group.id, mythChunks) === subGroupId;
+                          const isSubGroupOpen = expandedSubGroups.includes(subGroupId) || isFirstIncomplete;
+                          
+                          // Generate title based on scenarios in this chunk
+                          const scenarios = [...new Set(chunk.map(m => m.scenario).filter(Boolean))];
+                          const subTitle = scenarios.length === 1 && scenarios[0] 
+                            ? scenarios[0] 
+                            : `Part ${chunkIndex + 1}`;
+                          
+                          return (
+                            <MythSubGroup
+                              key={subGroupId}
+                              title={subTitle}
+                              subtitle={`${chunk.length} topic${chunk.length > 1 ? 's' : ''}`}
+                              groupIndex={chunkIndex}
+                              totalGroups={mythChunks.length}
+                              mythCount={chunk.length}
+                              reviewedCount={reviewedInChunk}
+                              isOpen={isSubGroupOpen}
+                              onToggle={() => toggleSubGroup(subGroupId)}
+                            >
+                              {chunk.map(myth => (
+                                <div key={myth.id} className="border rounded-lg overflow-hidden bg-background">
+                                  <Accordion type="single" collapsible>
+                                    <AccordionItem value={myth.id} className="border-none">
+                                      <AccordionTrigger className="px-4 py-3 hover:no-underline hover:bg-muted/30">
+                                        <div className="flex items-start gap-3 text-left flex-1">
+                                          {reviewedMyths.includes(myth.id) ? (
+                                            <CheckCircle2 className="w-4 h-4 mt-1 text-green-500 shrink-0" />
                                           ) : (
-                                            <Copy className="w-3 h-3" />
+                                            <MessageSquare className="w-4 h-4 mt-1 text-sacred shrink-0" />
                                           )}
-                                          <span className="ml-1 text-xs">Copy</span>
-                                        </Button>
-                                        <ListenButton 
-                                          text={generateQuickResponse(myth)} 
-                                          itemId={myth.id} 
-                                          title={myth.myth} 
-                                          size="sm" 
-                                        />
-                                      </div>
-                                    </div>
-                                    <p className="text-sm leading-relaxed">{myth.detailedResponse}</p>
-                                  </div>
-                                  
-                                  {/* Scripture Support */}
-                                  <div>
-                                    <p className="text-xs font-semibold mb-2">Scripture Support:</p>
-                                    <div className="space-y-2">
-                                      {myth.scriptures.map((s, i) => (
-                                        <div key={i} className="bg-muted/50 p-3 rounded-lg border-l-4 border-sacred">
-                                          <div className="flex items-start justify-between gap-2">
-                                            <div className="flex-1">
-                                              <p className="font-semibold text-xs text-sacred">{s.ref}</p>
-                                              <p className="text-xs italic mt-1">"{s.text}"</p>
-                                            </div>
-                                            <Button
-                                              variant="ghost"
-                                              size="sm"
-                                              className="h-6 w-6 p-0 shrink-0"
-                                              onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleCopy(`${s.ref}: "${s.text}"`, `${myth.id}-${i}`);
-                                              }}
-                                            >
-                                              {copiedId === `${myth.id}-${i}` ? (
-                                                <Check className="w-3 h-3 text-green-500" />
-                                              ) : (
-                                                <Copy className="w-3 h-3" />
+                                          <div className="flex-1">
+                                            <p className="font-medium text-sm">{myth.myth}</p>
+                                            <div className="flex items-center gap-2 mt-1">
+                                              {myth.scenario && (
+                                                <Badge variant="outline" className="text-xs">{myth.scenario}</Badge>
                                               )}
-                                            </Button>
+                                              {reviewedMyths.includes(myth.id) && (
+                                                <Badge variant="secondary" className="text-xs bg-green-500/10 text-green-600 border-green-500/30">Reviewed</Badge>
+                                              )}
+                                            </div>
                                           </div>
                                         </div>
-                                      ))}
-                                    </div>
-                                  </div>
-                                  
-                                   {/* Tags & Related + Mark Reviewed */}
-                                  <div className="flex flex-wrap items-center gap-2 pt-2 border-t">
-                                    {myth.tags.slice(0, 4).map(tag => (
-                                      <Badge key={tag} variant="secondary" className="text-xs">{tag}</Badge>
-                                    ))}
-                                    <div className="flex items-center gap-2 ml-auto">
-                                      {myth.relatedArticle && (
-                                        <Link to={myth.relatedArticleUrl || '/articles'} className="inline-flex items-center gap-1 text-xs text-sacred hover:underline">
-                                          <ExternalLink className="w-3 h-3" /> Related article
-                                        </Link>
-                                      )}
-                                      <Button
-                                        variant={reviewedMyths.includes(myth.id) ? "secondary" : "outline"}
-                                        size="sm"
-                                        className="gap-1.5 h-7"
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          toggleMythReviewed(myth.id);
-                                        }}
-                                      >
-                                        {reviewedMyths.includes(myth.id) ? (
-                                          <>
-                                            <CheckCircle2 className="w-3 h-3 text-green-500" />
-                                            Reviewed
-                                          </>
-                                        ) : (
-                                          <>
-                                            <CheckCircle2 className="w-3 h-3" />
-                                            Mark Reviewed
-                                          </>
-                                        )}
-                                      </Button>
-                                    </div>
-                                  </div>
+                                      </AccordionTrigger>
+                                      <AccordionContent className="px-4 pb-4">
+                                        <div className="space-y-4">
+                                          {/* The Accusation */}
+                                          <div className="bg-destructive/5 border border-destructive/20 rounded-lg p-3">
+                                            <p className="text-xs font-semibold text-destructive mb-1">What They Say:</p>
+                                            <p className="text-sm italic text-muted-foreground">"{myth.shortAnswer}"</p>
+                                          </div>
+                                          
+                                          {/* Quick Response Script */}
+                                          <div className="bg-sacred/5 border border-sacred/20 rounded-lg p-3">
+                                            <div className="flex items-center justify-between mb-2">
+                                              <p className="text-xs font-semibold text-sacred">Your Response:</p>
+                                              <div className="flex gap-1">
+                                                <Button
+                                                  variant="ghost"
+                                                  size="sm"
+                                                  className="h-7 px-2"
+                                                  onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleCopy(generateQuickResponse(myth), myth.id);
+                                                  }}
+                                                >
+                                                  {copiedId === myth.id ? (
+                                                    <Check className="w-3 h-3 text-green-500" />
+                                                  ) : (
+                                                    <Copy className="w-3 h-3" />
+                                                  )}
+                                                  <span className="ml-1 text-xs">Copy</span>
+                                                </Button>
+                                                <ListenButton 
+                                                  text={generateQuickResponse(myth)} 
+                                                  itemId={myth.id} 
+                                                  title={myth.myth} 
+                                                  size="sm" 
+                                                />
+                                              </div>
+                                            </div>
+                                            <p className="text-sm leading-relaxed">{myth.detailedResponse}</p>
+                                          </div>
+                                          
+                                          {/* Scripture Support */}
+                                          <div>
+                                            <p className="text-xs font-semibold mb-2">Scripture Support:</p>
+                                            <div className="space-y-2">
+                                              {myth.scriptures.map((s, i) => (
+                                                <div key={i} className="bg-muted/50 p-3 rounded-lg border-l-4 border-sacred">
+                                                  <div className="flex items-start justify-between gap-2">
+                                                    <div className="flex-1">
+                                                      <p className="font-semibold text-xs text-sacred">{s.ref}</p>
+                                                      <p className="text-xs italic mt-1">"{s.text}"</p>
+                                                    </div>
+                                                    <Button
+                                                      variant="ghost"
+                                                      size="sm"
+                                                      className="h-6 w-6 p-0 shrink-0"
+                                                      onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleCopy(`${s.ref}: "${s.text}"`, `${myth.id}-${i}`);
+                                                      }}
+                                                    >
+                                                      {copiedId === `${myth.id}-${i}` ? (
+                                                        <Check className="w-3 h-3 text-green-500" />
+                                                      ) : (
+                                                        <Copy className="w-3 h-3" />
+                                                      )}
+                                                    </Button>
+                                                  </div>
+                                                </div>
+                                              ))}
+                                            </div>
+                                          </div>
+                                          
+                                          {/* Tags & Related + Mark Reviewed */}
+                                          <div className="flex flex-wrap items-center gap-2 pt-2 border-t">
+                                            {myth.tags.slice(0, 4).map(tag => (
+                                              <Badge key={tag} variant="secondary" className="text-xs">{tag}</Badge>
+                                            ))}
+                                            <div className="flex items-center gap-2 ml-auto">
+                                              {myth.relatedArticle && (
+                                                <Link to={myth.relatedArticleUrl || '/articles'} className="inline-flex items-center gap-1 text-xs text-sacred hover:underline">
+                                                  <ExternalLink className="w-3 h-3" /> Related article
+                                                </Link>
+                                              )}
+                                              <Button
+                                                variant={reviewedMyths.includes(myth.id) ? "secondary" : "outline"}
+                                                size="sm"
+                                                className="gap-1.5 h-7"
+                                                onClick={(e) => {
+                                                  e.stopPropagation();
+                                                  toggleMythReviewed(myth.id);
+                                                }}
+                                              >
+                                                {reviewedMyths.includes(myth.id) ? (
+                                                  <>
+                                                    <CheckCircle2 className="w-3 h-3 text-green-500" />
+                                                    Reviewed
+                                                  </>
+                                                ) : (
+                                                  <>
+                                                    <CheckCircle2 className="w-3 h-3" />
+                                                    Mark Reviewed
+                                                  </>
+                                                )}
+                                              </Button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </AccordionContent>
+                                    </AccordionItem>
+                                  </Accordion>
                                 </div>
-                              </AccordionContent>
-                            </AccordionItem>
-                          </Accordion>
-                        </div>
-                      ))}
+                              ))}
+                            </MythSubGroup>
+                          );
+                        });
+                      })()}
                     </CardContent>
                   </CollapsibleContent>
                 </Card>
