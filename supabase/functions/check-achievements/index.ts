@@ -229,10 +229,12 @@ serve(async (req) => {
       const GREEK_LIFE_SESSIONS = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
       // Faith & Authority: sessions 16-20
       const FAITH_AUTH_SESSIONS = [16, 17, 18, 19, 20];
-      // Stay or Leave: sessions 21-26
-      const STAY_OR_LEAVE_SESSIONS = [21, 22, 23, 24, 25, 26];
+      // Stay or Leave: sessions 25-30
+      const STAY_OR_LEAVE_SESSIONS = [25, 26, 27, 28, 29, 30];
       // Saints or Sellouts: sessions 31-36
       const SAINTS_SELLOUTS_SESSIONS = [31, 32, 33, 34, 35, 36];
+      // Hidden in Plain Sight: sessions 40-45
+      const HIDDEN_PLAIN_SIGHT_SESSIONS = [40, 41, 42, 43, 44, 45];
 
       const hasAll = (completedSessionIds: number[], required: number[]) => {
         const set = new Set(completedSessionIds);
@@ -245,8 +247,10 @@ serve(async (req) => {
         completedIds,
         hasStayOrLeave: hasAll(completedIds, STAY_OR_LEAVE_SESSIONS),
         hasSaintsOrSellouts: hasAll(completedIds, SAINTS_SELLOUTS_SESSIONS),
+        hasHiddenInPlainSight: hasAll(completedIds, HIDDEN_PLAIN_SIGHT_SESSIONS),
         alreadyHasStayOrLeave: earnedKeys.has("stay_or_leave_complete"),
-        alreadyHasSaintsOrSellouts: earnedKeys.has("saints_sellouts_complete")
+        alreadyHasSaintsOrSellouts: earnedKeys.has("saints_sellouts_complete"),
+        alreadyHasHiddenInPlainSight: earnedKeys.has("hidden_plain_sight_complete")
       });
 
       if (hasAll(completedIds, PROOF_SESSIONS)) {
@@ -267,6 +271,10 @@ serve(async (req) => {
 
       if (hasAll(completedIds, SAINTS_SELLOUTS_SESSIONS)) {
         await awardAchievementByKey("saints_sellouts_complete");
+      }
+
+      if (hasAll(completedIds, HIDDEN_PLAIN_SIGHT_SESSIONS)) {
+        await awardAchievementByKey("hidden_plain_sight_complete");
       }
     }
 
