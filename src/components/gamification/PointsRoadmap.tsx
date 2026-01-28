@@ -304,9 +304,16 @@ export const PointsRoadmap = () => {
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Badge className={`${isCompleted ? `${colors.bg} ${colors.text} border-0` : 'bg-muted text-muted-foreground'}`}>
-                        +{step.points} pts
-                      </Badge>
+                      {isCompleted ? (
+                        <Badge className={`${colors.bg} ${colors.text} border-0 gap-1`}>
+                          <CheckCircle2 className="w-3 h-3" />
+                          {step.points} pts earned
+                        </Badge>
+                      ) : (
+                        <Badge className="bg-muted text-muted-foreground">
+                          +{step.points} pts
+                        </Badge>
+                      )}
                       <motion.div
                         animate={{ rotate: isExpanded ? 90 : 0 }}
                         transition={{ duration: 0.2 }}
