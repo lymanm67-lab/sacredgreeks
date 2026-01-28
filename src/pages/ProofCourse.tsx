@@ -9,6 +9,7 @@ import { SEOHead } from '@/components/SEOHead';
 import { useToast } from '@/hooks/use-toast';
 import { useSubscription } from '@/hooks/use-subscription';
 import { useNavigationProgress } from '@/hooks/use-navigation-progress';
+import { useStudyProgress } from '@/hooks/use-study-progress';
 import { ListenButton } from '@/components/ListenButton';
 import { ProofFrameworkAudio } from '@/components/proof/ProofFrameworkAudio';
 import { ProofCourseOnboarding } from '@/components/proof/ProofCourseOnboarding';
@@ -427,8 +428,13 @@ const ProofCourse = () => {
   const { toast } = useToast();
   const { subscribed, tier, loading: subLoading } = useSubscription();
   const { progressData } = useNavigationProgress();
+  const { progress: studyProgress, isSessionComplete, toggleSession, isLoading: progressLoading } = useStudyProgress();
   const [activeLesson, setActiveLesson] = useState<number | null>(null);
-  const [completedLessons, setCompletedLessons] = useState<number[]>([]);
+
+  // Get completed lessons from database (sessions 1-5 for PROOF course)
+  const completedLessons = studyProgress
+    .filter(p => p.session_id >= 1 && p.session_id <= 5 && p.completed)
+    .map(p => p.session_id);
 
   // Check if user has premium access (Pro or Ministry tier)
   const hasPremiumAccess = subscribed && (tier === 'pro' || tier === 'ministry');
@@ -463,8 +469,9 @@ const ProofCourse = () => {
   };
 
   const completeLesson = (lessonId: number) => {
-    if (!completedLessons.includes(lessonId)) {
-      setCompletedLessons([...completedLessons, lessonId]);
+    // Save to database using the study progress hook
+    if (!isSessionComplete(lessonId)) {
+      toggleSession({ sessionId: lessonId, completed: true });
       toast({
         title: 'Lesson Complete!',
         description: `Great job completing ${lessons.find(l => l.id === lessonId)?.title}`,
