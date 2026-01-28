@@ -106,6 +106,12 @@ The Germans later developed "Kinderfest" (children's festival) where a single ca
       content: "Despite Christian influence, these pagan elements survived relatively intact because they were seen as 'harmless fun' rather than religious practice—the same argument used against Greek Life rituals.",
     },
   ],
+  scholarlyReferences: [
+    "Montgomery, Lyman. Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate. 2025.",
+    "Schmidt, Leigh Eric. Consumer Rites: The Buying and Selling of American Holidays. Princeton University Press, 1995.",
+    "Pleck, Elizabeth. Celebrating the Family: Ethnicity, Consumer Culture, and Family Rituals. Harvard University Press, 2000.",
+    "Hutton, Ronald. The Stations of the Sun: A History of the Ritual Year in Britain. Oxford University Press, 1996.",
+  ],
 };
 
 const CONTEXT_MATTERS_CONTENT = {
@@ -124,6 +130,12 @@ const CONTEXT_MATTERS_CONTENT = {
       title: "Memorial Day & Decoration Day",
       content: "The tradition of decorating graves with flowers connects directly to Rosalia, the ancient Roman festival of roses honoring the dead. Memorial wreaths, flower arrangements, and cemetery visits preserve this pagan practice of appeasing departed spirits.",
     },
+  ],
+  scholarlyReferences: [
+    "Montgomery, Lyman. Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate. 2025.",
+    "Howard, Vicki. Brides, Inc.: American Weddings and the Business of Tradition. University of Pennsylvania Press, 2006.",
+    "Connelly, Mark. Christmas: A History. I.B. Tauris, 2012.",
+    "Forbes, Bruce David. America's Favorite Holidays: Candid Histories. University of California Press, 2015.",
   ],
 };
 
@@ -169,6 +181,14 @@ const DOUBLE_STANDARD_CONTENT = {
     },
   ],
   conclusion: "The selective application of 'pagan origins' criticism reveals cultural bias rather than consistent theological principle. Either all pagan-derived practices are spiritually dangerous, or context and intent matter for all of them. The historical sources cited above are available in academic libraries for verification.",
+  scholarlyReferences: [
+    "Montgomery, Lyman. Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate. 2025.",
+    "Knight, Phil. Shoe Dog: A Memoir by the Creator of Nike. Scribner, 2016.",
+    "Toynbee, J.M.C. Death and Burial in the Roman World. Johns Hopkins University Press, 1971.",
+    "Zerubavel, Eviatar. The Seven Day Circle: The History and Meaning of the Week. University of Chicago Press, 1985.",
+    "Grierson, Philip. The Origins of Money. Athlone Press, 1977.",
+    "Beard, Mary. SPQR: A History of Ancient Rome. Liveright, 2015.",
+  ],
 };
 
 const COSMETICS_CONTENT = {
@@ -241,6 +261,13 @@ const ARCHITECTURE_CONTENT = {
     },
   ],
   conclusion: "Christians worship in buildings featuring Zeus's eye (domes), Roman Senate platforms (pulpits), and pagan sacrifice tables (altars)—yet these 'baptized' elements raise no concern while Greek organizational symbols face condemnation.",
+  scholarlyReferences: [
+    "Montgomery, Lyman. Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate. 2025.",
+    "Krautheimer, Richard. Early Christian and Byzantine Architecture. Yale University Press, 1986.",
+    "Snoek, G.J.C. Medieval Piety from Relics to the Eucharist. Brill, 1995.",
+    "Kieckhefer, Richard. Theology in Stone: Church Architecture from Byzantium to Berkeley. Oxford University Press, 2004.",
+    "Goldhill, Simon. The Temple of Jerusalem. Harvard University Press, 2005.",
+  ],
 };
 
 const LANGUAGE_CONTENT = {
@@ -285,6 +312,13 @@ const LANGUAGE_CONTENT = {
     },
   ],
   conclusion: "The English language is saturated with pagan deity references, mythological concepts, and superstitious phrases. If Proverbs 18:21 meant words have magical power, Christians using these terms daily would be practicing sorcery. The consistent application proves context and intent matter—not the words themselves.",
+  scholarlyReferences: [
+    "Montgomery, Lyman. Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate. 2025.",
+    "Crystal, David. The Cambridge Encyclopedia of the English Language. Cambridge University Press, 2003.",
+    "Ayto, John. Dictionary of Word Origins. Arcade Publishing, 1990.",
+    "Frazer, James George. The Golden Bough: A Study in Magic and Religion. Macmillan, 1890.",
+    "Hutton, Ronald. The Triumph of the Moon: A History of Modern Pagan Witchcraft. Oxford University Press, 1999.",
+  ],
 };
 
 const APPLICATION_CONTENT = {
@@ -310,6 +344,12 @@ const APPLICATION_CONTENT = {
     },
   ],
   finalThought: "If birthday candles, wedding rings, Valentine's cards, Christmas trees, Nike shoes, and calendar names don't make us pagans, then neither do Greek letters, handshakes, or organizational rituals. Consistency requires either condemning all pagan-derived practices or extending grace to understand context and intent.",
+  scholarlyReferences: [
+    "Montgomery, Lyman. Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate. 2025.",
+    "Niebuhr, H. Richard. Christ and Culture. Harper & Row, 1951.",
+    "Carson, D.A. Christ and Culture Revisited. Eerdmans, 2008.",
+    "Vanhoozer, Kevin J. Everyday Theology: How to Read Cultural Texts and Interpret Trends. Baker Academic, 2007.",
+  ],
 };
 
 const CONCLUSION_CONTENT = {
@@ -333,6 +373,13 @@ const CONCLUSION_CONTENT = {
     },
   ],
   callToAction: "Armed with this understanding, you can now evaluate ritual practices consistently—whether birthday parties, wedding ceremonies, holiday celebrations, or organizational rituals. The standard must be theological content, not cultural familiarity.",
+  scholarlyReferences: [
+    "Montgomery, Lyman. Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate. 2025.",
+    "MacMullen, Ramsay. Christianizing the Roman Empire: A.D. 100-400. Yale University Press, 1984.",
+    "Brown, Peter. The Rise of Western Christendom. Wiley-Blackwell, 2013.",
+    "Salzman, Michele Renee. The Making of a Christian Aristocracy. Harvard University Press, 2002.",
+    "Stark, Rodney. The Rise of Christianity. Princeton University Press, 1996.",
+  ],
 };
 
 const COURSE_INSTRUCTIONS = `Welcome to "Hidden in Plain Sight"—a course that will challenge how you evaluate cultural practices. You'll discover that many beloved American and Christian traditions have direct pagan origins that we've accepted as "normal." Through an eye-opening case study format, you'll see how birthday candles, wedding traditions, holidays, cosmetics, architecture, language, and everyday symbols all trace to pagan sources. By the end, you'll have tools to evaluate practices consistently rather than selectively. Complete all nine modules to earn 200 points (22 points each, 24 for final). Let's uncover what's been hidden in plain sight!`;
@@ -735,6 +782,23 @@ export default function HiddenInPlainSight() {
               ))}
             </div>
 
+            {/* Scholarly References */}
+            <Card className="bg-muted/30 border-primary/20">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm flex items-center gap-2">
+                  <BookOpen className="h-4 w-4 text-primary" />
+                  Scholarly References
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="text-xs text-muted-foreground space-y-1">
+                  {REVEAL_CONTENT.scholarlyReferences.map((ref, index) => (
+                    <li key={index}>• {ref}</li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+
             <Button
               onClick={() => handleComplete("reveal", COURSE_SESSION_IDS.reveal)}
               disabled={isSessionComplete(COURSE_SESSION_IDS.reveal)}
@@ -782,6 +846,23 @@ export default function HiddenInPlainSight() {
                 </Card>
               ))}
             </div>
+
+            {/* Scholarly References */}
+            <Card className="bg-muted/30 border-primary/20">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm flex items-center gap-2">
+                  <BookOpen className="h-4 w-4 text-primary" />
+                  Scholarly References
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="text-xs text-muted-foreground space-y-1">
+                  {CONTEXT_MATTERS_CONTENT.scholarlyReferences.map((ref, index) => (
+                    <li key={index}>• {ref}</li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
 
             <Button
               onClick={() => handleComplete("contextMatters", COURSE_SESSION_IDS.contextMatters)}
@@ -837,6 +918,23 @@ export default function HiddenInPlainSight() {
             <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
               <p className="text-sm font-medium">{DOUBLE_STANDARD_CONTENT.conclusion}</p>
             </div>
+
+            {/* Scholarly References */}
+            <Card className="bg-muted/30 border-primary/20">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm flex items-center gap-2">
+                  <BookOpen className="h-4 w-4 text-primary" />
+                  Scholarly References
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="text-xs text-muted-foreground space-y-1">
+                  {DOUBLE_STANDARD_CONTENT.scholarlyReferences.map((ref, index) => (
+                    <li key={index}>• {ref}</li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
 
             <Button
               onClick={() => handleComplete("doubleStandard", COURSE_SESSION_IDS.doubleStandard)}
@@ -949,6 +1047,23 @@ export default function HiddenInPlainSight() {
               <p className="text-sm font-medium">{ARCHITECTURE_CONTENT.conclusion}</p>
             </div>
 
+            {/* Scholarly References */}
+            <Card className="bg-muted/30 border-primary/20">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm flex items-center gap-2">
+                  <BookOpen className="h-4 w-4 text-primary" />
+                  Scholarly References
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="text-xs text-muted-foreground space-y-1">
+                  {ARCHITECTURE_CONTENT.scholarlyReferences.map((ref, index) => (
+                    <li key={index}>• {ref}</li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+
             <Button
               onClick={() => handleComplete("architecture", COURSE_SESSION_IDS.architecture)}
               disabled={isSessionComplete(COURSE_SESSION_IDS.architecture)}
@@ -995,6 +1110,23 @@ export default function HiddenInPlainSight() {
             <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
               <p className="text-sm font-medium">{LANGUAGE_CONTENT.conclusion}</p>
             </div>
+
+            {/* Scholarly References */}
+            <Card className="bg-muted/30 border-primary/20">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm flex items-center gap-2">
+                  <BookOpen className="h-4 w-4 text-primary" />
+                  Scholarly References
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="text-xs text-muted-foreground space-y-1">
+                  {LANGUAGE_CONTENT.scholarlyReferences.map((ref, index) => (
+                    <li key={index}>• {ref}</li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
 
             <Button
               onClick={() => handleComplete("language", COURSE_SESSION_IDS.language)}
@@ -1047,6 +1179,23 @@ export default function HiddenInPlainSight() {
               <p className="text-sm font-medium">{APPLICATION_CONTENT.finalThought}</p>
             </div>
 
+            {/* Scholarly References */}
+            <Card className="bg-muted/30 border-primary/20">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm flex items-center gap-2">
+                  <BookOpen className="h-4 w-4 text-primary" />
+                  Scholarly References
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="text-xs text-muted-foreground space-y-1">
+                  {APPLICATION_CONTENT.scholarlyReferences.map((ref, index) => (
+                    <li key={index}>• {ref}</li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+
             <Button
               onClick={() => handleComplete("application", COURSE_SESSION_IDS.application)}
               disabled={isSessionComplete(COURSE_SESSION_IDS.application)}
@@ -1093,6 +1242,23 @@ export default function HiddenInPlainSight() {
             <div className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 rounded-lg p-4">
               <p className="text-sm font-medium">{CONCLUSION_CONTENT.callToAction}</p>
             </div>
+
+            {/* Scholarly References */}
+            <Card className="bg-muted/30 border-primary/20">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm flex items-center gap-2">
+                  <BookOpen className="h-4 w-4 text-primary" />
+                  Scholarly References
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="text-xs text-muted-foreground space-y-1">
+                  {CONCLUSION_CONTENT.scholarlyReferences.map((ref, index) => (
+                    <li key={index}>• {ref}</li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
 
             <Button
               onClick={() => handleComplete("conclusion", COURSE_SESSION_IDS.conclusion)}
