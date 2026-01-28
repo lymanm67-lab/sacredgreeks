@@ -888,11 +888,11 @@ export default function HiddenInPlainSight() {
               {isSessionComplete(COURSE_SESSION_IDS.conclusion) ? (
                 <>
                   <Trophy className="h-4 w-4 mr-2" />
-                  Course Completed! +100 Points
+                  Course Completed! +120 Points
                 </>
               ) : (
                 <>
-                  Complete Course & Earn 100 Points
+                  Complete Course & Earn 120 Points
                   <Trophy className="h-4 w-4 ml-2" />
                 </>
               )}
@@ -917,10 +917,15 @@ export default function HiddenInPlainSight() {
           <div className="flex-1">
             <div className="flex items-center gap-3 flex-wrap">
               <h1 className="text-2xl md:text-3xl font-bold">Hidden in Plain Sight</h1>
-              {progressPercentage === 100 && (
+              {progressPercentage === 100 ? (
                 <Badge className="bg-gradient-to-r from-amber-500 to-orange-500 text-white">
                   <Trophy className="w-3 h-3 mr-1" />
-                  100 Points Earned
+                  120 Points Earned
+                </Badge>
+              ) : (
+                <Badge variant="outline" className="border-amber-500/50 text-amber-600">
+                  <Trophy className="w-3 h-3 mr-1" />
+                  Earn 120 Points
                 </Badge>
               )}
             </div>
@@ -936,7 +941,7 @@ export default function HiddenInPlainSight() {
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium">Course Progress</span>
               <span className="text-sm text-muted-foreground">
-                {completedCount} / 6 modules completed
+                {completedCount} / 8 modules completed
               </span>
             </div>
             <Progress value={progressPercentage} className="h-3" />
