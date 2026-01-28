@@ -77,8 +77,8 @@ export const useNavigationProgress = () => {
       // Myth Buster progress (sessions 100+)
       // Total myths count is dynamically determined (currently around 30+ myths in the content)
       const mythSessions = studyProgress?.filter(p => p.session_id >= 100 && p.session_id < 200 && p.completed) || [];
-      // Use 35 as the approximate total myth count based on content file
-      const mythBuster = Math.min(Math.round((mythSessions.length / 35) * 100), 100);
+      // Total myth count after consolidation (reduced from 35 to ~48 entries)
+      const mythBuster = Math.min(Math.round((mythSessions.length / 48) * 100), 100);
 
       // Fetch journey progress (30-day)
       const { data: journeyData } = await supabase
