@@ -1,5 +1,5 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.7.1";
+import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.57.2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -15,38 +15,49 @@ interface CheckAchievementsRequest {
   actionType: ActionType;
 }
 
+const logStep = (step: string, details?: any) => {
+  const detailsStr = details ? ` - ${JSON.stringify(details)}` : '';
+  console.log(`[CHECK-ACHIEVEMENTS] ${step}${detailsStr}`);
+};
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    
+    // Create service role client for all operations
+    const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+      auth: { persistSession: false }
+    });
+
     // SECURITY: Require authentication
-    const authHeader = req.headers.get("authorization");
-    if (!authHeader) {
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return new Response(
         JSON.stringify({ error: "Authorization header required" }),
         { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
-    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const token = authHeader.replace("Bearer ", "");
+    logStep("Authenticating user with token");
     
-    // Verify the user's authentication
-    const authClient = createClient(supabaseUrl, supabaseAnonKey, {
-      global: { headers: { Authorization: authHeader } }
-    });
+    const { data: userData, error: authError } = await supabase.auth.getUser(token);
     
-    const { data: { user }, error: authError } = await authClient.auth.getUser();
-    if (authError || !user) {
-      console.error("Auth error:", authError);
+    if (authError || !userData?.user) {
+      logStep("Authentication failed", { error: authError?.message });
       return new Response(
         JSON.stringify({ error: "Invalid authentication" }),
         { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
+    
+    const authenticatedUserId = userData.user.id;
+    logStep("User authenticated", { userId: authenticatedUserId });
 
     // Parse and validate input
     const body = await req.json();
@@ -68,17 +79,14 @@ serve(async (req) => {
     }
 
     // SECURITY: User can only check achievements for themselves
-    if (user.id !== userId) {
+    if (authenticatedUserId !== userId) {
       return new Response(
         JSON.stringify({ error: "Can only check achievements for your own user" }),
         { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    // Use service role for database operations
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
-
-    console.log("Checking achievements for user:", userId, "action:", actionType);
+    logStep("Checking achievements", { userId, actionType });
 
     // Get user's current achievements
     const { data: userAchievements } = await supabase
@@ -285,6 +293,8 @@ serve(async (req) => {
         }
       }
     }
+
+    logStep("Achievements checked", { newCount: newAchievements.length });
 
     return new Response(
       JSON.stringify({
