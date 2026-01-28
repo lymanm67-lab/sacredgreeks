@@ -73,6 +73,7 @@ const learningPathItems = [
   { title: "Faith & Authority", url: "/faith-authority", icon: BookOpen, featureId: null, iconColor: "text-amber-500", hasProgress: true },
   { title: "Stay or Leave?", url: "/should-you-stay-or-leave", icon: Scale, featureId: null, iconColor: "text-teal-500", hasProgress: true },
   { title: "Saints or Sellouts?", url: "/saints-or-sellouts", icon: Crown, featureId: null, iconColor: "text-orange-500", hasProgress: true },
+  { title: "Hidden in Plain Sight", url: "/hidden-in-plain-sight", icon: Landmark, featureId: null, iconColor: "text-rose-500", hasProgress: true },
 ];
 
 // Assessments section - easy access to all quizzes and assessments for earning points

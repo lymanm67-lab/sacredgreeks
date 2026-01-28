@@ -23,6 +23,7 @@ import {
   Church,
   Video,
   Building2,
+  Landmark,
   User,
   ShoppingBag,
   Headphones,
@@ -57,6 +58,7 @@ const learningPathItems = [
   { title: "Faith & Authority", url: "/faith-authority", icon: BookOpen, featureId: null, iconColor: "text-amber-500" },
   { title: "Stay or Leave?", url: "/should-you-stay-or-leave", icon: Scale, featureId: null, iconColor: "text-teal-500" },
   { title: "Saints or Sellouts?", url: "/saints-or-sellouts", icon: Crown, featureId: null, iconColor: "text-orange-500" },
+  { title: "Hidden in Plain Sight", url: "/hidden-in-plain-sight", icon: Landmark, featureId: null, iconColor: "text-rose-500" },
 ];
 
 // Assessments section - matches AppSidebar
