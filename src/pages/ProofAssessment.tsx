@@ -21,6 +21,7 @@ import { AssessmentResultsPanel } from "@/components/assessment/AssessmentResult
 import { AssessmentVisualReport } from "@/components/assessment/AssessmentVisualReport";
 import { SavedAssessmentPrompt } from "@/components/assessment/SavedAssessmentPrompt";
 import { AssessmentTTS } from "@/components/assessment/AssessmentTTS";
+import { AssessmentBreadcrumb } from "@/components/assessment/AssessmentBreadcrumb";
 import { useSavedAssessment } from "@/hooks/use-saved-assessment";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -282,6 +283,11 @@ export default function ProofAssessment() {
     return (
       <div className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-8 max-w-2xl">
+          <AssessmentBreadcrumb
+            assessmentName="P.R.O.O.F. Assessment"
+            currentStep="results"
+            colorScheme="purple"
+          />
           <Button 
             variant="ghost" 
             onClick={() => setViewingSavedResults(false)}
@@ -342,6 +348,11 @@ export default function ProofAssessment() {
     return (
       <div className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-8 max-w-2xl">
+          <AssessmentBreadcrumb
+            assessmentName="P.R.O.O.F. Assessment"
+            currentStep="instructions"
+            colorScheme="purple"
+          />
           <SavedAssessmentPrompt
             assessmentTitle="P.R.O.O.F. Assessment"
             resultTitle={result.word}
@@ -361,6 +372,11 @@ export default function ProofAssessment() {
     return (
       <div className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-8 max-w-2xl">
+          <AssessmentBreadcrumb
+            assessmentName="P.R.O.O.F. Assessment"
+            currentStep="instructions"
+            colorScheme="purple"
+          />
           <AssessmentInstructions
             {...instructionsConfig}
             ttsText={`${instructionsConfig.description} ${instructionsConfig.whatResultsMean}`}
@@ -392,6 +408,11 @@ export default function ProofAssessment() {
     return (
       <div className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-8 max-w-2xl">
+          <AssessmentBreadcrumb
+            assessmentName="P.R.O.O.F. Assessment"
+            currentStep="results"
+            colorScheme="purple"
+          />
           <AssessmentResultsPanel
             assessmentType="proof-quiz"
             assessmentTitle="P.R.O.O.F. Assessment"
@@ -450,6 +471,13 @@ export default function ProofAssessment() {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-2xl">
+        <AssessmentBreadcrumb
+          assessmentName="P.R.O.O.F. Assessment"
+          currentStep="questions"
+          currentQuestion={currentQuestion + 1}
+          totalQuestions={questions.length}
+          colorScheme="purple"
+        />
         <div className="mb-8">
           <div className="flex items-center justify-between mb-2">
             <h1 className="text-xl font-bold">P.R.O.O.F. Assessment</h1>

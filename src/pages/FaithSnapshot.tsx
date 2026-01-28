@@ -11,6 +11,7 @@ import { AssessmentInstructions } from "@/components/assessment/AssessmentInstru
 import { AssessmentResultsPanel } from "@/components/assessment/AssessmentResultsPanel";
 import { AssessmentVisualReport } from "@/components/assessment/AssessmentVisualReport";
 import { SavedAssessmentPrompt } from "@/components/assessment/SavedAssessmentPrompt";
+import { AssessmentBreadcrumb } from "@/components/assessment/AssessmentBreadcrumb";
 import { useAuth } from "@/contexts/AuthContext";
 import logo from "@/assets/sacred-greeks-logo.png";
 import {
@@ -346,14 +347,14 @@ export default function FaithSnapshot() {
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-[hsl(225,50%,8%)] via-[hsl(250,40%,12%)] to-[hsl(225,50%,8%)] flex flex-col">
-        <header className="border-b border-purple-500/20 bg-[hsl(225,50%,8%)]/95 backdrop-blur-sm">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center gap-2 h-14">
-              <img src={logo} alt="Sacred Greeks" className="h-8 w-8 rounded-full object-cover" />
-              <span className="font-semibold text-white">Sacred Greeks</span>
-            </div>
-          </div>
-        </header>
+        <div className="container mx-auto px-4 py-4">
+          <AssessmentBreadcrumb
+            assessmentName="Faith Snapshot"
+            currentStep="results"
+            colorScheme="amber"
+            className="text-white/70 [&_a]:text-white/70 [&_a:hover]:text-white"
+          />
+        </div>
 
         <main className="flex-1 px-4 py-8">
           <div className="container mx-auto max-w-2xl">
@@ -415,14 +416,14 @@ export default function FaithSnapshot() {
     
     return (
       <div className="min-h-screen bg-gradient-to-br from-[hsl(225,50%,8%)] via-[hsl(250,40%,12%)] to-[hsl(225,50%,8%)] flex flex-col">
-        <header className="border-b border-purple-500/20 bg-[hsl(225,50%,8%)]/95 backdrop-blur-sm">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center gap-2 h-14">
-              <img src={logo} alt="Sacred Greeks" className="h-8 w-8 rounded-full object-cover" />
-              <span className="font-semibold text-white">Sacred Greeks</span>
-            </div>
-          </div>
-        </header>
+        <div className="container mx-auto px-4 py-4">
+          <AssessmentBreadcrumb
+            assessmentName="Faith Snapshot"
+            currentStep="instructions"
+            colorScheme="amber"
+            className="text-white/70 [&_a]:text-white/70 [&_a:hover]:text-white"
+          />
+        </div>
 
         <main className="flex-1 flex items-center justify-center px-4 py-12">
           <div className="w-full max-w-lg">
@@ -446,14 +447,14 @@ export default function FaithSnapshot() {
   if (!started) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[hsl(225,50%,8%)] via-[hsl(250,40%,12%)] to-[hsl(225,50%,8%)] flex flex-col">
-        <header className="border-b border-purple-500/20 bg-[hsl(225,50%,8%)]/95 backdrop-blur-sm">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center gap-2 h-14">
-              <img src={logo} alt="Sacred Greeks" className="h-8 w-8 rounded-full object-cover" />
-              <span className="font-semibold text-white">Sacred Greeks</span>
-            </div>
-          </div>
-        </header>
+        <div className="container mx-auto px-4 py-4">
+          <AssessmentBreadcrumb
+            assessmentName="Faith Snapshot"
+            currentStep="instructions"
+            colorScheme="amber"
+            className="text-white/70 [&_a]:text-white/70 [&_a:hover]:text-white"
+          />
+        </div>
 
         <main className="flex-1 flex items-center justify-center px-4 py-12">
           <div className="w-full max-w-lg">
@@ -491,14 +492,14 @@ export default function FaithSnapshot() {
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-[hsl(225,50%,8%)] via-[hsl(250,40%,12%)] to-[hsl(225,50%,8%)] flex flex-col">
-        <header className="border-b border-purple-500/20 bg-[hsl(225,50%,8%)]/95 backdrop-blur-sm">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center gap-2 h-14">
-              <img src={logo} alt="Sacred Greeks" className="h-8 w-8 rounded-full object-cover" />
-              <span className="font-semibold text-white">Sacred Greeks</span>
-            </div>
-          </div>
-        </header>
+        <div className="container mx-auto px-4 py-4">
+          <AssessmentBreadcrumb
+            assessmentName="Faith Snapshot"
+            currentStep="results"
+            colorScheme="amber"
+            className="text-white/70 [&_a]:text-white/70 [&_a:hover]:text-white"
+          />
+        </div>
 
         <main className="flex-1 flex items-center justify-center px-4 py-12">
           <div className="w-full max-w-lg space-y-6">
@@ -525,20 +526,17 @@ export default function FaithSnapshot() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[hsl(225,50%,8%)] via-[hsl(250,40%,12%)] to-[hsl(225,50%,8%)] flex flex-col">
-      {/* Header */}
-      <header className="border-b border-purple-500/20 bg-[hsl(225,50%,8%)]/95 backdrop-blur-sm">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-14">
-            <div className="flex items-center gap-2">
-              <img src={logo} alt="Sacred Greeks" className="h-8 w-8 rounded-full object-cover" />
-              <span className="font-semibold text-white">Sacred Greeks</span>
-            </div>
-            <Badge variant="outline" className="text-purple-300 border-purple-500/50">
-              Faith Snapshot
-            </Badge>
-          </div>
-        </div>
-      </header>
+      {/* Breadcrumb */}
+      <div className="container mx-auto px-4 py-4">
+        <AssessmentBreadcrumb
+          assessmentName="Faith Snapshot"
+          currentStep="questions"
+          currentQuestion={currentQuestion + 1}
+          totalQuestions={questions.length}
+          colorScheme="amber"
+          className="text-white/70 [&_a]:text-white/70 [&_a:hover]:text-white"
+        />
+      </div>
 
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-lg">
