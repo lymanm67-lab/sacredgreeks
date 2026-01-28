@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -918,6 +919,11 @@ export default function SaintsOrSellouts() {
       {/* Hero Section */}
       <section className="relative py-16 px-4 bg-gradient-to-br from-purple-900/20 via-background to-amber-900/10 border-b">
         <div className="max-w-6xl mx-auto">
+          {/* Back to Dashboard */}
+          <Link to="/dashboard" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-6">
+            <ArrowLeft className="w-4 h-4" />
+            <span>Back to Dashboard</span>
+          </Link>
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="space-y-4">
               <div className="flex items-center gap-3">

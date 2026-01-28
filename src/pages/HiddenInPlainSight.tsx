@@ -910,10 +910,9 @@ export default function HiddenInPlainSight() {
       <div className="container max-w-4xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
-          <Link to="/dashboard">
-            <Button variant="ghost" size="icon">
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
+          <Link to="/dashboard" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
+            <ArrowLeft className="h-5 w-5" />
+            <span>Back to Dashboard</span>
           </Link>
           <div className="flex-1">
             <div className="flex items-center gap-3 flex-wrap">
