@@ -302,7 +302,9 @@ export default function ShouldYouStayOrLeave() {
   const { isSessionComplete, toggleSession, progress: studyProgress, isAuthenticated } = useStudyProgress();
   const { awardPoints } = useGamification();
   const { speak, stop, isPlaying, isLoading } = useTTS();
+  const { speak: speakQuestion, stop: stopQuestion, isPlaying: isPlayingQuestion, isLoading: isLoadingQuestion } = useTTS({ voice: 'marcus' }); // African-American male voice
   const [playingModuleId, setPlayingModuleId] = useState<string | null>(null);
+  const [isQuestionTTSActive, setIsQuestionTTSActive] = useState(false);
   const [activeModule, setActiveModule] = useState<string | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [hasRevealed, setHasRevealed] = useState(false);
@@ -421,8 +423,37 @@ export default function ShouldYouStayOrLeave() {
       <Separator />
 
       <div className="space-y-4">
-        <h4 className="font-semibold text-lg break-words">{CASE_STUDY_SCENARIO.initialQuestion}</h4>
-        
+        <div className="flex items-center justify-between gap-3">
+          <h4 className="font-semibold text-lg break-words flex-1">{CASE_STUDY_SCENARIO.initialQuestion}</h4>
+          <button
+            onClick={() => {
+              if (isPlayingQuestion) {
+                stopQuestion();
+                setIsQuestionTTSActive(false);
+              } else {
+                setIsQuestionTTSActive(true);
+                const questionText = `${CASE_STUDY_SCENARIO.initialQuestion} Your options are: ${CASE_STUDY_SCENARIO.options.map(o => o.label).join('. ')}`;
+                speakQuestion(questionText);
+              }
+            }}
+            disabled={isLoadingQuestion}
+            className={cn(
+              "p-2 rounded-full transition-all shrink-0",
+              isPlayingQuestion
+                ? "bg-amber-500/20 text-amber-500"
+                : "text-muted-foreground hover:text-foreground hover:bg-muted"
+            )}
+            title={isPlayingQuestion ? "Stop audio" : "Listen to question"}
+          >
+            {isLoadingQuestion ? (
+              <Loader2 className="w-5 h-5 animate-spin" />
+            ) : isPlayingQuestion ? (
+              <VolumeX className="w-5 h-5" />
+            ) : (
+              <Volume2 className="w-5 h-5" />
+            )}
+          </button>
+        </div>
         <div className="grid gap-3">
           {CASE_STUDY_SCENARIO.options.map((option) => {
             const Icon = option.icon;
