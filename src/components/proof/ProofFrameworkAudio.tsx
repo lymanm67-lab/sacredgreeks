@@ -9,6 +9,8 @@ import { toast } from "sonner";
 const PROOF_FRAMEWORK_TEXT = `
 The P.R.O.O.F. Framework: A Biblical Response to Greek Life Criticism
 
+This framework is based on the work of Dr. Lyman Montgomery, author of Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate.
+
 P stands for Pledge Process. Critics say Greeks brutalize new members through hazing. But the Bible shows us that biblical mentorship involves testing character, not abusing it. Hebrews 10:24-25 says "Let us consider how to stir up one another to love and good works." True discipleship involves mentorship, not abuse. Jesus tested His disciples through teaching and experience, never through degradation.
 
 R stands for Rituals. Critics claim Greek rituals open demonic portals. But not all ceremonies are worship. Many rituals focus on history, values, and commitment—like weddings or graduations. First Thessalonians 5:21 instructs us to "test everything; hold fast what is good." We discern based on content, not assumption.

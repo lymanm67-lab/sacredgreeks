@@ -98,6 +98,7 @@ If you're considering membership, ask current members (privately) about actual i
 
 **Scholarly References:**
 
+• Montgomery, Lyman. *Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate*. 2025.
 • Nuwer, Hank. *Wrongs of Passage: Fraternities, Sororities, Hazing, and Binge Drinking*. Indiana University Press, 1999.
 • Parks, Gregory S. & Hughey, Matthew W. *Black Greek-Letter Organizations in the Twenty-First Century*. University Press of Kentucky, 2011.
 • Allan, Elizabeth J. & Madden, Mary. "Hazing in View: College Students at Risk." National Study of Student Hazing, 2008.
@@ -184,6 +185,7 @@ This doesn't mean all rituals are permissible—some clearly violate Scripture. 
 
 **Scholarly References:**
 
+• Montgomery, Lyman. *Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate*. 2025.
 • Bell, Catherine. *Ritual Theory, Ritual Practice*. Oxford University Press, 1992.
 • Grimes, Ronald L. *The Craft of Ritual Studies*. Oxford University Press, 2014.
 • Wright, N.T. *Paul and the Faithfulness of God*. Fortress Press, 2013.
@@ -271,6 +273,7 @@ Some organizations may have problematic elements:
 
 **Scholarly References:**
 
+• Montgomery, Lyman. *Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate*. 2025.
 • Winterer, Caroline. *The Culture of Classicism: Ancient Greece and Rome in American Intellectual Life, 1780–1910*. Johns Hopkins University Press, 2002.
 • Ross, Lawrence C. *The Divine Nine: The History of African American Fraternities and Sororities*. Kensington Books, 2000.
 • Keener, Craig S. *1-2 Corinthians* (NCBC). Cambridge University Press, 2005.
@@ -361,6 +364,7 @@ You don't need to reveal ritual details, but you should be able to discuss your 
 
 **Scholarly References:**
 
+• Montgomery, Lyman. *Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate*. 2025.
 • Simmel, Georg. "The Sociology of Secrecy and of Secret Societies." *American Journal of Sociology* 11, no. 4 (1906): 441–498.
 • Epstein, S.R. & Prak, Maarten, eds. *Guilds, Innovation, and the European Economy, 1400–1800*. Cambridge University Press, 2008.
 • Urban, Hugh B. *The Church of Scientology: A History of a New Religion*. Princeton University Press, 2011. (For comparative analysis of "secret society" rhetoric)
@@ -458,6 +462,7 @@ Remember: Being Greek doesn't make you righteous, and being anti-Greek doesn't m
 
 **Scholarly References:**
 
+• Montgomery, Lyman. *Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate*. 2025.
 • Beito, David T. *From Mutual Aid to the Welfare State: Fraternal Societies and Social Services, 1890–1967*. University of North Carolina Press, 2000.
 • Skocpol, Theda, et al. "African American Fraternal Associations in American History: An Introduction." *Social Science History* 28, no. 3 (2004): 367–394.
 • Heen, Mary L. "Ending Jim Crow Life Insurance Rates." *Northwestern Journal of Law & Social Policy* 4, no. 2 (2009): 360–399.
