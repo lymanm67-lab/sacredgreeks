@@ -197,6 +197,14 @@ const COSMETICS_CONTENT = {
     },
   ],
   conclusion: "The beauty industry is built on Egyptian religious practices honoring Isis, Horus, Hathor, and other deities. If wearing Greek letters is spiritually dangerous, then eyeliner, wigs, braids, and perfume should be equally concerning—yet they are not.",
+  scholarlyReferences: [
+    "Montgomery, Lyman. Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate. 2025.",
+    "Dayagi-Mendels, Michal. Perfumes and Cosmetics in the Ancient World. Israel Museum, 1989.",
+    "Manniche, Lise. Sacred Luxuries: Fragrance, Aromatherapy, and Cosmetics in Ancient Egypt. Cornell University Press, 1999.",
+    "Lucas, Alfred. Ancient Egyptian Materials and Industries. Dover Publications, 1962.",
+    "Riggs, Christina. Ancient Egyptian Art and Architecture: A Very Short Introduction. Oxford University Press, 2014.",
+    "Robins, Gay. Women in Ancient Egypt. Harvard University Press, 1993.",
+  ],
 };
 
 const ARCHITECTURE_CONTENT = {
@@ -876,6 +884,23 @@ export default function HiddenInPlainSight() {
             <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
               <p className="text-sm font-medium">{COSMETICS_CONTENT.conclusion}</p>
             </div>
+
+            {/* Scholarly References */}
+            <Card className="bg-muted/30 border-primary/20">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm flex items-center gap-2">
+                  <BookOpen className="h-4 w-4 text-primary" />
+                  Scholarly References
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="text-xs text-muted-foreground space-y-1">
+                  {COSMETICS_CONTENT.scholarlyReferences.map((ref, index) => (
+                    <li key={index}>• {ref}</li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
 
             <Button
               onClick={() => handleComplete("cosmetics", COURSE_SESSION_IDS.cosmetics)}
