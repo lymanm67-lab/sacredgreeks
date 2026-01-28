@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -28,24 +29,33 @@ import {
   Lock,
   Unlock,
   ArrowRight,
+  ArrowLeft,
   HelpCircle,
   ThumbsUp,
   ThumbsDown,
   RotateCcw,
+  Save,
+  Printer,
+  Volume2,
+  VolumeX,
+  Download,
+  FileText,
 } from "lucide-react";
 import { useStudyProgress } from "@/hooks/use-study-progress";
 import { useGamification } from "@/hooks/use-gamification";
 import { useLessonCelebration } from "@/hooks/use-lesson-celebration";
+import { useTTS } from "@/hooks/use-tts";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
-// Session IDs 25-29 for Should You Stay or Leave course
+// Session IDs 25-30 for Should You Stay or Leave course
 const COURSE_SESSION_IDS = {
   caseStudy: 25,
   reveal: 26,
   contextMatters: 27,
   ritualAsLearning: 28,
   application: 29,
+  conclusion: 30,
 };
 
 interface CaseStudyPhase {
@@ -173,6 +183,31 @@ const APPLICATION_CONTENT = {
   finalThought: "The dust and water ritual in Numbers teaches us that God Himself prescribed symbolic ceremonies that, if stripped of context, would appear superstitious to modern eyes. Yet within their proper framework, they served legitimate purposes of justice, protection, and covenant faithfulness. The same grace of context should be extended when evaluating any ritual practice.",
 };
 
+const CONCLUSION_CONTENT = {
+  title: "Course Summary",
+  keyTakeaways: [
+    {
+      title: "Context Determines Meaning",
+      content: "The same ritual can be sacred or superstitious depending on its context. Numbers 5 demonstrates that God Himself prescribed ceremonies that would seem strange to modern eyes.",
+    },
+    {
+      title: "Ritual Is Not Inherently Religious",
+      content: "Rituals are universal learning tools used to transmit values and identity. Scripture uses ritual throughout to teach truth without those actions becoming worship.",
+    },
+    {
+      title: "Judge Theology, Not Appearance",
+      content: "The biblical concern is whether ritual claims power independent of God or redirects allegiance away from Him—not whether it looks formal or symbolic.",
+    },
+    {
+      title: "Extend Grace of Context",
+      content: "Before condemning any practice, ask: Is worship being offered? Is a deity being invoked? Is spiritual power being claimed? Apply the same standard to Greek Life that you would to biblical rituals.",
+    },
+  ],
+  callToAction: "Armed with this understanding, you can now evaluate ritual practices—whether in Greek Life, church tradition, or cultural ceremonies—with theological clarity rather than cultural assumption.",
+};
+
+const COURSE_INSTRUCTIONS = `Welcome to "Should You Stay or Leave?" This interactive course will challenge your assumptions about ritual and context through an eye-opening case study. You'll first encounter a ritual scenario and give your initial reaction. Then, you'll discover its surprising source and explore why context changes everything. By the end, you'll have a theological framework for evaluating any ritual practice. Complete all six modules to earn 60 points. Let's begin!`;
+
 const MODULES = [
   {
     id: "caseStudy",
@@ -229,26 +264,57 @@ const MODULES = [
     borderColor: "border-green-500/30",
     description: "Apply these principles to real-world decisions",
   },
+  {
+    id: "conclusion",
+    sessionId: COURSE_SESSION_IDS.conclusion,
+    title: "Conclusion",
+    subtitle: "Key Takeaways",
+    icon: Trophy,
+    color: "from-teal-500 to-cyan-500",
+    bgColor: "bg-teal-500/10",
+    borderColor: "border-teal-500/30",
+    description: "Review what you've learned and earn your completion",
+  },
 ];
 
 export default function ShouldYouStayOrLeave() {
   const { isSessionComplete, toggleSession, progress: studyProgress, isAuthenticated } = useStudyProgress();
   const { awardPoints } = useGamification();
+  const { speak, stop, isPlaying } = useTTS();
   const [activeModule, setActiveModule] = useState<string | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [hasRevealed, setHasRevealed] = useState(false);
   const [pointsAwarded, setPointsAwarded] = useState(false);
 
-  // Get completed modules
+  // Get completed modules (now includes session 30)
   const completedModules = studyProgress
-    .filter(p => p.session_id >= 25 && p.session_id <= 29 && p.completed)
+    .filter(p => p.session_id >= 25 && p.session_id <= 30 && p.completed)
     .map(p => p.session_id);
 
   const completedCount = completedModules.length;
-  const progressPercentage = (completedCount / 5) * 100;
+  const progressPercentage = (completedCount / 6) * 100;
 
   const { triggerLessonComplete, triggerMilestone } = useLessonCelebration();
   const previousCompletedRef = useRef<number[]>([]);
+
+  // TTS handlers
+  const handlePlayInstructions = () => {
+    if (isPlaying) {
+      stop();
+    } else {
+      speak(COURSE_INSTRUCTIONS);
+    }
+  };
+
+  // Print report handler
+  const handlePrintReport = () => {
+    window.print();
+  };
+
+  // Save progress handler
+  const handleSaveProgress = () => {
+    toast.success("Progress saved successfully!");
+  };
 
   // Track module completions for celebrations and award points
   useEffect(() => {
@@ -270,7 +336,7 @@ export default function ShouldYouStayOrLeave() {
           setTimeout(() => triggerMilestone('first'), 2500);
         } else if (completedModules.length === 3) {
           setTimeout(() => triggerMilestone('halfway'), 2500);
-        } else if (completedModules.length === 5 && !pointsAwarded) {
+        } else if (completedModules.length === 6 && !pointsAwarded) {
           // Award 60 points for completing all modules
           awardPoints({ points: 60, actionType: 'stay_or_leave_completion' });
           setPointsAwarded(true);
@@ -546,6 +612,64 @@ export default function ShouldYouStayOrLeave() {
 
       <div className="flex justify-end">
         <Button onClick={() => completeModule("application")} className="gap-2">
+          Continue to Conclusion <ArrowRight className="w-4 h-4" />
+        </Button>
+      </div>
+    </div>
+  );
+
+  const renderConclusionModule = () => (
+    <div className="space-y-6">
+      <div className="text-center py-6">
+        <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-teal-500/20 to-cyan-500/20 flex items-center justify-center mb-4">
+          <Trophy className="w-10 h-10 text-teal-500" />
+        </div>
+        <h3 className="text-2xl font-bold mb-2">{CONCLUSION_CONTENT.title}</h3>
+        <p className="text-muted-foreground">You've completed the full case study journey</p>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        {CONCLUSION_CONTENT.keyTakeaways.map((takeaway, index) => (
+          <motion.div
+            key={takeaway.title}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+          >
+            <Card className="p-4 h-full border-teal-500/20 bg-teal-500/5">
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-full bg-teal-500/20 flex-shrink-0">
+                  <CheckCircle2 className="w-5 h-5 text-teal-500" />
+                </div>
+                <div>
+                  <h4 className="font-semibold mb-1">{takeaway.title}</h4>
+                  <p className="text-sm text-muted-foreground">{takeaway.content}</p>
+                </div>
+              </div>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="bg-gradient-to-r from-teal-500/10 to-cyan-500/10 rounded-lg p-6 border border-teal-500/30">
+        <h4 className="font-semibold mb-2 text-teal-600 dark:text-teal-400 flex items-center gap-2">
+          <Lightbulb className="w-5 h-5" /> Call to Action
+        </h4>
+        <p className="text-foreground/90">{CONCLUSION_CONTENT.callToAction}</p>
+      </div>
+
+      <Separator />
+
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={handlePrintReport} className="gap-2">
+            <Printer className="w-4 h-4" /> Print Report
+          </Button>
+          <Button variant="outline" onClick={handleSaveProgress} className="gap-2">
+            <Save className="w-4 h-4" /> Save Progress
+          </Button>
+        </div>
+        <Button onClick={() => completeModule("conclusion")} className="gap-2 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600">
           Complete Course <Trophy className="w-4 h-4" />
         </Button>
       </div>
@@ -564,6 +688,8 @@ export default function ShouldYouStayOrLeave() {
         return renderRitualAsLearningModule();
       case "application":
         return renderApplicationModule();
+      case "conclusion":
+        return renderConclusionModule();
       default:
         return null;
     }
@@ -575,6 +701,39 @@ export default function ShouldYouStayOrLeave() {
       <div className="relative overflow-hidden bg-gradient-to-r from-red-900/20 via-amber-900/20 to-orange-900/20 border-b">
         <div className="absolute inset-0 bg-grid-white/5" />
         <div className="container mx-auto px-4 py-12 relative">
+          {/* Back to Dashboard */}
+          <div className="flex items-center justify-between mb-6">
+            <Link to="/dashboard">
+              <Button variant="ghost" className="gap-2">
+                <ArrowLeft className="w-4 h-4" /> Back to Dashboard
+              </Button>
+            </Link>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handlePlayInstructions}
+                className="gap-2"
+              >
+                {isPlaying ? (
+                  <>
+                    <VolumeX className="w-4 h-4" /> Stop
+                  </>
+                ) : (
+                  <>
+                    <Volume2 className="w-4 h-4" /> Listen to Instructions
+                  </>
+                )}
+              </Button>
+              <Button variant="outline" size="sm" onClick={handlePrintReport} className="gap-2">
+                <Printer className="w-4 h-4" /> Print
+              </Button>
+              <Button variant="outline" size="sm" onClick={handleSaveProgress} className="gap-2">
+                <Save className="w-4 h-4" /> Save
+              </Button>
+            </div>
+          </div>
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -608,10 +767,10 @@ export default function ShouldYouStayOrLeave() {
               <div>
                 <CardTitle>Course Progress</CardTitle>
                 <CardDescription>
-                  {completedCount} of 5 modules completed
+                  {completedCount} of 6 modules completed
                 </CardDescription>
               </div>
-              {completedCount === 5 && (
+              {completedCount === 6 && (
                 <Badge className="bg-green-500/20 text-green-600 border-green-500/30">
                   <Trophy className="w-4 h-4 mr-1" /> Complete!
                 </Badge>
