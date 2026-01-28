@@ -44,6 +44,14 @@ const navigationItems = [
   { title: "Forum", url: "/forum", icon: MessageSquare, keywords: ["discussions", "community", "chat"] },
   { title: "Community", url: "/community", icon: Users, keywords: ["organization", "chapter"] },
   { title: "Resources", url: "/resources", icon: Library, keywords: ["documents", "pdfs", "guides"] },
+  // Training Courses
+  { title: "P.R.O.O.F. Course", url: "/proof-course", icon: BookOpen, keywords: ["proof", "pledge", "ritual", "oaths", "obscurity", "founders", "framework", "training"] },
+  { title: "Greek Life Training", url: "/greek-life-training", icon: BookOpen, keywords: ["guild", "greek", "brotherhood", "sisterhood", "history"] },
+  { title: "Myth Buster Library", url: "/myth-buster", icon: BookOpen, keywords: ["myths", "debunk", "answers", "criticisms"] },
+  { title: "Faith & Authority", url: "/faith-authority", icon: BookOpen, keywords: ["faith", "authority", "power", "words", "confession"] },
+  { title: "Should You Stay or Leave", url: "/should-you-stay-or-leave", icon: BookOpen, keywords: ["stay", "leave", "decision", "discernment"] },
+  { title: "Saints or Sellouts", url: "/saints-or-sellouts", icon: BookOpen, keywords: ["saints", "sellouts", "joseph", "daniel", "esther", "integration"] },
+  { title: "Hidden in Plain Sight", url: "/hidden-in-plain-sight", icon: BookOpen, keywords: ["hidden", "pagan", "origins", "architecture", "cosmetics", "money"] },
   // About Dr. Lyman
   { title: "About Creator", url: "/about-creator", icon: User, keywords: ["dr lyman", "author", "founder"] },
   { title: "Order Book", url: "/order-book", icon: Book, keywords: ["sacred not sinful", "purchase", "amazon"] },
