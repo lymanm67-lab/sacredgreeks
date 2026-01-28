@@ -853,8 +853,10 @@ export default function ShouldYouStayOrLeave() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <ScrollArea className="max-h-[70vh]">
-                    {renderModuleContent()}
+                  <ScrollArea className="max-h-[70vh] pr-4">
+                    <div className="pb-4">
+                      {renderModuleContent()}
+                    </div>
                   </ScrollArea>
                 </CardContent>
               </Card>
