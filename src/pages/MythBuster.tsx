@@ -23,6 +23,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useGamification } from '@/hooks/use-gamification';
 import { useCourseCompletion } from '@/hooks/use-course-celebration';
+import { useMicroCelebration } from '@/hooks/use-micro-celebration';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const categoryIcons: Record<string, string> = {
@@ -55,9 +56,14 @@ const proofCategories: { id: ProofCategory | 'all'; label: string; icon: React.C
   { id: 'founders', label: 'Founders', icon: Building, color: 'bg-red-500/10 text-red-600 border-red-500/30' },
 ];
 
+// Points per myth reviewed (350 total / number of myths)
+const POINTS_PER_MYTH = Math.floor(350 / mythBusterContent.length);
+const BONUS_COMPLETION_POINTS = 350 - (POINTS_PER_MYTH * mythBusterContent.length);
+
 const MythBuster = () => {
   const { user } = useAuth();
   const { awardPoints } = useGamification();
+  const { celebrate: microCelebrate, celebrateAchievement } = useMicroCelebration();
   const [search, setSearch] = useState('');
   const [scenario, setScenario] = useState('all');
   const [organization, setOrganization] = useState('all');
@@ -153,8 +159,43 @@ const MythBuster = () => {
           completed_at: new Date().toISOString()
         }, { onConflict: 'user_id,session_id' });
       
+      const newReviewedCount = reviewedMyths.length + 1;
       setReviewedMyths(prev => [...prev, mythId]);
-      toast.success('Myth reviewed! ✓');
+      
+      // Award points for this myth
+      awardPoints({ points: POINTS_PER_MYTH, actionType: 'myth_reviewed' });
+      
+      // Trigger micro-celebration with confetti
+      microCelebrate({ type: 'confetti' });
+      
+      // Show encouraging toast with points
+      const encouragements = [
+        `🎉 +${POINTS_PER_MYTH} pts! Keep going!`,
+        `✨ +${POINTS_PER_MYTH} pts! You're on fire!`,
+        `🌟 +${POINTS_PER_MYTH} pts! Great progress!`,
+        `💪 +${POINTS_PER_MYTH} pts! Knowledge is power!`,
+        `🔥 +${POINTS_PER_MYTH} pts! Unstoppable!`,
+      ];
+      const randomEncouragement = encouragements[Math.floor(Math.random() * encouragements.length)];
+      toast.success(randomEncouragement);
+      
+      // Special milestone celebrations
+      if (newReviewedCount === 5) {
+        setTimeout(() => {
+          celebrateAchievement();
+          toast.success('🏅 5 myths mastered! You\'re getting equipped!');
+        }, 500);
+      } else if (newReviewedCount === 10) {
+        setTimeout(() => {
+          celebrateAchievement();
+          toast.success('🥈 10 myths conquered! Halfway there!');
+        }, 500);
+      } else if (newReviewedCount === 20) {
+        setTimeout(() => {
+          celebrateAchievement();
+          toast.success('🥇 20 myths defeated! You\'re a myth-busting champion!');
+        }, 500);
+      }
     }
   };
 
