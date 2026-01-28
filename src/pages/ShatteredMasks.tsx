@@ -35,6 +35,7 @@ import { format } from 'date-fns';
 import { AssessmentInstructions } from '@/components/assessment/AssessmentInstructions';
 import { AssessmentResultsPanel } from '@/components/assessment/AssessmentResultsPanel';
 import { SavedAssessmentPrompt } from '@/components/assessment/SavedAssessmentPrompt';
+import { AssessmentBreadcrumb } from '@/components/assessment/AssessmentBreadcrumb';
 import { useSavedAssessment } from '@/hooks/use-saved-assessment';
 import jsPDF from 'jspdf';
 
@@ -550,17 +551,13 @@ const ShatteredMasks = () => {
     const latestResult = savedResults[0];
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-fuchsia-950/5 to-background">
-        <header className="border-b border-border/50 bg-card/50 backdrop-blur-lg sticky top-0 z-50">
-          <div className="container mx-auto px-4 py-4">
-            <Link to="/dashboard" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group">
-              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-              <Heart className="w-5 h-5 text-sacred" />
-              <span className="font-semibold bg-gradient-to-r from-sacred to-warm-blue bg-clip-text text-transparent">
-                Back to Dashboard
-              </span>
-            </Link>
-          </div>
-        </header>
+        <div className="container mx-auto px-4 py-8">
+          <AssessmentBreadcrumb
+            assessmentName="Shattered Masks"
+            currentStep="instructions"
+            colorScheme="fuchsia"
+          />
+        </div>
 
         <main className="container mx-auto px-4 py-12 flex items-center justify-center min-h-[calc(100vh-80px)]">
           <div className="w-full max-w-lg">
@@ -586,17 +583,13 @@ const ShatteredMasks = () => {
     
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-fuchsia-950/5 to-background flex flex-col">
-        <header className="border-b border-border/50 bg-card/50 backdrop-blur-lg sticky top-0 z-50">
-          <div className="container mx-auto px-4 py-4">
-            <Link to="/dashboard" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group">
-              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-              <Heart className="w-5 h-5 text-sacred" />
-              <span className="font-semibold bg-gradient-to-r from-sacred to-warm-blue bg-clip-text text-transparent">
-                Back to Dashboard
-              </span>
-            </Link>
-          </div>
-        </header>
+        <div className="container mx-auto px-4 py-8">
+          <AssessmentBreadcrumb
+            assessmentName="Shattered Masks"
+            currentStep="results"
+            colorScheme="fuchsia"
+          />
+        </div>
 
         <main className="flex-1 flex items-center justify-center px-4 py-12">
           <div className="w-full max-w-lg space-y-6">
@@ -647,17 +640,13 @@ const ShatteredMasks = () => {
   if (showInstructions) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-fuchsia-950/5 to-background">
-        <header className="border-b border-border/50 bg-card/50 backdrop-blur-lg sticky top-0 z-50">
-          <div className="container mx-auto px-4 py-4">
-            <Link to="/dashboard" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group">
-              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-              <Heart className="w-5 h-5 text-sacred" />
-              <span className="font-semibold bg-gradient-to-r from-sacred to-warm-blue bg-clip-text text-transparent">
-                Back to Dashboard
-              </span>
-            </Link>
-          </div>
-        </header>
+        <div className="container mx-auto px-4 py-8">
+          <AssessmentBreadcrumb
+            assessmentName="Shattered Masks"
+            currentStep="instructions"
+            colorScheme="fuchsia"
+          />
+        </div>
 
         <main className="container mx-auto px-4 py-8">
           <div className="max-w-2xl mx-auto space-y-8">
@@ -698,22 +687,27 @@ const ShatteredMasks = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-fuchsia-950/5 to-background flex flex-col">
-      <header className="border-b border-border/50 bg-card/50 backdrop-blur-lg sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <button 
-              onClick={handleRestart}
-              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
-            >
-              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-              <span className="text-sm">Start Over</span>
-            </button>
-            <Badge variant="outline" className="bg-fuchsia-500/10 text-fuchsia-400 border-fuchsia-500/30">
-              {currentQuestion + 1} of {questions.length}
-            </Badge>
-          </div>
+      <div className="container mx-auto px-4 py-4">
+        <AssessmentBreadcrumb
+          assessmentName="Shattered Masks"
+          currentStep="questions"
+          currentQuestion={currentQuestion + 1}
+          totalQuestions={questions.length}
+          colorScheme="fuchsia"
+        />
+        <div className="flex items-center justify-between mt-2">
+          <button 
+            onClick={handleRestart}
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
+          >
+            <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+            <span className="text-sm">Start Over</span>
+          </button>
+          <Badge variant="outline" className="bg-fuchsia-500/10 text-fuchsia-400 border-fuchsia-500/30">
+            {currentQuestion + 1} of {questions.length}
+          </Badge>
         </div>
-      </header>
+      </div>
 
       <main className="flex-1 flex flex-col items-center justify-center px-4 py-8">
         <div className="w-full max-w-2xl space-y-8">
