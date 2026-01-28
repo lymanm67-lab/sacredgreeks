@@ -62,7 +62,7 @@ const COURSE_SESSION_IDS = {
 const CASE_STUDY_SCENARIO = {
   title: "The Birthday Celebration at Church",
   setting: "A family gathering in the church fellowship hall, 2026",
-  scenario: `Your family is celebrating a child's birthday at the church. The party is held in the fellowship hall—a grand space with soaring dome ceilings, majestic Greek-style columns (Corinthian capitals adorning the sanctuary entrance), a towering steeple visible through the windows, and stunning stained glass windows casting colored light across the room.
+  scenario: `Your family is celebrating a child's birthday at the church. The party is held in the fellowship hall—a grand space with soaring dome ceilings, majestic Greek-style columns (Corinthian capitals adorning the sanctuary entrance), a towering steeple visible through the windows, and stunning stained glass windows depicting biblical scenes with figures surrounded by golden halos and radiating sunbeams.
 
 As the cake is brought out with lit candles, the child is encouraged to:
 
@@ -70,11 +70,13 @@ As the cake is brought out with lit candles, the child is encouraged to:
 2. Blow out all the flames in one breath to "seal" the wish
 3. Keep the wish completely secret, or it "won't come true"
 
-Everyone gathers in a circle beneath the dome—an architectural feature borrowed from Roman temples dedicated to the gods—singing a traditional song, while the candles' flames flicker. The child closes their eyes, concentrates on their deepest desire, then attempts to extinguish all flames simultaneously.
+Everyone gathers in a circle beneath the dome—an architectural feature borrowed from Roman temples dedicated to the gods—singing a traditional song, while the candles' flames flicker. Sunlight streams through the stained glass, casting colored shadows of saints wearing solar disc halos—the same artistic convention used to depict Apollo, Helios, and Roman emperors as divine beings.
+
+The child closes their eyes, concentrates on their deepest desire, then attempts to extinguish all flames simultaneously.
 
 If successful, the gathered witnesses clap and affirm that the wish will be granted. The child receives a crown or special hat, sits in a place of honor, and receives offerings (gifts) from all present.
 
-The irony is profound: this pagan birthday ritual is performed in a building whose dome represents the "Eye of Zeus" from the Pantheon, whose Greek columns mirror temples to Athena and Apollo, whose steeple evolved from Egyptian obelisks dedicated to the sun god Ra, and whose stained glass windows derive from Islamic mosques and ancient Roman window art. Yet no one questions the spiritual implications of either the ritual or the architecture.`,
+The irony is profound: this pagan birthday ritual is performed in a building whose dome represents the "Eye of Zeus" from the Pantheon, whose Greek columns mirror temples to Athena and Apollo, whose steeple evolved from Egyptian obelisks dedicated to the sun god Ra, and whose stained glass windows employ halos derived from solar worship of Helios and Apollo. Yet no one questions the spiritual implications of either the ritual or the architecture.`,
   initialQuestion: "Based on what you've just read, how would you classify this ritual and setting?",
   options: [
     { id: "normal", label: "This is a normal, harmless tradition", icon: ThumbsUp },
@@ -108,6 +110,10 @@ The Germans later developed "Kinderfest" (children's festival) where a single ca
     {
       title: "The Survival of Ritual Form",
       content: "Despite Christian influence, these pagan elements survived relatively intact because they were seen as 'harmless fun' rather than religious practice—the same argument used against Greek Life rituals.",
+    },
+    {
+      title: "Stained Glass & Solar Worship",
+      content: "The church's stained glass windows depict saints with golden halos—solar discs borrowed directly from Greek and Roman depictions of Apollo (god of the sun), Helios (personification of the sun), and Roman emperors who claimed divine status. This 'nimbus' or 'aureole' was the signature mark of pagan deities before Christians adopted it for Jesus and the saints. The light filtering through colored glass was designed to create a 'heavenly' atmosphere—a technique perfected in Roman temples and later Islamic mosques before European adoption.",
     },
   ],
   scholarlyReferences: [
