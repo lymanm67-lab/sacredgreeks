@@ -232,6 +232,10 @@ const ARCHITECTURE_CONTENT = {
   introduction: "Examine how pagan design elements permeate Christian worship spaces and religious art.",
   points: [
     {
+      title: "Greek Temple Columns: The Foundation of Western Authority",
+      content: "The iconic columned facades of Greek temples—featuring Doric, Ionic, and Corinthian orders—have been directly copied for churches, courthouses, banks, and government buildings worldwide. The U.S. Supreme Court, countless state capitols, and thousands of churches feature the same Greek temple design used to worship Zeus, Athena, and Apollo. The Parthenon (temple to Athena), with its columned portico and triangular pediment, serves as the direct architectural ancestor of Christian sanctuaries and halls of justice. When you enter a columned courthouse or church, you're walking into a pagan temple form—yet this raises no spiritual concern.",
+    },
+    {
       title: "Church Domes: Eyes of Zeus",
       content: "The dome structure in Christian architecture traces to Roman temples dedicated to the gods, particularly the Pantheon (temple to 'all gods'). The oculus (central opening) represented the 'Eye of Zeus' or the heavens watching down. St. Peter's Basilica and countless churches feature this pagan architectural element.",
     },
@@ -264,9 +268,11 @@ const ARCHITECTURE_CONTENT = {
   scholarlyReferences: [
     "Montgomery, Lyman. Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate. 2025.",
     "Krautheimer, Richard. Early Christian and Byzantine Architecture. Yale University Press, 1986.",
-    "Snoek, G.J.C. Medieval Piety from Relics to the Eucharist. Brill, 1995.",
+    "Summerson, John. The Classical Language of Architecture. MIT Press, 1963.",
+    "Lawrence, A.W. Greek Architecture. Yale University Press, 1996.",
     "Kieckhefer, Richard. Theology in Stone: Church Architecture from Byzantium to Berkeley. Oxford University Press, 2004.",
     "Goldhill, Simon. The Temple of Jerusalem. Harvard University Press, 2005.",
+    "Craig, Robert M. The Architecture of American Courthouses. University of Georgia Press, 1997.",
   ],
 };
 
