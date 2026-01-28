@@ -2,6 +2,11 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useBackgroundAudio } from "./use-background-audio";
+import {
+  FunctionsFetchError,
+  FunctionsHttpError,
+  FunctionsRelayError,
+} from "@supabase/supabase-js";
 
 export type PlaybackSpeed = 0.5 | 0.75 | 1 | 1.25 | 1.5 | 2;
 
@@ -117,11 +122,20 @@ export const useTextToSpeech = () => {
         body: { text, voice },
       });
 
-      // Check for quota exceeded or errors - use browser TTS fallback
-      const isQuotaError = error?.message?.includes('quota_exceeded') || 
-                          error?.message?.includes('402') ||
-                          data?.code === 'quota_exceeded' ||
-                          data?.error?.includes('quota_exceeded');
+      // Robust quota detection for supabase-js invoke()
+      let errorJson: any = null;
+      if (error instanceof FunctionsHttpError) {
+        errorJson = await error.context.json().catch(() => null);
+      }
+
+      const isQuotaError =
+        (error instanceof FunctionsHttpError && error.context?.status === 402) ||
+        error?.message?.includes("quota_exceeded") ||
+        error?.message?.includes("Edge function returned 402") ||
+        errorJson?.code === "quota_exceeded" ||
+        (typeof errorJson?.error === "string" && errorJson.error.includes("quota_exceeded")) ||
+        data?.code === "quota_exceeded" ||
+        (typeof data?.error === "string" && data.error.includes("quota_exceeded"));
       
       if (isQuotaError) {
         console.log('ElevenLabs quota exceeded, using browser TTS fallback');
@@ -140,15 +154,8 @@ export const useTextToSpeech = () => {
         throw new Error("No audio content received");
       }
 
-      // Convert base64 to audio
-      const binaryString = atob(data.audioContent);
-      const bytes = new Uint8Array(binaryString.length);
-      for (let i = 0; i < binaryString.length; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
-      }
-
-      const blob = new Blob([bytes], { type: "audio/mpeg" });
-      const audioUrl = URL.createObjectURL(blob);
+      // Use data URI for base64 audio (avoids atob() corruption issues)
+      const audioUrl = `data:audio/mpeg;base64,${data.audioContent}`;
 
       const audio = new Audio(audioUrl);
       audio.playbackRate = playbackSpeed;
@@ -192,6 +199,33 @@ export const useTextToSpeech = () => {
       }
     } catch (error) {
       console.error("Text-to-speech error:", error);
+
+      // If invoke threw an HTTP error (rather than returning { error }), still allow fallback.
+      if (error instanceof FunctionsHttpError) {
+        const body = await error.context.json().catch(() => null);
+        const isQuota =
+          error.context?.status === 402 ||
+          body?.code === "quota_exceeded" ||
+          (typeof body?.error === "string" && body.error.includes("quota_exceeded"));
+        if (isQuota) {
+          try {
+            setIsPlaying(itemId);
+            await speakWithBrowserTTS(text, itemId);
+          } finally {
+            setIsPlaying(null);
+            setIsLoading(null);
+          }
+          return;
+        }
+      }
+
+      if (error instanceof FunctionsRelayError || error instanceof FunctionsFetchError) {
+        // Network/relay errors shouldn't blank screen; just toast.
+        toast.error(error.message);
+        setIsPlaying(null);
+        return;
+      }
+
       toast.error(
         error instanceof Error ? error.message : "Failed to generate speech"
       );
