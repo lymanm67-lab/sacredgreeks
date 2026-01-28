@@ -573,23 +573,54 @@ const MythBuster = () => {
                 open={expandedCategories.includes(group.id)}
                 onOpenChange={() => toggleCategory(group.id)}
               >
-                <Card className="overflow-hidden">
-                  <CollapsibleTrigger className="w-full">
-                    <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <span className="text-2xl">{categoryIcons[group.id] || '📋'}</span>
-                          <div className="text-left">
-                            <CardTitle className="text-lg">{group.label}</CardTitle>
-                            <p className="text-sm text-muted-foreground font-normal">
-                              {categoryDescriptions[group.id]} • {group.myths.length} topics
-                            </p>
+                {(() => {
+                  const categoryReviewedCount = group.myths.filter(m => reviewedMyths.includes(m.id)).length;
+                  const isCategoryComplete = categoryReviewedCount === group.myths.length && group.myths.length > 0;
+                  
+                  return (
+                    <Card className={cn(
+                      "overflow-hidden transition-all",
+                      isCategoryComplete && "border-primary/40 bg-primary/5"
+                    )}>
+                      <CollapsibleTrigger className="w-full">
+                        <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              {isCategoryComplete ? (
+                                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+                                  <CheckCircle2 className="w-6 h-6 text-primary" />
+                                </div>
+                              ) : (
+                                <span className="text-2xl">{categoryIcons[group.id] || '📋'}</span>
+                              )}
+                              <div className="text-left">
+                                <div className="flex items-center gap-2">
+                                  <CardTitle className={cn("text-lg", isCategoryComplete && "text-primary")}>{group.label}</CardTitle>
+                                  {isCategoryComplete && (
+                                    <Badge className="bg-primary/20 text-primary border-primary/30 text-xs">
+                                      Complete
+                                    </Badge>
+                                  )}
+                                </div>
+                                <p className="text-sm text-muted-foreground font-normal">
+                                  {isCategoryComplete 
+                                    ? `All ${group.myths.length} topics reviewed ✓`
+                                    : `${categoryDescriptions[group.id]} • ${categoryReviewedCount}/${group.myths.length} topics`
+                                  }
+                                </p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              {!isCategoryComplete && categoryReviewedCount > 0 && (
+                                <Badge variant="secondary" className="text-xs">
+                                  {Math.round((categoryReviewedCount / group.myths.length) * 100)}%
+                                </Badge>
+                              )}
+                              <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform ${expandedCategories.includes(group.id) ? 'rotate-180' : ''}`} />
+                            </div>
                           </div>
-                        </div>
-                        <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform ${expandedCategories.includes(group.id) ? 'rotate-180' : ''}`} />
-                      </div>
-                    </CardHeader>
-                  </CollapsibleTrigger>
+                        </CardHeader>
+                      </CollapsibleTrigger>
                   
                   <CollapsibleContent>
                     {/* Section Action Buttons */}
@@ -800,6 +831,8 @@ const MythBuster = () => {
                     </CardContent>
                   </CollapsibleContent>
                 </Card>
+                  );
+                })()}
               </Collapsible>
             ))}
           </div>
