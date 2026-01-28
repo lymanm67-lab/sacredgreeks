@@ -1089,9 +1089,27 @@ export default function SaintsOrSellouts() {
                               {module.description}
                             </p>
                             {!isLocked && !isComplete && (
-                              <Button className="w-full mt-4 gap-2" size="sm">
-                                Start Module <ArrowRight className="w-4 h-4" />
-                              </Button>
+                              <div className="flex flex-col gap-2 mt-4">
+                                <Button className="w-full gap-2" size="sm">
+                                  Start Module <ArrowRight className="w-4 h-4" />
+                                </Button>
+                                <Button 
+                                  variant="outline" 
+                                  className="w-full gap-2" 
+                                  size="sm"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    if (isAuthenticated) {
+                                      toggleSession({ sessionId: module.sessionId, completed: true });
+                                      toast.success(`${module.title} marked as complete!`);
+                                    } else {
+                                      toast.error("Please sign in to track your progress");
+                                    }
+                                  }}
+                                >
+                                  <CheckCircle2 className="w-4 h-4" /> Mark as Complete
+                                </Button>
+                              </div>
                             )}
                             {isComplete && (
                               <Button variant="outline" className="w-full mt-4 gap-2" size="sm">
