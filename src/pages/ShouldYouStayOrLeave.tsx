@@ -385,7 +385,7 @@ export default function ShouldYouStayOrLeave() {
       <Separator />
 
       <div className="space-y-4">
-        <h4 className="font-semibold text-lg">{CASE_STUDY_SCENARIO.initialQuestion}</h4>
+        <h4 className="font-semibold text-lg break-words">{CASE_STUDY_SCENARIO.initialQuestion}</h4>
         
         <div className="grid gap-3">
           {CASE_STUDY_SCENARIO.options.map((option) => {
