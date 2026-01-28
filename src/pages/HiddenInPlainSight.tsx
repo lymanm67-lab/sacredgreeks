@@ -1059,7 +1059,7 @@ export default function HiddenInPlainSight() {
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium">Course Progress</span>
               <span className="text-sm text-muted-foreground">
-                {completedCount} / 8 modules completed
+                {completedCount} / 9 modules completed
               </span>
             </div>
             <Progress value={progressPercentage} className="h-3" />
