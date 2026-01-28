@@ -4,6 +4,8 @@ import {
   Heart, 
   Target, 
   GraduationCap, 
+  Scale,
+  Crown,
   CheckCircle2, 
   Circle,
   ChevronRight,
@@ -100,6 +102,30 @@ const ROADMAP_STEPS: RoadmapStep[] = [
     completedKey: "faithAuthority",
     isTraining: true,
     progressKey: "faithAuthority"
+  },
+  {
+    id: "stay-or-leave",
+    title: "Stay or Leave?",
+    description: "Complete all 6 modules in the discernment course",
+    points: 60,
+    icon: Scale,
+    color: "teal",
+    link: "/should-you-stay-or-leave",
+    completedKey: "stayOrLeave",
+    isTraining: true,
+    progressKey: "stayOrLeave"
+  },
+  {
+    id: "saints-or-sellouts",
+    title: "Saints or Sellouts?",
+    description: "Complete all 6 modules in the Saints or Sellouts course",
+    points: 60,
+    icon: Crown,
+    color: "purple",
+    link: "/saints-or-sellouts",
+    completedKey: "saintsOrSellouts",
+    isTraining: true,
+    progressKey: "saintsOrSellouts"
   }
 ];
 
