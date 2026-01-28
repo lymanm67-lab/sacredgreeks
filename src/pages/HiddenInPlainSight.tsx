@@ -60,23 +60,27 @@ const COURSE_SESSION_IDS = {
 };
 
 const CASE_STUDY_SCENARIO = {
-  title: "The Birthday Celebration",
-  setting: "A family gathering in 2024",
-  scenario: `Your family is celebrating a child's birthday. As the cake is brought out with lit candles, the child is encouraged to:
+  title: "The Birthday Celebration at Church",
+  setting: "A family gathering in the church fellowship hall, 2024",
+  scenario: `Your family is celebrating a child's birthday at the church. The party is held in the fellowship hall—a grand space with soaring dome ceilings, majestic Greek-style columns (Corinthian capitals adorning the sanctuary entrance), and a towering steeple visible through the windows.
+
+As the cake is brought out with lit candles, the child is encouraged to:
 
 1. Make a secret wish upon the candles
 2. Blow out all the flames in one breath to "seal" the wish
 3. Keep the wish completely secret, or it "won't come true"
 
-Everyone gathers in a circle, singing a traditional song, while the candles' flames flicker. The child closes their eyes, concentrates on their deepest desire, then attempts to extinguish all flames simultaneously.
+Everyone gathers in a circle beneath the dome—an architectural feature borrowed from Roman temples dedicated to the gods—singing a traditional song, while the candles' flames flicker. The child closes their eyes, concentrates on their deepest desire, then attempts to extinguish all flames simultaneously.
 
-If successful, the gathered witnesses clap and affirm that the wish will be granted. The child receives a crown or special hat, sits in a place of honor, and receives offerings (gifts) from all present.`,
-  initialQuestion: "Based on what you've just read, how would you classify this ritual?",
+If successful, the gathered witnesses clap and affirm that the wish will be granted. The child receives a crown or special hat, sits in a place of honor, and receives offerings (gifts) from all present.
+
+The irony is profound: this pagan birthday ritual is performed in a building whose dome represents the "Eye of Zeus" from the Pantheon, whose Greek columns mirror temples to Athena and Apollo, and whose steeple evolved from Egyptian obelisks dedicated to the sun god Ra. Yet no one questions the spiritual implications of either the ritual or the architecture.`,
+  initialQuestion: "Based on what you've just read, how would you classify this ritual and setting?",
   options: [
     { id: "normal", label: "This is a normal, harmless tradition", icon: ThumbsUp },
     { id: "unsure", label: "I never thought about it this way", icon: HelpCircle },
     { id: "concerning", label: "This does sound ritualistic when described this way", icon: Eye },
-    { id: "pagan", label: "This could have pagan origins", icon: ThumbsDown },
+    { id: "pagan", label: "Both the ritual and architecture have pagan origins", icon: ThumbsDown },
   ],
 };
 
