@@ -37,6 +37,9 @@ const ELEVENLABS_VOICES: Record<string, string> = {
   alice: "Xb7hH8MSUJpSbSDYk0k2", // Alice - friendly female
   matilda: "XrExE9yKIg1WjnnlVkGX", // Matilda - warm, nurturing female
   lily: "pFZP5JQG7iQjIQuC4Bku", // Lily - youthful, energetic female
+  // African-American female voices
+  nicole: "piTKgcLEGmPE4e6mEKli", // Nicole - warm, rich African-American female
+  aria: "9BWtsMINqrJLrRacOk9x", // Aria - confident, engaging African-American female
 };
 
 // Split text into chunks at natural boundaries (sentences/paragraphs)
