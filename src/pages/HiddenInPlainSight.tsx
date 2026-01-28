@@ -1180,7 +1180,7 @@ export default function HiddenInPlainSight() {
                     setPlayingModuleId(null);
                   } else {
                     setPlayingModuleId("scholarlyContext");
-                    speak("Scholarly Context. A substantial portion of Christian cultural practices and calendar observances—some scholars suggest 40 to 60 percent—adopted forms from Greco-Roman society, while the theological core remained distinctly Jewish-Christian. This pattern of Christianizing existing cultural frameworks mirrors what Paul modeled in Acts 17 at Mars Hill. Key academic references include: MacMullen's Christianity and Paganism in the Fourth to Eighth Centuries, Peter Brown's The Rise of Western Christendom, Salzman's The Making of a Christian Aristocracy, Markus's The End of Ancient Christianity, and Stroumsa's The End of Sacrifice.");
+                    speak("Scholarly Context. A substantial portion of Christian cultural practices and calendar observances—some scholars suggest 40 to 60 percent—adopted forms from Greco-Roman society, while the theological core remained distinctly Jewish-Christian. This pattern of Christianizing existing cultural frameworks mirrors what Paul modeled in Acts 17 at Mars Hill. Key academic references include: Montgomery's Sacred, Not Sinful from 2025, MacMullen's Christianity and Paganism in the Fourth to Eighth Centuries, Peter Brown's The Rise of Western Christendom, Salzman's The Making of a Christian Aristocracy, Markus's The End of Ancient Christianity, and Stroumsa's The End of Sacrifice.");
                   }
                 }}
                 disabled={isLoading && playingModuleId === "scholarlyContext"}
@@ -1204,6 +1204,7 @@ export default function HiddenInPlainSight() {
             <div className="bg-muted/50 rounded-lg p-4">
               <h4 className="text-sm font-semibold mb-2">Academic References:</h4>
               <ul className="text-xs text-muted-foreground space-y-1.5">
+                <li>• Montgomery, Lyman. <em>Sacred, Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate</em>. 2025.</li>
                 <li>• MacMullen, Ramsay. <em>Christianity and Paganism in the Fourth to Eighth Centuries</em>. Yale University Press, 1997.</li>
                 <li>• Brown, Peter. <em>The Rise of Western Christendom: Triumph and Diversity, A.D. 200-1000</em>. Wiley-Blackwell, 2003.</li>
                 <li>• Salzman, Michele Renee. <em>The Making of a Christian Aristocracy: Social and Religious Change in the Western Roman Empire</em>. Harvard University Press, 2002.</li>
