@@ -131,8 +131,8 @@ const ROADMAP_STEPS: RoadmapStep[] = [
   {
     id: "hidden-in-plain-sight",
     title: "Hidden in Plain Sight",
-    description: "Complete all 8 modules exploring pagan roots in modern customs",
-    points: 120,
+    description: "Complete all 9 modules exploring pagan roots in modern customs",
+    points: 200,
     icon: Eye,
     color: "amber",
     link: "/hidden-in-plain-sight",
