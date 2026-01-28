@@ -8,7 +8,10 @@ import {
   Sparkles,
   Play,
   Trophy,
-  Star
+  Star,
+  Landmark,
+  Calendar,
+  Shield
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -18,6 +21,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useGamification } from "@/hooks/use-gamification";
+import { useNavigationProgress } from "@/hooks/use-navigation-progress";
 import { useNavigate } from "react-router-dom";
 
 interface NextStepInfo {
@@ -32,6 +36,8 @@ interface NextStepInfo {
   ctaText: string;
   completedKey: string;
   order: number;
+  isTraining?: boolean;
+  progressKey?: string;
 }
 
 const STEPS: NextStepInfo[] = [
@@ -75,23 +81,71 @@ const STEPS: NextStepInfo[] = [
     order: 3
   },
   {
-    id: "study",
-    title: "Study Session",
-    description: "Deepen your faith knowledge with a training module",
-    points: 25,
-    icon: GraduationCap,
+    id: "proof-course",
+    title: "P.R.O.O.F. Course",
+    description: "Biblical framework for Greek life - 5 core modules",
+    points: 50,
+    icon: Target,
+    color: "text-amber-500",
+    bgGradient: "from-amber-500 to-yellow-500",
+    link: "/proof-course",
+    ctaText: "Continue Course",
+    completedKey: "proofCourse",
+    order: 4,
+    isTraining: true,
+    progressKey: "proofCourse"
+  },
+  {
+    id: "greek-life-training",
+    title: "Greek Life & Guild Training",
+    description: "Jesus & Paul's trade associations - 14 modules",
+    points: 50,
+    icon: Landmark,
+    color: "text-violet-500",
+    bgGradient: "from-violet-500 to-purple-500",
+    link: "/greek-life-training",
+    ctaText: "Continue Training",
+    completedKey: "greekLifeTraining",
+    order: 5,
+    isTraining: true,
+    progressKey: "greekLifeTraining"
+  },
+  {
+    id: "faith-authority",
+    title: "Faith & Authority",
+    description: "Power of belief teaching - 5 modules",
+    points: 50,
+    icon: Shield,
     color: "text-purple-500",
-    bgGradient: "from-purple-500 to-violet-500",
-    link: "/training",
-    ctaText: "Start Training",
-    completedKey: "studySessions",
-    order: 4
+    bgGradient: "from-purple-500 to-pink-500",
+    link: "/faith-authority",
+    ctaText: "Continue Training",
+    completedKey: "faithAuthority",
+    order: 6,
+    isTraining: true,
+    progressKey: "faithAuthority"
+  },
+  {
+    id: "journey",
+    title: "30-Day Journey",
+    description: "Daily spiritual growth challenge",
+    points: 30,
+    icon: Calendar,
+    color: "text-blue-500",
+    bgGradient: "from-blue-500 to-indigo-500",
+    link: "/journey",
+    ctaText: "Continue Journey",
+    completedKey: "journey",
+    order: 7,
+    isTraining: true,
+    progressKey: "journey"
   }
 ];
 
 export const NextStepCard = () => {
   const { user } = useAuth();
   const { stats, levelProgress, pointsToNextLevel } = useGamification();
+  const { progressData } = useNavigationProgress();
   const navigate = useNavigate();
 
   const { data: activityCounts } = useQuery({
@@ -117,16 +171,31 @@ export const NextStepCard = () => {
   });
 
   const getCompletionStatus = (step: NextStepInfo): boolean => {
+    // For training courses, check progress data
+    if (step.isTraining && step.progressKey && progressData) {
+      const progress = progressData[step.progressKey as keyof typeof progressData];
+      return progress >= 100;
+    }
+    // For non-training activities, check activity counts
     if (!activityCounts) return false;
     return (activityCounts[step.completedKey as keyof typeof activityCounts] || 0) > 0;
+  };
+
+  const getTrainingProgress = (step: NextStepInfo): number => {
+    if (!step.isTraining || !step.progressKey || !progressData) return 0;
+    return progressData[step.progressKey as keyof typeof progressData] || 0;
   };
 
   // Find the next incomplete step (in order)
   const nextStep = STEPS.sort((a, b) => a.order - b.order).find(step => !getCompletionStatus(step));
   
-  // If all complete, suggest the highest-point repeatable action
+  // If all complete, suggest the highest-point repeatable action (non-training)
   const allComplete = STEPS.every(step => getCompletionStatus(step));
-  const displayStep = nextStep || STEPS.sort((a, b) => b.points - a.points)[0];
+  const repeatableSteps = STEPS.filter(s => !s.isTraining);
+  const displayStep = nextStep || repeatableSteps.sort((a, b) => b.points - a.points)[0];
+  
+  // Get progress for training items
+  const displayProgress = displayStep.isTraining ? getTrainingProgress(displayStep) : 0;
   
   const Icon = displayStep.icon;
   const currentLevel = stats?.current_level || 1;
@@ -211,6 +280,21 @@ export const NextStepCard = () => {
                 <div>
                   <h4 className="text-xl font-bold text-white">{displayStep.title}</h4>
                   <p className="text-white/80 text-sm">{displayStep.description}</p>
+                  {displayStep.isTraining && displayProgress > 0 && (
+                    <div className="mt-2">
+                      <div className="flex items-center gap-2">
+                        <div className="flex-1 h-2 bg-white/20 rounded-full overflow-hidden">
+                          <motion.div 
+                            className="h-full bg-white rounded-full"
+                            initial={{ width: 0 }}
+                            animate={{ width: `${displayProgress}%` }}
+                            transition={{ duration: 0.5 }}
+                          />
+                        </div>
+                        <span className="text-xs text-white font-medium">{displayProgress}%</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -224,7 +308,7 @@ export const NextStepCard = () => {
               <Button 
                 size="lg"
                 onClick={handleStart}
-                className="bg-white text-gray-900 hover:bg-white/90 font-bold shadow-lg gap-2 group"
+                className="bg-white text-foreground hover:bg-white/90 font-bold shadow-lg gap-2 group"
               >
                 <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 {displayStep.ctaText}
