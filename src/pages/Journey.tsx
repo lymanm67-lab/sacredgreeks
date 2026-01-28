@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Textarea } from '@/components/ui/textarea';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { ArrowLeft, CheckCircle2, Circle, BookOpen, Heart, Lock, FlaskConical } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Circle, BookOpen, Heart, Lock, FlaskConical, Save, Printer } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { journeyContent } from '@/data/journeyContent';
 import { ListenButton } from '@/components/ListenButton';
@@ -198,7 +198,67 @@ const Journey = () => {
                       </div>
                       {(user || isShowingDemo) && (
                         <div>
-                          <h4 className="font-semibold mb-2">My Reflections</h4>
+                          <div className="flex items-center justify-between mb-2">
+                            <h4 className="font-semibold">My Reflections</h4>
+                            {user && !isShowingDemo && (
+                              <div className="flex gap-2">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => {
+                                    saveNotes(day.day, progress[day.day]?.notes || '');
+                                    toast({ title: 'Reflection saved!' });
+                                  }}
+                                  className="h-8"
+                                >
+                                  <Save className="w-4 h-4 mr-1" />
+                                  Save
+                                </Button>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => {
+                                    const printContent = `
+                                      <html>
+                                        <head>
+                                          <title>Day ${day.day} - ${day.title}</title>
+                                          <style>
+                                            body { font-family: Georgia, serif; padding: 40px; max-width: 700px; margin: 0 auto; }
+                                            h1 { color: #7c3aed; margin-bottom: 8px; }
+                                            .theme { color: #666; font-style: italic; margin-bottom: 24px; }
+                                            .scripture { background: #f5f3ff; padding: 16px; border-left: 4px solid #7c3aed; margin: 20px 0; }
+                                            .scripture-ref { font-weight: bold; color: #7c3aed; }
+                                            .reflection-title { font-weight: bold; margin-top: 24px; }
+                                            .reflection-content { white-space: pre-wrap; line-height: 1.8; margin-top: 8px; padding: 16px; background: #fafafa; border-radius: 8px; }
+                                          </style>
+                                        </head>
+                                        <body>
+                                          <h1>Day ${day.day}: ${day.title}</h1>
+                                          <p class="theme">${day.theme}</p>
+                                          <div class="scripture">
+                                            <p class="scripture-ref">${day.scripture}</p>
+                                            <p>"${day.scriptureText}"</p>
+                                          </div>
+                                          <p class="reflection-title">My Reflections:</p>
+                                          <div class="reflection-content">${progress[day.day]?.notes || '(No reflections written yet)'}</div>
+                                        </body>
+                                      </html>
+                                    `;
+                                    const printWindow = window.open('', '_blank');
+                                    if (printWindow) {
+                                      printWindow.document.write(printContent);
+                                      printWindow.document.close();
+                                      printWindow.print();
+                                    }
+                                  }}
+                                  className="h-8"
+                                >
+                                  <Printer className="w-4 h-4 mr-1" />
+                                  Print
+                                </Button>
+                              </div>
+                            )}
+                          </div>
                           <Textarea
                             placeholder={isShowingDemo ? "Sample reflection notes..." : "Write your thoughts..."}
                             value={isShowingDemo ? (displayProgress[day.day]?.notes || '') : (progress[day.day]?.notes || '')}
