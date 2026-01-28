@@ -40,6 +40,9 @@ const ELEVENLABS_VOICES: Record<string, string> = {
   // African-American female voices
   nicole: "piTKgcLEGmPE4e6mEKli", // Nicole - warm, rich African-American female
   aria: "9BWtsMINqrJLrRacOk9x", // Aria - confident, engaging African-American female
+  // African-American male voices
+  marcus: "bIHbv24MWmeRgasZH58o", // Will - warm, engaging African-American male
+  darnell: "nPczCjzI2devNBz1zQrb", // Brian - deep, resonant African-American male
 };
 
 // Split text into chunks at natural boundaries (sentences/paragraphs)
