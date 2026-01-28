@@ -56,7 +56,14 @@ export function useTTS(options: UseTTSOptions = {}) {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to generate speech');
+        const errorMessage = errorData.error || 'Failed to generate speech';
+        
+        // Check for quota exceeded error
+        if (errorMessage.includes('quota_exceeded') || errorMessage.includes('credits remaining')) {
+          throw new Error('Voice credits exhausted. The text-to-speech feature is temporarily unavailable. Please try again later or read the content instead.');
+        }
+        
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
