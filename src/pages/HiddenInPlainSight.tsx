@@ -157,7 +157,7 @@ const DOUBLE_STANDARD_CONTENT = {
     },
     {
       title: "Currency & Government",
-      content: "The American dollar features the Eye of Providence (from Egyptian mysticism), the pyramid (ancient Egyptian symbolism), and Latin phrases. Yet Christians handle money daily without perceiving spiritual danger.",
+      content: "The very word 'money' derives from Juno Moneta—the Roman goddess in whose temple coins were minted. 'Moneta' became 'money,' and the deity's name lives on every time we discuss finances. The American dollar features the Eye of Providence (from Egyptian mysticism), the pyramid (ancient Egyptian symbolism), and Latin phrases. Yet Christians handle 'money' daily—literally invoking a pagan goddess's name—without perceiving spiritual danger.",
     },
     {
       title: "Funeral Practices",
