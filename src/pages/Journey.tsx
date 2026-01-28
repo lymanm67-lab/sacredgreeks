@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Textarea } from '@/components/ui/textarea';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { ArrowLeft, CheckCircle2, Circle, BookOpen, Heart, Lock, FlaskConical, Save, Printer } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Circle, BookOpen, Heart, Lock, FlaskConical, Save, Printer, Trophy, FileText } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { journeyContent } from '@/data/journeyContent';
 import { ListenButton } from '@/components/ListenButton';
@@ -96,6 +96,156 @@ const Journey = () => {
 
   const completedDays = Object.values(displayProgress).filter(p => p.completed).length;
   const progressPercent = (completedDays / 30) * 100;
+  const isJourneyComplete = completedDays === 30;
+
+  const printFullReport = () => {
+    const reportContent = `
+      <html>
+        <head>
+          <title>30-Day Sacred, Not Sinful Journey - Complete Report</title>
+          <style>
+            @media print {
+              .page-break { page-break-before: always; }
+            }
+            body { 
+              font-family: Georgia, serif; 
+              padding: 40px; 
+              max-width: 800px; 
+              margin: 0 auto; 
+              line-height: 1.6;
+            }
+            .header { 
+              text-align: center; 
+              border-bottom: 3px solid #7c3aed; 
+              padding-bottom: 20px; 
+              margin-bottom: 30px; 
+            }
+            .header h1 { color: #7c3aed; margin-bottom: 8px; }
+            .header .subtitle { color: #666; font-style: italic; }
+            .completion-badge {
+              background: linear-gradient(135deg, #7c3aed, #3b82f6);
+              color: white;
+              padding: 12px 24px;
+              border-radius: 8px;
+              display: inline-block;
+              margin: 16px 0;
+              font-weight: bold;
+            }
+            .day-entry { 
+              margin-bottom: 32px; 
+              padding: 20px; 
+              border: 1px solid #e5e7eb; 
+              border-radius: 12px;
+              background: #fafafa;
+            }
+            .day-header { 
+              display: flex; 
+              align-items: center; 
+              gap: 12px; 
+              margin-bottom: 12px; 
+            }
+            .day-number { 
+              background: #7c3aed; 
+              color: white; 
+              padding: 4px 12px; 
+              border-radius: 20px; 
+              font-size: 14px; 
+              font-weight: bold;
+            }
+            .day-title { font-size: 18px; font-weight: bold; color: #1f2937; }
+            .day-theme { color: #666; font-style: italic; font-size: 14px; margin-bottom: 12px; }
+            .scripture { 
+              background: #f5f3ff; 
+              padding: 16px; 
+              border-left: 4px solid #7c3aed; 
+              margin: 16px 0; 
+            }
+            .scripture-ref { font-weight: bold; color: #7c3aed; }
+            .reflection-section { margin-top: 16px; }
+            .reflection-label { font-weight: bold; color: #7c3aed; margin-bottom: 8px; }
+            .reflection-content { 
+              background: white; 
+              padding: 16px; 
+              border-radius: 8px; 
+              border: 1px solid #e5e7eb;
+              white-space: pre-wrap; 
+              min-height: 60px;
+            }
+            .no-reflection { color: #9ca3af; font-style: italic; }
+            .footer { 
+              text-align: center; 
+              margin-top: 40px; 
+              padding-top: 20px; 
+              border-top: 2px solid #e5e7eb; 
+              color: #666; 
+            }
+            .stats { 
+              display: flex; 
+              justify-content: center; 
+              gap: 40px; 
+              margin: 20px 0; 
+            }
+            .stat { text-align: center; }
+            .stat-value { font-size: 32px; font-weight: bold; color: #7c3aed; }
+            .stat-label { font-size: 14px; color: #666; }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <h1>🙏 30-Day "Sacred, Not Sinful" Journey</h1>
+            <p class="subtitle">Daily Readings, Scriptures & Reflections</p>
+            <div class="completion-badge">✓ Journey Completed!</div>
+            <div class="stats">
+              <div class="stat">
+                <div class="stat-value">30</div>
+                <div class="stat-label">Days Completed</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value">${Object.values(progress).filter(p => p.notes?.trim()).length}</div>
+                <div class="stat-label">Reflections Written</div>
+              </div>
+            </div>
+            <p style="color: #666;">Completed on ${new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+          </div>
+          
+          ${journeyContent.map((day, index) => `
+            ${index > 0 && index % 5 === 0 ? '<div class="page-break"></div>' : ''}
+            <div class="day-entry">
+              <div class="day-header">
+                <span class="day-number">Day ${day.day}</span>
+                <span class="day-title">${day.title}</span>
+              </div>
+              <p class="day-theme">${day.theme}</p>
+              <div class="scripture">
+                <p class="scripture-ref">${day.scripture}</p>
+                <p>"${day.scriptureText}"</p>
+              </div>
+              <div class="reflection-section">
+                <p class="reflection-label">My Reflections:</p>
+                <div class="reflection-content">
+                  ${progress[day.day]?.notes?.trim() 
+                    ? progress[day.day].notes 
+                    : '<span class="no-reflection">No reflection written for this day</span>'}
+                </div>
+              </div>
+            </div>
+          `).join('')}
+          
+          <div class="footer">
+            <p><strong>Congratulations on completing your 30-Day Journey!</strong></p>
+            <p>May your faith continue to grow and inspire others in Greek life.</p>
+            <p style="font-size: 12px; margin-top: 20px;">Sacred Greeks Life • www.sacredgreekslife.com</p>
+          </div>
+        </body>
+      </html>
+    `;
+    const printWindow = window.open('', '_blank');
+    if (printWindow) {
+      printWindow.document.write(reportContent);
+      printWindow.document.close();
+      printWindow.print();
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
@@ -131,6 +281,23 @@ const Journey = () => {
               <Heart className="w-12 h-12 text-sacred" />
             </div>
             <Progress value={progressPercent} className="h-3" />
+            {isJourneyComplete && user && !isShowingDemo && (
+              <div className="mt-4 pt-4 border-t border-sacred/20">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-sacred">
+                    <Trophy className="w-5 h-5" />
+                    <span className="font-semibold">Journey Complete!</span>
+                  </div>
+                  <Button 
+                    onClick={printFullReport}
+                    className="bg-sacred hover:bg-sacred/90"
+                  >
+                    <FileText className="w-4 h-4 mr-2" />
+                    Print Full Report
+                  </Button>
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
 
