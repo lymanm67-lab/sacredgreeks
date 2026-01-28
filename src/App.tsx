@@ -265,6 +265,7 @@ const App = () => (
                     <Route path="/chapter-kit" element={<ChapterKit />} />
                     <Route path="/economic-history" element={<EconomicHistory />} />
                     <Route path="/ancient-guild-training" element={<Navigate to="/greek-life-training" replace />} />
+                    <Route path="/training" element={<Navigate to="/greek-life-training" replace />} />
                     <Route path="/greek-life-training" element={<GreekLifeTraining />} />
                     <Route path="/guest-panelist-application" element={<GuestPanelistApplication />} />
                     <Route path="/about-creator" element={<AboutCreator />} />
