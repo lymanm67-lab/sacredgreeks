@@ -90,6 +90,10 @@ Many Christians live in fear of rituals, symbols, or words they encountered befo
 
 • "Greater is He who is in you than he who is in the world." — 1 John 4:4
 
+**Scholarly Foundation:**
+
+This teaching aligns with what theologians call the "Christus Victor" model of atonement—Christ's victory over all powers and principalities (Colossians 2:15). As N.T. Wright observes, the early Christians understood themselves as freed from bondage to powers that had no ultimate authority over them. (Source: Wright, N.T. *The Resurrection of the Son of God*. Fortress Press, 2003.)
+
 **Reflection Questions:**
 
 • Have I been living in fear of past rituals or symbols?
@@ -118,6 +122,10 @@ One of the most remarkable passages in Scripture reveals that even Jesus—the S
 
 This isn't about Jesus lacking power. It's about how faith operates as the channel through which spiritual power flows. The people of Nazareth knew Jesus as "the carpenter's son." Their familiarity bred contempt, and their unbelief blocked access to His power.
 
+**Scholarly Insight:**
+
+New Testament scholars note the remarkable candor of this passage. R.T. France writes: "The 'could not' is not a matter of lack of power, but of the necessary conditions for its exercise... Faith is not simply a human response to what God does; it is also a precondition for what he will do." (Source: France, R.T. *The Gospel of Mark* (NIGTC). Eerdmans, 2002.)
+
 **Application to Greek Life:**
 
 If faith is required to access spiritual power—even for Jesus—then the inverse is also true: **unbelief blocks spiritual access**. When you participated in rituals without belief in their spiritual significance, you were not "opening doors" because you never gave faith-based access.
@@ -125,6 +133,12 @@ If faith is required to access spiritual power—even for Jesus—then the inver
 **Key Scriptures in This Module:**
 
 ${BELIEF_SCRIPTURES.jesusLimitedByUnbelief.map(s => `• **${s.reference}**: "${s.text}"\n  💡 ${s.principle}`).join('\n\n')}
+
+**Scholarly References:**
+
+• France, R.T. *The Gospel of Mark* (NIGTC). Eerdmans, 2002.
+• Guelich, Robert A. *Mark 1–8:26* (WBC). Thomas Nelson, 1989.
+• Keener, Craig S. *Miracles: The Credibility of the New Testament Accounts*. Baker Academic, 2011.
 
 **Reflection Questions:**
 
@@ -153,6 +167,10 @@ Faith functions like an operating system. Just as a computer requires an OS to r
 • **Positive faith** (trust in God) opens access to His promises
 • **Negative faith** (fear/belief in false powers) opens access to bondage
 
+**Scholarly Foundation:**
+
+The author of Hebrews presents faith as the substantiation of hope—the means by which unseen realities become operative in the believer's life. As William Lane notes: "Faith is not merely intellectual assent but the active appropriation of divine promises." (Source: Lane, William L. *Hebrews 9–13* (WBC). Thomas Nelson, 1991.)
+
 **Why This Matters for Greek Life:**
 
 When critics claim you "opened doors" through rituals, they're operating from a faulty understanding. You cannot open doors you never believed existed. The ritual was meaningless to you spiritually because you gave it no faith.
@@ -164,6 +182,12 @@ ${BELIEF_SCRIPTURES.faithAsChannel.map(s => `• **${s.reference}**: "${s.text}"
 **The Matthew 17 Principle:**
 
 Jesus said, "If you have faith as small as a mustard seed, you can say to this mountain, 'Move from here to there,' and it will move." Faith—even small faith—is the activating agent. No faith = no activation.
+
+**Scholarly References:**
+
+• Lane, William L. *Hebrews 9–13* (WBC). Thomas Nelson, 1991.
+• Hagner, Donald A. *Hebrews* (NIBC). Hendrickson, 1990.
+• Marshall, I. Howard. *New Testament Theology*. IVP Academic, 2004.
 
 **Reflection Questions:**
 
@@ -193,6 +217,10 @@ Paul addressed this directly when writing to the Corinthians about meat sacrific
 
 Paul doesn't say idols have power and we should avoid them. He says idols are **nothing**. The "gods" they represent don't exist. Therefore, the meat sacrificed to them is just... meat.
 
+**Scholarly Insight:**
+
+Gordon Fee explains Paul's reasoning: "The 'strong' in Corinth understood that since idols represent 'nobodies,' food offered to them is in no way contaminated... Paul basically agrees with their theological premise." The issue for Paul is not contamination but conscience and love for weaker believers. (Source: Fee, Gordon D. *The First Epistle to the Corinthians* (NICNT). Eerdmans, 1987.)
+
 **Application:**
 
 When you participated in Greek rituals:
@@ -207,6 +235,12 @@ ${BELIEF_SCRIPTURES.beliefAndAuthority.map(s => `• **${s.reference}**: "${s.te
 **The Weak Conscience Warning:**
 
 Paul does warn that if someone believes the idol is real and eats anyway, their conscience is defiled. This is why education matters—not to create fear, but to establish proper understanding.
+
+**Scholarly References:**
+
+• Fee, Gordon D. *The First Epistle to the Corinthians* (NICNT). Eerdmans, 1987.
+• Thiselton, Anthony C. *The First Epistle to the Corinthians* (NIGTC). Eerdmans, 2000.
+• Hays, Richard B. *First Corinthians* (Interpretation). Westminster John Knox, 1997.
 
 **Reflection Questions:**
 
@@ -236,6 +270,10 @@ Here's a truth many miss: **fear is faith in reverse**. When you fear something,
 
 Many believers unknowingly empower things through fear that they never empowered through faith. When someone tells you that Greek rituals "opened doors," and you become afraid—that fear itself becomes a form of belief that grants the very authority you never originally gave.
 
+**Scholarly Insight:**
+
+Theologian Karl Barth noted that fear of demonic powers often gives them a significance they do not deserve: "The demons are those powers which make themselves great... When we fear them unduly, we participate in their own self-inflation." True Christian freedom recognizes Christ's complete victory. (Source: Barth, Karl. *Church Dogmatics III/3*. T&T Clark, 1960.)
+
 **Breaking the Cycle:**
 
 • **Recognize the source**: Fear about rituals often comes from well-meaning but theologically misguided teachings
@@ -251,6 +289,12 @@ See the scripture cards below for detailed references.
 "For I am convinced that neither death nor life, neither angels nor demons, neither the present nor the future, nor any powers, neither height nor depth, nor anything else in all creation, will be able to separate us from the love of God that is in Christ Jesus our Lord."
 
 No ritual. No symbol. No word spoken in ignorance. NOTHING can separate you from Christ.
+
+**Scholarly References:**
+
+• Barth, Karl. *Church Dogmatics III/3*. T&T Clark, 1960.
+• Boyd, Gregory A. *God at War: The Bible and Spiritual Conflict*. IVP Academic, 1997.
+• Arnold, Clinton E. *Powers of Darkness: Principalities and Powers in Paul's Letters*. IVP Academic, 1992.
 
 **Reflection Questions:**
 

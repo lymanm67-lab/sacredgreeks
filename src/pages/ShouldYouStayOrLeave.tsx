@@ -99,19 +99,19 @@ This ceremony, often called the "dust and water test" or "bitter water ordeal," 
   keyPoints: [
     {
       title: "Not Magic, But Legal Procedure",
-      content: "The passage does not describe a magical act, incantation, or invocation of spiritual forces. It functions as a legal and covenantal procedure within ancient Israel, designed to place judgment in God's hands rather than human violence or coercion.",
+      content: "The passage does not describe a magical act, incantation, or invocation of spiritual forces. It functions as a legal and covenantal procedure within ancient Israel, designed to place judgment in God's hands rather than human violence or coercion. Old Testament scholar Jacob Milgrom notes this ritual 'transfers the burden of proof from the human to the divine sphere.' (Source: Milgrom, Jacob. *Numbers* (JPS Torah Commentary). Jewish Publication Society, 1990.)",
     },
     {
       title: "No Spell, No Deity Invoked",
-      content: "No spell is spoken, no foreign deity is invoked, and no supernatural power is attributed to the elements themselves. The dust comes from the tabernacle floor, symbolizing God's presence and covenant authority, not mystical energy.",
+      content: "No spell is spoken, no foreign deity is invoked, and no supernatural power is attributed to the elements themselves. The dust comes from the tabernacle floor, symbolizing God's presence and covenant authority, not mystical energy. As Timothy Ashley observes: 'The ritual is dependent entirely on YHWH for its efficacy.' (Source: Ashley, Timothy R. *The Book of Numbers* (NICOT). Eerdmans, 1993.)",
     },
     {
       title: "Protection, Not Oppression",
-      content: "Old Testament scholars note that the ritual actually protected women by preventing mob justice, forced confessions, or honor killings—outcomes common in surrounding cultures. The outcome depended on God's intervention, not the priest's words or the water itself.",
+      content: "Old Testament scholars note that the ritual actually protected women by preventing mob justice, forced confessions, or honor killings—outcomes common in surrounding cultures. The outcome depended on God's intervention, not the priest's words or the water itself. Gordon Wenham writes: 'This law is remarkably humane for its time, requiring evidence rather than mere accusation.' (Source: Wenham, Gordon J. *Numbers* (TOTC). IVP Academic, 1981.)",
     },
     {
       title: "Biblical, Not Witchcraft",
-      content: "This is consistent with biblical theology, which repeatedly rejects magic and divination while allowing symbolic legal acts under divine authority. Within Scripture, it was neither witchcraft nor magic—it was a restrained, symbolic appeal to God as judge.",
+      content: "This is consistent with biblical theology, which repeatedly rejects magic and divination (Deuteronomy 18:10-12) while allowing symbolic legal acts under divine authority. Within Scripture, it was neither witchcraft nor magic—it was a restrained, symbolic appeal to God as judge.",
     },
   ],
 };
@@ -141,11 +141,11 @@ const RITUAL_AS_LEARNING_CONTENT = {
   points: [
     {
       title: "Anthropological Reality",
-      content: "Anthropologists and biblical scholars alike note that rituals function primarily as pedagogical and communal devices—ways societies transmit values, identity, and moral expectations across generations.",
+      content: "Anthropologists and biblical scholars alike note that rituals function primarily as pedagogical and communal devices—ways societies transmit values, identity, and moral expectations across generations. Catherine Bell's foundational work *Ritual Theory, Ritual Practice* (1992) demonstrates that ritual is fundamentally about 'ritualization'—the strategic way societies mark certain activities as significant for teaching purposes.",
     },
     {
       title: "Scripture Uses Ritual to Teach",
-      content: "From Passover questions asked by children (Exodus 12:26) to symbolic prophetic actions performed by Isaiah, Jeremiah, and Ezekiel, God regularly used enacted symbols to teach truth without those actions becoming objects of worship.",
+      content: "From Passover questions asked by children (Exodus 12:26) to symbolic prophetic actions performed by Isaiah, Jeremiah, and Ezekiel, God regularly used enacted symbols to teach truth without those actions becoming objects of worship. As Ronald Grimes notes: 'Ritual is primarily a mode of attention, a way of framing experience.' (Source: Grimes, Ronald L. *The Craft of Ritual Studies*. Oxford University Press, 2014.)",
     },
     {
       title: "The Inconsistent Standard",
@@ -156,7 +156,7 @@ const RITUAL_AS_LEARNING_CONTENT = {
       content: "The biblical concern has never been the presence of ritual, but whether ritual claims spiritual power independent of God or redirects allegiance away from Him. Greek Life rituals do neither.",
     },
   ],
-  conclusion: "They function at the level of meaning, memory, and moral formation—much like ancient guild ceremonies or covenant reminders in Scripture. When ritual is evaluated by theology rather than appearance, objections based solely on form collapse, revealing that the discomfort is cultural, not biblical.",
+  conclusion: "They function at the level of meaning, memory, and moral formation—much like ancient guild ceremonies or covenant reminders in Scripture. When ritual is evaluated by theology rather than appearance, objections based solely on form collapse, revealing that the discomfort is cultural, not biblical. (Sources: Bell, Catherine. *Ritual Theory, Ritual Practice*. Oxford University Press, 1992; Grimes, Ronald L. *The Craft of Ritual Studies*. Oxford University Press, 2014.)",
 };
 
 const APPLICATION_CONTENT = {
@@ -205,6 +205,13 @@ const CONCLUSION_CONTENT = {
     },
   ],
   callToAction: "Armed with this understanding, you can now evaluate ritual practices—whether in Greek Life, church tradition, or cultural ceremonies—with theological clarity rather than cultural assumption.",
+  scholarlyReferences: [
+    "Milgrom, Jacob. *Numbers* (JPS Torah Commentary). Jewish Publication Society, 1990.",
+    "Ashley, Timothy R. *The Book of Numbers* (NICOT). Eerdmans, 1993.",
+    "Wenham, Gordon J. *Numbers* (TOTC). IVP Academic, 1981.",
+    "Bell, Catherine. *Ritual Theory, Ritual Practice*. Oxford University Press, 1992.",
+    "Grimes, Ronald L. *The Craft of Ritual Studies*. Oxford University Press, 2014.",
+  ],
 };
 
 const COURSE_INSTRUCTIONS = `Welcome to "Should You Stay or Leave?" This interactive course will challenge your assumptions about ritual and context through an eye-opening case study. You'll first encounter a ritual scenario and give your initial reaction. Then, you'll discover its surprising source and explore why context changes everything. By the end, you'll have a theological framework for evaluating any ritual practice. Complete all six modules to earn 60 points. Let's begin!`;

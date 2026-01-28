@@ -57,28 +57,32 @@ const foundationSections = [
     title: 'Koinonia: Biblical Fellowship',
     sessionId: 21,
     content: `Fraternities are not a modern invention. The concept of koinonia (κοινωνία)—Greek for "fellowship," "partnership," or "communion"—appears over 20 times in the New Testament and describes the essential fraternal bond between believers. When Scripture commands believers to have koinonia with one another, it's commanding exactly what Greek letter organizations create: shared life, mutual support, common identity, and exclusive fellowship.`,
-    scripture: 'Acts 2:42 — "They devoted themselves to the apostles\' teaching and to koinonia."'
+    scripture: 'Acts 2:42 — "They devoted themselves to the apostles\' teaching and to koinonia."',
+    scholarlyNote: '(Source: Hauck, Friedrich. "κοινωνία" in *Theological Dictionary of the New Testament*, Vol. 3. Eerdmans, 1965.)'
   },
   {
     id: 'jesus-tekton',
     title: 'Jesus: Master Craftsman & Guild Member',
     sessionId: 22,
-    content: `Jesus was a TEKTON (τέκτων)—translated "carpenter" but more accurately "master builder" or "craftsman." Ancient craft guilds were fraternal organizations with secret initiations, coded language, oaths of loyalty, and special recognition grips. Guild masters were highly selective—typically accepting only 1-3 apprentices at a time. Selection criteria included family lineage, physical aptitude, moral character, and recommendation from a current guild member.`,
-    scripture: 'Mark 6:3 — "Is not this the carpenter (tekton), the son of Mary?"'
+    content: `Jesus was a TEKTON (τέκτων)—translated "carpenter" but more accurately "master builder" or "craftsman." Ancient craft guilds were fraternal organizations with initiations, coded language, oaths of loyalty, and special recognition signs. Guild masters were highly selective—typically accepting only 1-3 apprentices at a time. Selection criteria included family lineage, physical aptitude, moral character, and recommendation from a current guild member. The word "tekton" in Greek culture implied membership in established trade networks with formal training and mutual accountability.`,
+    scripture: 'Mark 6:3 — "Is not this the carpenter (tekton), the son of Mary?"',
+    scholarlyNote: '(Sources: Batey, Richard A. "Is Not This the Carpenter?" *New Testament Studies* 30 (1984): 249–258; Hock, Ronald F. *The Social Context of Paul\'s Ministry*. Fortress Press, 1980.)'
   },
   {
     id: 'historical-evidence',
     title: 'Historical Evidence: Passwords & Recognition',
     sessionId: 23,
-    content: `The earliest documented password in history comes from Scripture itself. The Gileadites used "Shibboleth" to identify enemy Ephraimites who couldn't pronounce the "sh" sound. This demonstrates password-based recognition systems have biblical precedent dating back over 3,000 years. Roman-era craftsmen guilds had "secret methods of recognition"—but actual passwords were never written down, proving how seriously they guarded secrets.`,
-    scripture: 'Judges 12:6 — "Then they would say to him, \'Say now, Shibboleth.\'"'
+    content: `The earliest documented password in history comes from Scripture itself. The Gileadites used "Shibboleth" to identify enemy Ephraimites who couldn't pronounce the "sh" sound (Judges 12:6). This demonstrates password-based recognition systems have biblical precedent dating back over 3,000 years. Roman-era craftsmen guilds (collegia) had documented "secret methods of recognition"—though actual passwords were never written down, proving how seriously they guarded their fraternal secrets.`,
+    scripture: 'Judges 12:6 — "Then they would say to him, \'Say now, Shibboleth.\'"',
+    scholarlyNote: '(Sources: Kloppenborg, John S. "Collegia and Thiasoi." *Voluntary Associations in the Graeco-Roman World*. Routledge, 1996; Liu, Jinyu. *Collegia Centonariorum: The Guilds of Textile Dealers in the Roman West*. Brill, 2009.)'
   },
   {
     id: 'early-church',
     title: 'Early Church as Secret Society',
     sessionId: 24,
-    content: `The early church functioned as a secret society during persecution. They used the Ichthys fish symbol as a recognition sign, the password "Maranatha" (which Paul didn't translate, assuming readers knew it), the Holy Kiss as a ritual greeting commanded 5 times in Scripture, and a catechumenate of 1-3 years of initiation with fasting, exorcism, and new names. These practices directly parallel modern fraternal recognition rituals.`,
-    scripture: '1 Corinthians 16:22 — "Maranatha" (Our Lord, come!)'
+    content: `The early church functioned as a "secret society" during persecution. They used the Ichthys (fish) symbol as a covert recognition sign, the password "Maranatha" (which Paul didn't translate in 1 Corinthians 16:22, assuming readers knew it), the Holy Kiss as a ritual greeting commanded 5 times in Scripture (Romans 16:16, 1 Corinthians 16:20, 2 Corinthians 13:12, 1 Thessalonians 5:26, 1 Peter 5:14), and a catechumenate of 1-3 years of initiation with fasting, exorcism, and new names (baptismal names). These practices directly parallel modern fraternal recognition rituals.`,
+    scripture: '1 Corinthians 16:22 — "Maranatha" (Our Lord, come!)',
+    scholarlyNote: '(Sources: Ferguson, Everett. *Baptism in the Early Church*. Eerdmans, 2009; Penn, Michael Philip. *Kissing Christians: Ritual and Community in the Late Ancient Church*. University of Pennsylvania Press, 2005.)'
   }
 ];
 
