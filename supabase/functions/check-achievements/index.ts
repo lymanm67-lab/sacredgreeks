@@ -119,6 +119,36 @@ serve(async (req) => {
       if (!insertError) {
         earnedKeys.add(achievementKey);
         newAchievements.push(achievement);
+
+        // Award the achievement's points to the user's total
+        const points = achievement.points_required || 0;
+        if (points > 0) {
+          const { data: gamification } = await supabase
+            .from("user_gamification")
+            .select("total_points")
+            .eq("user_id", userId)
+            .maybeSingle();
+
+          const currentPoints = gamification?.total_points || 0;
+          const newPoints = currentPoints + points;
+          const newLevel = Math.min(Math.floor(newPoints / 100) + 1, 50);
+
+          await supabase
+            .from("user_gamification")
+            .upsert({
+              user_id: userId,
+              total_points: newPoints,
+              current_level: newLevel,
+              updated_at: new Date().toISOString(),
+            }, { onConflict: "user_id" });
+
+          logStep("Awarded achievement points", {
+            achievementKey,
+            points,
+            newPoints,
+            newLevel,
+          });
+        }
       } else {
         // If it's a duplicate insert, ignore; otherwise surface in logs.
         logStep("Failed to insert user_achievement", {
