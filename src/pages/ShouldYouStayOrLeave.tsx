@@ -301,7 +301,7 @@ const getModuleTTSContent = (moduleId: string): string => {
 export default function ShouldYouStayOrLeave() {
   const { isSessionComplete, toggleSession, progress: studyProgress, isAuthenticated } = useStudyProgress();
   const { awardPoints } = useGamification();
-  const { speak, stop, isPlaying, isLoading } = useTTS();
+  const { speak, stop, isPlaying, isLoading } = useTTS({ voice: 'nicole' }); // African-American female voice for modules
   const { speak: speakQuestion, stop: stopQuestion, isPlaying: isPlayingQuestion, isLoading: isLoadingQuestion } = useTTS({ voice: 'marcus' }); // African-American male voice
   const [playingModuleId, setPlayingModuleId] = useState<string | null>(null);
   const [isQuestionTTSActive, setIsQuestionTTSActive] = useState(false);
