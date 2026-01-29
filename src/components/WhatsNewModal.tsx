@@ -6,7 +6,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sparkles, Rocket, Bug, Shield, Zap } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 
-const APP_VERSION = '2.4.0';
+const APP_VERSION = '2.5.0';
 const VERSION_STORAGE_KEY = 'last-seen-version';
 
 interface ChangelogEntry {
@@ -20,6 +20,21 @@ interface ChangelogEntry {
 
 // Recent changelog entries to show
 const recentChanges: ChangelogEntry[] = [
+  {
+    version: '2.5.0',
+    date: '2026-01-28',
+    highlights: ['Hidden in Plain Sight Course', 'Interactive Modules', 'TTS Narration'],
+    features: [
+      'New "Hidden in Plain Sight" course exploring pagan roots in American & Christian traditions',
+      '9 interactive modules covering birthdays, weddings, holidays, symbols, and more',
+      'Case study format with TTS narration using Marcus voice',
+      '200 points awarded upon course completion',
+    ],
+    fixes: [],
+    improvements: [
+      'Achievement tracking for course completion on Achievements page',
+    ],
+  },
   {
     version: '2.4.0',
     date: '2025-12-03',
@@ -47,20 +62,6 @@ const recentChanges: ChangelogEntry[] = [
     improvements: [
       'Improved quick actions organization',
       'Better mobile responsiveness across all pages',
-    ],
-  },
-  {
-    version: '2.2.0',
-    date: '2025-12-01',
-    highlights: ['Demo Mode', 'Guided Tour', 'Onboarding'],
-    features: [
-      'Interactive demo mode for exploring features without signup',
-      'Demo walkthrough overlay with guided tour',
-    ],
-    fixes: [],
-    improvements: [
-      'Streamlined onboarding flow',
-      'Better first-time user experience',
     ],
   },
 ];

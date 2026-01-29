@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Current app version - update this when releasing new versions
-export const CURRENT_VERSION = '2.1.0';
+export const CURRENT_VERSION = '2.5.0';
 
 interface UpdateInfo {
   version: string;
@@ -19,14 +19,14 @@ interface UpdateInfo {
 // Latest update info to show in notification
 const latestUpdate: UpdateInfo = {
   version: CURRENT_VERSION,
-  title: 'iOS Installation Fix & SEO Improvements',
+  title: 'Hidden in Plain Sight Course',
   highlights: [
-    'Fixed Safari "cannot find network" error on iPhone',
-    'Dynamic sitemap for better search visibility',
-    'Structured data for rich search snippets',
-    'PWA validation tests to prevent future issues'
+    'New course exploring pagan roots in American & Christian traditions',
+    '9 interactive modules with TTS narration',
+    '200 points awarded upon course completion',
+    'Achievement tracking on Achievements page'
   ],
-  date: '2025-11-30'
+  date: '2026-01-28'
 };
 
 const STORAGE_KEY = 'sacred-greeks-last-seen-version';
