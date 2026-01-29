@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Current app version - update this when releasing new versions
-export const CURRENT_VERSION = '2.5.0';
+export const CURRENT_VERSION = '2.5.1';
 
 interface UpdateInfo {
   version: string;
@@ -19,14 +19,14 @@ interface UpdateInfo {
 // Latest update info to show in notification
 const latestUpdate: UpdateInfo = {
   version: CURRENT_VERSION,
-  title: 'Hidden in Plain Sight Course',
+  title: 'Sidebar Progress & Sign-In Improvements',
   highlights: [
-    'New course exploring pagan roots in American & Christian traditions',
-    '9 interactive modules with TTS narration',
-    '200 points awarded upon course completion',
-    'Achievement tracking on Achievements page'
+    'Progress bars on all courses in sidebar menu',
+    'Remember password with browser autofill',
+    'Color-coded completion status',
+    'Enhanced sign-in experience'
   ],
-  date: '2026-01-28'
+  date: '2026-01-29'
 };
 
 const STORAGE_KEY = 'sacred-greeks-last-seen-version';

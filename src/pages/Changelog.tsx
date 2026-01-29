@@ -19,6 +19,18 @@ interface ChangelogEntry {
 
 const changelog: ChangelogEntry[] = [
   {
+    version: "2.5.1",
+    date: "2026-01-29",
+    title: "Sidebar Progress & Sign-In Improvements",
+    type: "patch",
+    changes: [
+      { category: "feature", description: "Progress bars now visible on all courses in sidebar menu showing completion percentage" },
+      { category: "feature", description: "Remember password support with browser autofill for faster sign-in" },
+      { category: "improvement", description: "Progress bars show color-coded status: muted (0%), primary (in-progress), emerald (complete)" },
+      { category: "improvement", description: "Enhanced sign-in form with proper autocomplete attributes" },
+    ]
+  },
+  {
     version: "2.5.0",
     date: "2026-01-28",
     title: "Hidden in Plain Sight Course",
