@@ -352,6 +352,7 @@ const SignIn = () => {
                           type="email"
                           placeholder="you@example.com"
                           defaultValue={savedEmail}
+                          autoComplete="email"
                           required
                           className="bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-blue-500"
                         />
@@ -365,6 +366,7 @@ const SignIn = () => {
                             type={showPassword ? "text" : "password"}
                             placeholder="••••••••"
                             minLength={8}
+                            autoComplete="current-password"
                             required
                             className="pr-10 bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-blue-500"
                           />
