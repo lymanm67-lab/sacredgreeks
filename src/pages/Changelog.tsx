@@ -44,6 +44,109 @@ const changelog: ChangelogEntry[] = [
     ]
   },
   {
+    version: "2.4.9",
+    date: "2026-01-25",
+    title: "Points Roadmap & Achievement Tracking",
+    type: "patch",
+    changes: [
+      { category: "feature", description: "Points Roadmap showing all 880 available points across the platform" },
+      { category: "feature", description: "Automatic point awarding via awardPoints() hook" },
+      { category: "improvement", description: "Visual breakdown of points by course and assessment" },
+    ]
+  },
+  {
+    version: "2.4.8",
+    date: "2026-01-20",
+    title: "Learning Paths Map & Master Certificate",
+    type: "patch",
+    changes: [
+      { category: "feature", description: "Learning Paths Map visual roadmap on dashboard" },
+      { category: "feature", description: "Master Certificate unlocked at 100% curriculum completion" },
+      { category: "feature", description: "Printable landscape HTML certificate with unique ID" },
+      { category: "improvement", description: "Track progress across PROOF, Greek Life, Myth Busters, and Faith & Authority" },
+    ]
+  },
+  {
+    version: "2.4.7",
+    date: "2026-01-15",
+    title: "PROOF Course Achievement Badges",
+    type: "patch",
+    changes: [
+      { category: "feature", description: "Five interactive P-R-O-O-F badges that unlock with animations" },
+      { category: "feature", description: "PROOF Master trophy revealed at 100% completion" },
+      { category: "feature", description: "Milestone confetti celebrations at 1st, 3rd, and 5th lessons" },
+      { category: "improvement", description: "Enhanced gamification integration with achievement system" },
+    ]
+  },
+  {
+    version: "2.4.6",
+    date: "2026-01-10",
+    title: "Course Point Values System",
+    type: "patch",
+    changes: [
+      { category: "feature", description: "PROOF Course awards 50 points upon completion" },
+      { category: "feature", description: "Faith & Authority course awards 70 points" },
+      { category: "feature", description: "Should You Stay or Leave assessment awards 60 points" },
+      { category: "feature", description: "Saints or Sellouts assessment awards 60 points" },
+      { category: "improvement", description: "Myth Buster Library now awards up to 350 points total" },
+    ]
+  },
+  {
+    version: "2.4.5",
+    date: "2026-01-05",
+    title: "TTS Audio Narration Enhancement",
+    type: "patch",
+    changes: [
+      { category: "feature", description: "Marcus voice TTS narration for course content" },
+      { category: "feature", description: "Audio playback controls for lesson modules" },
+      { category: "improvement", description: "Improved audio quality and pacing" },
+    ]
+  },
+  {
+    version: "2.4.4",
+    date: "2025-12-28",
+    title: "Course Module Framework",
+    type: "patch",
+    changes: [
+      { category: "feature", description: "Case study format for interactive learning" },
+      { category: "feature", description: "Module-based progress tracking" },
+      { category: "improvement", description: "Consistent lesson layout across all courses" },
+    ]
+  },
+  {
+    version: "2.4.3",
+    date: "2025-12-20",
+    title: "Enhanced Assessment Results",
+    type: "patch",
+    changes: [
+      { category: "feature", description: "Shareable assessment certificates" },
+      { category: "feature", description: "Detailed score breakdowns by category" },
+      { category: "improvement", description: "Better visual presentation of results" },
+    ]
+  },
+  {
+    version: "2.4.2",
+    date: "2025-12-15",
+    title: "Subscription Tier Features",
+    type: "patch",
+    changes: [
+      { category: "feature", description: "Pro tier unlocks AI tools and premium audio" },
+      { category: "feature", description: "Ministry tier provides full platform access" },
+      { category: "improvement", description: "Visual tier comparison in subscription manager" },
+    ]
+  },
+  {
+    version: "2.4.1",
+    date: "2025-12-10",
+    title: "Dashboard Quick Actions",
+    type: "patch",
+    changes: [
+      { category: "feature", description: "Reorganized quick actions for easier navigation" },
+      { category: "improvement", description: "Context-aware action suggestions" },
+      { category: "improvement", description: "Faster loading for dashboard widgets" },
+    ]
+  },
+  {
     version: "2.4.0",
     date: "2025-12-03",
     title: "Admin Gifting & Feature Customization",
