@@ -1,8 +1,7 @@
-// React context for authentication - cache bust v3
+// React context for authentication - cache bust v5
 import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
-import { useQueryClient } from '@tanstack/react-query';
 
 interface Profile {
   id: string;
@@ -34,7 +33,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
-  const queryClient = useQueryClient();
 
   const fetchProfile = async (userId: string) => {
     const { data, error } = await supabase
@@ -64,20 +62,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (session?.user) {
           // Use setTimeout to avoid potential Supabase deadlock
           setTimeout(() => fetchProfile(session.user.id), 0);
-          
-          // Clear all cached queries on sign in to force fresh data
-          if (event === 'SIGNED_IN') {
-            queryClient.invalidateQueries();
-            queryClient.clear();
-          }
         } else {
           setProfile(null);
-          
-          // Clear cache on sign out too
-          if (event === 'SIGNED_OUT') {
-            queryClient.invalidateQueries();
-            queryClient.clear();
-          }
         }
         
         setLoading(false);
@@ -97,7 +83,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
 
     return () => subscription.unsubscribe();
-  }, [queryClient]);
+  }, []);
 
   const signUp = async (email: string, password: string, fullName: string) => {
     const redirectUrl = `${window.location.origin}/dashboard`;
@@ -127,9 +113,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signOut = async () => {
     setProfile(null);
-    // Clear cache before signing out to ensure fresh state on next login
-    queryClient.invalidateQueries();
-    queryClient.clear();
     await supabase.auth.signOut();
   };
 
