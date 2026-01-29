@@ -172,7 +172,7 @@ export function AppSidebar() {
 
   const NavItem = ({ item, showProgress = false }: { item: { title: string; url: string; icon: React.ComponentType<{ className?: string }>; iconColor?: string; hasProgress?: boolean }; showProgress?: boolean }) => {
     const progress = showProgress && item.hasProgress ? getProgressForPath(item.url) : 0;
-    const hasProgressBar = showProgress && item.hasProgress && !collapsed && progress > 0;
+    const shouldShowProgressBar = showProgress && item.hasProgress && !collapsed;
     
     return (
       <SidebarMenuItem className="isolate mb-1">
@@ -192,10 +192,23 @@ export function AppSidebar() {
               <item.icon className={cn("h-4 w-4 shrink-0", item.iconColor)} />
               <span className="truncate">{item.title}</span>
             </div>
-            {hasProgressBar && (
+            {shouldShowProgressBar && (
               <div className="flex items-center gap-1.5 mt-1.5 ml-7">
-                <Progress value={progress} className="h-1 w-16" />
-                <span className="text-[10px] text-muted-foreground">{progress}%</span>
+                <Progress 
+                  value={progress} 
+                  className={cn(
+                    "h-1.5 w-20",
+                    progress === 100 && "[&>div]:bg-emerald-500"
+                  )} 
+                />
+                <span className={cn(
+                  "text-[10px] font-medium",
+                  progress === 0 && "text-muted-foreground",
+                  progress > 0 && progress < 100 && "text-primary",
+                  progress === 100 && "text-emerald-500"
+                )}>
+                  {progress}%
+                </span>
               </div>
             )}
           </NavLink>
