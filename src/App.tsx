@@ -28,7 +28,6 @@ import { AppLayout } from "@/components/layout/AppLayout";
 import { WhatsNewModal } from "@/components/WhatsNewModal";
 import { GlobalSEO } from "@/components/GlobalSEO";
 import { UpdateNotification } from "@/components/UpdateNotification";
-import { useAuthCacheInvalidation } from "@/hooks/use-auth-cache-invalidation";
 import { Loader2 } from "lucide-react";
 
 // Eager load critical pages
@@ -137,12 +136,6 @@ const PageLoader = () => (
   </div>
 );
 
-// Component to handle auth cache invalidation
-const AuthCacheInvalidator = ({ children }: { children: React.ReactNode }) => {
-  useAuthCacheInvalidation();
-  return <>{children}</>;
-};
-
 // Protected route wrapper with AppLayout
 const ProtectedPageWithLayout = ({ children }: { children: React.ReactNode }) => (
   <ProtectedRoute>
@@ -181,7 +174,6 @@ const App = () => (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <AuthCacheInvalidator>
             <DemoModeProvider>
               <DemoTemplateSelectorProvider>
                 <DemoFeaturesProvider>
@@ -490,7 +482,6 @@ const App = () => (
               </DemoFeaturesProvider>
             </DemoTemplateSelectorProvider>
             </DemoModeProvider>
-          </AuthCacheInvalidator>
         </AuthProvider>
       </QueryClientProvider>
     </ThemeProvider>
