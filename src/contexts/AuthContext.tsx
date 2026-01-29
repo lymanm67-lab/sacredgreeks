@@ -97,7 +97,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [queryClient]);
 
   const signUp = async (email: string, password: string, fullName: string) => {
     const redirectUrl = `${window.location.origin}/dashboard`;
@@ -127,6 +127,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signOut = async () => {
     setProfile(null);
+    // Clear cache before signing out to ensure fresh state on next login
+    queryClient.invalidateQueries();
+    queryClient.clear();
     await supabase.auth.signOut();
   };
 
