@@ -6,7 +6,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sparkles, Rocket, Bug, Shield, Zap } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 
-const APP_VERSION = '2.5.0';
+const APP_VERSION = '2.5.1';
 const VERSION_STORAGE_KEY = 'last-seen-version';
 
 interface ChangelogEntry {
@@ -20,6 +20,20 @@ interface ChangelogEntry {
 
 // Recent changelog entries to show
 const recentChanges: ChangelogEntry[] = [
+  {
+    version: '2.5.1',
+    date: '2026-01-29',
+    highlights: ['Sidebar Progress Bars', 'Remember Password', 'Enhanced Sign-In'],
+    features: [
+      'Progress bars now visible on all courses in sidebar menu',
+      'Remember password support with browser autofill',
+    ],
+    fixes: [],
+    improvements: [
+      'Color-coded progress status: muted (0%), primary (in-progress), emerald (complete)',
+      'Enhanced sign-in form with proper autocomplete attributes',
+    ],
+  },
   {
     version: '2.5.0',
     date: '2026-01-28',
