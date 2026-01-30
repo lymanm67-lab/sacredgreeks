@@ -1,4 +1,4 @@
-// Cache bust v5 - 2026-01-30 - NetworkFirst strategy + date display
+// Cache bust v6 - 2026-01-30 - Live preview cache fix + SW v8
 import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
