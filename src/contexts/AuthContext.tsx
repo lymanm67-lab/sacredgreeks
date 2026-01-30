@@ -62,6 +62,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (session?.user) {
           // Use setTimeout to avoid potential Supabase deadlock
           setTimeout(() => fetchProfile(session.user.id), 0);
+          
+          // On SIGNED_IN event, clear caches to ensure fresh preview
+          if (event === 'SIGNED_IN') {
+            // Clear service worker caches
+            if ('caches' in window) {
+              caches.keys().then(names => {
+                names.forEach(name => caches.delete(name));
+              });
+            }
+            // Unregister service worker to force fresh fetch
+            if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.getRegistrations().then(registrations => {
+                registrations.forEach(registration => {
+                  registration.update();
+                });
+              });
+            }
+          }
         } else {
           setProfile(null);
         }
