@@ -19,6 +19,18 @@ interface ChangelogEntry {
 
 const changelog: ChangelogEntry[] = [
   {
+    version: "2.5.4",
+    date: "2026-01-30T11:50:00-05:00",
+    title: "Auto-Refresh on Login & Idle Detection",
+    type: "patch",
+    changes: [
+      { category: "feature", description: "Automatic cache invalidation when users sign in for fresh content" },
+      { category: "feature", description: "Idle detection auto-refreshes page after 5+ minutes of inactivity" },
+      { category: "improvement", description: "Service worker updated on login to ensure latest app version" },
+      { category: "improvement", description: "Bumped SW cache to v10 for forced refresh" },
+    ]
+  },
+  {
     version: "2.5.3",
     date: "2026-01-30T07:45:00-05:00",
     title: "Live Preview Cache Fix",

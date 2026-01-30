@@ -6,7 +6,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sparkles, Rocket, Bug, Shield, Zap } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 
-const APP_VERSION = '2.5.3';
+const APP_VERSION = '2.5.4';
 const VERSION_STORAGE_KEY = 'last-seen-version';
 
 interface ChangelogEntry {
@@ -21,8 +21,22 @@ interface ChangelogEntry {
 // Recent changelog entries to show
 const recentChanges: ChangelogEntry[] = [
   {
+    version: '2.5.4',
+    date: '2026-01-30T11:50:00-05:00',
+    highlights: ['Auto-Refresh on Login', 'Idle Detection', 'Cache Invalidation'],
+    features: [
+      'Automatic cache invalidation when users sign in',
+      'Idle detection auto-refreshes page after 5+ minutes',
+    ],
+    fixes: [],
+    improvements: [
+      'Service worker updated on login for latest app version',
+      'SW cache bumped to v10 for forced refresh',
+    ],
+  },
+  {
     version: '2.5.3',
-    date: '2026-01-30T12:30:00-05:00',
+    date: '2026-01-30T07:45:00-05:00',
     highlights: ['Live Preview Fix', 'Cache Refresh', 'SW Update'],
     features: [],
     fixes: [

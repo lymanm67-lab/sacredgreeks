@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Current app version - update this when releasing new versions
-export const CURRENT_VERSION = '2.5.3';
+export const CURRENT_VERSION = '2.5.4';
 
 interface UpdateInfo {
   version: string;
@@ -19,14 +19,14 @@ interface UpdateInfo {
 // Latest update info to show in notification
 const latestUpdate: UpdateInfo = {
   version: CURRENT_VERSION,
-  title: 'Live Preview Cache Fix',
+  title: 'Auto-Refresh on Login & Idle Detection',
   highlights: [
-    'Fixed stale preview showing old UI after login',
-    'Service worker only caches index.html for offline',
-    'Bumped SW cache to v8 for forced refresh',
-    'Version query string ensures reliable SW updates'
+    'Automatic cache clear on sign-in for fresh content',
+    'Idle detection refreshes page after 5+ min inactivity',
+    'Service worker updated on login',
+    'SW cache bumped to v10'
   ],
-  date: '2026-01-30T07:45:00-05:00'
+  date: '2026-01-30T11:50:00-05:00'
 };
 
 const STORAGE_KEY = 'sacred-greeks-last-seen-version';
