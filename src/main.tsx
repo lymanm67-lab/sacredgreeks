@@ -23,7 +23,7 @@ if ('serviceWorker' in navigator) {
     
     if (isSecure) {
       // IMPORTANT: querystring ensures browser fetches the latest SW file after deploys
-      navigator.serviceWorker.register(`/sw.js?v=2.5.3-20260130b`)
+      navigator.serviceWorker.register(`/sw.js?v=2.5.3-20260130c`)
         .then(registration => {
           console.log('Service Worker registered:', registration);
           
