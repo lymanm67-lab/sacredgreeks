@@ -154,13 +154,15 @@ const Dashboard = () => {
         currentStreak: streak,
       };
       
-      const hasNoActivity = 
-        (assessmentCount || 0) === 0 && 
-        (prayerCount || 0) === 0 && 
-        !progressData?.devotional_completed &&
-        streak === 0;
-      
-      if (hasNoActivity) {
+      // Only show demo stats for truly new users with *zero* history.
+      // (Previously, we treated "no activity today" as "no activity at all",
+      // which could incorrectly force demo stats for returning users.)
+      const hasNoHistory =
+        (assessmentCount || 0) === 0 &&
+        (prayerCount || 0) === 0 &&
+        (!progressHistory || progressHistory.length === 0);
+
+      if (hasNoHistory) {
         setStats(DEMO_STATS);
         setIsDemoStats(true);
       } else {
