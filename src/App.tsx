@@ -1,4 +1,4 @@
-// Cache bust v3 - force fresh load
+// Cache bust v4 - force fresh load
 import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
