@@ -52,6 +52,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  // Helper to clear all caches and update service worker
+  const clearCachesAndRefresh = async (shouldReload = false) => {
+    // Clear service worker caches
+    if ('caches' in window) {
+      const names = await caches.keys();
+      await Promise.all(names.map(name => caches.delete(name)));
+    }
+    // Update service worker
+    if ('serviceWorker' in navigator) {
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(registrations.map(reg => reg.update()));
+    }
+    if (shouldReload) {
+      window.location.reload();
+    }
+  };
+
   useEffect(() => {
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -65,20 +82,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           
           // On SIGNED_IN event, clear caches to ensure fresh preview
           if (event === 'SIGNED_IN') {
-            // Clear service worker caches
-            if ('caches' in window) {
-              caches.keys().then(names => {
-                names.forEach(name => caches.delete(name));
-              });
-            }
-            // Unregister service worker to force fresh fetch
-            if ('serviceWorker' in navigator) {
-              navigator.serviceWorker.getRegistrations().then(registrations => {
-                registrations.forEach(registration => {
-                  registration.update();
-                });
-              });
-            }
+            clearCachesAndRefresh(false);
           }
         } else {
           setProfile(null);
@@ -101,6 +105,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
 
     return () => subscription.unsubscribe();
+  }, []);
+
+  // Idle detection - refresh when tab becomes visible after being hidden for 5+ minutes
+  useEffect(() => {
+    let hiddenAt: number | null = null;
+    const IDLE_THRESHOLD_MS = 5 * 60 * 1000; // 5 minutes
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        hiddenAt = Date.now();
+      } else if (hiddenAt && Date.now() - hiddenAt >= IDLE_THRESHOLD_MS) {
+        // Tab was hidden for 5+ minutes, clear caches and reload
+        console.log('Tab was idle, refreshing content...');
+        clearCachesAndRefresh(true);
+      } else {
+        hiddenAt = null;
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
   }, []);
 
   const signUp = async (email: string, password: string, fullName: string) => {
