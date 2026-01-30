@@ -19,6 +19,19 @@ interface ChangelogEntry {
 
 const changelog: ChangelogEntry[] = [
   {
+    version: "2.5.2",
+    date: "2026-01-30",
+    title: "Cache & Data Freshness Improvements",
+    type: "patch",
+    changes: [
+      { category: "feature", description: "Current date now displayed on dashboard hero section" },
+      { category: "fix", description: "Fixed stale data showing on dashboard by switching to NetworkFirst cache strategy" },
+      { category: "fix", description: "Demo stats no longer incorrectly shown for returning users with zero activity today" },
+      { category: "improvement", description: "Service worker cache timeout reduced to 3 seconds for faster fresh data" },
+      { category: "improvement", description: "Separate JS and CSS cache buckets for better cache management" },
+    ]
+  },
+  {
     version: "2.5.1",
     date: "2026-01-29",
     title: "Sidebar Progress & Sign-In Improvements",
