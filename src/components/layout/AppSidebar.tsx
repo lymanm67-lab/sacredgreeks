@@ -184,7 +184,7 @@ export function AppSidebar() {
           <NavLink 
             to={item.url} 
             className={cn(
-              "flex flex-col transition-colors py-2 px-3 -mx-3 rounded-md",
+              "flex flex-col items-start justify-start text-left transition-colors py-2 px-3 -mx-3 rounded-md w-full",
               isActive(item.url) && "text-primary font-medium"
             )}
           >
