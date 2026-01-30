@@ -1,5 +1,6 @@
 // Enhanced Service Worker for PWA with offline support
-const CACHE_NAME = 'sacred-greeks-v6';
+// Cache version - increment to force cache refresh on deploy
+const CACHE_NAME = 'sacred-greeks-v7';
 const RUNTIME_CACHE = 'sacred-greeks-runtime';
 const IMAGE_CACHE = 'sacred-greeks-images';
 
