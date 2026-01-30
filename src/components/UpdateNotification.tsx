@@ -26,7 +26,7 @@ const latestUpdate: UpdateInfo = {
     'Improved demo stats detection for returning users',
     'Enhanced service worker cache strategy'
   ],
-  date: '2026-01-30'
+  date: '2026-01-30T10:45:00-05:00'
 };
 
 const STORAGE_KEY = 'sacred-greeks-last-seen-version';
@@ -88,9 +88,13 @@ export function UpdateNotification() {
                         v{latestUpdate.version}
                       </Badge>
                       <span className="text-xs text-muted-foreground">
-                        {new Date(latestUpdate.date).toLocaleDateString('en-US', {
+                        {new Date(latestUpdate.date).toLocaleString('en-US', {
                           month: 'short',
-                          day: 'numeric'
+                          day: 'numeric',
+                          hour: 'numeric',
+                          minute: '2-digit',
+                          hour12: true,
+                          timeZone: 'America/New_York'
                         })}
                       </span>
                     </div>
