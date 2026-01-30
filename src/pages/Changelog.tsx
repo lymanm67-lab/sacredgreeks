@@ -19,6 +19,18 @@ interface ChangelogEntry {
 
 const changelog: ChangelogEntry[] = [
   {
+    version: "2.5.3",
+    date: "2026-01-30T12:30:00-05:00",
+    title: "Live Preview Cache Fix",
+    type: "patch",
+    changes: [
+      { category: "fix", description: "Fixed stale preview showing old UI after login by stopping per-route caching" },
+      { category: "fix", description: "Service worker now only caches index.html for offline fallback, not individual routes" },
+      { category: "improvement", description: "Bumped SW cache version to v8 to force cache refresh" },
+      { category: "improvement", description: "Added version query string to SW registration for reliable updates" },
+    ]
+  },
+  {
     version: "2.5.2",
     date: "2026-01-30T10:45:00-05:00",
     title: "Cache & Data Freshness Improvements",

@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Current app version - update this when releasing new versions
-export const CURRENT_VERSION = '2.5.2';
+export const CURRENT_VERSION = '2.5.3';
 
 interface UpdateInfo {
   version: string;
@@ -19,14 +19,14 @@ interface UpdateInfo {
 // Latest update info to show in notification
 const latestUpdate: UpdateInfo = {
   version: CURRENT_VERSION,
-  title: 'Cache & Data Freshness Improvements',
+  title: 'Live Preview Cache Fix',
   highlights: [
-    'Current date now shown on dashboard',
-    'NetworkFirst caching prevents stale data',
-    'Improved demo stats detection for returning users',
-    'Enhanced service worker cache strategy'
+    'Fixed stale preview showing old UI after login',
+    'Service worker only caches index.html for offline',
+    'Bumped SW cache to v8 for forced refresh',
+    'Version query string ensures reliable SW updates'
   ],
-  date: '2026-01-30T10:45:00-05:00'
+  date: '2026-01-30T12:30:00-05:00'
 };
 
 const STORAGE_KEY = 'sacred-greeks-last-seen-version';

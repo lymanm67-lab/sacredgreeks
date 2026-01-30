@@ -6,7 +6,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sparkles, Rocket, Bug, Shield, Zap } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 
-const APP_VERSION = '2.5.2';
+const APP_VERSION = '2.5.3';
 const VERSION_STORAGE_KEY = 'last-seen-version';
 
 interface ChangelogEntry {
@@ -20,6 +20,20 @@ interface ChangelogEntry {
 
 // Recent changelog entries to show
 const recentChanges: ChangelogEntry[] = [
+  {
+    version: '2.5.3',
+    date: '2026-01-30T12:30:00-05:00',
+    highlights: ['Live Preview Fix', 'Cache Refresh', 'SW Update'],
+    features: [],
+    fixes: [
+      'Fixed stale preview showing old UI after login',
+      'Service worker now only caches index.html for offline fallback',
+    ],
+    improvements: [
+      'Bumped SW cache version to v8 to force cache refresh',
+      'Added version query string to SW registration for reliable updates',
+    ],
+  },
   {
     version: '2.5.2',
     date: '2026-01-30T10:45:00-05:00',
