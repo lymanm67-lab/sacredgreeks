@@ -15,6 +15,8 @@ interface NavProgressData {
   journey: number;
   bibleStudy: number;
   prayerJournal: number;
+  faithSnapshot: number;
+  shatteredMasks: number;
 }
 
 export const useNavigationProgress = () => {
@@ -37,6 +39,8 @@ export const useNavigationProgress = () => {
           journey: 0,
           bibleStudy: 0,
           prayerJournal: 0,
+          faithSnapshot: 0,
+          shatteredMasks: 0,
         };
       }
 
@@ -89,13 +93,23 @@ export const useNavigationProgress = () => {
       
       const journey = Math.round(((journeyData?.length || 0) / 30) * 100);
 
-      // Fetch assessment submissions for PROOF Quiz
+      // Fetch assessment submissions for tracking completion
       const { data: assessmentData } = await supabase
         .from("assessment_submissions")
-        .select("id")
+        .select("id, scenario")
         .eq("user_id", user.id);
       
-      const proofQuiz = assessmentData && assessmentData.length > 0 ? 100 : 0;
+      const proofQuiz = assessmentData?.some(a => a.scenario === 'proof') ? 100 : 0;
+      const faithSnapshot = assessmentData?.some(a => a.scenario === 'faith-snapshot' || a.scenario === 'snapshot') ? 100 : 0;
+
+      // Fetch Shattered Masks results
+      const { data: masksData } = await supabase
+        .from("shattered_masks_results")
+        .select("id")
+        .eq("user_id", user.id)
+        .limit(1);
+      
+      const shatteredMasks = masksData && masksData.length > 0 ? 100 : 0;
 
       // Fetch prayer journal entries count
       const { count: prayerCount } = await supabase
@@ -128,6 +142,8 @@ export const useNavigationProgress = () => {
         journey,
         bibleStudy,
         prayerJournal,
+        faithSnapshot,
+        shatteredMasks,
       };
     },
     enabled: !!user,
@@ -142,6 +158,10 @@ export const useNavigationProgress = () => {
         return progressData.proofCourse;
       case "/proof-assessment":
         return progressData.proofQuiz;
+      case "/snapshot":
+        return progressData.faithSnapshot;
+      case "/shattered-masks":
+        return progressData.shatteredMasks;
       case "/ancient-guild-training":
         return progressData.guildTraining;
       case "/greek-life-training":
