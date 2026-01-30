@@ -69,13 +69,26 @@ export default defineConfig(({ mode }) => ({
             }
           },
           {
-            // JS/CSS files - stale while revalidate for faster loads but fresh content
-            urlPattern: /\.(js|css)$/,
-            handler: 'StaleWhileRevalidate',
+            // JS files - NetworkFirst to always get fresh code, fallback to cache
+            urlPattern: /\.js$/,
+            handler: 'NetworkFirst',
             options: {
-              cacheName: 'assets-cache',
+              cacheName: 'js-cache',
+              networkTimeoutSeconds: 3,
               expiration: {
                 maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24 // 24 hours
+              }
+            }
+          },
+          {
+            // CSS files - StaleWhileRevalidate is fine for styles
+            urlPattern: /\.css$/,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'css-cache',
+              expiration: {
+                maxEntries: 50,
                 maxAgeSeconds: 60 * 60 * 24 // 24 hours
               }
             }
