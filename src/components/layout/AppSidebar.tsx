@@ -79,9 +79,9 @@ const learningPathItems = [
 
 // Assessments section - easy access to all quizzes and assessments for earning points
 const assessmentItems = [
-  { title: "Faith Snapshot", url: "/snapshot", icon: Sparkles, featureId: null, iconColor: "text-blue-500", hasProgress: false, points: "+20 pts" },
-  { title: "PROOF Quiz", url: "/proof-assessment", icon: ClipboardCheck, featureId: null, iconColor: "text-emerald-500", hasProgress: false, points: "+20 pts" },
-  { title: "Shattered Masks", url: "/shattered-masks", icon: Drama, featureId: null, iconColor: "text-purple-500", hasProgress: false, points: "+25 pts" },
+  { title: "Faith Snapshot", url: "/snapshot", icon: Sparkles, featureId: null, iconColor: "text-blue-500", hasProgress: true, points: "+20 pts" },
+  { title: "PROOF Quiz", url: "/proof-assessment", icon: ClipboardCheck, featureId: null, iconColor: "text-emerald-500", hasProgress: true, points: "+20 pts" },
+  { title: "Shattered Masks", url: "/shattered-masks", icon: Drama, featureId: null, iconColor: "text-purple-500", hasProgress: true, points: "+25 pts" },
   { title: "Assessment History", url: "/assessment-history", icon: History, featureId: null, iconColor: "text-slate-500", hasProgress: false },
 ];
 
@@ -306,7 +306,7 @@ export function AppSidebar() {
             <SidebarGroupContent>
               <SidebarMenu>
                 {filteredAssessments.map((item) => (
-                  <NavItem key={item.url} item={item} />
+                  <NavItem key={item.url} item={item} showProgress />
                 ))}
               </SidebarMenu>
             </SidebarGroupContent>
