@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Sparkles, ChevronRight, Flame, Target, Zap } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useDemoMode } from '@/contexts/DemoModeContext';
@@ -37,12 +38,28 @@ export const HeroSection = () => {
   const { user } = useAuth();
   const { isDemoMode } = useDemoMode();
   const dailyScripture = scriptures[new Date().getDate() % scriptures.length];
+  const [currentTime, setCurrentTime] = useState(new Date());
+  
+  // Update time every minute
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 60000);
+    return () => clearInterval(timer);
+  }, []);
   
   const getGreeting = () => {
-    const hour = new Date().getHours();
+    const hour = currentTime.getHours();
     if (hour < 12) return "Good Morning";
     if (hour < 18) return "Good Afternoon";
     return "Good Evening";
+  };
+
+  const formatTime = () => {
+    return currentTime.toLocaleTimeString('en-US', { 
+      hour: 'numeric', 
+      minute: '2-digit',
+      hour12: true,
+      timeZone: 'America/New_York'
+    });
   };
 
   const firstName = user?.user_metadata?.full_name?.split(' ')[0] || 'Friend';
@@ -114,7 +131,11 @@ export const HeroSection = () => {
                 <span className="text-sm font-medium">{getGreeting()}</span>
                 <span className="text-white/50 mx-1">•</span>
                 <span className="text-xs text-white/60">
-                  {new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+                  {currentTime.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+                </span>
+                <span className="text-white/50 mx-1">•</span>
+                <span className="text-xs text-cyan-400 font-medium">
+                  {formatTime()}
                 </span>
               </div>
               <h1 className="text-2xl md:text-3xl font-bold text-white">
