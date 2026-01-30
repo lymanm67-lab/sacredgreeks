@@ -96,20 +96,32 @@ export const useNavigationProgress = () => {
       // Fetch assessment submissions for tracking completion
       const { data: assessmentData } = await supabase
         .from("assessment_submissions")
-        .select("id, scenario")
+        .select("id, scenario, track")
         .eq("user_id", user.id);
       
-      const proofQuiz = assessmentData?.some(a => a.scenario === 'proof') ? 100 : 0;
-      const faithSnapshot = assessmentData?.some(a => a.scenario === 'faith-snapshot' || a.scenario === 'snapshot') ? 100 : 0;
+      // PROOF Quiz - check for track='proof-quiz' or scenario='proof'
+      const proofQuiz = assessmentData?.some(a => 
+        a.track === 'proof-quiz' || a.scenario === 'proof'
+      ) ? 100 : 0;
+      
+      // Faith Snapshot - check for track='faith-snapshot'
+      const faithSnapshot = assessmentData?.some(a => 
+        a.track === 'faith-snapshot' || a.track === 'snapshot'
+      ) ? 100 : 0;
 
-      // Fetch Shattered Masks results
+      // Fetch Shattered Masks results from dedicated table
       const { data: masksData } = await supabase
         .from("shattered_masks_results")
         .select("id")
         .eq("user_id", user.id)
         .limit(1);
       
-      const shatteredMasks = masksData && masksData.length > 0 ? 100 : 0;
+      // Also check assessment_submissions for track='shattered-masks'
+      const shatteredMasksFromAssessment = assessmentData?.some(a => 
+        a.track === 'shattered-masks'
+      );
+      
+      const shatteredMasks = (masksData && masksData.length > 0) || shatteredMasksFromAssessment ? 100 : 0;
 
       // Fetch prayer journal entries count
       const { count: prayerCount } = await supabase
