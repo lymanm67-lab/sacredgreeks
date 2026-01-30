@@ -191,12 +191,6 @@ export function AppSidebar() {
             <div className="flex items-center gap-3">
               <item.icon className={cn("h-4 w-4 shrink-0", item.iconColor)} />
               <span className="truncate">{item.title}</span>
-              {/* Inline completion badge for completed items */}
-              {shouldShowProgressBar && progress === 100 && (
-                <Badge variant="secondary" className="ml-auto text-[9px] px-1.5 py-0 h-4 bg-emerald-500/10 text-emerald-600 border-emerald-500/20">
-                  ✓
-                </Badge>
-              )}
             </div>
             {/* Progress bar - always visible for tracked items */}
             {shouldShowProgressBar && (
