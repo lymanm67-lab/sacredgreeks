@@ -1,6 +1,6 @@
 // Enhanced Service Worker for PWA with offline support
 // Cache version - increment to force cache refresh on deploy
-const CACHE_NAME = 'sacred-greeks-v7';
+const CACHE_NAME = 'sacred-greeks-v8';
 const RUNTIME_CACHE = 'sacred-greeks-runtime';
 const IMAGE_CACHE = 'sacred-greeks-images';
 
@@ -131,11 +131,13 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(request)
         .then((response) => {
-          // Cache successful navigation responses
+          // IMPORTANT: Do NOT cache per-route HTML responses (e.g. /dashboard),
+          // because that can cause stale UI after deploys.
+          // Only keep index.html cached for offline fallback.
           if (response.ok) {
             const responseClone = response.clone();
             caches.open(CACHE_NAME).then((cache) => {
-              cache.put(request, responseClone);
+              cache.put('/index.html', responseClone);
             });
           }
           return response;

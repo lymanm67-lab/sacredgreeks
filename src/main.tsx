@@ -14,7 +14,7 @@ if (container) {
 }
 
 // Register service worker for offline support with Safari fallback
-// App version for cache busting - v2.5.1-20260130
+// App version for cache busting - v2.5.2-20260130
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     const isSecure = window.location.protocol === 'https:' || 
@@ -22,7 +22,8 @@ if ('serviceWorker' in navigator) {
                      window.location.hostname === '127.0.0.1';
     
     if (isSecure) {
-      navigator.serviceWorker.register('/sw.js')
+      // IMPORTANT: querystring ensures browser fetches the latest SW file after deploys
+      navigator.serviceWorker.register(`/sw.js?v=2.5.2-20260130`)
         .then(registration => {
           console.log('Service Worker registered:', registration);
           
