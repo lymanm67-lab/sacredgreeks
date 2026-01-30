@@ -26,7 +26,7 @@ const latestUpdate: UpdateInfo = {
     'Bumped SW cache to v8 for forced refresh',
     'Version query string ensures reliable SW updates'
   ],
-  date: '2026-01-30T12:30:00-05:00'
+  date: '2026-01-30T07:45:00-05:00'
 };
 
 const STORAGE_KEY = 'sacred-greeks-last-seen-version';
