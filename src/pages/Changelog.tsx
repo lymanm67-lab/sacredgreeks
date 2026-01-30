@@ -20,7 +20,7 @@ interface ChangelogEntry {
 const changelog: ChangelogEntry[] = [
   {
     version: "2.5.3",
-    date: "2026-01-30T12:30:00-05:00",
+    date: "2026-01-30T07:45:00-05:00",
     title: "Live Preview Cache Fix",
     type: "patch",
     changes: [
