@@ -176,7 +176,7 @@ export function AppSidebar() {
     const allowTwoRowLayout = shouldShowProgressBar;
     
     return (
-      <SidebarMenuItem className="isolate mb-1">
+      <SidebarMenuItem className="isolate">
         <SidebarMenuButton
           asChild
           isActive={isActive(item.url)}
@@ -190,28 +190,28 @@ export function AppSidebar() {
           <NavLink 
             to={item.url} 
             className={cn(
-              "flex flex-col !items-start !justify-start !text-left transition-colors py-2 px-3 -mx-3 rounded-md w-full",
+              "flex flex-col !items-start !justify-start !text-left transition-colors py-1.5 px-2 rounded-md w-full",
               isActive(item.url) && "text-primary font-medium"
             )}
           >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <item.icon className={cn("h-4 w-4 shrink-0", item.iconColor)} />
-              <span className="truncate">{item.title}</span>
+              <span className="truncate text-sm">{item.title}</span>
             </div>
             {/* Progress bar - always visible for tracked items */}
             {shouldShowProgressBar && (
-              <div className="flex items-center gap-2 mt-1.5 ml-7">
+              <div className="flex items-center gap-1.5 mt-1 ml-6">
                 <Progress 
                   value={progress} 
                   className={cn(
-                    "h-1.5 w-24 bg-muted/50",
+                    "h-1 w-20 bg-muted/50",
                     progress === 0 && "[&>div]:bg-muted-foreground/30",
                     progress > 0 && progress < 100 && "[&>div]:bg-primary",
                     progress === 100 && "[&>div]:bg-emerald-500"
                   )} 
                 />
                 <span className={cn(
-                  "text-[10px] font-medium min-w-[28px]",
+                  "text-[9px] font-medium min-w-[24px]",
                   progress === 0 && "text-muted-foreground/60",
                   progress > 0 && progress < 100 && "text-primary",
                   progress === 100 && "text-emerald-500"
@@ -273,7 +273,7 @@ export function AppSidebar() {
           <Collapsible open={learningPathOpen} onOpenChange={setLearningPathOpen}>
             <SidebarGroup>
               <CollapsibleTrigger className="w-full">
-                <SidebarGroupLabel className="!mb-4 flex items-center justify-between cursor-pointer hover:text-foreground transition-colors">
+                <SidebarGroupLabel className="flex items-center justify-between cursor-pointer hover:text-foreground transition-colors">
                   <span>Learning Path</span>
                   <ChevronDown className={cn(
                     "h-4 w-4 transition-transform duration-200",
