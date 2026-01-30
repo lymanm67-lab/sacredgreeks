@@ -237,7 +237,7 @@ export function AppSidebar() {
             <div className="flex flex-col">
               <span className="font-semibold text-foreground">Sacred Greeks</span>
               {profile?.greek_organization && (
-                <Badge variant="secondary" className="text-xs w-fit mt-0.5">
+                <Badge variant="secondary" className="text-[10px] w-fit mt-0.5 whitespace-nowrap">
                   {profile.greek_organization}
                 </Badge>
               )}
