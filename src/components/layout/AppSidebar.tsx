@@ -200,18 +200,18 @@ export function AppSidebar() {
             </div>
             {/* Progress bar - always visible for tracked items */}
             {shouldShowProgressBar && (
-              <div className="flex items-center gap-1.5 mt-1 ml-6">
+              <div className="flex items-center gap-1 ml-6">
                 <Progress 
                   value={progress} 
                   className={cn(
-                    "h-1 w-20 bg-muted/50",
+                    "h-0.5 w-14 bg-muted/50",
                     progress === 0 && "[&>div]:bg-muted-foreground/30",
                     progress > 0 && progress < 100 && "[&>div]:bg-primary",
                     progress === 100 && "[&>div]:bg-emerald-500"
                   )} 
                 />
                 <span className={cn(
-                  "text-[9px] font-medium min-w-[24px]",
+                  "text-[8px] font-medium",
                   progress === 0 && "text-muted-foreground/60",
                   progress > 0 && progress < 100 && "text-primary",
                   progress === 100 && "text-emerald-500"
@@ -282,7 +282,7 @@ export function AppSidebar() {
                 </SidebarGroupLabel>
               </CollapsibleTrigger>
               <CollapsibleContent>
-                <SidebarGroupContent className="pt-2">
+                <SidebarGroupContent>
                   <SidebarMenu>
                     {filteredLearningPath.map((item) => (
                       <NavItem key={item.url} item={item} showProgress />
