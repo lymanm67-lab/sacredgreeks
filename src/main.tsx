@@ -14,9 +14,9 @@ if (container) {
 }
 
 // Register service worker for offline support with Safari fallback
+// App version for cache busting - v2.5.1-20260130
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    // Check if we're on HTTPS or localhost (required for service workers)
     const isSecure = window.location.protocol === 'https:' || 
                      window.location.hostname === 'localhost' ||
                      window.location.hostname === '127.0.0.1';
@@ -25,12 +25,29 @@ if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js')
         .then(registration => {
           console.log('Service Worker registered:', registration);
+          
+          // Check for updates on registration
+          registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
+            if (newWorker) {
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  // New version available - skip waiting and reload
+                  newWorker.postMessage({ type: 'SKIP_WAITING' });
+                  window.location.reload();
+                }
+              });
+            }
+          });
         })
         .catch(error => {
           console.log('Service Worker registration failed:', error);
         });
-    } else {
-      console.log('Service Worker skipped: not on secure connection');
     }
+  });
+  
+  // Force reload when service worker takes control
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    window.location.reload();
   });
 }
