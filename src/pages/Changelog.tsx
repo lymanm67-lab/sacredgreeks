@@ -20,7 +20,7 @@ interface ChangelogEntry {
 const changelog: ChangelogEntry[] = [
   {
     version: "2.5.2",
-    date: "2026-01-30",
+    date: "2026-01-30T10:45:00-05:00",
     title: "Cache & Data Freshness Improvements",
     type: "patch",
     changes: [
@@ -33,7 +33,7 @@ const changelog: ChangelogEntry[] = [
   },
   {
     version: "2.5.1",
-    date: "2026-01-29",
+    date: "2026-01-29T15:30:00-05:00",
     title: "Sidebar Progress & Sign-In Improvements",
     type: "patch",
     changes: [
@@ -45,7 +45,7 @@ const changelog: ChangelogEntry[] = [
   },
   {
     version: "2.5.0",
-    date: "2026-01-28",
+    date: "2026-01-28T09:00:00-05:00",
     title: "Hidden in Plain Sight Course",
     type: "minor",
     changes: [
@@ -362,11 +362,15 @@ export default function Changelog() {
                     </div>
                     <div className="flex items-center text-muted-foreground text-sm">
                       <Calendar className="mr-1 h-4 w-4" />
-                      {new Date(entry.date).toLocaleDateString('en-US', {
+                      {new Date(entry.date).toLocaleString('en-US', {
                         year: 'numeric',
                         month: 'long',
-                        day: 'numeric'
-                      })}
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        hour12: true,
+                        timeZone: 'America/New_York'
+                      })} EST
                     </div>
                   </div>
                   {index === 0 && (
