@@ -22,7 +22,7 @@ interface ChangelogEntry {
 const recentChanges: ChangelogEntry[] = [
   {
     version: '2.5.2',
-    date: '2026-01-30',
+    date: '2026-01-30T10:45:00-05:00',
     highlights: ['Cache & Data Freshness', 'Current Date Display', 'NetworkFirst Caching'],
     features: [
       'Current date now shown on dashboard',
@@ -36,7 +36,7 @@ const recentChanges: ChangelogEntry[] = [
   },
   {
     version: '2.5.1',
-    date: '2026-01-29',
+    date: '2026-01-29T15:30:00-05:00',
     highlights: ['Sidebar Progress Bars', 'Remember Password', 'Enhanced Sign-In'],
     features: [
       'Progress bars now visible on all courses in sidebar menu',
@@ -50,7 +50,7 @@ const recentChanges: ChangelogEntry[] = [
   },
   {
     version: '2.5.0',
-    date: '2026-01-28',
+    date: '2026-01-28T09:00:00-05:00',
     highlights: ['Hidden in Plain Sight Course', 'Interactive Modules', 'TTS Narration'],
     features: [
       'New "Hidden in Plain Sight" course exploring pagan roots in American & Christian traditions',
@@ -65,7 +65,7 @@ const recentChanges: ChangelogEntry[] = [
   },
   {
     version: '2.4.0',
-    date: '2025-12-03',
+    date: '2025-12-03T14:00:00-05:00',
     highlights: ['Admin Gift Subscriptions', 'Feature Customization', 'Tiered Access'],
     features: [
       'Admin gift subscription manager - gift Pro or Ministry access to users',
@@ -80,7 +80,7 @@ const recentChanges: ChangelogEntry[] = [
   },
   {
     version: '2.3.0',
-    date: '2025-12-02',
+    date: '2025-12-02T11:00:00-05:00',
     highlights: ['Personalization', 'Dashboard Updates', 'Mobile Improvements'],
     features: [
       'Personalization survey for new users',
@@ -146,7 +146,7 @@ export function WhatsNewModal() {
             <div>
               <DialogTitle className="text-xl">What's New</DialogTitle>
               <DialogDescription className="text-sm">
-                Version {latestEntry.version} • {latestEntry.date}
+                Version {latestEntry.version} • {new Date(latestEntry.date).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'America/New_York' })}
               </DialogDescription>
             </div>
           </div>
