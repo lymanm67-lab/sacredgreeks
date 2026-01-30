@@ -174,10 +174,10 @@ export const useNavigationProgress = () => {
         return progressData.faithSnapshot;
       case "/shattered-masks":
         return progressData.shatteredMasks;
-      case "/ancient-guild-training":
-        return progressData.guildTraining;
       case "/greek-life-training":
         return progressData.greekLifeTraining;
+      case "/ancient-guild-training":
+        return progressData.guildTraining;
       case "/myth-buster":
         return progressData.mythBuster;
       case "/faith-authority":
