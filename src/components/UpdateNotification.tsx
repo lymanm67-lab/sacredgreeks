@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Current app version - update this when releasing new versions
-export const CURRENT_VERSION = '2.5.1';
+export const CURRENT_VERSION = '2.5.2';
 
 interface UpdateInfo {
   version: string;
@@ -19,14 +19,14 @@ interface UpdateInfo {
 // Latest update info to show in notification
 const latestUpdate: UpdateInfo = {
   version: CURRENT_VERSION,
-  title: 'Sidebar Progress & Sign-In Improvements',
+  title: 'Cache & Data Freshness Improvements',
   highlights: [
-    'Progress bars on all courses in sidebar menu',
-    'Remember password with browser autofill',
-    'Color-coded completion status',
-    'Enhanced sign-in experience'
+    'Current date now shown on dashboard',
+    'NetworkFirst caching prevents stale data',
+    'Improved demo stats detection for returning users',
+    'Enhanced service worker cache strategy'
   ],
-  date: '2026-01-29'
+  date: '2026-01-30'
 };
 
 const STORAGE_KEY = 'sacred-greeks-last-seen-version';

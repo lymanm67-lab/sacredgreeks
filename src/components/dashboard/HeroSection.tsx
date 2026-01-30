@@ -112,6 +112,10 @@ export const HeroSection = () => {
               <div className="flex items-center gap-2 text-white/80">
                 <Sparkles className="w-4 h-4 text-amber-400" />
                 <span className="text-sm font-medium">{getGreeting()}</span>
+                <span className="text-white/50 mx-1">•</span>
+                <span className="text-xs text-white/60">
+                  {new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+                </span>
               </div>
               <h1 className="text-2xl md:text-3xl font-bold text-white">
                 {firstName}

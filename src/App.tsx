@@ -1,4 +1,4 @@
-// Cache bust v4 - force fresh load
+// Cache bust v5 - 2026-01-30 - NetworkFirst strategy + date display
 import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
