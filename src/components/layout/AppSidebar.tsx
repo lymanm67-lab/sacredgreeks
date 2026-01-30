@@ -179,7 +179,7 @@ export function AppSidebar() {
         <SidebarMenuButton
           asChild
           isActive={isActive(item.url)}
-          tooltip={collapsed ? item.title : undefined}
+          tooltip={collapsed ? `${item.title} (${progress}%)` : undefined}
         >
           <NavLink 
             to={item.url} 
@@ -191,19 +191,28 @@ export function AppSidebar() {
             <div className="flex items-center gap-3">
               <item.icon className={cn("h-4 w-4 shrink-0", item.iconColor)} />
               <span className="truncate">{item.title}</span>
+              {/* Inline completion badge for completed items */}
+              {shouldShowProgressBar && progress === 100 && (
+                <Badge variant="secondary" className="ml-auto text-[9px] px-1.5 py-0 h-4 bg-emerald-500/10 text-emerald-600 border-emerald-500/20">
+                  ✓
+                </Badge>
+              )}
             </div>
+            {/* Progress bar - always visible for tracked items */}
             {shouldShowProgressBar && (
-              <div className="flex items-center gap-1.5 mt-1.5 ml-7">
+              <div className="flex items-center gap-2 mt-1.5 ml-7">
                 <Progress 
                   value={progress} 
                   className={cn(
-                    "h-1.5 w-20",
+                    "h-1.5 w-24 bg-muted/50",
+                    progress === 0 && "[&>div]:bg-muted-foreground/30",
+                    progress > 0 && progress < 100 && "[&>div]:bg-primary",
                     progress === 100 && "[&>div]:bg-emerald-500"
                   )} 
                 />
                 <span className={cn(
-                  "text-[10px] font-medium",
-                  progress === 0 && "text-muted-foreground",
+                  "text-[10px] font-medium min-w-[28px]",
+                  progress === 0 && "text-muted-foreground/60",
                   progress > 0 && progress < 100 && "text-primary",
                   progress === 100 && "text-emerald-500"
                 )}>
