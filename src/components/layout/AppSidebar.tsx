@@ -173,6 +173,7 @@ export function AppSidebar() {
   const NavItem = ({ item, showProgress = false }: { item: { title: string; url: string; icon: React.ComponentType<{ className?: string }>; iconColor?: string; hasProgress?: boolean }; showProgress?: boolean }) => {
     const progress = showProgress && item.hasProgress ? getProgressForPath(item.url) : 0;
     const shouldShowProgressBar = showProgress && item.hasProgress && !collapsed;
+    const allowTwoRowLayout = shouldShowProgressBar;
     
     return (
       <SidebarMenuItem className="isolate mb-1">
@@ -180,6 +181,11 @@ export function AppSidebar() {
           asChild
           isActive={isActive(item.url)}
           tooltip={collapsed ? `${item.title} (${progress}%)` : undefined}
+          className={cn(
+            // SidebarMenuButton default styles enforce a fixed height (h-8) + overflow-hidden,
+            // which clips our second-row progress UI. Override only when we render progress.
+            allowTwoRowLayout && "!h-auto !items-start !overflow-visible"
+          )}
         >
           <NavLink 
             to={item.url} 
