@@ -14,18 +14,37 @@ if (container) {
 }
 
 // Register service worker for offline support with Safari fallback
-// App version for cache busting - v2.5.2-20260130
+// App version for cache busting - v2.5.4-20260131
+const APP_SW_VERSION = '2.5.4-20260131';
+
+// Clear stale caches on app start
+async function clearStaleCaches() {
+  if ('caches' in window) {
+    const cacheNames = await caches.keys();
+    const staleCaches = cacheNames.filter(name => 
+      !name.includes('v11') // Keep only current cache version
+    );
+    await Promise.all(staleCaches.map(name => caches.delete(name)));
+  }
+}
+
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
+  window.addEventListener('load', async () => {
+    // Clear stale caches immediately on load
+    await clearStaleCaches();
+    
     const isSecure = window.location.protocol === 'https:' || 
                      window.location.hostname === 'localhost' ||
                      window.location.hostname === '127.0.0.1';
     
     if (isSecure) {
       // IMPORTANT: querystring ensures browser fetches the latest SW file after deploys
-      navigator.serviceWorker.register(`/sw.js?v=2.5.3-20260130c`)
+      navigator.serviceWorker.register(`/sw.js?v=${APP_SW_VERSION}`)
         .then(registration => {
           console.log('Service Worker registered:', registration);
+          
+          // Force update check immediately
+          registration.update();
           
           // Check for updates on registration
           registration.addEventListener('updatefound', () => {
