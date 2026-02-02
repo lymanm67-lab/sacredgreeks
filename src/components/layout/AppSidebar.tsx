@@ -151,7 +151,16 @@ export function AppSidebar() {
   const { preferences } = useSidebarPreferences();
   const { isFeatureVisible } = useFeaturePreferences();
   const { getProgressForPath } = useNavigationProgress();
+  
+  // Collapsible states for each section
   const [learningPathOpen, setLearningPathOpen] = useState(true);
+  const [assessmentsOpen, setAssessmentsOpen] = useState(true);
+  const [spiritualOpen, setSpiritualOpen] = useState(true);
+  const [communityOpen, setCommunityOpen] = useState(true);
+  const [aboutOpen, setAboutOpen] = useState(false);
+  const [podcastOpen, setPodcastOpen] = useState(false);
+  const [resourcesOpen, setResourcesOpen] = useState(false);
+  const [systemOpen, setSystemOpen] = useState(false);
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -308,105 +317,189 @@ export function AppSidebar() {
 
         {/* Assessments Section - Earn Points */}
         {filteredAssessments.length > 0 && (
-          <SidebarGroup>
-            <SidebarGroupLabel className="flex items-center gap-2">
-              <span>Assessments</span>
-              <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 bg-primary/10 text-primary">
-                Earn Points
-              </Badge>
-            </SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {filteredAssessments.map((item) => (
-                  <NavItem key={item.url} item={item} showProgress />
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
+          <Collapsible open={assessmentsOpen} onOpenChange={setAssessmentsOpen}>
+            <SidebarGroup>
+              <CollapsibleTrigger className="w-full">
+                <SidebarGroupLabel className="flex items-center justify-between cursor-pointer hover:text-foreground transition-colors">
+                  <span className="flex items-center gap-2">
+                    Assessments
+                    <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 bg-primary/10 text-primary">
+                      Earn Points
+                    </Badge>
+                  </span>
+                  <ChevronDown className={cn(
+                    "h-4 w-4 transition-transform duration-200",
+                    assessmentsOpen ? "rotate-0" : "-rotate-90"
+                  )} />
+                </SidebarGroupLabel>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {filteredAssessments.map((item) => (
+                      <NavItem key={item.url} item={item} showProgress />
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </CollapsibleContent>
+            </SidebarGroup>
+          </Collapsible>
         )}
 
         {/* Spiritual Practices Section */}
         {preferences.showMain && filteredSpiritualPractices.length > 0 && (
-          <SidebarGroup>
-            <SidebarGroupLabel>Spiritual Practices</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {filteredSpiritualPractices.map((item) => (
-                  <NavItem key={item.url} item={item} showProgress />
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
+          <Collapsible open={spiritualOpen} onOpenChange={setSpiritualOpen}>
+            <SidebarGroup>
+              <CollapsibleTrigger className="w-full">
+                <SidebarGroupLabel className="flex items-center justify-between cursor-pointer hover:text-foreground transition-colors">
+                  <span>Spiritual Practices</span>
+                  <ChevronDown className={cn(
+                    "h-4 w-4 transition-transform duration-200",
+                    spiritualOpen ? "rotate-0" : "-rotate-90"
+                  )} />
+                </SidebarGroupLabel>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {filteredSpiritualPractices.map((item) => (
+                      <NavItem key={item.url} item={item} showProgress />
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </CollapsibleContent>
+            </SidebarGroup>
+          </Collapsible>
         )}
 
         {/* Community Section */}
         {filteredCommunity.length > 0 && (
-          <SidebarGroup>
-            <SidebarGroupLabel>Greek Community</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {filteredCommunity.map((item) => (
-                  <NavItem key={item.url} item={item} />
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
+          <Collapsible open={communityOpen} onOpenChange={setCommunityOpen}>
+            <SidebarGroup>
+              <CollapsibleTrigger className="w-full">
+                <SidebarGroupLabel className="flex items-center justify-between cursor-pointer hover:text-foreground transition-colors">
+                  <span>Greek Community</span>
+                  <ChevronDown className={cn(
+                    "h-4 w-4 transition-transform duration-200",
+                    communityOpen ? "rotate-0" : "-rotate-90"
+                  )} />
+                </SidebarGroupLabel>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {filteredCommunity.map((item) => (
+                      <NavItem key={item.url} item={item} />
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </CollapsibleContent>
+            </SidebarGroup>
+          </Collapsible>
         )}
 
         {/* About Dr. Lyman Section */}
         {filteredAboutDrLyman.length > 0 && (
-          <SidebarGroup>
-            <SidebarGroupLabel>About Dr. Lyman</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {filteredAboutDrLyman.map((item) => (
-                  <NavItem key={item.url} item={item} />
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
+          <Collapsible open={aboutOpen} onOpenChange={setAboutOpen}>
+            <SidebarGroup>
+              <CollapsibleTrigger className="w-full">
+                <SidebarGroupLabel className="flex items-center justify-between cursor-pointer hover:text-foreground transition-colors">
+                  <span>About Dr. Lyman</span>
+                  <ChevronDown className={cn(
+                    "h-4 w-4 transition-transform duration-200",
+                    aboutOpen ? "rotate-0" : "-rotate-90"
+                  )} />
+                </SidebarGroupLabel>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {filteredAboutDrLyman.map((item) => (
+                      <NavItem key={item.url} item={item} />
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </CollapsibleContent>
+            </SidebarGroup>
+          </Collapsible>
         )}
 
         {/* Podcast Section */}
         {filteredPodcast.length > 0 && (
-          <SidebarGroup>
-            <SidebarGroupLabel>Podcast</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {filteredPodcast.map((item) => (
-                  <NavItem key={item.url} item={item} />
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
+          <Collapsible open={podcastOpen} onOpenChange={setPodcastOpen}>
+            <SidebarGroup>
+              <CollapsibleTrigger className="w-full">
+                <SidebarGroupLabel className="flex items-center justify-between cursor-pointer hover:text-foreground transition-colors">
+                  <span>Podcast</span>
+                  <ChevronDown className={cn(
+                    "h-4 w-4 transition-transform duration-200",
+                    podcastOpen ? "rotate-0" : "-rotate-90"
+                  )} />
+                </SidebarGroupLabel>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {filteredPodcast.map((item) => (
+                      <NavItem key={item.url} item={item} />
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </CollapsibleContent>
+            </SidebarGroup>
+          </Collapsible>
         )}
 
         {/* Resources Section */}
         {filteredResources.length > 0 && (
-          <SidebarGroup>
-            <SidebarGroupLabel>Resources</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {filteredResources.map((item) => (
-                  <NavItem key={item.url} item={item} />
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
+          <Collapsible open={resourcesOpen} onOpenChange={setResourcesOpen}>
+            <SidebarGroup>
+              <CollapsibleTrigger className="w-full">
+                <SidebarGroupLabel className="flex items-center justify-between cursor-pointer hover:text-foreground transition-colors">
+                  <span>Resources</span>
+                  <ChevronDown className={cn(
+                    "h-4 w-4 transition-transform duration-200",
+                    resourcesOpen ? "rotate-0" : "-rotate-90"
+                  )} />
+                </SidebarGroupLabel>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {filteredResources.map((item) => (
+                      <NavItem key={item.url} item={item} />
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </CollapsibleContent>
+            </SidebarGroup>
+          </Collapsible>
         )}
 
         {/* System Section */}
         {filteredSystem.length > 0 && (
-          <SidebarGroup>
-            <SidebarGroupLabel>System</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {filteredSystem.map((item) => (
-                  <NavItem key={item.url} item={item} />
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
+          <Collapsible open={systemOpen} onOpenChange={setSystemOpen}>
+            <SidebarGroup>
+              <CollapsibleTrigger className="w-full">
+                <SidebarGroupLabel className="flex items-center justify-between cursor-pointer hover:text-foreground transition-colors">
+                  <span>System</span>
+                  <ChevronDown className={cn(
+                    "h-4 w-4 transition-transform duration-200",
+                    systemOpen ? "rotate-0" : "-rotate-90"
+                  )} />
+                </SidebarGroupLabel>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {filteredSystem.map((item) => (
+                      <NavItem key={item.url} item={item} />
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </CollapsibleContent>
+            </SidebarGroup>
+          </Collapsible>
         )}
       </SidebarContent>
 
