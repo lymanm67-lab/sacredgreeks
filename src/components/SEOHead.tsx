@@ -19,9 +19,9 @@ interface SEOHeadProps {
 }
 
 const defaultMeta = {
-  title: 'Sacred Greeks Life App - Daily Devotionals & Faith Guidance',
-  description: 'Your daily companion for navigating faith and Greek life. Get devotionals, biblical guidance, prayer tools, and progress tracking grounded in the P.R.O.O.F. framework.',
-  keywords: 'Sacred Greeks, Greek life, Christian fraternity, Christian sorority, BGLO, Divine Nine, faith and Greek life, daily devotional',
+  title: 'Sacred Greeks Life - #1 Christian Greek Life App | Faith & Fraternity Guide',
+  description: 'The leading faith-based app for Christians in Greek life. Daily devotionals, P.R.O.O.F. framework, prayer tools & Bible study for Divine Nine, BGLO & all Greek organizations. Free by Dr. Lyman Montgomery.',
+  keywords: 'Christian Greek life app, faith and fraternity, Christian sorority resources, Divine Nine faith, BGLO Christian, NPHC spiritual growth, P.R.O.O.F. framework, Greek life biblical guidance, Sacred Greeks, Christian devotionals',
   image: 'https://sacredgreekslife.com/icon-512.png',
   baseUrl: 'https://sacredgreekslife.com'
 };
