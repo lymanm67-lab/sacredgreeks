@@ -270,6 +270,20 @@
     <priority>0.65</priority>
   </url>
   
+  <!-- D9 Business Directory -->
+  <url>
+    <loc>https://sacredgreekslife.com/business-directory</loc>
+    <lastmod>2026-02-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/submit-business</loc>
+    <lastmod>2026-02-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  
   <!-- SEO Landing Pages - High Priority Keyword Pages -->
   <url>
     <loc>https://sacredgreekslife.com/christian-greek-life</loc>
