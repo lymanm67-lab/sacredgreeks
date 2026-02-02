@@ -48,17 +48,24 @@ export function AppLayout({ children }: AppLayoutProps) {
   const handleReturnToPresentation = useCallback((slideIndex: number) => {
     console.log('[AppLayout] handleReturnToPresentation called with slide:', slideIndex);
     
-    // Close first if already open (ensures clean re-open)
-    setShowSlideshow(false);
-    
-    // Set slide first, then open on next frame to ensure state is ready
+    // Set slide index first
     setInitialSlide(slideIndex);
     
-    // Use double requestAnimationFrame to ensure React has processed the state updates
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        console.log('[AppLayout] Opening slideshow at slide:', slideIndex);
-        setShowSlideshow(true);
+    // If already showing, we need to close and reopen to trigger the slide change
+    // Use a microtask to ensure the initialSlide state is set first
+    Promise.resolve().then(() => {
+      setShowSlideshow(prev => {
+        if (prev) {
+          // Force close and reopen
+          setTimeout(() => {
+            console.log('[AppLayout] Reopening slideshow at slide:', slideIndex);
+            setShowSlideshow(true);
+          }, 50);
+          return false;
+        } else {
+          console.log('[AppLayout] Opening slideshow at slide:', slideIndex);
+          return true;
+        }
       });
     });
   }, []);
