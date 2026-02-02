@@ -36,8 +36,10 @@ export interface GreekCostData {
   financialProgram?: {
     name: string;
     description: string;
+    url?: string;
   };
   sources: string[];
+  officialWebsite: string;
 }
 
 export const D9_COST_DATA: GreekCostData[] = [
@@ -67,9 +69,11 @@ export const D9_COST_DATA: GreekCostData[] = [
     },
     financialProgram: {
       name: 'Go-to-High-School, Go-to-College',
-      description: 'Education access including FAFSA completion and scholarship guidance'
+      description: 'Education access including FAFSA completion and scholarship guidance',
+      url: 'https://apa1906.net/programs/'
     },
-    sources: ['Auburn University Greek Life 2025', 'Alpha Phi Alpha Official']
+    sources: ['Auburn University Greek Life 2025', 'Alpha Phi Alpha Official'],
+    officialWebsite: 'https://apa1906.net'
   },
   {
     organization: 'Alpha Kappa Alpha Sorority, Inc.',
@@ -97,9 +101,11 @@ export const D9_COST_DATA: GreekCostData[] = [
     },
     financialProgram: {
       name: 'Economic Advancement Foundation (EAF)',
-      description: 'Wealth building, business ownership, and financial planning initiatives'
+      description: 'Wealth building, business ownership, and financial planning initiatives',
+      url: 'https://aka1908.com/programs/target-programs'
     },
-    sources: ['Auburn University Greek Life 2025', 'University of Arizona 2025', 'AKA Official']
+    sources: ['Auburn University Greek Life 2025', 'University of Arizona 2025', 'AKA Official'],
+    officialWebsite: 'https://aka1908.com'
   },
   {
     organization: 'Kappa Alpha Psi Fraternity, Inc.',
@@ -127,9 +133,11 @@ export const D9_COST_DATA: GreekCostData[] = [
     },
     financialProgram: {
       name: 'Guide Right Program',
-      description: 'Youth mentorship including career prep and financial responsibility education'
+      description: 'Youth mentorship including career prep and financial responsibility education',
+      url: 'https://kappaalphapsi1911.com/guide-right/'
     },
-    sources: ['Auburn University Greek Life 2025', 'Kappa Alpha Psi Official']
+    sources: ['Auburn University Greek Life 2025', 'Kappa Alpha Psi Official'],
+    officialWebsite: 'https://kappaalphapsi1911.com'
   },
   {
     organization: 'Omega Psi Phi Fraternity, Inc.',
@@ -157,9 +165,11 @@ export const D9_COST_DATA: GreekCostData[] = [
     },
     financialProgram: {
       name: 'Uplift Program',
-      description: 'Community uplift through mentorship and financial literacy for families'
+      description: 'Community uplift through mentorship and financial literacy for families',
+      url: 'https://oppf.org/programs/'
     },
-    sources: ['Auburn University Greek Life 2025', 'Kappa Tau Chapter Omega Psi Phi']
+    sources: ['Auburn University Greek Life 2025', 'Kappa Tau Chapter Omega Psi Phi'],
+    officialWebsite: 'https://oppf.org'
   },
   {
     organization: 'Delta Sigma Theta Sorority, Inc.',
@@ -187,9 +197,11 @@ export const D9_COST_DATA: GreekCostData[] = [
     },
     financialProgram: {
       name: 'Financial Fortitude Initiative',
-      description: 'Debt elimination, emergency savings, and investing basics for communities'
+      description: 'Debt elimination, emergency savings, and investing basics for communities',
+      url: 'https://www.deltasigmatheta.org/financial-fortitude'
     },
-    sources: ['Auburn University Greek Life 2025', 'DST Official', 'SBRAAC Chapter']
+    sources: ['Auburn University Greek Life 2025', 'DST Official', 'SBRAAC Chapter'],
+    officialWebsite: 'https://www.deltasigmatheta.org'
   },
   {
     organization: 'Phi Beta Sigma Fraternity, Inc.',
@@ -217,9 +229,11 @@ export const D9_COST_DATA: GreekCostData[] = [
     },
     financialProgram: {
       name: 'John Hope Franklin Financial Literacy Program',
-      description: 'Named after renowned historian, empowers communities with financial education rooted in economic justice'
+      description: 'Named after renowned historian, empowers communities with financial education rooted in economic justice',
+      url: 'https://phibetasigma1914.org/programs/social-action/'
     },
-    sources: ['Auburn University Greek Life 2025', 'Phi Beta Sigma Official']
+    sources: ['Auburn University Greek Life 2025', 'Phi Beta Sigma Official'],
+    officialWebsite: 'https://phibetasigma1914.org'
   },
   {
     organization: 'Zeta Phi Beta Sorority, Inc.',
@@ -247,9 +261,11 @@ export const D9_COST_DATA: GreekCostData[] = [
     },
     financialProgram: {
       name: 'Z-HOPE (Zetas Helping Other People Excel)',
-      description: 'Holistic community wellness including financial resource distribution'
+      description: 'Holistic community wellness including financial resource distribution',
+      url: 'https://zphib1920.org/z-hope/'
     },
-    sources: ['Auburn University Greek Life 2025', 'Zeta Phi Beta Official']
+    sources: ['Auburn University Greek Life 2025', 'Zeta Phi Beta Official'],
+    officialWebsite: 'https://zphib1920.org'
   },
   {
     organization: 'Sigma Gamma Rho Sorority, Inc.',
@@ -277,9 +293,11 @@ export const D9_COST_DATA: GreekCostData[] = [
     },
     financialProgram: {
       name: 'Project Reassurance',
-      description: 'Supporting families through practical assistance including financial counseling'
+      description: 'Supporting families through practical assistance including financial counseling',
+      url: 'https://sgrho1922.org/programs'
     },
-    sources: ['Auburn University Greek Life 2025', 'Sigma Gamma Rho Official']
+    sources: ['Auburn University Greek Life 2025', 'Sigma Gamma Rho Official'],
+    officialWebsite: 'https://sgrho1922.org'
   },
   {
     organization: 'Iota Phi Theta Fraternity, Inc.',
@@ -307,9 +325,11 @@ export const D9_COST_DATA: GreekCostData[] = [
     },
     financialProgram: {
       name: 'Iota Youth Alliance',
-      description: 'Mentoring programs including financial literacy and career pathway development'
+      description: 'Mentoring programs including financial literacy and career pathway development',
+      url: 'https://iotaphitheta.org/programs/'
     },
-    sources: ['Iota Phi Theta Official', 'University estimates']
+    sources: ['Iota Phi Theta Official', 'University estimates'],
+    officialWebsite: 'https://iotaphitheta.org'
   }
 ];
 
