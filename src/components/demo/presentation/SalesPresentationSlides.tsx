@@ -257,6 +257,36 @@ export const salesPresentationSlides: PresentationSlide[] = [
     ]
   },
   {
+    id: 'close',
+    title: 'Why Partner With Sacred Greeks?',
+    subtitle: 'Next Steps for Your Organization',
+    icon: <Rocket className="w-12 h-12 text-sacred" />,
+    image: slideClose,
+    duration: '3-4 min',
+    presenterNotes: [
+      'Summarize the value proposition',
+      'Emphasize: 100% FREE — no budget approval needed',
+      'PWA works on any device — no app store friction',
+      'Transition to Q&A slide for questions'
+    ],
+    keyPoints: [
+      '100% Free — No budget approval needed',
+      'PWA — Works on any device, no app store',
+      'Instant access — Members can start today',
+      'Growing community of 750+ chapters'
+    ],
+    stats: [
+      { label: 'Cost', value: '$0' },
+      { label: 'Chapters in Database', value: '750+' },
+      { label: 'Time to Start', value: 'Instant' }
+    ],
+    actionItems: [
+      'Share link with your chapter leaders',
+      'Add to new member orientation',
+      'Connect with us for speaking opportunities'
+    ]
+  },
+  {
     id: 'qa',
     title: 'Questions & Answers',
     subtitle: 'Let\'s Discuss How Sacred Greeks Can Serve Your Organization',
@@ -281,38 +311,6 @@ export const salesPresentationSlides: PresentationSlide[] = [
       'No app store download required — works instantly',
       'Resources work offline via PWA',
       'We\'re here to support your chapter\'s faith journey'
-    ]
-  },
-  {
-    id: 'close',
-    title: 'Why Partner With Sacred Greeks?',
-    subtitle: 'Next Steps for Your Organization',
-    icon: <Rocket className="w-12 h-12 text-sacred" />,
-    image: slideClose,
-    duration: '3-4 min',
-    showQRCode: true,
-    presenterNotes: [
-      'Summarize the value proposition',
-      'Emphasize: 100% FREE — no budget approval needed',
-      'PWA works on any device — no app store friction',
-      'Have them scan QR code right now to install'
-    ],
-    keyPoints: [
-      '100% Free — No budget approval needed',
-      'PWA — Works on any device, no app store',
-      'Instant access — Members can start today',
-      'Growing community of 750+ chapters'
-    ],
-    stats: [
-      { label: 'Cost', value: '$0' },
-      { label: 'Chapters in Database', value: '750+' },
-      { label: 'Time to Start', value: 'Instant' }
-    ],
-    actionItems: [
-      'Scan QR code to install on your phone now',
-      'Share link with your chapter leaders',
-      'Add to new member orientation',
-      'Connect with us for speaking opportunities'
     ]
   }
 ];
