@@ -5,6 +5,26 @@ import { useBackgroundAudio } from "./use-background-audio";
 
 export type PlaybackSpeed = 0.5 | 0.75 | 1 | 1.25 | 1.5 | 2;
 
+// Simple number to words converter for TTS
+const numberToWords = (num: string): string => {
+  const n = parseInt(num, 10);
+  const words: Record<number, string> = {
+    0: 'zero', 1: 'one', 2: 'two', 3: 'three', 4: 'four', 5: 'five',
+    6: 'six', 7: 'seven', 8: 'eight', 9: 'nine', 10: 'ten',
+    11: 'eleven', 12: 'twelve', 13: 'thirteen', 14: 'fourteen', 15: 'fifteen',
+    16: 'sixteen', 17: 'seventeen', 18: 'eighteen', 19: 'nineteen', 20: 'twenty',
+    30: 'thirty', 40: 'forty', 50: 'fifty', 60: 'sixty', 70: 'seventy',
+    80: 'eighty', 90: 'ninety', 100: 'one hundred'
+  };
+  if (words[n]) return words[n];
+  if (n < 100) {
+    const tens = Math.floor(n / 10) * 10;
+    const ones = n % 10;
+    return `${words[tens]}-${words[ones]}`;
+  }
+  return num; // fallback to number string
+};
+
 // Browser Speech Synthesis fallback
 const speakWithBrowserTTS = (text: string, itemId: string): Promise<void> => {
   return new Promise((resolve, reject) => {
@@ -95,6 +115,14 @@ export const useTextToSpeech = () => {
   }, [isPlaying, updatePositionState]);
 
   const speak = async (text: string, itemId: string, voice: string = "alloy", title?: string) => {
+    // Preprocess text for better TTS pronunciation
+    let processedText = text
+      // Convert 10/15/10/65 pattern to spoken form
+      .replace(/10\/15\/10\/65/g, "ten, fifteen, ten, sixty-five")
+      .replace(/(\d+)\/(\d+)\/(\d+)\/(\d+)/g, (_, a, b, c, d) => 
+        `${numberToWords(a)}, ${numberToWords(b)}, ${numberToWords(c)}, ${numberToWords(d)}`
+      );
+    
     // Set title for media session
     if (title) {
       setCurrentTitle(title);
@@ -117,7 +145,7 @@ export const useTextToSpeech = () => {
 
     try {
       const { data, error } = await supabase.functions.invoke("text-to-speech", {
-        body: { text, voice },
+        body: { text: processedText, voice },
       });
 
       // Helper to check if any string contains quota-related keywords
@@ -149,7 +177,7 @@ export const useTextToSpeech = () => {
         setIsPlaying(itemId);
         setUsingBrowserTTS(true);
         try {
-          await speakWithBrowserTTS(text, itemId);
+          await speakWithBrowserTTS(processedText, itemId);
         } catch (browserErr) {
           console.error('Browser TTS also failed:', browserErr);
           toast.error('Voice playback unavailable');
@@ -172,7 +200,7 @@ export const useTextToSpeech = () => {
           setIsPlaying(itemId);
           setUsingBrowserTTS(true);
           try {
-            await speakWithBrowserTTS(text, itemId);
+            await speakWithBrowserTTS(processedText, itemId);
           } catch (browserErr) {
             console.error('Browser TTS also failed:', browserErr);
             toast.error('Voice playback unavailable');
@@ -249,7 +277,7 @@ export const useTextToSpeech = () => {
         setUsingBrowserTTS(true);
         try {
           setIsPlaying(itemId);
-          await speakWithBrowserTTS(text, itemId);
+          await speakWithBrowserTTS(processedText, itemId);
         } finally {
           setUsingBrowserTTS(false);
           setIsPlaying(null);
