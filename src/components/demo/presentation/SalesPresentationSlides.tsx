@@ -35,21 +35,23 @@ export const salesPresentationSlides: PresentationSlide[] = [
   {
     id: 'intro',
     title: 'Sacred Greeks',
-    subtitle: 'Faith-First Resources for Divine Nine Members',
+    subtitle: 'Faith-First Resources for All Greek Life Members',
     icon: <Sparkles className="w-12 h-12 text-sacred" />,
     duration: '2-3 min',
     presenterNotes: [
       'Welcome and thank them for their time',
       'Establish credibility: Built by a Delta and ordained minister',
-      'Key hook: The ONLY platform addressing faith + Greek life intersection'
+      'Key hook: The ONLY platform addressing faith + Greek life intersection',
+      'Clarify: D9 focus, but resources apply to ALL Greek organizations'
     ],
     keyPoints: [
-      'First-of-its-kind platform for D9 Greek life',
+      'First-of-its-kind platform for Greek life',
+      'D9 focused — but open to ALL Greek organizations',
       'Addresses the faith-Greek life tension directly',
       'Built by someone who understands both worlds'
     ],
     stats: [
-      { label: 'Chapters in Database', value: '750+' },
+      { label: 'D9 Chapters in Database', value: '750+' },
       { label: 'Unique Focus Area', value: 'Faith + Greek Life' },
       { label: 'Cost to Organizations', value: '100% Free' }
     ]
