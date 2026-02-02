@@ -27,7 +27,11 @@ import {
   Wrench,
   FileText,
   Shield,
-  ClipboardList
+  ClipboardList,
+  Sparkles,
+  Car,
+  Plane,
+  Gem
 } from "lucide-react";
 import { FinancialScenarios } from "@/components/financial/FinancialScenarios";
 import { FinancialTools } from "@/components/financial/FinancialTools";
@@ -38,26 +42,52 @@ import { SISPCalculator } from "@/components/financial/SISPCalculator";
 import { FinancialOverviewTTS } from "@/components/financial/FinancialOverviewTTS";
 import { Link } from "react-router-dom";
 
+interface BudgetResults {
+  tithe: number;
+  needs: number;
+  wants: number;
+  funMoney: number;
+  savings: number;
+  investing: number;
+  futureGoals: number;
+  total: number;
+}
+
 const FinancialStewardship = () => {
   const [income, setIncome] = useState<string>("");
-  const [budgetResults, setBudgetResults] = useState<{needs: number; wants: number; savings: number; tithe: number} | null>(null);
+  const [budgetResults, setBudgetResults] = useState<BudgetResults | null>(null);
   const [debtAmount, setDebtAmount] = useState<string>("");
   const [interestRate, setInterestRate] = useState<string>("");
   const [monthlyPayment, setMonthlyPayment] = useState<string>("");
   const [debtPayoffMonths, setDebtPayoffMonths] = useState<number | null>(null);
 
+  // Zero-based budget percentages (must equal 100%)
+  const budgetPercentages = {
+    tithe: 10,        // First fruits - non-negotiable
+    needs: 45,        // Housing, utilities, food, transportation, insurance
+    wants: 15,        // Entertainment, dining, Greek activities
+    funMoney: 5,      // Guilt-free spending
+    savings: 10,      // Emergency fund
+    investing: 10,    // Retirement, stocks, index funds
+    futureGoals: 5,   // House, car, vacation, wedding
+  };
+
   const calculateBudget = () => {
     const monthlyIncome = parseFloat(income);
     if (isNaN(monthlyIncome) || monthlyIncome <= 0) return;
     
-    // 10% Tithe, 50% Needs, 30% Wants, 10% Savings (modified 50/30/20 with tithe)
-    const tithe = monthlyIncome * 0.10;
-    const remaining = monthlyIncome - tithe;
-    const needs = remaining * 0.50;
-    const wants = remaining * 0.30;
-    const savings = remaining * 0.20;
+    // Zero-based budget: Every dollar has a job
+    const tithe = monthlyIncome * (budgetPercentages.tithe / 100);
+    const needs = monthlyIncome * (budgetPercentages.needs / 100);
+    const wants = monthlyIncome * (budgetPercentages.wants / 100);
+    const funMoney = monthlyIncome * (budgetPercentages.funMoney / 100);
+    const savings = monthlyIncome * (budgetPercentages.savings / 100);
+    const investing = monthlyIncome * (budgetPercentages.investing / 100);
+    const futureGoals = monthlyIncome * (budgetPercentages.futureGoals / 100);
     
-    setBudgetResults({ needs, wants, savings, tithe });
+    const total = tithe + needs + wants + funMoney + savings + investing + futureGoals;
+    
+    setBudgetResults({ tithe, needs, wants, funMoney, savings, investing, futureGoals, total });
   };
 
   const calculateDebtPayoff = () => {
@@ -459,8 +489,20 @@ const FinancialStewardship = () => {
                   </Button>
                   
                   {budgetResults && (
-                    <div className="space-y-4 pt-4 border-t">
-                      <div className="space-y-2">
+                    <div className="space-y-3 pt-4 border-t">
+                      {/* Zero-Based Budget Summary */}
+                      <div className="p-3 rounded-lg bg-primary/10 border border-primary/20 mb-4">
+                        <div className="flex justify-between items-center">
+                          <span className="font-semibold text-sm">Zero-Based Budget Total</span>
+                          <span className={`font-bold ${Math.abs(budgetResults.total - parseFloat(income)) < 0.01 ? 'text-emerald-600' : 'text-destructive'}`}>
+                            ${budgetResults.total.toFixed(2)} / ${parseFloat(income).toFixed(2)}
+                          </span>
+                        </div>
+                        <p className="text-xs text-muted-foreground mt-1">Every dollar has a job - budget should equal income</p>
+                      </div>
+
+                      {/* Tithe */}
+                      <div className="space-y-1">
                         <div className="flex justify-between text-sm">
                           <span className="flex items-center gap-2">
                             <Heart className="w-4 h-4 text-sacred" />
@@ -471,7 +513,8 @@ const FinancialStewardship = () => {
                         <Progress value={10} className="h-2" />
                       </div>
                       
-                      <div className="space-y-2">
+                      {/* Needs */}
+                      <div className="space-y-1">
                         <div className="flex justify-between text-sm">
                           <span className="flex items-center gap-2">
                             <Home className="w-4 h-4 text-blue-500" />
@@ -480,31 +523,72 @@ const FinancialStewardship = () => {
                           <span className="font-bold">${budgetResults.needs.toFixed(2)}</span>
                         </div>
                         <Progress value={45} className="h-2" />
-                        <p className="text-xs text-muted-foreground">Housing, utilities, food, transportation, insurance</p>
+                        <p className="text-xs text-muted-foreground">Housing, utilities, food, transportation</p>
                       </div>
                       
-                      <div className="space-y-2">
+                      {/* Wants */}
+                      <div className="space-y-1">
                         <div className="flex justify-between text-sm">
                           <span className="flex items-center gap-2">
                             <Users className="w-4 h-4 text-purple-500" />
-                            Wants (27%)
+                            Wants (15%)
                           </span>
                           <span className="font-bold">${budgetResults.wants.toFixed(2)}</span>
                         </div>
-                        <Progress value={27} className="h-2" />
-                        <p className="text-xs text-muted-foreground">Entertainment, dining out, Greek activities, hobbies</p>
+                        <Progress value={15} className="h-2" />
+                        <p className="text-xs text-muted-foreground">Entertainment, Greek activities, dining</p>
+                      </div>
+
+                      {/* Fun Money */}
+                      <div className="space-y-1">
+                        <div className="flex justify-between text-sm">
+                          <span className="flex items-center gap-2">
+                            <Sparkles className="w-4 h-4 text-amber-500" />
+                            Fun Money (5%)
+                          </span>
+                          <span className="font-bold">${budgetResults.funMoney.toFixed(2)}</span>
+                        </div>
+                        <Progress value={5} className="h-2" />
+                        <p className="text-xs text-muted-foreground">Guilt-free spending - no questions asked!</p>
                       </div>
                       
-                      <div className="space-y-2">
+                      {/* Savings */}
+                      <div className="space-y-1">
                         <div className="flex justify-between text-sm">
                           <span className="flex items-center gap-2">
                             <PiggyBank className="w-4 h-4 text-emerald-500" />
-                            Savings (18%)
+                            Emergency Savings (10%)
                           </span>
                           <span className="font-bold">${budgetResults.savings.toFixed(2)}</span>
                         </div>
-                        <Progress value={18} className="h-2" />
-                        <p className="text-xs text-muted-foreground">Emergency fund, retirement, investments</p>
+                        <Progress value={10} className="h-2" />
+                        <p className="text-xs text-muted-foreground">3-6 months expenses goal</p>
+                      </div>
+
+                      {/* Investing */}
+                      <div className="space-y-1">
+                        <div className="flex justify-between text-sm">
+                          <span className="flex items-center gap-2">
+                            <TrendingUp className="w-4 h-4 text-cyan-500" />
+                            Investing (10%)
+                          </span>
+                          <span className="font-bold">${budgetResults.investing.toFixed(2)}</span>
+                        </div>
+                        <Progress value={10} className="h-2" />
+                        <p className="text-xs text-muted-foreground">401k, IRA, index funds, stocks</p>
+                      </div>
+
+                      {/* Future Goals */}
+                      <div className="space-y-1">
+                        <div className="flex justify-between text-sm">
+                          <span className="flex items-center gap-2">
+                            <Target className="w-4 h-4 text-rose-500" />
+                            Future Goals (5%)
+                          </span>
+                          <span className="font-bold">${budgetResults.futureGoals.toFixed(2)}</span>
+                        </div>
+                        <Progress value={5} className="h-2" />
+                        <p className="text-xs text-muted-foreground">House, car, vacation, wedding</p>
                       </div>
                     </div>
                   )}
@@ -515,55 +599,73 @@ const FinancialStewardship = () => {
                 <CardHeader>
                   <CardTitle>Budget Categories Breakdown</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-3">
-                    <div className="p-3 rounded-lg bg-sacred/10 border border-sacred/20">
-                      <h4 className="font-semibold flex items-center gap-2">
-                        <Heart className="w-4 h-4 text-sacred" />
-                        Tithe & Giving (10%)
+                <CardContent className="space-y-3">
+                  <div className="p-2 rounded-lg bg-primary/5 border border-primary/10 text-center mb-2">
+                    <p className="text-xs font-medium">Zero-Based Budget: 100% of income assigned</p>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 gap-2">
+                    <div className="p-2 rounded-lg bg-sacred/10 border border-sacred/20">
+                      <h4 className="font-semibold text-sm flex items-center gap-2">
+                        <Heart className="w-3 h-3 text-sacred" />
+                        Tithe (10%)
                       </h4>
-                      <p className="text-sm text-muted-foreground">
-                        Give first, not from leftovers. "Honor the Lord with your wealth and with the firstfruits" (Proverbs 3:9)
+                      <p className="text-xs text-muted-foreground">
+                        "Honor the Lord with your firstfruits" (Proverbs 3:9)
                       </p>
                     </div>
                     
-                    <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                      <h4 className="font-semibold flex items-center gap-2">
-                        <Home className="w-4 h-4 text-blue-500" />
-                        Essential Needs (45%)
+                    <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                      <h4 className="font-semibold text-sm flex items-center gap-2">
+                        <Home className="w-3 h-3 text-blue-500" />
+                        Needs (45%)
                       </h4>
-                      <ul className="text-sm text-muted-foreground mt-1 space-y-1">
-                        <li>• Housing (rent/mortgage): 25-30%</li>
-                        <li>• Utilities: 5-10%</li>
-                        <li>• Groceries: 5-10%</li>
-                        <li>• Transportation: 5-10%</li>
-                      </ul>
+                      <p className="text-xs text-muted-foreground">Housing, utilities, groceries, transportation, insurance</p>
                     </div>
                     
-                    <div className="p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
-                      <h4 className="font-semibold flex items-center gap-2">
-                        <Users className="w-4 h-4 text-purple-500" />
-                        Lifestyle & Wants (27%)
+                    <div className="p-2 rounded-lg bg-purple-500/10 border border-purple-500/20">
+                      <h4 className="font-semibold text-sm flex items-center gap-2">
+                        <Users className="w-3 h-3 text-purple-500" />
+                        Wants (15%)
                       </h4>
-                      <ul className="text-sm text-muted-foreground mt-1 space-y-1">
-                        <li>• Greek dues & events</li>
-                        <li>• Entertainment & dining</li>
-                        <li>• Personal care & clothing</li>
-                        <li>• Subscriptions</li>
-                      </ul>
+                      <p className="text-xs text-muted-foreground">Greek events, entertainment, dining, subscriptions</p>
+                    </div>
+
+                    <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                      <h4 className="font-semibold text-sm flex items-center gap-2">
+                        <Sparkles className="w-3 h-3 text-amber-500" />
+                        Fun Money (5%)
+                      </h4>
+                      <p className="text-xs text-muted-foreground">Guilt-free spending - treat yourself without regret</p>
                     </div>
                     
-                    <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-                      <h4 className="font-semibold flex items-center gap-2">
-                        <PiggyBank className="w-4 h-4 text-emerald-500" />
-                        Savings & Future (18%)
+                    <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                      <h4 className="font-semibold text-sm flex items-center gap-2">
+                        <PiggyBank className="w-3 h-3 text-emerald-500" />
+                        Emergency Savings (10%)
                       </h4>
-                      <ul className="text-sm text-muted-foreground mt-1 space-y-1">
-                        <li>• Emergency fund (3-6 months expenses)</li>
-                        <li>• Retirement (401k, IRA)</li>
-                        <li>• Investments</li>
-                        <li>• Major purchases fund</li>
-                      </ul>
+                      <p className="text-xs text-muted-foreground">Build 3-6 months of expenses for security</p>
+                    </div>
+
+                    <div className="p-2 rounded-lg bg-cyan-500/10 border border-cyan-500/20">
+                      <h4 className="font-semibold text-sm flex items-center gap-2">
+                        <TrendingUp className="w-3 h-3 text-cyan-500" />
+                        Investing (10%)
+                      </h4>
+                      <p className="text-xs text-muted-foreground">401k, Roth IRA, index funds - build generational wealth</p>
+                    </div>
+
+                    <div className="p-2 rounded-lg bg-rose-500/10 border border-rose-500/20">
+                      <h4 className="font-semibold text-sm flex items-center gap-2">
+                        <Target className="w-3 h-3 text-rose-500" />
+                        Future Goals (5%)
+                      </h4>
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        <Badge variant="outline" className="text-xs py-0"><Home className="w-2 h-2 mr-1" />House</Badge>
+                        <Badge variant="outline" className="text-xs py-0"><Car className="w-2 h-2 mr-1" />Car</Badge>
+                        <Badge variant="outline" className="text-xs py-0"><Plane className="w-2 h-2 mr-1" />Vacation</Badge>
+                        <Badge variant="outline" className="text-xs py-0"><Gem className="w-2 h-2 mr-1" />Wedding</Badge>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
