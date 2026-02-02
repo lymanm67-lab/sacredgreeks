@@ -266,7 +266,7 @@ export default function ShareToolkit() {
             <span className="text-xs">Copy Link</span>
           </Button>
           <Button variant="outline" className="h-auto py-4 flex-col gap-2" asChild>
-            <Link to="/install-guide">
+            <Link to="/install">
               <Smartphone className="h-5 w-5" />
               <span className="text-xs">Install Guide</span>
             </Link>
