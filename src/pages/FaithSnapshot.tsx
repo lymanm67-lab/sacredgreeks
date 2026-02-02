@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -235,12 +235,13 @@ const instructionsConfig = {
 export default function FaithSnapshot() {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
-  const { isDemoMode } = useDemoMode();
+  const { isDemoMode, demoSettings } = useDemoMode();
+  const isPresentationMode = demoSettings.presentationMode;
   const { trackConversion } = useLandingABTest();
   const { savedAssessment, hasSavedAssessment, isLoading: loadingSaved } = useSavedAssessment("faith-snapshot");
   
   // Log user state for debugging
-  console.log('[FaithSnapshot] Auth state:', { user: !!user, authLoading });
+  console.log('[FaithSnapshot] Auth state:', { user: !!user, authLoading, isPresentationMode });
   
   const [started, setStarted] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -249,6 +250,28 @@ export default function FaithSnapshot() {
   const [results, setResults] = useState<SnapshotResult | null>(null);
   const [viewingSavedResults, setViewingSavedResults] = useState(false);
   const [forceRetake, setForceRetake] = useState(false);
+
+  // Demo answers for presentation mode
+  const DEMO_ANSWERS: Record<number, string | string[]> = {
+    1: 'active',
+    2: 'family_criticism',
+    3: ['rituals', 'distraction'],
+    4: 'somewhat',
+    5: ['responses', 'symbols'],
+    6: 'strong'
+  };
+
+  // In presentation mode, show demo results immediately
+  useEffect(() => {
+    if (isPresentationMode) {
+      console.log('[FaithSnapshot] Presentation mode active, showing demo results');
+      const demoResults = calculateResults(DEMO_ANSWERS);
+      setAnswers(DEMO_ANSWERS);
+      setResults(demoResults);
+      setShowResults(true);
+      setStarted(true);
+    }
+  }, [isPresentationMode]);
 
   const question = questions[currentQuestion];
   const progress = ((currentQuestion + 1) / questions.length) * 100;

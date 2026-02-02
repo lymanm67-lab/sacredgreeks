@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
+import { useDemoMode } from '@/contexts/DemoModeContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -442,6 +443,8 @@ const calculateArchetype = (answers: Record<number, string>): { archetype: typeo
 const ShatteredMasks = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { demoSettings } = useDemoMode();
+  const isPresentationMode = demoSettings.presentationMode;
   
   // Assessment state
   const [showInstructions, setShowInstructions] = useState(true);
@@ -456,11 +459,33 @@ const ShatteredMasks = () => {
   // Check for existing assessment
   const { savedAssessment, isLoading: loadingSaved, hasSavedAssessment } = useSavedAssessment('shattered-masks');
 
+  // Demo answers for presentation mode - shows "The Integrator" archetype
+  const DEMO_ANSWERS: Record<number, string> = {
+    1: 'bridge',
+    2: 'proud',
+    3: 'discuss',
+    4: 'confident',
+    5: 'creative',
+    6: 'regularly',
+    7: 'virtues',
+    8: 'dialogue'
+  };
+
+  // In presentation mode, show demo results immediately
   useEffect(() => {
-    if (user) {
+    if (isPresentationMode) {
+      console.log('[ShatteredMasks] Presentation mode active, showing demo results');
+      setAnswers(DEMO_ANSWERS);
+      setShowResults(true);
+      setShowInstructions(false);
+    }
+  }, [isPresentationMode]);
+
+  useEffect(() => {
+    if (user && !isPresentationMode) {
       loadSavedResults();
     }
-  }, [user]);
+  }, [user, isPresentationMode]);
 
   const loadSavedResults = async () => {
     if (!user) return;
