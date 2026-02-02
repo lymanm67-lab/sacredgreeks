@@ -2777,7 +2777,6 @@ export type Database = {
           answers_json: Json | null
           consent_to_contact: boolean | null
           created_at: string | null
-          email: string | null
           id: string | null
           result_type: string | null
           scenario: string | null
@@ -2790,7 +2789,6 @@ export type Database = {
           answers_json?: Json | null
           consent_to_contact?: boolean | null
           created_at?: string | null
-          email?: never
           id?: string | null
           result_type?: string | null
           scenario?: string | null
@@ -2803,7 +2801,6 @@ export type Database = {
           answers_json?: Json | null
           consent_to_contact?: boolean | null
           created_at?: string | null
-          email?: never
           id?: string | null
           result_type?: string | null
           scenario?: string | null
