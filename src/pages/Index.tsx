@@ -2,12 +2,13 @@ import { useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useDemoMode } from "@/contexts/DemoModeContext";
 import { useLandingSurvey } from "@/hooks/use-landing-survey";
+import { useCTATracking } from "@/hooks/use-cta-tracking";
 import { useNavigate, Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import logo from "@/assets/sacred-greeks-logo.png";
 import { cn } from "@/lib/utils";
-import { Play, Sparkles, User, ChevronRight, Shield, Heart, BookOpen, Headphones, Star, CheckCircle, Globe, Clock } from "lucide-react";
+import { Play, Sparkles, User, ChevronRight, Shield, Heart, BookOpen, Headphones, Star, CheckCircle, Globe, Clock, Smartphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DashboardPreview } from "@/components/landing/DashboardPreview";
 import { Testimonials } from "@/components/Testimonials";
@@ -23,18 +24,22 @@ const Index = () => {
   const { user } = useAuth();
   const { isDemoMode, setDemoMode } = useDemoMode();
   const { showSurvey, completeSurvey, skipSurvey } = useLandingSurvey();
+  const { trackDemoStart, trackSignupStart, trackSigninClick, trackPodcastClick } = useCTATracking();
   const navigate = useNavigate();
 
   const handleDemoClick = () => {
+    trackDemoStart('landing_hero');
     setDemoMode(true);
     navigate('/dashboard');
   };
 
   const handleCreateAccount = () => {
+    trackSignupStart('landing_hero');
     navigate('/auth?mode=signup');
   };
 
   const handleSignIn = () => {
+    trackSigninClick('landing_header');
     navigate('/auth');
   };
 
@@ -49,8 +54,9 @@ const Index = () => {
     <>
       <SEOHead 
         title="Sacred Greeks Life - #1 Christian Greek Life App | Faith & Fraternity Guide"
-        description="The leading faith-based app for Christians in Greek life. Daily devotionals, P.R.O.O.F. framework, prayer tools & Bible study for Divine Nine, BGLO & all Greek organizations. Free by Dr. Lyman Montgomery."
-        keywords="Christian Greek life app, faith and fraternity, Divine Nine faith, BGLO Christian, NPHC spiritual growth, P.R.O.O.F. framework, Greek life biblical guidance, Christian sorority, Christian fraternity"
+        description="The leading faith-based web app for Christians in Greek life. Daily devotionals, P.R.O.O.F. framework, prayer tools & Bible study. No download required - works instantly in your browser."
+        keywords="Christian Greek life app, faith and fraternity, Divine Nine faith, BGLO Christian, NPHC spiritual growth, P.R.O.O.F. framework, Greek life biblical guidance, Christian sorority, Christian fraternity, web app"
+        image="https://sacredgreekslife.com/og-image.png"
         structuredDataType="WebApplication"
       />
       <div className={cn(
@@ -135,17 +141,15 @@ const Index = () => {
                   </p>
                 </header>
 
-                {/* Platform availability - Use on Web */}
-                <div className="flex items-center justify-center gap-3 mb-5 sm:mb-6">
-                  <Button 
-                    onClick={handleCreateAccount}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 h-auto"
-                    size="sm"
-                  >
-                    <Globe className="w-4 h-4 mr-1.5" />
-                    Use on Web
-                  </Button>
-                  <span className="text-xs text-slate-500">No download needed</span>
+                {/* Web App - No Download Badge */}
+                <div className="flex flex-col items-center gap-2 mb-5 sm:mb-6">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/10 border border-blue-500/30">
+                    <Globe className="w-4 h-4 text-blue-400" />
+                    <span className="text-sm font-medium text-blue-300">Web App — No Download Required</span>
+                  </div>
+                  <p className="text-xs text-slate-500 text-center max-w-xs">
+                    Works instantly in your browser on any device. Add to home screen for app-like experience.
+                  </p>
                 </div>
 
                 {/* Trust indicators with semantic markup */}
@@ -177,6 +181,7 @@ const Index = () => {
                 {/* Podcast CTA */}
                 <Link 
                   to="/podcast"
+                  onClick={() => trackPodcastClick('landing_hero')}
                   className="flex items-center justify-center gap-2 mb-5 sm:mb-6 py-2 px-4 rounded-full bg-gradient-to-r from-purple-500/20 to-fuchsia-500/20 border border-purple-500/30 hover:from-purple-500/30 hover:to-fuchsia-500/30 transition-all group"
                   aria-label="Listen to Sacred Greeks Podcast"
                 >

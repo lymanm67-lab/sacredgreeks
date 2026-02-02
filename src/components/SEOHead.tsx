@@ -22,7 +22,7 @@ const defaultMeta = {
   title: 'Sacred Greeks Life - #1 Christian Greek Life App | Faith & Fraternity Guide',
   description: 'The leading faith-based app for Christians in Greek life. Daily devotionals, P.R.O.O.F. framework, prayer tools & Bible study for Divine Nine, BGLO & all Greek organizations. Free by Dr. Lyman Montgomery.',
   keywords: 'Christian Greek life app, faith and fraternity, Christian sorority resources, Divine Nine faith, BGLO Christian, NPHC spiritual growth, P.R.O.O.F. framework, Greek life biblical guidance, Sacred Greeks, Christian devotionals',
-  image: 'https://sacredgreekslife.com/icon-512.png',
+  image: 'https://sacredgreekslife.com/og-image.png',
   baseUrl: 'https://sacredgreekslife.com'
 };
 
@@ -104,6 +104,9 @@ export function SEOHead({
     updateMeta('og:title', fullTitle, true);
     updateMeta('og:description', pageDescription, true);
     updateMeta('og:image', fullImage, true);
+    updateMeta('og:image:width', '1200', true);
+    updateMeta('og:image:height', '630', true);
+    updateMeta('og:image:type', 'image/png', true);
     updateMeta('og:url', canonicalUrl, true);
     updateMeta('og:type', type, true);
     updateMeta('og:site_name', 'Sacred Greeks Life', true);
