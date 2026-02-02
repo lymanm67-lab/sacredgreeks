@@ -9,13 +9,14 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { useSidebarPreferences } from "@/hooks/use-sidebar-preferences";
 import { useDemoMode } from "@/contexts/DemoModeContext";
 import { useAdminCheck } from "@/components/AdminRoute";
+import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { PresentationModeToggle } from "@/components/demo/PresentationModeToggle";
 import { SalesDeckGenerator } from "@/components/demo/SalesDeckGenerator";
 import { PresentationSlideViewer, ReturnToPresentationButton } from "@/components/demo/presentation";
 import { cn } from "@/lib/utils";
 import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { PanelLeftClose, PanelLeft } from "lucide-react";
+import { PanelLeft } from "lucide-react";
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -134,6 +135,9 @@ function AppLayoutContent({
 }) {
   const { state, toggleSidebar } = useSidebar();
   const isSidebarOpen = state === "expanded";
+  
+  // Enable Ctrl+B / ⌘+B keyboard shortcut for sidebar toggle
+  useKeyboardShortcuts([], toggleSidebar);
 
   return (
     <>
@@ -176,16 +180,21 @@ function AppLayoutContent({
       {/* Mobile bottom navigation */}
       {isMobile && <MobileBottomNav />}
       
-      {/* Floating Sidebar Toggle - Enhanced visibility when from presentation */}
-      {!isMobile && isFromPresentation && !isSidebarOpen && (
+      {/* Floating Sidebar Toggle - Shows when sidebar is collapsed */}
+      {!isMobile && !isSidebarOpen && (
         <Button
           variant="outline"
           size="icon"
           onClick={toggleSidebar}
-          className="fixed left-4 top-1/2 -translate-y-1/2 z-50 h-12 w-12 rounded-full shadow-lg bg-background/95 backdrop-blur border-2 border-primary/20 hover:border-primary/50 hover:bg-primary/10 transition-all"
+          className={cn(
+            "fixed left-4 top-1/2 -translate-y-1/2 z-50 rounded-full shadow-lg bg-background/95 backdrop-blur border-2 hover:border-primary/50 hover:bg-primary/10 transition-all",
+            isFromPresentation 
+              ? "h-12 w-12 border-primary/20" 
+              : "h-10 w-10 border-border/50"
+          )}
         >
-          <PanelLeft className="h-5 w-5" />
-          <span className="sr-only">Open sidebar</span>
+          <PanelLeft className={isFromPresentation ? "h-5 w-5" : "h-4 w-4"} />
+          <span className="sr-only">Open sidebar (Ctrl+B)</span>
         </Button>
       )}
       

@@ -22,6 +22,13 @@ const defaultShortcuts: ShortcutConfig[] = [
     global: true,
   },
   {
+    key: 'b',
+    ctrl: true,
+    description: 'Toggle sidebar',
+    action: () => {},
+    global: true,
+  },
+  {
     key: 'd',
     alt: true,
     description: 'Go to Dashboard',
@@ -43,7 +50,7 @@ const defaultShortcuts: ShortcutConfig[] = [
     global: true,
   },
   {
-    key: 'b',
+    key: 's',
     alt: true,
     description: 'Go to Bible Study',
     action: () => {},
@@ -57,13 +64,20 @@ const defaultShortcuts: ShortcutConfig[] = [
   },
 ];
 
-export function useKeyboardShortcuts(customShortcuts: ShortcutConfig[] = []) {
+export function useKeyboardShortcuts(customShortcuts: ShortcutConfig[] = [], onToggleSidebar?: () => void) {
   const navigate = useNavigate();
   const shortcutsRef = useRef<ShortcutConfig[]>([]);
 
   // Build shortcuts with navigation
   useEffect(() => {
     shortcutsRef.current = [
+      {
+        key: 'b',
+        ctrl: true,
+        description: 'Toggle sidebar',
+        action: () => onToggleSidebar?.(),
+        global: true,
+      },
       {
         key: 'd',
         alt: true,
@@ -86,7 +100,7 @@ export function useKeyboardShortcuts(customShortcuts: ShortcutConfig[] = []) {
         global: true,
       },
       {
-        key: 'b',
+        key: 's',
         alt: true,
         description: 'Go to Bible Study',
         action: () => navigate('/bible-study'),
@@ -100,7 +114,7 @@ export function useKeyboardShortcuts(customShortcuts: ShortcutConfig[] = []) {
       },
       ...customShortcuts,
     ];
-  }, [navigate, customShortcuts]);
+  }, [navigate, customShortcuts, onToggleSidebar]);
 
   const showShortcutsHelp = useCallback(() => {
     const shortcuts = shortcutsRef.current;
