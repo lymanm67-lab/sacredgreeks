@@ -56,9 +56,25 @@ export function AppLayout({ children }: AppLayoutProps) {
     if (!shouldOpen) return;
 
     const slide = parseInt(params.get('slide') || '0', 10);
-    setInitialSlide(Number.isFinite(slide) ? slide : 0);
-    setShowSlideshow(true);
-  }, [location.search]);
+    const targetSlide = Number.isFinite(slide) ? slide : 0;
+    
+    console.log('[AppLayout] Opening presentation from URL params, slide:', targetSlide);
+    
+    // First set the slide, then open (order matters for the effect in PresentationSlideViewer)
+    setInitialSlide(targetSlide);
+    
+    // Use a small delay to ensure initialSlide is set before opening
+    // This ensures the PresentationSlideViewer sees the correct initialSlide
+    requestAnimationFrame(() => {
+      setShowSlideshow(true);
+    });
+    
+    // Clear the URL params to avoid re-triggering on navigation
+    if (window.history.replaceState) {
+      const cleanUrl = location.pathname;
+      window.history.replaceState({}, '', cleanUrl);
+    }
+  }, [location.search, location.pathname]);
 
   return (
     <SidebarProvider defaultOpen={!isMobile}>

@@ -39,10 +39,22 @@ export function PresentationSlideViewer({ isOpen, onClose, initialSlide = 0 }: P
   const [showNotes, setShowNotes] = useState(true); // Presenter notes - hide for audience view
 
   // Update current slide when initialSlide changes (e.g., returning from demo)
+  // Use a ref to track if we just opened to avoid resetting on every render
+  const prevIsOpenRef = React.useRef(isOpen);
+  const prevInitialSlideRef = React.useRef(initialSlide);
+  
   React.useEffect(() => {
-    if (isOpen) {
+    // Set slide when opening OR when initialSlide changes while open
+    const justOpened = isOpen && !prevIsOpenRef.current;
+    const slideChanged = initialSlide !== prevInitialSlideRef.current;
+    
+    if (justOpened || (isOpen && slideChanged)) {
+      console.log('[PresentationSlideViewer] Setting slide to:', initialSlide, { justOpened, slideChanged });
       setCurrentSlide(initialSlide);
     }
+    
+    prevIsOpenRef.current = isOpen;
+    prevInitialSlideRef.current = initialSlide;
   }, [isOpen, initialSlide]);
 
   const slides = salesPresentationSlides;
