@@ -18,13 +18,17 @@ import {
   Check,
   X,
   Clock,
-  Sparkles
+  Sparkles,
+  Volume2,
+  VolumeX,
+  Loader2
 } from "lucide-react";
 import { PageHeader } from "@/components/ui/page-header";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import { useTTS } from "@/hooks/use-tts";
 
 // Organization colors for badges
 const orgColors: Record<string, string> = {
@@ -227,12 +231,29 @@ function ConnectionRequest({ connection, onAccept, onDecline }: {
   );
 }
 
+const NETWORK_OVERVIEW_TEXT = `Welcome to the Sacred Greeks Member Network. This is your faith-first networking hub where you can connect with fellow Divine Nine members who share your Christian faith journey.
+
+Unlike other Greek networking platforms, we prioritize spiritual connection alongside organizational ties. Here you can discover members across all nine organizations, send connection requests, and build meaningful relationships centered on Christ.
+
+Use the search and filter tools to find members by name, chapter, or organization. When you find someone you'd like to connect with, simply click the Connect button to send a request. They'll be notified and can accept to establish a mutual connection.
+
+Your network grows as you engage with the community. Sign in to unlock the full experience and start building your faith-focused Greek network today.`;
+
 export default function MemberNetwork() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedOrg, setSelectedOrg] = useState("All Organizations");
   const [activeTab, setActiveTab] = useState("discover");
+  const { speak, stop, isPlaying, isLoading } = useTTS({ voice: 'marcus' });
+
+  const handleOverviewTTS = () => {
+    if (isPlaying) {
+      stop();
+    } else {
+      speak(NETWORK_OVERVIEW_TEXT);
+    }
+  };
 
   // Fetch all profiles (excluding current user) - show members with names
   const { data: profiles } = useQuery({
@@ -378,6 +399,26 @@ export default function MemberNetwork() {
           description="Connect with fellow Greeks who share your faith journey. Build meaningful relationships centered on Christ."
           badge={{ text: "Community", variant: "default" }}
         />
+
+        {/* TTS Overview Button */}
+        <div className="flex justify-center mb-6">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleOverviewTTS}
+            disabled={isLoading}
+            className="gap-2"
+          >
+            {isLoading ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : isPlaying ? (
+              <VolumeX className="w-4 h-4" />
+            ) : (
+              <Volume2 className="w-4 h-4" />
+            )}
+            {isLoading ? "Loading..." : isPlaying ? "Stop Overview" : "Listen to Overview"}
+          </Button>
+        </div>
 
         {/* Value Prop */}
         <Card className="mb-8 bg-gradient-to-r from-sacred/10 to-purple-500/10 border-sacred/30">
