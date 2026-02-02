@@ -506,7 +506,7 @@ const FinancialStewardship = () => {
                         <div className="flex justify-between text-sm">
                           <span className="flex items-center gap-2">
                             <Heart className="w-4 h-4 text-sacred" />
-                            Tithe (10%)
+                            Tithe/Charity (10%)
                           </span>
                           <span className="font-bold">${budgetResults.tithe.toFixed(2)}</span>
                         </div>
@@ -608,7 +608,7 @@ const FinancialStewardship = () => {
                     <div className="p-2 rounded-lg bg-sacred/10 border border-sacred/20">
                       <h4 className="font-semibold text-sm flex items-center gap-2">
                         <Heart className="w-3 h-3 text-sacred" />
-                        Tithe (10%)
+                        Tithe/Charity (10%)
                       </h4>
                       <p className="text-xs text-muted-foreground">
                         "Honor the Lord with your firstfruits" (Proverbs 3:9)
