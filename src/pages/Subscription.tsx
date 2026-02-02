@@ -28,12 +28,12 @@ const PRICING_TIERS = {
       'Offline Access',
     ],
     monthly: {
-      price: 9.99,
+      price: 14.99,
       priceId: 'price_1SYXjdLMtnFcNpvTGb2LX4v7',
     },
     annual: {
-      price: 79.99,
-      monthlyEquivalent: 6.67,
+      price: 119.99,
+      monthlyEquivalent: 10.00,
       priceId: 'price_1SYXoDLMtnFcNpvTunTis7BN',
       savings: '33%',
     },
