@@ -63,7 +63,7 @@ export function CompetitorMention() {
             <div>
               <h3 className="font-semibold text-white mb-1">Complete Ecosystem</h3>
               <p className="text-sm text-slate-400">
-                Beyond apps like InterVarsity GreekIV or YouVersion—we offer book, podcast, coaching, and community all in one journey.
+                Beyond typical campus ministry apps or general devotionals—we offer book, podcast, coaching, and community all in one journey.
               </p>
             </div>
           </div>
