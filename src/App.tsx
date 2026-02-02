@@ -1,4 +1,4 @@
-// Cache bust v8 - 2026-02-02 - Force SW v10 refresh for sidebar collapsible fix
+// Cache bust v9 - 2026-02-02 - ChapterFinder with AppLayout sidebar
 import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
