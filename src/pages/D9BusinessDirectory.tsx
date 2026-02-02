@@ -17,8 +17,12 @@ import {
   Users,
   Filter,
   ExternalLink,
-  ArrowLeft
+  ArrowLeft,
+  QrCode,
+  Smartphone,
+  Download
 } from "lucide-react";
+import QRCode from 'react-qr-code';
 import { PageHeader } from "@/components/ui/page-header";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { useQuery } from "@tanstack/react-query";
@@ -432,21 +436,58 @@ export default function D9BusinessDirectory() {
           </Card>
         )}
 
-        {/* Submit CTA */}
-        <Card className="mt-8 border-sacred/30">
-          <CardContent className="p-6 text-center">
-            <h3 className="text-lg font-semibold text-foreground mb-2">
-              Own a Faith-Based Business?
-            </h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              List your D9-owned business for FREE and connect with brothers and sisters who want to support Black excellence.
-            </p>
-            <Button variant="outline" asChild>
-              <Link to="/submit-business">
-                <Mail className="w-4 h-4 mr-2" />
-                Submit Your Business Free
-              </Link>
-            </Button>
+        {/* QR Code & Submit CTA */}
+        <Card className="mt-8 border-sacred/30 overflow-hidden">
+          <CardContent className="p-0">
+            <div className="grid md:grid-cols-2">
+              {/* QR Code Section */}
+              <div className="bg-gradient-to-br from-sacred/10 to-purple-500/10 p-6 flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-border/50">
+                <div className="w-12 h-12 rounded-full bg-sacred/20 flex items-center justify-center mb-4">
+                  <QrCode className="w-6 h-6 text-sacred" />
+                </div>
+                <h3 className="text-lg font-semibold text-foreground mb-2">
+                  Scan to Add Your Business
+                </h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Quick scan at events, meetings, or share with fellow Greeks
+                </p>
+                <div className="bg-white p-4 rounded-xl shadow-lg">
+                  <QRCode 
+                    value={`${window.location.origin}/submit-business`}
+                    size={160}
+                    level="H"
+                  />
+                </div>
+                <div className="flex items-center gap-2 mt-4 text-xs text-muted-foreground">
+                  <Smartphone className="w-4 h-4" />
+                  <span>Open camera app & scan</span>
+                </div>
+              </div>
+
+              {/* Text CTA Section */}
+              <div className="p-6 flex flex-col items-center justify-center text-center">
+                <div className="w-12 h-12 rounded-full bg-sacred/20 flex items-center justify-center mb-4">
+                  <Building2 className="w-6 h-6 text-sacred" />
+                </div>
+                <h3 className="text-lg font-semibold text-foreground mb-2">
+                  Own a Faith-Based Business?
+                </h3>
+                <p className="text-sm text-muted-foreground mb-6">
+                  List your D9-owned business for FREE and connect with brothers and sisters who want to support Black excellence.
+                </p>
+                <div className="space-y-3 w-full max-w-xs">
+                  <Button className="w-full" asChild>
+                    <Link to="/submit-business">
+                      <Mail className="w-4 h-4 mr-2" />
+                      Submit Your Business Free
+                    </Link>
+                  </Button>
+                  <p className="text-xs text-muted-foreground">
+                    Takes only 2 minutes • No payment required
+                  </p>
+                </div>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
