@@ -1,5 +1,5 @@
 import { ReactNode, useState, useMemo, useCallback, useEffect } from "react";
-import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger, SidebarInset, useSidebar } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
 import { MobileNav } from "./MobileNav";
 import { MobileBottomNav } from "./MobileBottomNav";
@@ -14,6 +14,8 @@ import { SalesDeckGenerator } from "@/components/demo/SalesDeckGenerator";
 import { PresentationSlideViewer, ReturnToPresentationButton } from "@/components/demo/presentation";
 import { cn } from "@/lib/utils";
 import { useLocation } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { PanelLeftClose, PanelLeft } from "lucide-react";
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -86,8 +88,68 @@ export function AppLayout({ children }: AppLayoutProps) {
     }
   }, [location.search, location.pathname]);
 
+  // Check if coming from presentation (for enhanced sidebar toggle)
+  const isFromPresentation = useMemo(() => {
+    return new URLSearchParams(location.search).get('fromPresentation') === 'true';
+  }, [location.search]);
+
   return (
-    <SidebarProvider defaultOpen={!isMobile}>
+    <SidebarProvider defaultOpen={!isMobile && !isFromPresentation}>
+      <AppLayoutContent
+        isMobile={isMobile}
+        isRightSidebar={isRightSidebar}
+        isDemoMode={isDemoMode}
+        canAccessPresentationMode={canAccessPresentationMode}
+        isFromPresentation={isFromPresentation}
+        showSalesDeck={showSalesDeck}
+        setShowSalesDeck={setShowSalesDeck}
+        showSlideshow={showSlideshow}
+        setShowSlideshow={setShowSlideshow}
+        initialSlide={initialSlide}
+        setInitialSlide={setInitialSlide}
+        handleReturnToPresentation={handleReturnToPresentation}
+      >
+        {children}
+      </AppLayoutContent>
+    </SidebarProvider>
+  );
+}
+
+// Separate component to use useSidebar hook inside SidebarProvider
+function AppLayoutContent({
+  children,
+  isMobile,
+  isRightSidebar,
+  isDemoMode,
+  canAccessPresentationMode,
+  isFromPresentation,
+  showSalesDeck,
+  setShowSalesDeck,
+  showSlideshow,
+  setShowSlideshow,
+  initialSlide,
+  setInitialSlide,
+  handleReturnToPresentation,
+}: {
+  children: ReactNode;
+  isMobile: boolean;
+  isRightSidebar: boolean;
+  isDemoMode: boolean;
+  canAccessPresentationMode: boolean;
+  isFromPresentation: boolean;
+  showSalesDeck: boolean;
+  setShowSalesDeck: (show: boolean) => void;
+  showSlideshow: boolean;
+  setShowSlideshow: (show: boolean) => void;
+  initialSlide: number;
+  setInitialSlide: (slide: number) => void;
+  handleReturnToPresentation: (slideIndex: number) => void;
+}) {
+  const { state, toggleSidebar } = useSidebar();
+  const isSidebarOpen = state === "expanded";
+
+  return (
+    <>
       <div className={cn(
         "min-h-screen flex w-full",
         isRightSidebar && "flex-row-reverse",
@@ -123,8 +185,22 @@ export function AppLayout({ children }: AppLayoutProps) {
           </main>
         </SidebarInset>
       </div>
+      
       {/* Mobile bottom navigation */}
       {isMobile && <MobileBottomNav />}
+      
+      {/* Floating Sidebar Toggle - Enhanced visibility when from presentation */}
+      {!isMobile && isFromPresentation && !isSidebarOpen && (
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={toggleSidebar}
+          className="fixed left-4 top-1/2 -translate-y-1/2 z-50 h-12 w-12 rounded-full shadow-lg bg-background/95 backdrop-blur border-2 border-primary/20 hover:border-primary/50 hover:bg-primary/10 transition-all"
+        >
+          <PanelLeft className="h-5 w-5" />
+          <span className="sr-only">Open sidebar</span>
+        </Button>
+      )}
       
       {/* Return to Presentation Button (shown when viewing demo from presentation) */}
       <ReturnToPresentationButton onReturnToPresentation={handleReturnToPresentation} />
@@ -141,6 +217,6 @@ export function AppLayout({ children }: AppLayoutProps) {
         onClose={() => setShowSlideshow(false)}
         initialSlide={initialSlide}
       />
-    </SidebarProvider>
+    </>
   );
 }
