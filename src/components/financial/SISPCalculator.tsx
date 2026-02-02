@@ -16,7 +16,9 @@ import {
   Users,
   Calculator,
   CheckCircle2,
-  AlertTriangle
+  AlertTriangle,
+  Play,
+  Trash2
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -64,6 +66,58 @@ export function SISPCalculator() {
 
   const isHealthy = kingdomPercent >= 10 && savingsPercent >= 10 && spendingPercent <= 70;
 
+  // Load demo data - realistic scenario for a young professional D9 member
+  const loadDemoData = () => {
+    // Income: Young professional making $55k/year + side income
+    setPrimaryIncome("4583");  // ~$55k/year
+    setSideIncome("400");      // Photography/consulting side hustle
+    
+    // Kingdom First: 10%+
+    setTithe("498.30");        // 10% of total
+    setOfferings("50");        // Additional giving
+    
+    // Savings: 15%
+    setEmergencyFund("250");   // Building 3-6 month fund
+    setGreekSinking("150");    // Convention, Boule, chapter events
+    setGeneralSavings("100");  // General savings
+    
+    // Investing: 10%
+    setRetirement("350");      // 401k contribution
+    setBrokerage("150");       // Taxable brokerage
+    
+    // Spending: 65%
+    setHousing("1400");        // Rent/mortgage
+    setUtilities("180");       // Electric, gas, water, internet
+    setTransportation("450");  // Car payment, gas, insurance
+    setFood("400");            // Groceries + occasional dining
+    setGreekDues("125");       // Monthly dues, chapter assessments
+    setInsurance("120");       // Health insurance (after employer contribution)
+    setPersonal("260");        // Entertainment, clothing, misc
+    
+    toast.success("Demo data loaded! This shows a realistic budget for a young D9 professional.");
+  };
+
+  // Clear all data
+  const clearAllData = () => {
+    setPrimaryIncome("");
+    setSideIncome("");
+    setTithe("");
+    setOfferings("");
+    setEmergencyFund("");
+    setGreekSinking("");
+    setGeneralSavings("");
+    setRetirement("");
+    setBrokerage("");
+    setHousing("");
+    setUtilities("");
+    setTransportation("");
+    setFood("");
+    setGreekDues("");
+    setInsurance("");
+    setPersonal("");
+    toast.success("All data cleared");
+  };
+
   const autoCalculate = () => {
     if (totalIncome <= 0) {
       toast.error("Enter your income first");
@@ -96,12 +150,12 @@ export function SISPCalculator() {
     setInsurance((spendAlloc * 0.05).toFixed(2));
     setPersonal((spendAlloc * 0.10).toFixed(2));
 
-    toast.success("Budget auto-calculated using Sacred Greeks formula!");
+    toast.success("Budget auto-calculated using Kingdom Budget formula!");
   };
 
   const exportCSV = () => {
     const data = [
-      ["SACRED GREEKS SISP - Savings, Investing & Spending Plan"],
+      ["KINGDOM BUDGET PLANNER - Faith-First Financial Plan"],
       [""],
       ["INCOME", "Monthly", "Annual"],
       ["Primary Income", primaryIncome, (parseNum(primaryIncome) * 12).toFixed(2)],
@@ -144,10 +198,10 @@ export function SISPCalculator() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `sacred-greeks-sisp-${new Date().toISOString().split("T")[0]}.csv`;
+    a.download = `kingdom-budget-planner-${new Date().toISOString().split("T")[0]}.csv`;
     a.click();
     URL.revokeObjectURL(url);
-    toast.success("SISP exported to CSV!");
+    toast.success("Budget exported to CSV!");
   };
 
   const printPlan = () => {
@@ -162,14 +216,18 @@ export function SISPCalculator() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-xl">
             <Calculator className="w-6 h-6 text-sacred" />
-            Sacred Greeks SISP Calculator
+            Kingdom Budget Planner
           </CardTitle>
           <CardDescription>
-            Savings, Investing & Spending Plan — Biblical budgeting that honors God first
+            Faith-first budgeting with the 10/15/10/65 rule — every dollar has a purpose
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-2">
+            <Button variant="default" size="sm" onClick={loadDemoData}>
+              <Play className="w-4 h-4 mr-2" />
+              Load Demo
+            </Button>
             <Button variant="outline" size="sm" onClick={autoCalculate}>
               <Calculator className="w-4 h-4 mr-2" />
               Auto-Calculate
@@ -181,6 +239,10 @@ export function SISPCalculator() {
             <Button variant="outline" size="sm" onClick={printPlan} className="print:hidden">
               <Printer className="w-4 h-4 mr-2" />
               Print
+            </Button>
+            <Button variant="ghost" size="sm" onClick={clearAllData} className="text-destructive hover:text-destructive">
+              <Trash2 className="w-4 h-4 mr-2" />
+              Clear All
             </Button>
           </div>
         </CardContent>
