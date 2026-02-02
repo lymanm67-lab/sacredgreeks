@@ -36,6 +36,9 @@ import {
   Music,
   Briefcase,
   Cross,
+  CalendarDays,
+  MapPin,
+  UserPlus,
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -116,10 +119,17 @@ const podcastItems = [
   { title: "Be on Podcast", url: "/guest-panelist-application", icon: Mic, featureId: null, iconColor: "text-purple-500", hasProgress: false },
 ];
 
+// Community section (networking features)
+const communityItems = [
+  { title: "Events Calendar", url: "/events", icon: CalendarDays, featureId: null, iconColor: "text-purple-500", hasProgress: false },
+  { title: "Chapter Finder", url: "/chapters", icon: MapPin, featureId: null, iconColor: "text-blue-500", hasProgress: false },
+  { title: "Member Network", url: "/network", icon: UserPlus, featureId: null, iconColor: "text-pink-500", hasProgress: false },
+  { title: "Business Directory", url: "/business-directory", icon: Briefcase, featureId: null, iconColor: "text-emerald-500", hasProgress: false },
+];
+
 // Resources section
 const resourcesItems = [
   { title: "Chaplain Toolkit", url: "/chaplain-toolkit", icon: Cross, featureId: null, iconColor: "text-sacred", hasProgress: false },
-  { title: "Business Directory", url: "/business-directory", icon: Briefcase, featureId: null, iconColor: "text-emerald-500", hasProgress: false },
   { title: "Worship Playlists", url: "/worship-playlists", icon: Music, featureId: null, iconColor: "text-purple-500", hasProgress: false },
   { title: "Symbol Guide", url: "/symbol-guide", icon: Compass, featureId: null, iconColor: "text-teal-500", hasProgress: false },
   { title: "Video Library", url: "/video-library", icon: Video, featureId: null, iconColor: "text-sky-500", hasProgress: false },
@@ -163,6 +173,7 @@ export function AppSidebar() {
   const filteredCommunityNav = filterNavItems(communityNavItems);
   const filteredAboutDrLyman = filterNavItems(aboutDrLymanItems);
   const filteredPodcast = filterNavItems(podcastItems);
+  const filteredCommunity = filterNavItems(communityItems);
   const filteredResources = filterNavItems(resourcesItems);
   const filteredSystem = filterNavItems(systemItems);
 
@@ -368,6 +379,20 @@ export function AppSidebar() {
             <SidebarGroupContent>
               <SidebarMenu>
                 {filteredPodcast.map((item) => (
+                  <NavItem key={item.url} item={item} />
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
+
+        {/* Community/Networking Section */}
+        {filteredCommunity.length > 0 && (
+          <SidebarGroup>
+            <SidebarGroupLabel>Community</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {filteredCommunity.map((item) => (
                   <NavItem key={item.url} item={item} />
                 ))}
               </SidebarMenu>

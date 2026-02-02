@@ -139,6 +139,9 @@ const SpiritualGrowthGreekLife = lazy(() => import("./pages/seo/SpiritualGrowthG
 const ChapterChaplainToolkit = lazy(() => import("./pages/ChapterChaplainToolkit"));
 const D9BusinessDirectory = lazy(() => import("./pages/D9BusinessDirectory"));
 const GreekWorshipPlaylists = lazy(() => import("./pages/GreekWorshipPlaylists"));
+const EventsCalendar = lazy(() => import("./pages/EventsCalendar"));
+const ChapterFinder = lazy(() => import("./pages/ChapterFinder"));
+const MemberNetwork = lazy(() => import("./pages/MemberNetwork"));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -303,6 +306,9 @@ const App = () => (
                     <Route path="/chaplain-toolkit" element={<ChapterChaplainToolkit />} />
                     <Route path="/business-directory" element={<D9BusinessDirectory />} />
                     <Route path="/worship-playlists" element={<GreekWorshipPlaylists />} />
+                    <Route path="/events" element={<EventsCalendar />} />
+                    <Route path="/chapters" element={<ChapterFinder />} />
+                    <Route path="/network" element={<MemberNetwork />} />
                     
                     {/* Protected routes - with sidebar */}
                     <Route

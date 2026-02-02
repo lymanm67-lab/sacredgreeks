@@ -32,6 +32,8 @@ import {
   Shield,
   Wifi,
   Headphones,
+  Calendar,
+  MapPin,
 } from "lucide-react";
 
 const navigationItems = [
@@ -59,6 +61,10 @@ const navigationItems = [
   // Podcast
   { title: "Podcast", url: "/podcast", icon: Headphones, keywords: ["audio", "listen", "episodes", "rss", "sacred greeks"] },
   { title: "Be on Podcast", url: "/guest-panelist-application", icon: User, keywords: ["apply", "speaker", "webinar", "panelist", "guest"] },
+  // Community / Networking
+  { title: "Events Calendar", url: "/events", icon: Calendar, keywords: ["events", "conference", "retreat", "workshop", "gathering", "faith", "greek"] },
+  { title: "Chapter Finder", url: "/chapters", icon: MapPin, keywords: ["chapters", "find", "locate", "school", "university", "greek", "d9"] },
+  { title: "Member Network", url: "/network", icon: Users, keywords: ["network", "connect", "members", "greeks", "faith", "community"] },
   // Resources
   { title: "Chaplain Toolkit", url: "/chaplain-toolkit", icon: Heart, keywords: ["chaplain", "chapter", "prayer", "meeting", "devotional", "ministry"] },
   { title: "Business Directory", url: "/business-directory", icon: Users, keywords: ["business", "d9", "divine nine", "entrepreneur", "networking", "faith"] },

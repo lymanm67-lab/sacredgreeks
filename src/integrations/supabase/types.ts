@@ -797,6 +797,38 @@ export type Database = {
           },
         ]
       }
+      event_rsvps: {
+        Row: {
+          created_at: string
+          event_id: string
+          id: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          event_id: string
+          id?: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          event_id?: string
+          id?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_rsvps_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "greek_events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       feature_preferences: {
         Row: {
           created_at: string
@@ -994,6 +1026,129 @@ export type Database = {
           tier?: string
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      greek_chapters: {
+        Row: {
+          chapter_name: string
+          city: string
+          contact_email: string | null
+          created_at: string
+          description: string | null
+          id: string
+          is_faith_focused: boolean | null
+          latitude: number | null
+          longitude: number | null
+          organization: string
+          school_name: string | null
+          state: string
+          submitted_by: string | null
+          updated_at: string
+          website_url: string | null
+        }
+        Insert: {
+          chapter_name: string
+          city: string
+          contact_email?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_faith_focused?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          organization: string
+          school_name?: string | null
+          state: string
+          submitted_by?: string | null
+          updated_at?: string
+          website_url?: string | null
+        }
+        Update: {
+          chapter_name?: string
+          city?: string
+          contact_email?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_faith_focused?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          organization?: string
+          school_name?: string | null
+          state?: string
+          submitted_by?: string | null
+          updated_at?: string
+          website_url?: string | null
+        }
+        Relationships: []
+      }
+      greek_events: {
+        Row: {
+          city: string | null
+          cost_details: string | null
+          created_at: string
+          description: string | null
+          end_date: string | null
+          event_type: string
+          id: string
+          image_url: string | null
+          is_approved: boolean | null
+          is_free: boolean | null
+          is_virtual: boolean | null
+          location_name: string | null
+          organization: string | null
+          registration_url: string | null
+          start_date: string
+          state: string | null
+          submitted_by: string | null
+          title: string
+          updated_at: string
+          virtual_link: string | null
+        }
+        Insert: {
+          city?: string | null
+          cost_details?: string | null
+          created_at?: string
+          description?: string | null
+          end_date?: string | null
+          event_type: string
+          id?: string
+          image_url?: string | null
+          is_approved?: boolean | null
+          is_free?: boolean | null
+          is_virtual?: boolean | null
+          location_name?: string | null
+          organization?: string | null
+          registration_url?: string | null
+          start_date: string
+          state?: string | null
+          submitted_by?: string | null
+          title: string
+          updated_at?: string
+          virtual_link?: string | null
+        }
+        Update: {
+          city?: string | null
+          cost_details?: string | null
+          created_at?: string
+          description?: string | null
+          end_date?: string | null
+          event_type?: string
+          id?: string
+          image_url?: string | null
+          is_approved?: boolean | null
+          is_free?: boolean | null
+          is_virtual?: boolean | null
+          location_name?: string | null
+          organization?: string | null
+          registration_url?: string | null
+          start_date?: string
+          state?: string | null
+          submitted_by?: string | null
+          title?: string
+          updated_at?: string
+          virtual_link?: string | null
         }
         Relationships: []
       }
@@ -1283,6 +1438,36 @@ export type Database = {
           status?: string
           updated_at?: string
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      member_connections: {
+        Row: {
+          created_at: string
+          id: string
+          message: string | null
+          recipient_id: string
+          requester_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message?: string | null
+          recipient_id: string
+          requester_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string | null
+          recipient_id?: string
+          requester_id?: string
+          status?: string
+          updated_at?: string
         }
         Relationships: []
       }
