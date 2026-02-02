@@ -444,6 +444,28 @@ export const routeRegistry: RouteConfig[] = [
     noindex: true,
   },
 
+  // D9 Business Directory
+  {
+    path: '/business-directory',
+    title: 'D9 Business Directory | Divine Nine Black-Owned Businesses',
+    description: 'Discover and support Black-owned businesses by Divine Nine members. Find faith-centered D9 entrepreneurs in professional services, health, tech, real estate, and more. Shop D9!',
+    keywords: 'D9 business directory, Divine Nine businesses, Black owned business directory, NPHC entrepreneurs, BGLO business owners, support Black business, D9 network, Greek business directory, faith-centered business',
+    changefreq: 'weekly',
+    priority: 0.85,
+    isProtected: false,
+    structuredDataType: 'WebPage',
+  },
+  {
+    path: '/submit-business',
+    title: 'List Your D9 Business Free | Divine Nine Business Directory',
+    description: 'List your Divine Nine-owned business for FREE in the Sacred Greeks D9 Business Directory. Connect with D9 brothers and sisters who want to support Black excellence and faith-centered entrepreneurs.',
+    keywords: 'list D9 business free, Divine Nine business listing, add Black owned business, NPHC business directory submission, BGLO entrepreneur network, free business listing D9',
+    changefreq: 'monthly',
+    priority: 0.75,
+    isProtected: false,
+    structuredDataType: 'WebPage',
+  },
+
   // Legal pages
   {
     path: '/privacy',
