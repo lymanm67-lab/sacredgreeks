@@ -11,6 +11,7 @@ import { useDemoMode } from "@/contexts/DemoModeContext";
 import { useAdminCheck } from "@/components/AdminRoute";
 import { PresentationModeToggle } from "@/components/demo/PresentationModeToggle";
 import { SalesDeckGenerator } from "@/components/demo/SalesDeckGenerator";
+import { PresentationSlideViewer } from "@/components/demo/presentation";
 import { cn } from "@/lib/utils";
 
 interface AppLayoutProps {
@@ -23,6 +24,7 @@ export function AppLayout({ children }: AppLayoutProps) {
   const { isDemoMode, demoSettings } = useDemoMode();
   const { isAdmin } = useAdminCheck();
   const [showSalesDeck, setShowSalesDeck] = useState(false);
+  const [showSlideshow, setShowSlideshow] = useState(false);
   const isRightSidebar = preferences.position === 'right';
   const isPresentationMode = demoSettings.presentationMode;
 
@@ -55,7 +57,10 @@ export function AppLayout({ children }: AppLayoutProps) {
             <PageTitle />
             <div className="ml-auto flex items-center gap-2">
               {isDemoMode && canAccessPresentationMode && (
-                <PresentationModeToggle onGenerateDeck={() => setShowSalesDeck(true)} />
+                <PresentationModeToggle 
+                  onGenerateDeck={() => setShowSalesDeck(true)} 
+                  onStartSlideshow={() => setShowSlideshow(true)}
+                />
               )}
               <ThemeToggle />
             </div>
@@ -75,6 +80,12 @@ export function AppLayout({ children }: AppLayoutProps) {
       <SalesDeckGenerator 
         isOpen={showSalesDeck} 
         onClose={() => setShowSalesDeck(false)} 
+      />
+      
+      {/* Presentation Slideshow */}
+      <PresentationSlideViewer
+        isOpen={showSlideshow}
+        onClose={() => setShowSlideshow(false)}
       />
     </SidebarProvider>
   );
