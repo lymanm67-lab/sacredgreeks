@@ -44,8 +44,12 @@ export function AppLayout({ children }: AppLayoutProps) {
 
   // Handler for returning to presentation from demo pages
   const handleReturnToPresentation = useCallback((slideIndex: number) => {
+    console.log('[AppLayout] handleReturnToPresentation called with slide:', slideIndex);
     setInitialSlide(slideIndex);
-    setShowSlideshow(true);
+    // Use requestAnimationFrame to ensure state is set before opening
+    requestAnimationFrame(() => {
+      setShowSlideshow(true);
+    });
   }, []);
 
   // Allow non-layout pages (like /snapshot) to return to the slideshow via URL params.
