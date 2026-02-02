@@ -14,9 +14,11 @@ import {
   Heart,
   Shield,
   CheckCircle2,
-  Play
+  Play,
+  Info
 } from "lucide-react";
 import { ListenButton } from "@/components/ListenButton";
+import { D9_COST_DATA, D9_COST_SUMMARY, formatCurrency, getCostRange } from "@/data/greekCostData";
 
 // D9 Financial Literacy Programs
 const d9Programs = [
@@ -178,25 +180,128 @@ export default function GreekFinancialLeadership() {
         </div>
       </section>
 
-      {/* Stats Section */}
+      {/* Stats Section - Real Data */}
       <section className="py-12 border-y border-slate-800 bg-slate-900/50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
-              <p className="text-3xl md:text-4xl font-bold text-sacred">$1.3T</p>
-              <p className="text-slate-400 text-sm">US Student Debt</p>
+              <p className="text-3xl md:text-4xl font-bold text-sacred">{formatCurrency(D9_COST_SUMMARY.averageNewMemberFee.overall)}</p>
+              <p className="text-slate-400 text-sm">Avg New Member Fee</p>
             </div>
             <div>
-              <p className="text-3xl md:text-4xl font-bold text-emerald-400">9</p>
-              <p className="text-slate-400 text-sm">D9 Financial Programs</p>
+              <p className="text-3xl md:text-4xl font-bold text-emerald-400">{formatCurrency(D9_COST_SUMMARY.fourYearTotal.average)}</p>
+              <p className="text-slate-400 text-sm">Avg 4-Year Undergrad Cost</p>
             </div>
             <div>
-              <p className="text-3xl md:text-4xl font-bold text-amber-400">$50K+</p>
-              <p className="text-slate-400 text-sm">Avg Lifetime Greek Costs</p>
+              <p className="text-3xl md:text-4xl font-bold text-amber-400">{formatCurrency(D9_COST_SUMMARY.twentyYearTotal.average)}</p>
+              <p className="text-slate-400 text-sm">Avg 20-Year Active Cost</p>
             </div>
             <div>
               <p className="text-3xl md:text-4xl font-bold text-blue-400">10%</p>
               <p className="text-slate-400 text-sm">Biblical Tithe Priority</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Real D9 Cost Comparison */}
+      <section className="py-16 lg:py-24 bg-gradient-to-b from-slate-950 to-slate-900">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <Badge className="mb-4 bg-emerald-500/20 text-emerald-300 border-emerald-500/30">
+              <DollarSign className="w-3 h-3 mr-1" />
+              Real Cost Data
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Divine Nine Membership Costs
+            </h2>
+            <p className="text-slate-400 max-w-2xl mx-auto">
+              Actual cost data sourced from Auburn University and Arizona Greek Life offices (2025). 
+              Costs vary by chapter and region.
+            </p>
+          </div>
+
+          <div className="max-w-5xl mx-auto">
+            {/* Fraternities */}
+            <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="w-3 h-3 rounded-full bg-blue-500"></span>
+              Fraternities
+            </h3>
+            <div className="overflow-x-auto mb-8">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-slate-700">
+                    <th className="text-left py-3 px-4 text-slate-300 font-medium">Organization</th>
+                    <th className="text-right py-3 px-4 text-slate-300 font-medium">New Member</th>
+                    <th className="text-right py-3 px-4 text-slate-300 font-medium">Semester Dues</th>
+                    <th className="text-right py-3 px-4 text-slate-300 font-medium">4-Year Est.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {D9_COST_DATA.filter(org => org.type === 'fraternity').map((org) => (
+                    <tr key={org.greekLetters} className="border-b border-slate-800 hover:bg-slate-800/30">
+                      <td className="py-3 px-4">
+                        <span className="text-white font-medium">{org.greekLetters}</span>
+                        <span className="text-slate-400 text-xs block">{org.organization.replace(' Fraternity, Inc.', '')}</span>
+                      </td>
+                      <td className="text-right py-3 px-4 text-emerald-400">
+                        {getCostRange(org.undergraduate.newMemberFees.low, org.undergraduate.newMemberFees.high)}
+                      </td>
+                      <td className="text-right py-3 px-4 text-slate-300">
+                        {getCostRange(org.undergraduate.activeMemberDues.low, org.undergraduate.activeMemberDues.high)}
+                      </td>
+                      <td className="text-right py-3 px-4 text-amber-400">
+                        {getCostRange(org.estimatedLifetimeCost.fourYearUndergrad.low, org.estimatedLifetimeCost.fourYearUndergrad.high)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Sororities */}
+            <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+              <span className="w-3 h-3 rounded-full bg-pink-500"></span>
+              Sororities
+            </h3>
+            <div className="overflow-x-auto mb-8">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-slate-700">
+                    <th className="text-left py-3 px-4 text-slate-300 font-medium">Organization</th>
+                    <th className="text-right py-3 px-4 text-slate-300 font-medium">New Member</th>
+                    <th className="text-right py-3 px-4 text-slate-300 font-medium">Semester Dues</th>
+                    <th className="text-right py-3 px-4 text-slate-300 font-medium">4-Year Est.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {D9_COST_DATA.filter(org => org.type === 'sorority').map((org) => (
+                    <tr key={org.greekLetters} className="border-b border-slate-800 hover:bg-slate-800/30">
+                      <td className="py-3 px-4">
+                        <span className="text-white font-medium">{org.greekLetters}</span>
+                        <span className="text-slate-400 text-xs block">{org.organization.replace(' Sorority, Inc.', '')}</span>
+                      </td>
+                      <td className="text-right py-3 px-4 text-emerald-400">
+                        {getCostRange(org.undergraduate.newMemberFees.low, org.undergraduate.newMemberFees.high)}
+                      </td>
+                      <td className="text-right py-3 px-4 text-slate-300">
+                        {getCostRange(org.undergraduate.activeMemberDues.low, org.undergraduate.activeMemberDues.high)}
+                      </td>
+                      <td className="text-right py-3 px-4 text-amber-400">
+                        {getCostRange(org.estimatedLifetimeCost.fourYearUndergrad.low, org.estimatedLifetimeCost.fourYearUndergrad.high)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="flex items-start gap-2 text-xs text-slate-500 bg-slate-800/30 rounded-lg p-4">
+              <Info className="w-4 h-4 shrink-0 mt-0.5" />
+              <div>
+                <p className="mb-1"><strong className="text-slate-400">Sources:</strong> {D9_COST_SUMMARY.sources.join(', ')}</p>
+                <p className="text-slate-500">Last updated: {D9_COST_SUMMARY.lastUpdated}. Costs vary significantly by chapter, region, and year. Contact chapters directly for current fees.</p>
+              </div>
             </div>
           </div>
         </div>
