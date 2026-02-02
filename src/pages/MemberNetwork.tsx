@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -21,9 +22,11 @@ import {
   Sparkles,
   Volume2,
   VolumeX,
-  Loader2
+  Loader2,
+  ArrowLeft
 } from "lucide-react";
 import { PageHeader } from "@/components/ui/page-header";
+import { AppLayout } from "@/components/layout/AppLayout";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -392,8 +395,18 @@ export default function MemberNetwork() {
   const acceptedConnections = connections?.filter(c => c.status === 'accepted').length || 0;
 
   return (
-    <div className="min-h-screen bg-background">
+    <AppLayout>
       <div className="container mx-auto px-4 py-8 max-w-4xl">
+        {/* Back to Dashboard */}
+        <div className="mb-6">
+          <Button variant="ghost" size="sm" asChild>
+            <Link to="/dashboard" className="gap-2">
+              <ArrowLeft className="w-4 h-4" />
+              Back to Dashboard
+            </Link>
+          </Button>
+        </div>
+
         <PageHeader
           title="Member Network"
           description="Connect with fellow Greeks who share your faith journey. Build meaningful relationships centered on Christ."
@@ -586,6 +599,6 @@ export default function MemberNetwork() {
           </Card>
         )}
       </div>
-    </div>
+    </AppLayout>
   );
 }
