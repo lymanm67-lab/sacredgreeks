@@ -311,7 +311,7 @@ const App = () => (
                     <Route path="/business-directory" element={<D9BusinessDirectory />} />
                     <Route path="/worship-playlists" element={<GreekWorshipPlaylists />} />
                     <Route path="/events" element={<EventsCalendar />} />
-                    <Route path="/chapters" element={<ChapterFinder />} />
+                    <Route path="/chapters" element={<PageWithLayout><ChapterFinder /></PageWithLayout>} />
                     <Route path="/network" element={<MemberNetwork />} />
                     
                     {/* Protected routes - with sidebar */}
