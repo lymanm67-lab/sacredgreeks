@@ -257,7 +257,7 @@ const guideResources = [
     description: "Strategies for fostering a welcoming and supportive church atmosphere for all members.",
     action: "Access Toolkit",
     icon: Briefcase,
-    link: "/tools-resources"
+    link: "/resources"
   }
 ];
 
@@ -567,7 +567,7 @@ const ChurchLeaders = () => {
                     </a>
                   </Button>
                   <Button size="lg" variant="outline" asChild>
-                    <a href="/meet-dr-lyman">
+                    <a href="/about-creator">
                       Learn About Dr. Lyman
                     </a>
                   </Button>

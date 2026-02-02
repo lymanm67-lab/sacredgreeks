@@ -90,7 +90,7 @@ const IPDocumentation = lazy(() => import("./pages/IPDocumentation"));
 const TrademarkTracking = lazy(() => import("./pages/TrademarkTracking"));
 const TrademarkUsageGuide = lazy(() => import("./pages/TrademarkUsageGuide"));
 const Changelog = lazy(() => import("./pages/Changelog"));
-const InstallGuide = lazy(() => import("./pages/InstallGuide"));
+// InstallGuide removed - redirects to /install
 const ShareToolkit = lazy(() => import("./pages/ShareToolkit"));
 const AnalyticsDashboard = lazy(() => import("./pages/AnalyticsDashboard"));
 const EmailAnalytics = lazy(() => import("./pages/admin/EmailAnalytics"));
@@ -102,13 +102,13 @@ const MarketingDashboard = lazy(() => import("./pages/admin/MarketingDashboard")
 const NotificationPreferences = lazy(() => import("./pages/NotificationPreferences"));
 const CoachingApplication = lazy(() => import("./pages/CoachingApplication"));
 const AntiHazing = lazy(() => import("./pages/AntiHazing"));
-const MeetDrLyman = lazy(() => import("./pages/MeetDrLyman"));
+// MeetDrLyman removed - redirects to /about-creator
 const WebinarRegister = lazy(() => import("./pages/WebinarRegister"));
 const TheChallenge = lazy(() => import("./pages/TheChallenge"));
 const BiblicalGuides = lazy(() => import("./pages/BiblicalGuides"));
 const TheBook = lazy(() => import("./pages/TheBook"));
 const Contact = lazy(() => import("./pages/Contact"));
-const ToolsResources = lazy(() => import("./pages/ToolsResources"));
+// ToolsResources removed - redirects to /resources
 const HealingResources = lazy(() => import("./pages/HealingResources"));
 const OrganizationDetail = lazy(() => import("./pages/OrganizationDetail"));
 const ProofCourse = lazy(() => import("./pages/ProofCourse"));
@@ -261,11 +261,11 @@ const App = () => (
                     <Route path="/trademark-tracking" element={<TrademarkTracking />} />
                     <Route path="/trademark-usage-guide" element={<TrademarkUsageGuide />} />
                     <Route path="/changelog" element={<Changelog />} />
-                    <Route path="/install-guide" element={<InstallGuide />} />
+                    <Route path="/install-guide" element={<Navigate to="/install" replace />} />
                     <Route path="/share-toolkit" element={<ShareToolkit />} />
                     <Route path="/coaching-application" element={<CoachingApplication />} />
                     <Route path="/anti-hazing" element={<AntiHazing />} />
-                    <Route path="/meet-dr-lyman" element={<MeetDrLyman />} />
+                    <Route path="/meet-dr-lyman" element={<Navigate to="/about-creator" replace />} />
                     <Route path="/challenge" element={<Navigate to="/the-challenge" replace />} />
                     <Route path="/the-challenge" element={<TheChallenge />} />
                     <Route path="/biblical-guides" element={<BiblicalGuides />} />
@@ -273,7 +273,7 @@ const App = () => (
                     <Route path="/book" element={<Navigate to="/the-book" replace />} />
                     <Route path="/greek-life" element={<Navigate to="/greek-life-training" replace />} />
                     <Route path="/contact" element={<Contact />} />
-                    <Route path="/tools-resources" element={<ToolsResources />} />
+                    <Route path="/tools-resources" element={<Navigate to="/resources" replace />} />
                     <Route path="/healing-resources" element={<HealingResources />} />
                     <Route path="/proof-course" element={<ProofCourse />} />
                     <Route path="/proof-assessment" element={<ProofAssessment />} />
