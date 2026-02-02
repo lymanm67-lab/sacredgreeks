@@ -24,12 +24,36 @@ import { ListenButton } from "@/components/ListenButton";
 import { useExternalLinks } from "@/hooks/use-external-links";
 
 // External Resources Data
-const homeownershipResources = [
+// First-Time Homebuyer Programs
+const firstTimeHomebuyerResources = [
   { name: "HUD Housing Counseling", url: "https://www.hud.gov/counseling", description: "Free HUD-approved housing counselors" },
   { name: "NACA (Neighborhood Assistance Corporation)", url: "https://www.naca.com", description: "No down payment, no closing costs mortgages" },
-  { name: "Down Payment Resource", url: "https://downpaymentresource.com", description: "Find down payment assistance programs" },
-  { name: "Fannie Mae HomeReady", url: "https://singlefamily.fanniemae.com/originating-underwriting/mortgage-products/homeready-mortgage", description: "Low down payment programs" },
-  { name: "FHA Loans", url: "https://www.hud.gov/buying/loans", description: "Government-backed loans with low down payments" },
+  { name: "Down Payment Resource", url: "https://downpaymentresource.com", description: "Find down payment assistance programs in your area" },
+  { name: "Fannie Mae HomeReady", url: "https://singlefamily.fanniemae.com/originating-underwriting/mortgage-products/homeready-mortgage", description: "3% down payment for low-income buyers" },
+  { name: "Freddie Mac Home Possible", url: "https://sf.freddiemac.com/working-with-us/origination-underwriting/mortgage-products/home-possible", description: "3% down with flexible credit requirements" },
+  { name: "FHA Loans", url: "https://www.hud.gov/buying/loans", description: "3.5% down with credit scores as low as 580" },
+  { name: "Good Neighbor Next Door", url: "https://www.hud.gov/program_offices/housing/sfh/reo/goodn/gnndabot", description: "50% discount for teachers, police, firefighters, EMTs" },
+  { name: "State Housing Finance Agencies", url: "https://www.ncsha.org/housing-help/", description: "Find your state's first-time buyer programs" },
+];
+
+// Veterans & Military Programs
+const veteranResources = [
+  { name: "VA Home Loans", url: "https://www.va.gov/housing-assistance/home-loans/", description: "0% down, no PMI for eligible veterans" },
+  { name: "VA Loan Eligibility", url: "https://www.va.gov/housing-assistance/home-loans/eligibility/", description: "Check your Certificate of Eligibility (COE)" },
+  { name: "VA-Backed Purchase Loan", url: "https://www.va.gov/housing-assistance/home-loans/loan-types/purchase-loan/", description: "Buy a home with no down payment" },
+  { name: "Native American Direct Loan (NADL)", url: "https://www.va.gov/housing-assistance/home-loans/loan-types/native-american-direct-loan/", description: "For Native American veterans on federal trust land" },
+  { name: "Adapted Housing Grants", url: "https://www.va.gov/housing-assistance/disability-housing-grants/", description: "Grants for veterans with disabilities" },
+  { name: "Veterans United", url: "https://www.veteransunited.com", description: "Top VA loan lender with educational resources" },
+  { name: "Military OneSource", url: "https://www.militaryonesource.mil/financial-legal/personal-finance/housing/", description: "Free financial counseling for military families" },
+];
+
+// General Homeownership Resources
+const homeownershipResources = [
+  { name: "Consumer Financial Protection Bureau", url: "https://www.consumerfinance.gov/owning-a-home/", description: "Homebuying tools and mortgage guides" },
+  { name: "USDA Rural Housing", url: "https://www.rd.usda.gov/programs-services/single-family-housing-programs", description: "0% down loans for rural areas" },
+  { name: "Habitat for Humanity", url: "https://www.habitat.org/housing-help/apply", description: "Affordable homeownership program" },
+  { name: "NeighborWorks America", url: "https://www.neighborworks.org/homes", description: "Homeownership counseling nationwide" },
+  { name: "National Fair Housing Alliance", url: "https://nationalfairhousing.org/", description: "Know your housing rights" },
 ];
 
 const investingResources = [
@@ -165,13 +189,15 @@ export function BuildingWealthSection() {
   const { openExternalLink } = useExternalLinks();
   const [expandedScenario, setExpandedScenario] = useState<string | null>(null);
 
-  const ResourceLinks = ({ resources, title }: { resources: typeof homeownershipResources; title: string }) => (
+  const ResourceLinks = ({ resources, title }: { resources: typeof firstTimeHomebuyerResources; title: string }) => (
     <div className="space-y-2">
-      <h5 className="font-semibold text-sm flex items-center gap-2">
-        <ExternalLink className="w-4 h-4" />
-        {title}
-      </h5>
-      <div className="grid gap-2">
+      {title && (
+        <h5 className="font-semibold text-sm flex items-center gap-2">
+          <ExternalLink className="w-4 h-4" />
+          {title}
+        </h5>
+      )}
+      <div className="grid gap-2 max-h-80 overflow-y-auto pr-1">
         {resources.map((resource, idx) => (
           <Button
             key={idx}
@@ -217,34 +243,71 @@ export function BuildingWealthSection() {
         </CardHeader>
       </Card>
 
-      {/* Main Resource Cards with Links */}
-      <div className="grid gap-4 md:grid-cols-2">
-        {/* Homeownership */}
-        <Card className="border-blue-500/20">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Home className="w-5 h-5 text-blue-500" />
-              Homeownership
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <ul className="text-sm text-muted-foreground space-y-1">
-              <li>• Build equity instead of paying rent</li>
-              <li>• Research first-time buyer programs</li>
-              <li>• Improve credit score for better rates</li>
-              <li>• Save 20% down to avoid PMI</li>
-            </ul>
+      {/* Homeownership - Full Width with Multiple Categories */}
+      <Card className="border-blue-500/20">
+        <CardHeader className="pb-3">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Home className="w-5 h-5 text-blue-500" />
+                Homeownership Programs
+              </CardTitle>
+              <CardDescription>
+                Multiple pathways to homeownership with low or no down payment options
+              </CardDescription>
+            </div>
             <ListenButton
-              text="Homeownership is one of the most powerful wealth-building tools available. Instead of paying rent to a landlord, your mortgage payments build equity that belongs to you. First-time buyer programs like NACA and FHA loans make homeownership accessible with low or no down payments. Focus on improving your credit score to secure better interest rates, and try to save 20% down payment to avoid private mortgage insurance."
+              text="Homeownership is one of the most powerful wealth-building tools available. There are many programs designed to help you buy your first home. First-time buyer programs like NACA, FHA loans, and Fannie Mae HomeReady offer low or zero down payment options. Veterans and military members have access to VA loans with zero down payment and no private mortgage insurance. USDA loans provide zero down payment options for rural areas. Always work with a HUD-approved housing counselor who can guide you through the process for free."
               itemId="homeownership-tips"
-              title="Homeownership Tips"
+              title="Homeownership Programs"
               voice="onyx"
               size="sm"
-              showLabel={false}
             />
-            <ResourceLinks resources={homeownershipResources} title="Free Homeownership Resources" />
-          </CardContent>
-        </Card>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <ul className="text-sm text-muted-foreground space-y-1 grid md:grid-cols-2 gap-x-4">
+            <li>• Build equity instead of paying rent</li>
+            <li>• 0% down options for veterans (VA loans)</li>
+            <li>• 3% down for first-time buyers (FHA)</li>
+            <li>• 0% down for rural areas (USDA)</li>
+            <li>• Free housing counseling available</li>
+            <li>• State programs with down payment assistance</li>
+          </ul>
+
+          <div className="grid gap-4 md:grid-cols-3">
+            {/* First-Time Buyers */}
+            <div className="p-4 rounded-lg bg-blue-500/5 border border-blue-500/20">
+              <h4 className="font-semibold text-sm flex items-center gap-2 mb-3 text-blue-600">
+                <Users className="w-4 h-4" />
+                First-Time Buyers
+              </h4>
+              <ResourceLinks resources={firstTimeHomebuyerResources} title="" />
+            </div>
+
+            {/* Veterans & Military */}
+            <div className="p-4 rounded-lg bg-emerald-500/5 border border-emerald-500/20">
+              <h4 className="font-semibold text-sm flex items-center gap-2 mb-3 text-emerald-600">
+                <Shield className="w-4 h-4" />
+                Veterans & Military
+              </h4>
+              <ResourceLinks resources={veteranResources} title="" />
+            </div>
+
+            {/* General Resources */}
+            <div className="p-4 rounded-lg bg-amber-500/5 border border-amber-500/20">
+              <h4 className="font-semibold text-sm flex items-center gap-2 mb-3 text-amber-600">
+                <Building className="w-4 h-4" />
+                General Resources
+              </h4>
+              <ResourceLinks resources={homeownershipResources} title="" />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Other Resource Cards */}
+      <div className="grid gap-4 md:grid-cols-3">
 
         {/* Investing Education */}
         <Card className="border-purple-500/20">
