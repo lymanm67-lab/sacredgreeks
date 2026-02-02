@@ -132,8 +132,8 @@ export const salesPresentationSlides: PresentationSlide[] = [
       'Establish credibility: You\'ve lived both worlds'
     ],
     keyPoints: [
-      'Ordained minister with decades of experience',
-      'Initiated member of the Divine Nine',
+      'Former Alumni Chapter President',
+      'Creator of Sacred Greeks Life App',
       'Author of "Sacred Not Sinful: A Biblical Response"',
       'Host of the Sacred Greeks Podcast'
     ],
