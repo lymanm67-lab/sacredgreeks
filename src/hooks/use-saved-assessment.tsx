@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { useDemoMode } from "@/contexts/DemoModeContext";
 
 export interface SavedAssessment {
   id: string;
@@ -14,10 +15,20 @@ export interface SavedAssessment {
 
 export const useSavedAssessment = (assessmentType: string) => {
   const { user } = useAuth();
+  const { isDemoMode, demoSettings } = useDemoMode();
+  
+  // In presentation mode, bypass saved assessments for a fresh demo experience
+  const isPresentationMode = demoSettings.presentationMode;
 
   const { data: savedAssessment, isLoading, refetch } = useQuery({
-    queryKey: ["saved-assessment", assessmentType, user?.id],
+    queryKey: ["saved-assessment", assessmentType, user?.id, isPresentationMode],
     queryFn: async (): Promise<SavedAssessment | null> => {
+      // Skip fetching in presentation mode to ensure fresh demo experience
+      if (isPresentationMode) {
+        console.log('[useSavedAssessment] Presentation mode active, skipping saved assessment fetch');
+        return null;
+      }
+      
       if (!user) return null;
 
       const { data, error } = await supabase
@@ -36,16 +47,17 @@ export const useSavedAssessment = (assessmentType: string) => {
 
       return data as SavedAssessment | null;
     },
-    enabled: !!user,
+    enabled: !!user && !isPresentationMode,
     staleTime: 1000 * 60 * 5, // Cache for 5 minutes
   });
 
-  const hasSavedAssessment = !!savedAssessment;
+  // In presentation mode, always report no saved assessment
+  const hasSavedAssessment = !isPresentationMode && !!savedAssessment;
 
   return {
-    savedAssessment,
+    savedAssessment: isPresentationMode ? null : savedAssessment,
     hasSavedAssessment,
-    isLoading,
+    isLoading: isPresentationMode ? false : isLoading,
     refetch,
   };
 };
