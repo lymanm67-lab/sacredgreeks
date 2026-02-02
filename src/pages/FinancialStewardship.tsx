@@ -25,11 +25,17 @@ import {
   Landmark,
   Lightbulb,
   Wrench,
-  FileText
+  FileText,
+  Shield,
+  ClipboardList
 } from "lucide-react";
 import { FinancialScenarios } from "@/components/financial/FinancialScenarios";
 import { FinancialTools } from "@/components/financial/FinancialTools";
 import { FinancialExamples } from "@/components/financial/FinancialExamples";
+import { CreditRepairHub } from "@/components/financial/CreditRepairHub";
+import { StudentFinancialGuide } from "@/components/financial/StudentFinancialGuide";
+import { SISPCalculator } from "@/components/financial/SISPCalculator";
+import { FinancialOverviewTTS } from "@/components/financial/FinancialOverviewTTS";
 import { Link } from "react-router-dom";
 
 const FinancialStewardship = () => {
@@ -140,40 +146,55 @@ const FinancialStewardship = () => {
               <p className="text-sm text-muted-foreground mt-2">— Luke 14:28 (NKJV)</p>
             </CardContent>
           </Card>
+
+          {/* TTS Overview */}
+          <FinancialOverviewTTS />
         </div>
 
         {/* Main Tabs */}
         <Tabs defaultValue="foundation" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 xl:grid-cols-8 h-auto gap-2">
-            <TabsTrigger value="foundation" className="flex items-center gap-2 py-3">
+          <TabsList className="flex flex-wrap justify-start gap-2 h-auto bg-transparent">
+            <TabsTrigger value="foundation" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <BookOpen className="w-4 h-4" />
               <span className="hidden sm:inline">Biblical</span> Foundation
             </TabsTrigger>
-            <TabsTrigger value="scenarios" className="flex items-center gap-2 py-3">
+            <TabsTrigger value="credit" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <Shield className="w-4 h-4" />
+              Credit Repair
+            </TabsTrigger>
+            <TabsTrigger value="students" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <GraduationCap className="w-4 h-4" />
+              Students
+            </TabsTrigger>
+            <TabsTrigger value="sisp" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <ClipboardList className="w-4 h-4" />
+              SISP Budget
+            </TabsTrigger>
+            <TabsTrigger value="scenarios" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Lightbulb className="w-4 h-4" />
               Scenarios
             </TabsTrigger>
-            <TabsTrigger value="tools" className="flex items-center gap-2 py-3">
+            <TabsTrigger value="tools" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Wrench className="w-4 h-4" />
               Tools
             </TabsTrigger>
-            <TabsTrigger value="examples" className="flex items-center gap-2 py-3">
+            <TabsTrigger value="examples" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <FileText className="w-4 h-4" />
               Examples
             </TabsTrigger>
-            <TabsTrigger value="debt" className="flex items-center gap-2 py-3">
+            <TabsTrigger value="debt" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <CreditCard className="w-4 h-4" />
               Debt Freedom
             </TabsTrigger>
-            <TabsTrigger value="budget" className="flex items-center gap-2 py-3">
+            <TabsTrigger value="budget" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <PiggyBank className="w-4 h-4" />
               Budgeting
             </TabsTrigger>
-            <TabsTrigger value="greek" className="flex items-center gap-2 py-3">
+            <TabsTrigger value="greek" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Users className="w-4 h-4" />
               Greek Costs
             </TabsTrigger>
-            <TabsTrigger value="wealth" className="flex items-center gap-2 py-3">
+            <TabsTrigger value="wealth" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <TrendingUp className="w-4 h-4" />
               Wealth Building
             </TabsTrigger>
@@ -233,6 +254,21 @@ const FinancialStewardship = () => {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          {/* Credit Repair Hub Tab */}
+          <TabsContent value="credit" className="space-y-6">
+            <CreditRepairHub />
+          </TabsContent>
+
+          {/* Student Financial Guide Tab */}
+          <TabsContent value="students" className="space-y-6">
+            <StudentFinancialGuide />
+          </TabsContent>
+
+          {/* SISP Calculator Tab */}
+          <TabsContent value="sisp" className="space-y-6">
+            <SISPCalculator />
           </TabsContent>
 
           {/* Scenarios & Pitfalls Tab */}
