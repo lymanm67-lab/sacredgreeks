@@ -46,6 +46,7 @@ import { useStudyProgress } from "@/hooks/use-study-progress";
 import { useGamification } from "@/hooks/use-gamification";
 import { useLessonCelebration } from "@/hooks/use-lesson-celebration";
 import { useTTS } from "@/hooks/use-tts";
+import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -307,16 +308,27 @@ const getModuleTTSContent = (moduleId: string): string => {
 };
 
 export default function ShouldYouStayOrLeave() {
-  const { isSessionComplete, toggleSession, progress: studyProgress, isAuthenticated } = useStudyProgress();
+  const { isSessionComplete, toggleSession, progress: studyProgress, isAuthenticated, isPresentationMode } = useStudyProgress();
   const { awardPoints } = useGamification();
-  const { speak, stop, isPlaying, isLoading } = useTTS({ voice: 'marcus' }); // African-American male voice for modules
-  const { speak: speakQuestion, stop: stopQuestion, isPlaying: isPlayingQuestion, isLoading: isLoadingQuestion } = useTTS({ voice: 'marcus' }); // African-American male voice
+  const { speak, stop, isPlaying, isLoading } = useTTS({ voice: 'marcus' });
+  const { speak: speakQuestion, stop: stopQuestion, isPlaying: isPlayingQuestion, isLoading: isLoadingQuestion } = useTTS({ voice: 'marcus' });
+  const queryClient = useQueryClient();
   const [playingModuleId, setPlayingModuleId] = useState<string | null>(null);
   const [isQuestionTTSActive, setIsQuestionTTSActive] = useState(false);
   const [activeModule, setActiveModule] = useState<string | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [hasRevealed, setHasRevealed] = useState(false);
   const [pointsAwarded, setPointsAwarded] = useState(false);
+
+  // Reset demo data handler
+  const handleResetDemo = () => {
+    queryClient.invalidateQueries({ queryKey: ["study-progress"] });
+    setActiveModule(null);
+    setSelectedOption(null);
+    setHasRevealed(false);
+    setPointsAwarded(false);
+    toast.success("Demo data reset! Refresh to see changes.");
+  };
 
   // Get completed modules (now includes session 30)
   const completedModules = studyProgress
@@ -806,6 +818,16 @@ export default function ShouldYouStayOrLeave() {
               <Button variant="outline" size="sm" onClick={handleSaveProgress} className="gap-2">
                 <Save className="w-4 h-4" /> Save
               </Button>
+              {isPresentationMode && (
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={handleResetDemo} 
+                  className="gap-2 border-amber-500/50 text-amber-600 hover:bg-amber-500/10"
+                >
+                  <RotateCcw className="w-4 h-4" /> Reset Demo
+                </Button>
+              )}
             </div>
           </div>
 
