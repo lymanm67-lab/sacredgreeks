@@ -150,12 +150,12 @@ export function SISPCalculator() {
     setInsurance((spendAlloc * 0.05).toFixed(2));
     setPersonal((spendAlloc * 0.10).toFixed(2));
 
-    toast.success("Budget auto-calculated using Kingdom Budget formula!");
+    toast.success("Budget auto-calculated using SMSP formula!");
   };
 
   const exportCSV = () => {
     const data = [
-      ["KINGDOM BUDGET PLANNER - Faith-First Financial Plan"],
+      ["SACRED MONEY SPENDING PLAN (SMSP) - Faith-First Financial Plan"],
       [""],
       ["INCOME", "Monthly", "Annual"],
       ["Primary Income", primaryIncome, (parseNum(primaryIncome) * 12).toFixed(2)],
@@ -198,7 +198,7 @@ export function SISPCalculator() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `kingdom-budget-planner-${new Date().toISOString().split("T")[0]}.csv`;
+    a.download = `sacred-money-spending-plan-${new Date().toISOString().split("T")[0]}.csv`;
     a.click();
     URL.revokeObjectURL(url);
     toast.success("Budget exported to CSV!");
@@ -216,10 +216,10 @@ export function SISPCalculator() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-xl">
             <Calculator className="w-6 h-6 text-sacred" />
-            Kingdom Budget Planner
+            Sacred Money Spending Plan (SMSP)
           </CardTitle>
           <CardDescription>
-            Faith-first budgeting with the 10/15/10/65 rule — every dollar has a purpose
+            Faith-first budgeting with the 10/15/10/65 rule — honor God with every dollar
           </CardDescription>
         </CardHeader>
         <CardContent>

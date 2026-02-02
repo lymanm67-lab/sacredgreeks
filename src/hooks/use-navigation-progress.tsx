@@ -12,6 +12,7 @@ interface NavProgressData {
   stayOrLeave: number;
   saintsOrSellouts: number;
   hiddenInPlainSight: number;
+  sacredMoneyCourse: number;
   journey: number;
   bibleStudy: number;
   prayerJournal: number;
@@ -36,6 +37,7 @@ export const useNavigationProgress = () => {
           stayOrLeave: 0,
           saintsOrSellouts: 0,
           hiddenInPlainSight: 0,
+          sacredMoneyCourse: 0,
           journey: 0,
           bibleStudy: 0,
           prayerJournal: 0,
@@ -77,6 +79,10 @@ export const useNavigationProgress = () => {
       // Hidden in Plain Sight course (sessions 40-48, 9 modules)
       const hiddenInPlainSightSessions = studyProgress?.filter(p => p.session_id >= 40 && p.session_id <= 48 && p.completed) || [];
       const hiddenInPlainSight = Math.round((hiddenInPlainSightSessions.length / 9) * 100);
+
+      // Sacred Money Course (sessions 50-60, 11 sections)
+      const sacredMoneySessions = studyProgress?.filter(p => p.session_id >= 50 && p.session_id <= 60 && p.completed) || [];
+      const sacredMoneyCourse = Math.round((sacredMoneySessions.length / 11) * 100);
 
       // Myth Buster progress (sessions 100+)
       // Total myths count is dynamically determined (currently around 30+ myths in the content)
@@ -151,6 +157,7 @@ export const useNavigationProgress = () => {
         stayOrLeave,
         saintsOrSellouts,
         hiddenInPlainSight,
+        sacredMoneyCourse,
         journey,
         bibleStudy,
         prayerJournal,
@@ -188,6 +195,8 @@ export const useNavigationProgress = () => {
         return progressData.saintsOrSellouts;
       case "/hidden-in-plain-sight":
         return progressData.hiddenInPlainSight;
+      case "/financial-stewardship":
+        return progressData.sacredMoneyCourse;
       case "/journey":
         return progressData.journey;
       case "/bible-study":

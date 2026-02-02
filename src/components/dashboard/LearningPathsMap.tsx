@@ -16,7 +16,8 @@ import {
   Sparkles,
   Map,
   Award,
-  ChevronDown
+  ChevronDown,
+  DollarSign
 } from 'lucide-react';
 import { useNavigationProgress } from '@/hooks/use-navigation-progress';
 import { cn } from '@/lib/utils';
@@ -32,7 +33,7 @@ interface LearningPath {
   color: string;
   bgColor: string;
   borderColor: string;
-  progressKey: 'proofCourse' | 'greekLifeTraining' | 'mythBuster' | 'faithAuthority';
+  progressKey: 'proofCourse' | 'greekLifeTraining' | 'mythBuster' | 'faithAuthority' | 'sacredMoneyCourse';
   totalItems: number;
   itemLabel: string;
 }
@@ -89,6 +90,19 @@ const learningPaths: LearningPath[] = [
     progressKey: 'faithAuthority',
     totalItems: 5,
     itemLabel: 'modules'
+  },
+  {
+    id: 'sacred-money',
+    title: 'Sacred Money Course',
+    subtitle: 'Financial Literacy',
+    href: '/financial-stewardship',
+    icon: DollarSign,
+    color: 'text-emerald-500',
+    bgColor: 'bg-emerald-500',
+    borderColor: 'border-emerald-500/30',
+    progressKey: 'sacredMoneyCourse',
+    totalItems: 11,
+    itemLabel: 'sections'
   }
 ];
 
@@ -108,7 +122,8 @@ export function LearningPathsMap() {
         (progressData.proofCourse + 
          progressData.greekLifeTraining + 
          progressData.mythBuster + 
-         progressData.faithAuthority) / 4
+         progressData.faithAuthority +
+         (progressData.sacredMoneyCourse || 0)) / 5
       )
     : 0;
 
