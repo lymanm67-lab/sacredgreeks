@@ -26,6 +26,16 @@ const competitors: CompetitorData[] = [
     antiHazing: true,
   },
   {
+    name: "Greek IV Lead",
+    greekFocus: true,
+    faithFocus: true,
+    bgloSpecific: false,
+    freeModel: true,
+    proofFramework: false,
+    aiTools: false,
+    antiHazing: false,
+  },
+  {
     name: "OmegaFi",
     greekFocus: true,
     faithFocus: false,
