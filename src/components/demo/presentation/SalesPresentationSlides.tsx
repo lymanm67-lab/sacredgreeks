@@ -72,6 +72,7 @@ import slideCommunity from '@/assets/presentation/slide-community.jpg';
 import slideGamification from '@/assets/presentation/slide-gamification.jpg';
 import slideClose from '@/assets/presentation/slide-close.jpg';
 import slideQA from '@/assets/presentation/slide-qa.jpg';
+import slideSpeaker from '@/assets/presentation/dr-lyman-montgomery.jpeg';
 
 export interface PresentationSlide {
   id: string;
@@ -120,8 +121,9 @@ export const salesPresentationSlides: PresentationSlide[] = [
   {
     id: 'speaker-intro',
     title: 'Dr. Lyman Montgomery',
-    subtitle: 'Scholar, Minister, Delta, Storyteller',
+    subtitle: 'Faith-Based Leadership Speaker',
     icon: <UserCircle className="w-12 h-12 text-blue-500" />,
+    image: slideSpeaker,
     duration: '3-4 min',
     presenterNotes: [
       'Brief personal introduction — ordained minister AND Delta member',
