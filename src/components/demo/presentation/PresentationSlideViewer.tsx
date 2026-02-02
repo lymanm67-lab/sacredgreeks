@@ -189,12 +189,33 @@ export function PresentationSlideViewer({ isOpen, onClose, initialSlide = 0 }: P
                     </div>
                   </div>
                 ) : slide.image ? (
-                  <div className="relative h-48 w-full overflow-hidden">
-                    <img 
-                      src={slide.image} 
-                      alt={slide.title}
-                      className="w-full h-full object-cover"
-                    />
+                  <div className="relative w-full overflow-hidden">
+                    {slide.secondaryImage ? (
+                      <div className="flex h-48 gap-2">
+                        <div className="flex-1 relative overflow-hidden rounded-l-lg">
+                          <img 
+                            src={slide.image} 
+                            alt={slide.title}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="flex-1 relative overflow-hidden rounded-r-lg">
+                          <img 
+                            src={slide.secondaryImage} 
+                            alt={`${slide.title} - Gift`}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="h-48">
+                        <img 
+                          src={slide.image} 
+                          alt={slide.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent" />
                   </div>
                 ) : null}
