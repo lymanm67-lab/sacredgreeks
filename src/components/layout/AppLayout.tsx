@@ -1,4 +1,4 @@
-import { ReactNode, useState, useMemo } from "react";
+import { ReactNode, useState, useMemo, useCallback } from "react";
 import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
 import { MobileNav } from "./MobileNav";
@@ -11,7 +11,7 @@ import { useDemoMode } from "@/contexts/DemoModeContext";
 import { useAdminCheck } from "@/components/AdminRoute";
 import { PresentationModeToggle } from "@/components/demo/PresentationModeToggle";
 import { SalesDeckGenerator } from "@/components/demo/SalesDeckGenerator";
-import { PresentationSlideViewer } from "@/components/demo/presentation";
+import { PresentationSlideViewer, ReturnToPresentationButton } from "@/components/demo/presentation";
 import { cn } from "@/lib/utils";
 
 interface AppLayoutProps {
@@ -25,6 +25,7 @@ export function AppLayout({ children }: AppLayoutProps) {
   const { isAdmin } = useAdminCheck();
   const [showSalesDeck, setShowSalesDeck] = useState(false);
   const [showSlideshow, setShowSlideshow] = useState(false);
+  const [initialSlide, setInitialSlide] = useState(0);
   const isRightSidebar = preferences.position === 'right';
   const isPresentationMode = demoSettings.presentationMode;
 
@@ -38,6 +39,12 @@ export function AppLayout({ children }: AppLayoutProps) {
 
   // Show presentation toggle only for admins OR if ?presenter=true is in URL
   const canAccessPresentationMode = isAdmin || hasPresenterParam;
+
+  // Handler for returning to presentation from demo pages
+  const handleReturnToPresentation = useCallback((slideIndex: number) => {
+    setInitialSlide(slideIndex);
+    setShowSlideshow(true);
+  }, []);
 
   return (
     <SidebarProvider defaultOpen={!isMobile}>
@@ -59,7 +66,10 @@ export function AppLayout({ children }: AppLayoutProps) {
               {isDemoMode && canAccessPresentationMode && (
                 <PresentationModeToggle 
                   onGenerateDeck={() => setShowSalesDeck(true)} 
-                  onStartSlideshow={() => setShowSlideshow(true)}
+                  onStartSlideshow={() => {
+                    setInitialSlide(0);
+                    setShowSlideshow(true);
+                  }}
                 />
               )}
               <ThemeToggle />
@@ -76,6 +86,9 @@ export function AppLayout({ children }: AppLayoutProps) {
       {/* Mobile bottom navigation */}
       {isMobile && <MobileBottomNav />}
       
+      {/* Return to Presentation Button (shown when viewing demo from presentation) */}
+      <ReturnToPresentationButton onReturnToPresentation={handleReturnToPresentation} />
+      
       {/* Sales Deck Generator Dialog */}
       <SalesDeckGenerator 
         isOpen={showSalesDeck} 
@@ -86,6 +99,7 @@ export function AppLayout({ children }: AppLayoutProps) {
       <PresentationSlideViewer
         isOpen={showSlideshow}
         onClose={() => setShowSlideshow(false)}
+        initialSlide={initialSlide}
       />
     </SidebarProvider>
   );

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import QRCode from 'react-qr-code';
@@ -29,13 +29,21 @@ import { cn } from '@/lib/utils';
 interface PresentationSlideViewerProps {
   isOpen: boolean;
   onClose: () => void;
+  initialSlide?: number;
 }
 
-export function PresentationSlideViewer({ isOpen, onClose }: PresentationSlideViewerProps) {
+export function PresentationSlideViewer({ isOpen, onClose, initialSlide = 0 }: PresentationSlideViewerProps) {
   const navigate = useNavigate();
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(initialSlide);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showNotes, setShowNotes] = useState(true); // Presenter notes - hide for audience view
+
+  // Update current slide when initialSlide changes (e.g., returning from demo)
+  React.useEffect(() => {
+    if (isOpen) {
+      setCurrentSlide(initialSlide);
+    }
+  }, [isOpen, initialSlide]);
 
   const slides = salesPresentationSlides;
   const slide = slides[currentSlide];
@@ -77,7 +85,8 @@ export function PresentationSlideViewer({ isOpen, onClose }: PresentationSlideVi
 
   const handleLiveDemo = (route: string) => {
     onClose();
-    navigate(route);
+    // Pass slide index so we can return to the same slide
+    navigate(`${route}?fromPresentation=true&slide=${currentSlide}`);
   };
 
   if (!isOpen) return null;
