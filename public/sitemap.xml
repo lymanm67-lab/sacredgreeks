@@ -269,4 +269,36 @@
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
   </url>
+  
+  <!-- SEO Landing Pages - High Priority Keyword Pages -->
+  <url>
+    <loc>https://sacredgreekslife.com/christian-greek-life</loc>
+    <lastmod>2026-02-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/divine-nine-faith</loc>
+    <lastmod>2026-02-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/greek-life-biblical-guidance</loc>
+    <lastmod>2026-02-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/anti-hazing-christian</loc>
+    <lastmod>2026-02-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://sacredgreekslife.com/spiritual-growth-greek-life</loc>
+    <lastmod>2026-02-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
 </urlset>

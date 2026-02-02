@@ -121,6 +121,13 @@ A: All Christian denominations seeking biblical guidance for Greek life decision
 - About: /about, /faq
 - Legal: /privacy, /terms
 
+## SEO Keyword Landing Pages
+- Christian Greek Life: /christian-greek-life
+- Divine Nine Faith Resources: /divine-nine-faith
+- Greek Life Biblical Guidance: /greek-life-biblical-guidance
+- Anti-Hazing Christian Resources: /anti-hazing-christian
+- Spiritual Growth for Greek Life: /spiritual-growth-greek-life
+
 ## Technical Specifications
 - Platform: Progressive Web App (React + TypeScript)
 - Hosting: Lovable Cloud

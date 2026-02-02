@@ -1,0 +1,273 @@
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { SEOHead } from "@/components/SEOHead";
+import { 
+  Shield, Heart, Users, Cross, ArrowRight, 
+  CheckCircle2, AlertTriangle, BookOpen, Phone, HandHeart
+} from "lucide-react";
+
+const hazingAlternatives = [
+  {
+    traditional: "Physical punishment or abuse",
+    biblical: "Mentorship through encouragement (1 Thessalonians 5:11)",
+    icon: Heart,
+  },
+  {
+    traditional: "Humiliation rituals",
+    biblical: "Building up with dignity (Romans 12:10)",
+    icon: Users,
+  },
+  {
+    traditional: "Sleep deprivation",
+    biblical: "Reasonable requirements respecting well-being (3 John 1:2)",
+    icon: Shield,
+  },
+  {
+    traditional: "Forced isolation",
+    biblical: "Community and fellowship (Hebrews 10:24-25)",
+    icon: HandHeart,
+  },
+];
+
+const warningSignsList = [
+  "Being asked to keep activities secret from family or authorities",
+  "Physical activities causing pain, exhaustion, or injury",
+  "Verbal abuse, humiliation, or degradation",
+  "Being forced to consume alcohol or other substances",
+  "Sleep deprivation or extreme fatigue requirements",
+  "Activities that violate your personal values or faith",
+  "Threats or intimidation if you question activities",
+  "Isolation from friends, family, or support systems",
+];
+
+const resources = [
+  {
+    title: "StopHazing.org",
+    description: "National resource for hazing prevention and education",
+    type: "External Resource",
+  },
+  {
+    title: "P.R.O.O.F. Assessment",
+    description: "Evaluate your organization's practices biblically",
+    type: "Sacred Greeks Tool",
+    link: "/proof-assessment",
+  },
+  {
+    title: "Ask Dr. Lyman",
+    description: "Get confidential guidance on concerning situations",
+    type: "Sacred Greeks Tool",
+    link: "/ask-dr-lyman",
+  },
+];
+
+export default function AntiHazingChristian() {
+  return (
+    <>
+      <SEOHead
+        title="Anti-Hazing Christian Resources | Biblical Alternatives to Greek Hazing"
+        description="Christian anti-hazing resources for Greek life. Biblical alternatives to harmful traditions, hazing warning signs, and faith-based guidance for ethical fraternity and sorority membership. Stop hazing with Scripture-based approaches."
+        keywords="anti-hazing Christian, Greek hazing alternatives, biblical response to hazing, Christian fraternity hazing, sorority hazing prevention, ethical Greek life, hazing warning signs, stop Greek hazing, faith-based anti-hazing, Christian greek organization safety"
+        structuredDataType="WebPage"
+      />
+      
+      <div className="min-h-screen bg-background">
+        {/* Hero Section */}
+        <header className="relative overflow-hidden bg-gradient-to-b from-red-500/10 via-background to-background">
+          <div className="container mx-auto px-4 py-16 md:py-24">
+            <div className="max-w-4xl mx-auto text-center space-y-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20">
+                <Shield className="w-4 h-4" />
+                <span className="text-sm font-medium">Anti-Hazing Resources</span>
+              </div>
+              
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
+                Christian Response to{' '}
+                <span className="text-red-600 dark:text-red-400">Greek Hazing</span>
+              </h1>
+              
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Biblical alternatives to harmful traditions. Learn to recognize hazing, 
+                respond with faith, and promote ethical Greek life practices.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                <Link to="/anti-hazing">
+                  <Button size="lg" className="bg-red-600 hover:bg-red-700 text-white px-8">
+                    Full Anti-Hazing Guide
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </Link>
+                <Link to="/proof-assessment">
+                  <Button size="lg" variant="outline" className="px-8">
+                    Evaluate Your Organization
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Emergency Banner */}
+        <section className="py-6 bg-red-600 text-white">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-center md:text-left">
+              <Phone className="w-6 h-6 animate-pulse" />
+              <div>
+                <p className="font-semibold">If you're experiencing hazing or are in danger:</p>
+                <p className="text-sm">Call 911 for emergencies or the Hazing Hotline: 1-888-NOT-HAZE</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Biblical Alternatives */}
+        <section className="py-16 md:py-24">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Biblical Alternatives to Hazing
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Scripture provides a better way to build brotherhood and sisterhood 
+                without harm or degradation.
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              {hazingAlternatives.map((item, index) => (
+                <Card key={index} className="border-2">
+                  <CardContent className="p-6">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center shrink-0">
+                        <item.icon className="w-6 h-6 text-green-600 dark:text-green-400" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400">Instead of</span>
+                          <span className="text-sm text-muted-foreground line-through">{item.traditional}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs px-2 py-1 rounded bg-green-500/10 text-green-600 dark:text-green-400">Try</span>
+                          <span className="text-sm text-foreground">{item.biblical}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Warning Signs */}
+        <section className="py-16 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="flex items-center gap-3 justify-center mb-8">
+                <AlertTriangle className="w-8 h-8 text-amber-500" />
+                <h2 className="text-3xl font-bold text-center">
+                  Warning Signs of Hazing
+                </h2>
+              </div>
+              <div className="grid md:grid-cols-2 gap-4">
+                {warningSignsList.map((sign, index) => (
+                  <div key={index} className="flex items-start gap-3 p-4 rounded-lg bg-background border">
+                    <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+                    <span className="text-foreground text-sm">{sign}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Scripture Foundation */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <Card className="max-w-3xl mx-auto bg-gradient-to-br from-sacred/5 to-sacred/10 border-sacred/20">
+              <CardContent className="p-8 text-center">
+                <Cross className="w-10 h-10 text-sacred mx-auto mb-4" />
+                <blockquote className="text-xl italic text-foreground mb-4">
+                  "Do nothing out of selfish ambition or vain conceit. Rather, in humility value 
+                  others above yourselves, not looking to your own interests but each of you to 
+                  the interests of the others."
+                </blockquote>
+                <div className="text-muted-foreground font-semibold">
+                  Philippians 2:3-4
+                </div>
+                <p className="text-sm text-muted-foreground mt-4">
+                  True brotherhood and sisterhood is built through mutual respect, not degradation.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* What To Do Section */}
+        <section className="py-16 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center mb-8">
+              If You Witness or Experience Hazing
+            </h2>
+            <div className="max-w-3xl mx-auto space-y-4">
+              {[
+                { step: "1", action: "Remove yourself from the situation if safe to do so" },
+                { step: "2", action: "Document what happened (dates, times, witnesses)" },
+                { step: "3", action: "Report to campus authorities or Greek affairs office" },
+                { step: "4", action: "Seek support from trusted friends, family, or counselors" },
+                { step: "5", action: "Pray for wisdom and guidance in your response" },
+              ].map((item, index) => (
+                <div key={index} className="flex items-center gap-4 p-4 rounded-lg bg-background border">
+                  <div className="w-10 h-10 rounded-full bg-sacred/10 flex items-center justify-center text-sacred font-bold">
+                    {item.step}
+                  </div>
+                  <span className="text-foreground">{item.action}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-16">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-3xl font-bold mb-4">
+              Build Brotherhood Without Harm
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
+              Learn how to create meaningful Greek experiences that honor God and 
+              respect human dignity.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/proof-course">
+                <Button size="lg" className="bg-sacred hover:bg-sacred/90">
+                  Learn the P.R.O.O.F. Framework
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+              <Link to="/chapter-kit">
+                <Button size="lg" variant="outline">
+                  Chapter Resource Kit
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Related Links */}
+        <footer className="py-12 border-t">
+          <div className="container mx-auto px-4">
+            <h3 className="text-lg font-semibold mb-6 text-center">Related Resources</h3>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link to="/christian-greek-life" className="text-sacred hover:underline">Christian Greek Life</Link>
+              <Link to="/greek-life-biblical-guidance" className="text-sacred hover:underline">Biblical Guidance</Link>
+              <Link to="/healing-resources" className="text-sacred hover:underline">Healing Resources</Link>
+              <Link to="/parents-family" className="text-sacred hover:underline">For Parents & Family</Link>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </>
+  );
+}

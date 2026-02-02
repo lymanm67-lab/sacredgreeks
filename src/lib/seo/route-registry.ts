@@ -544,6 +544,58 @@ export const routeRegistry: RouteConfig[] = [
     isProtected: false,
     noindex: true,
   },
+
+  // SEO Landing Pages - Keyword Targeted
+  {
+    path: '/christian-greek-life',
+    title: 'Christian Greek Life App | Faith-Based Fraternity & Sorority Resources',
+    description: 'The #1 app for Christians in Greek life. Daily devotionals, biblical guidance on rituals and oaths, P.R.O.O.F. framework, and community support for Christian fraternity and sorority members.',
+    keywords: 'Christian Greek life, Christian fraternity, Christian sorority, faith-based Greek organization, Christians in fraternities, Christians in sororities, Greek life and Christianity, Christian BGLO, faith fraternity sorority',
+    changefreq: 'weekly',
+    priority: 0.95,
+    isProtected: false,
+    structuredDataType: 'WebPage',
+  },
+  {
+    path: '/divine-nine-faith',
+    title: 'Divine Nine Faith Resources | Christian BGLO & NPHC Spiritual Guide',
+    description: 'Faith-based resources for Divine Nine members. Christian guidance for BGLO organizations, NPHC spiritual growth, D9 biblical perspectives, and community support for believers in historically Black Greek-letter organizations.',
+    keywords: 'Divine Nine faith, BGLO Christian, NPHC spiritual growth, D9 faith resources, Black Greek Christian, Divine Nine Christianity, NPHC Bible study, BGLO devotional, Christian Greek letter organization',
+    changefreq: 'weekly',
+    priority: 0.95,
+    isProtected: false,
+    structuredDataType: 'WebPage',
+  },
+  {
+    path: '/greek-life-biblical-guidance',
+    title: 'Greek Life Biblical Guidance | P.R.O.O.F. Framework for Christian Discernment',
+    description: 'Biblical guidance for Greek life decisions. Use the P.R.O.O.F. framework to evaluate fraternity and sorority membership through Scripture. Christian perspective on Greek rituals, oaths, pledging, and traditions.',
+    keywords: 'Greek life biblical guidance, P.R.O.O.F. framework, Christian perspective Greek rituals, biblical view fraternity, sorority Christian guidance, Greek oaths Bible, fraternity rituals Scripture',
+    changefreq: 'weekly',
+    priority: 0.95,
+    isProtected: false,
+    structuredDataType: 'WebPage',
+  },
+  {
+    path: '/anti-hazing-christian',
+    title: 'Anti-Hazing Christian Resources | Biblical Alternatives to Greek Hazing',
+    description: 'Christian anti-hazing resources for Greek life. Biblical alternatives to harmful traditions, hazing warning signs, and faith-based guidance for ethical fraternity and sorority membership.',
+    keywords: 'anti-hazing Christian, Greek hazing alternatives, biblical response to hazing, Christian fraternity hazing, sorority hazing prevention, ethical Greek life, stop Greek hazing',
+    changefreq: 'weekly',
+    priority: 0.9,
+    isProtected: false,
+    structuredDataType: 'WebPage',
+  },
+  {
+    path: '/spiritual-growth-greek-life',
+    title: 'Spiritual Growth for Greek Life | Christian Devotionals & Prayer for Fraternities & Sororities',
+    description: 'Grow spiritually as a Christian in Greek life. Daily devotionals, prayer tools, Bible study, and faith journey resources designed for fraternity and sorority members.',
+    keywords: 'spiritual growth Greek life, Christian devotional fraternity, sorority spiritual growth, NPHC spiritual development, Greek life prayer, Christian Greek Bible study',
+    changefreq: 'weekly',
+    priority: 0.9,
+    isProtected: false,
+    structuredDataType: 'WebPage',
+  },
 ];
 
 // Get route config by path
