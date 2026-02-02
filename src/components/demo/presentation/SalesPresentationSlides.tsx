@@ -121,7 +121,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
   {
     id: 'speaker-intro',
     title: 'Dr. Lyman Montgomery',
-    subtitle: 'Faith-Based Leadership Speaker',
+    subtitle: 'Ordained Elder • Initiated Member of Phi Beta Sigma Fraternity, Inc.',
     icon: <UserCircle className="w-12 h-12 text-blue-500" />,
     image: slideSpeaker,
     duration: '3-4 min',
