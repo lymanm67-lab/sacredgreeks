@@ -2814,6 +2814,66 @@ export type Database = {
         }
         Relationships: []
       }
+      d9_business_directory_public: {
+        Row: {
+          business_category: string | null
+          business_name: string | null
+          created_at: string | null
+          description: string | null
+          email: string | null
+          faith_statement: string | null
+          featured: boolean | null
+          greek_organization: string | null
+          id: string | null
+          is_active: boolean | null
+          location_city: string | null
+          location_state: string | null
+          logo_url: string | null
+          owner_name: string | null
+          phone: string | null
+          updated_at: string | null
+          website_url: string | null
+        }
+        Insert: {
+          business_category?: string | null
+          business_name?: string | null
+          created_at?: string | null
+          description?: string | null
+          email?: never
+          faith_statement?: string | null
+          featured?: boolean | null
+          greek_organization?: string | null
+          id?: string | null
+          is_active?: boolean | null
+          location_city?: string | null
+          location_state?: string | null
+          logo_url?: string | null
+          owner_name?: string | null
+          phone?: never
+          updated_at?: string | null
+          website_url?: string | null
+        }
+        Update: {
+          business_category?: string | null
+          business_name?: string | null
+          created_at?: string | null
+          description?: string | null
+          email?: never
+          faith_statement?: string | null
+          featured?: boolean | null
+          greek_organization?: string | null
+          id?: string | null
+          is_active?: boolean | null
+          location_city?: string | null
+          location_state?: string | null
+          logo_url?: string | null
+          owner_name?: string | null
+          phone?: never
+          updated_at?: string | null
+          website_url?: string | null
+        }
+        Relationships: []
+      }
       healing_stories_public: {
         Row: {
           created_at: string | null
@@ -2884,7 +2944,6 @@ export type Database = {
         Row: {
           answer: string | null
           answered_at: string | null
-          answered_by: string | null
           category: string | null
           created_at: string | null
           email: string | null
@@ -2899,7 +2958,6 @@ export type Database = {
         Insert: {
           answer?: string | null
           answered_at?: string | null
-          answered_by?: string | null
           category?: string | null
           created_at?: string | null
           email?: never
@@ -2914,7 +2972,6 @@ export type Database = {
         Update: {
           answer?: string | null
           answered_at?: string | null
-          answered_by?: string | null
           category?: string | null
           created_at?: string | null
           email?: never
@@ -2949,6 +3006,10 @@ export type Database = {
       get_assessment_email_secure: {
         Args: { submission_id: string }
         Returns: string
+      }
+      get_business_contact_details: {
+        Args: { business_id: string }
+        Returns: Json
       }
       get_submission_email_if_consented: {
         Args: { submission_id: string }
