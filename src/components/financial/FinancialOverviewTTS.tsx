@@ -14,7 +14,7 @@ Second, our Credit Repair Hub gives you free access to your credit reports and a
 
 Third, the Student Financial Guide helps young Greeks avoid the credit card traps specifically targeting college students. Companies spend over a billion dollars each year marketing to students. We'll show you how to recognize and avoid these traps.
 
-Fourth, the Sacred Money Spending Plan, or S-M-S-P, is our signature budgeting tool. It implements a biblical model: tithe first, save second, invest third, and spend what remains. This is the path to generational wealth.
+Fourth, the Sacred Money Spending Plan, or S-M-S-P, is our signature budgeting tool built on the 10/15/10/65 plan. This biblical model ensures you tithe first, save second, invest third, and spend what remains. This is the path to generational wealth.
 
 Finally, you'll find real-world scenarios, practical examples, and tools for calculating debt payoff, emergency funds, and Greek-specific expenses like convention costs and dues.
 
