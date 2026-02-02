@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,78 +13,12 @@ import {
   Heart,
   Shield,
   CheckCircle2,
-  Play,
   Info
 } from "lucide-react";
 import { ListenButton } from "@/components/ListenButton";
 import { D9_COST_DATA, D9_COST_SUMMARY, formatCurrency, getCostRange } from "@/data/greekCostData";
 
-// D9 Financial Literacy Programs
-const d9Programs = [
-  {
-    org: "Phi Beta Sigma",
-    program: "John Hope Franklin Financial Literacy Program",
-    description: "Named after the renowned historian and Sigma brother, this program empowers communities with financial education rooted in economic justice.",
-    focus: ["Youth financial education", "Credit building", "Homeownership"],
-    color: "from-blue-600 to-blue-800"
-  },
-  {
-    org: "Alpha Kappa Alpha",
-    program: "Economic Advancement Foundation (EAF)",
-    description: "AKA's signature initiative promoting economic security through financial literacy workshops and entrepreneurship support.",
-    focus: ["Wealth building", "Business ownership", "Financial planning"],
-    color: "from-pink-500 to-pink-700"
-  },
-  {
-    org: "Delta Sigma Theta",
-    program: "Financial Fortitude Initiative",
-    description: "Comprehensive financial wellness programming addressing debt, savings, and generational wealth in African American communities.",
-    focus: ["Debt elimination", "Emergency savings", "Investing basics"],
-    color: "from-red-600 to-red-800"
-  },
-  {
-    org: "Alpha Phi Alpha",
-    program: "Go-to-High-School, Go-to-College",
-    description: "While education-focused, includes financial aid navigation and scholarship guidance for college-bound students.",
-    focus: ["Scholarship access", "FAFSA completion", "Education financing"],
-    color: "from-yellow-500 to-amber-600"
-  },
-  {
-    org: "Omega Psi Phi",
-    program: "Uplift Program",
-    description: "Community uplift through mentorship and financial literacy targeting young men and families.",
-    focus: ["Male mentorship", "Family finances", "Career development"],
-    color: "from-purple-600 to-purple-800"
-  },
-  {
-    org: "Kappa Alpha Psi",
-    program: "Kappa League",
-    description: "Youth development including financial responsibility and career preparation for young achievers.",
-    focus: ["Youth development", "Career prep", "Financial responsibility"],
-    color: "from-red-500 to-red-700"
-  },
-  {
-    org: "Zeta Phi Beta",
-    program: "Z-HOPE (Zetas Helping Other People Excel)",
-    description: "Holistic community service including financial wellness education and resource distribution.",
-    focus: ["Community wellness", "Resource access", "Economic empowerment"],
-    color: "from-blue-500 to-sky-600"
-  },
-  {
-    org: "Sigma Gamma Rho",
-    program: "Project Reassurance",
-    description: "Supporting families through practical assistance including financial counseling and resource connection.",
-    focus: ["Family support", "Financial counseling", "Crisis assistance"],
-    color: "from-yellow-400 to-amber-500"
-  },
-  {
-    org: "Iota Phi Theta",
-    program: "Iota Youth Alliance",
-    description: "Mentoring programs that include financial literacy and career pathway development.",
-    focus: ["Youth mentorship", "Career pathways", "Life skills"],
-    color: "from-amber-600 to-yellow-700"
-  }
-];
+// Using real D9 cost data from greekCostData.ts - d9Programs array removed
 
 const biblicalPrinciples = [
   {
@@ -124,8 +57,6 @@ Explore tools for budgeting, credit repair, debt freedom, and investment strateg
 Your chapter taught you discipline. Now apply that same excellence to your financial future.`;
 
 export default function GreekFinancialLeadership() {
-  const [expandedProgram, setExpandedProgram] = useState<number | null>(null);
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
       {/* Hero Section */}
@@ -307,7 +238,7 @@ export default function GreekFinancialLeadership() {
         </div>
       </section>
 
-      {/* D9 Programs Section */}
+      {/* D9 Programs Section - Using Real Data */}
       <section className="py-16 lg:py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -325,29 +256,50 @@ export default function GreekFinancialLeadership() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {d9Programs.map((program, index) => (
+            {D9_COST_DATA.filter(org => org.financialProgram).map((org) => (
               <Card 
-                key={program.org}
-                className={`bg-slate-800/50 border-slate-700 hover:border-slate-600 transition-all cursor-pointer ${
-                  expandedProgram === index ? 'ring-2 ring-sacred' : ''
-                }`}
-                onClick={() => setExpandedProgram(expandedProgram === index ? null : index)}
+                key={org.greekLetters}
+                className="bg-slate-800/50 border-slate-700 hover:border-slate-600 transition-all group"
               >
                 <CardHeader className="pb-3">
-                  <div className={`w-full h-2 rounded-full bg-gradient-to-r ${program.color} mb-3`} />
-                  <CardTitle className="text-white text-lg">{program.org}</CardTitle>
+                  <div className={`w-full h-2 rounded-full bg-gradient-to-r ${
+                    org.type === 'fraternity' ? 'from-blue-500 to-indigo-600' : 'from-pink-500 to-rose-600'
+                  } mb-3`} />
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-white text-lg">{org.greekLetters}</CardTitle>
+                    <Badge variant="outline" className="text-xs border-slate-600 text-slate-400">
+                      {org.type === 'fraternity' ? 'Fraternity' : 'Sorority'}
+                    </Badge>
+                  </div>
                   <CardDescription className="text-sacred font-medium">
-                    {program.program}
+                    {org.financialProgram?.name}
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-slate-400 text-sm mb-4">{program.description}</p>
+                <CardContent className="space-y-4">
+                  <p className="text-slate-400 text-sm">{org.financialProgram?.description}</p>
+                  
                   <div className="flex flex-wrap gap-2">
-                    {program.focus.map((item) => (
-                      <Badge key={item} variant="outline" className="text-xs border-slate-600 text-slate-300">
-                        {item}
-                      </Badge>
-                    ))}
+                    {org.financialProgram?.url && (
+                      <a 
+                        href={org.financialProgram.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-sm text-sacred hover:text-sacred/80 transition-colors"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <ArrowRight className="w-3 h-3" />
+                        Learn More
+                      </a>
+                    )}
+                    <a 
+                      href={org.officialWebsite}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-sm text-slate-400 hover:text-slate-300 transition-colors"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      Official Site
+                    </a>
                   </div>
                 </CardContent>
               </Card>
