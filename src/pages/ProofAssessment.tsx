@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,6 +24,7 @@ import { AssessmentTTS } from "@/components/assessment/AssessmentTTS";
 import { AssessmentBreadcrumb } from "@/components/assessment/AssessmentBreadcrumb";
 import { useSavedAssessment } from "@/hooks/use-saved-assessment";
 import { useAuth } from "@/contexts/AuthContext";
+import { useDemoMode } from "@/contexts/DemoModeContext";
 
 type ProofCategory = 'pledge-process' | 'rituals' | 'oaths' | 'obscurity' | 'founders';
 
@@ -188,6 +189,8 @@ const instructionsConfig = {
 export default function ProofAssessment() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { demoSettings } = useDemoMode();
+  const isPresentationMode = demoSettings.presentationMode;
   const { savedAssessment, hasSavedAssessment, isLoading: loadingSaved } = useSavedAssessment("proof-quiz");
   
   const [started, setStarted] = useState(false);
@@ -196,6 +199,17 @@ export default function ProofAssessment() {
   const [showResults, setShowResults] = useState(false);
   const [viewingSavedResults, setViewingSavedResults] = useState(false);
   const [forceRetake, setForceRetake] = useState(false);
+  const [demoTopCategory] = useState<ProofCategory>('rituals');
+
+  // In presentation mode, show demo results immediately
+  useEffect(() => {
+    if (isPresentationMode) {
+      console.log('[ProofAssessment] Presentation mode active, showing demo results');
+      setAnswers(['rituals', 'rituals', 'oaths', 'rituals', 'founders']);
+      setShowResults(true);
+      setStarted(true);
+    }
+  }, [isPresentationMode]);
 
   const progress = ((currentQuestion + 1) / questions.length) * 100;
 

@@ -11,6 +11,7 @@ import { calculateSacredGreeksScores } from "@/lib/scoring";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
+import { useDemoMode } from "@/contexts/DemoModeContext";
 import { PremiumGate } from "@/components/PremiumGate";
 import { getScenariosForCouncil, getCouncilContent } from "@/data/orgSpecificContent";
 import { Badge } from "@/components/ui/badge";
@@ -22,6 +23,29 @@ const steps = [
   { label: "P.R.O.O.F.", description: "Receive guidance" },
 ];
 
+// Demo data for presentation mode - shows a realistic completed assessment
+const DEMO_ANSWERS: SacredGreeksAnswers = {
+  scenario: "pressure",
+  role: "Active BGLO member",
+  situation: "My pastor recently preached a sermon that seemed to target Greek life members. He said we're 'serving two masters' and can't fully follow Christ while being in a sorority.",
+  whoInvolved: "My pastor, church congregation, my line sisters, and my parents who are also church members",
+  alreadyDone: "I've been praying about it and started reading 'Sacred, Not Sinful.' I haven't directly spoken to my pastor yet.",
+  emotions: ["Conflicted", "Hurt by church", "Determined"],
+  desiredOutcome: "I want to stay connected to both my faith community and my organization with peace and clarity.",
+  supportLevel: "Some support, but mixed reactions",
+  scenarioSpecific: {
+    pressureSource: "pastor"
+  }
+};
+
+const DEMO_SCORES = {
+  biblicalClarity: 75,
+  symbolRitualSensitivity: 68,
+  traumaConscienceImpact: 82,
+  witnessCommunityImpact: 71,
+  relationalWisdom: 79
+};
+
 const Guide = () => {
   const [searchParams] = useSearchParams();
   const [currentStep, setCurrentStep] = useState(1);
@@ -31,11 +55,27 @@ const Guide = () => {
   const [councilScenarios, setCouncilScenarios] = useState<Scenario[]>([]);
   const { toast } = useToast();
   const { user } = useAuth();
+  const { demoSettings } = useDemoMode();
+  const isPresentationMode = demoSettings.presentationMode;
 
-  // Load user's Greek council for personalized scenarios
+  // In presentation mode, skip to demo results immediately
+  useEffect(() => {
+    if (isPresentationMode) {
+      console.log('[Guide] Presentation mode active, showing demo results');
+      setAnswers(DEMO_ANSWERS);
+      setResultData({
+        scores: DEMO_SCORES,
+        resultType: 'high_pressure',
+        answers: DEMO_ANSWERS
+      });
+      setCurrentStep(3);
+    }
+  }, [isPresentationMode]);
+
+  // Load user's Greek council for personalized scenarios (skip in presentation mode)
   useEffect(() => {
     const loadUserProfile = async () => {
-      if (!user) return;
+      if (!user || isPresentationMode) return;
       
       const { data } = await supabase
         .from('profiles')
