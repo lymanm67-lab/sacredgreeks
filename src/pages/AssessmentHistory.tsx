@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useDemoMode } from '@/contexts/DemoModeContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -15,10 +16,11 @@ import {
   Sparkles,
   Target,
   TrendingUp,
-  ChevronRight
+  ChevronRight,
+  FlaskConical
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { format } from 'date-fns';
+import { format, subDays } from 'date-fns';
 import {
   ResponsiveContainer,
   AreaChart,
@@ -41,6 +43,42 @@ interface Assessment {
   scores_json: any;
 }
 
+// Demo assessment data for presentations
+const DEMO_ASSESSMENTS: Assessment[] = [
+  {
+    id: 'demo-1',
+    created_at: new Date().toISOString(),
+    track: 'faith-snapshot',
+    scenario: 'Symbol & Ritual Understanding',
+    result_type: 'Apologetics Ready',
+    scores_json: { score: 92 }
+  },
+  {
+    id: 'demo-2',
+    created_at: subDays(new Date(), 3).toISOString(),
+    track: 'proof-quiz',
+    scenario: 'Founders',
+    result_type: 'PROOF Master',
+    scores_json: { score: 85 }
+  },
+  {
+    id: 'demo-3',
+    created_at: subDays(new Date(), 7).toISOString(),
+    track: 'shattered-masks',
+    scenario: 'The Bridge Builder',
+    result_type: 'Reconciler',
+    scores_json: { score: 78 }
+  },
+  {
+    id: 'demo-4',
+    created_at: subDays(new Date(), 14).toISOString(),
+    track: 'faith-snapshot',
+    scenario: 'Faith Integration',
+    result_type: 'Seeking Clarity',
+    scores_json: { score: 65 }
+  },
+];
+
 const CHART_COLORS = [
   "hsl(270, 70%, 60%)",
   "hsl(45, 90%, 55%)",
@@ -58,17 +96,31 @@ const trackInfo: Record<string, { name: string; color: string; path: string }> =
 
 const AssessmentHistory = () => {
   const { user } = useAuth();
+  const { isDemoMode, demoSettings } = useDemoMode();
   const navigate = useNavigate();
   const [assessments, setAssessments] = useState<Assessment[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
+  // Show demo data in demo mode or presentation mode
+  const showDemoData = isDemoMode || demoSettings.presentationMode;
+
   useEffect(() => {
     loadAssessments();
-  }, [user]);
+  }, [user, showDemoData]);
 
   const loadAssessments = async () => {
-    if (!user) return;
+    // In demo/presentation mode, show sample data
+    if (showDemoData) {
+      setAssessments(DEMO_ASSESSMENTS);
+      setLoading(false);
+      return;
+    }
+
+    if (!user) {
+      setLoading(false);
+      return;
+    }
 
     try {
       const { data, error } = await supabase
@@ -78,17 +130,27 @@ const AssessmentHistory = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setAssessments(data || []);
+      
+      // If no real assessments, show demo data as placeholder
+      if (!data || data.length === 0) {
+        setAssessments(DEMO_ASSESSMENTS);
+      } else {
+        setAssessments(data);
+      }
     } catch (error) {
       toast({
         title: 'Error',
         description: 'Failed to load assessment history',
         variant: 'destructive',
       });
+      // Show demo data on error
+      setAssessments(DEMO_ASSESSMENTS);
     } finally {
       setLoading(false);
     }
   };
+
+  const isShowingDemoData = showDemoData || assessments.some(a => a.id.startsWith('demo-'));
 
   const handleExport = () => {
     const dataStr = JSON.stringify(assessments, null, 2);
@@ -167,11 +229,19 @@ const AssessmentHistory = () => {
                 <FileText className="w-6 h-6 text-primary" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold">Assessment History</h1>
+                <div className="flex items-center gap-2">
+                  <h1 className="text-3xl font-bold">Assessment History</h1>
+                  {isShowingDemoData && (
+                    <Badge variant="secondary" className="text-xs bg-amber-500/10 text-amber-600 border-amber-500/20">
+                      <FlaskConical className="w-3 h-3 mr-1" />
+                      Sample Data
+                    </Badge>
+                  )}
+                </div>
                 <p className="text-muted-foreground">Review and analyze your past assessments</p>
               </div>
             </div>
-            {assessments.length > 0 && (
+            {assessments.length > 0 && !isShowingDemoData && (
               <Button variant="outline" onClick={handleExport}>
                 <Download className="w-4 h-4 mr-2" />
                 Export All
