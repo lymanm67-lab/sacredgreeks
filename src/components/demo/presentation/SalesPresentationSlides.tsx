@@ -27,6 +27,7 @@ import slideChaplain from '@/assets/presentation/slide-chaplain.jpg';
 import slideCommunity from '@/assets/presentation/slide-community.jpg';
 import slideGamification from '@/assets/presentation/slide-gamification.jpg';
 import slideClose from '@/assets/presentation/slide-close.jpg';
+import slideQA from '@/assets/presentation/slide-qa.jpg';
 
 export interface PresentationSlide {
   id: string;
@@ -253,6 +254,33 @@ export const salesPresentationSlides: PresentationSlide[] = [
       '880+ total points available',
       'Master Certificate at 100% completion',
       'Social sharing built-in'
+    ]
+  },
+  {
+    id: 'qa',
+    title: 'Questions & Answers',
+    subtitle: 'Let\'s Discuss How Sacred Greeks Can Serve Your Organization',
+    icon: <Users className="w-12 h-12 text-blue-500" />,
+    image: slideQA,
+    duration: '5-10 min',
+    showQRCode: true,
+    presenterNotes: [
+      'Open the floor for questions',
+      'Have attendees scan QR code while you answer',
+      'Common questions: "Is this really free?", "How do we get started?"',
+      'Collect contact info for follow-up'
+    ],
+    keyPoints: [
+      'What questions do you have?',
+      'How can we support your chapter?',
+      'Scan the QR code to get started now',
+      'Connect with us for speaking opportunities'
+    ],
+    talkingPoints: [
+      'Every feature is 100% free',
+      'No app store download required — works instantly',
+      'Resources work offline via PWA',
+      'We\'re here to support your chapter\'s faith journey'
     ]
   },
   {
