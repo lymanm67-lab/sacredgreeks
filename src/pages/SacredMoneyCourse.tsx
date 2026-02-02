@@ -518,6 +518,7 @@ export default function SacredMoneyCourse() {
   const [activeTab, setActiveTab] = useState("content");
   const [reflection, setReflection] = useState("");
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(["content", "scenarios", "pitfalls", "tools"]));
+  const [modulesOpen, setModulesOpen] = useState(true);
 
   // Fetch completed modules
   const { data: completedModules = [] } = useQuery({
@@ -975,54 +976,59 @@ export default function SacredMoneyCourse() {
         </div>
 
         {/* Course Modules */}
-        <div className="space-y-3">
-          <h2 className="text-lg font-semibold mb-4">Course Modules</h2>
-          {courseModules.map((module, idx) => {
-            const isCompleted = completedModules.includes(module.id);
-            const isLocked = idx > 0 && !completedModules.includes(courseModules[idx - 1].id) && !isCompleted;
-            
-            return (
-              <Card 
-                key={module.id}
-                className={cn(
-                  "transition-all cursor-pointer hover:shadow-md",
-                  isCompleted && "border-emerald-500/50 bg-emerald-500/5",
-                  isLocked && "opacity-60"
-                )}
-                onClick={() => !isLocked && setSelectedModule(module)}
-              >
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-4">
-                    <div className={cn(
-                      "h-10 w-10 rounded-full flex items-center justify-center shrink-0",
-                      isCompleted ? "bg-emerald-500" : "bg-sacred/20"
-                    )}>
-                      {isCompleted ? (
-                        <CheckCircle2 className="h-5 w-5 text-white" />
-                      ) : (
-                        <module.icon className="h-5 w-5 text-sacred" />
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <h3 className="font-medium truncate">{module.title}</h3>
-                        {!isCompleted && (
-                          <Badge variant="outline" className="text-xs shrink-0">
-                            +{module.points} pts
-                          </Badge>
+        <Collapsible open={modulesOpen} onOpenChange={setModulesOpen}>
+          <CollapsibleTrigger className="flex items-center justify-between w-full p-3 bg-muted/50 rounded-lg hover:bg-muted transition-colors mb-3">
+            <h2 className="text-lg font-semibold">Course Modules</h2>
+            <ChevronDown className={cn("h-5 w-5 transition-transform", modulesOpen && "rotate-180")} />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="space-y-3">
+            {courseModules.map((module, idx) => {
+              const isCompleted = completedModules.includes(module.id);
+              const isLocked = idx > 0 && !completedModules.includes(courseModules[idx - 1].id) && !isCompleted;
+              
+              return (
+                <Card 
+                  key={module.id}
+                  className={cn(
+                    "transition-all cursor-pointer hover:shadow-md",
+                    isCompleted && "border-emerald-500/50 bg-emerald-500/5",
+                    isLocked && "opacity-60"
+                  )}
+                  onClick={() => !isLocked && setSelectedModule(module)}
+                >
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-4">
+                      <div className={cn(
+                        "h-10 w-10 rounded-full flex items-center justify-center shrink-0",
+                        isCompleted ? "bg-emerald-500" : "bg-sacred/20"
+                      )}>
+                        {isCompleted ? (
+                          <CheckCircle2 className="h-5 w-5 text-white" />
+                        ) : (
+                          <module.icon className="h-5 w-5 text-sacred" />
                         )}
                       </div>
-                      <p className="text-sm text-muted-foreground truncate">
-                        {module.description}
-                      </p>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-medium truncate">{module.title}</h3>
+                          {!isCompleted && (
+                            <Badge variant="outline" className="text-xs shrink-0">
+                              +{module.points} pts
+                            </Badge>
+                          )}
+                        </div>
+                        <p className="text-sm text-muted-foreground truncate">
+                          {module.description}
+                        </p>
+                      </div>
+                      <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0" />
                     </div>
-                    <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0" />
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </CollapsibleContent>
+        </Collapsible>
 
         {/* Link to Tools */}
         <Card className="mt-6 bg-gradient-to-r from-emerald-500/10 to-sacred/10 border-emerald-500/20">
