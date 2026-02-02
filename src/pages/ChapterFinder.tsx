@@ -16,8 +16,10 @@ import {
   ExternalLink,
   Cross,
   GraduationCap,
-  Plus
+  Plus,
+  ChevronLeft
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import { PageHeader } from "@/components/ui/page-header";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -254,6 +256,12 @@ export default function ChapterFinder() {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
+        <Button variant="ghost" size="sm" asChild className="mb-4">
+          <Link to="/dashboard">
+            <ChevronLeft className="w-4 h-4 mr-1" />
+            Back to Dashboard
+          </Link>
+        </Button>
         <PageHeader
           title="Chapter Finder"
           description="Find Greek chapters and connect with faith-focused organizations near you or your school."
