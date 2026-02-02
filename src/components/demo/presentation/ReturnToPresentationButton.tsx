@@ -17,21 +17,26 @@ export function ReturnToPresentationButton({ onReturnToPresentation }: ReturnToP
   const navigate = useNavigate();
   const [showButton, setShowButton] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);
+  const [isPresenter, setIsPresenter] = useState(false);
   
   // Check URL params whenever location changes
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const fromPresentation = params.get('fromPresentation') === 'true';
-    const slide = parseInt(params.get('slide') || '0', 10);
+    const slideRaw = parseInt(params.get('slide') || '0', 10);
+    const slide = Number.isFinite(slideRaw) ? slideRaw : 0;
+    const presenter = params.get('presenter') === 'true';
     
     setShowButton(fromPresentation);
     setSlideIndex(slide);
+    setIsPresenter(presenter);
   }, [location.search]);
 
   const handleReturn = () => {
     if (onReturnToPresentation) {
       // Navigate to dashboard without the query params
-      navigate('/dashboard');
+      // Preserve `presenter=true` so we don't lose presenter access.
+      navigate(isPresenter ? '/dashboard?presenter=true' : '/dashboard');
 
       // Small delay to ensure navigation completes, then open presentation
       setTimeout(() => {
@@ -41,7 +46,11 @@ export function ReturnToPresentationButton({ onReturnToPresentation }: ReturnToP
     }
 
     // Global fallback: let AppLayout open the slideshow via URL params
-    navigate(`/dashboard?openPresentation=true&slide=${slideIndex}`);
+    const qs = new URLSearchParams();
+    qs.set('openPresentation', 'true');
+    qs.set('slide', String(slideIndex));
+    if (isPresenter) qs.set('presenter', 'true');
+    navigate(`/dashboard?${qs.toString()}`);
   };
 
   return (

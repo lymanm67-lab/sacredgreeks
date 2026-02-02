@@ -97,8 +97,15 @@ export function PresentationSlideViewer({ isOpen, onClose, initialSlide = 0 }: P
 
   const handleLiveDemo = (route: string) => {
     onClose();
-    // Pass slide index so we can return to the same slide
-    navigate(`${route}?fromPresentation=true&slide=${currentSlide}`);
+    // Pass slide index so we can return to the same slide.
+    // Preserve `presenter=true` (fallback access) across routes.
+    const currentParams = new URLSearchParams(window.location.search);
+    const isPresenter = currentParams.get('presenter') === 'true';
+    const qs = new URLSearchParams();
+    qs.set('fromPresentation', 'true');
+    qs.set('slide', String(currentSlide));
+    if (isPresenter) qs.set('presenter', 'true');
+    navigate(`${route}?${qs.toString()}`);
   };
 
   if (!isOpen) return null;
