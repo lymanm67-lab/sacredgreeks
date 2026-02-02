@@ -2884,7 +2884,6 @@ export type Database = {
           organization: string | null
           story_content: string | null
           story_title: string | null
-          updated_at: string | null
         }
         Insert: {
           created_at?: string | null
@@ -2895,7 +2894,6 @@ export type Database = {
           organization?: string | null
           story_content?: string | null
           story_title?: string | null
-          updated_at?: string | null
         }
         Update: {
           created_at?: string | null
@@ -2906,7 +2904,6 @@ export type Database = {
           organization?: string | null
           story_content?: string | null
           story_title?: string | null
-          updated_at?: string | null
         }
         Relationships: []
       }
