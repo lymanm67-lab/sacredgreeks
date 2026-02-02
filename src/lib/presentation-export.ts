@@ -11,13 +11,34 @@ const COLORS = {
   muted: '9ca3af',
 };
 
+// Export platform types
+export type ExportPlatform = 'generic' | 'webinarjam' | 'zoom' | 'teams';
+
+// Platform-specific settings
+const PLATFORM_SETTINGS: Record<ExportPlatform, { 
+  width: number; 
+  height: number; 
+  footer: string;
+  includeNotes: boolean;
+}> = {
+  generic: { width: 10, height: 7.5, footer: 'Sacred Greeks | sacredgreeks.lovable.app', includeNotes: true },
+  webinarjam: { width: 13.333, height: 7.5, footer: 'Sacred Greeks | WebinarJam Presentation', includeNotes: true },
+  zoom: { width: 13.333, height: 7.5, footer: 'Sacred Greeks | Zoom Screen Share', includeNotes: true },
+  teams: { width: 13.333, height: 7.5, footer: 'Sacred Greeks | Microsoft Teams', includeNotes: true },
+};
+
 /**
  * Export slides to PowerPoint format
+ * @param slides - The presentation slides to export
+ * @param filename - Output filename (without extension)
+ * @param platform - Target platform for optimized export
  */
 export async function exportToPowerPoint(
   slides: PresentationSlide[],
-  filename: string = 'Sacred-Greeks-Presentation'
+  filename: string = 'Sacred-Greeks-Presentation',
+  platform: ExportPlatform = 'generic'
 ): Promise<void> {
+  const settings = PLATFORM_SETTINGS[platform];
   const pptx = new pptxgen();
   
   // Set presentation properties
@@ -26,16 +47,19 @@ export async function exportToPowerPoint(
   pptx.subject = 'Faith, Culture, and Activism in the Divine Nine';
   pptx.company = 'Sacred Greeks';
   
+  // Set layout for 16:9 HD (optimal for screen sharing)
+  pptx.layout = platform === 'generic' ? 'LAYOUT_4x3' : 'LAYOUT_16x9';
+  
   // Define master slide layout
   pptx.defineSlideMaster({
     title: 'SACRED_MASTER',
     background: { color: COLORS.background },
     objects: [
-      // Footer
+      // Footer with platform-specific text
       { 
         text: { 
-          text: 'Sacred Greeks | sacredgreeks.lovable.app', 
-          options: { x: 0.5, y: 7, w: '90%', h: 0.3, fontSize: 10, color: COLORS.muted, align: 'center' } 
+          text: settings.footer, 
+          options: { x: 0.5, y: platform === 'generic' ? 7 : 6.8, w: '90%', h: 0.3, fontSize: 10, color: COLORS.muted, align: 'center' } 
         } 
       },
     ],
@@ -127,9 +151,12 @@ export async function exportToPowerPoint(
       });
     }
     
-    // Add speaker notes
-    if (slide.presenterNotes && slide.presenterNotes.length > 0) {
-      pptSlide.addNotes(slide.presenterNotes.join('\n\n'));
+    // Add speaker notes (important for all platforms' presenter view)
+    if (settings.includeNotes && slide.presenterNotes && slide.presenterNotes.length > 0) {
+      const notesHeader = platform !== 'generic' 
+        ? `[${platform.toUpperCase()} PRESENTER NOTES]\n\n` 
+        : '';
+      pptSlide.addNotes(notesHeader + slide.presenterNotes.join('\n\n'));
     }
     
     // Add duration badge
@@ -146,25 +173,33 @@ export async function exportToPowerPoint(
     }
   }
   
-  // Generate and download
-  await pptx.writeFile({ fileName: `${filename}.pptx` });
+  // Generate and download with platform suffix
+  const platformSuffix = platform !== 'generic' ? `-${platform}` : '';
+  await pptx.writeFile({ fileName: `${filename}${platformSuffix}.pptx` });
 }
 
 /**
  * Export slides to PDF format
+ * @param slides - The presentation slides to export
+ * @param filename - Output filename (without extension)
+ * @param platform - Target platform for optimized export
  */
 export async function exportToPDF(
   slides: PresentationSlide[],
-  filename: string = 'Sacred-Greeks-Presentation'
+  filename: string = 'Sacred-Greeks-Presentation',
+  platform: ExportPlatform = 'generic'
 ): Promise<void> {
+  const settings = PLATFORM_SETTINGS[platform];
+  
+  // Use 16:9 for webinar platforms, 4:3 for generic
+  const pageWidth = platform === 'generic' ? 10 : 13.333;
+  const pageHeight = 7.5;
+  
   const pdf = new jsPDF({
     orientation: 'landscape',
     unit: 'in',
-    format: [10, 7.5], // Standard slide ratio
+    format: [pageWidth, pageHeight],
   });
-  
-  const pageWidth = 10;
-  const pageHeight = 7.5;
   
   slides.forEach((slide, index) => {
     if (index > 0) {
@@ -243,18 +278,20 @@ export async function exportToPDF(
       });
     }
     
-    // Footer
+    // Footer with platform-specific text
     pdf.setFontSize(8);
     pdf.setTextColor(107, 114, 128);
     pdf.text(`Slide ${index + 1} of ${slides.length}`, 0.5, pageHeight - 0.3);
-    pdf.text('Sacred Greeks | sacredgreeks.lovable.app', pageWidth / 2, pageHeight - 0.3, { align: 'center' });
+    pdf.text(settings.footer, pageWidth / 2, pageHeight - 0.3, { align: 'center' });
     
     if (slide.duration) {
       pdf.text(`⏱ ${slide.duration}`, pageWidth - 0.5, pageHeight - 0.3, { align: 'right' });
     }
   });
   
-  pdf.save(`${filename}.pdf`);
+  // Save with platform suffix
+  const platformSuffix = platform !== 'generic' ? `-${platform}` : '';
+  pdf.save(`${filename}${platformSuffix}.pdf`);
 }
 
 /**
