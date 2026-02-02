@@ -77,10 +77,20 @@ const pathAchievements: PathAchievement[] = [
   }
 ];
 
+const CELEBRATED_STORAGE_KEY = 'celebrated-path-achievements';
+
 export function PathCompletionAchievements() {
   const { progressData, isLoading } = useNavigationProgress();
   const { user } = useAuth();
-  const [celebratedAchievements, setCelebratedAchievements] = useState<Set<string>>(new Set());
+  const [celebratedAchievements, setCelebratedAchievements] = useState<Set<string>>(() => {
+    // Initialize from localStorage to prevent re-celebration on reload
+    try {
+      const stored = localStorage.getItem(CELEBRATED_STORAGE_KEY);
+      return stored ? new Set(JSON.parse(stored)) : new Set();
+    } catch {
+      return new Set();
+    }
+  });
   const [selectedAchievement, setSelectedAchievement] = useState<PathAchievement | null>(null);
   const [showCertificate, setShowCertificate] = useState(false);
 
@@ -90,22 +100,26 @@ export function PathCompletionAchievements() {
 
   const allComplete = completedPaths.length === pathAchievements.length;
 
-  // Celebrate new achievements
+  // Celebrate new achievements (only truly new ones)
   useEffect(() => {
     if (!progressData) return;
 
-    completedPaths.forEach(path => {
-      if (!celebratedAchievements.has(path.id)) {
-        // Trigger celebration
-        confetti({
-          particleCount: 80,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ['#FFD700', '#FFA500', '#FF6347', '#9333EA'],
-        });
-        setCelebratedAchievements(prev => new Set([...prev, path.id]));
-      }
-    });
+    const newlyCompleted = completedPaths.filter(path => !celebratedAchievements.has(path.id));
+    
+    if (newlyCompleted.length > 0) {
+      // Trigger celebration only for genuinely new achievements
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#FFD700', '#FFA500', '#FF6347', '#9333EA'],
+      });
+      
+      // Persist to localStorage and state
+      const updated = new Set([...celebratedAchievements, ...newlyCompleted.map(p => p.id)]);
+      setCelebratedAchievements(updated);
+      localStorage.setItem(CELEBRATED_STORAGE_KEY, JSON.stringify([...updated]));
+    }
   }, [completedPaths, celebratedAchievements, progressData]);
 
   if (isLoading || !user) return null;
