@@ -123,9 +123,9 @@ export function PresentationSlideViewer({ isOpen, onClose }: PresentationSlideVi
       </div>
 
       {/* Main Content Area */}
-      <div className="pt-16 pb-20 h-full flex">
+      <div className="pt-16 pb-24 h-full flex overflow-hidden">
         {/* Slide Content - Left Side */}
-        <div className="flex-1 flex items-center justify-center p-8">
+        <div className="flex-1 flex items-start justify-center p-8 overflow-y-auto">
           <AnimatePresence mode="wait">
             <motion.div
               key={slide.id}
@@ -133,7 +133,7 @@ export function PresentationSlideViewer({ isOpen, onClose }: PresentationSlideVi
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
-              className="w-full max-w-2xl"
+              className="w-full max-w-2xl mb-8"
             >
               <Card className="border-2 border-primary/20 bg-card/50 backdrop-blur overflow-hidden">
                 {/* Hero Image */}
