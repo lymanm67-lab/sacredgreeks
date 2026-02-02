@@ -73,6 +73,7 @@ import slideGamification from '@/assets/presentation/slide-gamification.jpg';
 import slideClose from '@/assets/presentation/slide-close.jpg';
 import slideQA from '@/assets/presentation/slide-qa.jpg';
 import slideSpeaker from '@/assets/presentation/dr-lyman-montgomery.jpeg';
+import slideJourneyPath from '@/assets/slides/journey-path.jpg';
 
 export interface PresentationSlide {
   id: string;
@@ -154,6 +155,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
     title: 'Our Journey Today',
     subtitle: '90 Minutes of Story, History, and Insight',
     icon: <ClipboardList className="w-12 h-12 text-amber-500" />,
+    image: slideJourneyPath,
     duration: '1-2 min',
     presenterNotes: [
       'Set expectations for the session',
