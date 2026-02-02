@@ -74,7 +74,6 @@ import slideClose from '@/assets/presentation/slide-close.jpg';
 import slideQA from '@/assets/presentation/slide-qa.jpg';
 import slideSpeaker from '@/assets/presentation/dr-lyman-montgomery.jpeg';
 import slideJourneyPath from '@/assets/slides/journey-path.jpg';
-import slideReceivingGift from '@/assets/slides/receiving-gift.jpg';
 
 export interface PresentationSlide {
   id: string;
@@ -127,7 +126,6 @@ export const salesPresentationSlides: PresentationSlide[] = [
     subtitle: 'Ordained Elder • Initiated Member of Phi Beta Sigma Fraternity, Inc.',
     icon: <UserCircle className="w-12 h-12 text-blue-500" />,
     image: slideSpeaker,
-    secondaryImage: slideReceivingGift,
     duration: '3-4 min',
     presenterNotes: [
       'Brief personal introduction — ordained minister AND Delta member',
