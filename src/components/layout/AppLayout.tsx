@@ -1,4 +1,4 @@
-import { ReactNode, useState, useMemo, useCallback, useEffect } from "react";
+import { ReactNode, useState, useMemo, useEffect } from "react";
 import { SidebarProvider, SidebarTrigger, SidebarInset, useSidebar } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
 import { MobileNav } from "./MobileNav";
@@ -43,32 +43,6 @@ export function AppLayout({ children }: AppLayoutProps) {
 
   // Show presentation toggle only for admins OR if ?presenter=true is in URL
   const canAccessPresentationMode = isAdmin || hasPresenterParam;
-
-  // Handler for returning to presentation from demo pages
-  const handleReturnToPresentation = useCallback((slideIndex: number) => {
-    console.log('[AppLayout] handleReturnToPresentation called with slide:', slideIndex);
-    
-    // Set slide index first
-    setInitialSlide(slideIndex);
-    
-    // If already showing, we need to close and reopen to trigger the slide change
-    // Use a microtask to ensure the initialSlide state is set first
-    Promise.resolve().then(() => {
-      setShowSlideshow(prev => {
-        if (prev) {
-          // Force close and reopen
-          setTimeout(() => {
-            console.log('[AppLayout] Reopening slideshow at slide:', slideIndex);
-            setShowSlideshow(true);
-          }, 50);
-          return false;
-        } else {
-          console.log('[AppLayout] Opening slideshow at slide:', slideIndex);
-          return true;
-        }
-      });
-    });
-  }, []);
 
   // Allow non-layout pages (like /snapshot) to return to the slideshow via URL params.
   // Example: /dashboard?openPresentation=true&slide=2
@@ -123,7 +97,6 @@ export function AppLayout({ children }: AppLayoutProps) {
         setShowSlideshow={setShowSlideshow}
         initialSlide={initialSlide}
         setInitialSlide={setInitialSlide}
-        handleReturnToPresentation={handleReturnToPresentation}
       >
         {children}
       </AppLayoutContent>
@@ -145,7 +118,6 @@ function AppLayoutContent({
   setShowSlideshow,
   initialSlide,
   setInitialSlide,
-  handleReturnToPresentation,
 }: {
   children: ReactNode;
   isMobile: boolean;
@@ -159,7 +131,6 @@ function AppLayoutContent({
   setShowSlideshow: (show: boolean) => void;
   initialSlide: number;
   setInitialSlide: (slide: number) => void;
-  handleReturnToPresentation: (slideIndex: number) => void;
 }) {
   const { state, toggleSidebar } = useSidebar();
   const isSidebarOpen = state === "expanded";
@@ -219,7 +190,7 @@ function AppLayoutContent({
       )}
       
       {/* Return to Presentation Button (shown when viewing demo from presentation) */}
-      <ReturnToPresentationButton onReturnToPresentation={handleReturnToPresentation} />
+      <ReturnToPresentationButton />
       
       {/* Sales Deck Generator Dialog */}
       <SalesDeckGenerator 

@@ -4,15 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Presentation, ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-interface ReturnToPresentationButtonProps {
-  /**
-   * Optional: If provided, the button will call this after navigating back to /dashboard.
-   * If omitted, it will redirect to /dashboard?openPresentation=true&slide=... and let AppLayout open the slideshow.
-   */
-  onReturnToPresentation?: (slideIndex: number) => void;
-}
-
-export function ReturnToPresentationButton({ onReturnToPresentation }: ReturnToPresentationButtonProps) {
+export function ReturnToPresentationButton() {
   const location = useLocation();
   const navigate = useNavigate();
   const [showButton, setShowButton] = useState(false);
@@ -35,26 +27,16 @@ export function ReturnToPresentationButton({ onReturnToPresentation }: ReturnToP
   const handleReturn = () => {
     // Capture slideIndex before navigating (navigation will clear URL params)
     const targetSlide = slideIndex;
-    console.log('[ReturnToPresentationButton] Returning to slide:', targetSlide, { isPresenter, hasCallback: !!onReturnToPresentation });
+    console.log('[ReturnToPresentationButton] Returning to slide:', targetSlide, { isPresenter });
     
-    if (onReturnToPresentation) {
-      // Navigate to dashboard without the query params
-      // Preserve `presenter=true` so we don't lose presenter access.
-      navigate(isPresenter ? '/dashboard?presenter=true' : '/dashboard');
-
-      // Small delay to ensure navigation completes, then open presentation
-      setTimeout(() => {
-        console.log('[ReturnToPresentationButton] Calling onReturnToPresentation with slide:', targetSlide);
-        onReturnToPresentation(targetSlide);
-      }, 150);
-      return;
-    }
-
-    // Global fallback: let AppLayout open the slideshow via URL params
+    // ALWAYS use URL params approach - this is the most reliable method
+    // because it survives component remounts during navigation
     const qs = new URLSearchParams();
     qs.set('openPresentation', 'true');
-    qs.set('slide', String(slideIndex));
+    qs.set('slide', String(targetSlide));
     if (isPresenter) qs.set('presenter', 'true');
+    
+    console.log('[ReturnToPresentationButton] Navigating with params:', qs.toString());
     navigate(`/dashboard?${qs.toString()}`);
   };
 

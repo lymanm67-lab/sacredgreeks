@@ -26,7 +26,6 @@ import { DemoTemplateSelectorProvider } from "@/components/demo/DemoTemplateSele
 import { DemoOverlayWithTemplate } from "@/components/demo/DemoOverlayWithTemplate";
 import { DemoFeaturesProvider } from "@/components/demo/DemoFeaturesProvider";
 import { AppLayout } from "@/components/layout/AppLayout";
-import { ReturnToPresentationButton } from "@/components/demo/presentation";
 import { WhatsNewModal } from "@/components/WhatsNewModal";
 import { GlobalSEO } from "@/components/GlobalSEO";
 import { UpdateNotification } from "@/components/UpdateNotification";
@@ -224,8 +223,6 @@ const App = () => (
                       <CookieConsent />
                       <WhatsNewModal />
                       <UpdateNotification />
-                      {/* Visible on non-layout routes too (e.g. /snapshot) */}
-                      <ReturnToPresentationButton />
                       <AnalyticsProvider>
                   <DemoModeTour />
                   <Suspense fallback={<PageLoader />}>
