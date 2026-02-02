@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Home, User, Users, RotateCcw } from 'lucide-react';
+import { Home, User, Users, RotateCcw, Bell, Settings, Palette } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
 import { NotificationSettings } from '@/components/NotificationSettings';
@@ -21,6 +21,7 @@ import { SidebarCustomization } from '@/components/SidebarCustomization';
 import { PersonalizationSettings } from '@/components/PersonalizationSettings';
 import { FeatureCustomization } from '@/components/FeatureCustomization';
 import { useTourReset } from '@/components/GuidedTour';
+import { QuickJump } from '@/components/ui/quick-jump';
 
 const profileSchema = z.object({
   full_name: z.string().min(1, 'Name is required').max(100, 'Name must be less than 100 characters'),
@@ -192,7 +193,20 @@ const Profile = () => {
             </div>
           </div>
 
-          <Card>
+          {/* Quick Jump Navigation */}
+          <QuickJump 
+            sections={[
+              { id: 'personal-info', label: 'Personal Info', icon: <User className="w-3 h-3" /> },
+              { id: 'greek-info', label: 'Greek Affiliation', icon: <Users className="w-3 h-3" /> },
+              { id: 'preferences', label: 'Preferences', icon: <Palette className="w-3 h-3" /> },
+              { id: 'notifications', label: 'Notifications', icon: <Bell className="w-3 h-3" /> },
+              { id: 'account', label: 'Account', icon: <Settings className="w-3 h-3" /> },
+            ]}
+            title="Jump to Section"
+            defaultOpen={false}
+          />
+
+          <Card id="personal-info">
             <CardHeader>
               <CardTitle>Personal Information</CardTitle>
             </CardHeader>
@@ -234,7 +248,7 @@ const Profile = () => {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card id="greek-info">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Users className="h-5 w-5 text-sacred" />
@@ -280,7 +294,9 @@ const Profile = () => {
             </CardContent>
           </Card>
 
-          <PersonalizationSettings />
+          <div id="preferences">
+            <PersonalizationSettings />
+          </div>
 
           <FeatureCustomization />
 
@@ -310,7 +326,9 @@ const Profile = () => {
 
           <SidebarCustomization />
 
-          <NotificationSettings />
+          <div id="notifications">
+            <NotificationSettings />
+          </div>
 
           <JourneyReminderSettings />
 
@@ -330,7 +348,7 @@ const Profile = () => {
 
           <SocialMediaConnect />
 
-          <Card>
+          <Card id="account">
             <CardHeader>
               <CardTitle>Password Reset</CardTitle>
             </CardHeader>

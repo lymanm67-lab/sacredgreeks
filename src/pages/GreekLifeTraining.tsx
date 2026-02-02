@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { SEOHead } from '@/components/SEOHead';
 import { useToast } from '@/hooks/use-toast';
 import { ListenButton } from '@/components/ListenButton';
+import { QuickJump } from '@/components/ui/quick-jump';
 import { 
   FileDown, Users, Landmark, BookOpen, ArrowLeft, Target, CheckCircle2, Circle, 
   BookHeart, Scroll, Building2, ChevronRight, Star, Printer, ChevronsUpDown, Home, Trophy
@@ -428,28 +429,41 @@ export default function GreekLifeTraining() {
           </AnimatePresence>
 
           {/* Course Introduction */}
-          <Card className="mb-8 border-violet-500/30 bg-gradient-to-r from-violet-500/5 to-purple-500/5">
-            <CardContent className="p-6">
-              <div className="flex items-start gap-4">
-                <Landmark className="w-8 h-8 text-violet-500 shrink-0 mt-1" />
-                <div>
-                  <h2 className="text-lg font-semibold text-foreground mb-2">Course Overview</h2>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                    This comprehensive training explores the historical reality of 1st-century trade guilds and their 
-                    direct connection to modern Greek-letter organizations. Part 1 establishes the biblical foundation,
-                    while Part 2 provides interactive training modules on ancient guild practices, recognition rituals,
-                    and archaeological evidence.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <Badge variant="outline" className="text-xs">4 Foundation Readings</Badge>
-                    <Badge variant="outline" className="text-xs">10 Training Modules</Badge>
-                    <Badge variant="outline" className="text-xs">PDF Resources</Badge>
-                    <Badge variant="outline" className="text-xs">Audio Narration</Badge>
+          <div id="course-overview">
+            <Card className="mb-8 border-violet-500/30 bg-gradient-to-r from-violet-500/5 to-purple-500/5">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4">
+                  <Landmark className="w-8 h-8 text-violet-500 shrink-0 mt-1" />
+                  <div>
+                    <h2 className="text-lg font-semibold text-foreground mb-2">Course Overview</h2>
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                      This comprehensive training explores the historical reality of 1st-century trade guilds and their 
+                      direct connection to modern Greek-letter organizations. Part 1 establishes the biblical foundation,
+                      while Part 2 provides interactive training modules on ancient guild practices, recognition rituals,
+                      and archaeological evidence.
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="outline" className="text-xs">4 Foundation Readings</Badge>
+                      <Badge variant="outline" className="text-xs">10 Training Modules</Badge>
+                      <Badge variant="outline" className="text-xs">PDF Resources</Badge>
+                      <Badge variant="outline" className="text-xs">Audio Narration</Badge>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Quick Jump Navigation */}
+          <QuickJump 
+            sections={[
+              { id: 'course-overview', label: 'Overview', icon: <Landmark className="w-3 h-3" /> },
+              { id: 'foundation-tab', label: 'Biblical Foundation', icon: <BookHeart className="w-3 h-3" /> },
+              { id: 'modules-tab', label: 'Training Modules', icon: <Target className="w-3 h-3" /> },
+              { id: 'pdf-resources', label: 'PDF Resources', icon: <FileDown className="w-3 h-3" /> },
+            ]}
+            title="Jump to Section"
+          />
 
           {/* Tabs for Foundation vs Training Modules */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
@@ -467,7 +481,7 @@ export default function GreekLifeTraining() {
             </TabsList>
 
             {/* Part 1: Biblical Foundation */}
-            <TabsContent value="foundation" className="space-y-6">
+            <TabsContent id="foundation-tab" value="foundation" className="space-y-6">
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <h3 className="text-lg font-semibold">Biblical Foundation Readings</h3>
@@ -573,7 +587,7 @@ export default function GreekLifeTraining() {
             </TabsContent>
 
             {/* Part 2: Guild Training Modules */}
-            <TabsContent value="modules" className="space-y-6">
+            <TabsContent id="modules-tab" value="modules" className="space-y-6">
               <div className="flex items-center justify-between mb-4 flex-wrap gap-4">
                 <div>
                   <h3 className="text-lg font-semibold">Interactive Training Modules</h3>

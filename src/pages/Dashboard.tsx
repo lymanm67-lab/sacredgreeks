@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { LogOut, User } from 'lucide-react';
+import { LogOut, User, Sparkles, BarChart3, GraduationCap, Trophy, Users, Bot, Compass } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import logo from '@/assets/sacred-greeks-logo.png';
 import { Onboarding } from '@/components/Onboarding';
@@ -27,6 +27,7 @@ import { PathCompletionAchievements } from '@/components/dashboard/PathCompletio
 import { StatsSection } from '@/components/dashboard/StatsSection';
 import { QuickLinksSection } from '@/components/dashboard/QuickLinksSection';
 import { DashboardAudioGuide } from '@/components/dashboard/DashboardAudioGuide';
+import { QuickJump } from '@/components/ui/quick-jump';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -238,6 +239,21 @@ const Dashboard = () => {
 
       <main className="w-full min-w-fit px-4 py-8">
         <div className="max-w-5xl mx-auto space-y-8 w-full">
+          {/* Quick Jump Navigation */}
+          <QuickJump 
+            sections={[
+              { id: 'featured-actions', label: 'Get Started', icon: <Sparkles className="w-3 h-3" /> },
+              { id: 'stats-section', label: 'Your Progress', icon: <BarChart3 className="w-3 h-3" /> },
+              { id: 'learning-paths', label: 'Learning Paths', icon: <GraduationCap className="w-3 h-3" /> },
+              { id: 'achievements', label: 'Achievements', icon: <Trophy className="w-3 h-3" /> },
+              { id: 'community', label: 'Community', icon: <Users className="w-3 h-3" /> },
+              { id: 'ai-assistant', label: 'AI Assistant', icon: <Bot className="w-3 h-3" /> },
+              { id: 'quick-links', label: 'Explore More', icon: <Compass className="w-3 h-3" /> },
+            ]}
+            title="Jump to Section"
+            defaultOpen={false}
+          />
+
           {/* 1. Hero Section - Welcome & Introduction */}
           <div className="animate-fade-in">
             <HeroSection />
@@ -249,37 +265,37 @@ const Dashboard = () => {
           </div>
 
           {/* 3. Featured Actions - Get Started / Core Tools */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
+          <div id="featured-actions" className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
             <FeaturedActions isLoading={loading} />
           </div>
 
           {/* 4. Stats Section - Your Progress */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.15s' }}>
+          <div id="stats-section" className="animate-fade-in" style={{ animationDelay: '0.15s' }}>
             <StatsSection stats={stats} isDemoStats={isDemoStats} />
           </div>
 
           {/* 5. Learning Paths Map - Training Roadmap */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <div id="learning-paths" className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <LearningPathsMap />
           </div>
 
           {/* 6. Path Completion Achievements */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.25s' }}>
+          <div id="achievements" className="animate-fade-in" style={{ animationDelay: '0.25s' }}>
             <PathCompletionAchievements />
           </div>
 
           {/* 7. Greek Community Section */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
+          <div id="community" className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
             <GreekCommunitySection />
           </div>
 
           {/* 8. AI Assistant */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.35s' }}>
+          <div id="ai-assistant" className="animate-fade-in" style={{ animationDelay: '0.35s' }}>
             <DashboardAIAssistant />
           </div>
 
           {/* 9. Quick Links - Explore More */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
+          <div id="quick-links" className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
             <QuickLinksSection />
           </div>
         </div>

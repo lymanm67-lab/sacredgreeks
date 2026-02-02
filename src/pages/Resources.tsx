@@ -16,6 +16,7 @@ import { useResourceRecommendations } from "@/hooks/use-resource-recommendations
 import { SuggestResourceDialog } from "@/components/resources/SuggestResourceDialog";
 import { MediaInquiryForm } from "@/components/resources/MediaInquiryForm";
 import { formatDistanceToNow } from "date-fns";
+import { QuickJump } from "@/components/ui/quick-jump";
 import { 
   BookOpen, 
   Heart, 
@@ -1577,6 +1578,20 @@ const Resources = () => {
               ))}
             </div>
           </div>
+        </div>
+
+        {/* Quick Jump Navigation */}
+        <div className="max-w-4xl mx-auto mb-8">
+          <QuickJump 
+            sections={[
+              { id: 'about-tab', label: 'About & Mission', icon: <Heart className="w-3 h-3" /> },
+              { id: 'book-tab', label: 'The Book', icon: <BookOpen className="w-3 h-3" /> },
+              { id: 'articles-tab', label: 'Articles', icon: <FileText className="w-3 h-3" /> },
+              { id: 'testimonials-tab', label: 'Stories', icon: <MessageSquare className="w-3 h-3" /> },
+            ]}
+            title="Browse Categories"
+            defaultOpen={false}
+          />
         </div>
 
         {/* Tabbed Navigation */}

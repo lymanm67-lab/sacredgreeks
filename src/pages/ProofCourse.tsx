@@ -19,6 +19,7 @@ import { useLessonCelebration } from '@/hooks/use-lesson-celebration';
 import { generateProofLessonPDF, generateAllProofLessonsPDF } from '@/lib/proof-lesson-pdf';
 import { generateLessonWorksheetPDF, generateAllWorksheetsPDF } from '@/lib/proof-worksheet-pdf';
 import { Link } from 'react-router-dom';
+import { QuickJump } from '@/components/ui/quick-jump';
 
 interface Lesson {
   id: number;
@@ -595,6 +596,22 @@ const ProofCourse = () => {
           completedLessons={completedLessons.length}
           totalLessons={lessons.length}
         />
+
+        {/* Quick Jump Navigation */}
+        <div className="mb-6">
+          <QuickJump 
+            sections={[
+              { id: 'lesson-cards', label: 'All Lessons', icon: <BookOpen className="w-3 h-3" /> },
+              { id: 'lesson-p', label: 'P - Pledge', icon: <span className="text-blue-500 font-bold text-xs">P</span> },
+              { id: 'lesson-r', label: 'R - Rituals', icon: <span className="text-purple-500 font-bold text-xs">R</span> },
+              { id: 'lesson-o1', label: 'O - Oaths', icon: <span className="text-orange-500 font-bold text-xs">O</span> },
+              { id: 'lesson-o2', label: 'O - Obscurity', icon: <span className="text-green-500 font-bold text-xs">O</span> },
+              { id: 'lesson-f', label: 'F - Faith', icon: <span className="text-red-500 font-bold text-xs">F</span> },
+            ]}
+            title="Jump to Lesson"
+            defaultOpen={false}
+          />
+        </div>
 
         {/* Quick Access Bar */}
         <motion.div
