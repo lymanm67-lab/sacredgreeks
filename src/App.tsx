@@ -1,4 +1,4 @@
-// Cache bust v7 - 2026-01-30 - Force SW v9 refresh for stale changelog
+// Cache bust v8 - 2026-02-02 - Force SW v10 refresh for sidebar collapsible fix
 import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
