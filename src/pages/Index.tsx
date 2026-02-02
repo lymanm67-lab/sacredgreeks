@@ -7,13 +7,17 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import logo from "@/assets/sacred-greeks-logo.png";
 import { cn } from "@/lib/utils";
-import { Play, Sparkles, User, ChevronRight, Shield, Heart, BookOpen, Headphones, Star, CheckCircle } from "lucide-react";
+import { Play, Sparkles, User, ChevronRight, Shield, Heart, BookOpen, Headphones, Star, CheckCircle, Globe, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DashboardPreview } from "@/components/landing/DashboardPreview";
 import { Testimonials } from "@/components/Testimonials";
 import { Footer } from "@/components/landing/Footer";
 import { LandingPersonalizationSurvey } from "@/components/landing/LandingPersonalizationSurvey";
 import { SEOHead } from "@/components/SEOHead";
+import { HowItWorksSection } from "@/components/landing/HowItWorksSection";
+import { EcosystemLadder } from "@/components/landing/EcosystemLadder";
+import { AppPreviews } from "@/components/landing/AppPreviews";
+import { CompetitorMention } from "@/components/landing/CompetitorMention";
 
 const Index = () => {
   const { user } = useAuth();
@@ -112,22 +116,40 @@ const Index = () => {
                   </div>
                 </div>
 
-                {/* SEO-Optimized H1 */}
+                {/* SEO-Optimized H1 with "Start free in 60 seconds" */}
                 <header className="text-center mb-5 sm:mb-6">
+                  {/* Quick start badge */}
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-medium mb-3">
+                    <Clock className="w-3 h-3" />
+                    Start free in 60 seconds
+                  </div>
+                  
                   <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-3 leading-tight">
-                    Christian Greek Life App:{' '}
+                    Clarity for Christian Greeks{' '}
                     <span className="gradient-shimmer">
-                      Faith & Fraternity United
+                      Tired of Choosing
                     </span>
                   </h1>
                   <p className="text-slate-400 text-sm sm:text-base md:text-lg max-w-md mx-auto leading-relaxed">
-                    Daily devotionals, <strong className="text-slate-300">P.R.O.O.F. framework</strong> guidance, and biblical tools for{' '}
-                    <span className="gradient-shimmer font-semibold">Divine Nine</span>, BGLO & all Greek organizations
+                    Daily devotionals and guided reflection, grounded in <strong className="text-slate-300">P.R.O.O.F.</strong>, built for Greek life realities
                   </p>
                 </header>
 
+                {/* Platform availability - Use on Web */}
+                <div className="flex items-center justify-center gap-3 mb-5 sm:mb-6">
+                  <Button 
+                    onClick={handleCreateAccount}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 h-auto"
+                    size="sm"
+                  >
+                    <Globe className="w-4 h-4 mr-1.5" />
+                    Use on Web
+                  </Button>
+                  <span className="text-xs text-slate-500">No download needed</span>
+                </div>
+
                 {/* Trust indicators with semantic markup */}
-                <div className="flex items-center justify-center gap-4 sm:gap-6 mb-5 sm:mb-6 text-xs sm:text-sm text-slate-400" role="list" aria-label="Key features">
+                <div className="flex items-center justify-center gap-4 sm:gap-6 mb-4 text-xs sm:text-sm text-slate-400" role="list" aria-label="Key features">
                   <div className="flex items-center gap-1.5" role="listitem">
                     <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400" aria-hidden="true" />
                     <span>Faith-First</span>
@@ -254,10 +276,22 @@ const Index = () => {
             </Card>
           </article>
 
+          {/* How It Works Section */}
+          <HowItWorksSection />
+
+          {/* App Previews - Show, don't tell */}
+          <AppPreviews />
+
           {/* Dashboard Preview Section */}
           <section aria-label="App Preview">
             <DashboardPreview />
           </section>
+
+          {/* Why Sacred Greeks - Competitor differentiation */}
+          <CompetitorMention />
+
+          {/* Ecosystem Ladder - Clear progression */}
+          <EcosystemLadder />
           
           {/* Testimonials Section */}
           <section aria-label="User Testimonials">
