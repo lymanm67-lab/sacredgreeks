@@ -368,7 +368,7 @@ export default function GreekFinancialLeadership() {
             {[
               { icon: Shield, title: "Credit Repair Hub", desc: "Dispute letters, bureau links, score tracking" },
               { icon: GraduationCap, title: "Student Defense Guide", desc: "Avoid debt traps targeting students" },
-              { icon: DollarSign, title: "SISP Calculator", desc: "Sacred Greeks budgeting spreadsheet" },
+              { icon: DollarSign, title: "SMSP Calculator", desc: "Sacred Money Spending Plan budgeting tool" },
               { icon: Award, title: "Debt Freedom Plan", desc: "Gazelle-intensity payoff strategies" }
             ].map((tool) => (
               <Card key={tool.title} className="bg-slate-800/50 border-slate-700 hover:border-sacred/50 transition-all">
