@@ -24,10 +24,10 @@ const SharedResult = () => {
     }
 
     try {
-      // Get shared result
+      // Get shared result - use safe view to exclude email addresses
       const { data: sharedData, error: sharedError } = await supabase
         .from('shared_results')
-        .select('*, assessment_submissions(*)')
+        .select('*, assessment_submissions_safe(*)')
         .eq('share_token', token)
         .maybeSingle();
 
@@ -55,7 +55,7 @@ const SharedResult = () => {
         })
         .eq('id', sharedData.id);
 
-      setResult(sharedData.assessment_submissions);
+      setResult(sharedData.assessment_submissions_safe);
     } catch (error) {
       console.error('Error loading shared result:', error);
       setError('Failed to load shared result');
