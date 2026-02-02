@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { useDemoMode } from "@/contexts/DemoModeContext";
 import { toast } from "sonner";
 import { invokeCheckAchievements } from "@/lib/invoke-check-achievements";
 
@@ -15,13 +16,47 @@ export interface StudyProgress {
   updated_at: string;
 }
 
+// Demo progress data for presentations - shows partial progress (2 of 5 lessons)
+const DEMO_PROGRESS: StudyProgress[] = [
+  {
+    id: 'demo-1',
+    user_id: 'demo-user',
+    session_id: 1,
+    completed: true,
+    completed_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
+    notes: 'Great insights on biblical boundaries during intake.',
+    created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    updated_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'demo-2',
+    user_id: 'demo-user',
+    session_id: 2,
+    completed: true,
+    completed_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(), // 1 day ago
+    notes: 'The power of belief principle is transformative.',
+    created_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    updated_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+];
+
 export const useStudyProgress = () => {
   const { user } = useAuth();
+  const { isDemoMode, demoSettings } = useDemoMode();
   const queryClient = useQueryClient();
 
+  // In presentation mode, bypass real data for a fresh demo experience
+  const isPresentationMode = demoSettings.presentationMode;
+
   const { data: progress = [], isLoading } = useQuery({
-    queryKey: ["study-progress", user?.id],
+    queryKey: ["study-progress", user?.id, isPresentationMode],
     queryFn: async () => {
+      // In presentation mode, return demo data showing partial progress
+      if (isPresentationMode) {
+        console.log('[useStudyProgress] Presentation mode active, returning demo progress');
+        return DEMO_PROGRESS;
+      }
+      
       if (!user) return [];
       
       const { data, error } = await supabase
@@ -33,11 +68,17 @@ export const useStudyProgress = () => {
       if (error) throw error;
       return data as StudyProgress[];
     },
-    enabled: !!user,
+    enabled: !!user || isPresentationMode,
   });
 
   const toggleSessionMutation = useMutation({
     mutationFn: async ({ sessionId, completed }: { sessionId: number; completed: boolean }) => {
+      // In presentation mode, just simulate success
+      if (isPresentationMode) {
+        console.log('[useStudyProgress] Presentation mode - simulating session toggle');
+        return;
+      }
+      
       if (!user) throw new Error("Must be logged in");
 
       if (completed) {
@@ -65,6 +106,16 @@ export const useStudyProgress = () => {
     },
     onSuccess: async (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["study-progress"] });
+      
+      // Skip point awarding in presentation mode
+      if (isPresentationMode) {
+        toast.success(
+          variables.completed
+            ? "Session marked as complete!"
+            : "Session marked as incomplete"
+        );
+        return;
+      }
       
       if (variables.completed) {
         // Award points for completing study session
@@ -95,6 +146,12 @@ export const useStudyProgress = () => {
 
   const saveNotesMutation = useMutation({
     mutationFn: async ({ sessionId, notes }: { sessionId: number; notes: string }) => {
+      // In presentation mode, just simulate success
+      if (isPresentationMode) {
+        console.log('[useStudyProgress] Presentation mode - simulating notes save');
+        return;
+      }
+      
       if (!user) throw new Error("Must be logged in");
 
       const { error } = await supabase
@@ -126,13 +183,14 @@ export const useStudyProgress = () => {
     return progress.find((p) => p.session_id === sessionId)?.notes || "";
   };
 
+  // In presentation mode, show demo progress (2 of 5)
   const completedCount = progress.filter((p) => p.completed).length;
   const totalSessions = 5;
   const progressPercentage = (completedCount / totalSessions) * 100;
 
   return {
     progress,
-    isLoading,
+    isLoading: isPresentationMode ? false : isLoading,
     toggleSession: toggleSessionMutation.mutate,
     saveNotes: saveNotesMutation.mutate,
     isSavingNotes: saveNotesMutation.isPending,
@@ -141,6 +199,7 @@ export const useStudyProgress = () => {
     completedCount,
     totalSessions,
     progressPercentage,
-    isAuthenticated: !!user,
+    isAuthenticated: !!user || isPresentationMode,
+    isPresentationMode,
   };
 };
