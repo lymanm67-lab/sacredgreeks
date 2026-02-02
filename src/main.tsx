@@ -14,8 +14,8 @@ if (container) {
 }
 
 // Register service worker for offline support with Safari fallback
-// App version for cache busting - v2.5.4-20260131
-const APP_SW_VERSION = '2.5.4-20260131';
+// App version for cache busting - v2.5.5-20260202 (new logo)
+const APP_SW_VERSION = '2.5.5-20260202';
 
 // Clear stale caches on app start
 async function clearStaleCaches() {
