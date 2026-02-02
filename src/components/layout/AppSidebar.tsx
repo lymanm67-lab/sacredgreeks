@@ -33,6 +33,9 @@ import {
   History,
   Scale,
   Crown,
+  Music,
+  Briefcase,
+  Cross,
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -115,6 +118,9 @@ const podcastItems = [
 
 // Resources section
 const resourcesItems = [
+  { title: "Chaplain Toolkit", url: "/chaplain-toolkit", icon: Cross, featureId: null, iconColor: "text-sacred", hasProgress: false },
+  { title: "Business Directory", url: "/business-directory", icon: Briefcase, featureId: null, iconColor: "text-emerald-500", hasProgress: false },
+  { title: "Worship Playlists", url: "/worship-playlists", icon: Music, featureId: null, iconColor: "text-purple-500", hasProgress: false },
   { title: "Symbol Guide", url: "/symbol-guide", icon: Compass, featureId: null, iconColor: "text-teal-500", hasProgress: false },
   { title: "Video Library", url: "/video-library", icon: Video, featureId: null, iconColor: "text-sky-500", hasProgress: false },
   { title: "Parents & Family", url: "/parents-family", icon: Heart, featureId: null, iconColor: "text-rose-500", hasProgress: false },

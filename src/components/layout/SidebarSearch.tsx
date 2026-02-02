@@ -60,6 +60,9 @@ const navigationItems = [
   { title: "Podcast", url: "/podcast", icon: Headphones, keywords: ["audio", "listen", "episodes", "rss", "sacred greeks"] },
   { title: "Be on Podcast", url: "/guest-panelist-application", icon: User, keywords: ["apply", "speaker", "webinar", "panelist", "guest"] },
   // Resources
+  { title: "Chaplain Toolkit", url: "/chaplain-toolkit", icon: Heart, keywords: ["chaplain", "chapter", "prayer", "meeting", "devotional", "ministry"] },
+  { title: "Business Directory", url: "/business-directory", icon: Users, keywords: ["business", "d9", "divine nine", "entrepreneur", "networking", "faith"] },
+  { title: "Worship Playlists", url: "/worship-playlists", icon: Headphones, keywords: ["worship", "music", "spotify", "apple", "playlists", "songs"] },
   { title: "Symbol Guide", url: "/symbol-guide", icon: Shapes, keywords: ["meanings", "greek", "symbols"] },
   { title: "Video Library", url: "/video-library", icon: Video, keywords: ["watch", "training"] },
   { title: "Study Guide", url: "/study", icon: ClipboardList, keywords: ["lessons", "curriculum"] },
