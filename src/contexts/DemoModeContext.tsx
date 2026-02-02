@@ -21,6 +21,7 @@ export interface DemoSettings {
   analyticsEnabled: boolean;
   showAnalytics: boolean;
   showSessionRecorder: boolean;
+  presentationMode: boolean; // Hides real user data for live sales demos
 }
 
 // Preloaded demo data cache
@@ -199,6 +200,7 @@ const DEFAULT_SETTINGS: DemoSettings = {
   analyticsEnabled: true,
   showAnalytics: false,
   showSessionRecorder: false,
+  presentationMode: false,
 };
 
 export function DemoModeProvider({ children }: { children: ReactNode }) {
