@@ -29,12 +29,12 @@ const PRICING_TIERS = {
     ],
     monthly: {
       price: 14.99,
-      priceId: 'price_1SYXjdLMtnFcNpvTGb2LX4v7',
+      priceId: 'price_1SwD9TLMtnFcNpvTY10A2AGF',
     },
     annual: {
       price: 119.99,
       monthlyEquivalent: 10.00,
-      priceId: 'price_1SYXoDLMtnFcNpvTunTis7BN',
+      priceId: 'price_1SwD9ULMtnFcNpvTwGLp6tg1',
       savings: '33%',
     },
   },
