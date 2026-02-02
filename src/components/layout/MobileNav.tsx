@@ -40,6 +40,7 @@ import {
   Briefcase,
   Cross,
   Music,
+  ChevronDown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -50,6 +51,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useFeaturePreferences } from "@/hooks/use-feature-preferences";
 import { SubscriptionBadge } from "@/components/dashboard/SubscriptionBadge";
 import { DemoModeControl } from "@/components/GlobalDemoIndicator";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
 
 // Dashboard - Always first
@@ -167,34 +169,50 @@ export function MobileNav() {
     setOpen(false);
   };
 
-  const NavSection = ({ title, items, badge }: { title: string; items: typeof dashboardItem; badge?: string }) => (
-    <div className="space-y-1">
-      <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-3 py-2 flex items-center gap-2">
-        {title}
-        {badge && (
-          <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 bg-primary/10 text-primary">
-            {badge}
-          </Badge>
-        )}
-      </h3>
-      {items.map((item) => (
-        <NavLink
-          key={item.url}
-          to={item.url}
-          onClick={handleNavClick}
-          className={cn(
-            "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors",
-            isActive(item.url) 
-              ? "bg-sacred/10 text-sacred font-medium" 
-              : "hover:bg-muted"
-          )}
-        >
-          <item.icon className={cn("h-5 w-5 shrink-0", item.iconColor)} />
-          <span>{item.title}</span>
-        </NavLink>
-      ))}
-    </div>
-  );
+  const NavSection = ({ title, items, badge, defaultOpen = true }: { title: string; items: typeof dashboardItem; badge?: string; defaultOpen?: boolean }) => {
+    const [isOpen, setIsOpen] = useState(defaultOpen);
+    
+    return (
+      <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+        <CollapsibleTrigger className="w-full">
+          <div className="flex items-center justify-between px-3 py-2 cursor-pointer hover:bg-muted/50 rounded-lg transition-colors">
+            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
+              {title}
+              {badge && (
+                <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 bg-primary/10 text-primary">
+                  {badge}
+                </Badge>
+              )}
+            </h3>
+            <ChevronDown className={cn(
+              "h-4 w-4 text-muted-foreground transition-transform duration-200",
+              isOpen ? "rotate-0" : "-rotate-90"
+            )} />
+          </div>
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <div className="space-y-1">
+            {items.map((item) => (
+              <NavLink
+                key={item.url}
+                to={item.url}
+                onClick={handleNavClick}
+                className={cn(
+                  "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors",
+                  isActive(item.url) 
+                    ? "bg-sacred/10 text-sacred font-medium" 
+                    : "hover:bg-muted"
+                )}
+              >
+                <item.icon className={cn("h-5 w-5 shrink-0", item.iconColor)} />
+                <span>{item.title}</span>
+              </NavLink>
+            ))}
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
+    );
+  };
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -226,7 +244,7 @@ export function MobileNav() {
         </SheetHeader>
 
         <ScrollArea className="h-[calc(100vh-180px)]">
-          <div className="p-4 space-y-6">
+          <div className="p-4 space-y-2">
             {filteredDashboard.length > 0 && (
               <NavSection title="Dashboard" items={filteredDashboard} />
             )}
@@ -243,16 +261,16 @@ export function MobileNav() {
               <NavSection title="Greek Community" items={filteredCommunity} />
             )}
             {filteredAboutDrLyman.length > 0 && (
-              <NavSection title="About Dr. Lyman" items={filteredAboutDrLyman} />
+              <NavSection title="About Dr. Lyman" items={filteredAboutDrLyman} defaultOpen={false} />
             )}
             {filteredPodcast.length > 0 && (
-              <NavSection title="Podcast" items={filteredPodcast} />
+              <NavSection title="Podcast" items={filteredPodcast} defaultOpen={false} />
             )}
             {filteredResources.length > 0 && (
-              <NavSection title="Resources" items={filteredResources} />
+              <NavSection title="Resources" items={filteredResources} defaultOpen={false} />
             )}
             {filteredSystem.length > 0 && (
-              <NavSection title="System" items={filteredSystem} />
+              <NavSection title="System" items={filteredSystem} defaultOpen={false} />
             )}
           </div>
         </ScrollArea>
