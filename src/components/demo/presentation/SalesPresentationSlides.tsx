@@ -58,6 +58,16 @@ import slideSnapshot from '@/assets/presentation/slide-snapshot.jpg';
 import slideProof from '@/assets/presentation/slide-proof.jpg';
 import slideFinancial from '@/assets/presentation/slide-financial.jpg';
 import slideChaplain from '@/assets/presentation/slide-chaplain.jpg';
+
+// Import new keynote images
+import slideGreekCeremony from '@/assets/slides/greek-stepping-ceremony.jpg';
+import slideCivilRights from '@/assets/slides/civil-rights-march.jpg';
+import slideCommunityService from '@/assets/slides/greek-community-service.jpg';
+import slideFaithWorship from '@/assets/slides/faith-worship-hands.jpg';
+import slideHBCUCampus from '@/assets/slides/hbcu-campus.jpg';
+import slideBuildingBridges from '@/assets/slides/building-bridges.jpg';
+import slideAppShowcase from '@/assets/slides/app-showcase.jpg';
+import slideBibleGreek from '@/assets/slides/bible-greek-letters.jpg';
 import slideCommunity from '@/assets/presentation/slide-community.jpg';
 import slideGamification from '@/assets/presentation/slide-gamification.jpg';
 import slideClose from '@/assets/presentation/slide-close.jpg';
@@ -87,7 +97,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
     title: 'Understanding the Sacred Side of Greek Life',
     subtitle: 'Faith, Culture, and Activism in the Divine Nine',
     icon: <Sparkles className="w-12 h-12 text-sacred" />,
-    image: slideIntro,
+    image: slideGreekCeremony,
     duration: '2-3 min',
     presenterNotes: [
       'Welcome warmly — acknowledge both Greek and non-Greek attendees',
@@ -219,6 +229,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
     title: 'Born Out of Necessity',
     subtitle: 'Why Greek Life Had to Exist',
     icon: <History className="w-12 h-12 text-amber-600" />,
+    image: slideHBCUCampus,
     duration: '4-5 min',
     presenterNotes: [
       'Set the historical stage: Early 1900s, Black students on white campuses',
@@ -279,6 +290,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
     title: 'Founders of Faith',
     subtitle: 'The Christian Roots of Greek Leadership',
     icon: <Church className="w-12 h-12 text-purple-600" />,
+    image: slideFaithWorship,
     duration: '4-5 min',
     presenterNotes: [
       'Many D9 founders were ministers, church leaders, Christians',
@@ -306,6 +318,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
     title: 'Marching for Justice',
     subtitle: 'Greek Life and the Civil Rights Movement',
     icon: <Megaphone className="w-12 h-12 text-red-500" />,
+    image: slideCivilRights,
     duration: '5-6 min',
     presenterNotes: [
       'This is the climactic section — bring energy',
@@ -361,7 +374,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
     title: 'Service as Sacred Work',
     subtitle: 'Millions of Hours, Countless Lives Changed',
     icon: <HandHeart className="w-12 h-12 text-pink-500" />,
-    image: slideCommunity,
+    image: slideCommunityService,
     duration: '4-5 min',
     presenterNotes: [
       'Transition from history to ongoing impact',
@@ -500,6 +513,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
     title: 'Symbols That Speak',
     subtitle: 'Greek Letters as Identity Markers',
     icon: <Feather className="w-12 h-12 text-indigo-500" />,
+    image: slideBibleGreek,
     duration: '3-4 min',
     presenterNotes: [
       'Explain the power of symbols in community',
@@ -577,6 +591,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
     title: 'Building Bridges',
     subtitle: 'Partnership Between Greek and Non-Greek Communities',
     icon: <Link2 className="w-12 h-12 text-blue-500" />,
+    image: slideBuildingBridges,
     duration: '3-4 min',
     presenterNotes: [
       'Learning objective #2 deep dive',
@@ -706,6 +721,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
     title: 'Your Digital Companion',
     subtitle: 'Sacred Greeks App — Faith Meets Greek Life',
     icon: <Smartphone className="w-12 h-12 text-sacred" />,
+    image: slideAppShowcase,
     duration: '2-3 min',
     presenterNotes: [
       'Transition: "Everything we\'ve discussed today... in your pocket"',
