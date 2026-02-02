@@ -41,6 +41,7 @@ import { StudentFinancialGuide } from "@/components/financial/StudentFinancialGu
 import { SISPCalculator } from "@/components/financial/SISPCalculator";
 import { FinancialOverviewTTS } from "@/components/financial/FinancialOverviewTTS";
 import { BuildingWealthSection } from "@/components/financial/BuildingWealthSection";
+import { DebtStrategiesCalculator } from "@/components/financial/DebtStrategiesCalculator";
 import { Link } from "react-router-dom";
 
 interface BudgetResults {
@@ -57,10 +58,6 @@ interface BudgetResults {
 const FinancialStewardship = () => {
   const [income, setIncome] = useState<string>("");
   const [budgetResults, setBudgetResults] = useState<BudgetResults | null>(null);
-  const [debtAmount, setDebtAmount] = useState<string>("");
-  const [interestRate, setInterestRate] = useState<string>("");
-  const [monthlyPayment, setMonthlyPayment] = useState<string>("");
-  const [debtPayoffMonths, setDebtPayoffMonths] = useState<number | null>(null);
 
   // Zero-based budget percentages (must equal 100%)
   const budgetPercentages = {
@@ -89,20 +86,6 @@ const FinancialStewardship = () => {
     const total = tithe + needs + wants + funMoney + savings + investing + futureGoals;
     
     setBudgetResults({ tithe, needs, wants, funMoney, savings, investing, futureGoals, total });
-  };
-
-  const calculateDebtPayoff = () => {
-    const principal = parseFloat(debtAmount);
-    const rate = parseFloat(interestRate) / 100 / 12;
-    const payment = parseFloat(monthlyPayment);
-    
-    if (isNaN(principal) || isNaN(rate) || isNaN(payment) || payment <= principal * rate) {
-      setDebtPayoffMonths(null);
-      return;
-    }
-    
-    const months = Math.ceil(Math.log(payment / (payment - principal * rate)) / Math.log(1 + rate));
-    setDebtPayoffMonths(months);
   };
 
   const scriptures = [
@@ -319,147 +302,38 @@ const FinancialStewardship = () => {
 
           {/* Debt Freedom Tab */}
           <TabsContent value="debt" className="space-y-6">
-            <div className="grid gap-6 lg:grid-cols-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <AlertTriangle className="w-5 h-5 text-amber-500" />
-                    The Debt Crisis
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Average Black household debt</span>
-                      <Badge variant="destructive">$46,000+</Badge>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Average credit card debt</span>
-                      <Badge variant="destructive">$5,700+</Badge>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Student loan debt (college grads)</span>
-                      <Badge variant="destructive">$25,000+</Badge>
-                    </div>
-                  </div>
-                  <p className="text-sm text-muted-foreground pt-4 border-t">
-                    <strong>The biblical truth:</strong> "The borrower is slave to the lender" (Proverbs 22:7). 
-                    Debt limits your ability to serve God freely and build generational wealth.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Calculator className="w-5 h-5 text-emerald-500" />
-                    Debt Payoff Calculator
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-3">
-                    <div>
-                      <Label>Total Debt Amount ($)</Label>
-                      <Input 
-                        type="number" 
-                        placeholder="10000" 
-                        value={debtAmount}
-                        onChange={(e) => setDebtAmount(e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <Label>Interest Rate (%)</Label>
-                      <Input 
-                        type="number" 
-                        placeholder="18" 
-                        value={interestRate}
-                        onChange={(e) => setInterestRate(e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <Label>Monthly Payment ($)</Label>
-                      <Input 
-                        type="number" 
-                        placeholder="300" 
-                        value={monthlyPayment}
-                        onChange={(e) => setMonthlyPayment(e.target.value)}
-                      />
-                    </div>
-                    <Button onClick={calculateDebtPayoff} className="w-full">
-                      Calculate Payoff Time
-                    </Button>
-                  </div>
-                  
-                  {debtPayoffMonths !== null && (
-                    <div className="p-4 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
-                      <p className="text-center">
-                        <span className="block text-3xl font-bold text-emerald-600">{debtPayoffMonths} months</span>
-                        <span className="text-sm text-muted-foreground">
-                          ({Math.floor(debtPayoffMonths / 12)} years, {debtPayoffMonths % 12} months)
-                        </span>
-                      </p>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            </div>
-
+            {/* Debt Crisis Stats Card */}
             <Card>
               <CardHeader>
-                <CardTitle>The Biblical Debt Freedom Plan</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <AlertTriangle className="w-5 h-5 text-amber-500" />
+                  The Debt Crisis
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <Accordion type="single" collapsible className="w-full">
-                  <AccordionItem value="step1">
-                    <AccordionTrigger>Step 1: Stop the Bleeding</AccordionTrigger>
-                    <AccordionContent className="space-y-2">
-                      <p>• Cut up credit cards or freeze them (literally)</p>
-                      <p>• Commit to no new debt—cash or debit only</p>
-                      <p>• Cancel unnecessary subscriptions</p>
-                      <p className="text-sm text-muted-foreground italic mt-2">
-                        "No one can serve two masters" (Matthew 6:24)
-                      </p>
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="step2">
-                    <AccordionTrigger>Step 2: Build Emergency Fund ($1,000)</AccordionTrigger>
-                    <AccordionContent className="space-y-2">
-                      <p>• Sell items you don't need</p>
-                      <p>• Work extra hours or side gigs</p>
-                      <p>• This prevents new debt for emergencies</p>
-                      <p className="text-sm text-muted-foreground italic mt-2">
-                        "The wise store up choice food and olive oil" (Proverbs 21:20)
-                      </p>
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="step3">
-                    <AccordionTrigger>Step 3: Debt Snowball Method</AccordionTrigger>
-                    <AccordionContent className="space-y-2">
-                      <p>• List debts smallest to largest</p>
-                      <p>• Pay minimums on all except smallest</p>
-                      <p>• Attack smallest debt with everything extra</p>
-                      <p>• When paid off, roll that payment to the next debt</p>
-                      <p className="text-sm text-muted-foreground italic mt-2">
-                        "Let us run with perseverance the race marked out for us" (Hebrews 12:1)
-                      </p>
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="step4">
-                    <AccordionTrigger>Step 4: Credit Repair Strategies</AccordionTrigger>
-                    <AccordionContent className="space-y-2">
-                      <p>• Get free credit report at AnnualCreditReport.com</p>
-                      <p>• Dispute errors in writing</p>
-                      <p>• Keep credit utilization under 30%</p>
-                      <p>• Become an authorized user on family member's good account</p>
-                      <p>• Consider a secured credit card for rebuilding</p>
-                      <p className="text-sm text-muted-foreground italic mt-2">
-                        "A good name is more desirable than great riches" (Proverbs 22:1)
-                      </p>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
+                <div className="grid gap-4 md:grid-cols-3">
+                  <div className="text-center p-4 rounded-lg bg-destructive/10 border border-destructive/20">
+                    <p className="text-2xl font-bold text-destructive">$46,000+</p>
+                    <p className="text-sm text-muted-foreground">Average Black household debt</p>
+                  </div>
+                  <div className="text-center p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                    <p className="text-2xl font-bold text-amber-600">$5,700+</p>
+                    <p className="text-sm text-muted-foreground">Average credit card debt</p>
+                  </div>
+                  <div className="text-center p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                    <p className="text-2xl font-bold text-blue-600">$25,000+</p>
+                    <p className="text-sm text-muted-foreground">Student loan debt (grads)</p>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground mt-4 p-3 bg-muted rounded-lg">
+                  <strong>Biblical truth:</strong> "The borrower is slave to the lender" (Proverbs 22:7). 
+                  Debt limits your ability to serve God freely and build generational wealth.
+                </p>
               </CardContent>
             </Card>
+
+            {/* New Debt Strategies Calculator */}
+            <DebtStrategiesCalculator />
           </TabsContent>
 
           {/* Budgeting Tab */}
