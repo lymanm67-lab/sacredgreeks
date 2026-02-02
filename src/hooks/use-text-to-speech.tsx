@@ -117,8 +117,8 @@ export const useTextToSpeech = () => {
   const speak = async (text: string, itemId: string, voice: string = "alloy", title?: string) => {
     // Preprocess text for better TTS pronunciation
     let processedText = text
-      // Convert 10/15/10/65 pattern to spoken form
-      .replace(/10\/15\/10\/65/g, "ten, fifteen, ten, sixty-five")
+      // Convert 10/15/10/65 pattern to spoken form with explanation
+      .replace(/10\/15\/10\/65/g, "ten-fifteen-ten-sixty-five, which means ten percent for Kingdom giving, fifteen percent for savings, ten percent for investing, and sixty-five percent for living expenses")
       .replace(/(\d+)\/(\d+)\/(\d+)\/(\d+)/g, (_, a, b, c, d) => 
         `${numberToWords(a)}, ${numberToWords(b)}, ${numberToWords(c)}, ${numberToWords(d)}`
       );
