@@ -120,29 +120,28 @@ export const useTextToSpeech = () => {
         body: { text, voice },
       });
 
-      // Robust quota detection - check multiple patterns
-      const anyErr = error as any;
-      let errorJson: any = null;
-      
-      // Try to parse error context if available
-      if (anyErr?.context?.json) {
-        try {
-          errorJson = await anyErr.context.json();
-        } catch {
-          errorJson = null;
-        }
-      }
+      // Helper to check if any string contains quota-related keywords
+      const containsQuotaError = (str: unknown): boolean => {
+        if (typeof str !== 'string') return false;
+        const lower = str.toLowerCase();
+        return lower.includes('quota_exceeded') || 
+               lower.includes('quota exceeded') ||
+               lower.includes('402') ||
+               lower.includes('credits remaining') ||
+               lower.includes('credits are required');
+      };
 
-      // Check for quota exceeded in multiple places
+      // Robust quota detection - check multiple patterns
+      const errorMessage = error?.message || '';
+      const errorStr = JSON.stringify(error || {});
+      const dataStr = JSON.stringify(data || {});
+      
       const isQuotaError =
-        anyErr?.context?.status === 402 ||
-        anyErr?.message?.includes("quota_exceeded") ||
-        anyErr?.message?.includes("Edge function returned 402") ||
-        anyErr?.message?.includes("402") ||
-        errorJson?.code === "quota_exceeded" ||
-        (typeof errorJson?.error === "string" && errorJson.error.includes("quota_exceeded")) ||
+        containsQuotaError(errorMessage) ||
+        containsQuotaError(errorStr) ||
+        containsQuotaError(dataStr) ||
         data?.code === "quota_exceeded" ||
-        (typeof data?.error === "string" && data.error.includes("quota_exceeded"));
+        error?.name === "FunctionsHttpError";
       
       if (isQuotaError) {
         console.log('ElevenLabs quota exceeded, using browser TTS fallback');
@@ -238,19 +237,14 @@ export const useTextToSpeech = () => {
     } catch (error) {
       console.error("Text-to-speech error:", error);
 
-      // If invoke threw (rare), try same quota fallback detection via duck-typing
-      const anyErr = error as any;
-      const status = anyErr?.context?.status;
-      let body: any = null;
-      if (anyErr?.context?.json) {
-        body = await anyErr.context.json().catch(() => null);
-      }
-      const isQuota =
-        status === 402 ||
-        anyErr?.message?.includes("quota_exceeded") ||
-        body?.code === "quota_exceeded" ||
-        (typeof body?.error === "string" && body.error.includes("quota_exceeded"));
+      // Final fallback - try browser TTS for any error
+      const errStr = String(error);
+      const isQuota = errStr.includes('402') || 
+                      errStr.includes('quota') || 
+                      errStr.includes('credits');
+      
       if (isQuota) {
+        console.log('Quota error in catch block, falling back to browser TTS');
         toast.info("Using browser voice (premium voice unavailable)");
         setUsingBrowserTTS(true);
         try {
