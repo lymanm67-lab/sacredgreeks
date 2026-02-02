@@ -46,11 +46,11 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
+
 import { SidebarSearch } from "./SidebarSearch";
 import { useSidebarPreferences } from "@/hooks/use-sidebar-preferences";
 import { useFeaturePreferences } from "@/hooks/use-feature-preferences";
-import { useNavigationProgress } from "@/hooks/use-navigation-progress";
+
 import { SubscriptionBadge } from "@/components/dashboard/SubscriptionBadge";
 import { DemoModeControl } from "@/components/GlobalDemoIndicator";
 import {
@@ -153,7 +153,7 @@ export function AppSidebar() {
   const { user, profile, signOut } = useAuth();
   const { preferences } = useSidebarPreferences();
   const { isFeatureVisible } = useFeaturePreferences();
-  const { getProgressForPath } = useNavigationProgress();
+  
   
   // Collapsible states for each section
   const [learningPathOpen, setLearningPathOpen] = useState(true);
@@ -194,56 +194,23 @@ export function AppSidebar() {
     return 'U';
   };
 
-  const NavItem = ({ item, showProgress = false }: { item: { title: string; url: string; icon: React.ComponentType<{ className?: string }>; iconColor?: string; hasProgress?: boolean }; showProgress?: boolean }) => {
-    const progress = showProgress && item.hasProgress ? getProgressForPath(item.url) : 0;
-    const shouldShowProgressBar = showProgress && item.hasProgress && !collapsed;
-    const allowTwoRowLayout = shouldShowProgressBar;
-    
+  const NavItem = ({ item }: { item: { title: string; url: string; icon: React.ComponentType<{ className?: string }>; iconColor?: string } }) => {
     return (
       <SidebarMenuItem className="isolate">
         <SidebarMenuButton
           asChild
           isActive={isActive(item.url)}
-          tooltip={collapsed ? `${item.title} (${progress}%)` : undefined}
-          className={cn(
-            // SidebarMenuButton default styles enforce a fixed height (h-8) + overflow-hidden,
-            // which clips our second-row progress UI. Override only when we render progress.
-            allowTwoRowLayout && "!h-auto !items-start !overflow-visible"
-          )}
+          tooltip={collapsed ? item.title : undefined}
         >
           <NavLink 
             to={item.url} 
             className={cn(
-              "flex flex-col !items-start !justify-start !text-left transition-colors py-1.5 px-2 rounded-md w-full",
+              "flex items-center gap-2 !items-start !justify-start !text-left transition-colors py-1.5 px-2 rounded-md w-full",
               isActive(item.url) && "text-primary font-medium"
             )}
           >
-            <div className="flex items-center gap-2">
-              <item.icon className={cn("h-4 w-4 shrink-0", item.iconColor)} />
-              <span className="truncate text-sm">{item.title}</span>
-            </div>
-            {/* Progress bar - always visible for tracked items */}
-            {shouldShowProgressBar && (
-              <div className="flex items-center gap-1 ml-6">
-                <Progress 
-                  value={progress} 
-                  className={cn(
-                    "h-0.5 w-14 bg-muted/50",
-                    progress === 0 && "[&>div]:bg-muted-foreground/30",
-                    progress > 0 && progress < 100 && "[&>div]:bg-primary",
-                    progress === 100 && "[&>div]:bg-emerald-500"
-                  )} 
-                />
-                <span className={cn(
-                  "text-[8px] font-medium",
-                  progress === 0 && "text-muted-foreground/60",
-                  progress > 0 && progress < 100 && "text-primary",
-                  progress === 100 && "text-emerald-500"
-                )}>
-                  {progress}%
-                </span>
-              </div>
-            )}
+            <item.icon className={cn("h-4 w-4 shrink-0", item.iconColor)} />
+            <span className="truncate text-sm">{item.title}</span>
           </NavLink>
         </SidebarMenuButton>
       </SidebarMenuItem>
@@ -309,7 +276,7 @@ export function AppSidebar() {
                 <SidebarGroupContent>
                   <SidebarMenu>
                     {filteredLearningPath.map((item) => (
-                      <NavItem key={item.url} item={item} showProgress />
+                      <NavItem key={item.url} item={item} />
                     ))}
                   </SidebarMenu>
                 </SidebarGroupContent>
@@ -340,7 +307,7 @@ export function AppSidebar() {
                 <SidebarGroupContent>
                   <SidebarMenu>
                     {filteredAssessments.map((item) => (
-                      <NavItem key={item.url} item={item} showProgress />
+                      <NavItem key={item.url} item={item} />
                     ))}
                   </SidebarMenu>
                 </SidebarGroupContent>
@@ -366,7 +333,7 @@ export function AppSidebar() {
                 <SidebarGroupContent>
                   <SidebarMenu>
                     {filteredSpiritualPractices.map((item) => (
-                      <NavItem key={item.url} item={item} showProgress />
+                      <NavItem key={item.url} item={item} />
                     ))}
                   </SidebarMenu>
                 </SidebarGroupContent>
