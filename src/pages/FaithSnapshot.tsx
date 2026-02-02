@@ -13,6 +13,7 @@ import { AssessmentVisualReport } from "@/components/assessment/AssessmentVisual
 import { SavedAssessmentPrompt } from "@/components/assessment/SavedAssessmentPrompt";
 import { AssessmentBreadcrumb } from "@/components/assessment/AssessmentBreadcrumb";
 import { useAuth } from "@/contexts/AuthContext";
+import { useDemoMode } from "@/contexts/DemoModeContext";
 import logo from "@/assets/sacred-greeks-logo.png";
 import {
   ArrowLeft, 
@@ -234,6 +235,7 @@ const instructionsConfig = {
 export default function FaithSnapshot() {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
+  const { isDemoMode } = useDemoMode();
   const { trackConversion } = useLandingABTest();
   const { savedAssessment, hasSavedAssessment, isLoading: loadingSaved } = useSavedAssessment("faith-snapshot");
   
@@ -410,8 +412,8 @@ export default function FaithSnapshot() {
     );
   }
 
-  // Show prompt for returning users with saved results
-  if (hasSavedAssessment && !forceRetake && !started && savedAssessment) {
+  // Show prompt for returning users with saved results (skip in Demo Mode for fresh presentation)
+  if (hasSavedAssessment && !forceRetake && !started && savedAssessment && !isDemoMode) {
     const scoresJson = savedAssessment.scores_json as { score?: number };
     
     return (
