@@ -28,6 +28,7 @@ import {
   User,
   ShoppingBag,
   Mic,
+  DollarSign,
   Sparkles,
   Drama,
   History,
@@ -125,6 +126,7 @@ const podcastItems = [
 
 // Resources section
 const resourcesItems = [
+  { title: "Financial Stewardship", url: "/financial-stewardship", icon: DollarSign, featureId: null, iconColor: "text-emerald-500", hasProgress: false },
   { title: "Chaplain Toolkit", url: "/chaplain-toolkit", icon: Cross, featureId: null, iconColor: "text-sacred", hasProgress: false },
   { title: "Worship Playlists", url: "/worship-playlists", icon: Music, featureId: null, iconColor: "text-purple-500", hasProgress: false },
   { title: "Symbol Guide", url: "/symbol-guide", icon: Compass, featureId: null, iconColor: "text-teal-500", hasProgress: false },

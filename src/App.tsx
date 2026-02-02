@@ -143,6 +143,7 @@ const GreekWorshipPlaylists = lazy(() => import("./pages/GreekWorshipPlaylists")
 const EventsCalendar = lazy(() => import("./pages/EventsCalendar"));
 const ChapterFinder = lazy(() => import("./pages/ChapterFinder"));
 const MemberNetwork = lazy(() => import("./pages/MemberNetwork"));
+const FinancialStewardship = lazy(() => import("./pages/FinancialStewardship"));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -315,6 +316,7 @@ const App = () => (
                     <Route path="/events" element={<EventsCalendar />} />
                     <Route path="/chapters" element={<PageWithLayout><ChapterFinder /></PageWithLayout>} />
                     <Route path="/network" element={<MemberNetwork />} />
+                    <Route path="/financial-stewardship" element={<PageWithLayout><FinancialStewardship /></PageWithLayout>} />
                     
                     {/* Protected routes - with sidebar */}
                     <Route
