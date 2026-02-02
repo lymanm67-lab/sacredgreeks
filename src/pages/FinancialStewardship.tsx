@@ -180,9 +180,9 @@ const FinancialStewardship = () => {
               <GraduationCap className="w-4 h-4" />
               Students
             </TabsTrigger>
-            <TabsTrigger value="sisp" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+            <TabsTrigger value="smsp" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <ClipboardList className="w-4 h-4" />
-              SISP Budget
+              SMSP Budget
             </TabsTrigger>
             <TabsTrigger value="scenarios" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Lightbulb className="w-4 h-4" />
@@ -280,8 +280,8 @@ const FinancialStewardship = () => {
             <StudentFinancialGuide />
           </TabsContent>
 
-          {/* SISP Calculator Tab */}
-          <TabsContent value="sisp" className="space-y-6">
+          {/* SMSP Calculator Tab */}
+          <TabsContent value="smsp" className="space-y-6">
             <SISPCalculator />
           </TabsContent>
 
