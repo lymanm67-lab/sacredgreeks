@@ -47,10 +47,19 @@ export function AppLayout({ children }: AppLayoutProps) {
   // Handler for returning to presentation from demo pages
   const handleReturnToPresentation = useCallback((slideIndex: number) => {
     console.log('[AppLayout] handleReturnToPresentation called with slide:', slideIndex);
+    
+    // Close first if already open (ensures clean re-open)
+    setShowSlideshow(false);
+    
+    // Set slide first, then open on next frame to ensure state is ready
     setInitialSlide(slideIndex);
-    // Use requestAnimationFrame to ensure state is set before opening
+    
+    // Use double requestAnimationFrame to ensure React has processed the state updates
     requestAnimationFrame(() => {
-      setShowSlideshow(true);
+      requestAnimationFrame(() => {
+        console.log('[AppLayout] Opening slideshow at slide:', slideIndex);
+        setShowSlideshow(true);
+      });
     });
   }, []);
 
