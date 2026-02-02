@@ -227,7 +227,7 @@ export default function ChapterFinder() {
       const { data, error } = await supabase
         .from('greek_chapters')
         .select('*')
-        .order('organization', { ascending: true });
+        .order('chapter_name', { ascending: true });
       
       if (error) throw error;
       return data as Chapter[];
