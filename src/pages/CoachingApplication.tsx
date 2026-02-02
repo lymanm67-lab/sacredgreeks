@@ -7,10 +7,23 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft, Send, UsersRound, UserCog, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Send, UsersRound, UserCog, CheckCircle, Sparkles, Target, Clock, Shield } from 'lucide-react';
 import { useLandingSurvey } from '@/hooks/use-landing-survey';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { ListenButton } from '@/components/ListenButton';
+
+const COACHING_OVERVIEW_TEXT = `Welcome to the Sacred Greeks Coaching Application. Our coaching program is designed to help Christians in Greek life navigate their faith journey with personalized guidance and support.
+
+We offer two coaching options. Group Coaching brings together 4 to 8 participants in a supportive community setting with weekly sessions. You'll learn alongside others facing similar challenges and build lasting connections.
+
+Personalized Coaching provides one-on-one guidance tailored specifically to your situation. You'll receive flexible scheduling with dedicated support from Dr. Lyman Montgomery or a certified Sacred Greeks coach.
+
+What to expect from coaching: First, you'll complete this application sharing your current situation and goals. Within 48 hours, we'll review your application and reach out to discuss next steps. If accepted, you'll begin your coaching journey with an initial assessment session.
+
+All coaching conversations are completely confidential. Our coaches are trained to provide biblically-grounded guidance while respecting your unique circumstances in Greek life.
+
+Please fill out the form below with as much detail as possible. The more we understand about your situation, the better we can serve you.`;
 
 export default function CoachingApplication() {
   const navigate = useNavigate();
@@ -135,6 +148,50 @@ export default function CoachingApplication() {
             </CardDescription>
           </CardHeader>
           <CardContent>
+            {/* Overview Section with TTS */}
+            <div className="mb-8 p-4 rounded-xl bg-muted/50 border border-border/50 space-y-4">
+              <div className="flex items-start justify-between gap-4">
+                <div className="space-y-2">
+                  <h3 className="font-semibold text-lg flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-sacred" />
+                    About Our Coaching Program
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    Listen to a complete overview of our coaching options and what to expect.
+                  </p>
+                </div>
+                <ListenButton
+                  text={COACHING_OVERVIEW_TEXT}
+                  itemId="coaching-overview"
+                  title="Coaching Program Overview"
+                  voice="onyx"
+                  showLabel={true}
+                />
+              </div>
+              
+              {/* Key Benefits */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                <div className="flex items-center gap-2 text-sm">
+                  <div className="w-8 h-8 rounded-full bg-sacred/10 flex items-center justify-center flex-shrink-0">
+                    <Target className="w-4 h-4 text-sacred" />
+                  </div>
+                  <span>Personalized guidance</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <div className="w-8 h-8 rounded-full bg-sacred/10 flex items-center justify-center flex-shrink-0">
+                    <Clock className="w-4 h-4 text-sacred" />
+                  </div>
+                  <span>48-hour response</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <div className="w-8 h-8 rounded-full bg-sacred/10 flex items-center justify-center flex-shrink-0">
+                    <Shield className="w-4 h-4 text-sacred" />
+                  </div>
+                  <span>100% confidential</span>
+                </div>
+              </div>
+            </div>
+
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Coaching Type Selection */}
               <div className="space-y-3">
