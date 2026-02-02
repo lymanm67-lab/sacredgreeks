@@ -718,254 +718,244 @@ export const salesPresentationSlides: PresentationSlide[] = [
   // ============ SECTION 6: THE APP COMPANION (15 min) ============
   {
     id: 'app-intro',
-    title: 'Your Digital Companion',
-    subtitle: 'Sacred Greeks App — Faith Meets Greek Life',
+    title: 'Sacred Greeks',
+    subtitle: 'Faith-First Digital Ministry for Greek Life',
     icon: <Smartphone className="w-12 h-12 text-sacred" />,
     image: slideAppShowcase,
+    route: '/',
+    showLivePreview: true,
     duration: '2-3 min',
     presenterNotes: [
       'Transition: "Everything we\'ve discussed today... in your pocket"',
       'Introduce the Sacred Greeks app as the practical tool',
       'Emphasize: Built by a Greek, for Greeks, rooted in faith',
-      'Show excitement — this is the actionable takeaway'
+      'Show the landing page and explain the mission'
     ],
     keyPoints: [
       'A faith-first platform built specifically for Greek life',
+      'The ONLY app addressing the faith-Greek intersection',
       'Daily devotionals tailored to the Greek experience',
-      'AI-powered tools for biblical discernment',
-      'Community features connecting faith-centered Greeks nationwide'
+      'AI-powered tools for biblical discernment'
     ],
     stats: [
-      { label: 'Daily Devotionals', value: '365+' },
-      { label: 'AI Tools', value: '5+' },
-      { label: 'Bible Plans', value: '5' }
+      { label: 'Focus', value: 'D9 + All Greeks' },
+      { label: 'Mission', value: 'Faith First' },
+      { label: 'Platform', value: 'PWA' }
     ]
   },
   {
-    id: 'app-proof-framework',
-    title: 'The P.R.O.O.F. Framework',
-    subtitle: 'Biblical Discernment for Greek Decisions',
-    icon: <Shield className="w-12 h-12 text-amber-500" />,
-    route: '/proof-course',
-    duration: '3-4 min',
+    id: 'app-problem',
+    title: 'The Faith-Greek Tension',
+    subtitle: 'Why This App Exists',
+    icon: <Target className="w-12 h-12 text-red-500" />,
+    route: '/snapshot',
+    showLivePreview: true,
+    duration: '2-3 min',
     presenterNotes: [
-      'Explain P.R.O.O.F.: Pledge, Rituals, Oaths, Obscurity, Founders',
-      'This is the core evaluative tool for membership decisions',
-      'Show the interactive course in the live preview',
-      'Emphasize: Faith-centered framework, not judgment'
+      'Address the core tension: Family criticism, church concerns, ritual questions',
+      'Add the financial crisis: Student debt + Greek dues = danger zone',
+      'Show the Faith Snapshot as the diagnostic tool',
+      'This creates urgency for the solution'
     ],
     keyPoints: [
-      'P — Pledge Process: What does biblical commitment look like?',
-      'R — Rituals: Are they worship or tradition?',
-      'O — Oaths: What are you actually promising?',
-      'O — Obscurity: What\'s hidden and why?',
-      'F — Founders: What legacy are you joining?'
+      '"Is Greek life sinful?" — The question members face daily',
+      'Family criticism vs. personal conviction',
+      'Financial pressure: $2K-$10K+ in dues meets student debt crisis',
+      'Greeks need tools to navigate faith AND finances'
     ],
     talkingPoints: [
-      'Not about condemning — about discerning',
-      'Helps members articulate their faith position',
-      'Perfect for chaplains, campus ministers, members'
+      'Members are left alone to figure this out',
+      'No biblical framework exists... until now',
+      'Financial literacy is almost non-existent'
     ]
   },
   {
     id: 'app-faith-snapshot',
     title: 'Faith Snapshot Assessment',
-    subtitle: 'Discover Where You Stand',
+    subtitle: 'Quick Engagement — Discover Where You Stand',
     icon: <Target className="w-12 h-12 text-blue-500" />,
     route: '/assessment/faith-snapshot',
+    showLivePreview: true,
     duration: '3-4 min',
     presenterNotes: [
-      'Interactive assessment for prospective and current members',
-      'Personalized results based on their specific situation',
-      'Walk through a sample assessment in demo mode',
-      'Highlight: Provides clarity without judgment'
+      'Interactive 6-question assessment for prospective and current members',
+      'Personalized "Faith Confidence Score" and archetype',
+      'Walk through a sample assessment LIVE',
+      'Highlight: Quick, engaging, shareable results'
     ],
     keyPoints: [
-      'Personalized assessment for prospective or current Greeks',
-      'Evaluates faith alignment with Greek life traditions',
-      'Provides actionable next steps and resources',
-      'Shareable results with mentors and chaplains'
+      '6 targeted questions evaluating faith-Greek alignment',
+      'Personalized archetypes: "Apologetics Ready", "Seeking Clarity", etc.',
+      'Addresses specific struggles: family criticism, ritual concerns',
+      'Perfect lead magnet for ministry outreach'
     ],
     stats: [
-      { label: 'Questions', value: '12' },
-      { label: 'Result Types', value: '5' },
-      { label: 'Time', value: '5 min' }
+      { label: 'Questions', value: '6' },
+      { label: 'Time', value: '2 min' },
+      { label: 'Results', value: 'Instant' }
     ]
   },
   {
-    id: 'app-ai-tools',
-    title: 'AI-Powered Faith Tools',
-    subtitle: 'Smart Technology for Spiritual Growth',
-    icon: <Brain className="w-12 h-12 text-purple-500" />,
-    route: '/ai-assistant',
-    duration: '2-3 min',
+    id: 'app-proof-framework',
+    title: 'The P.R.O.O.F. Framework',
+    subtitle: 'Biblical Responses to 5 Core Criticisms',
+    icon: <Shield className="w-12 h-12 text-amber-500" />,
+    route: '/proof-course',
+    showLivePreview: true,
+    duration: '3-4 min',
     presenterNotes: [
-      'AI Assistant for answering faith + Greek questions',
-      'Response Coach for handling tough conversations',
-      'Bible verse finder for Greek-related scriptures',
-      'Devotional generator for chapter meetings'
+      'Explain P.R.O.O.F.: Pledge, Rituals, Oaths, Obscurity, Founders',
+      'Each pillar addresses a common criticism with scripture',
+      'Show the interactive course in the live preview',
+      'Emphasize: Faith-centered framework, not judgment'
     ],
     keyPoints: [
-      'AI Assistant: Ask any faith + Greek question',
-      'Response Coach: Practice difficult conversations',
-      'Bible Search: Find verses for any situation',
-      'Devotional Generator: Create chapter devotionals'
+      'P — Pledge Process: Biblical commitment principles',
+      'R — Rituals: Worship vs. cultural tradition',
+      'O — Oaths: What promises are being made?',
+      'O — Obscurity: Secrecy vs. privacy distinction',
+      'F — Founders: The Christian heritage of D9'
     ],
     talkingPoints: [
-      'Like having a faith mentor in your pocket',
-      'Trained on "Sacred Not Sinful" and biblical resources',
-      'Private, secure, always available'
+      'Not about condemning — about discerning',
+      'Helps members articulate their faith position',
+      'Interactive lessons with gamification'
     ]
   },
   {
-    id: 'app-daily-devotional',
-    title: 'Daily Devotionals for Greeks',
-    subtitle: 'Start Every Day Grounded in Faith',
-    icon: <BookOpenCheck className="w-12 h-12 text-teal-500" />,
-    route: '/daily-devotional',
-    duration: '2-3 min',
-    presenterNotes: [
-      'Daily devotionals written for the Greek experience',
-      'Connects scripture to fraternity/sorority life',
-      'Push notifications to keep members engaged',
-      'Audio option for listening on the go'
-    ],
-    keyPoints: [
-      '365 devotionals crafted for Greek life context',
-      'Each one connects scripture to real Greek experiences',
-      'Audio versions with calming background',
-      'Push notifications for daily reminders'
-    ],
-    stats: [
-      { label: 'Devotionals', value: '365' },
-      { label: 'Audio', value: 'Yes' },
-      { label: 'Notifications', value: 'Custom' }
-    ]
-  },
-  {
-    id: 'app-financial-calculator',
-    title: 'True Cost Calculator',
-    subtitle: 'The Financial Reality of Greek Life',
+    id: 'app-financial-tools',
+    title: 'Financial Stewardship Tools',
+    subtitle: '10/15/10/65 Plan, Cost Calculator, Dispute Letters',
     icon: <BarChart3 className="w-12 h-12 text-green-500" />,
-    route: '/greek-financial-leadership',
-    duration: '2-3 min',
+    route: '/financial-stewardship',
+    showLivePreview: true,
+    duration: '3-4 min',
     presenterNotes: [
-      'Many Greeks don\'t realize the true 4-year and 20-year cost',
-      'Interactive calculator shows real numbers',
-      'Connects to D9 economic programs for stewardship',
-      'Transparent, honest, helpful'
+      'Introduce the Sacred Money Spending Plan: 10/15/10/65',
+      'Show the True Cost Calculator for Greek life expenses',
+      'Demo the FCRA-compliant dispute letter generator',
+      'Emphasize biblical stewardship meets practical tools'
     ],
     keyPoints: [
-      'Calculate true 4-year and 20-year membership costs',
-      'Compare across different organizations',
-      'Learn about D9 economic empowerment programs',
-      'Biblical stewardship meets financial reality'
+      'Sacred Money Spending Plan: 10% tithe, 15% savings, 10% giving, 65% living',
+      'True Cost Calculator: 4-year and 20-year Greek life costs',
+      'Credit Repair Hub with dispute letter generator',
+      'Debt Freedom Calculator: Snowball, Avalanche, Snowflake methods'
+    ],
+    stats: [
+      { label: 'Budget Categories', value: '7' },
+      { label: 'Debt Strategies', value: '3' },
+      { label: 'Templates', value: 'FCRA' }
+    ]
+  },
+  {
+    id: 'app-chaplain-toolkit',
+    title: 'Chapter Chaplain Toolkit',
+    subtitle: 'On-Demand PDF Resources',
+    icon: <FileText className="w-12 h-12 text-purple-500" />,
+    route: '/chaplain-toolkit',
+    showLivePreview: true,
+    duration: '2-3 min',
+    presenterNotes: [
+      'PDF generator for chapter devotionals and resources',
+      'Theology deep-dives on Greek-specific topics',
+      'Ready-made meeting agendas and prayer guides',
+      'Perfect for chapter chaplains and campus ministers'
+    ],
+    keyPoints: [
+      'Generate devotionals for chapter meetings on-the-fly',
+      'Theology resources on Greek-specific faith questions',
+      'Meeting agendas, prayer guides, and study materials',
+      'Download as PDF for offline use'
     ],
     talkingPoints: [
-      'Not to discourage — to prepare',
-      'Financial wisdom is biblical wisdom',
-      'Know what you\'re investing in'
+      'Chaplains often have no resources — we fix that',
+      'Everything is biblical, practical, and culturally relevant',
+      'Save hours of preparation time'
     ]
   },
   {
     id: 'app-community',
     title: 'Faith-Centered Community',
-    subtitle: 'Connect with Like-Minded Greeks',
+    subtitle: 'D9 Business Directory & Prayer Wall',
     icon: <Users2 className="w-12 h-12 text-pink-500" />,
-    route: '/member-network',
+    route: '/d9-directory',
+    showLivePreview: true,
     duration: '2-3 min',
     presenterNotes: [
-      'Member network connecting faith-centered Greeks',
-      'Prayer wall for supporting each other',
-      'Forum discussions on faith + Greek topics',
-      'Nationwide community, local connections'
+      'D9 Business Directory: Support Black Greek-owned businesses',
+      'Prayer Wall: Community prayer support',
+      'Member Network: Connect with faith-centered Greeks nationwide',
+      'Forum discussions on faith + Greek topics'
     ],
     keyPoints: [
-      'Member directory of faith-centered Greeks',
-      'Prayer wall for community support',
-      'Discussion forums on faith topics',
-      'Connect across chapters and organizations'
+      'D9 Business Directory: 30+ featured Black Greek-owned businesses',
+      'Prayer Wall: Share requests, receive encouragement',
+      'Member Network: Connect across chapters and organizations',
+      'Submit your own business for free listing'
     ],
     stats: [
-      { label: 'Network', value: 'Nationwide' },
+      { label: 'Businesses', value: '30+' },
       { label: 'Prayer Wall', value: 'Active' },
-      { label: 'Forums', value: 'Moderated' }
+      { label: 'Network', value: 'Nationwide' }
     ]
   },
   {
-    id: 'app-resources',
-    title: 'Complete Resource Library',
-    subtitle: 'Everything You Need in One Place',
-    icon: <FileText className="w-12 h-12 text-slate-500" />,
-    route: '/resources',
-    duration: '2 min',
-    presenterNotes: [
-      'MythBusters addressing common misconceptions',
-      'Symbols & Rituals explained with biblical context',
-      'Anti-hazing resources for chapter leaders',
-      'Book, podcast, and speaking resources'
-    ],
-    keyPoints: [
-      'MythBusters: Addressing common misconceptions',
-      'Symbols & Rituals: Biblical context explained',
-      'Anti-Hazing Resources: Chapter leadership tools',
-      'Podcast: Ongoing education and stories'
-    ],
-    actionItems: [
-      'Explore the resource library after today',
-      'Share relevant resources with your chapter',
-      'Listen to the Sacred Greeks Podcast',
-      'Order "Sacred Not Sinful" for deeper study'
-    ]
-  },
-  {
-    id: 'app-live-demo',
-    title: 'See It In Action',
-    subtitle: 'Live App Preview',
-    icon: <Monitor className="w-12 h-12 text-sacred" />,
+    id: 'app-gamification',
+    title: 'Gamification & Engagement',
+    subtitle: 'Badges, Streaks, Certificates',
+    icon: <Award className="w-12 h-12 text-yellow-500" />,
     route: '/dashboard',
     showLivePreview: true,
-    duration: '3-4 min',
+    duration: '2-3 min',
     presenterNotes: [
-      'This is the full interactive demo moment',
-      'Navigate through the dashboard live',
-      'Show gamification, streaks, achievements',
-      'Let them see the real experience'
+      'Points system with leveling (100 pts per level)',
+      'Achievement badges for completing courses and milestones',
+      'Daily streaks encourage consistent engagement',
+      'Master certificates upon curriculum completion'
     ],
     keyPoints: [
-      'Full dashboard with personalized experience',
-      'Gamification: Streaks, points, achievements',
-      'Progress tracking across all features',
-      'Works on any device — phone, tablet, desktop'
+      'Points Roadmap: ~900 points across 5 learning paths',
+      'Achievement badges: P.R.O.O.F. Master, Myth Buster, Faith Authority',
+      'Daily streaks: Build consistent spiritual habits',
+      'Printable certificates: Share your accomplishments'
     ],
-    talkingPoints: [
-      'Everything we\'ve discussed is right here',
-      'Install on your phone with one click',
-      'Start your faith journey today'
+    stats: [
+      { label: 'Total Points', value: '~900' },
+      { label: 'Learning Paths', value: '5' },
+      { label: 'Certificates', value: 'Printable' }
     ]
   },
   {
-    id: 'app-pricing',
-    title: 'Accessible for Everyone',
-    subtitle: 'Free to Start, Pro for Power Users',
-    icon: <Zap className="w-12 h-12 text-yellow-500" />,
-    duration: '1-2 min',
+    id: 'app-close',
+    title: '100% Free to Start',
+    subtitle: 'Progressive Web App — Install Now',
+    icon: <Zap className="w-12 h-12 text-sacred" />,
+    showQRCode: true,
+    duration: '2-3 min',
     presenterNotes: [
-      'Free tier: Basic education and devotionals',
-      'Pro tier: AI tools, premium audio, full features',
-      'Ministry tier: For chaplains and campus ministers',
-      'Pricing designed to be accessible'
+      'All core features are FREE — no paywall',
+      'PWA: Install on any device with one click',
+      'Works offline for devotionals and resources',
+      'QR code for instant installation'
     ],
     keyPoints: [
-      'Free: Daily devotionals, basic education, community access',
-      'Pro ($14.99/mo): AI tools, premium audio, full P.R.O.O.F. course',
-      'Ministry ($29.99/mo): Leadership resources, chapter tools',
-      '14-day free trial on all paid plans'
+      '✓ All education content: FREE',
+      '✓ Daily devotionals: FREE',
+      '✓ Financial tools: FREE',
+      '✓ Community features: FREE',
+      'PWA: Install like a native app on any device'
+    ],
+    actionItems: [
+      'Scan QR code to install immediately',
+      'Share with your chapter and Greek community',
+      'Start with Faith Snapshot — 2 minutes',
+      'Begin your P.R.O.O.F. journey today'
     ],
     stats: [
-      { label: 'Free Tier', value: 'Always' },
-      { label: 'Pro', value: '$14.99/mo' },
-      { label: 'Trial', value: '14 Days' }
+      { label: 'Price', value: 'FREE' },
+      { label: 'Platform', value: 'PWA' },
+      { label: 'Install', value: '1 Click' }
     ]
   },
 
