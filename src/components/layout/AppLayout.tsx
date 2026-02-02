@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
 import { MobileNav } from "./MobileNav";
@@ -8,6 +8,8 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useSidebarPreferences } from "@/hooks/use-sidebar-preferences";
 import { useDemoMode } from "@/contexts/DemoModeContext";
+import { PresentationModeToggle } from "@/components/demo/PresentationModeToggle";
+import { SalesDeckGenerator } from "@/components/demo/SalesDeckGenerator";
 import { cn } from "@/lib/utils";
 
 interface AppLayoutProps {
@@ -17,8 +19,10 @@ interface AppLayoutProps {
 export function AppLayout({ children }: AppLayoutProps) {
   const isMobile = useIsMobile();
   const { preferences } = useSidebarPreferences();
-  const { isDemoMode } = useDemoMode();
+  const { isDemoMode, demoSettings } = useDemoMode();
+  const [showSalesDeck, setShowSalesDeck] = useState(false);
   const isRightSidebar = preferences.position === 'right';
+  const isPresentationMode = demoSettings.presentationMode;
 
   return (
     <SidebarProvider defaultOpen={!isMobile}>
@@ -37,6 +41,9 @@ export function AppLayout({ children }: AppLayoutProps) {
             {isMobile ? <MobileNav /> : <SidebarTrigger className="-ml-1" />}
             <PageTitle />
             <div className="ml-auto flex items-center gap-2">
+              {isDemoMode && (
+                <PresentationModeToggle onGenerateDeck={() => setShowSalesDeck(true)} />
+              )}
               <ThemeToggle />
             </div>
           </header>
@@ -50,6 +57,12 @@ export function AppLayout({ children }: AppLayoutProps) {
       </div>
       {/* Mobile bottom navigation */}
       {isMobile && <MobileBottomNav />}
+      
+      {/* Sales Deck Generator Dialog */}
+      <SalesDeckGenerator 
+        isOpen={showSalesDeck} 
+        onClose={() => setShowSalesDeck(false)} 
+      />
     </SidebarProvider>
   );
 }
