@@ -133,9 +133,21 @@ export function PresentationSlideViewer({ isOpen, onClose }: PresentationSlideVi
               transition={{ duration: 0.3 }}
               className="w-full max-w-2xl"
             >
-              <Card className="border-2 border-primary/20 bg-card/50 backdrop-blur">
-                <CardHeader className="text-center pb-6">
-                  <div className="mx-auto mb-4 p-4 rounded-2xl bg-primary/10">
+              <Card className="border-2 border-primary/20 bg-card/50 backdrop-blur overflow-hidden">
+                {/* Hero Image */}
+                {slide.image && (
+                  <div className="relative h-48 w-full overflow-hidden">
+                    <img 
+                      src={slide.image} 
+                      alt={slide.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent" />
+                  </div>
+                )}
+                
+                <CardHeader className={cn("text-center pb-6", slide.image && "-mt-12 relative z-10")}>
+                  <div className="mx-auto mb-4 p-4 rounded-2xl bg-primary/10 backdrop-blur-sm border border-primary/20">
                     {slide.icon}
                   </div>
                   <CardTitle className="text-3xl">{slide.title}</CardTitle>

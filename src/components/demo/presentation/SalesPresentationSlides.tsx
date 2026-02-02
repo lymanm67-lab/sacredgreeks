@@ -17,11 +17,23 @@ import {
   TrendingUp
 } from 'lucide-react';
 
+// Import slide images
+import slideIntro from '@/assets/presentation/slide-intro.jpg';
+import slideProblem from '@/assets/presentation/slide-problem.jpg';
+import slideSnapshot from '@/assets/presentation/slide-snapshot.jpg';
+import slideProof from '@/assets/presentation/slide-proof.jpg';
+import slideFinancial from '@/assets/presentation/slide-financial.jpg';
+import slideChaplain from '@/assets/presentation/slide-chaplain.jpg';
+import slideCommunity from '@/assets/presentation/slide-community.jpg';
+import slideGamification from '@/assets/presentation/slide-gamification.jpg';
+import slideClose from '@/assets/presentation/slide-close.jpg';
+
 export interface PresentationSlide {
   id: string;
   title: string;
   subtitle?: string;
   icon: ReactNode;
+  image?: string; // Background or hero image for the slide
   presenterNotes: string[];
   keyPoints: string[];
   talkingPoints?: string[];
@@ -37,6 +49,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
     title: 'Sacred Greeks',
     subtitle: 'Faith-First Resources for All Greek Life Members',
     icon: <Sparkles className="w-12 h-12 text-sacred" />,
+    image: slideIntro,
     duration: '2-3 min',
     presenterNotes: [
       'Welcome and thank them for their time',
@@ -61,6 +74,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
     title: 'The Problem We Solve',
     subtitle: 'Why Greek Life Members Need This',
     icon: <AlertTriangle className="w-12 h-12 text-amber-500" />,
+    image: slideProblem,
     duration: '3-4 min',
     presenterNotes: [
       'Paint the pain: Members face criticism from family, church, peers',
@@ -86,6 +100,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
     title: 'Faith Snapshot Assessment',
     subtitle: 'Quick Engagement — Immediate Value',
     icon: <Target className="w-12 h-12 text-amber-500" />,
+    image: slideSnapshot,
     duration: '3-4 min',
     route: '/snapshot',
     presenterNotes: [
@@ -111,6 +126,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
     title: 'P.R.O.O.F. Framework',
     subtitle: 'Biblical Responses to the 5 Most Common Criticisms',
     icon: <Shield className="w-12 h-12 text-purple-500" />,
+    image: slideProof,
     duration: '5-6 min',
     route: '/proof-course',
     presenterNotes: [
@@ -138,6 +154,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
     title: 'Financial Stewardship Suite',
     subtitle: 'Addressing the $50K+ Lifetime Cost Reality',
     icon: <DollarSign className="w-12 h-12 text-emerald-500" />,
+    image: slideFinancial,
     duration: '4-5 min',
     route: '/financial-stewardship',
     presenterNotes: [
@@ -163,6 +180,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
     title: 'Chapter Chaplain Toolkit',
     subtitle: 'On-Demand Resources for Spiritual Leaders',
     icon: <BookOpen className="w-12 h-12 text-blue-500" />,
+    image: slideChaplain,
     duration: '3-4 min',
     route: '/chaplain-toolkit',
     presenterNotes: [
@@ -188,6 +206,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
     title: 'Community & Retention Features',
     subtitle: 'Building Cross-Chapter Fellowship',
     icon: <Users className="w-12 h-12 text-fuchsia-500" />,
+    image: slideCommunity,
     duration: '4-5 min',
     route: '/d9-business-directory',
     presenterNotes: [
@@ -213,6 +232,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
     title: 'Gamification & Engagement',
     subtitle: 'Driving Consistent Usage',
     icon: <Trophy className="w-12 h-12 text-amber-500" />,
+    image: slideGamification,
     duration: '2-3 min',
     route: '/dashboard',
     presenterNotes: [
@@ -239,6 +259,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
     title: 'Why Partner With Sacred Greeks?',
     subtitle: 'Next Steps for Your Organization',
     icon: <Rocket className="w-12 h-12 text-sacred" />,
+    image: slideClose,
     duration: '3-4 min',
     presenterNotes: [
       'Summarize the value proposition',
