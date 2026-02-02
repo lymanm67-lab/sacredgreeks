@@ -53,6 +53,8 @@ const pageTitles: Record<string, PageInfo> = {
   "/beta-checklist": { title: "Beta Checklist", icon: ClipboardList },
   "/assessment-history": { title: "Assessment History", icon: BarChart3 },
   "/service-tracker": { title: "Service Tracker", icon: ClipboardList },
+  "/financial-stewardship": { title: "Financial Stewardship", icon: Settings },
+  "/sacred-money-course": { title: "Sacred Money Course", icon: BookOpen },
 };
 
 export function PageTitle() {

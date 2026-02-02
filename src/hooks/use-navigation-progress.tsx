@@ -195,7 +195,7 @@ export const useNavigationProgress = () => {
         return progressData.saintsOrSellouts;
       case "/hidden-in-plain-sight":
         return progressData.hiddenInPlainSight;
-      case "/financial-stewardship":
+      case "/sacred-money-course":
         return progressData.sacredMoneyCourse;
       case "/journey":
         return progressData.journey;
