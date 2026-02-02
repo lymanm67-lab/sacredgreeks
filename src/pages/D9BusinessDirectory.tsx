@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -15,9 +16,11 @@ import {
   Star,
   Users,
   Filter,
-  ExternalLink
+  ExternalLink,
+  ArrowLeft
 } from "lucide-react";
 import { PageHeader } from "@/components/ui/page-header";
+import { AppLayout } from "@/components/layout/AppLayout";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -304,8 +307,18 @@ export default function D9BusinessDirectory() {
   const regularBusinesses = filteredBusinesses.filter(b => !b.featured);
 
   return (
-    <div className="min-h-screen bg-background">
+    <AppLayout>
       <div className="container mx-auto px-4 py-8 max-w-6xl">
+        {/* Back to Dashboard */}
+        <div className="mb-6">
+          <Button variant="ghost" size="sm" asChild>
+            <Link to="/dashboard" className="gap-2">
+              <ArrowLeft className="w-4 h-4" />
+              Back to Dashboard
+            </Link>
+          </Button>
+        </div>
+
         <PageHeader
           title="D9 Business Directory"
           description="Support Divine Nine entrepreneurs who operate with faith-based values. Every business here is owned by a D9 member committed to Kingdom principles."
@@ -438,6 +451,6 @@ export default function D9BusinessDirectory() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </AppLayout>
   );
 }
