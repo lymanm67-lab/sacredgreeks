@@ -69,9 +69,15 @@ export function AppLayout({ children }: AppLayoutProps) {
       setShowSlideshow(true);
     });
     
-    // Clear the URL params to avoid re-triggering on navigation
+    // Clear ONLY the presentation-open params to avoid re-triggering on navigation.
+    // IMPORTANT: preserve other params like `presenter=true` so we don't lose presenter access.
     if (window.history.replaceState) {
-      const cleanUrl = location.pathname;
+      const nextParams = new URLSearchParams(location.search);
+      nextParams.delete('openPresentation');
+      nextParams.delete('slide');
+
+      const nextSearch = nextParams.toString();
+      const cleanUrl = nextSearch ? `${location.pathname}?${nextSearch}` : location.pathname;
       window.history.replaceState({}, '', cleanUrl);
     }
   }, [location.search, location.pathname]);
