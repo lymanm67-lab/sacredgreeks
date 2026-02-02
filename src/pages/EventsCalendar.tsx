@@ -16,8 +16,9 @@ import {
   Filter,
   Heart,
   Plus,
-  ChevronRight
+  ChevronLeft
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import { PageHeader } from "@/components/ui/page-header";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -323,6 +324,13 @@ export default function EventsCalendar() {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
+        <Button variant="ghost" size="sm" asChild className="mb-4">
+          <Link to="/dashboard">
+            <ChevronLeft className="w-4 h-4 mr-1" />
+            Back to Dashboard
+          </Link>
+        </Button>
+        
         <PageHeader
           title="Faith & Greek Events"
           description="Conferences, retreats, workshops, and gatherings where faith and Greek life intersect. Connect with like-minded Greeks."
