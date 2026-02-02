@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -28,6 +28,8 @@ import { StatsSection } from '@/components/dashboard/StatsSection';
 import { QuickLinksSection } from '@/components/dashboard/QuickLinksSection';
 import { DashboardAudioGuide } from '@/components/dashboard/DashboardAudioGuide';
 import { QuickJump } from '@/components/ui/quick-jump';
+import { StartHereFlow, PersonalizedPlan } from '@/components/onboarding/StartHereFlow';
+import { useStartHereFlow } from '@/hooks/use-start-here-flow';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -46,8 +48,10 @@ const DEMO_STATS: DashboardStats = {
 const Dashboard = () => {
   const { user, signOut } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const { isDemoMode } = useDemoMode();
   const { showOnboarding, completeOnboarding, isChecking } = useOnboarding();
+  const { showStartHere, completeStartHere, skipStartHere } = useStartHereFlow();
   const [stats, setStats] = useState<DashboardStats>({
     assessmentCount: 0,
     prayerCount: 0,
@@ -63,6 +67,14 @@ const Dashboard = () => {
   useEffect(() => {
     prefetchCommonRoutes();
   }, []);
+
+  const handleStartHereComplete = (plan: PersonalizedPlan) => {
+    completeStartHere();
+    // Navigate to first day's action
+    if (plan.days.length > 0) {
+      navigate(plan.days[0].actionRoute);
+    }
+  };
 
   const handleRefresh = useCallback(async () => {
     await loadDashboardData();
@@ -302,6 +314,15 @@ const Dashboard = () => {
       </main>
 
       {showOnboarding && <Onboarding open={showOnboarding} onComplete={completeOnboarding} />}
+      
+      {/* Start Here guided flow for new users */}
+      {!showOnboarding && showStartHere && (
+        <StartHereFlow 
+          open={showStartHere} 
+          onComplete={handleStartHereComplete}
+          onSkip={skipStartHere}
+        />
+      )}
     </div>
   );
 };
