@@ -22,8 +22,14 @@ import {
   Heart,
   Home,
   GraduationCap,
-  Landmark
+  Landmark,
+  Lightbulb,
+  Wrench,
+  FileText
 } from "lucide-react";
+import { FinancialScenarios } from "@/components/financial/FinancialScenarios";
+import { FinancialTools } from "@/components/financial/FinancialTools";
+import { FinancialExamples } from "@/components/financial/FinancialExamples";
 import { Link } from "react-router-dom";
 
 const FinancialStewardship = () => {
@@ -138,10 +144,22 @@ const FinancialStewardship = () => {
 
         {/* Main Tabs */}
         <Tabs defaultValue="foundation" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 h-auto gap-2">
+          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 xl:grid-cols-8 h-auto gap-2">
             <TabsTrigger value="foundation" className="flex items-center gap-2 py-3">
               <BookOpen className="w-4 h-4" />
               <span className="hidden sm:inline">Biblical</span> Foundation
+            </TabsTrigger>
+            <TabsTrigger value="scenarios" className="flex items-center gap-2 py-3">
+              <Lightbulb className="w-4 h-4" />
+              Scenarios
+            </TabsTrigger>
+            <TabsTrigger value="tools" className="flex items-center gap-2 py-3">
+              <Wrench className="w-4 h-4" />
+              Tools
+            </TabsTrigger>
+            <TabsTrigger value="examples" className="flex items-center gap-2 py-3">
+              <FileText className="w-4 h-4" />
+              Examples
             </TabsTrigger>
             <TabsTrigger value="debt" className="flex items-center gap-2 py-3">
               <CreditCard className="w-4 h-4" />
@@ -215,6 +233,21 @@ const FinancialStewardship = () => {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          {/* Scenarios & Pitfalls Tab */}
+          <TabsContent value="scenarios" className="space-y-6">
+            <FinancialScenarios />
+          </TabsContent>
+
+          {/* Tools Tab */}
+          <TabsContent value="tools" className="space-y-6">
+            <FinancialTools />
+          </TabsContent>
+
+          {/* Examples Tab */}
+          <TabsContent value="examples" className="space-y-6">
+            <FinancialExamples />
           </TabsContent>
 
           {/* Debt Freedom Tab */}
