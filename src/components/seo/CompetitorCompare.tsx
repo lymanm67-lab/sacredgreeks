@@ -26,7 +26,7 @@ const competitors: CompetitorData[] = [
     antiHazing: true,
   },
   {
-    name: "Greek IV Lead",
+    name: "Campus Ministry Apps",
     greekFocus: true,
     faithFocus: true,
     bgloSpecific: false,
@@ -36,7 +36,7 @@ const competitors: CompetitorData[] = [
     antiHazing: false,
   },
   {
-    name: "OmegaFi",
+    name: "Greek Management Platforms",
     greekFocus: true,
     faithFocus: false,
     bgloSpecific: false,
@@ -46,7 +46,7 @@ const competitors: CompetitorData[] = [
     antiHazing: false,
   },
   {
-    name: "Black Greeks",
+    name: "D9 Community Sites",
     greekFocus: true,
     faithFocus: false,
     bgloSpecific: true,
@@ -56,7 +56,7 @@ const competitors: CompetitorData[] = [
     antiHazing: false,
   },
   {
-    name: "Glorify",
+    name: "General Faith Apps",
     greekFocus: false,
     faithFocus: true,
     bgloSpecific: false,
