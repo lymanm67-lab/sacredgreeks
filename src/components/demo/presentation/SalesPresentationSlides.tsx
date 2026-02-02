@@ -155,6 +155,33 @@ export const salesPresentationSlides: PresentationSlide[] = [
     ]
   },
   {
+    id: 'case-study-stay-leave',
+    title: 'Case Study: Should You Stay or Leave?',
+    subtitle: 'An Interactive Decision-Making Tool',
+    icon: <Scale className="w-12 h-12 text-amber-500" />,
+    showLivePreview: true,
+    route: '/should-you-stay-or-leave',
+    duration: '5-7 min',
+    presenterNotes: [
+      'Walk through the interactive assessment live',
+      'Explain how faith-based decision making works',
+      'Show how the tool guides members through difficult choices',
+      'Emphasize: This is about discernment, not judgment'
+    ],
+    keyPoints: [
+      'Biblical framework for making difficult decisions',
+      'Interactive self-assessment for Greek members',
+      'Guidance rooted in faith and wisdom',
+      'Real scenarios members face today'
+    ],
+    talkingPoints: [
+      'Many members struggle with the question: Should I stay or leave?',
+      'This tool provides a faith-based framework for that decision',
+      'Based on biblical principles of discernment',
+      'Helps members align their Greek journey with their faith'
+    ]
+  },
+  {
     id: 'agenda',
     title: 'Our Journey Today',
     subtitle: '90 Minutes of Story, History, and Insight',
