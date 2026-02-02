@@ -159,6 +159,11 @@ const ProtectedPageWithLayout = ({ children }: { children: React.ReactNode }) =>
   </ProtectedRoute>
 );
 
+// Public page wrapper with AppLayout (for content pages that need sidebar but not auth)
+const PageWithLayout = ({ children }: { children: React.ReactNode }) => (
+  <AppLayout>{children}</AppLayout>
+);
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -242,9 +247,9 @@ const App = () => (
                     <Route path="/family-ministry-fallout" element={<FamilyMinistryFallout />} />
                     <Route path="/church-hurt-healing" element={<FamilyMinistryFallout />} />
                     <Route path="/journey" element={<Journey />} />
-                    <Route path="/myth-buster" element={<MythBuster />} />
-                    <Route path="/symbol-guide" element={<SymbolGuide />} />
-                    <Route path="/oaths" element={<OathsGuide />} />
+                    <Route path="/myth-buster" element={<PageWithLayout><MythBuster /></PageWithLayout>} />
+                    <Route path="/symbol-guide" element={<PageWithLayout><SymbolGuide /></PageWithLayout>} />
+                    <Route path="/oaths" element={<PageWithLayout><OathsGuide /></PageWithLayout>} />
                     <Route path="/beauty-origins" element={<BeautyOrigins />} />
                     <Route path="/organization/:orgId" element={<OrganizationDetail />} />
                     <Route path="/ask-dr-lyman" element={<AskDrLyman />} />
@@ -275,20 +280,20 @@ const App = () => (
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/tools-resources" element={<Navigate to="/resources" replace />} />
                     <Route path="/healing-resources" element={<HealingResources />} />
-                    <Route path="/proof-course" element={<ProofCourse />} />
-                    <Route path="/proof-assessment" element={<ProofAssessment />} />
-                    <Route path="/church-leaders" element={<ChurchLeaders />} />
-                    <Route path="/parents-family" element={<ParentsFamily />} />
-                    <Route path="/faith-authority" element={<FaithAuthority />} />
-                    <Route path="/should-you-stay-or-leave" element={<ShouldYouStayOrLeave />} />
+                    <Route path="/proof-course" element={<PageWithLayout><ProofCourse /></PageWithLayout>} />
+                    <Route path="/proof-assessment" element={<PageWithLayout><ProofAssessment /></PageWithLayout>} />
+                    <Route path="/church-leaders" element={<PageWithLayout><ChurchLeaders /></PageWithLayout>} />
+                    <Route path="/parents-family" element={<PageWithLayout><ParentsFamily /></PageWithLayout>} />
+                    <Route path="/faith-authority" element={<PageWithLayout><FaithAuthority /></PageWithLayout>} />
+                    <Route path="/should-you-stay-or-leave" element={<PageWithLayout><ShouldYouStayOrLeave /></PageWithLayout>} />
                     <Route path="/saints-or-sellouts" element={<SaintsOrSellouts />} />
                     <Route path="/hidden-in-plain-sight" element={<HiddenInPlainSight />} />
                     <Route path="/chapter-kit" element={<ChapterKit />} />
                     <Route path="/economic-history" element={<EconomicHistory />} />
                     <Route path="/ancient-guild-training" element={<Navigate to="/greek-life-training" replace />} />
                     <Route path="/training" element={<Navigate to="/greek-life-training" replace />} />
-                    <Route path="/greek-life-training" element={<GreekLifeTraining />} />
-                    <Route path="/training-vault" element={<TrainingSuccessVault />} />
+                    <Route path="/greek-life-training" element={<PageWithLayout><GreekLifeTraining /></PageWithLayout>} />
+                    <Route path="/training-vault" element={<PageWithLayout><TrainingSuccessVault /></PageWithLayout>} />
                     <Route path="/guest-panelist-application" element={<GuestPanelistApplication />} />
                     <Route path="/about-creator" element={<AboutCreator />} />
                     <Route path="/order-book" element={<OrderBook />} />

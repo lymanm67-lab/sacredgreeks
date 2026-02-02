@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
-import { ArrowLeft, Search, BookOpen, ExternalLink, Filter, Copy, Check, MessageSquare, ChevronDown, Download, FileText, Target, Sparkles, Scale, Eye, Building, X, CheckCircle2, Save, Printer, Info, Trophy, Flame } from 'lucide-react';
+import { Search, BookOpen, ExternalLink, Filter, Copy, Check, MessageSquare, ChevronDown, Download, FileText, Target, Sparkles, Scale, Eye, Building, X, CheckCircle2, Save, Printer, Info, Trophy, Flame } from 'lucide-react';
 import { mythBusterContent, mythCategories, mythScenarios, mythOrganizations, ProofCategory } from '@/data/mythBusterContent';
 import { ListenButton } from '@/components/ListenButton';
 import { FISTFramework } from '@/components/myth-buster/FISTFramework';
@@ -346,61 +346,48 @@ const MythBuster = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
+    <div className="bg-gradient-to-b from-background to-muted/20">
       <PreviewBanner featureName="Myth Buster Library" />
       <DemoAudioGuide 
         pageId="myth-buster" 
         title="Myth Buster Library" 
         description="Explore common myths about Greek life and learn the truth with research-backed facts." 
       />
-      <header className="border-b bg-card/80 backdrop-blur-lg sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center gap-4">
-            <Link to="/dashboard"><Button variant="ghost" size="sm" className="gap-2"><ArrowLeft className="w-4 h-4" />Back to Dashboard</Button></Link>
-            <div className="flex-1">
-              <div className="flex items-center gap-3">
-                <h1 className="text-xl font-bold">Myth Buster Library</h1>
-                {/* Points Badge */}
-                <AnimatePresence>
-                  {isComplete ? (
-                    <motion.div
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 0, opacity: 0 }}
-                      className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border border-amber-500/40"
-                    >
-                      <Trophy className="w-4 h-4 text-amber-500" />
-                      <span className="text-xs font-bold text-amber-600">350 pts</span>
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-muted/50 border border-border"
-                    >
-                      <Target className="w-4 h-4 text-muted-foreground" />
-                      <span className="text-xs font-medium text-muted-foreground">350 pts</span>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-              <p className="text-sm text-muted-foreground">Biblical responses with ready-to-use scripts</p>
-            </div>
-            {user && (
-              <div className="hidden sm:flex items-center gap-3 bg-muted/50 px-3 py-2 rounded-lg">
-                <div className="text-sm text-muted-foreground">Progress</div>
-                <Progress value={reviewProgress} className="w-24 h-2" />
-                <Badge variant="secondary" className="text-xs">{reviewedMyths.length}/{mythBusterContent.length}</Badge>
-                {reviewProgress >= 50 && reviewProgress < 100 && (
-                  <Flame className="w-4 h-4 text-orange-500 animate-pulse" />
+      <div className="container mx-auto px-4 py-6">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
+          <div className="flex-1">
+            <div className="flex items-center gap-3 flex-wrap">
+              <h1 className="text-2xl font-bold">Myth Buster Library</h1>
+              {/* Points Badge */}
+              <AnimatePresence>
+                {isComplete ? (
+                  <motion.div
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0, opacity: 0 }}
+                    className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border border-amber-500/40"
+                  >
+                    <Trophy className="w-4 h-4 text-amber-500" />
+                    <span className="text-xs font-bold text-amber-600">350 pts</span>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-muted/50 border border-border"
+                  >
+                    <Target className="w-4 h-4 text-muted-foreground" />
+                    <span className="text-xs font-medium text-muted-foreground">350 pts</span>
+                  </motion.div>
                 )}
-              </div>
-            )}
+              </AnimatePresence>
+            </div>
+            <p className="text-sm text-muted-foreground mt-1">Biblical responses with ready-to-use scripts</p>
           </div>
           {user && (
-            <div className="sm:hidden mt-3 flex items-center gap-3 bg-muted/50 px-3 py-2 rounded-lg">
+            <div className="flex items-center gap-3 bg-muted/50 px-3 py-2 rounded-lg">
               <div className="text-sm text-muted-foreground">Progress</div>
-              <Progress value={reviewProgress} className="flex-1 h-2" />
+              <Progress value={reviewProgress} className="w-24 h-2" />
               <Badge variant="secondary" className="text-xs">{reviewedMyths.length}/{mythBusterContent.length}</Badge>
               {reviewProgress >= 50 && reviewProgress < 100 && (
                 <Flame className="w-4 h-4 text-orange-500 animate-pulse" />
@@ -408,7 +395,7 @@ const MythBuster = () => {
             </div>
           )}
         </div>
-      </header>
+      </div>
 
       <main className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Instructions Card */}
