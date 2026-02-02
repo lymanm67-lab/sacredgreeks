@@ -16,14 +16,16 @@ export interface StudyProgress {
   updated_at: string;
 }
 
-// Demo progress data for presentations - shows partial progress (2 of 5 lessons)
+// Demo progress data for presentations - shows partial progress
+// Includes "Stay or Leave" course progress (session 25 completed) so Reveal is unlocked
 const DEMO_PROGRESS: StudyProgress[] = [
+  // Greek Life Training sessions (1-2)
   {
     id: 'demo-1',
     user_id: 'demo-user',
     session_id: 1,
     completed: true,
-    completed_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
+    completed_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
     notes: 'Great insights on biblical boundaries during intake.',
     created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
     updated_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
@@ -33,10 +35,21 @@ const DEMO_PROGRESS: StudyProgress[] = [
     user_id: 'demo-user',
     session_id: 2,
     completed: true,
-    completed_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(), // 1 day ago
+    completed_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
     notes: 'The power of belief principle is transformative.',
     created_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
     updated_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  // Stay or Leave: Case Study completed (session 25) so Reveal is unlocked
+  {
+    id: 'demo-stay-1',
+    user_id: 'demo-user',
+    session_id: 25,
+    completed: true,
+    completed_at: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(),
+    notes: 'Selected "This could be acceptable" - interesting scenario.',
+    created_at: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(),
+    updated_at: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(),
   },
 ];
 
