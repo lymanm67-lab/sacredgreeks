@@ -33,6 +33,10 @@ export function ReturnToPresentationButton({ onReturnToPresentation }: ReturnToP
   }, [location.search]);
 
   const handleReturn = () => {
+    // Capture slideIndex before navigating (navigation will clear URL params)
+    const targetSlide = slideIndex;
+    console.log('[ReturnToPresentationButton] Returning to slide:', targetSlide, { isPresenter, hasCallback: !!onReturnToPresentation });
+    
     if (onReturnToPresentation) {
       // Navigate to dashboard without the query params
       // Preserve `presenter=true` so we don't lose presenter access.
@@ -40,7 +44,8 @@ export function ReturnToPresentationButton({ onReturnToPresentation }: ReturnToP
 
       // Small delay to ensure navigation completes, then open presentation
       setTimeout(() => {
-        onReturnToPresentation(slideIndex);
+        console.log('[ReturnToPresentationButton] Calling onReturnToPresentation with slide:', targetSlide);
+        onReturnToPresentation(targetSlide);
       }, 150);
       return;
     }
