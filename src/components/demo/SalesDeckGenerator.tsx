@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { jsPDF } from 'jspdf';
-import { Download, Loader2, FileText, CheckCircle2 } from 'lucide-react';
+import pptxgen from 'pptxgenjs';
+import { Download, Loader2, FileText, CheckCircle2, FileSpreadsheet } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -132,10 +133,134 @@ const DECK_SECTIONS = [
   },
 ];
 
+type ExportFormat = 'pptx' | 'pdf';
+
 export function SalesDeckGenerator({ isOpen, onClose }: SalesDeckGeneratorProps) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentSection, setCurrentSection] = useState('');
+
+  const generatePowerPoint = async () => {
+    setIsGenerating(true);
+    setProgress(0);
+
+    try {
+      const pptx = new pptxgen();
+      pptx.layout = 'LAYOUT_16x9';
+      pptx.title = 'Sacred Greeks Sales Deck';
+      pptx.author = 'Sacred Greeks';
+      pptx.subject = 'Faith Meets Greek Life';
+
+      for (let i = 0; i < DECK_SECTIONS.length; i++) {
+        const section = DECK_SECTIONS[i];
+        setCurrentSection(section.title);
+        setProgress(((i + 1) / DECK_SECTIONS.length) * 100);
+
+        const slide = pptx.addSlide();
+        
+        // Dark background
+        slide.background = { color: '0F172A' };
+
+        // Accent bar on left
+        slide.addShape(pptx.ShapeType.rect, {
+          x: 0,
+          y: 0,
+          w: 0.3,
+          h: '100%',
+          fill: { color: 'D97706' },
+        });
+
+        // Slide number
+        slide.addText(`${i + 1} / ${DECK_SECTIONS.length}`, {
+          x: 8.5,
+          y: 5,
+          w: 1,
+          h: 0.3,
+          fontSize: 10,
+          color: '94A3B8',
+          align: 'right',
+        });
+
+        // Title
+        slide.addText(section.title, {
+          x: 0.6,
+          y: 0.3,
+          w: 9,
+          h: 0.8,
+          fontSize: 32,
+          bold: true,
+          color: 'FFFFFF',
+        });
+
+        // Content - build formatted text
+        const contentItems: pptxgen.TextProps[] = [];
+        section.content.forEach((line) => {
+          if (line === '') {
+            contentItems.push({ text: '\n', options: { fontSize: 14 } });
+          } else if (line.startsWith('•')) {
+            contentItems.push({
+              text: '• ',
+              options: { fontSize: 14, color: 'FBBf24', bold: true },
+            });
+            contentItems.push({
+              text: line.substring(2) + '\n',
+              options: { fontSize: 14, color: 'E2E8F0' },
+            });
+          } else if (line.endsWith(':')) {
+            contentItems.push({
+              text: line + '\n',
+              options: { fontSize: 14, color: 'FBBf24', bold: true },
+            });
+          } else if (line.startsWith('"')) {
+            contentItems.push({
+              text: line + '\n',
+              options: { fontSize: 14, color: 'FBBf24', italic: true },
+            });
+          } else {
+            contentItems.push({
+              text: line + '\n',
+              options: { fontSize: 14, color: 'E2E8F0' },
+            });
+          }
+        });
+
+        slide.addText(contentItems, {
+          x: 0.6,
+          y: 1.2,
+          w: 9,
+          h: 4,
+          valign: 'top',
+        });
+
+        // Footer branding
+        slide.addText('Sacred Greeks | Faith Meets Greek Life', {
+          x: 0.6,
+          y: 5,
+          w: 5,
+          h: 0.3,
+          fontSize: 8,
+          color: '64748B',
+        });
+
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+
+      await pptx.writeFile({ fileName: 'Sacred-Greeks-Sales-Deck.pptx' });
+      
+      toast.success('PowerPoint Generated!', {
+        description: 'Your .pptx file has been downloaded.',
+      });
+    } catch (error) {
+      console.error('PowerPoint generation error:', error);
+      toast.error('Failed to generate PowerPoint', {
+        description: 'Please try again.',
+      });
+    } finally {
+      setIsGenerating(false);
+      setProgress(0);
+      setCurrentSection('');
+    }
+  };
 
   const generatePDF = async () => {
     setIsGenerating(true);
@@ -217,13 +342,13 @@ export function SalesDeckGenerator({ isOpen, onClose }: SalesDeckGeneratorProps)
         doc.text('Sacred Greeks | Faith Meets Greek Life', margin + 10, pageHeight - 10);
 
         // Simulate processing time for visual feedback
-        await new Promise(resolve => setTimeout(resolve, 200));
+        await new Promise(resolve => setTimeout(resolve, 100));
       }
 
       // Save the PDF
       doc.save('Sacred-Greeks-Sales-Deck.pdf');
       
-      toast.success('Sales Deck Generated!', {
+      toast.success('PDF Generated!', {
         description: 'Your PDF has been downloaded.',
       });
     } catch (error) {
@@ -235,7 +360,14 @@ export function SalesDeckGenerator({ isOpen, onClose }: SalesDeckGeneratorProps)
       setIsGenerating(false);
       setProgress(0);
       setCurrentSection('');
-      onClose();
+    }
+  };
+
+  const handleGenerate = async (format: ExportFormat) => {
+    if (format === 'pptx') {
+      await generatePowerPoint();
+    } else {
+      await generatePDF();
     }
   };
 
@@ -248,13 +380,13 @@ export function SalesDeckGenerator({ isOpen, onClose }: SalesDeckGeneratorProps)
             Sales Deck Generator
           </DialogTitle>
           <DialogDescription>
-            Generate a professional PDF presentation for Greek Life leaders.
+            Generate a professional presentation for Greek Life leaders.
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 py-4">
           <div className="text-sm text-muted-foreground">
-            <p className="font-medium mb-2">Deck Includes:</p>
+            <p className="font-medium mb-2">Deck Includes ({DECK_SECTIONS.length} slides):</p>
             <ul className="space-y-1">
               {DECK_SECTIONS.map((section, index) => (
                 <li key={section.id} className="flex items-center gap-2">
@@ -280,23 +412,37 @@ export function SalesDeckGenerator({ isOpen, onClose }: SalesDeckGeneratorProps)
             </div>
           )}
 
-          <Button
-            onClick={generatePDF}
-            disabled={isGenerating}
-            className="w-full bg-primary hover:bg-primary/90"
-          >
-            {isGenerating ? (
-              <>
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                Generating...
-              </>
-            ) : (
-              <>
-                <Download className="w-4 h-4 mr-2" />
-                Generate & Download PDF
-              </>
-            )}
-          </Button>
+          <div className="grid grid-cols-2 gap-3">
+            <Button
+              onClick={() => handleGenerate('pptx')}
+              disabled={isGenerating}
+              className="w-full bg-primary hover:bg-primary/90"
+            >
+              {isGenerating ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <>
+                  <FileSpreadsheet className="w-4 h-4 mr-2" />
+                  PowerPoint
+                </>
+              )}
+            </Button>
+            <Button
+              onClick={() => handleGenerate('pdf')}
+              disabled={isGenerating}
+              variant="outline"
+              className="w-full"
+            >
+              {isGenerating ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <>
+                  <Download className="w-4 h-4 mr-2" />
+                  PDF
+                </>
+              )}
+            </Button>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
