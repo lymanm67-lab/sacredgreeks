@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Check, Crown, Users, Sparkles, Shield, Clock, RefreshCw } from 'lucide-react';
+import { Check, Crown, Users, Sparkles, Shield, Clock, RefreshCw, HelpCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { QuickJump } from '@/components/ui/quick-jump';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSubscription } from '@/hooks/use-subscription';
 import { toast } from 'sonner';
@@ -124,12 +125,19 @@ export default function Subscription() {
     }
   };
 
+  const quickJumpSections = [
+    { id: 'pricing-plans', label: 'Pricing Plans', icon: <Crown className="w-3 h-3" /> },
+    { id: 'pro-features', label: 'Pro Features', icon: <Sparkles className="w-3 h-3" /> },
+    { id: 'ministry-features', label: 'Ministry Features', icon: <Users className="w-3 h-3" /> },
+    { id: 'faq-section', label: 'FAQ & Support', icon: <HelpCircle className="w-3 h-3" /> },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/30">
       <div className="container mx-auto px-4 py-12">
         {/* Header */}
         <motion.div 
-          className="text-center mb-12"
+          className="text-center mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
@@ -143,6 +151,16 @@ export default function Subscription() {
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Navigate Greek Life with Biblical wisdom. Start your free trial today.
           </p>
+        </motion.div>
+
+        {/* Quick Jump Navigation */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="max-w-2xl mx-auto"
+        >
+          <QuickJump sections={quickJumpSections} title="Jump to Section" />
         </motion.div>
 
         {/* Current Subscription Status */}
@@ -199,7 +217,7 @@ export default function Subscription() {
         </motion.div>
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div id="pricing-plans" className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {Object.entries(PRICING_TIERS).map(([key, tierConfig], index) => {
             const isCurrentTier = tier === key;
             const Icon = tierConfig.icon;
@@ -295,6 +313,7 @@ export default function Subscription() {
 
         {/* FAQ/Trust Section */}
         <motion.div 
+          id="faq-section"
           className="mt-16 text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
