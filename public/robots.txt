@@ -1,23 +1,47 @@
-# Search Engine Crawlers
+# Robots.txt for Sacred Greeks Life
+# https://sacredgreekslife.com
+# Last Updated: 2026-02-02
+
+# ===========================================
+# SEARCH ENGINE CRAWLERS
+# ===========================================
+
+# Google
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
-User-agent: Bingbot
+User-agent: Googlebot-Image
 Allow: /
 
+User-agent: Googlebot-Video
+Allow: /
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Yahoo
 User-agent: Slurp
 Allow: /
 
+# DuckDuckGo
 User-agent: DuckDuckBot
 Allow: /
 
+# Baidu
 User-agent: Baiduspider
 Allow: /
 
+# Yandex
 User-agent: YandexBot
 Allow: /
 
-# Social Media Crawlers
+# ===========================================
+# SOCIAL MEDIA CRAWLERS
+# ===========================================
+
 User-agent: Twitterbot
 Allow: /
 
@@ -30,31 +54,71 @@ Allow: /
 User-agent: Pinterest
 Allow: /
 
-# AI/LLM Crawlers - Explicitly Allowed
+User-agent: Slackbot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+# ===========================================
+# AI/LLM CRAWLERS - EXPLICITLY ALLOWED
+# ===========================================
+
+# OpenAI
 User-agent: GPTBot
 Allow: /
 
 User-agent: ChatGPT-User
 Allow: /
 
+# Google AI
 User-agent: Google-Extended
 Allow: /
 
+# Anthropic
 User-agent: Anthropic-AI
 Allow: /
 
 User-agent: Claude-Web
 Allow: /
 
+User-agent: ClaudeBot
+Allow: /
+
+# Perplexity
 User-agent: PerplexityBot
 Allow: /
 
+# Cohere
 User-agent: Cohere-AI
 Allow: /
 
-# Default - Allow All with Private Page Exclusions
+# Meta AI
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# Common Crawl (used for AI training)
+User-agent: CCBot
+Allow: /
+
+# Apple AI
+User-agent: Applebot
+Allow: /
+
+# ===========================================
+# DEFAULT RULES
+# ===========================================
+
 User-agent: *
 Allow: /
+
+# Private/User-Specific Pages (noindex)
 Disallow: /admin
 Disallow: /profile
 Disallow: /assessment-history
@@ -64,12 +128,30 @@ Disallow: /analytics
 Disallow: /beta-dashboard
 Disallow: /beta-checklist
 Disallow: /reset-password
-Disallow: /shared/
-Disallow: /shared-symbols/
 Disallow: /bookmarks
 
-# Sitemaps
+# Dynamic share pages (unique tokens)
+Disallow: /shared/
+Disallow: /shared-symbols/
+Disallow: /shared-certificate/
+
+# API endpoints
+Disallow: /api/
+
+# ===========================================
+# SITEMAP & AI INFORMATION
+# ===========================================
+
 Sitemap: https://sacredgreekslife.com/sitemap.xml
 
 # AI/LLM Information File
-# See https://sacredgreekslife.com/llms.txt for AI-friendly site information
+# Provides structured information for AI assistants
+# See: https://sacredgreekslife.com/llms.txt
+
+# ===========================================
+# SITE INFORMATION
+# ===========================================
+# Name: Sacred Greeks Life
+# Description: Faith-based app for Christians in Greek life
+# Creator: Dr. Lyman Montgomery
+# Topics: Christian Greek life, Divine Nine faith, BGLO, devotionals, prayer, P.R.O.O.F. framework
