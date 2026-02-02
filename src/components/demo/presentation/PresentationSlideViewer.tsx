@@ -63,27 +63,33 @@ export function PresentationSlideViewer({ isOpen, onClose, initialSlide = 0 }: P
 
   // Track previous open state to detect when opening
   const wasOpenRef = React.useRef(false);
+  const lastInitialSlideRef = React.useRef(initialSlide);
   
-  // ALWAYS sync to initialSlide when opening (isOpen transitions from false to true)
-  // This ensures returning from demo pages goes to the correct slide
+  // Sync to initialSlide when:
+  // 1. Opening (isOpen transitions from false to true)
+  // 2. initialSlide changes while open (for re-navigation scenarios)
   React.useEffect(() => {
     const justOpened = isOpen && !wasOpenRef.current;
+    const slideChangedWhileOpen = isOpen && wasOpenRef.current && initialSlide !== lastInitialSlideRef.current;
     
     console.log('[PresentationSlideViewer] Effect:', { 
       isOpen, 
       wasOpen: wasOpenRef.current, 
-      justOpened, 
+      justOpened,
+      slideChangedWhileOpen,
       initialSlide,
+      lastInitialSlide: lastInitialSlideRef.current,
       currentSlide 
     });
     
-    if (justOpened) {
-      console.log('[PresentationSlideViewer] Opening at slide:', initialSlide);
+    if (justOpened || slideChangedWhileOpen) {
+      console.log('[PresentationSlideViewer] Setting slide to:', initialSlide);
       setCurrentSlide(initialSlide);
     }
     
-    // Update ref AFTER checking (important for next render comparison)
+    // Update refs AFTER checking
     wasOpenRef.current = isOpen;
+    lastInitialSlideRef.current = initialSlide;
   }, [isOpen, initialSlide]);
 
   const slides = salesPresentationSlides;
