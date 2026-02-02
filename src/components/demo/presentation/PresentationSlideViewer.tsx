@@ -138,15 +138,22 @@ export function PresentationSlideViewer({ isOpen, onClose }: PresentationSlideVi
               <Card className="border-2 border-primary/20 bg-card/50 backdrop-blur overflow-hidden">
                 {/* Live App Preview or Fallback Image */}
                 {slide.route ? (
-                  <div className="relative h-64 w-full overflow-hidden bg-background border-b border-border">
-                    <iframe 
-                      src={`${window.location.origin}${slide.route}`}
-                      title={`${slide.title} Preview`}
-                      className="w-full h-full pointer-events-none scale-[0.5] origin-top-left"
-                      style={{ width: '200%', height: '200%' }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-                    <div className="absolute bottom-2 left-2 right-2 flex justify-center">
+                  <div className="relative w-full overflow-hidden bg-background border-b border-border" style={{ height: '280px' }}>
+                    <div className="absolute inset-0" style={{ 
+                      transform: 'scale(0.35)', 
+                      transformOrigin: 'top left',
+                      width: '285%',
+                      height: '285%'
+                    }}>
+                      <iframe 
+                        src={`${window.location.origin}${slide.route}`}
+                        title={`${slide.title} Preview`}
+                        className="w-full h-full pointer-events-none border-0"
+                        style={{ minHeight: '800px' }}
+                      />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute bottom-2 left-2 right-2 flex justify-center pointer-events-none">
                       <Badge variant="secondary" className="bg-primary/90 text-primary-foreground">
                         <Play className="w-3 h-3 mr-1" />
                         Live Preview
