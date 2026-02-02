@@ -136,7 +136,8 @@ export const salesPresentationSlides: PresentationSlide[] = [
       'Former Alumni Chapter President',
       'Creator of Sacred Greeks App',
       'Author of "Sacred Not Sinful"',
-      'Sacred Greeks Podcast Host'
+      'Sacred Greeks Podcast Host',
+      'Introduction to Sacred Greeks App (Free Gift for Attending)'
     ],
     talkingPoints: [
       'Walked the same journey many Greek members walk',
