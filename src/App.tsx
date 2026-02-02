@@ -209,7 +209,6 @@ const App = () => (
                       <BetaFeedbackWidget />
                       <CookieConsent />
                       <WhatsNewModal />
-                      <WhatsNewModal />
                       <UpdateNotification />
                       <AnalyticsProvider>
                   <DemoModeTour />
