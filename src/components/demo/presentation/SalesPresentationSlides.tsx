@@ -7,14 +7,15 @@ import {
   BookOpen, 
   Users, 
   Rocket,
-  CheckCircle2,
   Target,
-  Heart,
-  FileText,
-  Building2,
-  Smartphone,
   Trophy,
-  TrendingUp
+  GraduationCap,
+  HandHeart,
+  ScrollText,
+  Lock,
+  History,
+  Mic2,
+  UserCircle
 } from 'lucide-react';
 
 // Import slide images
@@ -46,13 +47,14 @@ export interface PresentationSlide {
 }
 
 export const salesPresentationSlides: PresentationSlide[] = [
+  // ============ INTRODUCTION (10 min) ============
   {
     id: 'intro',
     title: 'Sacred Greeks',
     subtitle: 'Faith-First Resources for All Greek Life Members',
     icon: <Sparkles className="w-12 h-12 text-sacred" />,
     image: slideIntro,
-    duration: '2-3 min',
+    duration: '3-4 min',
     presenterNotes: [
       'Welcome and thank them for their time',
       'Establish credibility: Built by a Delta and ordained minister',
@@ -72,12 +74,49 @@ export const salesPresentationSlides: PresentationSlide[] = [
     ]
   },
   {
+    id: 'creator',
+    title: 'Meet the Creator',
+    subtitle: 'Dr. Lyman Montgomery — Scholar, Minister, Delta',
+    icon: <UserCircle className="w-12 h-12 text-blue-500" />,
+    duration: '5-6 min',
+    presenterNotes: [
+      'Introduce Dr. Lyman Montgomery — ordained minister AND Delta member',
+      'Mention his book: "Sacred Not Sinful: A Biblical Response to the Black Greek Letter Organization Debate"',
+      'Podcast: Sacred Greeks Podcast available on all platforms',
+      'Emphasize: He understands BOTH the church critique AND the Greek experience'
+    ],
+    keyPoints: [
+      'Ordained minister with theological training',
+      'Initiated member of Delta Sigma Theta Sorority, Inc.',
+      'Author of "Sacred Not Sinful" — the definitive biblical response',
+      'Host of the Sacred Greeks Podcast'
+    ],
+    talkingPoints: [
+      'Decades of ministry experience',
+      'Walked the same journey as many of your members',
+      'Created this platform because resources didn\'t exist',
+      'Mission: Biblical clarity without condemnation'
+    ],
+    stats: [
+      { label: 'Years in Ministry', value: '20+' },
+      { label: 'Podcast Episodes', value: '50+' },
+      { label: 'Speaking Engagements', value: 'Nationwide' }
+    ],
+    actionItems: [
+      'Follow the Sacred Greeks Podcast',
+      'Order "Sacred Not Sinful" for your chapter library',
+      'Invite Dr. Montgomery to speak at your event'
+    ]
+  },
+
+  // ============ THE PROBLEM (15 min) ============
+  {
     id: 'problem',
     title: 'The Problem We Solve',
     subtitle: 'Why Greek Life Members Need This',
     icon: <AlertTriangle className="w-12 h-12 text-amber-500" />,
     image: slideProblem,
-    duration: '3-4 min',
+    duration: '4-5 min',
     presenterNotes: [
       'Paint the pain: Members face criticism from family, church, peers',
       'Financial crisis: Average D9 member spends $50K+ lifetime',
@@ -97,13 +136,200 @@ export const salesPresentationSlides: PresentationSlide[] = [
       'Chapter chaplains struggle without support'
     ]
   },
+
+  // ============ P.R.O.O.F. DEEP DIVE (30 min) ============
+  {
+    id: 'proof-overview',
+    title: 'P.R.O.O.F. Framework',
+    subtitle: 'Biblical Responses to the 5 Most Common Criticisms',
+    icon: <Shield className="w-12 h-12 text-purple-500" />,
+    image: slideProof,
+    duration: '3-4 min',
+    route: '/proof-course',
+    presenterNotes: [
+      'This is the CORE differentiator of Sacred Greeks',
+      'Each letter addresses a specific criticism members face',
+      'Leaders can finally equip members with answers',
+      'We\'ll dive into each letter in the next slides'
+    ],
+    keyPoints: [
+      'P — Pledge Process (Hazing concerns)',
+      'R — Rituals (Religious objections)',
+      'O — Oaths (Spiritual concerns)',
+      'O — Obscurity/Secrecy (Transparency questions)',
+      'F — Founders (Historical context)'
+    ],
+    talkingPoints: [
+      'Each module has biblical backing + historical context',
+      'Printable worksheets for personal study',
+      'TTS audio for accessibility',
+      'Progress tracking with gamification'
+    ]
+  },
+  {
+    id: 'proof-pledge',
+    title: 'P — Pledge Process',
+    subtitle: 'Addressing Hazing & Initiation Concerns',
+    icon: <GraduationCap className="w-12 h-12 text-blue-500" />,
+    duration: '5-6 min',
+    presenterNotes: [
+      'The most common criticism: "Pledging is hazing"',
+      'Biblical parallel: 1st-century guilds had apprenticeship periods',
+      'Jesus Himself was a "tekton" (craftsman) — likely guild member',
+      'Differentiate: Structured formation ≠ abusive hazing'
+    ],
+    keyPoints: [
+      '"Is pledging the same as hazing?" — Common church question',
+      'Biblical model: Apprenticeship existed in early Christianity',
+      'Jesus (tekton) and Paul (tentmaker) operated in guild systems',
+      'Formation through discipline is biblical (Proverbs 22:6)'
+    ],
+    talkingPoints: [
+      '1st-century trade guilds had structured initiation',
+      'Apprentice → Journeyman → Master progression',
+      'The church has catechumenates and discipleship processes',
+      'The issue is abuse, not the concept of formation itself'
+    ],
+    stats: [
+      { label: 'Biblical References', value: '12+' },
+      { label: 'Historical Parallels', value: '5 Eras' },
+      { label: 'Study Time', value: '~20 min' }
+    ]
+  },
+  {
+    id: 'proof-rituals',
+    title: 'R — Rituals',
+    subtitle: 'Responding to "Those Rituals Are Pagan" Criticism',
+    icon: <HandHeart className="w-12 h-12 text-purple-500" />,
+    duration: '5-6 min',
+    presenterNotes: [
+      'Address the "paganism" accusation directly',
+      'Key point: The church itself has rituals (baptism, communion)',
+      'Historical context: Medieval guilds had Christian rituals',
+      'Ask: What makes a ritual sacred vs. secular?'
+    ],
+    keyPoints: [
+      '"Those rituals look like worship" — Church criticism',
+      'Biblical truth: Ritual ≠ worship automatically',
+      'The church has rituals: baptism, communion, ordination',
+      'Question: Is the ritual glorifying God or replacing Him?'
+    ],
+    talkingPoints: [
+      'Ritual comes from Latin "ritus" — a practice or custom',
+      'Every organization has rituals: government, military, sports',
+      'The intent and object of devotion matters',
+      'Greek rituals often emphasize brotherhood, not deity worship'
+    ],
+    stats: [
+      { label: 'Common Rituals Analyzed', value: '8+' },
+      { label: 'Biblical Comparisons', value: '10+' },
+      { label: 'Historical Sources', value: '15+' }
+    ]
+  },
+  {
+    id: 'proof-oaths',
+    title: 'O — Oaths',
+    subtitle: 'What Does the Bible Actually Say About Oaths?',
+    icon: <ScrollText className="w-12 h-12 text-orange-500" />,
+    duration: '5-6 min',
+    presenterNotes: [
+      'Address Matthew 5:34 — "Do not swear at all"',
+      'Context: Jesus was condemning flippant, deceptive oaths',
+      'Biblical examples: Paul made vows (Acts 18:18), God swears (Hebrews 6:13)',
+      'The issue is deception, not commitment itself'
+    ],
+    keyPoints: [
+      '"The Bible says not to swear oaths" — Common objection',
+      'Context: Jesus condemned manipulative, deceptive oaths',
+      'Paul took vows (Acts 18:18, 21:23-24)',
+      'God Himself swears by His own name (Hebrews 6:13-17)'
+    ],
+    talkingPoints: [
+      'Jewish oath tradition included loopholes for deception',
+      'Jesus condemned the system of evasive swearing',
+      'Marriage vows, court oaths, citizenship oaths are common',
+      'A commitment to service and brotherhood aligns with Scripture'
+    ],
+    stats: [
+      { label: 'Scripture References', value: '15+' },
+      { label: 'Historical Context Docs', value: '8+' },
+      { label: 'Theological Sources', value: '10+' }
+    ]
+  },
+  {
+    id: 'proof-obscurity',
+    title: 'O — Obscurity/Secrecy',
+    subtitle: 'Addressing "Secret Society" Accusations',
+    icon: <Lock className="w-12 h-12 text-emerald-500" />,
+    duration: '5-6 min',
+    presenterNotes: [
+      'The "secret society" label is the most dramatic criticism',
+      'Key distinction: Confidentiality ≠ Conspiracy',
+      'Biblical parallel: Jesus had "mystery" teachings for disciples',
+      'Every organization has private information (your job, family)'
+    ],
+    keyPoints: [
+      '"Greek organizations are secret societies" — Accusation',
+      'Truth: Confidentiality is normal (medical, legal, family)',
+      'Jesus had teachings for disciples vs. crowds (Mark 4:10-12)',
+      'Early church met in secret due to persecution'
+    ],
+    talkingPoints: [
+      'The word "mystery" (mysterion) is used 27x in the NT',
+      'Secret ≠ evil; some things are sacred and protected',
+      'Organizational grips/signs are no different than security clearances',
+      'The real question: Is the organization hiding sin?'
+    ],
+    stats: [
+      { label: 'Biblical "Mystery" References', value: '27' },
+      { label: 'Historical Parallels', value: '6 Eras' },
+      { label: 'Case Studies', value: '5+' }
+    ]
+  },
+  {
+    id: 'proof-founders',
+    title: 'F — Founders',
+    subtitle: 'Historical Context & Christian Heritage',
+    icon: <History className="w-12 h-12 text-red-500" />,
+    duration: '5-6 min',
+    presenterNotes: [
+      'Many D9 founders were active Christians',
+      'Organizations were born out of necessity: mutual aid, survival',
+      'Insurance companies refused to cover Black Americans',
+      'Fraternities provided burial benefits, financial support, community'
+    ],
+    keyPoints: [
+      'Many D9 founders were ministers, church leaders, Christians',
+      'Mutual aid societies arose from discriminatory practices',
+      'Organizations provided insurance, burial funds, education',
+      'The mission was survival and uplift, not occultism'
+    ],
+    talkingPoints: [
+      'Race-rated insurance premiums made coverage unaffordable',
+      'Burial societies and mutual aid organizations filled the gap',
+      'Greek-letter organizations carried on this legacy of service',
+      'Understanding history reframes the narrative'
+    ],
+    stats: [
+      { label: 'D9 Organizations', value: '9' },
+      { label: 'Years of History', value: '100+' },
+      { label: 'Members Worldwide', value: '2.5M+' }
+    ],
+    actionItems: [
+      'Download the Economic History PDF',
+      'Share founder stories with your chapter',
+      'Host a history education session'
+    ]
+  },
+
+  // ============ FEATURES (20 min) ============
   {
     id: 'faith-snapshot',
     title: 'Faith Snapshot Assessment',
     subtitle: 'Quick Engagement — Immediate Value',
     icon: <Target className="w-12 h-12 text-amber-500" />,
     image: slideSnapshot,
-    duration: '3-4 min',
+    duration: '4-5 min',
     route: '/snapshot',
     presenterNotes: [
       'DEMO: Walk through the 6-question assessment',
@@ -124,34 +350,6 @@ export const salesPresentationSlides: PresentationSlide[] = [
     ]
   },
   {
-    id: 'proof-framework',
-    title: 'P.R.O.O.F. Framework',
-    subtitle: 'Biblical Responses to the 5 Most Common Criticisms',
-    icon: <Shield className="w-12 h-12 text-purple-500" />,
-    image: slideProof,
-    duration: '5-6 min',
-    route: '/proof-course',
-    presenterNotes: [
-      'This is the CORE differentiator',
-      'Each letter addresses a specific criticism',
-      'Leaders can finally equip members with answers',
-      'DEMO: Show one lesson in detail'
-    ],
-    keyPoints: [
-      'P — Pledge Process (Hazing concerns)',
-      'R — Rituals (Religious objections)',
-      'O — Oaths (Spiritual concerns)',
-      'O — Obscurity/Secrecy (Transparency questions)',
-      'F — Founders (Historical context)'
-    ],
-    talkingPoints: [
-      'Each module has biblical backing + historical context',
-      'Printable worksheets for personal study',
-      'TTS audio for accessibility',
-      'Progress tracking with gamification'
-    ]
-  },
-  {
     id: 'financial-tools',
     title: 'Financial Stewardship Suite',
     subtitle: 'Addressing the $50K+ Lifetime Cost Reality',
@@ -163,17 +361,17 @@ export const salesPresentationSlides: PresentationSlide[] = [
       'Financial literacy gap is HUGE in young Greeks',
       'DEMO: Show the D9 Lifetime Cost Calculator',
       'Highlight: FCRA-compliant dispute letter generator',
-      'The 10/15/10/65 plan is sticky content'
+      'The Sacred Money Spending Plan is sticky content'
     ],
     keyPoints: [
-      '10/15/10/65 Sacred Money Spending Plan',
+      'Sacred Money Spending Plan (SMSP) budgeting system',
       'D9 Lifetime Cost Calculator with real data',
       'FCRA-compliant credit dispute letter generator',
       'Student Financial Defense against predatory tactics'
     ],
     stats: [
       { label: 'Average D9 Lifetime Cost', value: '$50,000+' },
-      { label: 'Spending Plan Categories', value: '4' },
+      { label: 'Budget Categories', value: '7' },
       { label: 'Debt Strategies', value: '3 Methods' }
     ]
   },
@@ -183,7 +381,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
     subtitle: 'On-Demand Resources for Spiritual Leaders',
     icon: <BookOpen className="w-12 h-12 text-blue-500" />,
     image: slideChaplain,
-    duration: '3-4 min',
+    duration: '4-5 min',
     route: '/chaplain-toolkit',
     presenterNotes: [
       'Chaplains are often untrained and overwhelmed',
@@ -209,7 +407,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
     subtitle: 'Building Cross-Chapter Fellowship',
     icon: <Users className="w-12 h-12 text-fuchsia-500" />,
     image: slideCommunity,
-    duration: '4-5 min',
+    duration: '3-4 min',
     route: '/d9-business-directory',
     presenterNotes: [
       'D9 Business Directory showcases faith-first entrepreneurs',
@@ -235,7 +433,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
     subtitle: 'Driving Consistent Usage',
     icon: <Trophy className="w-12 h-12 text-amber-500" />,
     image: slideGamification,
-    duration: '2-3 min',
+    duration: '3-4 min',
     route: '/dashboard',
     presenterNotes: [
       'Badges, streaks, and certificates drive engagement',
@@ -256,13 +454,15 @@ export const salesPresentationSlides: PresentationSlide[] = [
       'Social sharing built-in'
     ]
   },
+
+  // ============ CLOSING (15 min) ============
   {
     id: 'close',
     title: 'Why Partner With Sacred Greeks?',
     subtitle: 'Next Steps for Your Organization',
     icon: <Rocket className="w-12 h-12 text-sacred" />,
     image: slideClose,
-    duration: '3-4 min',
+    duration: '4-5 min',
     presenterNotes: [
       'Summarize the value proposition',
       'Emphasize: 100% FREE — no budget approval needed',
@@ -290,9 +490,9 @@ export const salesPresentationSlides: PresentationSlide[] = [
     id: 'qa',
     title: 'Questions & Answers',
     subtitle: 'Let\'s Discuss How Sacred Greeks Can Serve Your Organization',
-    icon: <Users className="w-12 h-12 text-blue-500" />,
+    icon: <Mic2 className="w-12 h-12 text-blue-500" />,
     image: slideQA,
-    duration: '5-10 min',
+    duration: '10-15 min',
     showQRCode: true,
     presenterNotes: [
       'Open the floor for questions',
@@ -316,12 +516,6 @@ export const salesPresentationSlides: PresentationSlide[] = [
 ];
 
 export const getPresentationDuration = () => {
-  const slides = salesPresentationSlides;
-  const durations = slides.map(s => {
-    if (!s.duration) return 3;
-    const match = s.duration.match(/(\d+)/);
-    return match ? parseInt(match[1]) : 3;
-  });
-  const total = durations.reduce((a, b) => a + b, 0);
-  return `${total}-${total + slides.length * 2} minutes`;
+  // Fixed 90-minute presentation
+  return '~90 minutes';
 };
