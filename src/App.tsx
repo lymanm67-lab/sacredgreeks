@@ -135,6 +135,11 @@ const GreekLifeBiblicalGuidance = lazy(() => import("./pages/seo/GreekLifeBiblic
 const AntiHazingChristian = lazy(() => import("./pages/seo/AntiHazingChristian"));
 const SpiritualGrowthGreekLife = lazy(() => import("./pages/seo/SpiritualGrowthGreekLife"));
 
+// New Feature Pages
+const ChapterChaplainToolkit = lazy(() => import("./pages/ChapterChaplainToolkit"));
+const D9BusinessDirectory = lazy(() => import("./pages/D9BusinessDirectory"));
+const GreekWorshipPlaylists = lazy(() => import("./pages/GreekWorshipPlaylists"));
+
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
     <div className="flex flex-col items-center gap-4">
@@ -287,12 +292,17 @@ const App = () => (
                     <Route path="/order-book" element={<OrderBook />} />
                     <Route path="/speaking-request" element={<SpeakingRequest />} />
                     
-                    {/* SEO Landing Pages */}
+{/* SEO Landing Pages */}
                     <Route path="/christian-greek-life" element={<ChristianGreekLife />} />
                     <Route path="/divine-nine-faith" element={<DivineNineFaith />} />
                     <Route path="/greek-life-biblical-guidance" element={<GreekLifeBiblicalGuidance />} />
                     <Route path="/anti-hazing-christian" element={<AntiHazingChristian />} />
                     <Route path="/spiritual-growth-greek-life" element={<SpiritualGrowthGreekLife />} />
+                    
+                    {/* New Feature Pages */}
+                    <Route path="/chaplain-toolkit" element={<ChapterChaplainToolkit />} />
+                    <Route path="/business-directory" element={<D9BusinessDirectory />} />
+                    <Route path="/worship-playlists" element={<GreekWorshipPlaylists />} />
                     
                     {/* Protected routes - with sidebar */}
                     <Route

@@ -374,6 +374,66 @@ export type Database = {
         }
         Relationships: []
       }
+      d9_business_directory: {
+        Row: {
+          business_category: string
+          business_name: string
+          created_at: string
+          description: string
+          email: string | null
+          faith_statement: string | null
+          featured: boolean | null
+          greek_organization: string
+          id: string
+          is_active: boolean | null
+          location_city: string | null
+          location_state: string | null
+          logo_url: string | null
+          owner_name: string
+          phone: string | null
+          updated_at: string
+          website_url: string | null
+        }
+        Insert: {
+          business_category: string
+          business_name: string
+          created_at?: string
+          description: string
+          email?: string | null
+          faith_statement?: string | null
+          featured?: boolean | null
+          greek_organization: string
+          id?: string
+          is_active?: boolean | null
+          location_city?: string | null
+          location_state?: string | null
+          logo_url?: string | null
+          owner_name: string
+          phone?: string | null
+          updated_at?: string
+          website_url?: string | null
+        }
+        Update: {
+          business_category?: string
+          business_name?: string
+          created_at?: string
+          description?: string
+          email?: string | null
+          faith_statement?: string | null
+          featured?: boolean | null
+          greek_organization?: string
+          id?: string
+          is_active?: boolean | null
+          location_city?: string | null
+          location_state?: string | null
+          logo_url?: string | null
+          owner_name?: string
+          phone?: string | null
+          updated_at?: string
+          website_url?: string | null
+        }
+        Relationships: []
+      }
       daily_challenges: {
         Row: {
           challenge_type: string
