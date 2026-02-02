@@ -98,10 +98,14 @@ const spiritualPracticesItems = [
   { title: "Prayer Journal", url: "/prayer-journal", icon: BookHeart, featureId: null, iconColor: "text-rose-500", hasProgress: true },
 ];
 
-// Community section
-const communityNavItems = [
+// Community section - all community features merged
+const communityItems = [
   { title: "Prayer Wall", url: "/prayer-wall", icon: Heart, featureId: null, iconColor: "text-pink-500", hasProgress: false },
   { title: "Forum", url: "/forum", icon: MessageSquare, featureId: null, iconColor: "text-cyan-500", hasProgress: false },
+  { title: "Events Calendar", url: "/events", icon: CalendarDays, featureId: null, iconColor: "text-purple-500", hasProgress: false },
+  { title: "Chapter Finder", url: "/chapters", icon: MapPin, featureId: null, iconColor: "text-blue-500", hasProgress: false },
+  { title: "Member Network", url: "/network", icon: UserPlus, featureId: null, iconColor: "text-pink-500", hasProgress: false },
+  { title: "Business Directory", url: "/business-directory", icon: Briefcase, featureId: null, iconColor: "text-emerald-500", hasProgress: false },
   { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null, iconColor: "text-indigo-500", hasProgress: false },
   { title: "Group Coaching", url: "/community", icon: GraduationCap, featureId: null, iconColor: "text-orange-500", hasProgress: false },
 ];
@@ -117,14 +121,6 @@ const aboutDrLymanItems = [
 const podcastItems = [
   { title: "Podcast", url: "/podcast", icon: Headphones, featureId: null, iconColor: "text-purple-500", hasProgress: false },
   { title: "Be on Podcast", url: "/guest-panelist-application", icon: Mic, featureId: null, iconColor: "text-purple-500", hasProgress: false },
-];
-
-// Community section (networking features)
-const communityItems = [
-  { title: "Events Calendar", url: "/events", icon: CalendarDays, featureId: null, iconColor: "text-purple-500", hasProgress: false },
-  { title: "Chapter Finder", url: "/chapters", icon: MapPin, featureId: null, iconColor: "text-blue-500", hasProgress: false },
-  { title: "Member Network", url: "/network", icon: UserPlus, featureId: null, iconColor: "text-pink-500", hasProgress: false },
-  { title: "Business Directory", url: "/business-directory", icon: Briefcase, featureId: null, iconColor: "text-emerald-500", hasProgress: false },
 ];
 
 // Resources section
@@ -170,10 +166,9 @@ export function AppSidebar() {
   const filteredLearningPath = filterNavItems(learningPathItems);
   const filteredAssessments = filterNavItems(assessmentItems);
   const filteredSpiritualPractices = filterNavItems(spiritualPracticesItems);
-  const filteredCommunityNav = filterNavItems(communityNavItems);
+  const filteredCommunity = filterNavItems(communityItems);
   const filteredAboutDrLyman = filterNavItems(aboutDrLymanItems);
   const filteredPodcast = filterNavItems(podcastItems);
-  const filteredCommunity = filterNavItems(communityItems);
   const filteredResources = filterNavItems(resourcesItems);
   const filteredSystem = filterNavItems(systemItems);
 
@@ -345,12 +340,12 @@ export function AppSidebar() {
         )}
 
         {/* Community Section */}
-        {filteredCommunityNav.length > 0 && (
+        {filteredCommunity.length > 0 && (
           <SidebarGroup>
-            <SidebarGroupLabel>Community</SidebarGroupLabel>
+            <SidebarGroupLabel>Greek Community</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {filteredCommunityNav.map((item) => (
+                {filteredCommunity.map((item) => (
                   <NavItem key={item.url} item={item} />
                 ))}
               </SidebarMenu>
@@ -379,20 +374,6 @@ export function AppSidebar() {
             <SidebarGroupContent>
               <SidebarMenu>
                 {filteredPodcast.map((item) => (
-                  <NavItem key={item.url} item={item} />
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        )}
-
-        {/* Community/Networking Section */}
-        {filteredCommunity.length > 0 && (
-          <SidebarGroup>
-            <SidebarGroupLabel>Community</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {filteredCommunity.map((item) => (
                   <NavItem key={item.url} item={item} />
                 ))}
               </SidebarMenu>

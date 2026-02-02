@@ -34,6 +34,12 @@ import {
   History,
   Scale,
   Crown,
+  CalendarDays,
+  MapPin,
+  UserPlus,
+  Briefcase,
+  Cross,
+  Music,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -77,10 +83,14 @@ const spiritualPracticesItems = [
   { title: "Prayer Journal", url: "/prayer-journal", icon: BookHeart, featureId: null, iconColor: "text-rose-500" },
 ];
 
-// Community section - matches AppSidebar
-const communityNavItems = [
+// Community section - all community features merged (matches AppSidebar)
+const communityItems = [
   { title: "Prayer Wall", url: "/prayer-wall", icon: Heart, featureId: null, iconColor: "text-pink-500" },
   { title: "Forum", url: "/forum", icon: MessageSquare, featureId: null, iconColor: "text-cyan-500" },
+  { title: "Events Calendar", url: "/events", icon: CalendarDays, featureId: null, iconColor: "text-purple-500" },
+  { title: "Chapter Finder", url: "/chapters", icon: MapPin, featureId: null, iconColor: "text-blue-500" },
+  { title: "Member Network", url: "/network", icon: UserPlus, featureId: null, iconColor: "text-pink-500" },
+  { title: "Business Directory", url: "/business-directory", icon: Briefcase, featureId: null, iconColor: "text-emerald-500" },
   { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null, iconColor: "text-indigo-500" },
   { title: "Group Coaching", url: "/community", icon: GraduationCap, featureId: null, iconColor: "text-orange-500" },
 ];
@@ -100,6 +110,8 @@ const podcastItems = [
 
 // Resources section - matches AppSidebar
 const resourcesItems = [
+  { title: "Chaplain Toolkit", url: "/chaplain-toolkit", icon: Cross, featureId: null, iconColor: "text-sacred" },
+  { title: "Worship Playlists", url: "/worship-playlists", icon: Music, featureId: null, iconColor: "text-purple-500" },
   { title: "Symbol Guide", url: "/symbol-guide", icon: Compass, featureId: null, iconColor: "text-teal-500" },
   { title: "Video Library", url: "/video-library", icon: Video, featureId: null, iconColor: "text-sky-500" },
   { title: "Parents & Family", url: "/parents-family", icon: Heart, featureId: null, iconColor: "text-rose-500" },
@@ -135,7 +147,7 @@ export function MobileNav() {
   const filteredLearningPath = filterNavItems(learningPathItems);
   const filteredAssessments = filterNavItems(assessmentItems);
   const filteredSpiritualPractices = filterNavItems(spiritualPracticesItems);
-  const filteredCommunityNav = filterNavItems(communityNavItems);
+  const filteredCommunity = filterNavItems(communityItems);
   const filteredAboutDrLyman = filterNavItems(aboutDrLymanItems);
   const filteredPodcast = filterNavItems(podcastItems);
   const filteredResources = filterNavItems(resourcesItems);
@@ -227,8 +239,8 @@ export function MobileNav() {
             {filteredSpiritualPractices.length > 0 && (
               <NavSection title="Spiritual Practices" items={filteredSpiritualPractices} />
             )}
-            {filteredCommunityNav.length > 0 && (
-              <NavSection title="Community" items={filteredCommunityNav} />
+            {filteredCommunity.length > 0 && (
+              <NavSection title="Greek Community" items={filteredCommunity} />
             )}
             {filteredAboutDrLyman.length > 0 && (
               <NavSection title="About Dr. Lyman" items={filteredAboutDrLyman} />
