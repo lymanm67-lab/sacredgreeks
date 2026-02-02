@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import QRCode from 'react-qr-code';
@@ -7,6 +7,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from '@/components/ui/dropdown-menu';
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -21,10 +28,17 @@ import {
   ExternalLink,
   MessageSquare,
   ListChecks,
-  Smartphone
+  Smartphone,
+  Download,
+  Upload,
+  FileDown,
+  FileText,
+  Loader2
 } from 'lucide-react';
 import { PresentationSlide, salesPresentationSlides, getPresentationDuration } from './SalesPresentationSlides';
 import { cn } from '@/lib/utils';
+import { exportToPowerPoint, exportToPDF } from '@/lib/presentation-export';
+import { toast } from 'sonner';
 
 interface PresentationSlideViewerProps {
   isOpen: boolean;
@@ -37,6 +51,8 @@ export function PresentationSlideViewer({ isOpen, onClose, initialSlide = 0 }: P
   const [currentSlide, setCurrentSlide] = useState(initialSlide);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showNotes, setShowNotes] = useState(true); // Presenter notes - hide for audience view
+  const [isExporting, setIsExporting] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Update current slide when initialSlide changes (e.g., returning from demo)
   // Use a ref to track if we just opened to avoid resetting on every render
@@ -108,6 +124,54 @@ export function PresentationSlideViewer({ isOpen, onClose, initialSlide = 0 }: P
     navigate(`${route}?${qs.toString()}`);
   };
 
+  // Export handlers
+  const handleExportPowerPoint = async () => {
+    setIsExporting(true);
+    try {
+      await exportToPowerPoint(slides, 'Sacred-Greeks-Presentation');
+      toast.success('PowerPoint exported successfully!');
+    } catch (error) {
+      console.error('Export error:', error);
+      toast.error('Failed to export PowerPoint');
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const handleExportPDF = async () => {
+    setIsExporting(true);
+    try {
+      await exportToPDF(slides, 'Sacred-Greeks-Presentation');
+      toast.success('PDF exported successfully!');
+    } catch (error) {
+      console.error('Export error:', error);
+      toast.error('Failed to export PDF');
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.name.endsWith('.pptx') && !file.name.endsWith('.ppt')) {
+      toast.error('Please upload a PowerPoint file (.pptx or .ppt)');
+      return;
+    }
+
+    toast.info('Upload feature coming soon! For now, you can download and edit the PowerPoint, then share it directly.');
+    
+    // Reset file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -136,6 +200,45 @@ export function PresentationSlideViewer({ isOpen, onClose, initialSlide = 0 }: P
 
         <div className="flex items-center gap-2">
           <Progress value={progress} className="w-32 h-2" />
+          
+          {/* Export/Import Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" className="gap-2" disabled={isExporting}>
+                {isExporting ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Download className="w-4 h-4" />
+                )}
+                Export
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={handleExportPowerPoint}>
+                <FileDown className="w-4 h-4 mr-2" />
+                Download PowerPoint (.pptx)
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handleExportPDF}>
+                <FileText className="w-4 h-4 mr-2" />
+                Download PDF
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleUploadClick}>
+                <Upload className="w-4 h-4 mr-2" />
+                Upload Custom Deck
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          
+          {/* Hidden file input for upload */}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".pptx,.ppt"
+            onChange={handleFileUpload}
+            className="hidden"
+          />
+          
           <Button 
             variant={showNotes ? "secondary" : "ghost"} 
             size="icon" 
