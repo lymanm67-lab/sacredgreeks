@@ -234,14 +234,15 @@ export default function MemberNetwork() {
   const [selectedOrg, setSelectedOrg] = useState("All Organizations");
   const [activeTab, setActiveTab] = useState("discover");
 
-  // Fetch all profiles (excluding current user)
+  // Fetch all profiles (excluding current user) - show members with names
   const { data: profiles } = useQuery({
     queryKey: ['member-profiles', user?.id],
     queryFn: async () => {
       const query = supabase
         .from('profiles')
         .select('*')
-        .not('greek_organization', 'is', null);
+        .not('full_name', 'is', null)
+        .neq('full_name', '');
       
       if (user) {
         query.neq('id', user.id);
