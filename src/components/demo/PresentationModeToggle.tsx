@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Presentation, Eye, EyeOff, Download, Play } from 'lucide-react';
+import { Presentation, Eye, EyeOff, Download, Play, Projector } from 'lucide-react';
 import { useDemoMode } from '@/contexts/DemoModeContext';
 import { Button } from '@/components/ui/button';
 import {
@@ -12,9 +12,10 @@ import { toast } from 'sonner';
 
 interface PresentationModeToggleProps {
   onGenerateDeck?: () => void;
+  onStartSlideshow?: () => void;
 }
 
-export function PresentationModeToggle({ onGenerateDeck }: PresentationModeToggleProps) {
+export function PresentationModeToggle({ onGenerateDeck, onStartSlideshow }: PresentationModeToggleProps) {
   const { isDemoMode, setDemoMode, demoSettings, setDemoSetting } = useDemoMode();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -97,6 +98,21 @@ export function PresentationModeToggle({ onGenerateDeck }: PresentationModeToggl
           )}
 
           <div className="pt-2 border-t space-y-2">
+            {/* Launch Slideshow - Primary Action */}
+            {onStartSlideshow && (
+              <Button
+                size="sm"
+                className="w-full justify-start bg-primary"
+                onClick={() => {
+                  onStartSlideshow();
+                  setIsOpen(false);
+                }}
+              >
+                <Projector className="w-4 h-4 mr-2" />
+                Launch Sales Slideshow
+              </Button>
+            )}
+
             {onGenerateDeck && (
               <Button
                 variant="outline"
@@ -117,7 +133,6 @@ export function PresentationModeToggle({ onGenerateDeck }: PresentationModeToggl
               size="sm"
               className="w-full justify-start text-muted-foreground"
               onClick={() => {
-                // Open a quick start guide
                 toast.info('30-45 Minute Pitch Guide', {
                   description: 'Start with Faith Snapshot → P.R.O.O.F. → Financial Tools → Community Features',
                   duration: 8000,
