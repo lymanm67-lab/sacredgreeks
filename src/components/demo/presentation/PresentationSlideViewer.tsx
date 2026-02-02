@@ -13,6 +13,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+  DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
 import { 
   ChevronLeft, 
@@ -33,7 +37,10 @@ import {
   Upload,
   FileDown,
   FileText,
-  Loader2
+  Loader2,
+  Video,
+  Monitor,
+  Presentation
 } from 'lucide-react';
 import { PresentationSlide, salesPresentationSlides, getPresentationDuration } from './SalesPresentationSlides';
 import { cn } from '@/lib/utils';
@@ -125,11 +132,23 @@ export function PresentationSlideViewer({ isOpen, onClose, initialSlide = 0 }: P
   };
 
   // Export handlers
-  const handleExportPowerPoint = async () => {
+  type ExportPlatform = 'generic' | 'webinarjam' | 'zoom' | 'teams';
+  
+  const handleExportPowerPoint = async (platform: ExportPlatform = 'generic') => {
     setIsExporting(true);
+    const platformNames: Record<ExportPlatform, string> = {
+      generic: 'PowerPoint',
+      webinarjam: 'WebinarJam',
+      zoom: 'Zoom',
+      teams: 'MS Teams'
+    };
     try {
-      await exportToPowerPoint(slides, 'Sacred-Greeks-Presentation');
-      toast.success('PowerPoint exported successfully!');
+      await exportToPowerPoint(slides, 'Sacred-Greeks-Presentation', platform);
+      toast.success(`${platformNames[platform]} presentation exported!`, {
+        description: platform !== 'generic' 
+          ? `Optimized for ${platformNames[platform]} screen sharing` 
+          : undefined
+      });
     } catch (error) {
       console.error('Export error:', error);
       toast.error('Failed to export PowerPoint');
@@ -138,10 +157,10 @@ export function PresentationSlideViewer({ isOpen, onClose, initialSlide = 0 }: P
     }
   };
 
-  const handleExportPDF = async () => {
+  const handleExportPDF = async (platform: ExportPlatform = 'generic') => {
     setIsExporting(true);
     try {
-      await exportToPDF(slides, 'Sacred-Greeks-Presentation');
+      await exportToPDF(slides, 'Sacred-Greeks-Presentation', platform);
       toast.success('PDF exported successfully!');
     } catch (error) {
       console.error('Export error:', error);
@@ -213,15 +232,71 @@ export function PresentationSlideViewer({ isOpen, onClose, initialSlide = 0 }: P
                 Export
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={handleExportPowerPoint}>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel className="text-xs text-muted-foreground">Standard Export</DropdownMenuLabel>
+              <DropdownMenuItem onClick={() => handleExportPowerPoint('generic')}>
                 <FileDown className="w-4 h-4 mr-2" />
                 Download PowerPoint (.pptx)
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleExportPDF}>
+              <DropdownMenuItem onClick={() => handleExportPDF('generic')}>
                 <FileText className="w-4 h-4 mr-2" />
                 Download PDF
               </DropdownMenuItem>
+              
+              <DropdownMenuSeparator />
+              <DropdownMenuLabel className="text-xs text-muted-foreground">Platform-Optimized</DropdownMenuLabel>
+              
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <Presentation className="w-4 h-4 mr-2" />
+                  WebinarJam
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem onClick={() => handleExportPowerPoint('webinarjam')}>
+                    <FileDown className="w-4 h-4 mr-2" />
+                    PowerPoint (16:9 HD)
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleExportPDF('webinarjam')}>
+                    <FileText className="w-4 h-4 mr-2" />
+                    PDF with Notes
+                  </DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+              
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <Video className="w-4 h-4 mr-2" />
+                  Zoom
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem onClick={() => handleExportPowerPoint('zoom')}>
+                    <FileDown className="w-4 h-4 mr-2" />
+                    PowerPoint (16:9 HD)
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleExportPDF('zoom')}>
+                    <FileText className="w-4 h-4 mr-2" />
+                    PDF with Notes
+                  </DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+              
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <Monitor className="w-4 h-4 mr-2" />
+                  MS Teams
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem onClick={() => handleExportPowerPoint('teams')}>
+                    <FileDown className="w-4 h-4 mr-2" />
+                    PowerPoint (16:9 HD)
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleExportPDF('teams')}>
+                    <FileText className="w-4 h-4 mr-2" />
+                    PDF with Notes
+                  </DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+              
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleUploadClick}>
                 <Upload className="w-4 h-4 mr-2" />
