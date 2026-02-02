@@ -218,7 +218,7 @@ export default function ChapterFinder() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedOrg, setSelectedOrg] = useState("All Organizations");
   const [selectedState, setSelectedState] = useState("All States");
-  const [faithFocusedOnly, setFaithFocusedOnly] = useState(false);
+  
 
   // Fetch chapters from database
   const { data: dbChapters } = useQuery({
@@ -239,16 +239,18 @@ export default function ChapterFinder() {
 
   // Filter chapters
   const filteredChapters = chapters.filter(chapter => {
+    const searchLower = searchQuery.toLowerCase();
     const matchesSearch = 
-      chapter.chapter_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (chapter.school_name?.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      chapter.city.toLowerCase().includes(searchQuery.toLowerCase());
+      chapter.chapter_name.toLowerCase().includes(searchLower) ||
+      (chapter.school_name?.toLowerCase().includes(searchLower)) ||
+      chapter.city.toLowerCase().includes(searchLower) ||
+      chapter.organization.toLowerCase().includes(searchLower) ||
+      (chapter.is_faith_focused && searchLower.includes("faith"));
     
     const matchesOrg = selectedOrg === "All Organizations" || chapter.organization === selectedOrg;
     const matchesState = selectedState === "All States" || chapter.state === selectedState;
-    const matchesFaith = !faithFocusedOnly || chapter.is_faith_focused;
     
-    return matchesSearch && matchesOrg && matchesState && matchesFaith;
+    return matchesSearch && matchesOrg && matchesState;
   });
 
   const faithFocusedCount = chapters.filter(c => c.is_faith_focused).length;
@@ -326,14 +328,6 @@ export default function ChapterFinder() {
                     ))}
                   </SelectContent>
                 </Select>
-                <Button 
-                  variant={faithFocusedOnly ? "default" : "outline"} 
-                  onClick={() => setFaithFocusedOnly(!faithFocusedOnly)}
-                  className={faithFocusedOnly ? "bg-sacred hover:bg-sacred/90" : ""}
-                >
-                  <Cross className="w-4 h-4 mr-2" />
-                  Faith-Focused Only
-                </Button>
               </div>
             </div>
           </CardContent>
