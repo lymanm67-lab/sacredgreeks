@@ -40,6 +40,7 @@ import { CreditRepairHub } from "@/components/financial/CreditRepairHub";
 import { StudentFinancialGuide } from "@/components/financial/StudentFinancialGuide";
 import { SISPCalculator } from "@/components/financial/SISPCalculator";
 import { FinancialOverviewTTS } from "@/components/financial/FinancialOverviewTTS";
+import { BuildingWealthSection } from "@/components/financial/BuildingWealthSection";
 import { Link } from "react-router-dom";
 
 interface BudgetResults {
@@ -754,104 +755,7 @@ const FinancialStewardship = () => {
 
           {/* Wealth Building Tab */}
           <TabsContent value="wealth" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-emerald-500" />
-                  Building Generational Wealth
-                </CardTitle>
-                <CardDescription>
-                  "A good person leaves an inheritance for their children's children" — Proverbs 13:22
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid gap-4 md:grid-cols-2">
-                  <div className="space-y-4">
-                    <div className="p-4 rounded-lg bg-muted/50">
-                      <h4 className="font-semibold flex items-center gap-2 mb-2">
-                        <Home className="w-5 h-5 text-blue-500" />
-                        Homeownership
-                      </h4>
-                      <ul className="text-sm text-muted-foreground space-y-1">
-                        <li>• Build equity instead of paying rent</li>
-                        <li>• Research first-time buyer programs</li>
-                        <li>• Improve credit score for better rates</li>
-                        <li>• Save 20% down to avoid PMI</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="p-4 rounded-lg bg-muted/50">
-                      <h4 className="font-semibold flex items-center gap-2 mb-2">
-                        <Landmark className="w-5 h-5 text-amber-500" />
-                        Retirement Investing
-                      </h4>
-                      <ul className="text-sm text-muted-foreground space-y-1">
-                        <li>• Start now—compound interest is powerful</li>
-                        <li>• Max employer 401(k) match (free money!)</li>
-                        <li>• Open a Roth IRA ($7,000/year limit)</li>
-                        <li>• Target-date funds for simplicity</li>
-                      </ul>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <div className="p-4 rounded-lg bg-muted/50">
-                      <h4 className="font-semibold flex items-center gap-2 mb-2">
-                        <GraduationCap className="w-5 h-5 text-purple-500" />
-                        Education & Skills
-                      </h4>
-                      <ul className="text-sm text-muted-foreground space-y-1">
-                        <li>• Invest in certifications that increase income</li>
-                        <li>• Negotiate salary (research market rates)</li>
-                        <li>• Develop multiple income streams</li>
-                        <li>• Use Greek network for opportunities</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="p-4 rounded-lg bg-muted/50">
-                      <h4 className="font-semibold flex items-center gap-2 mb-2">
-                        <Heart className="w-5 h-5 text-rose-500" />
-                        Legacy Planning
-                      </h4>
-                      <ul className="text-sm text-muted-foreground space-y-1">
-                        <li>• Life insurance (term life is affordable)</li>
-                        <li>• Create a will and trust</li>
-                        <li>• Teach children about money early</li>
-                        <li>• Support Black-owned businesses</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-r from-emerald-500/10 to-green-500/10 border-emerald-500/20">
-              <CardContent className="pt-6">
-                <div className="text-center space-y-4">
-                  <h3 className="text-xl font-bold">The Power of Compound Interest</h3>
-                  <p className="text-muted-foreground">
-                    If you invest $200/month starting at age 25 with 8% average returns:
-                  </p>
-                  <div className="grid grid-cols-3 gap-4 mt-4">
-                    <div>
-                      <p className="text-2xl font-bold text-emerald-600">$58,902</p>
-                      <p className="text-sm text-muted-foreground">At age 35</p>
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold text-emerald-600">$176,023</p>
-                      <p className="text-sm text-muted-foreground">At age 45</p>
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold text-emerald-600">$559,562</p>
-                      <p className="text-sm text-muted-foreground">At age 65</p>
-                    </div>
-                  </div>
-                  <p className="text-sm text-muted-foreground italic pt-4">
-                    "Whoever gathers money little by little makes it grow" — Proverbs 13:11
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+            <BuildingWealthSection />
           </TabsContent>
         </Tabs>
       </div>
