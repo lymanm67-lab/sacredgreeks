@@ -1,4 +1,4 @@
-import { ReactNode, useState, useMemo, useCallback } from "react";
+import { ReactNode, useState, useMemo, useCallback, useEffect } from "react";
 import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
 import { MobileNav } from "./MobileNav";
@@ -13,6 +13,7 @@ import { PresentationModeToggle } from "@/components/demo/PresentationModeToggle
 import { SalesDeckGenerator } from "@/components/demo/SalesDeckGenerator";
 import { PresentationSlideViewer, ReturnToPresentationButton } from "@/components/demo/presentation";
 import { cn } from "@/lib/utils";
+import { useLocation } from "react-router-dom";
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -20,6 +21,7 @@ interface AppLayoutProps {
 
 export function AppLayout({ children }: AppLayoutProps) {
   const isMobile = useIsMobile();
+  const location = useLocation();
   const { preferences } = useSidebarPreferences();
   const { isDemoMode, demoSettings } = useDemoMode();
   const { isAdmin } = useAdminCheck();
@@ -45,6 +47,18 @@ export function AppLayout({ children }: AppLayoutProps) {
     setInitialSlide(slideIndex);
     setShowSlideshow(true);
   }, []);
+
+  // Allow non-layout pages (like /snapshot) to return to the slideshow via URL params.
+  // Example: /dashboard?openPresentation=true&slide=2
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const shouldOpen = params.get('openPresentation') === 'true';
+    if (!shouldOpen) return;
+
+    const slide = parseInt(params.get('slide') || '0', 10);
+    setInitialSlide(Number.isFinite(slide) ? slide : 0);
+    setShowSlideshow(true);
+  }, [location.search]);
 
   return (
     <SidebarProvider defaultOpen={!isMobile}>

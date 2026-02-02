@@ -1,11 +1,15 @@
-import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Presentation, ArrowLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 interface ReturnToPresentationButtonProps {
-  onReturnToPresentation: (slideIndex: number) => void;
+  /**
+   * Optional: If provided, the button will call this after navigating back to /dashboard.
+   * If omitted, it will redirect to /dashboard?openPresentation=true&slide=... and let AppLayout open the slideshow.
+   */
+  onReturnToPresentation?: (slideIndex: number) => void;
 }
 
 export function ReturnToPresentationButton({ onReturnToPresentation }: ReturnToPresentationButtonProps) {
@@ -25,13 +29,19 @@ export function ReturnToPresentationButton({ onReturnToPresentation }: ReturnToP
   }, [location.search]);
 
   const handleReturn = () => {
-    // Navigate to dashboard without the query params
-    navigate('/dashboard');
-    
-    // Small delay to ensure navigation completes, then open presentation
-    setTimeout(() => {
-      onReturnToPresentation(slideIndex);
-    }, 150);
+    if (onReturnToPresentation) {
+      // Navigate to dashboard without the query params
+      navigate('/dashboard');
+
+      // Small delay to ensure navigation completes, then open presentation
+      setTimeout(() => {
+        onReturnToPresentation(slideIndex);
+      }, 150);
+      return;
+    }
+
+    // Global fallback: let AppLayout open the slideshow via URL params
+    navigate(`/dashboard?openPresentation=true&slide=${slideIndex}`);
   };
 
   return (
