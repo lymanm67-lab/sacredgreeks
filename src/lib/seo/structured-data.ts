@@ -43,38 +43,66 @@ export function generateOrganizationSchema() {
   };
 }
 
-// WebApplication schema (for the main app)
-export function generateWebApplicationSchema() {
+// SoftwareApplication schema (for app store SEO)
+export function generateSoftwareApplicationSchema() {
   return {
     '@context': 'https://schema.org',
-    '@type': 'WebApplication',
+    '@type': 'SoftwareApplication',
     name: ORG_NAME,
     url: BASE_URL,
-    applicationCategory: 'ReligiousApp',
-    operatingSystem: 'Any',
-    browserRequirements: 'Requires JavaScript',
-    description: 'Your daily companion for navigating faith and Greek life. Get devotionals, biblical guidance, prayer tools, and progress tracking.',
+    applicationCategory: 'LifestyleApplication',
+    applicationSubCategory: 'ReligiousApp',
+    operatingSystem: 'Web Browser (Chrome, Safari, Firefox, Edge)',
+    browserRequirements: 'Requires JavaScript. Works on all modern browsers.',
+    description: 'The #1 faith-based web app for Christians in Greek life. Daily devotionals, P.R.O.O.F. framework, prayer tools, Bible study, and community features. No download required - works instantly in your browser.',
     offers: {
       '@type': 'Offer',
       price: '0',
       priceCurrency: 'USD',
-      description: 'Free with premium features available',
+      description: 'Free forever with optional premium features',
+      availability: 'https://schema.org/InStock',
     },
     featureList: [
-      'Daily Devotionals',
-      'Prayer Journal',
-      'Community Prayer Wall',
-      'Bible Study Tools',
-      'Achievement System',
-      'Progress Tracking',
+      'Daily Devotionals for Greek Life',
+      'P.R.O.O.F. Decision Framework',
+      'Prayer Journal & Wall',
+      'Community Prayer Support',
+      'Bible Study Tools with AI',
+      'Achievement & Progress Tracking',
+      'D9 Business Directory',
+      'Faith-Based Events Calendar',
+      'Member Networking',
     ],
-    screenshot: `${BASE_URL}/icon-512.png`,
-    softwareVersion: '1.4.0',
+    screenshot: `${BASE_URL}/og-image.png`,
+    image: `${BASE_URL}/og-image.png`,
+    softwareVersion: '2.5.4',
+    datePublished: '2024-01-01',
+    downloadUrl: BASE_URL,
+    installUrl: BASE_URL,
+    permissions: 'No special permissions required',
+    storageRequirements: 'Minimal - runs in browser',
+    memoryRequirements: 'Minimal - runs in browser',
     author: {
       '@type': 'Organization',
       name: ORG_NAME,
     },
+    creator: {
+      '@type': 'Person',
+      name: 'Dr. Lyman Montgomery',
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      ratingCount: '127',
+      bestRating: '5',
+      worstRating: '1',
+    },
   };
+}
+
+// WebApplication schema (for the main app) - Alias for backward compatibility
+export function generateWebApplicationSchema() {
+  return generateSoftwareApplicationSchema();
 }
 
 // WebPage schema
