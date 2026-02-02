@@ -34,6 +34,7 @@ export interface PresentationSlide {
   subtitle?: string;
   icon: ReactNode;
   image?: string; // Background or hero image for the slide
+  showQRCode?: boolean; // Show QR code for mobile download
   presenterNotes: string[];
   keyPoints: string[];
   talkingPoints?: string[];
@@ -261,11 +262,12 @@ export const salesPresentationSlides: PresentationSlide[] = [
     icon: <Rocket className="w-12 h-12 text-sacred" />,
     image: slideClose,
     duration: '3-4 min',
+    showQRCode: true,
     presenterNotes: [
       'Summarize the value proposition',
       'Emphasize: 100% FREE — no budget approval needed',
       'PWA works on any device — no app store friction',
-      'Ask for specific next steps'
+      'Have them scan QR code right now to install'
     ],
     keyPoints: [
       '100% Free — No budget approval needed',
@@ -279,9 +281,9 @@ export const salesPresentationSlides: PresentationSlide[] = [
       { label: 'Time to Start', value: 'Instant' }
     ],
     actionItems: [
+      'Scan QR code to install on your phone now',
       'Share link with your chapter leaders',
       'Add to new member orientation',
-      'Include in chaplain training',
       'Connect with us for speaking opportunities'
     ]
   }

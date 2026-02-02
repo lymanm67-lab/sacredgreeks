@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import QRCode from 'react-qr-code';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -19,7 +20,8 @@ import {
   CheckCircle2,
   ExternalLink,
   MessageSquare,
-  ListChecks
+  ListChecks,
+  Smartphone
 } from 'lucide-react';
 import { PresentationSlide, salesPresentationSlides, getPresentationDuration } from './SalesPresentationSlides';
 import { cn } from '@/lib/utils';
@@ -213,6 +215,28 @@ export function PresentationSlideViewer({ isOpen, onClose }: PresentationSlideVi
                       <ExternalLink className="w-4 h-4 mr-2" />
                       Open Live Demo
                     </Button>
+                  )}
+
+                  {/* QR Code for Mobile Download */}
+                  {slide.showQRCode && (
+                    <div className="pt-4 border-t space-y-3">
+                      <div className="flex items-center justify-center gap-2 text-sm font-medium text-muted-foreground">
+                        <Smartphone className="w-4 h-4" />
+                        Scan to Install on Your Phone
+                      </div>
+                      <div className="flex justify-center">
+                        <div className="bg-white p-3 rounded-lg shadow-sm">
+                          <QRCode
+                            value={window.location.origin}
+                            size={120}
+                            level="M"
+                          />
+                        </div>
+                      </div>
+                      <p className="text-xs text-center text-muted-foreground">
+                        Works on iPhone & Android
+                      </p>
+                    </div>
                   )}
                 </CardContent>
               </Card>
