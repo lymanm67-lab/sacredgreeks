@@ -14,6 +14,8 @@ import {
   Maximize2,
   Minimize2,
   Clock,
+  PanelRightClose,
+  PanelRight,
   CheckCircle2,
   ExternalLink,
   MessageSquare,
@@ -31,6 +33,7 @@ export function PresentationSlideViewer({ isOpen, onClose }: PresentationSlideVi
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showNotes, setShowNotes] = useState(true); // Presenter notes - hide for audience view
 
   const slides = salesPresentationSlides;
   const slide = slides[currentSlide];
@@ -103,6 +106,14 @@ export function PresentationSlideViewer({ isOpen, onClose }: PresentationSlideVi
 
         <div className="flex items-center gap-2">
           <Progress value={progress} className="w-32 h-2" />
+          <Button 
+            variant={showNotes ? "secondary" : "ghost"} 
+            size="icon" 
+            onClick={() => setShowNotes(!showNotes)}
+            title={showNotes ? "Hide notes (presenter view)" : "Show notes"}
+          >
+            {showNotes ? <PanelRightClose className="w-5 h-5" /> : <PanelRight className="w-5 h-5" />}
+          </Button>
           <Button variant="ghost" size="icon" onClick={toggleFullscreen}>
             {isFullscreen ? <Minimize2 className="w-5 h-5" /> : <Maximize2 className="w-5 h-5" />}
           </Button>
@@ -197,69 +208,71 @@ export function PresentationSlideViewer({ isOpen, onClose }: PresentationSlideVi
           </AnimatePresence>
         </div>
 
-        {/* Presenter Notes - Right Side */}
-        <div className="w-96 border-l border-border bg-muted/30 flex flex-col">
-          <div className="p-4 border-b border-border bg-background/50">
-            <h3 className="font-semibold flex items-center gap-2">
-              <MessageSquare className="w-4 h-4" />
-              Presenter Notes
-            </h3>
-          </div>
-          
-          <ScrollArea className="flex-1 p-4">
-            <div className="space-y-6">
-              {/* Speaking Notes */}
-              <div className="space-y-3">
-                <h4 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
-                  What to Say
-                </h4>
-                {slide.presenterNotes.map((note, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: i * 0.1 }}
-                    className="flex gap-2 text-sm"
-                  >
-                    <span className="text-primary font-bold">{i + 1}.</span>
-                    <span>{note}</span>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Talking Points */}
-              {slide.talkingPoints && slide.talkingPoints.length > 0 && (
-                <div className="space-y-3 pt-4 border-t">
-                  <h4 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
-                    Supporting Details
-                  </h4>
-                  {slide.talkingPoints.map((point, i) => (
-                    <div key={i} className="flex gap-2 text-sm text-muted-foreground">
-                      <span>→</span>
-                      <span>{point}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {/* Action Items */}
-              {slide.actionItems && slide.actionItems.length > 0 && (
-                <div className="space-y-3 pt-4 border-t">
-                  <h4 className="text-sm font-medium text-muted-foreground uppercase tracking-wider flex items-center gap-2">
-                    <ListChecks className="w-4 h-4" />
-                    Call to Action
-                  </h4>
-                  {slide.actionItems.map((item, i) => (
-                    <div key={i} className="flex gap-2 text-sm">
-                      <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
+        {/* Presenter Notes - Right Side (hidden in audience mode) */}
+        {showNotes && (
+          <div className="w-96 border-l border-border bg-muted/30 flex flex-col">
+            <div className="p-4 border-b border-border bg-background/50">
+              <h3 className="font-semibold flex items-center gap-2">
+                <MessageSquare className="w-4 h-4" />
+                Presenter Notes
+              </h3>
             </div>
-          </ScrollArea>
-        </div>
+            
+            <ScrollArea className="flex-1 p-4">
+              <div className="space-y-6">
+                {/* Speaking Notes */}
+                <div className="space-y-3">
+                  <h4 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+                    What to Say
+                  </h4>
+                  {slide.presenterNotes.map((note, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: i * 0.1 }}
+                      className="flex gap-2 text-sm"
+                    >
+                      <span className="text-primary font-bold">{i + 1}.</span>
+                      <span>{note}</span>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Talking Points */}
+                {slide.talkingPoints && slide.talkingPoints.length > 0 && (
+                  <div className="space-y-3 pt-4 border-t">
+                    <h4 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+                      Supporting Details
+                    </h4>
+                    {slide.talkingPoints.map((point, i) => (
+                      <div key={i} className="flex gap-2 text-sm text-muted-foreground">
+                        <span>→</span>
+                        <span>{point}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Action Items */}
+                {slide.actionItems && slide.actionItems.length > 0 && (
+                  <div className="space-y-3 pt-4 border-t">
+                    <h4 className="text-sm font-medium text-muted-foreground uppercase tracking-wider flex items-center gap-2">
+                      <ListChecks className="w-4 h-4" />
+                      Call to Action
+                    </h4>
+                    {slide.actionItems.map((item, i) => (
+                      <div key={i} className="flex gap-2 text-sm">
+                        <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </ScrollArea>
+          </div>
+        )}
       </div>
 
       {/* Navigation Footer */}
