@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useMemo } from "react";
 import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
 import { MobileNav } from "./MobileNav";
@@ -8,6 +8,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useSidebarPreferences } from "@/hooks/use-sidebar-preferences";
 import { useDemoMode } from "@/contexts/DemoModeContext";
+import { useAdminCheck } from "@/components/AdminRoute";
 import { PresentationModeToggle } from "@/components/demo/PresentationModeToggle";
 import { SalesDeckGenerator } from "@/components/demo/SalesDeckGenerator";
 import { cn } from "@/lib/utils";
@@ -20,9 +21,21 @@ export function AppLayout({ children }: AppLayoutProps) {
   const isMobile = useIsMobile();
   const { preferences } = useSidebarPreferences();
   const { isDemoMode, demoSettings } = useDemoMode();
+  const { isAdmin } = useAdminCheck();
   const [showSalesDeck, setShowSalesDeck] = useState(false);
   const isRightSidebar = preferences.position === 'right';
   const isPresentationMode = demoSettings.presentationMode;
+
+  // Check for ?presenter=true URL parameter (fallback access for non-admins)
+  const hasPresenterParam = useMemo(() => {
+    if (typeof window !== 'undefined') {
+      return new URLSearchParams(window.location.search).get('presenter') === 'true';
+    }
+    return false;
+  }, []);
+
+  // Show presentation toggle only for admins OR if ?presenter=true is in URL
+  const canAccessPresentationMode = isAdmin || hasPresenterParam;
 
   return (
     <SidebarProvider defaultOpen={!isMobile}>
@@ -41,7 +54,7 @@ export function AppLayout({ children }: AppLayoutProps) {
             {isMobile ? <MobileNav /> : <SidebarTrigger className="-ml-1" />}
             <PageTitle />
             <div className="ml-auto flex items-center gap-2">
-              {isDemoMode && (
+              {isDemoMode && canAccessPresentationMode && (
                 <PresentationModeToggle onGenerateDeck={() => setShowSalesDeck(true)} />
               )}
               <ThemeToggle />
