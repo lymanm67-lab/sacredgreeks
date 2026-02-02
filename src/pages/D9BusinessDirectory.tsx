@@ -439,14 +439,13 @@ export default function D9BusinessDirectory() {
               Own a Faith-Based Business?
             </h3>
             <p className="text-sm text-muted-foreground mb-4">
-              We're curating this directory to feature D9 entrepreneurs who operate on Kingdom principles.
-              Contact us to be considered for inclusion.
+              List your D9-owned business for FREE and connect with brothers and sisters who want to support Black excellence.
             </p>
             <Button variant="outline" asChild>
-              <a href="mailto:directory@sacredgreeks.com">
+              <Link to="/submit-business">
                 <Mail className="w-4 h-4 mr-2" />
-                Submit Your Business
-              </a>
+                Submit Your Business Free
+              </Link>
             </Button>
           </CardContent>
         </Card>

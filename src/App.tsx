@@ -138,6 +138,7 @@ const SpiritualGrowthGreekLife = lazy(() => import("./pages/seo/SpiritualGrowthG
 // New Feature Pages
 const ChapterChaplainToolkit = lazy(() => import("./pages/ChapterChaplainToolkit"));
 const D9BusinessDirectory = lazy(() => import("./pages/D9BusinessDirectory"));
+const SubmitBusiness = lazy(() => import("./pages/SubmitBusiness"));
 const GreekWorshipPlaylists = lazy(() => import("./pages/GreekWorshipPlaylists"));
 const EventsCalendar = lazy(() => import("./pages/EventsCalendar"));
 const ChapterFinder = lazy(() => import("./pages/ChapterFinder"));
@@ -309,6 +310,7 @@ const App = () => (
                     {/* New Feature Pages */}
                     <Route path="/chaplain-toolkit" element={<ChapterChaplainToolkit />} />
                     <Route path="/business-directory" element={<D9BusinessDirectory />} />
+                    <Route path="/submit-business" element={<SubmitBusiness />} />
                     <Route path="/worship-playlists" element={<GreekWorshipPlaylists />} />
                     <Route path="/events" element={<EventsCalendar />} />
                     <Route path="/chapters" element={<PageWithLayout><ChapterFinder /></PageWithLayout>} />
