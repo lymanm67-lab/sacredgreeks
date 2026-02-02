@@ -135,6 +135,11 @@ const GreekLifeBiblicalGuidance = lazy(() => import("./pages/seo/GreekLifeBiblic
 const AntiHazingChristian = lazy(() => import("./pages/seo/AntiHazingChristian"));
 const SpiritualGrowthGreekLife = lazy(() => import("./pages/seo/SpiritualGrowthGreekLife"));
 
+// Entry Point Landing Pages
+const GreekFinancialLeadership = lazy(() => import("./pages/landing/GreekFinancialLeadership"));
+const GreekLeadership = lazy(() => import("./pages/landing/GreekLeadership"));
+const FaithAndGreekLife = lazy(() => import("./pages/landing/FaithAndGreekLife"));
+
 // New Feature Pages
 const ChapterChaplainToolkit = lazy(() => import("./pages/ChapterChaplainToolkit"));
 const D9BusinessDirectory = lazy(() => import("./pages/D9BusinessDirectory"));
@@ -307,6 +312,11 @@ const App = () => (
                     <Route path="/greek-life-biblical-guidance" element={<GreekLifeBiblicalGuidance />} />
                     <Route path="/anti-hazing-christian" element={<AntiHazingChristian />} />
                     <Route path="/spiritual-growth-greek-life" element={<SpiritualGrowthGreekLife />} />
+                    
+                    {/* Entry Point Landing Pages */}
+                    <Route path="/greek-financial-leadership" element={<GreekFinancialLeadership />} />
+                    <Route path="/greek-leadership" element={<GreekLeadership />} />
+                    <Route path="/faith-and-greek-life" element={<FaithAndGreekLife />} />
                     
                     {/* New Feature Pages */}
                     <Route path="/chaplain-toolkit" element={<ChapterChaplainToolkit />} />
