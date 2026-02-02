@@ -4,8 +4,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { SEOHead } from "@/components/SEOHead";
 import { 
   Shield, Heart, Users, Cross, ArrowRight, 
-  CheckCircle2, AlertTriangle, BookOpen, Phone, HandHeart
+  CheckCircle2, AlertTriangle, Phone, HandHeart, Trophy, Sparkles, Zap
 } from "lucide-react";
+import { BlueOceanBadge, FreeForeverBadge } from "@/components/seo/BlueOceanBadge";
+
+const uniqueApproach = [
+  { stat: "Only", label: "Anti-hazing app", detail: "With biblical alternatives" },
+  { stat: "50+", label: "Resources", detail: "Scripture-based guidance" },
+  { stat: "$0", label: "Forever", detail: "Free safety resources" },
+  { stat: "24/7", label: "Support", detail: "AI assistant available" },
+];
 
 const hazingAlternatives = [
   {
@@ -41,33 +49,13 @@ const warningSignsList = [
   "Isolation from friends, family, or support systems",
 ];
 
-const resources = [
-  {
-    title: "StopHazing.org",
-    description: "National resource for hazing prevention and education",
-    type: "External Resource",
-  },
-  {
-    title: "P.R.O.O.F. Assessment",
-    description: "Evaluate your organization's practices biblically",
-    type: "Sacred Greeks Tool",
-    link: "/proof-assessment",
-  },
-  {
-    title: "Ask Dr. Lyman",
-    description: "Get confidential guidance on concerning situations",
-    type: "Sacred Greeks Tool",
-    link: "/ask-dr-lyman",
-  },
-];
-
 export default function AntiHazingChristian() {
   return (
     <>
       <SEOHead
-        title="Anti-Hazing Christian Resources | Biblical Alternatives to Greek Hazing"
-        description="Christian anti-hazing resources for Greek life. Biblical alternatives to harmful traditions, hazing warning signs, and faith-based guidance for ethical fraternity and sorority membership. Stop hazing with Scripture-based approaches."
-        keywords="anti-hazing Christian, Greek hazing alternatives, biblical response to hazing, Christian fraternity hazing, sorority hazing prevention, ethical Greek life, hazing warning signs, stop Greek hazing, faith-based anti-hazing, Christian greek organization safety"
+        title="Anti-Hazing Christian Resources | Only Biblical Alternative Guide | Sacred Greeks"
+        description="The ONLY anti-hazing resource with biblical alternatives. Unlike generic safety sites, Sacred Greeks offers Scripture-based responses, faith-centered prevention strategies, and Christian community support—100% FREE."
+        keywords="anti-hazing Christian, Greek hazing alternatives biblical, Christian fraternity hazing prevention, sorority hazing Bible response, ethical Greek life Christian, hazing warning signs, stop Greek hazing faith, Christian greek safety, biblical anti-hazing resources"
         structuredDataType="WebPage"
       />
       
@@ -76,19 +64,23 @@ export default function AntiHazingChristian() {
         <header className="relative overflow-hidden bg-gradient-to-b from-red-500/10 via-background to-background">
           <div className="container mx-auto px-4 py-16 md:py-24">
             <div className="max-w-4xl mx-auto text-center space-y-6">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20">
-                <Shield className="w-4 h-4" />
-                <span className="text-sm font-medium">Anti-Hazing Resources</span>
+              <div className="flex flex-wrap gap-2 justify-center">
+                <BlueOceanBadge variant="default" />
+                <FreeForeverBadge />
               </div>
               
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-                Christian Response to{' '}
-                <span className="text-red-600 dark:text-red-400">Greek Hazing</span>
+                The <span className="text-red-600 dark:text-red-400">Only</span> Anti-Hazing Resource with{' '}
+                <span className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
+                  Biblical Alternatives
+                </span>
               </h1>
               
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Biblical alternatives to harmful traditions. Learn to recognize hazing, 
-                respond with faith, and promote ethical Greek life practices.
+                <span className="line-through text-muted-foreground/60">StopHazing.org</span> is secular only.{' '}
+                <span className="line-through text-muted-foreground/60">Greek management apps</span> ignore safety.{' '}
+                <strong className="text-foreground">Sacred Greeks</strong> is the only resource offering{' '}
+                <span className="text-red-600 dark:text-red-400 font-semibold">Scripture-based hazing prevention</span>.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
@@ -121,35 +113,65 @@ export default function AntiHazingChristian() {
           </div>
         </section>
 
+        {/* Stats */}
+        <section className="py-12 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+              {uniqueApproach.map((item, index) => (
+                <div key={index} className="text-center">
+                  <div className="text-3xl md:text-4xl font-bold text-red-600 dark:text-red-400">{item.stat}</div>
+                  <div className="text-sm font-medium text-foreground">{item.label}</div>
+                  <div className="text-xs text-muted-foreground mt-1">{item.detail}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Unique Approach Notice */}
+        <section className="py-8 bg-red-500/10 border-y border-red-500/20">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-center gap-3 text-center">
+              <Trophy className="w-6 h-6 text-red-600 dark:text-red-400" />
+              <p className="text-red-700 dark:text-red-300 font-medium">
+                Only Sacred Greeks offers hazing alternatives with Scripture references for each situation.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Biblical Alternatives */}
         <section className="py-16 md:py-24">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
+              <Sparkles className="w-10 h-10 text-emerald-500 mx-auto mb-4" />
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
                 Biblical Alternatives to Hazing
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Scripture provides a better way to build brotherhood and sisterhood 
-                without harm or degradation.
+                Scripture provides a better way to build brotherhood and sisterhood—without harm. 
+                <span className="text-red-600 dark:text-red-400 font-medium"> Only available here.</span>
               </p>
             </div>
             
             <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
               {hazingAlternatives.map((item, index) => (
-                <Card key={index} className="border-2">
-                  <CardContent className="p-6">
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center shrink-0">
-                        <item.icon className="w-6 h-6 text-green-600 dark:text-green-400" />
+                <Card key={index} className="border-2 overflow-hidden">
+                  <CardContent className="p-0">
+                    <div className="bg-red-500/10 p-3 border-b border-red-500/20">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs px-2 py-1 rounded bg-red-500/20 text-red-600 dark:text-red-400 font-medium">INSTEAD OF</span>
+                        <span className="text-sm text-muted-foreground line-through">{item.traditional}</span>
                       </div>
-                      <div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-xs px-2 py-1 rounded bg-red-500/10 text-red-600 dark:text-red-400">Instead of</span>
-                          <span className="text-sm text-muted-foreground line-through">{item.traditional}</span>
+                    </div>
+                    <div className="bg-emerald-500/5 p-4">
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center shrink-0">
+                          <item.icon className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                         </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs px-2 py-1 rounded bg-green-500/10 text-green-600 dark:text-green-400">Try</span>
-                          <span className="text-sm text-foreground">{item.biblical}</span>
+                        <div>
+                          <span className="text-xs px-2 py-1 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-medium">TRY THIS</span>
+                          <p className="text-foreground mt-2">{item.biblical}</p>
                         </div>
                       </div>
                     </div>
@@ -204,7 +226,7 @@ export default function AntiHazingChristian() {
           </div>
         </section>
 
-        {/* What To Do Section */}
+        {/* What To Do */}
         <section className="py-16 bg-muted/30">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-8">
@@ -230,19 +252,19 @@ export default function AntiHazingChristian() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-16">
+        <section className="py-16 bg-red-500/5">
           <div className="container mx-auto px-4 text-center">
+            <Zap className="w-12 h-12 text-red-500 mx-auto mb-4" />
             <h2 className="text-3xl font-bold mb-4">
               Build Brotherhood Without Harm
             </h2>
             <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
-              Learn how to create meaningful Greek experiences that honor God and 
-              respect human dignity.
+              Get complete biblical alternatives for every hazing scenario. Only on Sacred Greeks.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/proof-course">
                 <Button size="lg" className="bg-sacred hover:bg-sacred/90">
-                  Learn the P.R.O.O.F. Framework
+                  Learn P.R.O.O.F. Framework
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </Link>

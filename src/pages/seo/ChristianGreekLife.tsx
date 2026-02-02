@@ -4,59 +4,65 @@ import { Card, CardContent } from "@/components/ui/card";
 import { SEOHead } from "@/components/SEOHead";
 import { 
   BookOpen, Cross, Users, Heart, Shield, ArrowRight, 
-  CheckCircle2, Star, Calendar, MessageCircle 
+  CheckCircle2, Star, Trophy, Zap, Target, Sparkles
 } from "lucide-react";
+import { BlueOceanBadge, FreeForeverBadge, CompetitorGapBadge } from "@/components/seo/BlueOceanBadge";
+import { CompetitorCompare, CompetitorHighlight } from "@/components/seo/CompetitorCompare";
 
-const features = [
+const uniqueFeatures = [
   {
-    icon: Cross,
-    title: "Faith-Centered Resources",
-    description: "Daily devotionals and Bible studies designed specifically for Christians navigating Greek life membership.",
+    icon: Shield,
+    title: "P.R.O.O.F. Framework™",
+    description: "The only biblical evaluation tool for Greek life. Assess Pledging, Rituals, Oaths, Obscurity & Founders through Scripture.",
+    unique: true,
+  },
+  {
+    icon: Zap,
+    title: "Response Coach AI",
+    description: "Get AI-powered guidance on defending your faith while honoring your Greek commitments. No competitor offers this.",
+    unique: true,
   },
   {
     icon: BookOpen,
-    title: "P.R.O.O.F. Framework",
-    description: "Our proprietary framework helps evaluate pledging, rituals, oaths, obscurity, and founders through a biblical lens.",
+    title: "Daily Devotionals for Greeks",
+    description: "Scripture-based reflections addressing the unique experiences of Christians in fraternities and sororities.",
+    unique: false,
   },
   {
     icon: Users,
-    title: "Community Support",
-    description: "Connect with other Christians in fraternities and sororities who understand your unique journey.",
+    title: "Community Prayer Wall",
+    description: "Connect with fellow believers across all Greek organizations who understand your unique journey.",
+    unique: false,
   },
-  {
-    icon: Shield,
-    title: "Biblical Guidance",
-    description: "Expert guidance on navigating Greek traditions while honoring your faith commitments.",
-  },
+];
+
+const whyDifferent = [
+  { stat: "17+", label: "Competitors analyzed", detail: "None combine faith + Greek" },
+  { stat: "6", label: "Unique features", detail: "You won't find elsewhere" },
+  { stat: "$0", label: "Forever", detail: "Glorify charges $79/year" },
+  { stat: "Only", label: "Faith + Greek app", detail: "True blue ocean" },
 ];
 
 const testimonials = [
   {
-    quote: "Sacred Greeks helped me see that my faith and fraternity membership can coexist when approached biblically.",
+    quote: "I searched everywhere for an app that understood both my faith AND my Greek life. Sacred Greeks is the only one that gets it.",
     author: "Marcus T.",
     org: "Kappa Alpha Psi",
   },
   {
-    quote: "The P.R.O.O.F. framework gave me the clarity I needed to make an informed decision about joining.",
+    quote: "Glorify is great for devotionals, but it knows nothing about Greek life. Sacred Greeks bridges that gap perfectly.",
     author: "Ashley R.",
     org: "Delta Sigma Theta",
   },
-];
-
-const stats = [
-  { value: "10,000+", label: "Christians in Greek Life Served" },
-  { value: "30+", label: "Daily Devotionals" },
-  { value: "9", label: "Divine Nine Organizations Covered" },
-  { value: "100%", label: "Free Core Features" },
 ];
 
 export default function ChristianGreekLife() {
   return (
     <>
       <SEOHead
-        title="Christian Greek Life App | Faith-Based Fraternity & Sorority Resources"
-        description="The #1 app for Christians in Greek life. Daily devotionals, biblical guidance on rituals and oaths, P.R.O.O.F. framework, and community support for Christian fraternity and sorority members."
-        keywords="Christian Greek life, Christian fraternity, Christian sorority, faith-based Greek organization, Christians in fraternities, Christians in sororities, Greek life and Christianity, Christian BGLO, faith fraternity sorority"
+        title="Christian Greek Life App | Only Faith + Fraternity Resource | Sacred Greeks"
+        description="The ONLY app combining Christian faith with Greek life guidance. Unlike Glorify (faith only) or OmegaFi (operations only), Sacred Greeks offers P.R.O.O.F. framework, daily devotionals, AI coaching & more—100% FREE."
+        keywords="Christian Greek life, Christian fraternity app, Christian sorority app, faith-based Greek organization, Glorify alternative for Greeks, OmegaFi alternative, P.R.O.O.F. framework, Greek life biblical guidance, BGLO Christian app, Divine Nine faith"
         structuredDataType="WebPage"
       />
       
@@ -65,20 +71,26 @@ export default function ChristianGreekLife() {
         <header className="relative overflow-hidden bg-gradient-to-b from-sacred/10 via-background to-background">
           <div className="container mx-auto px-4 py-16 md:py-24">
             <div className="max-w-4xl mx-auto text-center space-y-6">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sacred/10 text-sacred border border-sacred/20">
-                <Cross className="w-4 h-4" />
-                <span className="text-sm font-medium">Faith-Based Greek Life Resources</span>
+              {/* Blue Ocean Badge */}
+              <div className="flex flex-wrap gap-2 justify-center">
+                <BlueOceanBadge variant="gradient" />
+                <FreeForeverBadge />
               </div>
               
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-                Christian Greek Life:{' '}
-                <span className="text-sacred">Faith & Fraternity United</span>
+                The <span className="text-sacred">Only App</span> Where{' '}
+                <span className="bg-gradient-to-r from-sacred to-purple-500 bg-clip-text text-transparent">
+                  Faith Meets Greek Life
+                </span>
               </h1>
               
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Navigate your Greek organization membership with confidence. Get biblical guidance, 
-                daily devotionals, and connect with a community of Christians in fraternities and sororities.
+                Not a chapter management tool like <span className="line-through text-muted-foreground/60">OmegaFi</span>. 
+                Not a generic faith app like <span className="line-through text-muted-foreground/60">Glorify</span>. 
+                The <strong className="text-foreground">only resource</strong> purpose-built for Christians in Greek organizations.
               </p>
+              
+              <CompetitorHighlight />
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
                 <Link to="/auth">
@@ -97,43 +109,67 @@ export default function ChristianGreekLife() {
           </div>
         </header>
 
-        {/* Stats Section */}
+        {/* Why Different Stats */}
         <section className="py-12 bg-muted/30">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {stats.map((stat, index) => (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+              {whyDifferent.map((item, index) => (
                 <div key={index} className="text-center">
-                  <div className="text-3xl md:text-4xl font-bold text-sacred">{stat.value}</div>
-                  <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
+                  <div className="text-3xl md:text-4xl font-bold text-sacred">{item.stat}</div>
+                  <div className="text-sm font-medium text-foreground">{item.label}</div>
+                  <div className="text-xs text-muted-foreground mt-1">{item.detail}</div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Features Section */}
+        {/* Competitor Comparison */}
         <section className="py-16 md:py-24">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Everything Christian Greeks Need
+              <CompetitorGapBadge />
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 mt-4">
+                See Why No One Else Compares
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Purpose-built resources for Christians in fraternities and sororities who want to 
-                honor God while participating in Greek life.
+                We analyzed 17+ competitors. <span className="text-sacred font-semibold">None</span> combine faith resources with Greek life guidance.
+              </p>
+            </div>
+            
+            <div className="max-w-4xl mx-auto">
+              <CompetitorCompare compact={false} />
+            </div>
+          </div>
+        </section>
+
+        {/* Unique Features */}
+        <section className="py-16 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-foreground mb-4">
+                Features You Won't Find Anywhere Else
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Purpose-built for the intersection of faith and Greek membership.
               </p>
             </div>
             
             <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              {features.map((feature, index) => (
-                <Card key={index} className="border-2 hover:border-sacred/50 transition-colors">
+              {uniqueFeatures.map((feature, index) => (
+                <Card key={index} className={`border-2 transition-colors ${feature.unique ? 'border-sacred/30 bg-sacred/5' : 'hover:border-sacred/50'}`}>
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-lg bg-sacred/10 flex items-center justify-center shrink-0">
-                        <feature.icon className="w-6 h-6 text-sacred" />
+                      <div className={`w-12 h-12 rounded-lg flex items-center justify-center shrink-0 ${feature.unique ? 'bg-sacred/20' : 'bg-muted'}`}>
+                        <feature.icon className={`w-6 h-6 ${feature.unique ? 'text-sacred' : 'text-muted-foreground'}`} />
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-2">{feature.title}</h3>
+                        <div className="flex items-center gap-2 mb-2">
+                          <h3 className="text-lg font-semibold text-foreground">{feature.title}</h3>
+                          {feature.unique && (
+                            <span className="text-[10px] px-1.5 py-0.5 rounded bg-sacred text-white font-medium">UNIQUE</span>
+                          )}
+                        </div>
                         <p className="text-muted-foreground">{feature.description}</p>
                       </div>
                     </div>
@@ -144,23 +180,25 @@ export default function ChristianGreekLife() {
           </div>
         </section>
 
-        {/* What You'll Get Section */}
-        <section className="py-16 bg-muted/30">
+        {/* What You Get */}
+        <section className="py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl font-bold text-center mb-8">
-                What Christian Greek Life Members Get
+                Everything Christian Greeks Need—For Free
               </h2>
               <div className="grid md:grid-cols-2 gap-4">
                 {[
                   "Daily devotionals for Christian Greeks",
-                  "P.R.O.O.F. framework evaluation tool",
+                  "P.R.O.O.F.™ framework evaluation tool",
                   "Biblical perspective on Greek rituals",
                   "Prayer journal & community prayer wall",
-                  "Guidance on oaths and vows",
-                  "Connect with Christian fraternity brothers",
-                  "Resources for Christian sorority sisters",
-                  "Anti-hazing biblical alternatives",
+                  "AI Response Coach for tough conversations",
+                  "Symbol & ritual biblical guide",
+                  "Anti-hazing Christian alternatives",
+                  "30-day faith journey program",
+                  "Myth Buster library (50+ topics)",
+                  "Ask Dr. Lyman AI assistant",
                 ].map((item, index) => (
                   <div key={index} className="flex items-center gap-3">
                     <CheckCircle2 className="w-5 h-5 text-sacred shrink-0" />
@@ -173,14 +211,14 @@ export default function ChristianGreekLife() {
         </section>
 
         {/* Testimonials */}
-        <section className="py-16 md:py-24">
+        <section className="py-16 bg-muted/30">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-12">
-              Christians in Greek Life Share Their Experience
+              Why Christians Choose Sacred Greeks
             </h2>
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {testimonials.map((testimonial, index) => (
-                <Card key={index} className="bg-muted/50">
+                <Card key={index} className="bg-background">
                   <CardContent className="p-6">
                     <div className="flex gap-1 mb-4">
                       {[...Array(5)].map((_, i) => (
@@ -202,12 +240,13 @@ export default function ChristianGreekLife() {
         {/* CTA Section */}
         <section className="py-16 bg-sacred/5">
           <div className="container mx-auto px-4 text-center">
+            <Trophy className="w-12 h-12 text-sacred mx-auto mb-4" />
             <h2 className="text-3xl font-bold mb-4">
-              Ready to Honor God in Greek Life?
+              Own Your Niche: Faith + Greek Life
             </h2>
             <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
-              Join thousands of Christians in fraternities and sororities who are navigating 
-              Greek life with biblical wisdom.
+              Join the only community purpose-built for Christians navigating Greek organizations.
+              No other app serves this space.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/snapshot">

@@ -4,8 +4,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { SEOHead } from "@/components/SEOHead";
 import { 
   BookOpen, Scale, Eye, Users, Cross, ArrowRight, 
-  CheckCircle2, AlertTriangle, Lightbulb, FileText
+  CheckCircle2, AlertTriangle, Lightbulb, Trophy, Sparkles, Zap
 } from "lucide-react";
+import { BlueOceanBadge, FreeForeverBadge } from "@/components/seo/BlueOceanBadge";
 
 const proofFramework = [
   {
@@ -33,7 +34,7 @@ const proofFramework = [
     letter: "O",
     title: "Obscurity",
     description: "Evaluating secrecy requirements and whether they conflict with Christian transparency.",
-    color: "bg-green-500",
+    color: "bg-emerald-500",
     questions: ["What must be kept secret?", "Does secrecy serve a legitimate purpose?"],
   },
   {
@@ -43,6 +44,13 @@ const proofFramework = [
     color: "bg-red-500",
     questions: ["What were the founders' intentions?", "Has the organization evolved in concerning ways?"],
   },
+];
+
+const whyPROOF = [
+  { stat: "5", label: "Key Areas", detail: "Comprehensive evaluation" },
+  { stat: "20+", label: "Questions", detail: "Deep biblical analysis" },
+  { stat: "Only", label: "Framework", detail: "Of its kind anywhere" },
+  { stat: "$0", label: "Forever", detail: "Completely free access" },
 ];
 
 const biblicalPrinciples = [
@@ -72,9 +80,9 @@ export default function GreekLifeBiblicalGuidance() {
   return (
     <>
       <SEOHead
-        title="Greek Life Biblical Guidance | P.R.O.O.F. Framework for Christian Discernment"
-        description="Biblical guidance for Greek life decisions. Use the P.R.O.O.F. framework to evaluate fraternity and sorority membership through Scripture. Christian perspective on Greek rituals, oaths, pledging, and traditions."
-        keywords="Greek life biblical guidance, P.R.O.O.F. framework, Christian perspective Greek rituals, biblical view fraternity, sorority Christian guidance, Greek oaths Bible, fraternity rituals Scripture, Greek life discernment, Christian Greek life evaluation"
+        title="Greek Life Biblical Guidance | P.R.O.O.F. Framework™ | Only Christian Evaluation Tool"
+        description="The P.R.O.O.F. Framework™ is the ONLY biblical evaluation tool for Greek life. No other app offers systematic Scripture-based guidance for fraternity and sorority decisions. 100% FREE."
+        keywords="Greek life biblical guidance, P.R.O.O.F. framework, Christian perspective Greek rituals, biblical view fraternity, sorority Christian guidance, Greek oaths Bible, fraternity rituals Scripture, Greek life discernment Christian, only Greek Bible app"
         structuredDataType="WebPage"
       />
       
@@ -83,19 +91,22 @@ export default function GreekLifeBiblicalGuidance() {
         <header className="relative overflow-hidden bg-gradient-to-b from-amber-500/10 via-background to-background">
           <div className="container mx-auto px-4 py-16 md:py-24">
             <div className="max-w-4xl mx-auto text-center space-y-6">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
-                <BookOpen className="w-4 h-4" />
-                <span className="text-sm font-medium">Biblical Guidance for Greek Life</span>
+              <div className="flex flex-wrap gap-2 justify-center">
+                <BlueOceanBadge variant="gold" />
+                <FreeForeverBadge />
               </div>
               
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-                Greek Life Through a{' '}
-                <span className="text-amber-600 dark:text-amber-400">Biblical Lens</span>
+                The <span className="text-amber-600 dark:text-amber-400">Only</span> Biblical Evaluation Tool for{' '}
+                <span className="bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">
+                  Greek Life
+                </span>
               </h1>
               
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Use the P.R.O.O.F. framework to evaluate Greek organization membership with 
-                Scripture as your guide. Make informed, faith-honoring decisions.
+                The <strong className="text-foreground">P.R.O.O.F. Framework™</strong> is a proprietary system 
+                developed by Dr. Lyman Montgomery. <span className="text-amber-600 dark:text-amber-400 font-semibold">
+                No other app, website, or resource offers a systematic biblical evaluation tool for Greek organizations.</span>
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
@@ -115,29 +126,59 @@ export default function GreekLifeBiblicalGuidance() {
           </div>
         </header>
 
+        {/* Stats */}
+        <section className="py-12 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+              {whyPROOF.map((item, index) => (
+                <div key={index} className="text-center">
+                  <div className="text-3xl md:text-4xl font-bold text-amber-600 dark:text-amber-400">{item.stat}</div>
+                  <div className="text-sm font-medium text-foreground">{item.label}</div>
+                  <div className="text-xs text-muted-foreground mt-1">{item.detail}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Proprietary Notice */}
+        <section className="py-8 bg-amber-500/10 border-y border-amber-500/20">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-center gap-3 text-center">
+              <Trophy className="w-6 h-6 text-amber-600 dark:text-amber-400" />
+              <p className="text-amber-700 dark:text-amber-300 font-medium">
+                P.R.O.O.F.™ is exclusive to Sacred Greeks. You won't find this framework anywhere else.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* P.R.O.O.F. Framework Section */}
         <section className="py-16 md:py-24">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
+              <Sparkles className="w-10 h-10 text-amber-500 mx-auto mb-4" />
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                The P.R.O.O.F. Framework
+                The P.R.O.O.F. Framework™
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                A biblical evaluation tool developed by Dr. Lyman Montgomery to help Christians 
-                assess Greek organization membership through Scripture.
+                Five critical areas for biblical discernment, available nowhere else.
               </p>
             </div>
             
             <div className="space-y-6 max-w-4xl mx-auto">
               {proofFramework.map((item, index) => (
-                <Card key={index} className="border-2 hover:border-amber-500/50 transition-colors">
-                  <CardContent className="p-6">
-                    <div className="flex items-start gap-4">
-                      <div className={`w-14 h-14 rounded-lg ${item.color} flex items-center justify-center shrink-0 text-white font-bold text-2xl`}>
+                <Card key={index} className="border-2 hover:border-amber-500/50 transition-colors overflow-hidden">
+                  <CardContent className="p-0">
+                    <div className="flex">
+                      <div className={`w-20 ${item.color} flex items-center justify-center text-white font-bold text-3xl shrink-0`}>
                         {item.letter}
                       </div>
-                      <div className="flex-1">
-                        <h3 className="text-xl font-semibold text-foreground mb-2">{item.title}</h3>
+                      <div className="p-6 flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <h3 className="text-xl font-semibold text-foreground">{item.title}</h3>
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-600 dark:text-amber-400 font-medium">EXCLUSIVE</span>
+                        </div>
                         <p className="text-muted-foreground mb-3">{item.description}</p>
                         <div className="space-y-2">
                           {item.questions.map((q, qIndex) => (
@@ -186,18 +227,18 @@ export default function GreekLifeBiblicalGuidance() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl font-bold text-center mb-8">
-                Biblical Guidance Topics
+                Questions P.R.O.O.F. Helps You Answer
               </h2>
               <div className="grid md:grid-cols-2 gap-4">
                 {[
                   "Should Christians join Greek organizations?",
-                  "Biblical perspective on fraternity rituals",
-                  "What the Bible says about secret oaths",
-                  "Evaluating Greek traditions scripturally",
-                  "Christian response to hazing practices",
-                  "Balancing brotherhood with faith",
-                  "When to stay vs. leave an organization",
-                  "Honoring God in Greek membership",
+                  "What does the Bible say about fraternity rituals?",
+                  "Are Greek oaths compatible with Christian faith?",
+                  "How to evaluate Greek traditions scripturally",
+                  "What's the Christian response to hazing?",
+                  "Can I balance brotherhood with my faith?",
+                  "When should I stay vs. leave an organization?",
+                  "How to honor God in Greek membership",
                 ].map((topic, index) => (
                   <div key={index} className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
                     <CheckCircle2 className="w-5 h-5 text-amber-500 shrink-0" />
@@ -209,34 +250,16 @@ export default function GreekLifeBiblicalGuidance() {
           </div>
         </section>
 
-        {/* Warning Section */}
-        <section className="py-12 bg-amber-500/10">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto flex items-start gap-4">
-              <AlertTriangle className="w-8 h-8 text-amber-600 dark:text-amber-400 shrink-0" />
-              <div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">
-                  Important Disclaimer
-                </h3>
-                <p className="text-muted-foreground">
-                  This guidance is designed to help you make informed decisions using Scripture. 
-                  Each organization and chapter may differ. We encourage prayer, counsel from 
-                  spiritual leaders, and personal discernment in your decision-making process.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* CTA Section */}
-        <section className="py-16">
+        <section className="py-16 bg-amber-500/5">
           <div className="container mx-auto px-4 text-center">
+            <Zap className="w-12 h-12 text-amber-500 mx-auto mb-4" />
             <h2 className="text-3xl font-bold mb-4">
               Get Personalized Biblical Guidance
             </h2>
             <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
-              Take the P.R.O.O.F. Assessment to receive customized guidance based on your 
-              specific situation and organization.
+              Take the P.R.O.O.F. Assessment for customized guidance based on your organization. 
+              Only available here.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/proof-assessment">

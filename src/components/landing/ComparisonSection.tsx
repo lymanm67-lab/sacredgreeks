@@ -99,8 +99,8 @@ const comparisonData = [
 
 const competitors = [
   { name: "Sacred Greeks", color: "sacred", isUs: true },
-  { name: "Glorify", color: "orange-500", isUs: false },
-  { name: "Hallow", color: "purple-600", isUs: false },
+  { name: "Glorify ($79/yr)", color: "orange-500", isUs: false },
+  { name: "Hallow ($99/yr)", color: "purple-600", isUs: false },
   { name: "Black Greeks", color: "neutral-600", isUs: false },
 ];
 
