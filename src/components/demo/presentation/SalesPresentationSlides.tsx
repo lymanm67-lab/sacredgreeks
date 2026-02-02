@@ -38,7 +38,17 @@ import {
   Shield,
   Feather,
   Sunrise,
-  Medal
+  Medal,
+  Smartphone,
+  Monitor,
+  Zap,
+  Brain,
+  Target,
+  BarChart3,
+  BookOpenCheck,
+  Headphones,
+  FileText,
+  Users2
 } from 'lucide-react';
 
 // Import slide images
@@ -60,6 +70,7 @@ export interface PresentationSlide {
   icon: ReactNode;
   image?: string;
   showQRCode?: boolean;
+  showLivePreview?: boolean;
   presenterNotes: string[];
   keyPoints: string[];
   talkingPoints?: string[];
@@ -688,6 +699,261 @@ export const salesPresentationSlides: PresentationSlide[] = [
       'Let knowledge build bridges, not walls'
     ]
   },
+
+  // ============ SECTION 6: THE APP COMPANION (15 min) ============
+  {
+    id: 'app-intro',
+    title: 'Your Digital Companion',
+    subtitle: 'Sacred Greeks App — Faith Meets Greek Life',
+    icon: <Smartphone className="w-12 h-12 text-sacred" />,
+    duration: '2-3 min',
+    presenterNotes: [
+      'Transition: "Everything we\'ve discussed today... in your pocket"',
+      'Introduce the Sacred Greeks app as the practical tool',
+      'Emphasize: Built by a Greek, for Greeks, rooted in faith',
+      'Show excitement — this is the actionable takeaway'
+    ],
+    keyPoints: [
+      'A faith-first platform built specifically for Greek life',
+      'Daily devotionals tailored to the Greek experience',
+      'AI-powered tools for biblical discernment',
+      'Community features connecting faith-centered Greeks nationwide'
+    ],
+    stats: [
+      { label: 'Daily Devotionals', value: '365+' },
+      { label: 'AI Tools', value: '5+' },
+      { label: 'Bible Plans', value: '5' }
+    ]
+  },
+  {
+    id: 'app-proof-framework',
+    title: 'The P.R.O.O.F. Framework',
+    subtitle: 'Biblical Discernment for Greek Decisions',
+    icon: <Shield className="w-12 h-12 text-amber-500" />,
+    route: '/proof-course',
+    duration: '3-4 min',
+    presenterNotes: [
+      'Explain P.R.O.O.F.: Pledge, Rituals, Oaths, Obscurity, Founders',
+      'This is the core evaluative tool for membership decisions',
+      'Show the interactive course in the live preview',
+      'Emphasize: Faith-centered framework, not judgment'
+    ],
+    keyPoints: [
+      'P — Pledge Process: What does biblical commitment look like?',
+      'R — Rituals: Are they worship or tradition?',
+      'O — Oaths: What are you actually promising?',
+      'O — Obscurity: What\'s hidden and why?',
+      'F — Founders: What legacy are you joining?'
+    ],
+    talkingPoints: [
+      'Not about condemning — about discerning',
+      'Helps members articulate their faith position',
+      'Perfect for chaplains, campus ministers, members'
+    ]
+  },
+  {
+    id: 'app-faith-snapshot',
+    title: 'Faith Snapshot Assessment',
+    subtitle: 'Discover Where You Stand',
+    icon: <Target className="w-12 h-12 text-blue-500" />,
+    route: '/assessment/faith-snapshot',
+    duration: '3-4 min',
+    presenterNotes: [
+      'Interactive assessment for prospective and current members',
+      'Personalized results based on their specific situation',
+      'Walk through a sample assessment in demo mode',
+      'Highlight: Provides clarity without judgment'
+    ],
+    keyPoints: [
+      'Personalized assessment for prospective or current Greeks',
+      'Evaluates faith alignment with Greek life traditions',
+      'Provides actionable next steps and resources',
+      'Shareable results with mentors and chaplains'
+    ],
+    stats: [
+      { label: 'Questions', value: '12' },
+      { label: 'Result Types', value: '5' },
+      { label: 'Time', value: '5 min' }
+    ]
+  },
+  {
+    id: 'app-ai-tools',
+    title: 'AI-Powered Faith Tools',
+    subtitle: 'Smart Technology for Spiritual Growth',
+    icon: <Brain className="w-12 h-12 text-purple-500" />,
+    route: '/ai-assistant',
+    duration: '2-3 min',
+    presenterNotes: [
+      'AI Assistant for answering faith + Greek questions',
+      'Response Coach for handling tough conversations',
+      'Bible verse finder for Greek-related scriptures',
+      'Devotional generator for chapter meetings'
+    ],
+    keyPoints: [
+      'AI Assistant: Ask any faith + Greek question',
+      'Response Coach: Practice difficult conversations',
+      'Bible Search: Find verses for any situation',
+      'Devotional Generator: Create chapter devotionals'
+    ],
+    talkingPoints: [
+      'Like having a faith mentor in your pocket',
+      'Trained on "Sacred Not Sinful" and biblical resources',
+      'Private, secure, always available'
+    ]
+  },
+  {
+    id: 'app-daily-devotional',
+    title: 'Daily Devotionals for Greeks',
+    subtitle: 'Start Every Day Grounded in Faith',
+    icon: <BookOpenCheck className="w-12 h-12 text-teal-500" />,
+    route: '/daily-devotional',
+    duration: '2-3 min',
+    presenterNotes: [
+      'Daily devotionals written for the Greek experience',
+      'Connects scripture to fraternity/sorority life',
+      'Push notifications to keep members engaged',
+      'Audio option for listening on the go'
+    ],
+    keyPoints: [
+      '365 devotionals crafted for Greek life context',
+      'Each one connects scripture to real Greek experiences',
+      'Audio versions with calming background',
+      'Push notifications for daily reminders'
+    ],
+    stats: [
+      { label: 'Devotionals', value: '365' },
+      { label: 'Audio', value: 'Yes' },
+      { label: 'Notifications', value: 'Custom' }
+    ]
+  },
+  {
+    id: 'app-financial-calculator',
+    title: 'True Cost Calculator',
+    subtitle: 'The Financial Reality of Greek Life',
+    icon: <BarChart3 className="w-12 h-12 text-green-500" />,
+    route: '/greek-financial-leadership',
+    duration: '2-3 min',
+    presenterNotes: [
+      'Many Greeks don\'t realize the true 4-year and 20-year cost',
+      'Interactive calculator shows real numbers',
+      'Connects to D9 economic programs for stewardship',
+      'Transparent, honest, helpful'
+    ],
+    keyPoints: [
+      'Calculate true 4-year and 20-year membership costs',
+      'Compare across different organizations',
+      'Learn about D9 economic empowerment programs',
+      'Biblical stewardship meets financial reality'
+    ],
+    talkingPoints: [
+      'Not to discourage — to prepare',
+      'Financial wisdom is biblical wisdom',
+      'Know what you\'re investing in'
+    ]
+  },
+  {
+    id: 'app-community',
+    title: 'Faith-Centered Community',
+    subtitle: 'Connect with Like-Minded Greeks',
+    icon: <Users2 className="w-12 h-12 text-pink-500" />,
+    route: '/member-network',
+    duration: '2-3 min',
+    presenterNotes: [
+      'Member network connecting faith-centered Greeks',
+      'Prayer wall for supporting each other',
+      'Forum discussions on faith + Greek topics',
+      'Nationwide community, local connections'
+    ],
+    keyPoints: [
+      'Member directory of faith-centered Greeks',
+      'Prayer wall for community support',
+      'Discussion forums on faith topics',
+      'Connect across chapters and organizations'
+    ],
+    stats: [
+      { label: 'Network', value: 'Nationwide' },
+      { label: 'Prayer Wall', value: 'Active' },
+      { label: 'Forums', value: 'Moderated' }
+    ]
+  },
+  {
+    id: 'app-resources',
+    title: 'Complete Resource Library',
+    subtitle: 'Everything You Need in One Place',
+    icon: <FileText className="w-12 h-12 text-slate-500" />,
+    route: '/resources',
+    duration: '2 min',
+    presenterNotes: [
+      'MythBusters addressing common misconceptions',
+      'Symbols & Rituals explained with biblical context',
+      'Anti-hazing resources for chapter leaders',
+      'Book, podcast, and speaking resources'
+    ],
+    keyPoints: [
+      'MythBusters: Addressing common misconceptions',
+      'Symbols & Rituals: Biblical context explained',
+      'Anti-Hazing Resources: Chapter leadership tools',
+      'Podcast: Ongoing education and stories'
+    ],
+    actionItems: [
+      'Explore the resource library after today',
+      'Share relevant resources with your chapter',
+      'Listen to the Sacred Greeks Podcast',
+      'Order "Sacred Not Sinful" for deeper study'
+    ]
+  },
+  {
+    id: 'app-live-demo',
+    title: 'See It In Action',
+    subtitle: 'Live App Preview',
+    icon: <Monitor className="w-12 h-12 text-sacred" />,
+    route: '/dashboard',
+    showLivePreview: true,
+    duration: '3-4 min',
+    presenterNotes: [
+      'This is the full interactive demo moment',
+      'Navigate through the dashboard live',
+      'Show gamification, streaks, achievements',
+      'Let them see the real experience'
+    ],
+    keyPoints: [
+      'Full dashboard with personalized experience',
+      'Gamification: Streaks, points, achievements',
+      'Progress tracking across all features',
+      'Works on any device — phone, tablet, desktop'
+    ],
+    talkingPoints: [
+      'Everything we\'ve discussed is right here',
+      'Install on your phone with one click',
+      'Start your faith journey today'
+    ]
+  },
+  {
+    id: 'app-pricing',
+    title: 'Accessible for Everyone',
+    subtitle: 'Free to Start, Pro for Power Users',
+    icon: <Zap className="w-12 h-12 text-yellow-500" />,
+    duration: '1-2 min',
+    presenterNotes: [
+      'Free tier: Basic education and devotionals',
+      'Pro tier: AI tools, premium audio, full features',
+      'Ministry tier: For chaplains and campus ministers',
+      'Pricing designed to be accessible'
+    ],
+    keyPoints: [
+      'Free: Daily devotionals, basic education, community access',
+      'Pro ($14.99/mo): AI tools, premium audio, full P.R.O.O.F. course',
+      'Ministry ($29.99/mo): Leadership resources, chapter tools',
+      '14-day free trial on all paid plans'
+    ],
+    stats: [
+      { label: 'Free Tier', value: 'Always' },
+      { label: 'Pro', value: '$14.99/mo' },
+      { label: 'Trial', value: '14 Days' }
+    ]
+  },
+
+  // ============ SECTION 7: CLOSING & INSPIRATION (15 min) ============
   {
     id: 'call-to-understanding',
     title: 'A Call to Understanding',
@@ -710,7 +976,7 @@ export const salesPresentationSlides: PresentationSlide[] = [
       'Have a conversation with someone from "the other side"',
       'Attend a Greek service event as a volunteer',
       'Read "Sacred Not Sinful" for deeper understanding',
-      'Share today\'s insights with someone who needs to hear them'
+      'Download the Sacred Greeks app today'
     ]
   },
   {
