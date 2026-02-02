@@ -130,13 +130,68 @@ const systemItems = [
   { title: "Settings", url: "/profile", icon: Settings, featureId: null, iconColor: "text-slate-500" },
 ];
 
+// NavSection extracted as a proper component to avoid hooks violation
+interface NavSectionProps {
+  title: string;
+  items: typeof dashboardItem;
+  badge?: string;
+  defaultOpen?: boolean;
+  currentPath: string;
+  onNavClick: () => void;
+}
+
+function NavSection({ title, items, badge, defaultOpen = true, currentPath, onNavClick }: NavSectionProps) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+  
+  const isActive = (path: string) => currentPath === path;
+  
+  return (
+    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+      <CollapsibleTrigger className="w-full">
+        <div className="flex items-center justify-between px-3 py-2 cursor-pointer hover:bg-muted/50 rounded-lg transition-colors">
+          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
+            {title}
+            {badge && (
+              <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 bg-primary/10 text-primary">
+                {badge}
+              </Badge>
+            )}
+          </h3>
+          <ChevronDown className={cn(
+            "h-4 w-4 text-muted-foreground transition-transform duration-200",
+            isOpen ? "rotate-0" : "-rotate-90"
+          )} />
+        </div>
+      </CollapsibleTrigger>
+      <CollapsibleContent>
+        <div className="space-y-1">
+          {items.map((item) => (
+            <NavLink
+              key={item.url}
+              to={item.url}
+              onClick={onNavClick}
+              className={cn(
+                "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors",
+                isActive(item.url) 
+                  ? "bg-sacred/10 text-sacred font-medium" 
+                  : "hover:bg-muted"
+              )}
+            >
+              <item.icon className={cn("h-5 w-5 shrink-0", item.iconColor)} />
+              <span>{item.title}</span>
+            </NavLink>
+          ))}
+        </div>
+      </CollapsibleContent>
+    </Collapsible>
+  );
+}
+
 export function MobileNav() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const { user, profile, signOut } = useAuth();
   const { isFeatureVisible } = useFeaturePreferences();
-
-  const isActive = (path: string) => location.pathname === path;
 
   const filterNavItems = (items: typeof dashboardItem) => {
     return items.filter(item => {
@@ -167,51 +222,6 @@ export function MobileNav() {
 
   const handleNavClick = () => {
     setOpen(false);
-  };
-
-  const NavSection = ({ title, items, badge, defaultOpen = true }: { title: string; items: typeof dashboardItem; badge?: string; defaultOpen?: boolean }) => {
-    const [isOpen, setIsOpen] = useState(defaultOpen);
-    
-    return (
-      <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <CollapsibleTrigger className="w-full">
-          <div className="flex items-center justify-between px-3 py-2 cursor-pointer hover:bg-muted/50 rounded-lg transition-colors">
-            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-2">
-              {title}
-              {badge && (
-                <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 bg-primary/10 text-primary">
-                  {badge}
-                </Badge>
-              )}
-            </h3>
-            <ChevronDown className={cn(
-              "h-4 w-4 text-muted-foreground transition-transform duration-200",
-              isOpen ? "rotate-0" : "-rotate-90"
-            )} />
-          </div>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <div className="space-y-1">
-            {items.map((item) => (
-              <NavLink
-                key={item.url}
-                to={item.url}
-                onClick={handleNavClick}
-                className={cn(
-                  "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors",
-                  isActive(item.url) 
-                    ? "bg-sacred/10 text-sacred font-medium" 
-                    : "hover:bg-muted"
-                )}
-              >
-                <item.icon className={cn("h-5 w-5 shrink-0", item.iconColor)} />
-                <span>{item.title}</span>
-              </NavLink>
-            ))}
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
-    );
   };
 
   return (
@@ -246,31 +256,31 @@ export function MobileNav() {
         <ScrollArea className="h-[calc(100vh-180px)]">
           <div className="p-4 space-y-2">
             {filteredDashboard.length > 0 && (
-              <NavSection title="Dashboard" items={filteredDashboard} />
+              <NavSection title="Dashboard" items={filteredDashboard} currentPath={location.pathname} onNavClick={handleNavClick} />
             )}
             {filteredLearningPath.length > 0 && (
-              <NavSection title="Learning Path" items={filteredLearningPath} />
+              <NavSection title="Learning Path" items={filteredLearningPath} currentPath={location.pathname} onNavClick={handleNavClick} />
             )}
             {filteredAssessments.length > 0 && (
-              <NavSection title="Assessments" items={filteredAssessments} badge="Earn Points" />
+              <NavSection title="Assessments" items={filteredAssessments} badge="Earn Points" currentPath={location.pathname} onNavClick={handleNavClick} />
             )}
             {filteredSpiritualPractices.length > 0 && (
-              <NavSection title="Spiritual Practices" items={filteredSpiritualPractices} />
+              <NavSection title="Spiritual Practices" items={filteredSpiritualPractices} currentPath={location.pathname} onNavClick={handleNavClick} />
             )}
             {filteredCommunity.length > 0 && (
-              <NavSection title="Greek Community" items={filteredCommunity} />
+              <NavSection title="Greek Community" items={filteredCommunity} currentPath={location.pathname} onNavClick={handleNavClick} />
             )}
             {filteredAboutDrLyman.length > 0 && (
-              <NavSection title="About Dr. Lyman" items={filteredAboutDrLyman} defaultOpen={false} />
+              <NavSection title="About Dr. Lyman" items={filteredAboutDrLyman} defaultOpen={false} currentPath={location.pathname} onNavClick={handleNavClick} />
             )}
             {filteredPodcast.length > 0 && (
-              <NavSection title="Podcast" items={filteredPodcast} defaultOpen={false} />
+              <NavSection title="Podcast" items={filteredPodcast} defaultOpen={false} currentPath={location.pathname} onNavClick={handleNavClick} />
             )}
             {filteredResources.length > 0 && (
-              <NavSection title="Resources" items={filteredResources} defaultOpen={false} />
+              <NavSection title="Resources" items={filteredResources} defaultOpen={false} currentPath={location.pathname} onNavClick={handleNavClick} />
             )}
             {filteredSystem.length > 0 && (
-              <NavSection title="System" items={filteredSystem} defaultOpen={false} />
+              <NavSection title="System" items={filteredSystem} defaultOpen={false} currentPath={location.pathname} onNavClick={handleNavClick} />
             )}
           </div>
         </ScrollArea>
