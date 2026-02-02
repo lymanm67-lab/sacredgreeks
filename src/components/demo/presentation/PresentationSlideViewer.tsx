@@ -136,8 +136,24 @@ export function PresentationSlideViewer({ isOpen, onClose }: PresentationSlideVi
               className="w-full max-w-2xl mb-8"
             >
               <Card className="border-2 border-primary/20 bg-card/50 backdrop-blur overflow-hidden">
-                {/* Hero Image */}
-                {slide.image && (
+                {/* Live App Preview or Fallback Image */}
+                {slide.route ? (
+                  <div className="relative h-64 w-full overflow-hidden bg-background border-b border-border">
+                    <iframe 
+                      src={`${window.location.origin}${slide.route}`}
+                      title={`${slide.title} Preview`}
+                      className="w-full h-full pointer-events-none scale-[0.5] origin-top-left"
+                      style={{ width: '200%', height: '200%' }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+                    <div className="absolute bottom-2 left-2 right-2 flex justify-center">
+                      <Badge variant="secondary" className="bg-primary/90 text-primary-foreground">
+                        <Play className="w-3 h-3 mr-1" />
+                        Live Preview
+                      </Badge>
+                    </div>
+                  </div>
+                ) : slide.image ? (
                   <div className="relative h-48 w-full overflow-hidden">
                     <img 
                       src={slide.image} 
@@ -146,9 +162,9 @@ export function PresentationSlideViewer({ isOpen, onClose }: PresentationSlideVi
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent" />
                   </div>
-                )}
+                ) : null}
                 
-                <CardHeader className={cn("text-center pb-6", slide.image && "-mt-12 relative z-10")}>
+                <CardHeader className={cn("text-center pb-6", (slide.image || slide.route) && "-mt-12 relative z-10")}>
                   <div className="mx-auto mb-4 p-4 rounded-2xl bg-primary/10 backdrop-blur-sm border border-primary/20">
                     {slide.icon}
                   </div>
@@ -205,15 +221,15 @@ export function PresentationSlideViewer({ isOpen, onClose }: PresentationSlideVi
                     </div>
                   )}
 
-                  {/* Live Demo Button */}
+                  {/* Live Demo Button - More Prominent */}
                   {slide.route && (
                     <Button
                       onClick={() => handleLiveDemo(slide.route!)}
-                      className="w-full"
-                      variant="outline"
+                      className="w-full bg-primary hover:bg-primary/90"
+                      size="lg"
                     >
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      Open Live Demo
+                      <ExternalLink className="w-5 h-5 mr-2" />
+                      Open Full Demo
                     </Button>
                   )}
 
