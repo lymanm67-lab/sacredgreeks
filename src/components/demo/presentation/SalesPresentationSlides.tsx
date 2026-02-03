@@ -48,7 +48,8 @@ import {
   BookOpenCheck,
   Headphones,
   FileText,
-  Users2
+  Users2,
+  QrCode
 } from 'lucide-react';
 
 // Import slide images
@@ -931,6 +932,38 @@ export const salesPresentationSlides: PresentationSlide[] = [
       { label: 'Businesses', value: '30+' },
       { label: 'Prayer Wall', value: 'Active' },
       { label: 'Network', value: 'Nationwide' }
+    ]
+  },
+  {
+    id: 'app-sacred-connections',
+    title: 'Sacred Connections',
+    subtitle: 'Digital Contact Swap & Business Card Scanner',
+    icon: <QrCode className="w-12 h-12 text-sacred" />,
+    route: '/contacts',
+    showLivePreview: true,
+    duration: '2-3 min',
+    presenterNotes: [
+      'Demo the vCard QR code generator',
+      'Show the in-app QR scanner with reciprocate flow',
+      'Demonstrate AI-powered business card scanning',
+      'Emphasize: Perfect for Greek events and conferences'
+    ],
+    keyPoints: [
+      'Generate digital vCard QR codes from your profile',
+      'Scan QR codes with automatic reciprocate prompt',
+      'AI-powered business card scanner extracts contact info',
+      'Save contacts as .vcf files for easy import'
+    ],
+    talkingPoints: [
+      'Perfect for conferences, step shows, and networking events',
+      'Swap contacts without paper business cards',
+      'AI extraction works with any business card photo',
+      'Built for the Greek networking experience'
+    ],
+    stats: [
+      { label: 'vCard Generation', value: 'Instant' },
+      { label: 'AI Extraction', value: 'Smart' },
+      { label: 'Format', value: '.vcf' }
     ]
   },
   {
