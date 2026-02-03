@@ -1,22 +1,11 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Volume2, Pause, Play, Loader2, ChevronDown, ChevronUp, Sparkles } from 'lucide-react';
-import { useTextToSpeech } from '@/hooks/use-text-to-speech';
+import { toast } from 'sonner';
 
-const INTRO_TEXT = `Welcome to Sacred Connections, your digital networking hub for the Greek community. 
-
-In our Divine 9 and faith-focused Greek organizations, relationships are everything. Whether you're at a conference, step show, community service event, or alumni mixer, Sacred Connections makes it effortless to exchange contact information and build lasting bonds.
-
-Here's how it works:
-
-First, the My Card tab. This generates a professional QR code from your profile. When someone scans it, they instantly receive your contact information as a digital vCard. No more fumbling for business cards or manually typing phone numbers.
-
-Second, the Scan QR tab. Use your camera to scan another member's QR code. Their contact info is automatically saved, and you'll be prompted to share your card back. This reciprocal exchange strengthens our network.
-
-Third, the Scan Card tab. Got a traditional business card? Our AI-powered scanner reads the card image and extracts the contact details automatically. Just snap a photo and let technology do the work.
-
-Sacred Connections embodies our Greek values of brotherhood, sisterhood, and community. Every connection you make strengthens our network and honors our legacy of service and uplift. Start connecting today!`;
+// Shorter intro text to reduce API costs and improve reliability
+const INTRO_TEXT = `Welcome to Sacred Connections, your digital networking hub. In Greek life, relationships are everything. This tool makes exchanging contacts effortless. Use My Card to generate your QR code. Use Scan QR to capture others' codes. Use Scan Card to photograph business cards. The AI extracts contact details automatically. Every connection strengthens our community.`;
 
 const EXAMPLE_SCENARIOS = [
   {
@@ -33,25 +22,58 @@ const EXAMPLE_SCENARIOS = [
   }
 ];
 
+// Browser-based TTS fallback
+const speakWithBrowser = (text: string): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    if (!('speechSynthesis' in window)) {
+      reject(new Error('Browser does not support text-to-speech'));
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    const voices = window.speechSynthesis.getVoices();
+    const preferredVoice = voices.find(v => v.lang.startsWith('en')) || voices[0];
+    if (preferredVoice) utterance.voice = preferredVoice;
+    utterance.rate = 0.95;
+    utterance.onend = () => resolve();
+    utterance.onerror = (e) => reject(e);
+    window.speechSynthesis.speak(utterance);
+  });
+};
+
 export function SacredConnectionsIntro() {
   const [isExpanded, setIsExpanded] = useState(false);
-  const { speak, pause, resume, stop, isPlaying, isPaused, isLoading } = useTextToSpeech();
-  
-  const itemId = 'sacred-connections-intro';
-  const isActive = isPlaying === itemId;
-  const loading = isLoading === itemId;
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleTTSClick = () => {
-    if (isActive) {
+  const handleTTSClick = useCallback(async () => {
+    if (isPlaying) {
       if (isPaused) {
-        resume();
+        window.speechSynthesis.resume();
+        setIsPaused(false);
       } else {
-        pause();
+        window.speechSynthesis.pause();
+        setIsPaused(true);
       }
-    } else {
-      speak(INTRO_TEXT, itemId, "onwK4e9ZLuTAKqWW03F9", "Sacred Connections Introduction");
+      return;
     }
-  };
+
+    setIsLoading(true);
+    try {
+      // Use browser TTS directly (ElevenLabs quota exhausted)
+      toast.info('Playing audio introduction...');
+      setIsPlaying(true);
+      await speakWithBrowser(INTRO_TEXT);
+    } catch (error) {
+      console.error('TTS error:', error);
+      toast.error('Voice playback unavailable on this device');
+    } finally {
+      setIsLoading(false);
+      setIsPlaying(false);
+      setIsPaused(false);
+    }
+  }, [isPlaying, isPaused]);
 
   return (
     <Card className="mb-6 border-sacred/30 bg-gradient-to-br from-sacred/5 to-transparent">
@@ -70,23 +92,23 @@ export function SacredConnectionsIntro() {
                 variant="outline"
                 size="sm"
                 onClick={handleTTSClick}
-                disabled={loading}
+                disabled={isLoading}
                 className={`gap-2 ${
-                  isActive 
+                  isPlaying 
                     ? "bg-sacred/20 border-sacred/50 text-sacred" 
                     : "border-sacred/30 hover:bg-sacred/10"
                 }`}
               >
-                {loading ? (
+                {isLoading ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
-                ) : isActive && !isPaused ? (
+                ) : isPlaying && !isPaused ? (
                   <Pause className="w-4 h-4" />
-                ) : isActive && isPaused ? (
+                ) : isPlaying && isPaused ? (
                   <Play className="w-4 h-4" />
                 ) : (
                   <Volume2 className="w-4 h-4" />
                 )}
-                {loading ? "Loading..." : isActive && !isPaused ? "Pause" : isActive && isPaused ? "Resume" : "Listen"}
+                {isLoading ? "Loading..." : isPlaying && !isPaused ? "Pause" : isPlaying && isPaused ? "Resume" : "Listen"}
               </Button>
             </div>
             
