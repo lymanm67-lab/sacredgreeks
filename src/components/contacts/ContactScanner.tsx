@@ -2,10 +2,13 @@ import { useState, useEffect, useRef } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Camera, CameraOff, Download, UserPlus, CheckCircle, Save } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Camera, CameraOff, Download, CheckCircle, Save, Play } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { SaveContactDialog } from './SaveContactDialog';
 import { useAuth } from '@/contexts/AuthContext';
+import { useDemoMode } from '@/contexts/DemoModeContext';
+import { DEMO_QR_SCAN_CONTACT } from '@/data/demoContactsData';
 
 interface ContactScannerProps {
   onScanSuccess?: () => void;
@@ -22,12 +25,16 @@ interface ParsedContact {
 export function ContactScanner({ onScanSuccess }: ContactScannerProps) {
   const { toast } = useToast();
   const { user } = useAuth();
+  const { isDemoMode, demoSettings } = useDemoMode();
   const [isScanning, setIsScanning] = useState(false);
   const [scannedContact, setScannedContact] = useState<ParsedContact | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showSaveDialog, setShowSaveDialog] = useState(false);
   const scannerRef = useRef<Html5Qrcode | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const isPresentationMode = demoSettings.presentationMode;
+  const showDemoMode = !user || isDemoMode || isPresentationMode;
 
   useEffect(() => {
     return () => {
@@ -159,12 +166,24 @@ export function ContactScanner({ onScanSuccess }: ContactScannerProps) {
     setError(null);
   };
 
+  const handleDemoScan = () => {
+    setScannedContact(DEMO_QR_SCAN_CONTACT);
+    toast({
+      title: 'Demo Contact Found!',
+      description: `Scanned ${DEMO_QR_SCAN_CONTACT.name}'s contact card`,
+    });
+    onScanSuccess?.();
+  };
+
   return (
     <Card>
       <CardHeader className="text-center">
         <CardTitle className="flex items-center justify-center gap-2">
           <Camera className="w-5 h-5 text-sacred" />
           Scan QR Code
+          {showDemoMode && (
+            <Badge variant="secondary" className="text-xs">Demo</Badge>
+          )}
         </CardTitle>
         <CardDescription>
           Scan someone's digital card to save their contact
@@ -227,10 +246,20 @@ export function ContactScanner({ onScanSuccess }: ContactScannerProps) {
               </div>
             )}
 
+            {showDemoMode && (
+              <Button 
+                onClick={handleDemoScan}
+                className="w-full bg-sacred hover:bg-sacred/90 mb-2"
+              >
+                <Play className="w-4 h-4 mr-2" />
+                Try Demo Scan
+              </Button>
+            )}
+
             <Button 
               onClick={isScanning ? stopScanner : startScanner}
-              className={`w-full ${isScanning ? '' : 'bg-sacred hover:bg-sacred/90'}`}
-              variant={isScanning ? 'outline' : 'default'}
+              className={`w-full ${isScanning ? '' : showDemoMode ? '' : 'bg-sacred hover:bg-sacred/90'}`}
+              variant={isScanning || showDemoMode ? 'outline' : 'default'}
             >
               {isScanning ? (
                 <>
