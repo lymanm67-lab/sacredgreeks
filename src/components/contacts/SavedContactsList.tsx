@@ -19,7 +19,6 @@ import {
   MessageCircle,
   MoreVertical,
   Bell,
-  BellOff,
   Edit,
   Trash2,
   Download,
@@ -27,18 +26,37 @@ import {
   Clock,
   Building,
   StickyNote,
+  RotateCcw,
 } from 'lucide-react';
 import { useSavedContacts, SavedContact } from '@/hooks/useSavedContacts';
 import { ContactEditDialog } from './ContactEditDialog';
 import { ReminderDialog } from './ReminderDialog';
 import { format, isPast, isToday, isTomorrow } from 'date-fns';
+import { useAuth } from '@/contexts/AuthContext';
+import { useDemoMode } from '@/contexts/DemoModeContext';
+import { DEMO_CONTACTS } from '@/data/demoContactsData';
 
 export function SavedContactsList() {
-  const { contacts, isLoading, deleteContact, exportContacts } = useSavedContacts();
+  const { user } = useAuth();
+  const { isDemoMode, demoSettings } = useDemoMode();
+  const { contacts: realContacts, isLoading, deleteContact, exportContacts } = useSavedContacts();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [editingContact, setEditingContact] = useState<SavedContact | null>(null);
   const [reminderContact, setReminderContact] = useState<SavedContact | null>(null);
+  const [demoKey, setDemoKey] = useState(0); // For resetting demo
+
+  const isPresentationMode = demoSettings.presentationMode;
+  const showDemoData = !user || isDemoMode || isPresentationMode;
+  const contacts = showDemoData ? DEMO_CONTACTS : realContacts;
+
+  const resetDemo = () => {
+    setDemoKey(prev => prev + 1);
+    setSearchQuery('');
+    setSelectedIds([]);
+    setEditingContact(null);
+    setReminderContact(null);
+  };
 
   const filteredContacts = contacts.filter(c =>
     c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -136,28 +154,44 @@ export function SavedContactsList() {
 
   return (
     <>
-      <Card>
+      <Card key={demoKey}>
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
               <CardTitle className="flex items-center gap-2">
                 <Users className="w-5 h-5 text-sacred" />
                 Saved Contacts
+                {showDemoData && (
+                  <Badge variant="secondary" className="text-xs">Demo</Badge>
+                )}
               </CardTitle>
               <CardDescription>
                 {contacts.length} contacts saved
               </CardDescription>
             </div>
-            {contacts.length > 0 && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => exportContacts(selectedIds.length > 0 ? selectedIds : undefined)}
-              >
-                <FileDown className="w-4 h-4 mr-2" />
-                Export {selectedIds.length > 0 ? `(${selectedIds.length})` : 'All'}
-              </Button>
-            )}
+            <div className="flex items-center gap-2">
+              {isPresentationMode && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={resetDemo}
+                >
+                  <RotateCcw className="w-4 h-4 mr-2" />
+                  Reset Demo
+                </Button>
+              )}
+              {contacts.length > 0 && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => exportContacts(selectedIds.length > 0 ? selectedIds : undefined)}
+                  disabled={showDemoData}
+                >
+                  <FileDown className="w-4 h-4 mr-2" />
+                  Export {selectedIds.length > 0 ? `(${selectedIds.length})` : 'All'}
+                </Button>
+              )}
+            </div>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">

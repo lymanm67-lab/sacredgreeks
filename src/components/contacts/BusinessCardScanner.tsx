@@ -3,11 +3,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Camera, Upload, Download, Loader2, CreditCard, CheckCircle, Edit, Save } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Camera, Upload, Download, Loader2, CreditCard, CheckCircle, Edit, Save, Play } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { SaveContactDialog } from './SaveContactDialog';
 import { useAuth } from '@/contexts/AuthContext';
+import { useDemoMode } from '@/contexts/DemoModeContext';
+import { DEMO_BUSINESS_CARD_CONTACT } from '@/data/demoContactsData';
 
 interface BusinessCardScannerProps {
   onScanSuccess?: () => void;
@@ -26,6 +29,7 @@ interface ExtractedContact {
 export function BusinessCardScanner({ onScanSuccess }: BusinessCardScannerProps) {
   const { toast } = useToast();
   const { user } = useAuth();
+  const { isDemoMode, demoSettings } = useDemoMode();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [extractedContact, setExtractedContact] = useState<ExtractedContact | null>(null);
@@ -33,6 +37,9 @@ export function BusinessCardScanner({ onScanSuccess }: BusinessCardScannerProps)
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [showSaveDialog, setShowSaveDialog] = useState(false);
+
+  const isPresentationMode = demoSettings.presentationMode;
+  const showDemoMode = !user || isDemoMode || isPresentationMode;
 
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -138,12 +145,26 @@ export function BusinessCardScanner({ onScanSuccess }: BusinessCardScannerProps)
     setEditedContact(prev => prev ? { ...prev, [field]: value } : null);
   };
 
+  const handleDemoScan = () => {
+    setExtractedContact(DEMO_BUSINESS_CARD_CONTACT);
+    setEditedContact(DEMO_BUSINESS_CARD_CONTACT);
+    setPreviewImage(null);
+    toast({
+      title: 'Demo Card Scanned!',
+      description: 'Contact information extracted successfully',
+    });
+    onScanSuccess?.();
+  };
+
   return (
     <Card>
       <CardHeader className="text-center">
         <CardTitle className="flex items-center justify-center gap-2">
           <CreditCard className="w-5 h-5 text-sacred" />
           Scan Business Card
+          {showDemoMode && (
+            <Badge variant="secondary" className="text-xs">Demo</Badge>
+          )}
         </CardTitle>
         <CardDescription>
           Take a photo of a physical business card to extract contact info
@@ -154,7 +175,7 @@ export function BusinessCardScanner({ onScanSuccess }: BusinessCardScannerProps)
           <div className="space-y-4">
             {previewImage && (
               <div className="relative">
-                <img 
+                <img
                   src={previewImage} 
                   alt="Business card" 
                   className="w-full rounded-lg opacity-50"
@@ -293,10 +314,21 @@ export function BusinessCardScanner({ onScanSuccess }: BusinessCardScannerProps)
               onChange={handleFileSelect}
             />
 
+            {showDemoMode && (
+              <Button 
+                onClick={handleDemoScan}
+                className="w-full bg-sacred hover:bg-sacred/90 mb-2"
+              >
+                <Play className="w-4 h-4 mr-2" />
+                Try Demo Scan
+              </Button>
+            )}
+
             <div className="flex gap-3">
               <Button 
                 onClick={() => fileInputRef.current?.click()}
-                className="flex-1 bg-sacred hover:bg-sacred/90"
+                className={`flex-1 ${showDemoMode ? '' : 'bg-sacred hover:bg-sacred/90'}`}
+                variant={showDemoMode ? 'outline' : 'default'}
                 disabled={isProcessing}
               >
                 <Camera className="w-4 h-4 mr-2" />
