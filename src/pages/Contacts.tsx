@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { MyDigitalCard } from '@/components/contacts/MyDigitalCard';
 import { ContactScanner } from '@/components/contacts/ContactScanner';
 import { BusinessCardScanner } from '@/components/contacts/BusinessCardScanner';
+import { SacredConnectionsIntro } from '@/components/contacts/SacredConnectionsIntro';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function Contacts() {
@@ -64,6 +65,8 @@ export default function Contacts() {
             Share your digital card or scan to connect
           </p>
         </div>
+
+        <SacredConnectionsIntro />
 
         {showReciprocate && (
           <Card className="mb-6 border-sacred bg-sacred/5">
