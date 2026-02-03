@@ -59,7 +59,7 @@ export default function Contacts() {
         </Link>
 
         <div className="text-center mb-6">
-          <h1 className="text-3xl font-bold mb-2">Contact Swap</h1>
+          <h1 className="text-3xl font-bold mb-2">Sacred Contacts</h1>
           <p className="text-muted-foreground">
             Share your digital card or scan to connect
           </p>
