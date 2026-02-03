@@ -157,11 +157,11 @@ export function AppSidebar() {
   const { isFeatureVisible } = useFeaturePreferences();
   
   
-  // Collapsible states for each section
-  const [learningPathOpen, setLearningPathOpen] = useState(true);
-  const [assessmentsOpen, setAssessmentsOpen] = useState(true);
-  const [spiritualOpen, setSpiritualOpen] = useState(true);
-  const [communityOpen, setCommunityOpen] = useState(true);
+  // Collapsible states for each section - all collapsed by default on login
+  const [learningPathOpen, setLearningPathOpen] = useState(false);
+  const [assessmentsOpen, setAssessmentsOpen] = useState(false);
+  const [spiritualOpen, setSpiritualOpen] = useState(false);
+  const [communityOpen, setCommunityOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [podcastOpen, setPodcastOpen] = useState(false);
   const [resourcesOpen, setResourcesOpen] = useState(false);
