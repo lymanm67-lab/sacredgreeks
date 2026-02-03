@@ -2,8 +2,10 @@ import { useState, useEffect, useRef } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Camera, CameraOff, Download, UserPlus, CheckCircle } from 'lucide-react';
+import { Camera, CameraOff, Download, UserPlus, CheckCircle, Save } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { SaveContactDialog } from './SaveContactDialog';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface ContactScannerProps {
   onScanSuccess?: () => void;
@@ -19,9 +21,11 @@ interface ParsedContact {
 
 export function ContactScanner({ onScanSuccess }: ContactScannerProps) {
   const { toast } = useToast();
+  const { user } = useAuth();
   const [isScanning, setIsScanning] = useState(false);
   const [scannedContact, setScannedContact] = useState<ParsedContact | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [showSaveDialog, setShowSaveDialog] = useState(false);
   const scannerRef = useRef<Html5Qrcode | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -169,8 +173,8 @@ export function ContactScanner({ onScanSuccess }: ContactScannerProps) {
       <CardContent className="space-y-4">
         {scannedContact ? (
           <div className="space-y-4">
-            <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4 text-center">
-              <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-3" />
+            <div className="bg-sacred/10 border border-sacred/20 rounded-lg p-4 text-center">
+              <CheckCircle className="w-12 h-12 text-sacred mx-auto mb-3" />
               <h3 className="font-semibold text-lg">{scannedContact.name}</h3>
               {scannedContact.email && (
                 <p className="text-sm text-muted-foreground">{scannedContact.email}</p>
@@ -184,10 +188,17 @@ export function ContactScanner({ onScanSuccess }: ContactScannerProps) {
             </div>
 
             <div className="flex gap-3">
-              <Button onClick={saveContact} className="flex-1 bg-sacred hover:bg-sacred/90">
-                <Download className="w-4 h-4 mr-2" />
-                Save Contact
-              </Button>
+              {user ? (
+                <Button onClick={() => setShowSaveDialog(true)} className="flex-1 bg-sacred hover:bg-sacred/90">
+                  <Save className="w-4 h-4 mr-2" />
+                  Save to My Contacts
+                </Button>
+              ) : (
+                <Button onClick={saveContact} className="flex-1 bg-sacred hover:bg-sacred/90">
+                  <Download className="w-4 h-4 mr-2" />
+                  Download vCard
+                </Button>
+              )}
               <Button variant="outline" onClick={resetScanner}>
                 Scan Another
               </Button>
@@ -236,6 +247,24 @@ export function ContactScanner({ onScanSuccess }: ContactScannerProps) {
           </>
         )}
       </CardContent>
+
+      {scannedContact && (
+        <SaveContactDialog
+          open={showSaveDialog}
+          onOpenChange={setShowSaveDialog}
+          contact={{
+            name: scannedContact.name,
+            email: scannedContact.email,
+            phone: scannedContact.phone,
+            organization: scannedContact.organization,
+          }}
+          source="qr_scan"
+          onSaved={() => {
+            onScanSuccess?.();
+            resetScanner();
+          }}
+        />
+      )}
     </Card>
   );
 }

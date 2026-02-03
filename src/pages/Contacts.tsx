@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, User, Scan, CreditCard, LogIn } from 'lucide-react';
+import { ArrowLeft, User, Scan, CreditCard, LogIn, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { MyDigitalCard } from '@/components/contacts/MyDigitalCard';
 import { ContactScanner } from '@/components/contacts/ContactScanner';
 import { BusinessCardScanner } from '@/components/contacts/BusinessCardScanner';
 import { SacredConnectionsIntro } from '@/components/contacts/SacredConnectionsIntro';
+import { SavedContactsList } from '@/components/contacts/SavedContactsList';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function Contacts() {
@@ -89,10 +90,14 @@ export default function Contacts() {
         )}
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="my-card" className="flex items-center gap-2">
               <User className="w-4 h-4" />
               <span className="hidden sm:inline">My Card</span>
+            </TabsTrigger>
+            <TabsTrigger value="contacts" className="flex items-center gap-2">
+              <Users className="w-4 h-4" />
+              <span className="hidden sm:inline">Contacts</span>
             </TabsTrigger>
             <TabsTrigger value="scan-qr" className="flex items-center gap-2">
               <Scan className="w-4 h-4" />
@@ -106,6 +111,10 @@ export default function Contacts() {
 
           <TabsContent value="my-card" className="mt-6">
             <MyDigitalCard />
+          </TabsContent>
+
+          <TabsContent value="contacts" className="mt-6">
+            <SavedContactsList />
           </TabsContent>
 
           <TabsContent value="scan-qr" className="mt-6">

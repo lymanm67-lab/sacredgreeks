@@ -3,9 +3,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Camera, Upload, Download, Loader2, CreditCard, CheckCircle, Edit } from 'lucide-react';
+import { Camera, Upload, Download, Loader2, CreditCard, CheckCircle, Edit, Save } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { SaveContactDialog } from './SaveContactDialog';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface BusinessCardScannerProps {
   onScanSuccess?: () => void;
@@ -23,12 +25,14 @@ interface ExtractedContact {
 
 export function BusinessCardScanner({ onScanSuccess }: BusinessCardScannerProps) {
   const { toast } = useToast();
+  const { user } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [extractedContact, setExtractedContact] = useState<ExtractedContact | null>(null);
   const [editedContact, setEditedContact] = useState<ExtractedContact | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [showSaveDialog, setShowSaveDialog] = useState(false);
 
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -238,10 +242,17 @@ export function BusinessCardScanner({ onScanSuccess }: BusinessCardScannerProps)
             )}
 
             <div className="flex gap-3">
-              <Button onClick={saveContact} className="flex-1 bg-sacred hover:bg-sacred/90">
-                <Download className="w-4 h-4 mr-2" />
-                Save Contact
-              </Button>
+              {user ? (
+                <Button onClick={() => setShowSaveDialog(true)} className="flex-1 bg-sacred hover:bg-sacred/90">
+                  <Save className="w-4 h-4 mr-2" />
+                  Save to My Contacts
+                </Button>
+              ) : (
+                <Button onClick={saveContact} className="flex-1 bg-sacred hover:bg-sacred/90">
+                  <Download className="w-4 h-4 mr-2" />
+                  Download vCard
+                </Button>
+              )}
               <Button variant="outline" onClick={resetScanner}>
                 Scan Another
               </Button>
@@ -309,6 +320,26 @@ export function BusinessCardScanner({ onScanSuccess }: BusinessCardScannerProps)
           </>
         )}
       </CardContent>
+
+      {editedContact && (
+        <SaveContactDialog
+          open={showSaveDialog}
+          onOpenChange={setShowSaveDialog}
+          contact={{
+            name: editedContact.name,
+            email: editedContact.email,
+            phone: editedContact.phone,
+            organization: editedContact.company,
+            title: editedContact.title,
+            website: editedContact.website,
+          }}
+          source="business_card"
+          onSaved={() => {
+            onScanSuccess?.();
+            resetScanner();
+          }}
+        />
+      )}
     </Card>
   );
 }
