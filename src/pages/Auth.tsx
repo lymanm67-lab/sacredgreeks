@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Home, Eye, EyeOff, AlertTriangle, BookOpen, Heart, Shield, Quote, ChevronRight, ChevronDown, ChevronUp, Sparkles, Play, User, Moon, Zap, Video, UserCheck, FileDown, Headphones } from 'lucide-react';
+import { Home, Eye, EyeOff, AlertTriangle, BookOpen, Heart, Shield, Quote, ChevronRight, ChevronDown, ChevronUp, Sparkles, Play, User, Moon, Zap, Video, UserCheck, FileDown, Headphones, QrCode } from 'lucide-react';
 import logo from '@/assets/sacred-greeks-logo.png';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -116,6 +116,19 @@ const SECONDARY_TOOLS = [
     iconColor: "text-teal-400",
     borderColor: "border-teal-500/70",
     topBorderColor: "bg-teal-500"
+  },
+  {
+    icon: QrCode,
+    title: "Sacred Connections",
+    subtitle: "Digital Contact Swap",
+    description: "Share your digital vCard via QR code and scan business cards with AI-powered extraction.",
+    tags: ["QR vCards", "AI Card Scanner", "Quick Networking"],
+    link: "/contacts",
+    bgColor: "bg-sacred/20",
+    hoverBgColor: "bg-sacred/30",
+    iconColor: "text-sacred",
+    borderColor: "border-sacred/70",
+    topBorderColor: "bg-sacred"
   }
 ];
 
