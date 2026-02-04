@@ -151,6 +151,7 @@ const MemberNetwork = lazy(() => import("./pages/MemberNetwork"));
 const FinancialStewardship = lazy(() => import("./pages/FinancialStewardship"));
 const SacredMoneyCourse = lazy(() => import("./pages/SacredMoneyCourse"));
 const Contacts = lazy(() => import("./pages/Contacts"));
+const ChapterFinance = lazy(() => import("./pages/ChapterFinance"));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -434,6 +435,14 @@ const App = () => (
                       element={
                         <ProtectedPageWithLayout>
                           <ServiceTracker />
+                        </ProtectedPageWithLayout>
+                      }
+                    />
+                    <Route
+                      path="/chapter-finance"
+                      element={
+                        <ProtectedPageWithLayout>
+                          <ChapterFinance />
                         </ProtectedPageWithLayout>
                       }
                     />
