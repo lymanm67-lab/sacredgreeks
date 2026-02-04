@@ -804,6 +804,13 @@ export type Database = {
             referencedRelation: "email_sends"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "email_clicks_send_id_fkey"
+            columns: ["send_id"]
+            isOneToOne: false
+            referencedRelation: "email_sends_safe"
+            referencedColumns: ["id"]
+          },
         ]
       }
       email_opens: {
@@ -834,6 +841,13 @@ export type Database = {
             columns: ["send_id"]
             isOneToOne: false
             referencedRelation: "email_sends"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_opens_send_id_fkey"
+            columns: ["send_id"]
+            isOneToOne: false
+            referencedRelation: "email_sends_safe"
             referencedColumns: ["id"]
           },
         ]
@@ -2546,6 +2560,13 @@ export type Database = {
             foreignKeyName: "shared_results_assessment_id_fkey"
             columns: ["assessment_id"]
             isOneToOne: false
+            referencedRelation: "assessment_analytics_safe"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shared_results_assessment_id_fkey"
+            columns: ["assessment_id"]
+            isOneToOne: false
             referencedRelation: "assessment_submissions"
             referencedColumns: ["id"]
           },
@@ -3033,6 +3054,39 @@ export type Database = {
       }
     }
     Views: {
+      assessment_analytics_safe: {
+        Row: {
+          created_at: string | null
+          id: string | null
+          is_authenticated_user: boolean | null
+          result_type: string | null
+          scenario: string | null
+          scores_json: Json | null
+          track: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string | null
+          is_authenticated_user?: never
+          result_type?: string | null
+          scenario?: string | null
+          scores_json?: Json | null
+          track?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string | null
+          is_authenticated_user?: never
+          result_type?: string | null
+          scenario?: string | null
+          scores_json?: Json | null
+          track?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       assessment_submissions_safe: {
         Row: {
           answers_json: Json | null
@@ -3131,6 +3185,51 @@ export type Database = {
           website_url?: string | null
         }
         Relationships: []
+      }
+      email_sends_safe: {
+        Row: {
+          campaign_id: string | null
+          id: string | null
+          recipient_email_masked: string | null
+          sent_at: string | null
+          tracking_token: string | null
+          user_id: string | null
+          variant_id: string | null
+        }
+        Insert: {
+          campaign_id?: string | null
+          id?: string | null
+          recipient_email_masked?: never
+          sent_at?: string | null
+          tracking_token?: string | null
+          user_id?: string | null
+          variant_id?: string | null
+        }
+        Update: {
+          campaign_id?: string | null
+          id?: string | null
+          recipient_email_masked?: never
+          sent_at?: string | null
+          tracking_token?: string | null
+          user_id?: string | null
+          variant_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_sends_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "email_campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_sends_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "email_subject_variants"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       healing_stories_public: {
         Row: {
@@ -3266,6 +3365,7 @@ export type Database = {
         Args: { business_id: string }
         Returns: Json
       }
+      get_email_send_recipient: { Args: { send_id: string }; Returns: string }
       get_submission_email_if_consented: {
         Args: { submission_id: string }
         Returns: string
