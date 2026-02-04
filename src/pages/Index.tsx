@@ -11,7 +11,8 @@ import { cn } from "@/lib/utils";
 import { Play, Sparkles, User, ChevronRight, Shield, Heart, BookOpen, Headphones, Star, CheckCircle, Globe, Clock, Smartphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DashboardPreview } from "@/components/landing/DashboardPreview";
-import { Testimonials } from "@/components/Testimonials";
+import { TestimonialCarousel } from "@/components/landing/TestimonialCarousel";
+import { PartnerCTA } from "@/components/landing/PartnerCTA";
 import { Footer } from "@/components/landing/Footer";
 import { LandingPersonalizationSurvey } from "@/components/landing/LandingPersonalizationSurvey";
 import { SEOHead } from "@/components/SEOHead";
@@ -300,8 +301,11 @@ const Index = () => {
           
           {/* Testimonials Section */}
           <section aria-label="User Testimonials">
-            <Testimonials />
+            <TestimonialCarousel />
           </section>
+
+          {/* Partner CTA */}
+          <PartnerCTA />
         </main>
         
         {/* Footer */}
