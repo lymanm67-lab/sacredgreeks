@@ -207,11 +207,17 @@ export function AppSidebar() {
           <NavLink 
             to={item.url} 
             className={cn(
-              "flex items-center gap-2 !items-start !justify-start !text-left transition-colors py-1.5 px-2 rounded-md w-full",
+              "flex items-center gap-2 !items-start !justify-start !text-left transition-colors py-1.5 px-2 rounded-md w-full group",
               isActive(item.url) && "text-primary font-medium"
             )}
           >
-            <item.icon className={cn("h-4 w-4 shrink-0", item.iconColor)} />
+            <span className={cn(
+              "flex items-center justify-center h-6 w-6 rounded-md shrink-0 transition-all",
+              item.iconColor?.replace('text-', 'bg-').replace('500', '500/15'),
+              "group-hover:scale-110"
+            )}>
+              <item.icon className={cn("h-4 w-4", item.iconColor, "drop-shadow-sm")} />
+            </span>
             <span className="truncate text-sm">{item.title}</span>
           </NavLink>
         </SidebarMenuButton>
