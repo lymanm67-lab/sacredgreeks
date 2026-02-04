@@ -406,28 +406,33 @@ const SignIn = () => {
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <Checkbox 
-                            id="remember" 
-                            checked={rememberMe}
-                            onCheckedChange={(checked) => setRememberMe(checked as boolean)}
-                            className="border-slate-600 data-[state=checked]:bg-blue-500"
-                          />
-                          <label htmlFor="remember" className="text-sm text-slate-400 cursor-pointer">
-                            Remember me
-                          </label>
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2">
+                            <Checkbox 
+                              id="remember" 
+                              checked={rememberMe}
+                              onCheckedChange={(checked) => setRememberMe(checked as boolean)}
+                              className="border-slate-600 data-[state=checked]:bg-blue-500"
+                            />
+                            <label htmlFor="remember" className="text-sm text-slate-400 cursor-pointer">
+                              Remember my email
+                            </label>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const emailInput = document.getElementById('signin-email') as HTMLInputElement;
+                              handleForgotPassword(emailInput?.value || '');
+                            }}
+                            className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
+                          >
+                            Forgot password?
+                          </button>
                         </div>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            const emailInput = document.getElementById('signin-email') as HTMLInputElement;
-                            handleForgotPassword(emailInput?.value || '');
-                          }}
-                          className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
-                        >
-                          Forgot password?
-                        </button>
+                        <p className="text-xs text-slate-500">
+                          Tip: Allow your browser to save your password when prompted for faster login
+                        </p>
                       </div>
 
                       <Button
