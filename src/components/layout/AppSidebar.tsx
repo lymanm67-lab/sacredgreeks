@@ -198,6 +198,7 @@ export function AppSidebar() {
   };
 
   const NavItem = ({ item }: { item: { title: string; url: string; icon: React.ComponentType<{ className?: string }>; iconColor?: string } }) => {
+    const Icon = item.icon;
     return (
       <SidebarMenuItem className="isolate">
         <SidebarMenuButton
@@ -217,7 +218,7 @@ export function AppSidebar() {
               item.iconColor?.replace('text-', 'bg-').replace('500', '500/15'),
               "group-hover:scale-110"
             )}>
-              <item.icon className={cn("h-4 w-4", item.iconColor, "drop-shadow-sm")} />
+              <Icon className={cn("h-4 w-4", item.iconColor, "drop-shadow-sm")} />
             </span>
             <span className="truncate text-sm">{item.title}</span>
           </NavLink>
