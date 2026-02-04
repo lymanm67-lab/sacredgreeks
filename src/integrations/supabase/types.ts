@@ -3132,7 +3132,6 @@ export type Database = {
           business_name: string | null
           created_at: string | null
           description: string | null
-          email: string | null
           faith_statement: string | null
           featured: boolean | null
           greek_organization: string | null
@@ -3142,7 +3141,6 @@ export type Database = {
           location_state: string | null
           logo_url: string | null
           owner_name: string | null
-          phone: string | null
           updated_at: string | null
           website_url: string | null
         }
@@ -3151,7 +3149,6 @@ export type Database = {
           business_name?: string | null
           created_at?: string | null
           description?: string | null
-          email?: never
           faith_statement?: string | null
           featured?: boolean | null
           greek_organization?: string | null
@@ -3161,7 +3158,6 @@ export type Database = {
           location_state?: string | null
           logo_url?: string | null
           owner_name?: string | null
-          phone?: never
           updated_at?: string | null
           website_url?: string | null
         }
@@ -3170,7 +3166,6 @@ export type Database = {
           business_name?: string | null
           created_at?: string | null
           description?: string | null
-          email?: never
           faith_statement?: string | null
           featured?: boolean | null
           greek_organization?: string | null
@@ -3180,7 +3175,6 @@ export type Database = {
           location_state?: string | null
           logo_url?: string | null
           owner_name?: string | null
-          phone?: never
           updated_at?: string | null
           website_url?: string | null
         }
