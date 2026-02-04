@@ -152,6 +152,7 @@ const FinancialStewardship = lazy(() => import("./pages/FinancialStewardship"));
 const SacredMoneyCourse = lazy(() => import("./pages/SacredMoneyCourse"));
 const Contacts = lazy(() => import("./pages/Contacts"));
 const ChapterFinance = lazy(() => import("./pages/ChapterFinance"));
+const EBoardTraining = lazy(() => import("./pages/EBoardTraining"));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -508,6 +509,14 @@ const App = () => (
                         <ProtectedPageWithLayout>
                           <OrgCommunity />
                         </ProtectedPageWithLayout>
+                      }
+                    />
+                    <Route
+                      path="/eboard-training"
+                      element={
+                        <PageWithLayout>
+                          <EBoardTraining />
+                        </PageWithLayout>
                       }
                     />
                     <Route

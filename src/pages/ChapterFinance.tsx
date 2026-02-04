@@ -5,14 +5,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
-  Receipt, PieChart, FileText, Plus, Wallet, TrendingUp, 
-  Calculator, Sparkles, ArrowLeft
+  Receipt, PieChart, FileText, Wallet, TrendingUp, 
+  Calculator, Sparkles, ArrowLeft, GraduationCap
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { ReceiptScanner } from '@/components/expenses/ReceiptScanner';
 import { ExpenseTracker } from '@/components/expenses/ExpenseTracker';
 import { BudgetDashboard } from '@/components/expenses/BudgetDashboard';
 import { ExpenseReports } from '@/components/expenses/ExpenseReports';
+import { FinanceSandbox } from '@/components/expenses/FinanceSandbox';
 import { useExpenses } from '@/hooks/use-expenses';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -144,6 +145,17 @@ export default function ChapterFinance() {
               <span className="hidden sm:inline">Reports</span>
               <span className="sm:hidden">Reports</span>
             </TabsTrigger>
+            <TabsTrigger 
+              value="sandbox" 
+              className="flex items-center gap-2 data-[state=active]:bg-primary"
+            >
+              <GraduationCap className="h-4 w-4" />
+              <span className="hidden sm:inline">Practice</span>
+              <span className="sm:hidden">Practice</span>
+              <Badge variant="secondary" className="ml-1 bg-purple-500/20 text-purple-400 text-xs">
+                Sandbox
+              </Badge>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="scanner" className="mt-6">
@@ -160,6 +172,10 @@ export default function ChapterFinance() {
 
           <TabsContent value="reports" className="mt-6">
             <ExpenseReports />
+          </TabsContent>
+
+          <TabsContent value="sandbox" className="mt-6">
+            <FinanceSandbox />
           </TabsContent>
         </Tabs>
 
