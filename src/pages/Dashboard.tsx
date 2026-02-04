@@ -30,6 +30,7 @@ import { DashboardAudioGuide } from '@/components/dashboard/DashboardAudioGuide'
 import { QuickJump } from '@/components/ui/quick-jump';
 import { StartHereFlow, PersonalizedPlan } from '@/components/onboarding/StartHereFlow';
 import { useStartHereFlow } from '@/hooks/use-start-here-flow';
+import { ProductTour, useProductTour } from '@/components/onboarding/ProductTour';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -52,6 +53,7 @@ const Dashboard = () => {
   const { isDemoMode } = useDemoMode();
   const { showOnboarding, completeOnboarding, isChecking } = useOnboarding();
   const { showStartHere, completeStartHere, skipStartHere } = useStartHereFlow();
+  const { showTour, completeTour, skipTour } = useProductTour();
   const [stats, setStats] = useState<DashboardStats>({
     assessmentCount: 0,
     prayerCount: 0,
@@ -321,6 +323,14 @@ const Dashboard = () => {
           open={showStartHere} 
           onComplete={handleStartHereComplete}
           onSkip={skipStartHere}
+        />
+      )}
+
+      {/* Product Tour for first-time users */}
+      {!showOnboarding && !showStartHere && showTour && (
+        <ProductTour 
+          onComplete={completeTour}
+          onSkip={skipTour}
         />
       )}
     </div>

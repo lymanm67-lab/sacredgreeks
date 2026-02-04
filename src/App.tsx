@@ -153,6 +153,7 @@ const SacredMoneyCourse = lazy(() => import("./pages/SacredMoneyCourse"));
 const Contacts = lazy(() => import("./pages/Contacts"));
 const ChapterFinance = lazy(() => import("./pages/ChapterFinance"));
 const EBoardTraining = lazy(() => import("./pages/EBoardTraining"));
+const Partner = lazy(() => import("./pages/Partner"));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -307,6 +308,7 @@ const App = () => (
                     <Route path="/training-vault" element={<PageWithLayout><TrainingSuccessVault /></PageWithLayout>} />
                     <Route path="/guest-panelist-application" element={<GuestPanelistApplication />} />
                     <Route path="/about-creator" element={<AboutCreator />} />
+                    <Route path="/partner" element={<Partner />} />
                     <Route path="/order-book" element={<OrderBook />} />
                     <Route path="/speaking-request" element={<SpeakingRequest />} />
                     
