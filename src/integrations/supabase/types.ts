@@ -263,6 +263,130 @@ export type Database = {
         }
         Relationships: []
       }
+      chapter_budgets: {
+        Row: {
+          budget_amount: number
+          category_id: string
+          created_at: string | null
+          id: string
+          notes: string | null
+          period_end: string
+          period_start: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          budget_amount?: number
+          category_id: string
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          period_end: string
+          period_start: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          budget_amount?: number
+          category_id?: string
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          period_end?: string
+          period_start?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chapter_budgets_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "expense_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chapter_expenses: {
+        Row: {
+          amount: number
+          approved_at: string | null
+          approved_by: string | null
+          category_id: string | null
+          created_at: string | null
+          description: string | null
+          event_name: string | null
+          expense_date: string
+          id: string
+          is_reimbursement: boolean | null
+          payment_method: string | null
+          receipt_data: Json | null
+          receipt_url: string | null
+          reimbursement_paid: boolean | null
+          reimbursement_paid_at: string | null
+          rejection_reason: string | null
+          status: Database["public"]["Enums"]["expense_status"] | null
+          submitted_by: string | null
+          updated_at: string | null
+          user_id: string
+          vendor_name: string | null
+        }
+        Insert: {
+          amount: number
+          approved_at?: string | null
+          approved_by?: string | null
+          category_id?: string | null
+          created_at?: string | null
+          description?: string | null
+          event_name?: string | null
+          expense_date?: string
+          id?: string
+          is_reimbursement?: boolean | null
+          payment_method?: string | null
+          receipt_data?: Json | null
+          receipt_url?: string | null
+          reimbursement_paid?: boolean | null
+          reimbursement_paid_at?: string | null
+          rejection_reason?: string | null
+          status?: Database["public"]["Enums"]["expense_status"] | null
+          submitted_by?: string | null
+          updated_at?: string | null
+          user_id: string
+          vendor_name?: string | null
+        }
+        Update: {
+          amount?: number
+          approved_at?: string | null
+          approved_by?: string | null
+          category_id?: string | null
+          created_at?: string | null
+          description?: string | null
+          event_name?: string | null
+          expense_date?: string
+          id?: string
+          is_reimbursement?: boolean | null
+          payment_method?: string | null
+          receipt_data?: Json | null
+          receipt_url?: string | null
+          reimbursement_paid?: boolean | null
+          reimbursement_paid_at?: string | null
+          rejection_reason?: string | null
+          status?: Database["public"]["Enums"]["expense_status"] | null
+          submitted_by?: string | null
+          updated_at?: string | null
+          user_id?: string
+          vendor_name?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chapter_expenses_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "expense_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       chapter_meeting_notes: {
         Row: {
           action_items: string | null
@@ -828,6 +952,92 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      expense_approval_history: {
+        Row: {
+          action: string
+          action_by: string | null
+          created_at: string | null
+          expense_id: string
+          id: string
+          new_status: Database["public"]["Enums"]["expense_status"] | null
+          notes: string | null
+          previous_status: Database["public"]["Enums"]["expense_status"] | null
+        }
+        Insert: {
+          action: string
+          action_by?: string | null
+          created_at?: string | null
+          expense_id: string
+          id?: string
+          new_status?: Database["public"]["Enums"]["expense_status"] | null
+          notes?: string | null
+          previous_status?: Database["public"]["Enums"]["expense_status"] | null
+        }
+        Update: {
+          action?: string
+          action_by?: string | null
+          created_at?: string | null
+          expense_id?: string
+          id?: string
+          new_status?: Database["public"]["Enums"]["expense_status"] | null
+          notes?: string | null
+          previous_status?: Database["public"]["Enums"]["expense_status"] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "expense_approval_history_expense_id_fkey"
+            columns: ["expense_id"]
+            isOneToOne: false
+            referencedRelation: "chapter_expenses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      expense_categories: {
+        Row: {
+          category_type:
+            | Database["public"]["Enums"]["expense_category_type"]
+            | null
+          color: string | null
+          created_at: string | null
+          description: string | null
+          icon: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          category_type?:
+            | Database["public"]["Enums"]["expense_category_type"]
+            | null
+          color?: string | null
+          created_at?: string | null
+          description?: string | null
+          icon?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          category_type?:
+            | Database["public"]["Enums"]["expense_category_type"]
+            | null
+          color?: string | null
+          created_at?: string | null
+          description?: string | null
+          icon?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
       }
       feature_preferences: {
         Row: {
@@ -3075,6 +3285,8 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      expense_category_type: "standard" | "custom"
+      expense_status: "pending" | "approved" | "rejected" | "reimbursed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -3203,6 +3415,8 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      expense_category_type: ["standard", "custom"],
+      expense_status: ["pending", "approved", "rejected", "reimbursed"],
     },
   },
 } as const
