@@ -39,6 +39,8 @@ export default defineConfig(({ mode }) => ({
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        // Prevent SW from caching OAuth redirect routes
+        navigateFallbackDenylist: [/^\/~oauth/],
         // Skip waiting and claim clients immediately for faster updates
         skipWaiting: true,
         clientsClaim: true,
