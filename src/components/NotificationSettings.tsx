@@ -101,7 +101,7 @@ export const NotificationSettings = () => {
   const checkSubscription = async () => {
     try {
       const registration = await navigator.serviceWorker.ready;
-      const subscription = await registration.pushManager.getSubscription();
+      const subscription = await (registration as any).pushManager.getSubscription();
       setIsSubscribed(!!subscription);
 
       if (subscription && user) {
@@ -168,7 +168,7 @@ export const NotificationSettings = () => {
       const registration = await navigator.serviceWorker.ready;
 
       // Subscribe to push notifications using VAPID keys
-      const subscription = await registration.pushManager.subscribe({
+      const subscription = await (registration as any).pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(
           'BIlS2Jw3IDwM_GCSFdDo62G6QBZFnVhbMmhHeu1Cmmog_ZkM_j_JPzhpMlBgU2etR-0kqJptbEZ5PgTV3PGLAUM'
@@ -207,7 +207,7 @@ export const NotificationSettings = () => {
 
     try {
       const registration = await navigator.serviceWorker.ready;
-      const subscription = await registration.pushManager.getSubscription();
+      const subscription = await (registration as any).pushManager.getSubscription();
 
       if (subscription) {
         await subscription.unsubscribe();
@@ -245,7 +245,7 @@ export const NotificationSettings = () => {
     if (isSubscribed && user) {
       try {
         const registration = await navigator.serviceWorker.ready;
-        const subscription = await registration.pushManager.getSubscription();
+        const subscription = await (registration as any).pushManager.getSubscription();
 
         if (subscription) {
           await supabase.functions.invoke('subscribe-push', {
