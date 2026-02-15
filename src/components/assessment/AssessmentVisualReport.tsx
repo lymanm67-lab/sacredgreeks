@@ -476,10 +476,10 @@ export function AssessmentVisualReport({
       case "radar":
       default:
         return (
-          <ResponsiveContainer width="100%" height={280}>
-            <RadarChart data={chartData}>
+          <ResponsiveContainer width="100%" height={300}>
+            <RadarChart data={chartData} cx="50%" cy="50%" outerRadius="65%">
               <PolarGrid stroke="hsl(var(--border))" />
-              <PolarAngleAxis dataKey="name" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} />
+              <PolarAngleAxis dataKey="name" tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} />
               <PolarRadiusAxis angle={30} domain={[0, 100]} tick={{ fontSize: 10 }} />
               <Radar
                 name="Score"

@@ -302,15 +302,15 @@ const Podcast = () => {
       {/* Header */}
       <header className="border-b border-purple-500/20 bg-gradient-to-r from-purple-900/10 via-card/80 to-sacred/10 backdrop-blur sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <Link to="/dashboard">
                 <Button variant="ghost" size="sm" className="hover:bg-purple-500/10">
                   <Home className="w-4 h-4 mr-2" />
                   Dashboard
                 </Button>
               </Link>
-              <span className="text-muted-foreground/50">|</span>
+              <span className="text-muted-foreground/50 hidden sm:inline">|</span>
               <Link to="/study">
                 <Button variant="ghost" size="sm" className="hover:bg-purple-500/10">
                   <ArrowLeft className="w-4 h-4 mr-2" />
@@ -318,7 +318,7 @@ const Podcast = () => {
                 </Button>
               </Link>
             </div>
-            <Badge className="bg-gradient-to-r from-purple-500/20 to-sacred/20 text-purple-300 hover:from-purple-500/30 hover:to-sacred/30 border-purple-500/30" variant="outline">
+            <Badge className="bg-gradient-to-r from-purple-500/20 to-sacred/20 text-purple-300 hover:from-purple-500/30 hover:to-sacred/30 border-purple-500/30 shrink-0 self-start sm:self-auto" variant="outline">
               🎙️ Audio Study Guide
             </Badge>
           </div>
