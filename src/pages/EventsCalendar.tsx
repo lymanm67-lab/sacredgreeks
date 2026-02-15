@@ -335,6 +335,7 @@ export default function EventsCalendar() {
           title="Faith & Greek Events"
           description="Conferences, retreats, workshops, and gatherings where faith and Greek life intersect. Connect with like-minded Greeks."
           badge={{ text: "Community", variant: "default" }}
+          demoPageKey="events-calendar"
         />
 
         {/* Value Prop */}

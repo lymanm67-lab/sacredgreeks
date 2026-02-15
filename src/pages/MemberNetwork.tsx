@@ -411,6 +411,7 @@ export default function MemberNetwork() {
           title="Member Network"
           description="Connect with fellow Greeks who share your faith journey. Build meaningful relationships centered on Christ."
           badge={{ text: "Community", variant: "default" }}
+          demoPageKey="member-network"
         />
 
         {/* TTS Overview Button */}

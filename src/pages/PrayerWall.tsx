@@ -19,6 +19,7 @@ import { useDemoMode } from '@/contexts/DemoModeContext';
 import { usePrayerWallRealtime } from '@/hooks/use-realtime-notifications';
 import { SEOHead, pageSEO } from '@/components/SEOHead';
 import { AnimatedSection } from '@/components/ui/AnimatedSection';
+import { DemoPageBadge } from '@/components/demo/DemoPageBadge';
 
 interface PrayerRequest {
   id: string;
@@ -352,13 +353,8 @@ const PrayerWall = () => {
                 <h1 className="text-xl sm:text-2xl font-bold flex items-center gap-2 flex-wrap">
                   <Heart className="h-5 w-5 sm:h-6 sm:w-6 text-red-500 shrink-0" />
                   Prayer Wall
-                  {isShowingDemoData && (
-                    <Badge variant="secondary" className="text-xs bg-amber-500/10 text-amber-600 border-amber-500/20">
-                      <FlaskConical className="w-3 h-3 mr-1" />
-                      Demo
-                    </Badge>
-                  )}
                 </h1>
+                <DemoPageBadge pageKey="prayer-wall" />
                 <p className="text-sm text-muted-foreground">Share and support prayer requests</p>
               </div>
             </div>

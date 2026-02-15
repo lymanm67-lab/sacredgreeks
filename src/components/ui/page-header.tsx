@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { DemoPageBadge } from "@/components/demo/DemoPageBadge";
 
 interface PageHeaderProps {
   title: string;
@@ -8,9 +9,10 @@ interface PageHeaderProps {
     variant?: "default" | "secondary" | "destructive" | "outline";
   };
   children?: React.ReactNode;
+  demoPageKey?: string;
 }
 
-export function PageHeader({ title, description, badge, children }: PageHeaderProps) {
+export function PageHeader({ title, description, badge, children, demoPageKey }: PageHeaderProps) {
   return (
     <div className="mb-8">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-2">
@@ -21,6 +23,7 @@ export function PageHeader({ title, description, badge, children }: PageHeaderPr
             </Badge>
           )}
           <h1 className="text-2xl md:text-3xl font-bold text-foreground">{title}</h1>
+          {demoPageKey && <DemoPageBadge pageKey={demoPageKey} className="mt-2" />}
         </div>
         {children}
       </div>

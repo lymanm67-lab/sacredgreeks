@@ -13,6 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 import { journeyContent } from '@/data/journeyContent';
 import { ListenButton } from '@/components/ListenButton';
 import { useDemoMode } from '@/contexts/DemoModeContext';
+import { DemoPageBadge } from '@/components/demo/DemoPageBadge';
 
 // Demo progress data - shows first 8 days completed with sample notes
 const DEMO_PROGRESS: Record<number, { completed: boolean; notes: string }> = {
@@ -254,17 +255,12 @@ const Journey = () => {
           <Link to="/">
             <Button variant="ghost" size="icon"><ArrowLeft className="w-5 h-5" /></Button>
           </Link>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-wrap">
             <div>
               <h1 className="text-xl font-bold">30-Day "Sacred, Not Sinful" Journey</h1>
               <p className="text-sm text-muted-foreground">Daily readings, scriptures & reflections</p>
             </div>
-            {isShowingDemo && (
-              <Badge variant="outline" className="bg-amber-500/10 text-amber-600 border-amber-500/30">
-                <FlaskConical className="w-3 h-3 mr-1" />
-                Demo
-              </Badge>
-            )}
+            <DemoPageBadge pageKey="journey" />
           </div>
         </div>
       </header>

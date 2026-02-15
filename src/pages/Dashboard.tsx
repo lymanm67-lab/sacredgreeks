@@ -31,6 +31,7 @@ import { QuickJump } from '@/components/ui/quick-jump';
 import { StartHereFlow, PersonalizedPlan } from '@/components/onboarding/StartHereFlow';
 import { useStartHereFlow } from '@/hooks/use-start-here-flow';
 import { ProductTour, useProductTour } from '@/components/onboarding/ProductTour';
+import { DemoPageBadge } from '@/components/demo/DemoPageBadge';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -267,6 +268,8 @@ const Dashboard = () => {
             title="Jump to Section"
             defaultOpen={false}
           />
+
+          <DemoPageBadge pageKey="dashboard" className="justify-center" />
 
           {/* 1. Hero Section - Welcome & Introduction */}
           <div className="animate-fade-in">

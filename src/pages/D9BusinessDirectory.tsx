@@ -327,6 +327,7 @@ export default function D9BusinessDirectory() {
           title="D9 Business Directory"
           description="Support Divine Nine entrepreneurs who operate with faith-based values. Every business here is owned by a D9 member committed to Kingdom principles."
           badge={{ text: "Faith + Business", variant: "default" }}
+          demoPageKey="business-directory"
         />
 
         {/* Value Prop */}
