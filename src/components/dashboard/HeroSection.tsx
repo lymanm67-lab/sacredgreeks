@@ -65,7 +65,7 @@ export const HeroSection = () => {
   const firstName = user?.user_metadata?.full_name?.split(' ')[0] || 'Friend';
 
   return (
-    <div className="relative w-full max-w-full overflow-hidden rounded-3xl shadow-2xl isolate">
+    <div className="relative w-full max-w-full overflow-hidden rounded-3xl shadow-2xl isolate box-border">
       {/* Background with animated gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-[hsl(225,50%,12%)] via-[hsl(225,60%,18%)] to-[hsl(210,80%,25%)]" />
       
@@ -175,7 +175,7 @@ export const HeroSection = () => {
 
             {/* Quick Action Buttons */}
             <motion.div 
-              className="flex flex-nowrap gap-2"
+              className="flex flex-wrap gap-2"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
