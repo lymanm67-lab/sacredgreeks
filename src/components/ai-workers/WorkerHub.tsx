@@ -1,6 +1,8 @@
-import { Shield, BookOpen, MessageSquareText, GraduationCap, History, Sparkles } from 'lucide-react';
+import { Shield, BookOpen, MessageSquareText, GraduationCap, History, Sparkles, Theater } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { useDemoMode } from '@/contexts/DemoModeContext';
 import type { WorkerType } from '@/pages/AIWorkers';
 
 const WORKERS = [
@@ -45,24 +47,39 @@ const WORKERS = [
 interface WorkerHubProps {
   onSelectWorker: (worker: WorkerType) => void;
   onViewHistory: () => void;
+  onViewShowcase?: () => void;
 }
 
-export function WorkerHub({ onSelectWorker, onViewHistory }: WorkerHubProps) {
+export function WorkerHub({ onSelectWorker, onViewHistory, onViewShowcase }: WorkerHubProps) {
+  const { isDemoMode } = useDemoMode();
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold text-foreground flex items-center gap-2">
             <Sparkles className="w-7 h-7 text-primary" />
-            AI Workers
+            PROOF Command Center
           </h1>
           <p className="text-muted-foreground mt-1">
             Source-grounded coaches for navigating faith & Greek life with clarity.
           </p>
+          {isDemoMode && (
+            <Badge variant="secondary" className="mt-2 gap-1">
+              <Sparkles className="w-3 h-3" /> Demo Mode Active
+            </Badge>
+          )}
         </div>
-        <Button variant="outline" size="sm" onClick={onViewHistory} className="gap-2">
-          <History className="w-4 h-4" /> History
-        </Button>
+        <div className="flex gap-2">
+          {onViewShowcase && (
+            <Button variant="outline" size="sm" onClick={onViewShowcase} className="gap-2">
+              <Theater className="w-4 h-4" /> Showcase
+            </Button>
+          )}
+          <Button variant="outline" size="sm" onClick={onViewHistory} className="gap-2">
+            <History className="w-4 h-4" /> History
+          </Button>
+        </div>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">

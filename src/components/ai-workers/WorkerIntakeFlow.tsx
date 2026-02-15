@@ -1,9 +1,12 @@
 import { useState } from 'react';
-import { ArrowLeft, Send, Loader2 } from 'lucide-react';
+import { ArrowLeft, Send, Loader2, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
+import { useDemoMode } from '@/contexts/DemoModeContext';
+import { getDemoResult } from '@/data/aiWorkerDemoData';
 import type { WorkerType, AudienceType, ClaimCategory, WorkerResult } from '@/pages/AIWorkers';
 
 const AUDIENCES: { value: AudienceType; label: string; emoji: string }[] = [
@@ -37,13 +40,14 @@ interface WorkerIntakeFlowProps {
 
 export function WorkerIntakeFlow({ workerType, onBack, onResult }: WorkerIntakeFlowProps) {
   const { toast } = useToast();
+  const { isDemoMode } = useDemoMode();
   const [audience, setAudience] = useState<AudienceType | null>(null);
   const [claim, setClaim] = useState<ClaimCategory | null>(null);
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const showAudience = workerType !== 'study_navigator';
-  const showClaims = workerType !== 'study_navigator' && workerType !== 'conversation_coach' || (workerType === 'conversation_coach');
+  const showClaims = workerType !== 'study_navigator';
   const canSubmit = workerType === 'study_navigator' || (audience && claim);
 
   const handleSubmit = async () => {
@@ -51,6 +55,14 @@ export function WorkerIntakeFlow({ workerType, onBack, onResult }: WorkerIntakeF
     setIsLoading(true);
 
     try {
+      // Demo mode: return curated demo data instead of calling edge function
+      if (isDemoMode) {
+        await new Promise(resolve => setTimeout(resolve, 1200)); // Simulate loading
+        const demoResult = getDemoResult(workerType, audience, claim);
+        onResult(demoResult);
+        return;
+      }
+
       const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-worker`, {
         method: 'POST',
         headers: {
@@ -90,7 +102,14 @@ export function WorkerIntakeFlow({ workerType, onBack, onResult }: WorkerIntakeF
         <Button variant="ghost" size="icon" onClick={onBack}>
           <ArrowLeft className="w-5 h-5" />
         </Button>
-        <h2 className="text-xl font-bold text-foreground">{WORKER_TITLES[workerType]}</h2>
+        <div>
+          <h2 className="text-xl font-bold text-foreground">{WORKER_TITLES[workerType]}</h2>
+          {isDemoMode && (
+            <Badge variant="secondary" className="mt-1 gap-1 text-xs">
+              <Sparkles className="w-3 h-3" /> Demo — curated responses
+            </Badge>
+          )}
+        </div>
       </div>
 
       {/* Audience selector */}
@@ -167,12 +186,12 @@ export function WorkerIntakeFlow({ workerType, onBack, onResult }: WorkerIntakeF
         {isLoading ? (
           <>
             <Loader2 className="w-5 h-5 animate-spin" />
-            Processing...
+            {isDemoMode ? 'Loading Demo Response...' : 'Processing...'}
           </>
         ) : (
           <>
             <Send className="w-5 h-5" />
-            Generate Response
+            {isDemoMode ? 'View Demo Response' : 'Generate Response'}
           </>
         )}
       </Button>
