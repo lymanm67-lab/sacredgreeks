@@ -125,16 +125,16 @@ export const HeroSection = () => {
                 className="relative h-16 w-16 rounded-full object-cover border-2 border-white/20"
               />
             </div>
-            <div>
-              <div className="flex items-center gap-2 text-white/80">
-                <Sparkles className="w-4 h-4 text-amber-400" />
+            <div className="min-w-0">
+              <div className="flex items-center gap-1 sm:gap-2 text-white/80 flex-wrap">
+                <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
                 <span className="text-sm font-medium">{getGreeting()}</span>
-                <span className="text-white/50 mx-1">•</span>
-                <span className="text-xs text-white/60">
+                <span className="text-white/50 mx-0.5 hidden sm:inline">•</span>
+                <span className="text-xs text-white/60 hidden sm:inline">
                   {currentTime.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
                 </span>
-                <span className="text-white/50 mx-1">•</span>
-                <span className="text-xs text-cyan-400 font-medium">
+                <span className="text-white/50 mx-0.5 hidden md:inline">•</span>
+                <span className="text-xs text-cyan-400 font-medium hidden md:inline">
                   {formatTime()}
                 </span>
               </div>
@@ -164,7 +164,7 @@ export const HeroSection = () => {
                   </div>
                   <span className="text-amber-400 text-sm font-semibold uppercase tracking-wider">Today's Word</span>
                 </div>
-                <p className="text-white/90 text-lg leading-relaxed mb-4 italic">
+                <p className="text-white/90 text-base sm:text-lg leading-relaxed mb-4 italic break-words">
                   "{dailyScripture.text}"
                 </p>
                 <p className="text-cyan-400 font-semibold">

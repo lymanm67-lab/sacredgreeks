@@ -1345,6 +1345,54 @@ export type Database = {
           },
         ]
       }
+      founding_members: {
+        Row: {
+          created_at: string | null
+          email: string
+          full_name: string
+          id: string
+          is_active: boolean | null
+          organization: string | null
+          referral_code: string
+          referral_count: number | null
+          referred_by_code: string | null
+          signed_up_at: string | null
+          tier: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          full_name: string
+          id?: string
+          is_active?: boolean | null
+          organization?: string | null
+          referral_code: string
+          referral_count?: number | null
+          referred_by_code?: string | null
+          signed_up_at?: string | null
+          tier?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          is_active?: boolean | null
+          organization?: string | null
+          referral_code?: string
+          referral_count?: number | null
+          referred_by_code?: string | null
+          signed_up_at?: string | null
+          tier?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       gifted_subscriptions: {
         Row: {
           created_at: string
