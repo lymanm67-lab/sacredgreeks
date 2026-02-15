@@ -3329,6 +3329,41 @@ export type Database = {
           },
         ]
       }
+      worker_output_feedback: {
+        Row: {
+          comment: string | null
+          created_at: string
+          id: string
+          output_history_id: string | null
+          rating: string
+          user_id: string
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          output_history_id?: string | null
+          rating: string
+          user_id: string
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          output_history_id?: string | null
+          rating?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "worker_output_feedback_output_history_id_fkey"
+            columns: ["output_history_id"]
+            isOneToOne: false
+            referencedRelation: "worker_output_history"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       worker_output_history: {
         Row: {
           created_at: string
