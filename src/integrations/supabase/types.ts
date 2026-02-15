@@ -77,6 +77,92 @@ export type Database = {
         }
         Relationships: []
       }
+      ai_study_plan_progress: {
+        Row: {
+          completed_at: string | null
+          completed_days: number[] | null
+          created_at: string
+          current_day: number
+          id: string
+          last_activity_at: string | null
+          plan_id: string
+          started_at: string
+          streak_count: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          completed_days?: number[] | null
+          created_at?: string
+          current_day?: number
+          id?: string
+          last_activity_at?: string | null
+          plan_id: string
+          started_at?: string
+          streak_count?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          completed_days?: number[] | null
+          created_at?: string
+          current_day?: number
+          id?: string
+          last_activity_at?: string | null
+          plan_id?: string
+          started_at?: string
+          streak_count?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_study_plan_progress_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "ai_study_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_study_plans: {
+        Row: {
+          created_at: string
+          days_json: Json
+          description: string | null
+          id: string
+          is_active: boolean
+          plan_type: string
+          proof_categories: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          days_json?: Json
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          plan_type: string
+          proof_categories?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          days_json?: Json
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          plan_type?: string
+          proof_categories?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       analytics_events: {
         Row: {
           created_at: string | null
@@ -495,6 +581,51 @@ export type Database = {
           title?: string
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      conversation_scripts: {
+        Row: {
+          audience_type: string
+          boundary_statements: string[]
+          closing_prayer: string | null
+          created_at: string
+          id: string
+          is_active: boolean
+          key_points: string[]
+          opening_lines: string
+          questions_to_ask: string[]
+          scenario: string
+          source_ids: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          audience_type: string
+          boundary_statements?: string[]
+          closing_prayer?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          key_points?: string[]
+          opening_lines: string
+          questions_to_ask?: string[]
+          scenario: string
+          source_ids?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          audience_type?: string
+          boundary_statements?: string[]
+          closing_prayer?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          key_points?: string[]
+          opening_lines?: string
+          questions_to_ask?: string[]
+          scenario?: string
+          source_ids?: string[] | null
+          updated_at?: string
         }
         Relationships: []
       }
@@ -1253,6 +1384,63 @@ export type Database = {
         }
         Relationships: []
       }
+      golden_library_sources: {
+        Row: {
+          author: string | null
+          citation_ref: string | null
+          content: string
+          created_at: string
+          id: string
+          is_active: boolean
+          metadata_json: Json | null
+          proof_category: string | null
+          source_type: string
+          source_url: string | null
+          summary: string | null
+          tags: string[] | null
+          tier: number
+          title: string
+          updated_at: string
+          version: number
+        }
+        Insert: {
+          author?: string | null
+          citation_ref?: string | null
+          content: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          metadata_json?: Json | null
+          proof_category?: string | null
+          source_type: string
+          source_url?: string | null
+          summary?: string | null
+          tags?: string[] | null
+          tier?: number
+          title: string
+          updated_at?: string
+          version?: number
+        }
+        Update: {
+          author?: string | null
+          citation_ref?: string | null
+          content?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          metadata_json?: Json | null
+          proof_category?: string | null
+          source_type?: string
+          source_url?: string | null
+          summary?: string | null
+          tags?: string[] | null
+          tier?: number
+          title?: string
+          updated_at?: string
+          version?: number
+        }
+        Relationships: []
+      }
       greek_chapters: {
         Row: {
           chapter_name: string
@@ -1806,6 +1994,63 @@ export type Database = {
           status?: string
           target_segments?: string[]
           updated_at?: string
+        }
+        Relationships: []
+      }
+      objection_cards: {
+        Row: {
+          audience_notes_json: Json | null
+          boundary_statement: string
+          claim_category: string
+          claim_text: string
+          created_at: string
+          dialogue_questions: string[]
+          five_minute_response: string
+          id: string
+          is_active: boolean
+          prayer: string
+          proof_breakdown_json: Json
+          scripture_refs: string[]
+          sixty_second_response: string
+          source_ids: string[] | null
+          updated_at: string
+          version: number
+        }
+        Insert: {
+          audience_notes_json?: Json | null
+          boundary_statement: string
+          claim_category: string
+          claim_text: string
+          created_at?: string
+          dialogue_questions?: string[]
+          five_minute_response: string
+          id?: string
+          is_active?: boolean
+          prayer: string
+          proof_breakdown_json?: Json
+          scripture_refs?: string[]
+          sixty_second_response: string
+          source_ids?: string[] | null
+          updated_at?: string
+          version?: number
+        }
+        Update: {
+          audience_notes_json?: Json | null
+          boundary_statement?: string
+          claim_category?: string
+          claim_text?: string
+          created_at?: string
+          dialogue_questions?: string[]
+          five_minute_response?: string
+          id?: string
+          is_active?: boolean
+          prayer?: string
+          proof_breakdown_json?: Json
+          scripture_refs?: string[]
+          sixty_second_response?: string
+          source_ids?: string[] | null
+          updated_at?: string
+          version?: number
         }
         Relationships: []
       }
@@ -3049,6 +3294,130 @@ export type Database = {
           user_id?: string | null
           webinar_id?: string
           webinar_title?: string
+        }
+        Relationships: []
+      }
+      worker_event_log: {
+        Row: {
+          created_at: string
+          event_data_json: Json | null
+          event_type: string
+          id: string
+          worker_run_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_data_json?: Json | null
+          event_type: string
+          id?: string
+          worker_run_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_data_json?: Json | null
+          event_type?: string
+          id?: string
+          worker_run_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "worker_event_log_worker_run_id_fkey"
+            columns: ["worker_run_id"]
+            isOneToOne: false
+            referencedRelation: "worker_runs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      worker_output_history: {
+        Row: {
+          created_at: string
+          id: string
+          is_bookmarked: boolean
+          output_json: Json
+          title: string
+          user_id: string
+          worker_run_id: string | null
+          worker_type: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_bookmarked?: boolean
+          output_json?: Json
+          title: string
+          user_id: string
+          worker_run_id?: string | null
+          worker_type: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_bookmarked?: boolean
+          output_json?: Json
+          title?: string
+          user_id?: string
+          worker_run_id?: string | null
+          worker_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "worker_output_history_worker_run_id_fkey"
+            columns: ["worker_run_id"]
+            isOneToOne: false
+            referencedRelation: "worker_runs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      worker_runs: {
+        Row: {
+          citations_json: Json | null
+          confidence_score: number | null
+          created_at: string
+          duration_ms: number | null
+          escalated: boolean
+          escalation_reason: string | null
+          id: string
+          intake_json: Json
+          output_json: Json | null
+          status: string
+          trigger_type: string
+          updated_at: string
+          user_id: string | null
+          worker_type: string
+        }
+        Insert: {
+          citations_json?: Json | null
+          confidence_score?: number | null
+          created_at?: string
+          duration_ms?: number | null
+          escalated?: boolean
+          escalation_reason?: string | null
+          id?: string
+          intake_json?: Json
+          output_json?: Json | null
+          status?: string
+          trigger_type?: string
+          updated_at?: string
+          user_id?: string | null
+          worker_type: string
+        }
+        Update: {
+          citations_json?: Json | null
+          confidence_score?: number | null
+          created_at?: string
+          duration_ms?: number | null
+          escalated?: boolean
+          escalation_reason?: string | null
+          id?: string
+          intake_json?: Json
+          output_json?: Json | null
+          status?: string
+          trigger_type?: string
+          updated_at?: string
+          user_id?: string | null
+          worker_type?: string
         }
         Relationships: []
       }
