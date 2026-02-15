@@ -246,7 +246,7 @@ export const DashboardAIAssistant = () => {
             </motion.div>
             <div>
               <CardTitle className="flex items-center gap-2 text-lg">
-                AI Assistant
+                The Berean
                 <Sparkles className="w-4 h-4 text-primary" />
               </CardTitle>
               <p className="text-sm text-muted-foreground">Ask about Greek life & faith</p>

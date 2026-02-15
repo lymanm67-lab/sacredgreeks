@@ -261,7 +261,7 @@ const Dashboard = () => {
               { id: 'learning-paths', label: 'Learning Paths', icon: <GraduationCap className="w-3 h-3" /> },
               { id: 'achievements', label: 'Achievements', icon: <Trophy className="w-3 h-3" /> },
               { id: 'community', label: 'Community', icon: <Users className="w-3 h-3" /> },
-              { id: 'ai-assistant', label: 'AI Assistant', icon: <Bot className="w-3 h-3" /> },
+              { id: 'ai-assistant', label: 'The Berean', icon: <Bot className="w-3 h-3" /> },
               { id: 'quick-links', label: 'Explore More', icon: <Compass className="w-3 h-3" /> },
             ]}
             title="Jump to Section"
