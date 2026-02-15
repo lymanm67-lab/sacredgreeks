@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import { ArrowLeft, Trash2, Clock } from 'lucide-react';
+import { ArrowLeft, Trash2, Clock, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { useDemoMode } from '@/contexts/DemoModeContext';
+import { DEMO_HISTORY } from '@/data/aiWorkerDemoData';
 
 interface HistoryItem {
   id: string;
@@ -26,11 +28,17 @@ interface WorkerHistoryPanelProps {
 
 export function WorkerHistoryPanel({ onBack }: WorkerHistoryPanelProps) {
   const { user } = useAuth();
+  const { isDemoMode } = useDemoMode();
   const [items, setItems] = useState<HistoryItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user) return;
+    if (isDemoMode) {
+      setItems(DEMO_HISTORY);
+      setLoading(false);
+      return;
+    }
+    if (!user) { setLoading(false); return; }
     (async () => {
       const { data } = await supabase
         .from('worker_output_history')
@@ -41,9 +49,13 @@ export function WorkerHistoryPanel({ onBack }: WorkerHistoryPanelProps) {
       setItems((data as HistoryItem[]) || []);
       setLoading(false);
     })();
-  }, [user]);
+  }, [user, isDemoMode]);
 
   const handleDelete = async (id: string) => {
+    if (isDemoMode) {
+      setItems(prev => prev.filter(i => i.id !== id));
+      return;
+    }
     await supabase.from('worker_output_history').delete().eq('id', id);
     setItems(prev => prev.filter(i => i.id !== id));
   };
@@ -54,7 +66,14 @@ export function WorkerHistoryPanel({ onBack }: WorkerHistoryPanelProps) {
         <Button variant="ghost" size="icon" onClick={onBack}>
           <ArrowLeft className="w-5 h-5" />
         </Button>
-        <h2 className="text-xl font-bold text-foreground">Response History</h2>
+        <div>
+          <h2 className="text-xl font-bold text-foreground">Response History</h2>
+          {isDemoMode && (
+            <Badge variant="secondary" className="mt-1 gap-1 text-xs">
+              <Sparkles className="w-3 h-3" /> Sample Data
+            </Badge>
+          )}
+        </div>
       </div>
 
       {loading ? (

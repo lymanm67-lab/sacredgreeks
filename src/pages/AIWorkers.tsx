@@ -4,6 +4,8 @@ import { WorkerHub } from '@/components/ai-workers/WorkerHub';
 import { WorkerIntakeFlow } from '@/components/ai-workers/WorkerIntakeFlow';
 import { WorkerOutputDisplay } from '@/components/ai-workers/WorkerOutputDisplay';
 import { WorkerHistoryPanel } from '@/components/ai-workers/WorkerHistoryPanel';
+import { WorkerDemoShowcase } from '@/components/ai-workers/WorkerDemoShowcase';
+import { useDemoMode } from '@/contexts/DemoModeContext';
 
 export type WorkerType = 'ritual_oath_coach' | 'founders_guide' | 'conversation_coach' | 'study_navigator';
 export type AudienceType = 'pastor' | 'parent' | 'chapter' | 'spouse' | 'friend';
@@ -20,9 +22,10 @@ export interface WorkerResult {
   message?: string;
 }
 
-type ViewState = 'hub' | 'intake' | 'output' | 'history';
+type ViewState = 'hub' | 'intake' | 'output' | 'history' | 'showcase';
 
 export default function AIWorkers() {
+  const { isDemoMode } = useDemoMode();
   const [view, setView] = useState<ViewState>('hub');
   const [selectedWorker, setSelectedWorker] = useState<WorkerType | null>(null);
   const [result, setResult] = useState<WorkerResult | null>(null);
@@ -41,13 +44,14 @@ export default function AIWorkers() {
     if (view === 'output') setView('intake');
     else if (view === 'intake') { setView('hub'); setSelectedWorker(null); }
     else if (view === 'history') setView('hub');
+    else if (view === 'showcase') setView('hub');
     else setView('hub');
   };
 
   return (
     <>
       <SEOHead
-        title="AI Workers | Sacred Greeks"
+        title="PROOF Command Center | Sacred Greeks"
         description="AI-powered coaches grounded in the PROOF framework to help you navigate faith and Greek life conversations."
       />
       <div className="p-4 md:p-6 max-w-4xl mx-auto space-y-6">
@@ -55,6 +59,7 @@ export default function AIWorkers() {
           <WorkerHub
             onSelectWorker={handleSelectWorker}
             onViewHistory={() => setView('history')}
+            onViewShowcase={isDemoMode ? () => setView('showcase') : undefined}
           />
         )}
         {view === 'intake' && selectedWorker && (
@@ -74,6 +79,16 @@ export default function AIWorkers() {
         )}
         {view === 'history' && (
           <WorkerHistoryPanel onBack={handleBack} />
+        )}
+        {view === 'showcase' && (
+          <WorkerDemoShowcase
+            onBack={handleBack}
+            onViewResult={(res, workerType) => {
+              setResult(res);
+              setSelectedWorker(workerType);
+              setView('output');
+            }}
+          />
         )}
       </div>
     </>
