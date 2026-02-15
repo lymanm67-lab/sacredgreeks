@@ -142,13 +142,13 @@ function AppLayoutContent({
   return (
     <>
       <div className={cn(
-        "min-h-screen flex w-full",
+        "min-h-screen flex w-full max-w-[100vw] overflow-x-hidden",
         isRightSidebar && "flex-row-reverse",
         isDemoMode && "pt-11"
       )}>
         {/* Hide sidebar on mobile - use hamburger menu instead */}
         {!isMobile && <AppSidebar />}
-        <SidebarInset className="flex-1 flex flex-col">
+        <SidebarInset className="flex-1 flex flex-col min-w-0">
           <header className={cn(
             "sticky z-40 flex h-14 items-center gap-4 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 md:px-6",
             isDemoMode ? "top-11" : "top-0"
