@@ -94,7 +94,7 @@ export const QuickLinksSection = () => {
                         <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
                           {link.title}
                         </h3>
-                        <p className="text-sm text-muted-foreground truncate">
+                        <p className="text-sm text-muted-foreground line-clamp-2">
                           {link.description}
                         </p>
                       </div>
