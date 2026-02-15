@@ -108,7 +108,7 @@ export const HeroSection = () => {
         </div>
       )}
 
-      <div className="relative z-10 p-6 md:p-8 lg:p-12">
+      <div className="relative z-10 p-4 sm:p-6 md:p-8 lg:p-12 min-w-0 overflow-hidden">
         {/* Top section with logo and greeting */}
         <div className="flex items-start justify-between mb-8">
           <motion.div 
@@ -146,25 +146,25 @@ export const HeroSection = () => {
         </div>
 
         {/* Main content grid */}
-        <div className="grid lg:grid-cols-2 gap-8 items-center">
+        <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 items-center min-w-0">
           {/* Left: Scripture & Quick Actions */}
-          <div className="space-y-6">
+          <div className="space-y-6 min-w-0 overflow-hidden">
             {/* Daily Scripture Card */}
             <motion.div 
-              className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-lg p-6"
+              className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-lg p-4 sm:p-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-amber-500/20 to-transparent rounded-full blur-2xl" />
-              <div className="relative">
+              <div className="relative min-w-0">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center">
                     <Sparkles className="w-4 h-4 text-amber-400" />
                   </div>
                   <span className="text-amber-400 text-sm font-semibold uppercase tracking-wider">Today's Word</span>
                 </div>
-                <p className="text-white/90 text-base sm:text-lg leading-relaxed mb-4 italic break-words">
+                <p className="text-white/90 text-sm sm:text-base md:text-lg leading-relaxed mb-4 italic break-words overflow-hidden">
                   "{dailyScripture.text}"
                 </p>
                 <p className="text-cyan-400 font-semibold">
@@ -202,7 +202,7 @@ export const HeroSection = () => {
 
           {/* Right: Welcome Video */}
           <motion.div 
-            className="w-full"
+            className="w-full min-w-0 overflow-hidden"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
