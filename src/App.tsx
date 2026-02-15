@@ -154,6 +154,7 @@ const Contacts = lazy(() => import("./pages/Contacts"));
 const ChapterFinance = lazy(() => import("./pages/ChapterFinance"));
 const EBoardTraining = lazy(() => import("./pages/EBoardTraining"));
 const Partner = lazy(() => import("./pages/Partner"));
+const AIWorkers = lazy(() => import("./pages/AIWorkers"));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -309,6 +310,7 @@ const App = () => (
                     <Route path="/guest-panelist-application" element={<GuestPanelistApplication />} />
                     <Route path="/about-creator" element={<AboutCreator />} />
                     <Route path="/partner" element={<Partner />} />
+                    <Route path="/ai-workers" element={<PageWithLayout><AIWorkers /></PageWithLayout>} />
                     <Route path="/order-book" element={<OrderBook />} />
                     <Route path="/speaking-request" element={<SpeakingRequest />} />
                     
