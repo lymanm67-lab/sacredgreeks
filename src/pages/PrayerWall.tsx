@@ -340,17 +340,17 @@ const PrayerWall = () => {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3 min-w-0">
               <Link to="/">
-                <Button variant="ghost" size="sm">
+                <Button variant="ghost" size="sm" className="shrink-0">
                   <Home className="w-4 h-4 mr-2" />
                   Home
                 </Button>
               </Link>
-              <div>
-                <h1 className="text-2xl font-bold flex items-center gap-2">
-                  <Heart className="h-6 w-6 text-red-500" />
+              <div className="min-w-0">
+                <h1 className="text-xl sm:text-2xl font-bold flex items-center gap-2 flex-wrap">
+                  <Heart className="h-5 w-5 sm:h-6 sm:w-6 text-red-500 shrink-0" />
                   Prayer Wall
                   {isShowingDemoData && (
                     <Badge variant="secondary" className="text-xs bg-amber-500/10 text-amber-600 border-amber-500/20">
@@ -362,7 +362,7 @@ const PrayerWall = () => {
                 <p className="text-sm text-muted-foreground">Share and support prayer requests</p>
               </div>
             </div>
-            <Button onClick={() => setCreateDialogOpen(true)}>
+            <Button onClick={() => setCreateDialogOpen(true)} className="shrink-0 w-full sm:w-auto">
               <Plus className="w-4 h-4 mr-2" />
               Share Request
             </Button>
