@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import ReactMarkdown from 'react-markdown';
 import type { WorkerType, WorkerResult } from '@/pages/AIWorkers';
+import { WorkerOutputFeedback } from './WorkerOutputFeedback';
 
 interface WorkerOutputDisplayProps {
   result: WorkerResult;
@@ -346,6 +347,12 @@ export function WorkerOutputDisplay({ result, workerType, onBack, onNewQuery }: 
           )}
         </TabsContent>
       </Tabs>
+
+      {/* Feedback & Share */}
+      <WorkerOutputFeedback
+        runId={result.runId}
+        outputSummary={sixtySecond || fiveMinute || 'PROOF Command Center Response'}
+      />
     </div>
   );
 }
