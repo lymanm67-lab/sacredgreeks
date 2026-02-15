@@ -9,6 +9,7 @@ import { Home, TrendingUp, Calendar, Target, FlaskConical } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { BreadcrumbNav } from '@/components/ui/breadcrumb-nav';
 import { useDemoMode } from '@/contexts/DemoModeContext';
+import { DemoPageBadge } from '@/components/demo/DemoPageBadge';
 import {
   LineChart,
   Line,
@@ -190,14 +191,9 @@ const Progress = () => {
         <div className="max-w-7xl mx-auto space-y-8">
           {/* Header */}
           <div className="text-center space-y-2">
-            <div className="flex items-center justify-center gap-3">
+            <div className="flex flex-col items-center gap-3">
               <h1 className="text-4xl font-bold">Your Spiritual Journey</h1>
-              {isShowingDemo && (
-                <Badge variant="outline" className="bg-amber-500/10 text-amber-600 border-amber-500/30">
-                  <FlaskConical className="w-3 h-3 mr-1" />
-                  Demo
-                </Badge>
-              )}
+              <DemoPageBadge pageKey="progress" />
             </div>
             <p className="text-xl text-muted-foreground">Track your growth and celebrate your progress</p>
           </div>

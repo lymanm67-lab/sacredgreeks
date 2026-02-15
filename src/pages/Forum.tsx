@@ -72,6 +72,7 @@ import { GREEK_COUNCILS } from "@/data/greekOrganizations";
 import { formatDistanceToNow } from "date-fns";
 import { useGamification } from "@/hooks/use-gamification";
 import { ForumNotifications } from "@/components/forum/ForumNotifications";
+import { DemoPageBadge } from "@/components/demo/DemoPageBadge";
 
 interface Discussion {
   id: string;
@@ -752,6 +753,7 @@ const Forum = () => {
               <p className="text-muted-foreground text-sm">
                 Connect and discuss with fellow members
               </p>
+              <DemoPageBadge pageKey="forum" />
             </div>
           </div>
 
