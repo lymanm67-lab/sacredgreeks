@@ -223,19 +223,20 @@ export function PathCompletionAchievements() {
               transition={{ delay: 0.5 }}
               className="mt-4 p-4 rounded-xl bg-gradient-to-r from-amber-500/20 via-primary/20 to-violet-500/20 border border-amber-500/30"
             >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 via-primary to-violet-500 flex items-center justify-center shadow-xl">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:justify-between">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-12 h-12 shrink-0 rounded-full bg-gradient-to-br from-amber-500 via-primary to-violet-500 flex items-center justify-center shadow-xl">
                     <Award className="w-7 h-7 text-white" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="font-bold text-foreground">Sacred Greeks Master</p>
                     <p className="text-xs text-muted-foreground">You've completed all learning paths!</p>
                   </div>
                 </div>
                 <Button 
                   onClick={() => setShowCertificate(true)}
-                  className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white"
+                  className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shrink-0 w-full sm:w-auto"
+                  size="sm"
                 >
                   <Printer className="w-4 h-4 mr-2" />
                   Get Certificate
