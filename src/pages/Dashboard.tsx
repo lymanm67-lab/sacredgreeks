@@ -215,7 +215,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-muted/30 w-full overflow-x-auto">
+    <div className="min-h-screen bg-muted/30 w-full overflow-x-hidden">
       <SEOHead {...pageSEO.dashboard} />
       <PullToRefreshIndicator 
         isPulling={isPulling}
@@ -251,8 +251,8 @@ const Dashboard = () => {
         </div>
       </header>
 
-      <main className="w-full min-w-fit px-4 py-8">
-        <div className="max-w-5xl mx-auto space-y-8 w-full">
+      <main className="w-full px-4 py-8 overflow-x-hidden">
+        <div className="max-w-5xl mx-auto space-y-8 w-full overflow-hidden">
           {/* Quick Jump Navigation */}
           <QuickJump 
             sections={[
