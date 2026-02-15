@@ -67,12 +67,12 @@ export const WelcomeVideo = () => {
   const dailyVideo = useMemo(() => getDailyVideo(), []);
   
   return (
-    <Card className="overflow-hidden border-2 shadow-xl h-full flex flex-col">
-      <div className="flex flex-col h-full">
+    <Card className="overflow-hidden border-2 shadow-xl h-full flex flex-col max-w-full">
+      <div className="flex flex-col h-full min-w-0">
         {/* Video Title/Header */}
-        <div className="bg-gradient-to-r from-sacred to-warm-blue p-4">
-          <h2 className="text-xl md:text-2xl font-bold text-white line-clamp-1">{dailyVideo.title}</h2>
-          <p className="text-white/90 text-xs md:text-sm mt-1 line-clamp-2">{dailyVideo.description}</p>
+        <div className="bg-gradient-to-r from-sacred to-warm-blue p-3 sm:p-4 min-w-0">
+          <h2 className="text-base sm:text-xl md:text-2xl font-bold text-white line-clamp-1 break-words">{dailyVideo.title}</h2>
+          <p className="text-white/90 text-xs md:text-sm mt-1 line-clamp-2 break-words">{dailyVideo.description}</p>
         </div>
         
         {/* Video Container */}
