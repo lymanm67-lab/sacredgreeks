@@ -290,6 +290,15 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
 
   const handleSubmitVideo = async () => {
     if (!videoRequest?.id) return;
+
+    // Validate script has actual content before submitting
+    const scriptEntries = scriptData?.script || [];
+    const hasContent = scriptEntries.length > 0 && scriptEntries.some((s: any) => (s.narration || s.visual || '').trim());
+    if (!hasContent && !scriptData?.title && !prompt) {
+      toast({ title: 'No content', description: 'The script is empty. Please go back and provide a prompt or select content first.', variant: 'destructive' });
+      return;
+    }
+
     setIsLoading(true);
     setJobStatus('submitting');
     try {
