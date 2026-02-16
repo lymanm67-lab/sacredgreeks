@@ -41,7 +41,6 @@ if ('serviceWorker' in navigator) {
       // IMPORTANT: querystring ensures browser fetches the latest SW file after deploys
       navigator.serviceWorker.register(`/sw.js?v=${APP_SW_VERSION}`)
         .then(registration => {
-          console.log('Service Worker registered:', registration);
           
           // Force update check immediately
           registration.update();
@@ -60,8 +59,8 @@ if ('serviceWorker' in navigator) {
             }
           });
         })
-        .catch(error => {
-          console.log('Service Worker registration failed:', error);
+        .catch(() => {
+          // SW registration failed silently
         });
     }
   });
