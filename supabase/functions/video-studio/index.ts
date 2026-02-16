@@ -12,7 +12,7 @@ interface VideoStudioRequest {
   contentIds?: string[];
   videoRequestId?: string;
   jobId?: string;
-  provider?: 'runway' | 'replicate';
+  provider?: 'runway' | 'replicate' | 'shotstack';
   providerModel?: string;
   customPrompt?: string;
   isCustomContent?: boolean;
@@ -175,14 +175,12 @@ class ReplicateProvider implements VideoProvider {
     const data = await res.json();
 
     if (data.status === 'succeeded') {
-      // Replicate output is model-dependent; typically an array or string URL
       const videoUrl = Array.isArray(data.output) ? data.output[0] : data.output;
       return { status: 'completed' as const, videoUrl, rawResponse: data };
     }
     if (data.status === 'failed' || data.status === 'canceled') {
       return { status: 'failed' as const, error: data.error || 'Generation failed', rawResponse: data };
     }
-    // starting / processing
     const logs = data.logs || '';
     const progressMatch = logs.match(/(\d+)%/);
     const progress = progressMatch ? parseInt(progressMatch[1]) / 100 : 0;
@@ -190,7 +188,149 @@ class ReplicateProvider implements VideoProvider {
   }
 }
 
+// ===== SHOTSTACK PROVIDER =====
+class ShotStackProvider implements VideoProvider {
+  private apiKey: string;
+  private env: string; // 'v1' for production, 'stage' for sandbox
+  constructor(apiKey: string, env: string = 'v1') {
+    this.apiKey = apiKey;
+    this.env = env;
+  }
+
+  async submitJob(prompt: string, options: Record<string, any>) {
+    // Build a ShotStack Edit timeline from the scene plan
+    const scenes = options.scenes || [];
+    const clips: any[] = [];
+    let currentStart = 0;
+
+    if (scenes.length > 0) {
+      // Build clips from scene plan
+      for (const scene of scenes) {
+        const durationSec = parseInt(scene.duration) || 5;
+        const clip: any = {
+          asset: {
+            type: 'html',
+            html: `<div style="padding:40px;color:white;font-family:sans-serif;font-size:36px;text-align:center;background:linear-gradient(135deg,#1a1a2e,#16213e);width:100%;height:100%;display:flex;align-items:center;justify-content:center;">${scene.textOverlay || scene.visual || ''}</div>`,
+            width: 720,
+            height: 1280,
+          },
+          start: currentStart,
+          length: durationSec,
+          effect: 'zoomIn',
+        };
+
+        // If scene has an image URL, use image asset instead
+        if (scene.imageUrl) {
+          clip.asset = {
+            type: 'image',
+            src: scene.imageUrl,
+          };
+          clip.fit = 'cover';
+        }
+
+        clips.push(clip);
+        currentStart += durationSec;
+      }
+    } else {
+      // Fallback: single title card from prompt
+      clips.push({
+        asset: {
+          type: 'html',
+          html: `<div style="padding:40px;color:white;font-family:sans-serif;font-size:36px;text-align:center;background:linear-gradient(135deg,#1a1a2e,#16213e);width:100%;height:100%;display:flex;align-items:center;justify-content:center;">${prompt.slice(0, 200)}</div>`,
+          width: 720,
+          height: 1280,
+        },
+        start: 0,
+        length: 10,
+        effect: 'zoomIn',
+      });
+    }
+
+    // If an input image is provided, use it as background
+    if (options.imageUrl && clips.length <= 1) {
+      clips[0] = {
+        asset: {
+          type: 'image',
+          src: options.imageUrl,
+        },
+        start: 0,
+        length: options.duration || 10,
+        fit: 'cover',
+        effect: 'slowZoomIn',
+      };
+    }
+
+    const timeline: any = {
+      soundtrack: options.soundtrackUrl ? {
+        src: options.soundtrackUrl,
+        effect: 'fadeOut',
+      } : undefined,
+      background: '#000000',
+      tracks: [{ clips }],
+    };
+
+    const editPayload: any = {
+      timeline,
+      output: {
+        format: 'mp4',
+        resolution: 'hd',
+        aspectRatio: options.ratio === '1920:1080' ? '16:9' : '9:16',
+        size: {
+          width: options.ratio === '1920:1080' ? 1920 : 720,
+          height: options.ratio === '1920:1080' ? 1080 : 1280,
+        },
+      },
+    };
+
+    const baseUrl = `https://api.shotstack.io/${this.env}`;
+    const res = await fetch(`${baseUrl}/render`, {
+      method: 'POST',
+      headers: {
+        'x-api-key': this.apiKey,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(editPayload),
+    });
+
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error(`ShotStack API error [${res.status}]: ${errText}`);
+    }
+
+    const data = await res.json();
+    const renderId = data.response?.id;
+    if (!renderId) throw new Error('ShotStack did not return a render ID');
+
+    return { jobId: renderId, rawResponse: data };
+  }
+
+  async checkStatus(jobId: string) {
+    const baseUrl = `https://api.shotstack.io/${this.env}`;
+    const res = await fetch(`${baseUrl}/render/${jobId}`, {
+      headers: { 'x-api-key': this.apiKey },
+    });
+
+    if (!res.ok) throw new Error(`ShotStack status check failed [${res.status}]`);
+    const data = await res.json();
+    const status = data.response?.status;
+
+    if (status === 'done' && data.response?.url) {
+      return { status: 'completed' as const, videoUrl: data.response.url, rawResponse: data };
+    }
+    if (status === 'failed') {
+      return { status: 'failed' as const, error: data.response?.error || 'Render failed', rawResponse: data };
+    }
+    // queued, fetching, rendering, saving
+    return { status: 'processing' as const, progress: status === 'rendering' ? 0.5 : 0.2, rawResponse: data };
+  }
+}
+
 function getProvider(providerName: string, model?: string): VideoProvider {
+  if (providerName === 'shotstack') {
+    const apiKey = Deno.env.get('SHOTSTACK_API_KEY');
+    if (!apiKey) throw new Error('ShotStack API key not configured');
+    return new ShotStackProvider(apiKey, 'v1');
+  }
   if (providerName === 'replicate') {
     const apiKey = Deno.env.get('REPLICATE_API_KEY');
     if (!apiKey) throw new Error('Replicate API key not configured');

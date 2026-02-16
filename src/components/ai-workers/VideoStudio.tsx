@@ -13,7 +13,7 @@ import { StudioLibrary } from './studio/StudioLibrary';
 import { StudioContentPicker } from './studio/StudioContentPicker';
 
 type TemplateType = 'objection_short' | 'mini_teaching' | 'conversation_prep' | 'weekly_devotional' | 'custom';
-type ProviderType = 'runway' | 'replicate';
+type ProviderType = 'runway' | 'replicate' | 'shotstack';
 type GenerationMode = 'text_to_video' | 'image_to_video' | 'video_upload' | 'generate_image';
 type Step = 'prompt' | 'content' | 'script' | 'generate' | 'library';
 
