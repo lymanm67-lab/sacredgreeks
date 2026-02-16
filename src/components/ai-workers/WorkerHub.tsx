@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { Shield, BookOpen, MessageSquareText, GraduationCap, History, Sparkles, Theater, Film } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useDemoMode } from '@/contexts/DemoModeContext';
+import { CommandCenterDemoOverview } from './CommandCenterDemoOverview';
 import type { WorkerType } from '@/pages/AIWorkers';
 
 const WORKERS = [
@@ -53,6 +55,7 @@ interface WorkerHubProps {
 
 export function WorkerHub({ onSelectWorker, onViewHistory, onViewShowcase, onViewVideoStudio }: WorkerHubProps) {
   const { isDemoMode } = useDemoMode();
+  const [showDemoOverview, setShowDemoOverview] = useState(true);
 
   return (
     <div className="space-y-6">
@@ -150,6 +153,11 @@ export function WorkerHub({ onSelectWorker, onViewHistory, onViewShowcase, onVie
           </Card>
         )}
       </div>
+
+      {/* Demo Overview - shown in demo mode */}
+      {isDemoMode && showDemoOverview && (
+        <CommandCenterDemoOverview onDismiss={() => setShowDemoOverview(false)} />
+      )}
     </div>
   );
 }
