@@ -84,7 +84,7 @@ const App = () => (
                     <InstallPrompt />
                     <OfflineIndicator />
                     <AIAssistantWidget />
-                    <BrowserRouter>
+                    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
                       <GlobalSEO />
                       <DemoBanner />
                       <DemoOverlayWithTemplate />
