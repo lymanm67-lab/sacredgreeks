@@ -1,46 +1,33 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Film, Play, Loader2, AlertTriangle, CheckCircle, Copy, RefreshCw, Video, FileText, Clock, Sparkles } from 'lucide-react';
+import { ArrowLeft, Film, Play, Loader2, AlertTriangle, CheckCircle, Copy, RefreshCw, Video, FileText, Clock, Sparkles, Settings2, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import ReactMarkdown from 'react-markdown';
 
-type TemplateType = 'objection_short' | 'mini_teaching' | 'conversation_prep' | 'weekly_devotional';
+type TemplateType = 'objection_short' | 'mini_teaching' | 'conversation_prep' | 'weekly_devotional' | 'custom';
+type ProviderType = 'runway' | 'replicate';
 
 const TEMPLATES = [
-  {
-    type: 'objection_short' as TemplateType,
-    title: 'PROOF Objection Short',
-    duration: '30–60s',
-    icon: '⚡',
-    description: 'Quick, punchy response to a common claim'
-  },
-  {
-    type: 'mini_teaching' as TemplateType,
-    title: 'PROOF Mini Teaching',
-    duration: '2–3 min',
-    icon: '📖',
-    description: 'Deeper exploration of a PROOF topic'
-  },
-  {
-    type: 'conversation_prep' as TemplateType,
-    title: 'Conversation Prep',
-    duration: '45–75s',
-    icon: '🗣️',
-    description: 'Rehearsal-ready script for a real conversation'
-  },
-  {
-    type: 'weekly_devotional' as TemplateType,
-    title: 'Weekly Devotional',
-    duration: '60s',
-    icon: '🙏',
-    description: 'Scripture-grounded encouragement'
-  },
+  { type: 'objection_short' as TemplateType, title: 'PROOF Objection Short', duration: '30–60s', icon: '⚡', description: 'Quick, punchy response to a common claim' },
+  { type: 'mini_teaching' as TemplateType, title: 'PROOF Mini Teaching', duration: '2–3 min', icon: '📖', description: 'Deeper exploration of a PROOF topic' },
+  { type: 'conversation_prep' as TemplateType, title: 'Conversation Prep', duration: '45–75s', icon: '🗣️', description: 'Rehearsal-ready script for a real conversation' },
+  { type: 'weekly_devotional' as TemplateType, title: 'Weekly Devotional', duration: '60s', icon: '🙏', description: 'Scripture-grounded encouragement' },
+];
+
+const CUSTOM_TEMPLATE = { type: 'custom' as TemplateType, title: 'Custom Video', duration: '30s–3min', icon: '✨', description: 'Create any content video from your own prompt' };
+
+const REPLICATE_MODELS = [
+  { id: 'minimax/video-01-live', label: 'MiniMax Video-01-Live', desc: 'Fast, good quality shorts' },
+  { id: 'luma/ray', label: 'Luma Ray', desc: 'Cinematic quality, slower' },
 ];
 
 interface VideoStudioProps {
@@ -62,12 +49,26 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
   const [myVideos, setMyVideos] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState('script');
 
-  // Load available content (objection cards + library sources)
+  // New state for custom content + provider selection
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isCustomMode, setIsCustomMode] = useState(false);
+  const [customPrompt, setCustomPrompt] = useState('');
+  const [selectedProvider, setSelectedProvider] = useState<ProviderType>('runway');
+  const [selectedModel, setSelectedModel] = useState('minimax/video-01-live');
+
+  // Check admin role
+  useEffect(() => {
+    if (!user) return;
+    supabase.from('user_roles').select('role').eq('user_id', user.id).eq('role', 'admin').maybeSingle()
+      .then(({ data }) => setIsAdmin(!!data));
+  }, [user]);
+
+  // Load available content
   useEffect(() => {
     const loadContent = async () => {
       const [{ data: cards }, { data: sources }] = await Promise.all([
         supabase.from('objection_cards').select('id, claim_category, claim_text').eq('is_active', true),
-        supabase.from('golden_library_sources').select('id, title, proof_category, tier, source_type').eq('is_active', true).order('tier', { ascending: true }).limit(30),
+        supabase.from('golden_library_sources').select('id, title, proof_category, tier, source_type').eq('is_active', true).order('tier', { ascending: true }).limit(50),
       ]);
       setAvailableContent([
         ...(cards || []).map(c => ({ ...c, contentType: 'objection_card', label: `📋 ${c.claim_category}: ${c.claim_text?.slice(0, 60)}` })),
@@ -80,15 +81,12 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
   // Load user's video library
   useEffect(() => {
     if (step === 'library' && user) {
-      const loadVideos = async () => {
-        const { data } = await supabase
-          .from('video_requests')
-          .select('*')
-          .eq('user_id', user.id)
-          .order('created_at', { ascending: false });
-        setMyVideos(data || []);
-      };
-      loadVideos();
+      supabase
+        .from('video_requests')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .then(({ data }) => setMyVideos(data || []));
     }
   }, [step, user]);
 
@@ -98,8 +96,12 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
     );
   };
 
-  const handleGenerateScript = async () => {
-    if (!selectedTemplate || selectedContentIds.length === 0) return;
+  const handleGenerateScript = async (parentRequestId?: string) => {
+    if (isCustomMode) {
+      if (!customPrompt.trim()) return;
+    } else {
+      if (!selectedTemplate || selectedContentIds.length === 0) return;
+    }
     setIsLoading(true);
 
     try {
@@ -111,8 +113,13 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
         },
         body: JSON.stringify({
           action: 'generate_script',
-          templateType: selectedTemplate,
-          contentIds: selectedContentIds,
+          templateType: isCustomMode ? 'custom' : selectedTemplate,
+          contentIds: isCustomMode ? [] : selectedContentIds,
+          isCustomContent: isCustomMode,
+          customPrompt: isCustomMode ? customPrompt : undefined,
+          provider: selectedProvider,
+          providerModel: selectedProvider === 'replicate' ? selectedModel : undefined,
+          parentRequestId,
         }),
       });
 
@@ -126,24 +133,21 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
       setVideoRequest(result.videoRequest);
 
       if (result.blocked) {
-        toast({
-          title: '⚠️ Video Blocked',
-          description: `Missing citations: ${result.blockedReason?.join(', ')}`,
-          variant: 'destructive',
-        });
+        toast({ title: '⚠️ Video Blocked', description: `Missing citations: ${result.blockedReason?.join(', ')}`, variant: 'destructive' });
       }
 
       setStep('script');
     } catch (error) {
       console.error('Script generation error:', error);
-      toast({
-        title: 'Error',
-        description: error instanceof Error ? error.message : 'Failed to generate script',
-        variant: 'destructive',
-      });
+      toast({ title: 'Error', description: error instanceof Error ? error.message : 'Failed to generate script', variant: 'destructive' });
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleRegenerateScript = () => {
+    if (!videoRequest?.id) return;
+    handleGenerateScript(videoRequest.id);
   };
 
   const handleSubmitVideo = async () => {
@@ -161,6 +165,8 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
         body: JSON.stringify({
           action: 'submit_video',
           videoRequestId: videoRequest.id,
+          provider: selectedProvider,
+          providerModel: selectedProvider === 'replicate' ? selectedModel : undefined,
         }),
       });
 
@@ -169,20 +175,13 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
         throw new Error(err.error || `Error ${response.status}`);
       }
 
-      const result = await response.json();
       setJobStatus('submitted');
       setStep('generate');
-
-      // Start polling
       pollJobStatus(videoRequest.id);
     } catch (error) {
       console.error('Submit error:', error);
       setJobStatus('failed');
-      toast({
-        title: 'Error',
-        description: error instanceof Error ? error.message : 'Failed to submit video',
-        variant: 'destructive',
-      });
+      toast({ title: 'Error', description: error instanceof Error ? error.message : 'Failed to submit video', variant: 'destructive' });
     } finally {
       setIsLoading(false);
     }
@@ -197,10 +196,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`,
           },
-          body: JSON.stringify({
-            action: 'check_status',
-            videoRequestId: requestId,
-          }),
+          body: JSON.stringify({ action: 'check_status', videoRequestId: requestId }),
         });
 
         const result = await response.json();
@@ -208,22 +204,18 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
 
         if (result.status === 'completed' && result.videoUrl) {
           setVideoUrl(result.videoUrl);
-          toast({ title: '🎬 Video Ready!', description: 'Your PROOF video has been generated.' });
+          toast({ title: '🎬 Video Ready!', description: 'Your video has been generated.' });
           return;
         }
-
         if (result.status === 'failed') {
           toast({ title: 'Video Failed', description: result.error || 'Generation failed', variant: 'destructive' });
           return;
         }
-
-        // Continue polling
         setTimeout(poll, 5000);
       } catch {
         setTimeout(poll, 10000);
       }
     };
-
     setTimeout(poll, 5000);
   };
 
@@ -232,53 +224,116 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
     toast({ title: `${label} copied!` });
   };
 
+  const resetFlow = () => {
+    setStep('template');
+    setScriptData(null);
+    setVideoRequest(null);
+    setVideoUrl(null);
+    setJobStatus(null);
+    setIsCustomMode(false);
+    setCustomPrompt('');
+    setSelectedContentIds([]);
+    setSelectedTemplate(null);
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-2">
         <div className="flex items-center gap-3">
-          <Button variant="ghost" size="icon" onClick={onBack}>
-            <ArrowLeft className="w-5 h-5" />
-          </Button>
+          <Button variant="ghost" size="icon" onClick={onBack}><ArrowLeft className="w-5 h-5" /></Button>
           <div>
             <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
-              <Film className="w-5 h-5 text-primary" />
-              PROOF Video Studio
+              <Film className="w-5 h-5 text-primary" /> Video Studio
             </h2>
-            <p className="text-sm text-muted-foreground">Generate AI videos from approved PROOF content</p>
+            <p className="text-sm text-muted-foreground">Generate AI videos{isAdmin ? ' — Admin: custom content unlocked' : ' from approved PROOF content'}</p>
           </div>
         </div>
-        <Button variant="outline" size="sm" onClick={() => setStep('library')} className="gap-2">
-          <Video className="w-4 h-4" /> My Videos
-        </Button>
+        <Button variant="outline" size="sm" onClick={() => setStep('library')} className="gap-2"><Video className="w-4 h-4" /> My Videos</Button>
       </div>
 
       {/* Step: Template Selection */}
       {step === 'template' && (
         <div className="space-y-4">
-          <h3 className="font-semibold text-foreground">Choose a Template</h3>
-          <div className="grid gap-3 md:grid-cols-2">
-            {TEMPLATES.map(t => (
-              <Card
-                key={t.type}
-                className={`cursor-pointer transition-all hover:shadow-lg ${selectedTemplate === t.type ? 'border-primary ring-2 ring-primary/20' : 'hover:border-primary/30'}`}
-                onClick={() => setSelectedTemplate(t.type)}
+          {/* Provider selector */}
+          <Card className="border-muted">
+            <CardContent className="p-4 space-y-3">
+              <div className="flex items-center gap-2"><Settings2 className="w-4 h-4 text-muted-foreground" /><span className="text-sm font-medium">Video Provider</span></div>
+              <div className="flex gap-3 flex-wrap">
+                <Select value={selectedProvider} onValueChange={(v: ProviderType) => setSelectedProvider(v)}>
+                  <SelectTrigger className="w-[200px]"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="runway">Runway Gen-4</SelectItem>
+                    <SelectItem value="replicate">Replicate</SelectItem>
+                  </SelectContent>
+                </Select>
+                {selectedProvider === 'replicate' && (
+                  <Select value={selectedModel} onValueChange={setSelectedModel}>
+                    <SelectTrigger className="w-[240px]"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      {REPLICATE_MODELS.map(m => (
+                        <SelectItem key={m.id} value={m.id}>{m.label} — {m.desc}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Admin custom toggle */}
+          {isAdmin && (
+            <Card className="border-primary/20 bg-primary/5">
+              <CardContent className="p-4 flex items-center justify-between">
+                <div>
+                  <p className="font-medium text-sm">Custom Content Mode</p>
+                  <p className="text-xs text-muted-foreground">Create videos from your own prompt (admin only)</p>
+                </div>
+                <Switch checked={isCustomMode} onCheckedChange={setIsCustomMode} />
+              </CardContent>
+            </Card>
+          )}
+
+          {isCustomMode ? (
+            <div className="space-y-4">
+              <h3 className="font-semibold text-foreground">Custom Video</h3>
+              <Textarea
+                placeholder="Describe the video you want to create... (e.g., 'A 60-second motivational video about the power of community in Greek life')"
+                value={customPrompt}
+                onChange={e => setCustomPrompt(e.target.value)}
+                rows={5}
+              />
+              <Button
+                disabled={!customPrompt.trim() || isLoading}
+                onClick={() => handleGenerateScript()}
+                className="w-full gap-2"
               >
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base flex items-center gap-2">
-                    <span className="text-xl">{t.icon}</span> {t.title}
-                  </CardTitle>
-                  <CardDescription>{t.description}</CardDescription>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <Badge variant="secondary" className="text-xs"><Clock className="w-3 h-3 mr-1" />{t.duration}</Badge>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-          <Button disabled={!selectedTemplate} onClick={() => setStep('content')} className="w-full">
-            Next: Select Content →
-          </Button>
+                {isLoading ? <><Loader2 className="w-4 h-4 animate-spin" /> Generating Script...</> : <><Sparkles className="w-4 h-4" /> Generate Custom Script</>}
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              <h3 className="font-semibold text-foreground">Choose a Template</h3>
+              <div className="grid gap-3 md:grid-cols-2">
+                {TEMPLATES.map(t => (
+                  <Card
+                    key={t.type}
+                    className={`cursor-pointer transition-all hover:shadow-lg ${selectedTemplate === t.type ? 'border-primary ring-2 ring-primary/20' : 'hover:border-primary/30'}`}
+                    onClick={() => setSelectedTemplate(t.type)}
+                  >
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-base flex items-center gap-2"><span className="text-xl">{t.icon}</span> {t.title}</CardTitle>
+                      <CardDescription>{t.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      <Badge variant="secondary" className="text-xs"><Clock className="w-3 h-3 mr-1" />{t.duration}</Badge>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+              <Button disabled={!selectedTemplate} onClick={() => setStep('content')} className="w-full">Next: Select Content →</Button>
+            </div>
+          )}
         </div>
       )}
 
@@ -289,9 +344,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
             <h3 className="font-semibold text-foreground">Select Approved Content</h3>
             <Button variant="ghost" size="sm" onClick={() => setStep('template')}>← Back</Button>
           </div>
-          <p className="text-sm text-muted-foreground">
-            Choose objection cards and library sources to include in your video. Only approved content can be used.
-          </p>
+          <p className="text-sm text-muted-foreground">Choose objection cards and library sources to include in your video.</p>
           <div className="space-y-2 max-h-[400px] overflow-y-auto">
             {availableContent.map(c => (
               <Card
@@ -309,12 +362,10 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
               </Card>
             ))}
           </div>
-          <div className="flex gap-2">
-            <Badge variant="secondary">{selectedContentIds.length} selected</Badge>
-          </div>
+          <Badge variant="secondary">{selectedContentIds.length} selected</Badge>
           <Button
             disabled={selectedContentIds.length === 0 || isLoading}
-            onClick={handleGenerateScript}
+            onClick={() => handleGenerateScript()}
             className="w-full gap-2"
           >
             {isLoading ? <><Loader2 className="w-4 h-4 animate-spin" /> Generating Script...</> : <><Sparkles className="w-4 h-4" /> Generate Script</>}
@@ -325,21 +376,34 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
       {/* Step: Script Preview */}
       {step === 'script' && scriptData && (
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-2">
             <h3 className="font-semibold text-foreground">{scriptData.title || 'Generated Script'}</h3>
-            <Button variant="ghost" size="sm" onClick={() => setStep('content')}>← Back</Button>
+            <div className="flex gap-2">
+              <Button variant="ghost" size="sm" onClick={handleRegenerateScript} className="gap-1"><RotateCcw className="w-3 h-3" /> Regenerate</Button>
+              <Button variant="ghost" size="sm" onClick={() => isCustomMode ? setStep('template') : setStep('content')}>← Back</Button>
+            </div>
           </div>
+
+          {videoRequest?.version_number > 1 && (
+            <Badge variant="secondary">Version {videoRequest.version_number}</Badge>
+          )}
 
           {videoRequest?.status === 'blocked' && (
             <Alert variant="destructive">
               <AlertTriangle className="h-4 w-4" />
               <AlertTitle>Video Blocked</AlertTitle>
               <AlertDescription>
-                Missing citations detected. Video generation is blocked until an admin approves the missing sources.
+                Missing citations detected. Video generation is blocked until sources are approved.
                 <br /><strong>{videoRequest.blocked_reason}</strong>
               </AlertDescription>
             </Alert>
           )}
+
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <Badge variant="outline">{videoRequest?.provider === 'replicate' ? 'Replicate' : 'Runway'}</Badge>
+            {videoRequest?.provider_model && <Badge variant="outline">{videoRequest.provider_model}</Badge>}
+            {videoRequest?.is_custom_content && <Badge className="bg-primary/10 text-primary">Custom</Badge>}
+          </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="w-full grid grid-cols-4">
@@ -362,15 +426,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
                   </CardContent>
                 </Card>
               ))}
-              <Button
-                variant="outline"
-                size="sm"
-                className="gap-2"
-                onClick={() => copyToClipboard(
-                  (scriptData.script || []).map((s: any) => s.narration).join('\n\n'),
-                  'Script'
-                )}
-              >
+              <Button variant="outline" size="sm" className="gap-2" onClick={() => copyToClipboard((scriptData.script || []).map((s: any) => s.narration).join('\n\n'), 'Script')}>
                 <Copy className="w-3 h-3" /> Copy Script
               </Button>
             </TabsContent>
@@ -393,17 +449,15 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
             <TabsContent value="captions" className="mt-4">
               <Card>
                 <CardContent className="p-4">
-                  <pre className="text-xs whitespace-pre-wrap font-mono text-muted-foreground">
-                    {scriptData.captions || 'No captions generated'}
-                  </pre>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="mt-3 gap-2"
-                    onClick={() => copyToClipboard(scriptData.captions || '', 'Captions')}
-                  >
-                    <Copy className="w-3 h-3" /> Copy Captions
-                  </Button>
+                  <pre className="text-xs whitespace-pre-wrap font-mono text-muted-foreground">{scriptData.captions || 'No captions generated'}</pre>
+                  <div className="flex gap-2 mt-3">
+                    <Button variant="outline" size="sm" className="gap-2" onClick={() => copyToClipboard(scriptData.captions || '', 'Captions (SRT)')}>
+                      <Copy className="w-3 h-3" /> Copy SRT
+                    </Button>
+                    <Button variant="outline" size="sm" className="gap-2" onClick={() => copyToClipboard(scriptData.transcript || '', 'Transcript')}>
+                      <Copy className="w-3 h-3" /> Copy Transcript
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -411,22 +465,12 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
             <TabsContent value="meta" className="space-y-3 mt-4">
               <Card>
                 <CardContent className="p-4 space-y-3">
-                  <div>
-                    <p className="text-xs text-muted-foreground">Description</p>
-                    <p className="text-sm">{scriptData.description}</p>
-                  </div>
+                  <div><p className="text-xs text-muted-foreground">Description</p><p className="text-sm">{scriptData.description}</p></div>
                   <div>
                     <p className="text-xs text-muted-foreground">Tags</p>
-                    <div className="flex flex-wrap gap-1 mt-1">
-                      {(scriptData.tags || []).map((tag: string, i: number) => (
-                        <Badge key={i} variant="secondary" className="text-xs">{tag}</Badge>
-                      ))}
-                    </div>
+                    <div className="flex flex-wrap gap-1 mt-1">{(scriptData.tags || []).map((tag: string, i: number) => (<Badge key={i} variant="secondary" className="text-xs">{tag}</Badge>))}</div>
                   </div>
-                  <div>
-                    <p className="text-xs text-muted-foreground">Thumbnail Prompt</p>
-                    <p className="text-sm italic">{scriptData.thumbnailPrompt}</p>
-                  </div>
+                  <div><p className="text-xs text-muted-foreground">Thumbnail Prompt</p><p className="text-sm italic">{scriptData.thumbnailPrompt}</p></div>
                   {(scriptData.citationsUsed || []).length > 0 && (
                     <div>
                       <p className="text-xs text-muted-foreground">Citations Used</p>
@@ -448,7 +492,10 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
             className="w-full gap-2"
             size="lg"
           >
-            {isLoading ? <><Loader2 className="w-4 h-4 animate-spin" /> Submitting...</> : <><Play className="w-4 h-4" /> Generate Video (Runway)</>}
+            {isLoading
+              ? <><Loader2 className="w-4 h-4 animate-spin" /> Submitting...</>
+              : <><Play className="w-4 h-4" /> Generate Video ({selectedProvider === 'replicate' ? 'Replicate' : 'Runway'})</>
+            }
           </Button>
         </div>
       )}
@@ -461,15 +508,11 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
               <>
                 <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
                 <h3 className="text-xl font-bold mb-2">Video Ready! 🎬</h3>
-                <video
-                  src={videoUrl}
-                  controls
-                  className="w-full max-w-md mx-auto rounded-lg shadow-lg"
-                  style={{ aspectRatio: '9/16', maxHeight: '500px' }}
-                />
-                <div className="flex gap-2 justify-center mt-4">
+                <video src={videoUrl} controls className="w-full max-w-md mx-auto rounded-lg shadow-lg" style={{ aspectRatio: '9/16', maxHeight: '500px' }} />
+                <div className="flex gap-2 justify-center mt-4 flex-wrap">
                   <Button asChild><a href={videoUrl} target="_blank" rel="noopener noreferrer">Download</a></Button>
-                  <Button variant="outline" onClick={() => { setStep('template'); setScriptData(null); setVideoRequest(null); setVideoUrl(null); setJobStatus(null); }}>Create Another</Button>
+                  <Button variant="outline" onClick={resetFlow}>Create Another</Button>
+                  <Button variant="ghost" onClick={handleRegenerateScript} className="gap-1"><RotateCcw className="w-4 h-4" /> Regenerate</Button>
                 </div>
               </>
             ) : jobStatus === 'failed' ? (
@@ -483,7 +526,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
               <>
                 <Loader2 className="w-16 h-16 text-primary mx-auto mb-4 animate-spin" />
                 <h3 className="text-xl font-bold mb-2">Generating Video...</h3>
-                <p className="text-muted-foreground">This may take 1–3 minutes. You can leave and check back later.</p>
+                <p className="text-muted-foreground">This may take 1–5 minutes. You can leave and check back later.</p>
                 <Badge className="mt-2">{jobStatus || 'Processing'}</Badge>
               </>
             )}
@@ -502,7 +545,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
             <Card>
               <CardContent className="p-8 text-center">
                 <Film className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-                <p className="text-muted-foreground">No videos yet. Create your first PROOF video!</p>
+                <p className="text-muted-foreground">No videos yet. Create your first video!</p>
                 <Button className="mt-4" onClick={() => setStep('template')}>Get Started</Button>
               </CardContent>
             </Card>
@@ -513,18 +556,17 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
                   <CardContent className="p-4 flex items-center justify-between">
                     <div>
                       <p className="font-medium text-sm">{v.title}</p>
-                      <div className="flex items-center gap-2 mt-1">
+                      <div className="flex items-center gap-2 mt-1 flex-wrap">
                         <Badge variant="outline" className="text-xs">{v.template_type}</Badge>
-                        <Badge variant={v.status === 'completed' ? 'default' : v.status === 'blocked' ? 'destructive' : 'secondary'} className="text-xs">
-                          {v.status}
-                        </Badge>
+                        <Badge variant="outline" className="text-xs">{v.provider || 'runway'}</Badge>
+                        {v.version_number > 1 && <Badge variant="secondary" className="text-xs">v{v.version_number}</Badge>}
+                        {v.is_custom_content && <Badge className="bg-primary/10 text-primary text-xs">Custom</Badge>}
+                        <Badge variant={v.status === 'completed' ? 'default' : v.status === 'blocked' ? 'destructive' : 'secondary'} className="text-xs">{v.status}</Badge>
                         <span className="text-xs text-muted-foreground">{new Date(v.created_at).toLocaleDateString()}</span>
                       </div>
                     </div>
                     {v.status === 'completed' && (
-                      <Button size="sm" variant="outline" className="gap-1">
-                        <Play className="w-3 h-3" /> View
-                      </Button>
+                      <Button size="sm" variant="outline" className="gap-1"><Play className="w-3 h-3" /> View</Button>
                     )}
                   </CardContent>
                 </Card>
