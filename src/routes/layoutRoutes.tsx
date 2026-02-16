@@ -49,7 +49,7 @@ export const layoutRoutes = (
     <Route path="/contacts" element={<PageWithLayout><Contacts /></PageWithLayout>} />
     <Route path="/financial-stewardship" element={<PageWithLayout><FinancialStewardship /></PageWithLayout>} />
     <Route path="/sacred-money-course" element={<PageWithLayout><SacredMoneyCourse /></PageWithLayout>} />
-    <Route path="/chaplain-toolkit" element={<ChapterChaplainToolkit />} />
+    <Route path="/chaplain-toolkit" element={<PageWithLayout><ChapterChaplainToolkit /></PageWithLayout>} />
     <Route path="/business-directory" element={<D9BusinessDirectory />} />
     <Route path="/submit-business" element={<SubmitBusiness />} />
     <Route path="/worship-playlists" element={<GreekWorshipPlaylists />} />
