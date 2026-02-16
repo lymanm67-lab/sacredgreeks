@@ -82,6 +82,8 @@ Requirements:
 - End with a call-to-action about Sacred Greeks Life app
 - Tone: authoritative yet approachable, faith-centered
 - Reference Dr. Lyman Montgomery's book "Sacred, Not Sinful" where appropriate
+- INTERNAL LINKING: Naturally link to these internal pages where relevant (use markdown links with relative paths): /proof-framework, /snapshot, /should-i-leave-my-fraternity, /is-greek-life-a-sin, /christian-fraternity-guide, /divine-nine-spiritual-concerns, /greek-financial-leadership, /faith-and-greek-life
+- SOCIAL SNIPPETS: Generate a Twitter/X caption (under 280 chars, with a hook) and Instagram caption (with emojis, storytelling, CTA). Include 8-12 relevant hashtags.
 
 Return your response using the generate_content tool.`;
 
@@ -109,7 +111,7 @@ Return your response using the generate_content tool.`;
                 type: "object",
                 properties: {
                   title: { type: "string", description: "The content title" },
-                  content: { type: "string", description: "The full content body in markdown" },
+                  content: { type: "string", description: "The full content body in markdown. Include internal links to these pages where relevant: /proof-framework, /snapshot, /should-i-leave-my-fraternity, /is-greek-life-a-sin, /christian-fraternity-guide, /divine-nine-spiritual-concerns, /greek-financial-leadership, /faith-and-greek-life, /blog" },
                   excerpt: { type: "string", description: "A 1-2 sentence excerpt/summary" },
                   meta_description: { type: "string", description: "SEO meta description under 160 chars" },
                   seo_title: { type: "string", description: "SEO-optimized title under 60 chars" },
@@ -118,8 +120,20 @@ Return your response using the generate_content tool.`;
                     items: { type: "string" },
                     description: "Suggested SEO keywords",
                   },
+                  twitter_caption: { type: "string", description: "Twitter/X post caption under 280 chars, engaging and shareable, with a hook" },
+                  instagram_caption: { type: "string", description: "Instagram caption under 2200 chars, with emojis, storytelling hook, and CTA" },
+                  hashtags: {
+                    type: "array",
+                    items: { type: "string" },
+                    description: "8-12 relevant hashtags without # prefix (e.g. 'GreekLife', 'D9Faith')",
+                  },
+                  internal_links: {
+                    type: "array",
+                    items: { type: "string" },
+                    description: "Paths of internal pages linked in the content (e.g. '/proof-framework')",
+                  },
                 },
-                required: ["title", "content", "excerpt", "meta_description", "seo_title", "suggested_keywords"],
+                required: ["title", "content", "excerpt", "meta_description", "seo_title", "suggested_keywords", "twitter_caption", "instagram_caption", "hashtags", "internal_links"],
                 additionalProperties: false,
               },
             },
@@ -190,6 +204,10 @@ Return your response using the generate_content tool.`;
         meta_description: generated.meta_description,
         seo_title: generated.seo_title,
         keywords: generated.suggested_keywords,
+        twitter_caption: generated.twitter_caption || null,
+        instagram_caption: generated.instagram_caption || null,
+        hashtags: generated.hashtags || [],
+        internal_links: generated.internal_links || [],
         ai_model: "google/gemini-3-flash-preview",
         generation_prompt: userPrompt,
         status: "draft",
