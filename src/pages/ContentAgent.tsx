@@ -417,20 +417,33 @@ export default function ContentAgent() {
                           <Facebook className="w-3.5 h-3.5" />
                         </Button>
                       )}
-                      {draft.instagram_caption && (
+                      {/* Instagram: Follow + Copy Link */}
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-7 w-7 p-0"
+                        title="Follow us on Instagram"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.open("https://www.instagram.com/sacredgreeks", "_blank");
+                        }}
+                      >
+                        <Instagram className="w-3.5 h-3.5" />
+                      </Button>
+                      {draft.slug && (
                         <Button
                           variant="ghost"
                           size="sm"
                           className="h-7 w-7 p-0"
-                          title="Copy for Instagram"
+                          title="Copy link for Instagram bio/story"
                           onClick={(e) => {
                             e.stopPropagation();
-                            const text = draft.instagram_caption + (draft.hashtags?.length ? "\n\n" + draft.hashtags.map(h => `#${h}`).join(" ") : "");
-                            navigator.clipboard.writeText(text);
-                            toast({ title: "📋 Copied for Instagram!", description: "Paste into Instagram app." });
+                            const url = `${window.location.origin}/blog/${draft.slug}`;
+                            navigator.clipboard.writeText(url);
+                            toast({ title: "🔗 Link copied!", description: "Paste into your Instagram bio or story." });
                           }}
                         >
-                          <Instagram className="w-3.5 h-3.5" />
+                          <Link2 className="w-3.5 h-3.5" />
                         </Button>
                       )}
                       <Dialog>
