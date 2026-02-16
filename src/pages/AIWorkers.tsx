@@ -5,6 +5,7 @@ import { WorkerIntakeFlow } from '@/components/ai-workers/WorkerIntakeFlow';
 import { WorkerOutputDisplay } from '@/components/ai-workers/WorkerOutputDisplay';
 import { WorkerHistoryPanel } from '@/components/ai-workers/WorkerHistoryPanel';
 import { WorkerDemoShowcase } from '@/components/ai-workers/WorkerDemoShowcase';
+import { VideoStudio } from '@/components/ai-workers/VideoStudio';
 import { useDemoMode } from '@/contexts/DemoModeContext';
 
 export type WorkerType = 'ritual_oath_coach' | 'founders_guide' | 'conversation_coach' | 'study_navigator';
@@ -22,7 +23,7 @@ export interface WorkerResult {
   message?: string;
 }
 
-type ViewState = 'hub' | 'intake' | 'output' | 'history' | 'showcase';
+type ViewState = 'hub' | 'intake' | 'output' | 'history' | 'showcase' | 'video_studio';
 
 export default function AIWorkers() {
   const { isDemoMode } = useDemoMode();
@@ -45,6 +46,7 @@ export default function AIWorkers() {
     else if (view === 'intake') { setView('hub'); setSelectedWorker(null); }
     else if (view === 'history') setView('hub');
     else if (view === 'showcase') setView('hub');
+    else if (view === 'video_studio') setView('hub');
     else setView('hub');
   };
 
@@ -60,6 +62,7 @@ export default function AIWorkers() {
             onSelectWorker={handleSelectWorker}
             onViewHistory={() => setView('history')}
             onViewShowcase={isDemoMode ? () => setView('showcase') : undefined}
+            onViewVideoStudio={() => setView('video_studio')}
           />
         )}
         {view === 'intake' && selectedWorker && (
@@ -89,6 +92,9 @@ export default function AIWorkers() {
               setView('output');
             }}
           />
+        )}
+        {view === 'video_studio' && (
+          <VideoStudio onBack={handleBack} />
         )}
       </div>
     </>
