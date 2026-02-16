@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { SEOHead } from '@/components/SEOHead';
 import { WorkerHub } from '@/components/ai-workers/WorkerHub';
 import { WorkerIntakeFlow } from '@/components/ai-workers/WorkerIntakeFlow';
@@ -27,7 +28,11 @@ type ViewState = 'hub' | 'intake' | 'output' | 'history' | 'showcase' | 'video_s
 
 export default function AIWorkers() {
   const { isDemoMode } = useDemoMode();
-  const [view, setView] = useState<ViewState>('hub');
+  const [searchParams] = useSearchParams();
+  const [view, setView] = useState<ViewState>(() => {
+    return searchParams.get('view') === 'video-studio' ? 'video_studio' : 'hub';
+  });
+
   const [selectedWorker, setSelectedWorker] = useState<WorkerType | null>(null);
   const [result, setResult] = useState<WorkerResult | null>(null);
 

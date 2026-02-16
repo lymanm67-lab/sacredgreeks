@@ -42,6 +42,7 @@ import {
   UserPlus,
   QrCode,
   Bot,
+  Film,
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -86,6 +87,7 @@ const learningPathItems = [
   { title: "Hidden in Plain Sight", url: "/hidden-in-plain-sight", icon: Landmark, featureId: null, iconColor: "text-rose-500", hasProgress: true },
   { title: "Sacred Money Course", url: "/sacred-money-course", icon: DollarSign, featureId: null, iconColor: "text-emerald-500", hasProgress: true },
   { title: "PROOF Command Center", url: "/ai-workers", icon: Bot, featureId: null, iconColor: "text-primary", hasProgress: false },
+  { title: "Video Studio", url: "/ai-workers?view=video-studio", icon: Film, featureId: null, iconColor: "text-violet-500", hasProgress: false },
 ];
 
 // Assessments section - easy access to all quizzes and assessments for earning points
