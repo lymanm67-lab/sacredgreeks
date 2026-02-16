@@ -72,8 +72,6 @@ const learningPathItems = [
   { title: "Stay or Leave?", url: "/should-you-stay-or-leave", icon: Scale, featureId: null, iconColor: "text-teal-500" },
   { title: "Saints or Sellouts?", url: "/saints-or-sellouts", icon: Crown, featureId: null, iconColor: "text-orange-500" },
   { title: "Hidden in Plain Sight", url: "/hidden-in-plain-sight", icon: Landmark, featureId: null, iconColor: "text-rose-500" },
-  { title: "PROOF Command Center", url: "/ai-workers", icon: Bot, featureId: null, iconColor: "text-primary" },
-  { title: "Studio Agent", url: "/ai-workers?view=video-studio", icon: Film, featureId: null, iconColor: "text-violet-500" },
 ];
 
 // Assessments section - matches AppSidebar
@@ -119,6 +117,8 @@ const podcastItems = [
 
 // Resources section - matches AppSidebar
 const resourcesItems = [
+  { title: "PROOF Command Center", url: "/ai-workers", icon: Bot, featureId: null, iconColor: "text-primary" },
+  { title: "Studio Agent", url: "/ai-workers?view=video-studio", icon: Film, featureId: null, iconColor: "text-violet-500" },
   { title: "Financial Stewardship", url: "/financial-stewardship", icon: DollarSign, featureId: null, iconColor: "text-emerald-500" },
   { title: "Chaplain Toolkit", url: "/chaplain-toolkit", icon: Cross, featureId: null, iconColor: "text-sacred" },
   { title: "Worship Playlists", url: "/worship-playlists", icon: Music, featureId: null, iconColor: "text-purple-500" },
