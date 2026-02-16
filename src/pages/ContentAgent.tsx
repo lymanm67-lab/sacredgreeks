@@ -35,6 +35,8 @@ type TopicSuggestion = {
   title: string;
   keywords: string[];
   audience_reach_score: number;
+  virality_score: number;
+  trend_category: "rising_trend" | "peak_trend" | "evergreen" | "seasonal";
   rationale: string;
 };
 
@@ -237,9 +239,12 @@ export default function ContentAgent() {
                   <CardContent className="p-4">
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1 min-w-0 space-y-2">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 flex-wrap">
                           <span className="text-xs font-semibold text-muted-foreground">#{i + 1}</span>
                           <h4 className="font-semibold text-sm leading-tight">{s.title}</h4>
+                          <Badge variant={s.trend_category === "peak_trend" ? "destructive" : s.trend_category === "rising_trend" ? "default" : "secondary"} className="text-[9px] px-1.5 py-0">
+                            {s.trend_category === "rising_trend" ? "🔥 Rising" : s.trend_category === "peak_trend" ? "🚀 Peak" : s.trend_category === "evergreen" ? "🌿 Evergreen" : "📅 Seasonal"}
+                          </Badge>
                         </div>
                         <div className="flex flex-wrap gap-1.5">
                           {s.keywords.map((kw) => (
@@ -250,12 +255,21 @@ export default function ContentAgent() {
                         </div>
                         <p className="text-xs text-muted-foreground leading-relaxed">{s.rationale}</p>
                       </div>
-                      <div className="flex-shrink-0 text-center w-20">
-                        <div className={`text-2xl font-bold ${getScoreColor(s.audience_reach_score)}`}>
-                          {s.audience_reach_score}
+                      <div className="flex-shrink-0 flex gap-3">
+                        <div className="text-center w-16">
+                          <div className={`text-xl font-bold ${getScoreColor(s.audience_reach_score)}`}>
+                            {s.audience_reach_score}
+                          </div>
+                          <div className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">Reach</div>
+                          <Progress value={s.audience_reach_score} className={`h-1.5 mt-1 ${getScoreBarColor(s.audience_reach_score)}`} />
                         </div>
-                        <div className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">Reach</div>
-                        <Progress value={s.audience_reach_score} className={`h-1.5 mt-1 ${getScoreBarColor(s.audience_reach_score)}`} />
+                        <div className="text-center w-16">
+                          <div className={`text-xl font-bold ${getScoreColor(s.virality_score)}`}>
+                            {s.virality_score}
+                          </div>
+                          <div className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">Viral</div>
+                          <Progress value={s.virality_score} className={`h-1.5 mt-1 ${getScoreBarColor(s.virality_score)}`} />
+                        </div>
                       </div>
                     </div>
                     <div className="mt-2 flex items-center gap-1 text-[10px] text-primary font-medium">
