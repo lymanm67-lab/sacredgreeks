@@ -593,7 +593,10 @@ export type Database = {
           editor_notes: string | null
           excerpt: string | null
           generation_prompt: string | null
+          hashtags: string[] | null
           id: string
+          instagram_caption: string | null
+          internal_links: string[] | null
           keywords: string[] | null
           meta_description: string | null
           published_at: string | null
@@ -601,6 +604,7 @@ export type Database = {
           slug: string | null
           status: string
           title: string
+          twitter_caption: string | null
           updated_at: string
           user_id: string
         }
@@ -612,7 +616,10 @@ export type Database = {
           editor_notes?: string | null
           excerpt?: string | null
           generation_prompt?: string | null
+          hashtags?: string[] | null
           id?: string
+          instagram_caption?: string | null
+          internal_links?: string[] | null
           keywords?: string[] | null
           meta_description?: string | null
           published_at?: string | null
@@ -620,6 +627,7 @@ export type Database = {
           slug?: string | null
           status?: string
           title: string
+          twitter_caption?: string | null
           updated_at?: string
           user_id: string
         }
@@ -631,7 +639,10 @@ export type Database = {
           editor_notes?: string | null
           excerpt?: string | null
           generation_prompt?: string | null
+          hashtags?: string[] | null
           id?: string
+          instagram_caption?: string | null
+          internal_links?: string[] | null
           keywords?: string[] | null
           meta_description?: string | null
           published_at?: string | null
@@ -639,6 +650,7 @@ export type Database = {
           slug?: string | null
           status?: string
           title?: string
+          twitter_caption?: string | null
           updated_at?: string
           user_id?: string
         }

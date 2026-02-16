@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Sparkles, FileText, Megaphone, Share2, CheckCircle, XCircle, Edit, Eye, Globe, Lightbulb, TrendingUp, Target } from "lucide-react";
+import { Loader2, Sparkles, FileText, Megaphone, Share2, CheckCircle, XCircle, Edit, Eye, Globe, Lightbulb, TrendingUp, Target, Twitter, Instagram, Hash, Link2, Copy } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { Progress } from "@/components/ui/progress";
 
@@ -29,6 +29,10 @@ type ContentDraft = {
   published_at: string | null;
   created_at: string;
   updated_at: string;
+  twitter_caption: string | null;
+  instagram_caption: string | null;
+  hashtags: string[] | null;
+  internal_links: string[] | null;
 };
 
 type TopicSuggestion = {
@@ -429,6 +433,63 @@ export default function ContentAgent() {
                                 placeholder="Editor notes (internal only)"
                                 rows={2}
                               />
+                              {/* Social Snippets */}
+                              {(draft.twitter_caption || draft.instagram_caption || (draft.hashtags && draft.hashtags.length > 0)) && (
+                                <div className="space-y-3 border rounded-lg p-4 bg-muted/30">
+                                  <h4 className="font-semibold text-sm flex items-center gap-2">
+                                    <Share2 className="w-4 h-4" /> Social Media Snippets
+                                  </h4>
+                                  {draft.twitter_caption && (
+                                    <div className="space-y-1">
+                                      <div className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
+                                        <Twitter className="w-3 h-3" /> Twitter/X
+                                        <Button variant="ghost" size="sm" className="h-5 px-1 ml-auto" onClick={() => { navigator.clipboard.writeText(draft.twitter_caption); toast({ title: "Copied!" }); }}>
+                                          <Copy className="w-3 h-3" />
+                                        </Button>
+                                      </div>
+                                      <p className="text-xs bg-background rounded p-2">{draft.twitter_caption}</p>
+                                    </div>
+                                  )}
+                                  {draft.instagram_caption && (
+                                    <div className="space-y-1">
+                                      <div className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
+                                        <Instagram className="w-3 h-3" /> Instagram
+                                        <Button variant="ghost" size="sm" className="h-5 px-1 ml-auto" onClick={() => { navigator.clipboard.writeText(draft.instagram_caption); toast({ title: "Copied!" }); }}>
+                                          <Copy className="w-3 h-3" />
+                                        </Button>
+                                      </div>
+                                      <p className="text-xs bg-background rounded p-2 whitespace-pre-wrap">{draft.instagram_caption}</p>
+                                    </div>
+                                  )}
+                                  {draft.hashtags && draft.hashtags.length > 0 && (
+                                    <div className="space-y-1">
+                                      <div className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
+                                        <Hash className="w-3 h-3" /> Hashtags
+                                        <Button variant="ghost" size="sm" className="h-5 px-1 ml-auto" onClick={() => { navigator.clipboard.writeText(draft.hashtags.map((h: string) => `#${h}`).join(" ")); toast({ title: "Copied!" }); }}>
+                                          <Copy className="w-3 h-3" />
+                                        </Button>
+                                      </div>
+                                      <div className="flex flex-wrap gap-1">
+                                        {draft.hashtags.map((h: string) => (
+                                          <Badge key={h} variant="secondary" className="text-[10px]">#{h}</Badge>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  )}
+                                  {draft.internal_links && draft.internal_links.length > 0 && (
+                                    <div className="space-y-1">
+                                      <div className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
+                                        <Link2 className="w-3 h-3" /> Internal Links
+                                      </div>
+                                      <div className="flex flex-wrap gap-1">
+                                        {draft.internal_links.map((link: string) => (
+                                          <Badge key={link} variant="outline" className="text-[10px]">{link}</Badge>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                              )}
                               <div className="flex gap-2 flex-wrap">
                                 <Button onClick={saveDraft}>Save Changes</Button>
                                 {draft.status === "draft" && (
