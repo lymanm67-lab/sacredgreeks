@@ -1,0 +1,2 @@
+ALTER TABLE public.video_requests DROP CONSTRAINT video_requests_template_type_check;
+ALTER TABLE public.video_requests ADD CONSTRAINT video_requests_template_type_check CHECK (template_type = ANY (ARRAY['objection_short'::text, 'mini_teaching'::text, 'conversation_prep'::text, 'weekly_devotional'::text, 'custom'::text]));
