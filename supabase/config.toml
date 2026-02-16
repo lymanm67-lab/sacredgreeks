@@ -146,3 +146,6 @@ verify_jwt = false
 
 [functions.scheduled-content]
 verify_jwt = false
+
+[functions.suggest-topics]
+verify_jwt = false

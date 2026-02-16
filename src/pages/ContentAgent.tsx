@@ -10,8 +10,9 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Sparkles, FileText, Megaphone, Share2, CheckCircle, XCircle, Edit, Eye, Globe } from "lucide-react";
+import { Loader2, Sparkles, FileText, Megaphone, Share2, CheckCircle, XCircle, Edit, Eye, Globe, Lightbulb, TrendingUp, Target } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import { Progress } from "@/components/ui/progress";
 
 type ContentDraft = {
   id: string;
@@ -30,6 +31,13 @@ type ContentDraft = {
   updated_at: string;
 };
 
+type TopicSuggestion = {
+  title: string;
+  keywords: string[];
+  audience_reach_score: number;
+  rationale: string;
+};
+
 const CONTENT_TYPE_ICONS: Record<string, React.ReactNode> = {
   blog_post: <FileText className="w-4 h-4" />,
   pr_release: <Megaphone className="w-4 h-4" />,
@@ -43,6 +51,18 @@ const STATUS_COLORS: Record<string, string> = {
   rejected: "bg-red-500/20 text-red-700 dark:text-red-400",
 };
 
+const getScoreColor = (score: number) => {
+  if (score >= 80) return "text-green-600 dark:text-green-400";
+  if (score >= 60) return "text-yellow-600 dark:text-yellow-400";
+  return "text-orange-600 dark:text-orange-400";
+};
+
+const getScoreBarColor = (score: number) => {
+  if (score >= 80) return "[&>div]:bg-green-500";
+  if (score >= 60) return "[&>div]:bg-yellow-500";
+  return "[&>div]:bg-orange-500";
+};
+
 export default function ContentAgent() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -54,6 +74,8 @@ export default function ContentAgent() {
   const [editTitle, setEditTitle] = useState("");
   const [editorNotes, setEditorNotes] = useState("");
   const [previewMode, setPreviewMode] = useState(false);
+  const [suggestions, setSuggestions] = useState<TopicSuggestion[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const { data: drafts, isLoading } = useQuery({
     queryKey: ["content-drafts"],
@@ -64,6 +86,25 @@ export default function ContentAgent() {
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data as ContentDraft[];
+    },
+  });
+
+  const suggestMutation = useMutation({
+    mutationFn: async () => {
+      const { data, error } = await supabase.functions.invoke("suggest-topics", {
+        body: { content_type: contentType },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data.suggestions as TopicSuggestion[];
+    },
+    onSuccess: (data) => {
+      setSuggestions(data);
+      setShowSuggestions(true);
+      toast({ title: "Topics suggested!", description: `${data.length} topic ideas with SEO analysis ready.` });
+    },
+    onError: (err: Error) => {
+      toast({ title: "Suggestion failed", description: err.message, variant: "destructive" });
     },
   });
 
@@ -105,6 +146,13 @@ export default function ContentAgent() {
     },
   });
 
+  const useSuggestion = (suggestion: TopicSuggestion) => {
+    setTopic(suggestion.title);
+    setKeywords(suggestion.keywords.join(", "));
+    setShowSuggestions(false);
+    toast({ title: "Topic loaded", description: "Edit if needed, then hit Generate Draft." });
+  };
+
   const openEditor = (draft: ContentDraft) => {
     setSelectedDraft(draft);
     setEditTitle(draft.title);
@@ -139,6 +187,88 @@ export default function ContentAgent() {
           Auto-draft blog posts, PR releases, and social media content. Review and approve before publishing.
         </p>
       </div>
+
+      {/* Topic Suggestions */}
+      <Card className="border-dashed border-2 border-primary/30">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Lightbulb className="w-5 h-5 text-yellow-500" />
+            AI Topic Suggestions
+          </CardTitle>
+          <CardDescription>
+            Get AI-recommended topics with SEO keywords and audience reach scores.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center gap-3">
+            <Select value={contentType} onValueChange={setContentType}>
+              <SelectTrigger className="w-48">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="blog_post">📝 Blog Post</SelectItem>
+                <SelectItem value="pr_release">📢 PR Release</SelectItem>
+                <SelectItem value="social_media">📱 Social Media</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button
+              variant="outline"
+              onClick={() => suggestMutation.mutate()}
+              disabled={suggestMutation.isPending}
+            >
+              {suggestMutation.isPending ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Analyzing...
+                </>
+              ) : (
+                <>
+                  <Target className="w-4 h-4 mr-2" />
+                  Suggest Topics
+                </>
+              )}
+            </Button>
+          </div>
+
+          {showSuggestions && suggestions.length > 0 && (
+            <div className="space-y-3">
+              {suggestions.map((s, i) => (
+                <Card key={i} className="bg-muted/40 hover:bg-muted/60 transition-colors cursor-pointer" onClick={() => useSuggestion(s)}>
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1 min-w-0 space-y-2">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-semibold text-muted-foreground">#{i + 1}</span>
+                          <h4 className="font-semibold text-sm leading-tight">{s.title}</h4>
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {s.keywords.map((kw) => (
+                            <Badge key={kw} variant="secondary" className="text-[10px] px-1.5 py-0">
+                              {kw}
+                            </Badge>
+                          ))}
+                        </div>
+                        <p className="text-xs text-muted-foreground leading-relaxed">{s.rationale}</p>
+                      </div>
+                      <div className="flex-shrink-0 text-center w-20">
+                        <div className={`text-2xl font-bold ${getScoreColor(s.audience_reach_score)}`}>
+                          {s.audience_reach_score}
+                        </div>
+                        <div className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">Reach</div>
+                        <Progress value={s.audience_reach_score} className={`h-1.5 mt-1 ${getScoreBarColor(s.audience_reach_score)}`} />
+                      </div>
+                    </div>
+                    <div className="mt-2 flex items-center gap-1 text-[10px] text-primary font-medium">
+                      <TrendingUp className="w-3 h-3" />
+                      Click to use this topic
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
       {/* Generator Card */}
       <Card>
