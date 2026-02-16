@@ -7,7 +7,7 @@ const corsHeaders = {
 };
 
 interface VideoStudioRequest {
-  action: 'generate_script' | 'submit_video' | 'check_status' | 'upload_video';
+  action: 'generate_script' | 'submit_video' | 'check_status' | 'upload_video' | 'generate_image';
   templateType?: string;
   contentIds?: string[];
   videoRequestId?: string;
@@ -22,6 +22,10 @@ interface VideoStudioRequest {
   videoUrl?: string;
   title?: string;
   description?: string;
+  // Image generation fields
+  imagePrompt?: string;
+  imageModel?: 'fast' | 'quality';
+  imageEditSource?: string;
 }
 
 const TEMPLATE_CONFIGS: Record<string, { durationRange: string; format: string; description: string }> = {
@@ -221,7 +225,7 @@ serve(async (req) => {
 
   try {
     const body = await req.json() as VideoStudioRequest;
-    const { action, templateType, contentIds, videoRequestId, jobId, provider: reqProvider, providerModel, customPrompt, isCustomContent, parentRequestId, generationMode, inputImageUrl, videoUrl: uploadVideoUrl, title: uploadTitle, description: uploadDescription } = body;
+    const { action, templateType, contentIds, videoRequestId, jobId, provider: reqProvider, providerModel, customPrompt, isCustomContent, parentRequestId, generationMode, inputImageUrl, videoUrl: uploadVideoUrl, title: uploadTitle, description: uploadDescription, imagePrompt, imageModel, imageEditSource } = body;
 
     // Get user
     const authHeader = req.headers.get('Authorization');
@@ -707,6 +711,110 @@ Generate the complete script with scene plan, captions, and metadata.`;
       return new Response(JSON.stringify({ videoRequest: videoReq, status: 'completed' }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
+    }
+
+    // ========== ACTION: GENERATE IMAGE ==========
+    if (action === 'generate_image') {
+      if (!imagePrompt) {
+        return new Response(JSON.stringify({ error: 'imagePrompt required' }), {
+          status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
+      const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+      if (!LOVABLE_API_KEY) {
+        return new Response(JSON.stringify({ error: 'AI service not configured' }), {
+          status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
+      const model = imageModel === 'quality' ? 'google/gemini-3-pro-image-preview' : 'google/gemini-2.5-flash-image';
+
+      // Build messages — if editing an existing image, include it
+      const messages: any[] = [];
+      if (imageEditSource) {
+        messages.push({
+          role: 'user',
+          content: [
+            { type: 'text', text: imagePrompt },
+            { type: 'image_url', image_url: { url: imageEditSource } },
+          ],
+        });
+      } else {
+        messages.push({ role: 'user', content: imagePrompt });
+      }
+
+      const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model,
+          messages,
+          modalities: ['image', 'text'],
+        }),
+      });
+
+      if (!aiResponse.ok) {
+        const errText = await aiResponse.text();
+        console.error('Image AI error:', aiResponse.status, errText);
+        if (aiResponse.status === 429) {
+          return new Response(JSON.stringify({ error: 'Rate limit exceeded. Please try again shortly.' }), {
+            status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          });
+        }
+        if (aiResponse.status === 402) {
+          return new Response(JSON.stringify({ error: 'Payment required. Please add funds.' }), {
+            status: 402, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          });
+        }
+        return new Response(JSON.stringify({ error: 'Image generation failed' }), {
+          status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
+      const aiData = await aiResponse.json();
+      const textContent = aiData.choices?.[0]?.message?.content || '';
+      const images = aiData.choices?.[0]?.message?.images || [];
+
+      if (images.length === 0) {
+        return new Response(JSON.stringify({ error: 'No image was generated. Try a different prompt.' }), {
+          status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
+      const imageDataUrl = images[0]?.image_url?.url || '';
+
+      // Upload the base64 image to storage
+      let storedUrl = imageDataUrl;
+      try {
+        const base64Match = imageDataUrl.match(/^data:image\/(png|jpeg|jpg|webp);base64,(.+)$/);
+        if (base64Match) {
+          const ext = base64Match[1] === 'jpeg' ? 'jpg' : base64Match[1];
+          const raw = base64Match[2];
+          const bytes = Uint8Array.from(atob(raw), c => c.charCodeAt(0));
+          const filePath = `${userId}/generated_${Date.now()}.${ext}`;
+
+          const { data: uploadData, error: uploadError } = await supabase.storage
+            .from('video-studio-uploads')
+            .upload(filePath, bytes, { contentType: `image/${base64Match[1]}`, upsert: false });
+
+          if (!uploadError && uploadData) {
+            const { data: urlData } = supabase.storage.from('video-studio-uploads').getPublicUrl(uploadData.path);
+            storedUrl = urlData.publicUrl;
+          }
+        }
+      } catch (e) {
+        console.error('Image upload to storage failed, returning base64:', e);
+      }
+
+      return new Response(JSON.stringify({
+        imageUrl: storedUrl,
+        textContent,
+        model,
+      }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
     }
 
     return new Response(JSON.stringify({ error: 'Invalid action' }), {
