@@ -13,6 +13,7 @@ import { StudioUploadZone } from './studio/StudioUploadZone';
 import { StudioGenerationProgress } from './studio/StudioGenerationProgress';
 import { StudioLibrary } from './studio/StudioLibrary';
 import { StudioContentPicker } from './studio/StudioContentPicker';
+import { StudioDemoOverview } from './studio/StudioDemoOverview';
 
 // Demo data for showcase when demo mode is active
 const DEMO_VIDEOS = [
@@ -102,6 +103,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
   const [step, setStep] = useState<Step>('prompt');
   const [generationMode, setGenerationMode] = useState<GenerationMode>('text_to_video');
   const [isLoading, setIsLoading] = useState(false);
+  const [showDemoOverview, setShowDemoOverview] = useState(isDemoMode);
   const [isAdmin, setIsAdmin] = useState(false);
 
   // Prompt & template
@@ -423,6 +425,11 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
             selectedModel={selectedModel}
             onModelChange={setSelectedModel}
           />
+
+          {/* Demo Overview - shown in demo mode */}
+          {isDemoMode && showDemoOverview && (
+            <StudioDemoOverview onDismiss={() => setShowDemoOverview(false)} />
+          )}
 
           {/* Mode-specific content below hero */}
           {generationMode === 'image_to_video' && (
