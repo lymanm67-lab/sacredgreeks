@@ -33,6 +33,16 @@ export default function AIWorkers() {
     return searchParams.get('view') === 'video-studio' ? 'video_studio' : 'hub';
   });
 
+  // Sync view state when search params change (e.g. clicking sidebar links)
+  useEffect(() => {
+    const viewParam = searchParams.get('view');
+    if (viewParam === 'video-studio') {
+      setView('video_studio');
+    } else if (!viewParam && view === 'video_studio') {
+      setView('hub');
+    }
+  }, [searchParams]);
+
   const [selectedWorker, setSelectedWorker] = useState<WorkerType | null>(null);
   const [result, setResult] = useState<WorkerResult | null>(null);
 
