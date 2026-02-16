@@ -7,7 +7,7 @@ const corsHeaders = {
 };
 
 interface VideoStudioRequest {
-  action: 'generate_script' | 'submit_video' | 'check_status';
+  action: 'generate_script' | 'submit_video' | 'check_status' | 'upload_video';
   templateType?: string;
   contentIds?: string[];
   videoRequestId?: string;
@@ -17,6 +17,11 @@ interface VideoStudioRequest {
   customPrompt?: string;
   isCustomContent?: boolean;
   parentRequestId?: string;
+  generationMode?: 'text_to_video' | 'image_to_video' | 'video_upload';
+  inputImageUrl?: string;
+  videoUrl?: string;
+  title?: string;
+  description?: string;
 }
 
 const TEMPLATE_CONFIGS: Record<string, { durationRange: string; format: string; description: string }> = {
@@ -64,11 +69,24 @@ interface VideoProvider {
   checkStatus(jobId: string): Promise<{ status: 'processing' | 'completed' | 'failed'; progress?: number; videoUrl?: string; error?: string; rawResponse?: any }>;
 }
 
+// Runway supports image_to_video natively
 class RunwayProvider implements VideoProvider {
   private apiKey: string;
   constructor(apiKey: string) { this.apiKey = apiKey; }
 
   async submitJob(prompt: string, options: Record<string, any>) {
+    const body: Record<string, any> = {
+      model: 'gen4_turbo',
+      ratio: options.ratio || '720:1280',
+      duration: options.duration || 10,
+      text_prompt: prompt.slice(0, 500),
+    };
+
+    // If image URL is provided, use image_to_video
+    if (options.imageUrl) {
+      body.image = options.imageUrl;
+    }
+
     const res = await fetch('https://api.dev.runwayml.com/v1/image_to_video', {
       method: 'POST',
       headers: {
@@ -76,12 +94,7 @@ class RunwayProvider implements VideoProvider {
         'Content-Type': 'application/json',
         'X-Runway-Version': '2024-11-06',
       },
-      body: JSON.stringify({
-        model: 'gen4_turbo',
-        ratio: options.ratio || '720:1280',
-        duration: options.duration || 10,
-        text_prompt: prompt.slice(0, 500),
-      }),
+      body: JSON.stringify(body),
     });
     if (!res.ok) {
       const errText = await res.text();
@@ -120,7 +133,17 @@ class ReplicateProvider implements VideoProvider {
   }
 
   async submitJob(prompt: string, options: Record<string, any>) {
-    // Use Replicate predictions API
+    const input: Record<string, any> = {
+      prompt: prompt.slice(0, 1000),
+      ...(options.replicateInput || {}),
+    };
+
+    // If image URL is provided, pass as image input
+    if (options.imageUrl) {
+      input.image = options.imageUrl;
+      input.image_url = options.imageUrl; // some models use image_url
+    }
+
     const res = await fetch('https://api.replicate.com/v1/predictions', {
       method: 'POST',
       headers: {
@@ -129,10 +152,7 @@ class ReplicateProvider implements VideoProvider {
       },
       body: JSON.stringify({
         model: this.model,
-        input: {
-          prompt: prompt.slice(0, 1000),
-          ...(options.replicateInput || {}),
-        },
+        input,
       }),
     });
     if (!res.ok) {
@@ -201,7 +221,7 @@ serve(async (req) => {
 
   try {
     const body = await req.json() as VideoStudioRequest;
-    const { action, templateType, contentIds, videoRequestId, jobId, provider: reqProvider, providerModel, customPrompt, isCustomContent, parentRequestId } = body;
+    const { action, templateType, contentIds, videoRequestId, jobId, provider: reqProvider, providerModel, customPrompt, isCustomContent, parentRequestId, generationMode, inputImageUrl, videoUrl: uploadVideoUrl, title: uploadTitle, description: uploadDescription } = body;
 
     // Get user
     const authHeader = req.headers.get('Authorization');
@@ -440,6 +460,8 @@ Generate the complete script with scene plan, captions, and metadata.`;
           is_custom_content: useCustom,
           version_number: versionNumber,
           parent_request_id: parentRequestId || null,
+          generation_mode: generationMode || 'text_to_video',
+          input_image_url: inputImageUrl || null,
         })
         .select()
         .single();
@@ -525,6 +547,7 @@ Generate the complete script with scene plan, captions, and metadata.`;
         const { jobId: providerJobId, rawResponse } = await provider.submitJob(textPrompt, {
           ratio: '720:1280',
           duration: 10,
+          imageUrl: vr.input_image_url || undefined,
         });
 
         const { data: job } = await supabase.from('video_jobs').insert({
@@ -638,6 +661,52 @@ Generate the complete script with scene plan, captions, and metadata.`;
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
         });
       }
+    }
+
+    // ========== ACTION: UPLOAD VIDEO ==========
+    if (action === 'upload_video') {
+      if (!uploadVideoUrl) {
+        return new Response(JSON.stringify({ error: 'videoUrl required' }), {
+          status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
+      const { data: videoReq, error: insertError } = await supabase
+        .from('video_requests')
+        .insert({
+          user_id: userId,
+          template_type: 'custom',
+          title: uploadTitle || 'Uploaded Video',
+          description: uploadDescription || '',
+          input_content_ids: [],
+          script_json: {},
+          scene_plan_json: [],
+          status: 'completed',
+          provider: 'upload',
+          generation_mode: 'video_upload',
+          input_video_url: uploadVideoUrl,
+          is_custom_content: true,
+        })
+        .select()
+        .single();
+
+      if (insertError) {
+        console.error('Upload insert error:', insertError);
+        return new Response(JSON.stringify({ error: 'Failed to save uploaded video' }), {
+          status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
+      // Also create a video_assets entry
+      await supabase.from('video_assets').insert({
+        video_request_id: videoReq.id,
+        video_url: uploadVideoUrl,
+        metadata_json: { source: 'user_upload' },
+      });
+
+      return new Response(JSON.stringify({ videoRequest: videoReq, status: 'completed' }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
 
     return new Response(JSON.stringify({ error: 'Invalid action' }), {

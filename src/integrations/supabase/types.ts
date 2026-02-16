@@ -3526,8 +3526,11 @@ export type Database = {
           created_at: string
           custom_prompt: string | null
           description: string | null
+          generation_mode: string | null
           id: string
           input_content_ids: string[] | null
+          input_image_url: string | null
+          input_video_url: string | null
           is_custom_content: boolean
           parent_request_id: string | null
           provider: string
@@ -3550,8 +3553,11 @@ export type Database = {
           created_at?: string
           custom_prompt?: string | null
           description?: string | null
+          generation_mode?: string | null
           id?: string
           input_content_ids?: string[] | null
+          input_image_url?: string | null
+          input_video_url?: string | null
           is_custom_content?: boolean
           parent_request_id?: string | null
           provider?: string
@@ -3574,8 +3580,11 @@ export type Database = {
           created_at?: string
           custom_prompt?: string | null
           description?: string | null
+          generation_mode?: string | null
           id?: string
           input_content_ids?: string[] | null
+          input_image_url?: string | null
+          input_video_url?: string | null
           is_custom_content?: boolean
           parent_request_id?: string | null
           provider?: string

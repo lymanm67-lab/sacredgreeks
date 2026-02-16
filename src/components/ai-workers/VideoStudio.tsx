@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { ArrowLeft, Film, Play, Loader2, AlertTriangle, CheckCircle, Copy, RefreshCw, Video, FileText, Clock, Sparkles, Settings2, RotateCcw } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { ArrowLeft, Film, Play, Loader2, AlertTriangle, CheckCircle, Copy, RefreshCw, Video, FileText, Clock, Sparkles, Settings2, RotateCcw, Upload, ImageIcon, VideoIcon, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -15,6 +15,7 @@ import { useAuth } from '@/contexts/AuthContext';
 
 type TemplateType = 'objection_short' | 'mini_teaching' | 'conversation_prep' | 'weekly_devotional' | 'custom';
 type ProviderType = 'runway' | 'replicate';
+type GenerationMode = 'text_to_video' | 'image_to_video' | 'video_upload';
 
 const TEMPLATES = [
   { type: 'objection_short' as TemplateType, title: 'PROOF Objection Short', duration: '30–60s', icon: '⚡', description: 'Quick, punchy response to a common claim' },
@@ -49,12 +50,22 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
   const [myVideos, setMyVideos] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState('script');
 
-  // New state for custom content + provider selection
+  // Provider & custom state
   const [isAdmin, setIsAdmin] = useState(false);
   const [isCustomMode, setIsCustomMode] = useState(false);
   const [customPrompt, setCustomPrompt] = useState('');
   const [selectedProvider, setSelectedProvider] = useState<ProviderType>('runway');
   const [selectedModel, setSelectedModel] = useState('minimax/video-01-live');
+
+  // Generation mode & upload state
+  const [generationMode, setGenerationMode] = useState<GenerationMode>('text_to_video');
+  const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
+  const [uploadedImagePreview, setUploadedImagePreview] = useState<string | null>(null);
+  const [uploadedVideoUrl, setUploadedVideoUrl] = useState<string | null>(null);
+  const [uploadedVideoPreview, setUploadedVideoPreview] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const videoInputRef = useRef<HTMLInputElement>(null);
 
   // Check admin role
   useEffect(() => {
@@ -96,7 +107,87 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
     );
   };
 
+  // ===== FILE UPLOAD HANDLERS =====
+  const handleFileUpload = async (file: File, type: 'image' | 'video') => {
+    if (!user) return;
+    setIsUploading(true);
+
+    try {
+      const ext = file.name.split('.').pop() || (type === 'image' ? 'jpg' : 'mp4');
+      const filePath = `${user.id}/${Date.now()}_${type}.${ext}`;
+
+      const { data, error } = await supabase.storage
+        .from('video-studio-uploads')
+        .upload(filePath, file, { upsert: false });
+
+      if (error) throw error;
+
+      const { data: urlData } = supabase.storage
+        .from('video-studio-uploads')
+        .getPublicUrl(data.path);
+
+      const publicUrl = urlData.publicUrl;
+
+      if (type === 'image') {
+        setUploadedImageUrl(publicUrl);
+        setUploadedImagePreview(URL.createObjectURL(file));
+        toast({ title: '📸 Image uploaded', description: 'Ready for video generation.' });
+      } else {
+        setUploadedVideoUrl(publicUrl);
+        setUploadedVideoPreview(URL.createObjectURL(file));
+        toast({ title: '🎬 Video uploaded', description: 'Ready for editing.' });
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      toast({ title: 'Upload failed', description: error instanceof Error ? error.message : 'Failed to upload file', variant: 'destructive' });
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const clearUpload = (type: 'image' | 'video') => {
+    if (type === 'image') {
+      setUploadedImageUrl(null);
+      setUploadedImagePreview(null);
+    } else {
+      setUploadedVideoUrl(null);
+      setUploadedVideoPreview(null);
+    }
+  };
+
   const handleGenerateScript = async (parentRequestId?: string) => {
+    if (generationMode === 'video_upload') {
+      // For video uploads, save directly to library
+      if (!uploadedVideoUrl) return;
+      setIsLoading(true);
+      try {
+        const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/video-studio`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`,
+          },
+          body: JSON.stringify({
+            action: 'upload_video',
+            videoUrl: uploadedVideoUrl,
+            title: customPrompt.trim() || 'Uploaded Video',
+            description: customPrompt.trim() || '',
+          }),
+        });
+        if (!response.ok) {
+          const err = await response.json().catch(() => ({ error: 'Upload failed' }));
+          throw new Error(err.error || `Error ${response.status}`);
+        }
+        toast({ title: '✅ Video saved', description: 'Your video has been added to your library.' });
+        setStep('library');
+      } catch (error) {
+        toast({ title: 'Error', description: error instanceof Error ? error.message : 'Failed to save video', variant: 'destructive' });
+      } finally {
+        setIsLoading(false);
+      }
+      return;
+    }
+
     if (isCustomMode) {
       if (!customPrompt.trim()) return;
     } else {
@@ -120,6 +211,8 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
           provider: selectedProvider,
           providerModel: selectedProvider === 'replicate' ? selectedModel : undefined,
           parentRequestId,
+          generationMode,
+          inputImageUrl: generationMode === 'image_to_video' ? uploadedImageUrl : undefined,
         }),
       });
 
@@ -234,6 +327,74 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
     setCustomPrompt('');
     setSelectedContentIds([]);
     setSelectedTemplate(null);
+    setGenerationMode('text_to_video');
+    setUploadedImageUrl(null);
+    setUploadedImagePreview(null);
+    setUploadedVideoUrl(null);
+    setUploadedVideoPreview(null);
+  };
+
+  // ===== Upload Zone Component =====
+  const UploadZone = ({ type, accept, onFile, preview, url, onClear }: {
+    type: 'image' | 'video';
+    accept: string;
+    onFile: (f: File) => void;
+    preview: string | null;
+    url: string | null;
+    onClear: () => void;
+  }) => {
+    const inputRef = type === 'image' ? imageInputRef : videoInputRef;
+    const Icon = type === 'image' ? ImageIcon : VideoIcon;
+
+    return (
+      <div className="space-y-3">
+        <input
+          ref={inputRef}
+          type="file"
+          accept={accept}
+          className="hidden"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) onFile(file);
+          }}
+        />
+
+        {preview ? (
+          <div className="relative rounded-xl border-2 border-primary/30 overflow-hidden bg-muted">
+            {type === 'image' ? (
+              <img src={preview} alt="Uploaded preview" className="w-full max-h-64 object-contain" />
+            ) : (
+              <video src={preview} controls className="w-full max-h-64" />
+            )}
+            <Button
+              variant="destructive"
+              size="icon"
+              className="absolute top-2 right-2 h-7 w-7"
+              onClick={onClear}
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          </div>
+        ) : (
+          <div
+            onClick={() => inputRef.current?.click()}
+            className="border-2 border-dashed border-muted-foreground/30 rounded-xl p-8 text-center cursor-pointer hover:border-primary/50 hover:bg-primary/5 transition-all"
+          >
+            {isUploading ? (
+              <Loader2 className="w-10 h-10 mx-auto text-primary animate-spin mb-2" />
+            ) : (
+              <Icon className="w-10 h-10 mx-auto text-muted-foreground mb-2" />
+            )}
+            <p className="text-sm font-medium text-foreground">
+              {isUploading ? 'Uploading...' : `Click to upload ${type}`}
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              {type === 'image' ? 'JPG, PNG, WebP, GIF (max 20MB)' : 'MP4, WebM, MOV (max 100MB)'}
+            </p>
+          </div>
+        )}
+      </div>
+    );
   };
 
   return (
@@ -255,84 +416,219 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
       {/* Step: Template Selection */}
       {step === 'template' && (
         <div className="space-y-4">
-          {/* Provider selector */}
+          {/* Generation Mode Selector */}
           <Card className="border-muted">
             <CardContent className="p-4 space-y-3">
-              <div className="flex items-center gap-2"><Settings2 className="w-4 h-4 text-muted-foreground" /><span className="text-sm font-medium">Video Provider</span></div>
-              <div className="flex gap-3 flex-wrap">
-                <Select value={selectedProvider} onValueChange={(v: ProviderType) => setSelectedProvider(v)}>
-                  <SelectTrigger className="w-[200px]"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="runway">Runway Gen-4</SelectItem>
-                    <SelectItem value="replicate">Replicate</SelectItem>
-                  </SelectContent>
-                </Select>
-                {selectedProvider === 'replicate' && (
-                  <Select value={selectedModel} onValueChange={setSelectedModel}>
-                    <SelectTrigger className="w-[240px]"><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      {REPLICATE_MODELS.map(m => (
-                        <SelectItem key={m.id} value={m.id}>{m.label} — {m.desc}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
+              <div className="flex items-center gap-2"><Sparkles className="w-4 h-4 text-muted-foreground" /><span className="text-sm font-medium">Creation Mode</span></div>
+              <div className="grid grid-cols-3 gap-2">
+                {([
+                  { mode: 'text_to_video' as GenerationMode, label: 'Text to Video', icon: FileText, desc: 'Generate from script' },
+                  { mode: 'image_to_video' as GenerationMode, label: 'Image to Video', icon: ImageIcon, desc: 'Animate a still frame' },
+                  { mode: 'video_upload' as GenerationMode, label: 'Upload Video', icon: Upload, desc: 'Upload & manage' },
+                ]).map(m => (
+                  <button
+                    key={m.mode}
+                    onClick={() => setGenerationMode(m.mode)}
+                    className={`p-3 rounded-xl border-2 text-left transition-all ${generationMode === m.mode ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/30'}`}
+                  >
+                    <m.icon className={`w-5 h-5 mb-1 ${generationMode === m.mode ? 'text-primary' : 'text-muted-foreground'}`} />
+                    <p className="text-sm font-medium">{m.label}</p>
+                    <p className="text-xs text-muted-foreground">{m.desc}</p>
+                  </button>
+                ))}
               </div>
             </CardContent>
           </Card>
 
-          {/* Admin custom toggle */}
-          {isAdmin && (
-            <Card className="border-primary/20 bg-primary/5">
-              <CardContent className="p-4 flex items-center justify-between">
-                <div>
-                  <p className="font-medium text-sm">Custom Content Mode</p>
-                  <p className="text-xs text-muted-foreground">Create videos from your own prompt (admin only)</p>
+          {/* Provider selector */}
+          {generationMode !== 'video_upload' && (
+            <Card className="border-muted">
+              <CardContent className="p-4 space-y-3">
+                <div className="flex items-center gap-2"><Settings2 className="w-4 h-4 text-muted-foreground" /><span className="text-sm font-medium">Video Provider</span></div>
+                <div className="flex gap-3 flex-wrap">
+                  <Select value={selectedProvider} onValueChange={(v: ProviderType) => setSelectedProvider(v)}>
+                    <SelectTrigger className="w-[200px]"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="runway">Runway Gen-4</SelectItem>
+                      <SelectItem value="replicate">Replicate</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {selectedProvider === 'replicate' && (
+                    <Select value={selectedModel} onValueChange={setSelectedModel}>
+                      <SelectTrigger className="w-[240px]"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        {REPLICATE_MODELS.map(m => (
+                          <SelectItem key={m.id} value={m.id}>{m.label} — {m.desc}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
                 </div>
-                <Switch checked={isCustomMode} onCheckedChange={setIsCustomMode} />
               </CardContent>
             </Card>
           )}
 
-          {isCustomMode ? (
+          {/* ===== IMAGE TO VIDEO MODE ===== */}
+          {generationMode === 'image_to_video' && (
             <div className="space-y-4">
-              <h3 className="font-semibold text-foreground">Custom Video</h3>
+              <h3 className="font-semibold text-foreground">Upload Still Frame</h3>
+              <p className="text-sm text-muted-foreground">Upload an image to animate into a video. Add a prompt to guide the motion.</p>
+
+              <UploadZone
+                type="image"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                onFile={(f) => handleFileUpload(f, 'image')}
+                preview={uploadedImagePreview}
+                url={uploadedImageUrl}
+                onClear={() => clearUpload('image')}
+              />
+
+              {/* Admin custom toggle */}
+              {isAdmin && (
+                <Card className="border-primary/20 bg-primary/5">
+                  <CardContent className="p-4 flex items-center justify-between">
+                    <div>
+                      <p className="font-medium text-sm">Custom Content Mode</p>
+                      <p className="text-xs text-muted-foreground">Use free-form prompt (admin only)</p>
+                    </div>
+                    <Switch checked={isCustomMode} onCheckedChange={setIsCustomMode} />
+                  </CardContent>
+                </Card>
+              )}
+
+              {isCustomMode ? (
+                <Textarea
+                  placeholder="Describe the motion you want... (e.g., 'Slow zoom in, clouds drifting, warm golden light')"
+                  value={customPrompt}
+                  onChange={e => setCustomPrompt(e.target.value)}
+                  rows={3}
+                />
+              ) : (
+                <>
+                  <h4 className="text-sm font-medium">Select a Template</h4>
+                  <div className="grid gap-2 md:grid-cols-2">
+                    {TEMPLATES.map(t => (
+                      <Card
+                        key={t.type}
+                        className={`cursor-pointer transition-all text-sm ${selectedTemplate === t.type ? 'border-primary ring-2 ring-primary/20' : 'hover:border-primary/30'}`}
+                        onClick={() => setSelectedTemplate(t.type)}
+                      >
+                        <CardContent className="p-3 flex items-center gap-2">
+                          <span>{t.icon}</span>
+                          <div>
+                            <p className="font-medium">{t.title}</p>
+                            <p className="text-xs text-muted-foreground">{t.duration}</p>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </>
+              )}
+
+              {uploadedImageUrl && (isCustomMode ? customPrompt.trim() : selectedTemplate) && (
+                <Button
+                  disabled={isLoading}
+                  onClick={() => isCustomMode ? handleGenerateScript() : setStep('content')}
+                  className="w-full gap-2"
+                >
+                  {isLoading ? <><Loader2 className="w-4 h-4 animate-spin" /> Processing...</> : isCustomMode ? <><Sparkles className="w-4 h-4" /> Generate Script from Image</> : <>Next: Select Content →</>}
+                </Button>
+              )}
+            </div>
+          )}
+
+          {/* ===== VIDEO UPLOAD MODE ===== */}
+          {generationMode === 'video_upload' && (
+            <div className="space-y-4">
+              <h3 className="font-semibold text-foreground">Upload Video</h3>
+              <p className="text-sm text-muted-foreground">Upload a video to your library for management and sharing.</p>
+
+              <UploadZone
+                type="video"
+                accept="video/mp4,video/webm,video/quicktime"
+                onFile={(f) => handleFileUpload(f, 'video')}
+                preview={uploadedVideoPreview}
+                url={uploadedVideoUrl}
+                onClear={() => clearUpload('video')}
+              />
+
               <Textarea
-                placeholder="Describe the video you want to create... (e.g., 'A 60-second motivational video about the power of community in Greek life')"
+                placeholder="Video title / description (optional)"
                 value={customPrompt}
                 onChange={e => setCustomPrompt(e.target.value)}
-                rows={5}
+                rows={2}
               />
-              <Button
-                disabled={!customPrompt.trim() || isLoading}
-                onClick={() => handleGenerateScript()}
-                className="w-full gap-2"
-              >
-                {isLoading ? <><Loader2 className="w-4 h-4 animate-spin" /> Generating Script...</> : <><Sparkles className="w-4 h-4" /> Generate Custom Script</>}
-              </Button>
+
+              {uploadedVideoUrl && (
+                <Button
+                  disabled={isLoading}
+                  onClick={() => handleGenerateScript()}
+                  className="w-full gap-2"
+                >
+                  {isLoading ? <><Loader2 className="w-4 h-4 animate-spin" /> Saving...</> : <><Upload className="w-4 h-4" /> Save to Library</>}
+                </Button>
+              )}
             </div>
-          ) : (
-            <div className="space-y-4">
-              <h3 className="font-semibold text-foreground">Choose a Template</h3>
-              <div className="grid gap-3 md:grid-cols-2">
-                {TEMPLATES.map(t => (
-                  <Card
-                    key={t.type}
-                    className={`cursor-pointer transition-all hover:shadow-lg ${selectedTemplate === t.type ? 'border-primary ring-2 ring-primary/20' : 'hover:border-primary/30'}`}
-                    onClick={() => setSelectedTemplate(t.type)}
+          )}
+
+          {/* ===== TEXT TO VIDEO MODE ===== */}
+          {generationMode === 'text_to_video' && (
+            <>
+              {/* Admin custom toggle */}
+              {isAdmin && (
+                <Card className="border-primary/20 bg-primary/5">
+                  <CardContent className="p-4 flex items-center justify-between">
+                    <div>
+                      <p className="font-medium text-sm">Custom Content Mode</p>
+                      <p className="text-xs text-muted-foreground">Create videos from your own prompt (admin only)</p>
+                    </div>
+                    <Switch checked={isCustomMode} onCheckedChange={setIsCustomMode} />
+                  </CardContent>
+                </Card>
+              )}
+
+              {isCustomMode ? (
+                <div className="space-y-4">
+                  <h3 className="font-semibold text-foreground">Custom Video</h3>
+                  <Textarea
+                    placeholder="Describe the video you want to create... (e.g., 'A 60-second motivational video about the power of community in Greek life')"
+                    value={customPrompt}
+                    onChange={e => setCustomPrompt(e.target.value)}
+                    rows={5}
+                  />
+                  <Button
+                    disabled={!customPrompt.trim() || isLoading}
+                    onClick={() => handleGenerateScript()}
+                    className="w-full gap-2"
                   >
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-base flex items-center gap-2"><span className="text-xl">{t.icon}</span> {t.title}</CardTitle>
-                      <CardDescription>{t.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent className="pt-0">
-                      <Badge variant="secondary" className="text-xs"><Clock className="w-3 h-3 mr-1" />{t.duration}</Badge>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-              <Button disabled={!selectedTemplate} onClick={() => setStep('content')} className="w-full">Next: Select Content →</Button>
-            </div>
+                    {isLoading ? <><Loader2 className="w-4 h-4 animate-spin" /> Generating Script...</> : <><Sparkles className="w-4 h-4" /> Generate Custom Script</>}
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <h3 className="font-semibold text-foreground">Choose a Template</h3>
+                  <div className="grid gap-3 md:grid-cols-2">
+                    {TEMPLATES.map(t => (
+                      <Card
+                        key={t.type}
+                        className={`cursor-pointer transition-all hover:shadow-lg ${selectedTemplate === t.type ? 'border-primary ring-2 ring-primary/20' : 'hover:border-primary/30'}`}
+                        onClick={() => setSelectedTemplate(t.type)}
+                      >
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-base flex items-center gap-2"><span className="text-xl">{t.icon}</span> {t.title}</CardTitle>
+                          <CardDescription>{t.description}</CardDescription>
+                        </CardHeader>
+                        <CardContent className="pt-0">
+                          <Badge variant="secondary" className="text-xs"><Clock className="w-3 h-3 mr-1" />{t.duration}</Badge>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                  <Button disabled={!selectedTemplate} onClick={() => setStep('content')} className="w-full">Next: Select Content →</Button>
+                </div>
+              )}
+            </>
           )}
         </div>
       )}
@@ -345,6 +641,14 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
             <Button variant="ghost" size="sm" onClick={() => setStep('template')}>← Back</Button>
           </div>
           <p className="text-sm text-muted-foreground">Choose objection cards and library sources to include in your video.</p>
+
+          {generationMode === 'image_to_video' && uploadedImagePreview && (
+            <div className="rounded-lg border overflow-hidden bg-muted">
+              <img src={uploadedImagePreview} alt="Selected frame" className="w-full max-h-40 object-contain" />
+              <p className="text-xs text-center text-muted-foreground p-1">Still frame attached</p>
+            </div>
+          )}
+
           <div className="space-y-2 max-h-[400px] overflow-y-auto">
             {availableContent.map(c => (
               <Card
@@ -399,10 +703,18 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
             </Alert>
           )}
 
+          {videoRequest?.input_image_url && (
+            <div className="rounded-lg border overflow-hidden bg-muted">
+              <img src={videoRequest.input_image_url} alt="Input frame" className="w-full max-h-40 object-contain" />
+              <p className="text-xs text-center text-muted-foreground p-1">🖼️ Image-to-video source</p>
+            </div>
+          )}
+
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <Badge variant="outline">{videoRequest?.provider === 'replicate' ? 'Replicate' : 'Runway'}</Badge>
             {videoRequest?.provider_model && <Badge variant="outline">{videoRequest.provider_model}</Badge>}
             {videoRequest?.is_custom_content && <Badge className="bg-primary/10 text-primary">Custom</Badge>}
+            {videoRequest?.generation_mode === 'image_to_video' && <Badge className="bg-violet-500/10 text-violet-600">Image→Video</Badge>}
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab}>
@@ -559,6 +871,8 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
                       <div className="flex items-center gap-2 mt-1 flex-wrap">
                         <Badge variant="outline" className="text-xs">{v.template_type}</Badge>
                         <Badge variant="outline" className="text-xs">{v.provider || 'runway'}</Badge>
+                        {v.generation_mode === 'image_to_video' && <Badge className="bg-violet-500/10 text-violet-600 text-xs">Image→Video</Badge>}
+                        {v.generation_mode === 'video_upload' && <Badge className="bg-blue-500/10 text-blue-600 text-xs">Uploaded</Badge>}
                         {v.version_number > 1 && <Badge variant="secondary" className="text-xs">v{v.version_number}</Badge>}
                         {v.is_custom_content && <Badge className="bg-primary/10 text-primary text-xs">Custom</Badge>}
                         <Badge variant={v.status === 'completed' ? 'default' : v.status === 'blocked' ? 'destructive' : 'secondary'} className="text-xs">{v.status}</Badge>
