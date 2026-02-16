@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 type GenerationMode = 'text_to_video' | 'image_to_video' | 'video_upload' | 'generate_image';
-type ProviderType = 'runway' | 'replicate';
+type ProviderType = 'runway' | 'replicate' | 'shotstack';
 
 const SUGGESTIONS = [
   { label: '⚡ Quick Objection Response', prompt: 'Create a 30-second PROOF objection response video about the secret oaths in Greek life', template: 'objection_short' as const },
@@ -161,6 +161,7 @@ export function StudioPromptHero({
                     <SelectContent>
                       <SelectItem value="runway">Runway Gen-4</SelectItem>
                       <SelectItem value="replicate">Replicate</SelectItem>
+                      <SelectItem value="shotstack">ShotStack</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
