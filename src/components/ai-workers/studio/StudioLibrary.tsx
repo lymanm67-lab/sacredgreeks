@@ -1,9 +1,11 @@
-import { useState } from 'react';
-import { Film, Play, Plus, Youtube } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Film, Play, Plus, Youtube, CheckSquare, Square, SquareCheck, X, ListChecks } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
 import { YouTubeUploadDialog } from '@/components/youtube/YouTubeUploadDialog';
+import { BulkYouTubeUploadDialog } from '@/components/youtube/BulkYouTubeUploadDialog';
 
 interface StudioLibraryProps {
   videos: any[];
@@ -14,19 +16,101 @@ export function StudioLibrary({ videos, onNewVideo }: StudioLibraryProps) {
   const [ytDialogOpen, setYtDialogOpen] = useState(false);
   const [ytVideo, setYtVideo] = useState<any>(null);
 
+  // Bulk selection state
+  const [bulkMode, setBulkMode] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [bulkDialogOpen, setBulkDialogOpen] = useState(false);
+
+  // Only completed videos with a URL are eligible for YouTube upload
+  const eligibleVideos = useMemo(
+    () => videos.filter(v => v.status === 'completed' && v.video_url),
+    [videos]
+  );
+
   const handleYouTubeUpload = (video: any) => {
     setYtVideo(video);
     setYtDialogOpen(true);
   };
 
+  const toggleBulkMode = () => {
+    if (bulkMode) {
+      setSelectedIds(new Set());
+    }
+    setBulkMode(!bulkMode);
+  };
+
+  const toggleSelection = (id: string) => {
+    setSelectedIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const selectAll = () => {
+    setSelectedIds(new Set(eligibleVideos.map(v => v.id)));
+  };
+
+  const clearSelection = () => {
+    setSelectedIds(new Set());
+  };
+
+  const handleBulkUpload = () => {
+    if (selectedIds.size === 0) return;
+    setBulkDialogOpen(true);
+  };
+
+  const selectedVideos = useMemo(
+    () => videos.filter(v => selectedIds.has(v.id) && v.video_url),
+    [videos, selectedIds]
+  );
+
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-2 flex-wrap">
         <h3 className="text-lg font-bold text-foreground">My Videos</h3>
-        <Button onClick={onNewVideo} className="gap-2 rounded-xl">
-          <Plus className="w-4 h-4" /> New Video
-        </Button>
+        <div className="flex items-center gap-2">
+          {eligibleVideos.length > 0 && (
+            <Button
+              variant={bulkMode ? 'default' : 'outline'}
+              size="sm"
+              onClick={toggleBulkMode}
+              className="gap-1.5 text-xs"
+            >
+              <ListChecks className="w-3.5 h-3.5" />
+              {bulkMode ? 'Exit Bulk' : 'Bulk Upload'}
+            </Button>
+          )}
+          <Button onClick={onNewVideo} className="gap-2 rounded-xl" size="sm">
+            <Plus className="w-4 h-4" /> New Video
+          </Button>
+        </div>
       </div>
+
+      {/* Bulk action bar */}
+      {bulkMode && (
+        <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/60 border border-border flex-wrap">
+          <Badge variant="secondary" className="text-xs">
+            {selectedIds.size} selected
+          </Badge>
+          <Button variant="ghost" size="sm" onClick={selectAll} className="text-xs h-7 gap-1">
+            <SquareCheck className="w-3 h-3" /> Select All ({eligibleVideos.length})
+          </Button>
+          <Button variant="ghost" size="sm" onClick={clearSelection} className="text-xs h-7 gap-1" disabled={selectedIds.size === 0}>
+            <X className="w-3 h-3" /> Clear
+          </Button>
+          <div className="flex-1" />
+          <Button
+            size="sm"
+            onClick={handleBulkUpload}
+            disabled={selectedIds.size === 0}
+            className="gap-1.5 bg-red-600 hover:bg-red-700 text-white text-xs"
+          >
+            <Youtube className="w-3.5 h-3.5" /> Upload to YouTube
+          </Button>
+        </div>
+      )}
 
       {videos.length === 0 ? (
         <div className="text-center py-16">
@@ -40,58 +124,85 @@ export function StudioLibrary({ videos, onNewVideo }: StudioLibraryProps) {
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 gap-3">
-          {videos.map(v => (
-            <Card key={v.id} className="overflow-hidden hover:shadow-md transition-shadow border-border/30">
-              <CardContent className="p-4">
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-sm truncate">{v.title}</p>
-                    <div className="flex items-center gap-1.5 mt-2 flex-wrap">
-                      <Badge variant="outline" className="text-[10px]">{v.template_type}</Badge>
-                      <Badge variant="outline" className="text-[10px]">{v.provider || 'runway'}</Badge>
-                      {v.generation_mode === 'image_to_video' && (
-                        <Badge className="bg-violet-500/10 text-violet-600 text-[10px] border-0">Image→Video</Badge>
-                      )}
-                      {v.generation_mode === 'video_upload' && (
-                        <Badge className="bg-blue-500/10 text-blue-600 text-[10px] border-0">Uploaded</Badge>
-                      )}
-                      {v.is_custom_content && (
-                        <Badge className="bg-primary/10 text-primary text-[10px] border-0">Custom</Badge>
-                      )}
-                      <Badge
-                        variant={v.status === 'completed' ? 'default' : v.status === 'blocked' ? 'destructive' : 'secondary'}
-                        className="text-[10px]"
-                      >
-                        {v.status}
-                      </Badge>
-                    </div>
-                    <p className="text-[10px] text-muted-foreground mt-1.5">
-                      {new Date(v.created_at).toLocaleDateString()}
-                    </p>
-                  </div>
-                  <div className="flex flex-col gap-1 shrink-0">
-                    {v.status === 'completed' && (
-                      <>
-                        <Button size="sm" variant="outline" className="gap-1 rounded-lg">
-                          <Play className="w-3 h-3" /> View
-                        </Button>
-                        {v.video_url && (
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="gap-1 rounded-lg text-red-600 hover:text-red-700 border-red-200 hover:border-red-300"
-                            onClick={() => handleYouTubeUpload(v)}
-                          >
-                            <Youtube className="w-3 h-3" /> YouTube
-                          </Button>
+          {videos.map(v => {
+            const isEligible = v.status === 'completed' && v.video_url;
+            const isSelected = selectedIds.has(v.id);
+
+            return (
+              <Card
+                key={v.id}
+                className={`overflow-hidden transition-all border-border/30 ${
+                  bulkMode && isEligible ? 'cursor-pointer hover:shadow-md' : 'hover:shadow-md'
+                } ${isSelected ? 'ring-2 ring-primary border-primary/30' : ''}`}
+                onClick={bulkMode && isEligible ? () => toggleSelection(v.id) : undefined}
+              >
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-3">
+                    {/* Checkbox in bulk mode */}
+                    {bulkMode && (
+                      <div className="pt-0.5 shrink-0" onClick={e => e.stopPropagation()}>
+                        <Checkbox
+                          checked={isSelected}
+                          onCheckedChange={() => toggleSelection(v.id)}
+                          disabled={!isEligible}
+                          className="mt-0.5"
+                        />
+                      </div>
+                    )}
+
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-sm truncate">{v.title}</p>
+                      <div className="flex items-center gap-1.5 mt-2 flex-wrap">
+                        <Badge variant="outline" className="text-[10px]">{v.template_type}</Badge>
+                        <Badge variant="outline" className="text-[10px]">{v.provider || 'runway'}</Badge>
+                        {v.generation_mode === 'image_to_video' && (
+                          <Badge className="bg-violet-500/10 text-violet-600 text-[10px] border-0">Image→Video</Badge>
                         )}
-                      </>
+                        {v.generation_mode === 'video_upload' && (
+                          <Badge className="bg-blue-500/10 text-blue-600 text-[10px] border-0">Uploaded</Badge>
+                        )}
+                        {v.is_custom_content && (
+                          <Badge className="bg-primary/10 text-primary text-[10px] border-0">Custom</Badge>
+                        )}
+                        <Badge
+                          variant={v.status === 'completed' ? 'default' : v.status === 'blocked' ? 'destructive' : 'secondary'}
+                          className="text-[10px]"
+                        >
+                          {v.status}
+                        </Badge>
+                      </div>
+                      <p className="text-[10px] text-muted-foreground mt-1.5">
+                        {new Date(v.created_at).toLocaleDateString()}
+                      </p>
+                    </div>
+
+                    {/* Actions - hidden in bulk mode */}
+                    {!bulkMode && (
+                      <div className="flex flex-col gap-1 shrink-0">
+                        {v.status === 'completed' && (
+                          <>
+                            <Button size="sm" variant="outline" className="gap-1 rounded-lg">
+                              <Play className="w-3 h-3" /> View
+                            </Button>
+                            {v.video_url && (
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="gap-1 rounded-lg text-red-600 hover:text-red-700 border-red-200 hover:border-red-300"
+                                onClick={() => handleYouTubeUpload(v)}
+                              >
+                                <Youtube className="w-3 h-3" /> YouTube
+                              </Button>
+                            )}
+                          </>
+                        )}
+                      </div>
                     )}
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       )}
 
@@ -105,6 +216,18 @@ export function StudioLibrary({ videos, onNewVideo }: StudioLibraryProps) {
           videoRequestId={ytVideo.id}
         />
       )}
+
+      <BulkYouTubeUploadDialog
+        open={bulkDialogOpen}
+        onOpenChange={(open) => {
+          setBulkDialogOpen(open);
+          if (!open) {
+            setSelectedIds(new Set());
+            setBulkMode(false);
+          }
+        }}
+        videos={selectedVideos}
+      />
     </div>
   );
 }
