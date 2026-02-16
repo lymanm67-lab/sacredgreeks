@@ -274,6 +274,22 @@ const narrationScripts: Record<string, DemoNarrationScript> = {
     This guide is a companion to the Hidden in Plain Sight course and provides quick reference during group studies. 
     The goal is informed faith — understanding what you're representing and making conscious decisions about your participation.`,
   },
+
+  'video-studio': {
+    title: 'Studio Agent Tour',
+    voice: 'onyx',
+    script: `Welcome to the Studio Agent — your AI-powered video creation hub inside Sacred Greeks. 
+    This studio lets you turn any idea into a polished video, thumbnail, or animation in just a few steps. 
+    Start by choosing a creation mode at the top: Text to Video generates a video from a written prompt. Image to Video animates a still image with AI-driven motion. AI Thumbnails creates photorealistic images for your content. And Upload lets you save existing videos to your library. 
+    In demo mode, you're seeing sample videos including a P.R.O.O.F. Objection Short, a Mini Teaching, and a Conversation Prep — all generated from approved library content. 
+    Here's how the process works. First, type or select a prompt describing your video. The AI generates a full script with scenes, narration, captions, and visual direction — all citation-grounded in the P.R.O.O.F. framework. 
+    Next, review and edit the script in the Scene Editor. Each scene shows its visual description, narration text, and duration. You can adjust anything before rendering. 
+    Then choose your rendering provider in Settings — Runway Gen-4 for AI-generated video, Replicate for alternative models like MiniMax or Luma Ray, or ShotStack for timeline-based composition with text overlays and transitions. 
+    Hit Generate and the system submits the job. You can leave the page and come back — your video will be waiting in your library. 
+    Every generated video includes automated SRT captions and a full transcript. 
+    Admins can access Custom Content Mode to create videos beyond the P.R.O.O.F. framework. 
+    Explore the demo library below to see what's possible, then create your own.`,
+  },
 };
 
 export function getDemoNarration(pageKey: string): DemoNarrationScript | null {

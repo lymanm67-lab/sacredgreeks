@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { useDemoMode } from '@/contexts/DemoModeContext';
+import { DemoPageBadge } from '@/components/demo/DemoPageBadge';
 import { StudioPromptHero } from './studio/StudioPromptHero';
 import { StudioSceneEditor } from './studio/StudioSceneEditor';
 import { StudioImageGenerator } from './studio/StudioImageGenerator';
@@ -11,6 +13,76 @@ import { StudioUploadZone } from './studio/StudioUploadZone';
 import { StudioGenerationProgress } from './studio/StudioGenerationProgress';
 import { StudioLibrary } from './studio/StudioLibrary';
 import { StudioContentPicker } from './studio/StudioContentPicker';
+
+// Demo data for showcase when demo mode is active
+const DEMO_VIDEOS = [
+  {
+    id: 'demo-1',
+    title: 'Secret Oaths: What the Bible Says',
+    description: 'A 30-second PROOF objection response about secret oaths in Greek organizations.',
+    template_type: 'objection_short',
+    status: 'completed',
+    provider: 'runway',
+    generation_mode: 'text_to_video',
+    created_at: new Date(Date.now() - 2 * 86400000).toISOString(),
+    tags: ['oaths', 'PROOF', 'objection'],
+    script_json: {
+      title: 'Secret Oaths: What the Bible Says',
+      script: [
+        { timestamp: '0:00-0:05', narration: 'Many Greek organizations require secret oaths during initiation. But what does Scripture say?', visual: 'Dark background with glowing Bible icon' },
+        { timestamp: '0:05-0:15', narration: 'Jesus commands in Matthew 5:34: "Do not swear an oath at all." James 5:12 echoes this: "Let your yes be yes and your no be no."', visual: 'Scripture text appearing on screen with highlights' },
+        { timestamp: '0:15-0:25', narration: 'The PROOF framework helps us evaluate: Are these oaths aligned with biblical instruction? The evidence says they are not.', visual: 'PROOF framework graphic with "Oaths" category highlighted' },
+        { timestamp: '0:25-0:30', narration: 'Know the truth. Walk in clarity.', visual: 'Sacred Greeks logo with tagline' },
+      ],
+      scenePlan: [
+        { sceneNumber: 1, duration: '5s', visual: 'Bible icon animation', textOverlay: 'Secret Oaths' },
+        { sceneNumber: 2, duration: '10s', visual: 'Scripture on screen', textOverlay: 'Matthew 5:34' },
+        { sceneNumber: 3, duration: '10s', visual: 'PROOF framework', textOverlay: 'Evaluate with PROOF' },
+        { sceneNumber: 4, duration: '5s', visual: 'Logo closing', textOverlay: 'Sacred Greeks' },
+      ],
+      captions: '1\n00:00:00,000 --> 00:00:05,000\nMany Greek organizations require secret oaths during initiation.\n\n2\n00:00:05,000 --> 00:00:15,000\nJesus commands in Matthew 5:34: Do not swear an oath at all.',
+      transcript: 'Many Greek organizations require secret oaths during initiation. But what does Scripture say? Jesus commands in Matthew 5:34: Do not swear an oath at all. James 5:12 echoes this: Let your yes be yes and your no be no. The PROOF framework helps us evaluate: Are these oaths aligned with biblical instruction? The evidence says they are not. Know the truth. Walk in clarity.',
+      citationsUsed: ['Matthew 5:34', 'James 5:12', 'PROOF Framework - Oaths Category'],
+    },
+  },
+  {
+    id: 'demo-2',
+    title: 'Founders & Faith: A 2-Minute History',
+    description: 'A mini teaching exploring the faith roots and Masonic connections of Greek letter organizations.',
+    template_type: 'mini_teaching',
+    status: 'completed',
+    provider: 'replicate',
+    generation_mode: 'text_to_video',
+    created_at: new Date(Date.now() - 5 * 86400000).toISOString(),
+    tags: ['founders', 'history', 'masonry', 'teaching'],
+    script_json: {
+      title: 'Founders & Faith: A 2-Minute History',
+      script: [
+        { timestamp: '0:00-0:10', narration: 'The nine historically Black Greek-letter organizations were founded between 1906 and 1963. But many members don\'t know the faith connections — and contradictions — embedded in their origins.', visual: 'Timeline graphic of founding dates' },
+        { timestamp: '0:10-0:30', narration: 'Several founders were Freemasons. Alpha Phi Alpha\'s founding members included men with Masonic ties. The structure of pledging, secret rituals, and hierarchical brotherhood mirrors Masonic lodge culture.', visual: 'Side-by-side comparison of Greek and Masonic symbols' },
+        { timestamp: '0:30-0:50', narration: 'At the same time, many founders were devoted Christians. They built organizations rooted in community service and uplift. The tension between faith and fraternal ritual has existed since day one.', visual: 'Historical photos with overlay text' },
+      ],
+    },
+  },
+  {
+    id: 'demo-3',
+    title: 'Talking to Your Line Sister About Faith',
+    description: 'A conversation prep video for discussing faith concerns with a close sorority sister.',
+    template_type: 'conversation_prep',
+    status: 'completed',
+    provider: 'shotstack',
+    generation_mode: 'text_to_video',
+    created_at: new Date(Date.now() - 1 * 86400000).toISOString(),
+    tags: ['conversation', 'sorority', 'relationships'],
+    script_json: {
+      title: 'Talking to Your Line Sister About Faith',
+      script: [
+        { timestamp: '0:00-0:08', narration: 'Having a conversation about faith with your line sister doesn\'t have to end the friendship. Here\'s how to approach it with love and clarity.', visual: 'Two women talking over coffee' },
+        { timestamp: '0:08-0:20', narration: 'Start with your shared bond: "Our sisterhood means everything to me. That\'s exactly why I want to share what I\'ve been learning."', visual: 'Text overlay with opening line' },
+      ],
+    },
+  },
+];
 
 type TemplateType = 'objection_short' | 'mini_teaching' | 'conversation_prep' | 'weekly_devotional' | 'custom';
 type ProviderType = 'runway' | 'replicate' | 'shotstack';
@@ -24,6 +96,7 @@ interface VideoStudioProps {
 export function VideoStudio({ onBack }: VideoStudioProps) {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { isDemoMode } = useDemoMode();
 
   // Flow state
   const [step, setStep] = useState<Step>('prompt');
@@ -89,12 +162,18 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
 
   // Load library
   useEffect(() => {
-    if (step === 'library' && user) {
-      supabase.from('video_requests').select('*').eq('user_id', user.id)
-        .order('created_at', { ascending: false })
-        .then(({ data }) => setMyVideos(data || []));
+    if (step === 'library') {
+      if (isDemoMode) {
+        setMyVideos(DEMO_VIDEOS as any[]);
+        return;
+      }
+      if (user) {
+        supabase.from('video_requests').select('*').eq('user_id', user.id)
+          .order('created_at', { ascending: false })
+          .then(({ data }) => setMyVideos(data || []));
+      }
     }
-  }, [step, user]);
+  }, [step, user, isDemoMode]);
 
   // === HANDLERS ===
 
@@ -309,9 +388,12 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
     <div className="space-y-4">
       {/* Minimal top bar */}
       <div className="flex items-center justify-between">
-        <Button variant="ghost" size="sm" onClick={onBack} className="gap-1.5 text-muted-foreground">
-          <ArrowLeft className="w-4 h-4" /> Back
-        </Button>
+        <div className="flex items-center gap-3">
+          <Button variant="ghost" size="sm" onClick={onBack} className="gap-1.5 text-muted-foreground">
+            <ArrowLeft className="w-4 h-4" /> Back
+          </Button>
+          <DemoPageBadge pageKey="video-studio" />
+        </div>
         {step !== 'library' && (
           <Button variant="ghost" size="sm" onClick={() => setStep('library')} className="gap-1.5 text-muted-foreground">
             <Video className="w-4 h-4" /> My Videos
