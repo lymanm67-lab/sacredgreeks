@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { BookOpen, Heart, FileText, CheckCircle, TrendingUp, Users } from 'lucide-react';
+import { BookOpen, Heart, FileText, CheckCircle, TrendingUp, Users, ArrowRight, ChevronRight } from 'lucide-react';
 import { GreekOrganizationSelector } from '@/components/GreekOrganizationSelector';
-import { AffiliationTypeSelector } from '@/components/AffiliationTypeSelector';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { AFFILIATION_TYPES } from '@/data/affiliationTypes';
+import logo from '@/assets/sacred-greeks-logo.png';
 
 interface OnboardingProps {
   open: boolean;
@@ -15,68 +15,64 @@ interface OnboardingProps {
   userId?: string;
 }
 
+const slideVariants = {
+  enter: (direction: number) => ({ x: direction > 0 ? 300 : -300, opacity: 0 }),
+  center: { x: 0, opacity: 1 },
+  exit: (direction: number) => ({ x: direction > 0 ? -300 : 300, opacity: 0 }),
+};
+
 export function Onboarding({ open, onComplete, userId }: OnboardingProps) {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
+  const [direction, setDirection] = useState(1);
   const [saving, setSaving] = useState(false);
   const { toast } = useToast();
-  const totalSteps = 7;
 
-  // Affiliation type state
-  const [affiliationType, setAffiliationType] = useState('member');
-
-  // Greek organization state
+  const [affiliationType, setAffiliationType] = useState('');
   const [greekCouncil, setGreekCouncil] = useState('');
   const [greekOrganization, setGreekOrganization] = useState('');
   const [chapterName, setChapterName] = useState('');
   const [initiationYear, setInitiationYear] = useState<number | null>(null);
   const [memberStatus, setMemberStatus] = useState('active');
 
-  const saveGreekInfo = async () => {
-    if (!userId) return true; // Skip if no user
+  // Steps: 0=welcome, 1=affiliation, 2=org(members only), 3=features1, 4=features2, 5=features3, 6=ready
+  const isMember = affiliationType === 'member';
+  const steps = isMember
+    ? ['welcome', 'affiliation', 'organization', 'spiritual', 'community', 'proof', 'ready']
+    : ['welcome', 'affiliation', 'spiritual', 'community', 'proof', 'ready'];
+  const totalSteps = steps.length;
+  const currentStepName = steps[step] || 'ready';
 
+  const saveGreekInfo = async () => {
+    if (!userId) return true;
     setSaving(true);
     try {
-      const { error } = await supabase
-        .from('profiles')
-        .upsert({
-          id: userId,
-          affiliation_type: affiliationType,
-          greek_council: affiliationType === 'member' ? (greekCouncil || null) : null,
-          greek_organization: affiliationType === 'member' ? (greekOrganization || null) : null,
-          chapter_name: affiliationType === 'member' ? (chapterName || null) : null,
-          initiation_year: affiliationType === 'member' ? initiationYear : null,
-          member_status: affiliationType === 'member' ? (memberStatus || 'active') : null,
-          updated_at: new Date().toISOString(),
-        });
-
+      const { error } = await supabase.from('profiles').upsert({
+        id: userId,
+        affiliation_type: affiliationType || 'member',
+        greek_council: isMember ? (greekCouncil || null) : null,
+        greek_organization: isMember ? (greekOrganization || null) : null,
+        chapter_name: isMember ? (chapterName || null) : null,
+        initiation_year: isMember ? initiationYear : null,
+        member_status: isMember ? (memberStatus || 'active') : null,
+        updated_at: new Date().toISOString(),
+      });
       if (error) throw error;
       return true;
     } catch (error) {
       console.error('Error saving Greek info:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to save your info. You can update it later in your profile.',
-        variant: 'destructive',
-      });
-      return true; // Continue anyway
+      toast({ title: 'Error', description: 'Failed to save your info. You can update it later in your profile.', variant: 'destructive' });
+      return true;
     } finally {
       setSaving(false);
     }
   };
 
   const handleNext = async () => {
-    if (step === 3 && affiliationType === 'member') {
-      // Save Greek info when leaving step 3 (org selection for members)
-      await saveGreekInfo();
-    } else if (step === 2 && affiliationType !== 'member') {
-      // Save affiliation type for non-members
+    if (currentStepName === 'organization' || (currentStepName === 'affiliation' && !isMember)) {
       await saveGreekInfo();
     }
-    
-    // Skip org selection step for non-members
-    if (step === 2 && affiliationType !== 'member') {
-      setStep(4); // Skip to Community Features
-    } else if (step < totalSteps) {
+    setDirection(1);
+    if (step < totalSteps - 1) {
       setStep(step + 1);
     } else {
       onComplete();
@@ -84,68 +80,61 @@ export function Onboarding({ open, onComplete, userId }: OnboardingProps) {
   };
 
   const handleSkip = async () => {
-    // Save whatever info they've entered
     await saveGreekInfo();
     onComplete();
   };
 
-  const progress = (step / totalSteps) * 100;
+  const progress = ((step + 1) / totalSteps) * 100;
+
+  if (!open) return null;
 
   return (
-    <Dialog open={open} onOpenChange={onComplete}>
-      <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="text-2xl">Welcome to Sacred Greeks!</DialogTitle>
-        </DialogHeader>
-        
-        <Progress value={progress} className="w-full" />
-        
-        <div className="py-6">
-          {step === 1 && (
-            <div className="space-y-4 text-center">
-              <div className="w-20 h-20 mx-auto bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
-                <BookOpen className="w-10 h-10 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold">Daily Spiritual Tools</h3>
-              <p className="text-muted-foreground">
-                Build a consistent spiritual practice with devotionals, Bible study, prayer guides, and journaling to strengthen your daily walk with Christ.
-              </p>
-            </div>
-          )}
+    <div className="fixed inset-0 z-50 bg-[hsl(222,47%,8%)] text-white flex flex-col overflow-hidden">
+      {/* Top bar */}
+      <header className="flex items-center justify-between px-4 sm:px-8 py-4 shrink-0">
+        <div className="flex items-center gap-3">
+          <img src={logo} alt="Sacred Greeks" className="w-8 h-8 rounded-full" />
+          <span className="text-sm font-medium text-white/70 hidden sm:inline">Sacred Greeks</span>
+        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={handleSkip}
+          disabled={saving}
+          className="border-white/20 text-white hover:bg-white/10 hover:text-white bg-transparent"
+        >
+          {step === 0 ? 'Skip tour' : 'Continue to app'}
+          <ChevronRight className="w-4 h-4 ml-1" />
+        </Button>
+      </header>
 
-          {step === 2 && (
-            <div className="space-y-4">
-              <div className="text-center mb-4">
-                <div className="w-20 h-20 mx-auto bg-gradient-to-br from-sacred to-warm-blue rounded-full flex items-center justify-center mb-4">
-                  <Users className="w-10 h-10 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold">Your Connection to Greek Life</h3>
-                <p className="text-muted-foreground text-sm">
-                  How are you connected to Greek life?
-                </p>
-              </div>
-              <AffiliationTypeSelector
-                value={affiliationType}
-                onChange={setAffiliationType}
-                compact
-              />
-            </div>
-          )}
+      {/* Progress */}
+      <div className="px-4 sm:px-8 shrink-0">
+        <Progress value={progress} className="h-1 bg-white/10 [&>div]:bg-[hsl(var(--sacred))]" />
+        <p className="text-xs text-white/40 mt-2 text-right">Step {step + 1} of {totalSteps}</p>
+      </div>
 
-          {step === 3 && affiliationType === 'member' && (
-            <div className="space-y-4">
-              <div className="text-center mb-4">
-                <div className="w-20 h-20 mx-auto bg-gradient-to-br from-purple-500 to-violet-600 rounded-full flex items-center justify-center mb-4">
-                  <Users className="w-10 h-10 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold">Your Organization</h3>
-                <p className="text-muted-foreground text-sm">
-                  Tell us about your Greek organization (optional)
-                </p>
-              </div>
-              <GreekOrganizationSelector
-                selectedCouncil={greekCouncil}
-                selectedOrganization={greekOrganization}
+      {/* Content area */}
+      <div className="flex-1 flex items-center justify-center overflow-y-auto px-4 py-8">
+        <AnimatePresence mode="wait" custom={direction}>
+          <motion.div
+            key={step}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.35, ease: 'easeInOut' }}
+            className="w-full max-w-2xl mx-auto"
+          >
+            {currentStepName === 'welcome' && <WelcomeStep />}
+            {currentStepName === 'affiliation' && (
+              <AffiliationStep value={affiliationType} onChange={setAffiliationType} />
+            )}
+            {currentStepName === 'organization' && (
+              <OrganizationStep
+                greekCouncil={greekCouncil}
+                greekOrganization={greekOrganization}
                 chapterName={chapterName}
                 initiationYear={initiationYear}
                 memberStatus={memberStatus}
@@ -154,73 +143,144 @@ export function Onboarding({ open, onComplete, userId }: OnboardingProps) {
                 onChapterChange={setChapterName}
                 onYearChange={setInitiationYear}
                 onStatusChange={setMemberStatus}
-                compact
               />
-            </div>
-          )}
+            )}
+            {currentStepName === 'spiritual' && <FeatureStep icon={BookOpen} iconColors="from-blue-500 to-indigo-600" title="Daily Spiritual Tools" description="Build a consistent spiritual practice with devotionals, Bible study, prayer guides, and journaling to strengthen your daily walk with Christ." />}
+            {currentStepName === 'community' && <FeatureStep icon={Heart} iconColors="from-purple-500 to-violet-600" title="Community Features" description="Connect with others through the Prayer Wall, share requests, support brothers and sisters, and track community service hours together." />}
+            {currentStepName === 'proof' && <FeatureStep icon={FileText} iconColors="from-emerald-500 to-teal-600" title="P.R.O.O.F. Framework" description="Biblical responses to common Greek life criticisms: Pledge Process (hazing), Rituals (demonic claims), Oaths (deity allegiance), Obscurity (secrecy), and Founders (Masonic ties)." />}
+            {currentStepName === 'ready' && <ReadyStep />}
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
-          {step === 4 && (
-            <div className="space-y-4 text-center">
-              <div className="w-20 h-20 mx-auto bg-gradient-to-br from-purple-500 to-violet-600 rounded-full flex items-center justify-center">
-                <Heart className="w-10 h-10 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold">Community Features</h3>
-              <p className="text-muted-foreground">
-                Connect with others through the Prayer Wall, share requests, support brothers and sisters, and track community service hours together.
-              </p>
-            </div>
-          )}
-
-          {step === 5 && (
-            <div className="space-y-4 text-center">
-              <div className="w-20 h-20 mx-auto bg-gradient-to-br from-rose-500 to-pink-600 rounded-full flex items-center justify-center">
-                <TrendingUp className="w-10 h-10 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold">Personal Growth</h3>
-              <p className="text-muted-foreground">
-                Track your spiritual journey with progress insights, achievements, streaks, and personalized recommendations tailored to your growth.
-              </p>
-            </div>
-          )}
-
-          {step === 6 && (
-            <div className="space-y-4 text-center">
-              <div className="w-20 h-20 mx-auto bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center">
-                <FileText className="w-10 h-10 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold">P.R.O.O.F. Framework</h3>
-              <p className="text-muted-foreground">
-                Biblical responses to common Greek life criticisms: Pledge Process (hazing), Rituals (demonic claims), Oaths (deity allegiance), Obscurity (secrecy), and Founders (Masonic ties).
-              </p>
-            </div>
-          )}
-
-          {step === 7 && (
-            <div className="space-y-4 text-center">
-              <div className="w-20 h-20 mx-auto bg-gradient-to-br from-yellow-500 to-amber-600 rounded-full flex items-center justify-center">
-                <CheckCircle className="w-10 h-10 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold">You're All Set!</h3>
-              <p className="text-muted-foreground">
-                You're ready to begin your journey of faithfully navigating Greek life. Let's get started!
-              </p>
-            </div>
-          )}
-        </div>
-
-        <div className="flex justify-between gap-3">
-          <Button variant="outline" onClick={handleSkip} disabled={saving}>
-            Skip
-          </Button>
-          <Button onClick={handleNext} className="bg-sacred hover:bg-sacred/90" disabled={saving}>
-            {saving ? 'Saving...' : step === totalSteps ? 'Get Started' : 'Next'}
+      {/* Bottom action */}
+      <div className="px-4 sm:px-8 pb-8 pt-4 shrink-0">
+        <div className="max-w-2xl mx-auto">
+          <Button
+            onClick={handleNext}
+            disabled={saving || (currentStepName === 'affiliation' && !affiliationType)}
+            size="lg"
+            className="w-full bg-[hsl(var(--sacred))] hover:bg-[hsl(var(--sacred))]/90 text-white font-semibold py-6 text-lg group"
+          >
+            {saving ? 'Saving...' : step === totalSteps - 1 ? 'Get Started' : 'Continue'}
+            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
+      </div>
+    </div>
+  );
+}
 
-        <p className="text-xs text-center text-muted-foreground">
-          Step {step} of {totalSteps}
-        </p>
-      </DialogContent>
-    </Dialog>
+/* ── Sub-steps ─────────────────────────────────────── */
+
+function WelcomeStep() {
+  return (
+    <div className="text-center space-y-6">
+      <div className="inline-block px-5 py-2 rounded-full border border-[hsl(var(--sacred))]/40 bg-[hsl(var(--sacred))]/10 text-[hsl(var(--sacred))] text-sm font-semibold tracking-wide uppercase">
+        The Only App You Need
+      </div>
+      <h1 className="text-3xl sm:text-5xl font-bold leading-tight">
+        Faithfully navigate Greek life.{' '}
+        <span className="text-[hsl(var(--sacred))]">In your pocket.</span>
+      </h1>
+      <p className="text-white/60 text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
+        Grow spiritually with daily devotionals, defend your faith with the P.R.O.O.F. framework, connect with your community, and track your journey — all in one place.
+      </p>
+    </div>
+  );
+}
+
+function AffiliationStep({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  return (
+    <div className="space-y-8">
+      <div className="text-center space-y-3">
+        <h2 className="text-2xl sm:text-4xl font-bold">Where are you in your Greek life journey?</h2>
+        <p className="text-white/50 text-sm sm:text-base">Select the option that best describes you.</p>
+      </div>
+      <div className="space-y-3">
+        {AFFILIATION_TYPES.map((type) => (
+          <button
+            key={type.value}
+            onClick={() => onChange(type.value)}
+            className={`w-full text-left p-4 sm:p-5 rounded-xl border-2 transition-all duration-200 ${
+              value === type.value
+                ? 'border-[hsl(var(--sacred))] bg-[hsl(var(--sacred))]/10'
+                : 'border-white/10 bg-white/5 hover:border-white/25 hover:bg-white/8'
+            }`}
+          >
+            <div className="flex items-center gap-4">
+              <span className="text-2xl">{type.icon}</span>
+              <div>
+                <div className="font-semibold text-base sm:text-lg">{type.label}</div>
+                <div className="text-white/50 text-sm mt-0.5">{type.description}</div>
+              </div>
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function OrganizationStep(props: {
+  greekCouncil: string;
+  greekOrganization: string;
+  chapterName: string;
+  initiationYear: number | null;
+  memberStatus: string;
+  onCouncilChange: (v: string) => void;
+  onOrganizationChange: (v: string) => void;
+  onChapterChange: (v: string) => void;
+  onYearChange: (v: number | null) => void;
+  onStatusChange: (v: string) => void;
+}) {
+  return (
+    <div className="space-y-6">
+      <div className="text-center space-y-3">
+        <h2 className="text-2xl sm:text-4xl font-bold">Tell us about your organization</h2>
+        <p className="text-white/50 text-sm">(Optional — you can update this later)</p>
+      </div>
+      <div className="bg-white/5 rounded-2xl p-4 sm:p-6 border border-white/10 [&_label]:text-white/70 [&_button]:border-white/20 [&_button]:text-white [&_input]:bg-white/5 [&_input]:border-white/20 [&_input]:text-white [&_.text-muted-foreground]:text-white/50">
+        <GreekOrganizationSelector
+          selectedCouncil={props.greekCouncil}
+          selectedOrganization={props.greekOrganization}
+          chapterName={props.chapterName}
+          initiationYear={props.initiationYear}
+          memberStatus={props.memberStatus}
+          onCouncilChange={props.onCouncilChange}
+          onOrganizationChange={props.onOrganizationChange}
+          onChapterChange={props.onChapterChange}
+          onYearChange={props.onYearChange}
+          onStatusChange={props.onStatusChange}
+          compact
+        />
+      </div>
+    </div>
+  );
+}
+
+function FeatureStep({ icon: Icon, iconColors, title, description }: { icon: React.ElementType; iconColors: string; title: string; description: string }) {
+  return (
+    <div className="text-center space-y-6">
+      <div className={`w-24 h-24 mx-auto bg-gradient-to-br ${iconColors} rounded-2xl flex items-center justify-center shadow-2xl`}>
+        <Icon className="w-12 h-12 text-white" />
+      </div>
+      <h2 className="text-2xl sm:text-4xl font-bold">{title}</h2>
+      <p className="text-white/60 text-base sm:text-lg max-w-lg mx-auto leading-relaxed">{description}</p>
+    </div>
+  );
+}
+
+function ReadyStep() {
+  return (
+    <div className="text-center space-y-6">
+      <div className="w-24 h-24 mx-auto bg-gradient-to-br from-yellow-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-2xl">
+        <CheckCircle className="w-12 h-12 text-white" />
+      </div>
+      <h2 className="text-2xl sm:text-4xl font-bold">You're all set!</h2>
+      <p className="text-white/60 text-base sm:text-lg max-w-lg mx-auto leading-relaxed">
+        You're ready to begin your journey of faithfully navigating Greek life. Let's get started!
+      </p>
+    </div>
   );
 }
