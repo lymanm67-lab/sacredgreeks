@@ -584,6 +584,66 @@ export type Database = {
         }
         Relationships: []
       }
+      content_drafts: {
+        Row: {
+          ai_model: string | null
+          content: string
+          content_type: string
+          created_at: string
+          editor_notes: string | null
+          excerpt: string | null
+          generation_prompt: string | null
+          id: string
+          keywords: string[] | null
+          meta_description: string | null
+          published_at: string | null
+          seo_title: string | null
+          slug: string | null
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          ai_model?: string | null
+          content: string
+          content_type: string
+          created_at?: string
+          editor_notes?: string | null
+          excerpt?: string | null
+          generation_prompt?: string | null
+          id?: string
+          keywords?: string[] | null
+          meta_description?: string | null
+          published_at?: string | null
+          seo_title?: string | null
+          slug?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          ai_model?: string | null
+          content?: string
+          content_type?: string
+          created_at?: string
+          editor_notes?: string | null
+          excerpt?: string | null
+          generation_prompt?: string | null
+          id?: string
+          keywords?: string[] | null
+          meta_description?: string | null
+          published_at?: string | null
+          seo_title?: string | null
+          slug?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       conversation_scripts: {
         Row: {
           audience_type: string

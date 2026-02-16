@@ -59,6 +59,8 @@ const Partner = lazy(() => import("@/pages/Partner"));
 const OrderBook = lazy(() => import("@/pages/OrderBook"));
 const SpeakingRequest = lazy(() => import("@/pages/SpeakingRequest"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
+const Blog = lazy(() => import("@/pages/Blog"));
+const BlogPost = lazy(() => import("@/pages/BlogPost"));
 
 export const publicRoutes = (
   <>
@@ -130,6 +132,8 @@ export const publicRoutes = (
     <Route path="/partner" element={<Partner />} />
     <Route path="/order-book" element={<OrderBook />} />
     <Route path="/speaking-request" element={<SpeakingRequest />} />
+    <Route path="/blog" element={<Blog />} />
+    <Route path="/blog/:slug" element={<BlogPost />} />
     <Route path="*" element={<NotFound />} />
   </>
 );
