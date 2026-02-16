@@ -169,7 +169,9 @@ export function AppSidebar() {
   const [communityOpen, setCommunityOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [podcastOpen, setPodcastOpen] = useState(false);
-  const [resourcesOpen, setResourcesOpen] = useState(false);
+  const [resourcesOpen, setResourcesOpen] = useState(() => {
+    return resourcesItems.some(item => location.pathname === item.url || location.pathname.startsWith(item.url.split('?')[0]));
+  });
   const [systemOpen, setSystemOpen] = useState(false);
 
   const isActive = (path: string) => location.pathname === path;
