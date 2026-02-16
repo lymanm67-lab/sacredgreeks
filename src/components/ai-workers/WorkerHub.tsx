@@ -1,4 +1,4 @@
-import { Shield, BookOpen, MessageSquareText, GraduationCap, History, Sparkles, Theater } from 'lucide-react';
+import { Shield, BookOpen, MessageSquareText, GraduationCap, History, Sparkles, Theater, Film } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -48,9 +48,10 @@ interface WorkerHubProps {
   onSelectWorker: (worker: WorkerType) => void;
   onViewHistory: () => void;
   onViewShowcase?: () => void;
+  onViewVideoStudio?: () => void;
 }
 
-export function WorkerHub({ onSelectWorker, onViewHistory, onViewShowcase }: WorkerHubProps) {
+export function WorkerHub({ onSelectWorker, onViewHistory, onViewShowcase, onViewVideoStudio }: WorkerHubProps) {
   const { isDemoMode } = useDemoMode();
 
   return (
@@ -70,7 +71,12 @@ export function WorkerHub({ onSelectWorker, onViewHistory, onViewShowcase }: Wor
             </Badge>
           )}
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
+          {onViewVideoStudio && (
+            <Button variant="outline" size="sm" onClick={onViewVideoStudio} className="gap-2">
+              <Film className="w-4 h-4" /> Video Studio
+            </Button>
+          )}
           {onViewShowcase && (
             <Button variant="outline" size="sm" onClick={onViewShowcase} className="gap-2">
               <Theater className="w-4 h-4" /> Showcase
@@ -112,21 +118,38 @@ export function WorkerHub({ onSelectWorker, onViewHistory, onViewShowcase }: Wor
         ))}
       </div>
 
-      {/* Quick action */}
-      <Card className="border-primary/20 bg-primary/5">
-        <CardContent className="p-4 flex items-center gap-4">
-          <div className="p-3 rounded-full bg-primary/10">
-            <Shield className="w-6 h-6 text-primary" />
-          </div>
-          <div className="flex-1">
-            <h3 className="font-semibold text-foreground">Help me respond to this objection</h3>
-            <p className="text-sm text-muted-foreground">One-tap entry to the Ritual & Oath Clarity Coach</p>
-          </div>
-          <Button onClick={() => onSelectWorker('ritual_oath_coach')}>
-            Go
-          </Button>
-        </CardContent>
-      </Card>
+      {/* Quick actions */}
+      <div className="grid gap-3 md:grid-cols-2">
+        <Card className="border-primary/20 bg-primary/5">
+          <CardContent className="p-4 flex items-center gap-4">
+            <div className="p-3 rounded-full bg-primary/10">
+              <Shield className="w-6 h-6 text-primary" />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-foreground">Help me respond</h3>
+              <p className="text-sm text-muted-foreground">One-tap Ritual & Oath Coach</p>
+            </div>
+            <Button onClick={() => onSelectWorker('ritual_oath_coach')} size="sm">
+              Go
+            </Button>
+          </CardContent>
+        </Card>
+
+        {onViewVideoStudio && (
+          <Card className="border-violet-500/20 bg-violet-500/5 cursor-pointer hover:shadow-lg transition-shadow" onClick={onViewVideoStudio}>
+            <CardContent className="p-4 flex items-center gap-4">
+              <div className="p-3 rounded-full bg-violet-500/10">
+                <Film className="w-6 h-6 text-violet-600 dark:text-violet-400" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-foreground">PROOF Video Studio</h3>
+                <p className="text-sm text-muted-foreground">Generate AI videos from approved content</p>
+              </div>
+              <Button variant="outline" size="sm">Create</Button>
+            </CardContent>
+          </Card>
+        )}
+      </div>
     </div>
   );
 }

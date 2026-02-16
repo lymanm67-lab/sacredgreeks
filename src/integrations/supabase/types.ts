@@ -2174,6 +2174,58 @@ export type Database = {
         }
         Relationships: []
       }
+      output_citations: {
+        Row: {
+          created_at: string
+          excerpt: string | null
+          field_name: string
+          id: string
+          objection_card_id: string | null
+          source_id: string | null
+          worker_run_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          excerpt?: string | null
+          field_name: string
+          id?: string
+          objection_card_id?: string | null
+          source_id?: string | null
+          worker_run_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          excerpt?: string | null
+          field_name?: string
+          id?: string
+          objection_card_id?: string | null
+          source_id?: string | null
+          worker_run_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "output_citations_objection_card_id_fkey"
+            columns: ["objection_card_id"]
+            isOneToOne: false
+            referencedRelation: "objection_cards"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "output_citations_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "golden_library_sources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "output_citations_worker_run_id_fkey"
+            columns: ["worker_run_id"]
+            isOneToOne: false
+            referencedRelation: "worker_runs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       podcast_guest_applications: {
         Row: {
           admin_notes: string | null
@@ -3320,6 +3372,206 @@ export type Database = {
           created_at?: string | null
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      video_assets: {
+        Row: {
+          captions_url: string | null
+          created_at: string
+          duration_seconds: number | null
+          file_size_bytes: number | null
+          id: string
+          metadata_json: Json | null
+          resolution: string | null
+          thumbnail_url: string | null
+          transcript_text: string | null
+          video_request_id: string
+          video_url: string
+        }
+        Insert: {
+          captions_url?: string | null
+          created_at?: string
+          duration_seconds?: number | null
+          file_size_bytes?: number | null
+          id?: string
+          metadata_json?: Json | null
+          resolution?: string | null
+          thumbnail_url?: string | null
+          transcript_text?: string | null
+          video_request_id: string
+          video_url: string
+        }
+        Update: {
+          captions_url?: string | null
+          created_at?: string
+          duration_seconds?: number | null
+          file_size_bytes?: number | null
+          id?: string
+          metadata_json?: Json | null
+          resolution?: string | null
+          thumbnail_url?: string | null
+          transcript_text?: string | null
+          video_request_id?: string
+          video_url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "video_assets_video_request_id_fkey"
+            columns: ["video_request_id"]
+            isOneToOne: false
+            referencedRelation: "video_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      video_citations: {
+        Row: {
+          created_at: string
+          id: string
+          objection_card_id: string | null
+          segment_label: string | null
+          source_id: string | null
+          video_request_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          objection_card_id?: string | null
+          segment_label?: string | null
+          source_id?: string | null
+          video_request_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          objection_card_id?: string | null
+          segment_label?: string | null
+          source_id?: string | null
+          video_request_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "video_citations_objection_card_id_fkey"
+            columns: ["objection_card_id"]
+            isOneToOne: false
+            referencedRelation: "objection_cards"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "video_citations_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "golden_library_sources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "video_citations_video_request_id_fkey"
+            columns: ["video_request_id"]
+            isOneToOne: false
+            referencedRelation: "video_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      video_jobs: {
+        Row: {
+          created_at: string
+          error_message: string | null
+          id: string
+          metadata_json: Json | null
+          provider: string
+          provider_job_id: string | null
+          status: string
+          updated_at: string
+          video_request_id: string
+        }
+        Insert: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          metadata_json?: Json | null
+          provider?: string
+          provider_job_id?: string | null
+          status?: string
+          updated_at?: string
+          video_request_id: string
+        }
+        Update: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          metadata_json?: Json | null
+          provider?: string
+          provider_job_id?: string | null
+          status?: string
+          updated_at?: string
+          video_request_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "video_jobs_video_request_id_fkey"
+            columns: ["video_request_id"]
+            isOneToOne: false
+            referencedRelation: "video_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      video_requests: {
+        Row: {
+          blocked_reason: string | null
+          captions_text: string | null
+          created_at: string
+          description: string | null
+          id: string
+          input_content_ids: string[] | null
+          scene_plan_json: Json | null
+          script_json: Json | null
+          status: string
+          tags: string[] | null
+          template_type: string
+          thumbnail_prompt: string | null
+          title: string
+          transcript_text: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          blocked_reason?: string | null
+          captions_text?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          input_content_ids?: string[] | null
+          scene_plan_json?: Json | null
+          script_json?: Json | null
+          status?: string
+          tags?: string[] | null
+          template_type: string
+          thumbnail_prompt?: string | null
+          title: string
+          transcript_text?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          blocked_reason?: string | null
+          captions_text?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          input_content_ids?: string[] | null
+          scene_plan_json?: Json | null
+          script_json?: Json | null
+          status?: string
+          tags?: string[] | null
+          template_type?: string
+          thumbnail_prompt?: string | null
+          title?: string
+          transcript_text?: string | null
+          updated_at?: string
           user_id?: string
         }
         Relationships: []
