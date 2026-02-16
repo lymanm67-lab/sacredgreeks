@@ -27,16 +27,11 @@ export function ReturnToPresentationButton() {
   const handleReturn = () => {
     // Capture slideIndex before navigating (navigation will clear URL params)
     const targetSlide = slideIndex;
-    console.log('[ReturnToPresentationButton] Returning to slide:', targetSlide, { isPresenter });
-    
-    // ALWAYS use URL params approach - this is the most reliable method
-    // because it survives component remounts during navigation
+    // Use URL params approach - survives component remounts during navigation
     const qs = new URLSearchParams();
     qs.set('openPresentation', 'true');
     qs.set('slide', String(targetSlide));
     if (isPresenter) qs.set('presenter', 'true');
-    
-    console.log('[ReturnToPresentationButton] Navigating with params:', qs.toString());
     navigate(`/dashboard?${qs.toString()}`);
   };
 

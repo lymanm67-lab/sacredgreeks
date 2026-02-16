@@ -1,4 +1,4 @@
-// Cache bust v11 - 2026-02-15 - Beta page + SEO pages + mobile overflow fix
+// Cache bust v12 - 2026-02-16 - Provider refactor + console cleanup
 import { Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -28,6 +28,7 @@ import { WhatsNewModal } from "@/components/WhatsNewModal";
 import { GlobalSEO } from "@/components/GlobalSEO";
 import { UpdateNotification } from "@/components/UpdateNotification";
 import { Loader2 } from "lucide-react";
+import { composeProviders } from "@/lib/composeProviders";
 
 // Split route definitions
 import { publicRoutes } from "@/routes/publicRoutes";
@@ -69,52 +70,49 @@ const queryClient = new QueryClient({
   },
 });
 
+// Compose context providers to avoid deep nesting
+const AppProviders = composeProviders(
+  ({ children }) => <ErrorBoundary>{children}</ErrorBoundary>,
+  ({ children }) => <ThemeProvider attribute="class" defaultTheme="system" enableSystem>{children}</ThemeProvider>,
+  ({ children }) => <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>,
+  AuthProvider,
+  DemoModeProvider,
+  DemoTemplateSelectorProvider,
+  DemoFeaturesProvider,
+  CelebrationProvider,
+  TooltipProvider,
+);
+
 const App = () => (
-  <ErrorBoundary>
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-            <DemoModeProvider>
-              <DemoTemplateSelectorProvider>
-                <DemoFeaturesProvider>
-                  <CelebrationProvider>
-                    <TooltipProvider>
-                    <Toaster />
-                    <Sonner />
-                    <InstallPrompt />
-                    <OfflineIndicator />
-                    <AIAssistantWidget />
-                    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-                      <GlobalSEO />
-                      <DemoBanner />
-                      <DemoOverlayWithTemplate />
-                      <DemoComparisonWrapper />
-                      <DemoAnalyticsDashboardWrapper />
-                      <BetaFeedbackWidget />
-                      <CookieConsent />
-                      <WhatsNewModal />
-                      <UpdateNotification />
-                      <AnalyticsProvider>
-                  <DemoModeTour />
-                  <Suspense fallback={<PageLoader />}>
-                    <Routes>
-                      {publicRoutes}
-                      {layoutRoutes}
-                      {seoRoutes}
-                      {protectedRoutes}
-                    </Routes>
-                  </Suspense>
-                </AnalyticsProvider>
-              </BrowserRouter>
-                  </TooltipProvider>
-                </CelebrationProvider>
-              </DemoFeaturesProvider>
-            </DemoTemplateSelectorProvider>
-            </DemoModeProvider>
-        </AuthProvider>
-      </QueryClientProvider>
-    </ThemeProvider>
-  </ErrorBoundary>
+  <AppProviders>
+    <Toaster />
+    <Sonner />
+    <InstallPrompt />
+    <OfflineIndicator />
+    <AIAssistantWidget />
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <GlobalSEO />
+      <DemoBanner />
+      <DemoOverlayWithTemplate />
+      <DemoComparisonWrapper />
+      <DemoAnalyticsDashboardWrapper />
+      <BetaFeedbackWidget />
+      <CookieConsent />
+      <WhatsNewModal />
+      <UpdateNotification />
+      <AnalyticsProvider>
+        <DemoModeTour />
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            {publicRoutes}
+            {layoutRoutes}
+            {seoRoutes}
+            {protectedRoutes}
+          </Routes>
+        </Suspense>
+      </AnalyticsProvider>
+    </BrowserRouter>
+  </AppProviders>
 );
 
 export default App;
