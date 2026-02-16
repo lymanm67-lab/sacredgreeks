@@ -55,8 +55,6 @@ export function AppLayout({ children }: AppLayoutProps) {
     const slide = parseInt(params.get('slide') || '0', 10);
     const targetSlide = Number.isFinite(slide) ? slide : 0;
     
-    console.log('[AppLayout] Opening presentation from URL params, slide:', targetSlide);
-    
     // First set the slide, then open (order matters for the effect in PresentationSlideViewer)
     setInitialSlide(targetSlide);
     
