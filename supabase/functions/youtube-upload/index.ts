@@ -217,50 +217,61 @@ serve(async (req) => {
       const userId = await getUserId(req);
       const accessToken = await getValidToken(userId);
 
-      // Search for existing
+      const playlistsToEnsure = [
+        { title: "Sacred Greeks", description: "Official videos from the Sacred Greeks platform." },
+        { title: "Black Greek Letter Organizations", description: "Content celebrating and exploring Black Greek Letter Organizations, faith, and legacy." },
+      ];
+
+      // Fetch existing playlists
       const listRes = await fetch(
         "https://www.googleapis.com/youtube/v3/playlists?part=snippet&mine=true&maxResults=50",
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
       const listData = await listRes.json();
-      const existing = (listData.items || []).find((p: any) => 
-        p.snippet?.title?.toLowerCase() === "sacred greeks"
-      );
+      const existingItems = listData.items || [];
 
-      if (existing) {
-        return new Response(
-          JSON.stringify({ success: true, playlistId: existing.id, title: existing.snippet.title }),
-          { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      const results: { playlistId: string; title: string }[] = [];
+
+      for (const pl of playlistsToEnsure) {
+        const existing = existingItems.find((p: any) =>
+          p.snippet?.title?.toLowerCase() === pl.title.toLowerCase()
         );
-      }
 
-      // Create new
-      const createRes = await fetch(
-        "https://www.googleapis.com/youtube/v3/playlists?part=snippet,status",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            snippet: {
-              title: "Sacred Greeks",
-              description: "Official videos from the Sacred Greeks platform.",
-            },
-            status: { privacyStatus: "public" },
-          }),
+        if (existing) {
+          results.push({ playlistId: existing.id, title: existing.snippet.title });
+        } else {
+          const createRes = await fetch(
+            "https://www.googleapis.com/youtube/v3/playlists?part=snippet,status",
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                snippet: { title: pl.title, description: pl.description },
+                status: { privacyStatus: "public" },
+              }),
+            }
+          );
+
+          if (createRes.ok) {
+            const newData = await createRes.json();
+            results.push({ playlistId: newData.id, title: newData.snippet.title });
+          } else {
+            console.error(`Failed to create playlist "${pl.title}":`, await createRes.text());
+          }
         }
-      );
-
-      if (!createRes.ok) {
-        const err = await createRes.text();
-        throw new Error(`Failed to create playlist: ${err}`);
       }
 
-      const newData = await createRes.json();
+      // Return first playlist (Sacred Greeks) as default
       return new Response(
-        JSON.stringify({ success: true, playlistId: newData.id, title: newData.snippet.title }),
+        JSON.stringify({
+          success: true,
+          playlistId: results[0]?.playlistId || null,
+          title: results[0]?.title || null,
+          allPlaylists: results,
+        }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
