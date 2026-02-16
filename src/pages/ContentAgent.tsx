@@ -188,7 +188,7 @@ export default function ContentAgent() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">AI Content Agent</h1>
+        <h1 className="text-3xl font-bold">Growth Agent</h1>
         <p className="text-muted-foreground mt-1">
           Auto-draft blog posts, PR releases, and social media content. Review and approve before publishing.
         </p>

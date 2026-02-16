@@ -623,10 +623,10 @@ export const routeRegistry: RouteConfig[] = [
     structuredDataType: 'WebPage',
   },
 
-  // Content Agent (admin, noindex)
+  // Growth Agent (admin, noindex)
   {
     path: '/content-agent',
-    title: 'AI Content Agent',
+    title: 'Growth Agent',
     description: 'Generate and manage AI-drafted content for Sacred Greeks Life.',
     changefreq: 'weekly',
     priority: 0.4,
