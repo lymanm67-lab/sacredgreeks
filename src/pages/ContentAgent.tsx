@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Sparkles, FileText, Megaphone, Share2, CheckCircle, XCircle, Edit, Eye, Globe, Lightbulb, TrendingUp, Target, Twitter, Instagram, Hash, Link2, Copy } from "lucide-react";
+import { Loader2, Sparkles, FileText, Megaphone, Share2, CheckCircle, XCircle, Edit, Eye, Globe, Lightbulb, TrendingUp, Target, Twitter, Instagram, Facebook, Hash, Link2, Copy, ExternalLink } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { Progress } from "@/components/ui/progress";
 
@@ -380,8 +380,59 @@ export default function ContentAgent() {
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 flex-shrink-0">
+                    <div className="flex items-center gap-1.5 flex-shrink-0">
                       <Badge className={STATUS_COLORS[draft.status]}>{draft.status}</Badge>
+                      {/* Social Share Buttons */}
+                      {draft.twitter_caption && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-7 w-7 p-0"
+                          title="Post to X"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const text = encodeURIComponent(
+                              draft.twitter_caption + (draft.hashtags?.length ? "\n\n" + draft.hashtags.map(h => `#${h}`).join(" ") : "")
+                            );
+                            window.open(`https://x.com/intent/tweet?text=${text}`, "_blank", "width=550,height=420");
+                          }}
+                        >
+                          <Twitter className="w-3.5 h-3.5" />
+                        </Button>
+                      )}
+                      {draft.twitter_caption && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-7 w-7 p-0"
+                          title="Share to Facebook"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const text = encodeURIComponent(
+                              draft.twitter_caption + (draft.hashtags?.length ? "\n\n" + draft.hashtags.map(h => `#${h}`).join(" ") : "")
+                            );
+                            window.open(`https://www.facebook.com/sharer/sharer.php?quote=${text}`, "_blank", "width=550,height=420");
+                          }}
+                        >
+                          <Facebook className="w-3.5 h-3.5" />
+                        </Button>
+                      )}
+                      {draft.instagram_caption && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-7 w-7 p-0"
+                          title="Copy for Instagram"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const text = draft.instagram_caption + (draft.hashtags?.length ? "\n\n" + draft.hashtags.map(h => `#${h}`).join(" ") : "");
+                            navigator.clipboard.writeText(text);
+                            toast({ title: "📋 Copied for Instagram!", description: "Paste into Instagram app." });
+                          }}
+                        >
+                          <Instagram className="w-3.5 h-3.5" />
+                        </Button>
+                      )}
                       <Dialog>
                         <DialogTrigger asChild>
                           <Button variant="outline" size="sm" onClick={() => openEditor(draft)}>
