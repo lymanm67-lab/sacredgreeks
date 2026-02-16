@@ -510,6 +510,9 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
           onReset={resetFlow}
           onRegenerate={handleRegenerate}
           onBackToScript={() => setStep('script')}
+          videoTitle={scriptData?.title || prompt || ''}
+          videoDescription={scriptData?.description || ''}
+          videoRequestId={videoRequest?.id}
         />
       )}
 

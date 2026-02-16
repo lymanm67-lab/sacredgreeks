@@ -3863,6 +3863,99 @@ export type Database = {
         }
         Relationships: []
       }
+      youtube_connections: {
+        Row: {
+          access_token: string
+          channel_id: string | null
+          channel_title: string | null
+          created_at: string
+          id: string
+          refresh_token: string
+          token_expires_at: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          access_token: string
+          channel_id?: string | null
+          channel_title?: string | null
+          created_at?: string
+          id?: string
+          refresh_token: string
+          token_expires_at: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          access_token?: string
+          channel_id?: string | null
+          channel_title?: string | null
+          created_at?: string
+          id?: string
+          refresh_token?: string
+          token_expires_at?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      youtube_uploads: {
+        Row: {
+          category_id: string | null
+          created_at: string
+          description: string | null
+          error_message: string | null
+          id: string
+          playlist_id: string | null
+          privacy_status: string
+          publish_at: string | null
+          tags: string[] | null
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+          upload_status: string
+          user_id: string
+          video_request_id: string | null
+          youtube_video_id: string | null
+        }
+        Insert: {
+          category_id?: string | null
+          created_at?: string
+          description?: string | null
+          error_message?: string | null
+          id?: string
+          playlist_id?: string | null
+          privacy_status?: string
+          publish_at?: string | null
+          tags?: string[] | null
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string
+          upload_status?: string
+          user_id: string
+          video_request_id?: string | null
+          youtube_video_id?: string | null
+        }
+        Update: {
+          category_id?: string | null
+          created_at?: string
+          description?: string | null
+          error_message?: string | null
+          id?: string
+          playlist_id?: string | null
+          privacy_status?: string
+          publish_at?: string | null
+          tags?: string[] | null
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+          upload_status?: string
+          user_id?: string
+          video_request_id?: string | null
+          youtube_video_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       assessment_analytics_safe: {

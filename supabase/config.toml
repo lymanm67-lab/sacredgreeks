@@ -158,3 +158,6 @@ verify_jwt = false
 
 [functions.video-studio]
 verify_jwt = false
+
+[functions.youtube-upload]
+verify_jwt = false

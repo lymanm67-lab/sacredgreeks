@@ -1,7 +1,9 @@
-import { Film, Play, Plus } from 'lucide-react';
+import { useState } from 'react';
+import { Film, Play, Plus, Youtube } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { YouTubeUploadDialog } from '@/components/youtube/YouTubeUploadDialog';
 
 interface StudioLibraryProps {
   videos: any[];
@@ -9,6 +11,14 @@ interface StudioLibraryProps {
 }
 
 export function StudioLibrary({ videos, onNewVideo }: StudioLibraryProps) {
+  const [ytDialogOpen, setYtDialogOpen] = useState(false);
+  const [ytVideo, setYtVideo] = useState<any>(null);
+
+  const handleYouTubeUpload = (video: any) => {
+    setYtVideo(video);
+    setYtDialogOpen(true);
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -59,16 +69,41 @@ export function StudioLibrary({ videos, onNewVideo }: StudioLibraryProps) {
                       {new Date(v.created_at).toLocaleDateString()}
                     </p>
                   </div>
-                  {v.status === 'completed' && (
-                    <Button size="sm" variant="outline" className="gap-1 rounded-lg shrink-0">
-                      <Play className="w-3 h-3" /> View
-                    </Button>
-                  )}
+                  <div className="flex flex-col gap-1 shrink-0">
+                    {v.status === 'completed' && (
+                      <>
+                        <Button size="sm" variant="outline" className="gap-1 rounded-lg">
+                          <Play className="w-3 h-3" /> View
+                        </Button>
+                        {v.video_url && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="gap-1 rounded-lg text-red-600 hover:text-red-700 border-red-200 hover:border-red-300"
+                            onClick={() => handleYouTubeUpload(v)}
+                          >
+                            <Youtube className="w-3 h-3" /> YouTube
+                          </Button>
+                        )}
+                      </>
+                    )}
+                  </div>
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
+      )}
+
+      {ytVideo && (
+        <YouTubeUploadDialog
+          open={ytDialogOpen}
+          onOpenChange={setYtDialogOpen}
+          videoUrl={ytVideo.video_url || ''}
+          defaultTitle={ytVideo.title || ''}
+          defaultDescription={ytVideo.description || ''}
+          videoRequestId={ytVideo.id}
+        />
       )}
     </div>
   );
