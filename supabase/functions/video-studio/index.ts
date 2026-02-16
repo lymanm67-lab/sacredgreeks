@@ -684,12 +684,19 @@ Generate the complete script with scene plan, captions, and metadata.`;
       const providerName = reqProvider || vr.provider || 'runway';
       const model = providerModel || vr.provider_model || undefined;
 
-      // Build text prompt from script
+      // Build text prompt from script, with fallback to title/description
       const script = vr.script_json as any;
-      const textPrompt = (script?.script || [])
-        .map((s: any) => `${s.visual || ''} ${s.narration || ''}`)
+      let textPrompt = (script?.script || [])
+        .map((s: any) => `${s.visual || ''} ${s.narration || ''}`.trim())
+        .filter(Boolean)
         .join('. ')
-        .slice(0, 1000);
+        .slice(0, 1000)
+        .trim();
+
+      // Fallback if script produced empty prompt
+      if (!textPrompt) {
+        textPrompt = (vr.title || vr.description || script?.title || script?.description || 'Generate a professional video').slice(0, 500);
+      }
 
       try {
         const provider = getProvider(providerName, model);
