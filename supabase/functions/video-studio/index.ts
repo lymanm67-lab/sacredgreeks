@@ -80,7 +80,7 @@ class RunwayProvider implements VideoProvider {
 
   async submitJob(prompt: string, options: Record<string, any>) {
     const body: Record<string, any> = {
-      model: 'gen4_turbo',
+      model: 'gen4.5',
       ratio: options.ratio || '720:1280',
       duration: options.duration || 10,
       promptText: prompt.slice(0, 500),
