@@ -210,7 +210,8 @@ Return your response using the generate_content tool.`;
         internal_links: generated.internal_links || [],
         ai_model: "google/gemini-3-flash-preview",
         generation_prompt: userPrompt,
-        status: "draft",
+        status: "published",
+        published_at: new Date().toISOString(),
       })
       .select()
       .single();
