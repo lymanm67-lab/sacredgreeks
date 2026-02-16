@@ -83,15 +83,20 @@ class RunwayProvider implements VideoProvider {
       model: 'gen4_turbo',
       ratio: options.ratio || '720:1280',
       duration: options.duration || 10,
-      text_prompt: prompt.slice(0, 500),
+      promptText: prompt.slice(0, 500),
     };
 
-    // If image URL is provided, use image_to_video
+    // If image URL is provided, use image_to_video endpoint with promptImage
     if (options.imageUrl) {
-      body.image = options.imageUrl;
+      body.promptImage = options.imageUrl;
     }
 
-    const res = await fetch('https://api.dev.runwayml.com/v1/image_to_video', {
+    // Choose endpoint based on whether we have an image
+    const endpoint = options.imageUrl
+      ? 'https://api.dev.runwayml.com/v1/image_to_video'
+      : 'https://api.dev.runwayml.com/v1/text_to_video';
+
+    const res = await fetch(endpoint, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${this.apiKey}`,
