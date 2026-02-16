@@ -38,9 +38,9 @@ export function YouTubeUploadDialog({
   // Form state
   const [title, setTitle] = useState(defaultTitle);
   const [description, setDescription] = useState(defaultDescription);
-  const [tags, setTags] = useState('');
-  const [privacyStatus, setPrivacyStatus] = useState('private');
-  const [categoryId, setCategoryId] = useState('22');
+  const [tags, setTags] = useState('Sacred Greeks, Greek Life, Faith, Christian, Ministry');
+  const [privacyStatus, setPrivacyStatus] = useState('public');
+  const [categoryId, setCategoryId] = useState('27'); // Education
   const [playlistId, setPlaylistId] = useState('');
   const [scheduleEnabled, setScheduleEnabled] = useState(false);
   const [publishDate, setPublishDate] = useState('');
@@ -81,6 +81,7 @@ export function YouTubeUploadDialog({
       setChannelTitle(data.channelTitle || '');
       if (data.connected) {
         loadPlaylistsAndCategories();
+        ensureSacredGreeksPlaylist();
       }
     } catch {
       setConnected(false);
@@ -106,6 +107,24 @@ export function YouTubeUploadDialog({
       setCategories(catData.categories || []);
     } catch (e) {
       console.error('Failed to load playlists/categories:', e);
+    }
+  };
+
+  const ensureSacredGreeksPlaylist = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/youtube-upload`, {
+        method: 'POST',
+        headers: await getAuthHeader(),
+        body: JSON.stringify({ action: 'ensure_sacred_greeks_playlist' }),
+      });
+      const data = await res.json();
+      if (data.playlistId) {
+        setPlaylistId(data.playlistId);
+        // Refresh playlists to ensure it's in the list
+        loadPlaylistsAndCategories();
+      }
+    } catch (e) {
+      console.error('Failed to ensure Sacred Greeks playlist:', e);
     }
   };
 
@@ -188,6 +207,7 @@ export function YouTubeUploadDialog({
         setConnected(true);
         setChannelTitle(event.data.channelTitle || 'Connected');
         loadPlaylistsAndCategories();
+        ensureSacredGreeksPlaylist();
         toast({ title: `✅ Connected to ${event.data.channelTitle || 'YouTube'}` });
       }
     };
@@ -270,7 +290,7 @@ export function YouTubeUploadDialog({
 
             {/* Tags */}
             <div className="space-y-1.5">
-              <Label>Tags</Label>
+              <Label>Keywords / Tags</Label>
               <Input value={tags} onChange={e => setTags(e.target.value)} placeholder="tag1, tag2, tag3" />
               <p className="text-[10px] text-muted-foreground">Comma-separated</p>
             </div>

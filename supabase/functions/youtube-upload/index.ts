@@ -205,8 +205,62 @@ serve(async (req) => {
         title: p.snippet?.title,
       }));
 
+      // Check if "Sacred Greeks" exists, if not, we'll let the frontend know or handle it
       return new Response(
         JSON.stringify({ playlists }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // ===== ENSURE SACRED GREEKS PLAYLIST =====
+    if (action === "ensure_sacred_greeks_playlist") {
+      const userId = await getUserId(req);
+      const accessToken = await getValidToken(userId);
+
+      // Search for existing
+      const listRes = await fetch(
+        "https://www.googleapis.com/youtube/v3/playlists?part=snippet&mine=true&maxResults=50",
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      );
+      const listData = await listRes.json();
+      const existing = (listData.items || []).find((p: any) => 
+        p.snippet?.title?.toLowerCase() === "sacred greeks"
+      );
+
+      if (existing) {
+        return new Response(
+          JSON.stringify({ success: true, playlistId: existing.id, title: existing.snippet.title }),
+          { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      // Create new
+      const createRes = await fetch(
+        "https://www.googleapis.com/youtube/v3/playlists?part=snippet,status",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            snippet: {
+              title: "Sacred Greeks",
+              description: "Official videos from the Sacred Greeks platform.",
+            },
+            status: { privacyStatus: "public" },
+          }),
+        }
+      );
+
+      if (!createRes.ok) {
+        const err = await createRes.text();
+        throw new Error(`Failed to create playlist: ${err}`);
+      }
+
+      const newData = await createRes.json();
+      return new Response(
+        JSON.stringify({ success: true, playlistId: newData.id, title: newData.snippet.title }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
