@@ -72,18 +72,7 @@ export function PresentationSlideViewer({ isOpen, onClose, initialSlide = 0 }: P
     const justOpened = isOpen && !wasOpenRef.current;
     const slideChangedWhileOpen = isOpen && wasOpenRef.current && initialSlide !== lastInitialSlideRef.current;
     
-    console.log('[PresentationSlideViewer] Effect:', { 
-      isOpen, 
-      wasOpen: wasOpenRef.current, 
-      justOpened,
-      slideChangedWhileOpen,
-      initialSlide,
-      lastInitialSlide: lastInitialSlideRef.current,
-      currentSlide 
-    });
-    
     if (justOpened || slideChangedWhileOpen) {
-      console.log('[PresentationSlideViewer] Setting slide to:', initialSlide);
       setCurrentSlide(initialSlide);
     }
     
