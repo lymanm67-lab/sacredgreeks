@@ -698,6 +698,8 @@ Generate the complete script with scene plan, captions, and metadata.`;
         textPrompt = (vr.title || vr.description || script?.title || script?.description || 'Generate a professional video').slice(0, 500);
       }
 
+      console.log('[VIDEO-STUDIO] textPrompt length:', textPrompt.length, 'preview:', textPrompt.slice(0, 100));
+
       try {
         const provider = getProvider(providerName, model);
         const { jobId: providerJobId, rawResponse } = await provider.submitJob(textPrompt, {
