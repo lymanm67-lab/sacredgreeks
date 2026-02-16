@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { ArrowLeft, Film, Play, Loader2, AlertTriangle, CheckCircle, Copy, RefreshCw, Video, FileText, Clock, Sparkles, Settings2, RotateCcw, Upload, ImageIcon, VideoIcon, X } from 'lucide-react';
+import { ArrowLeft, Film, Play, Loader2, AlertTriangle, CheckCircle, Copy, RefreshCw, Video, FileText, Clock, Sparkles, Settings2, RotateCcw, Upload, ImageIcon, VideoIcon, X, Wand2, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -15,7 +15,7 @@ import { useAuth } from '@/contexts/AuthContext';
 
 type TemplateType = 'objection_short' | 'mini_teaching' | 'conversation_prep' | 'weekly_devotional' | 'custom';
 type ProviderType = 'runway' | 'replicate';
-type GenerationMode = 'text_to_video' | 'image_to_video' | 'video_upload';
+type GenerationMode = 'text_to_video' | 'image_to_video' | 'video_upload' | 'generate_image';
 
 const TEMPLATES = [
   { type: 'objection_short' as TemplateType, title: 'PROOF Objection Short', duration: '30–60s', icon: '⚡', description: 'Quick, punchy response to a common claim' },
@@ -66,6 +66,15 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
   const [isUploading, setIsUploading] = useState(false);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
+
+  // Image generation state
+  const [imagePrompt, setImagePrompt] = useState('');
+  const [imageModel, setImageModel] = useState<'fast' | 'quality'>('fast');
+  const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null);
+  const [isGeneratingImage, setIsGeneratingImage] = useState(false);
+  const [imageEditSource, setImageEditSource] = useState<string | null>(null);
+  const [imageEditPreview, setImageEditPreview] = useState<string | null>(null);
+  const imageEditInputRef = useRef<HTMLInputElement>(null);
 
   // Check admin role
   useEffect(() => {
@@ -317,6 +326,62 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
     toast({ title: `${label} copied!` });
   };
 
+  // ===== IMAGE GENERATION HANDLER =====
+  const handleGenerateImage = async () => {
+    if (!imagePrompt.trim()) return;
+    setIsGeneratingImage(true);
+    setGeneratedImageUrl(null);
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/video-studio`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`,
+        },
+        body: JSON.stringify({
+          action: 'generate_image',
+          imagePrompt: imagePrompt.trim(),
+          imageModel,
+          imageEditSource: imageEditSource || undefined,
+        }),
+      });
+
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({ error: 'Image generation failed' }));
+        throw new Error(err.error || `Error ${response.status}`);
+      }
+
+      const result = await response.json();
+      setGeneratedImageUrl(result.imageUrl);
+      toast({ title: '🖼️ Image generated!', description: `Using ${imageModel === 'quality' ? 'High Quality' : 'Fast'} model` });
+    } catch (error) {
+      console.error('Image generation error:', error);
+      toast({ title: 'Error', description: error instanceof Error ? error.message : 'Failed to generate image', variant: 'destructive' });
+    } finally {
+      setIsGeneratingImage(false);
+    }
+  };
+
+  const handleImageEditUpload = async (file: File) => {
+    if (!user) return;
+    setIsUploading(true);
+    try {
+      const ext = file.name.split('.').pop() || 'jpg';
+      const filePath = `${user.id}/${Date.now()}_edit_source.${ext}`;
+      const { data, error } = await supabase.storage.from('video-studio-uploads').upload(filePath, file, { upsert: false });
+      if (error) throw error;
+      const { data: urlData } = supabase.storage.from('video-studio-uploads').getPublicUrl(data.path);
+      setImageEditSource(urlData.publicUrl);
+      setImageEditPreview(URL.createObjectURL(file));
+      toast({ title: '📸 Source image uploaded', description: 'Ready for AI editing.' });
+    } catch (error) {
+      toast({ title: 'Upload failed', description: error instanceof Error ? error.message : 'Failed to upload', variant: 'destructive' });
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   const resetFlow = () => {
     setStep('template');
     setScriptData(null);
@@ -332,6 +397,10 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
     setUploadedImagePreview(null);
     setUploadedVideoUrl(null);
     setUploadedVideoPreview(null);
+    setImagePrompt('');
+    setGeneratedImageUrl(null);
+    setImageEditSource(null);
+    setImageEditPreview(null);
   };
 
   // ===== Upload Zone Component =====
@@ -420,11 +489,12 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
           <Card className="border-muted">
             <CardContent className="p-4 space-y-3">
               <div className="flex items-center gap-2"><Sparkles className="w-4 h-4 text-muted-foreground" /><span className="text-sm font-medium">Creation Mode</span></div>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                 {([
                   { mode: 'text_to_video' as GenerationMode, label: 'Text to Video', icon: FileText, desc: 'Generate from script' },
                   { mode: 'image_to_video' as GenerationMode, label: 'Image to Video', icon: ImageIcon, desc: 'Animate a still frame' },
                   { mode: 'video_upload' as GenerationMode, label: 'Upload Video', icon: Upload, desc: 'Upload & manage' },
+                  { mode: 'generate_image' as GenerationMode, label: 'AI Thumbnails', icon: Wand2, desc: 'Generate images' },
                 ]).map(m => (
                   <button
                     key={m.mode}
@@ -441,7 +511,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
           </Card>
 
           {/* Provider selector */}
-          {generationMode !== 'video_upload' && (
+          {generationMode !== 'video_upload' && generationMode !== 'generate_image' && (
             <Card className="border-muted">
               <CardContent className="p-4 space-y-3">
                 <div className="flex items-center gap-2"><Settings2 className="w-4 h-4 text-muted-foreground" /><span className="text-sm font-medium">Video Provider</span></div>
@@ -568,6 +638,151 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
                 >
                   {isLoading ? <><Loader2 className="w-4 h-4 animate-spin" /> Saving...</> : <><Upload className="w-4 h-4" /> Save to Library</>}
                 </Button>
+              )}
+            </div>
+          )}
+
+          {/* ===== GENERATE IMAGE MODE ===== */}
+          {generationMode === 'generate_image' && (
+            <div className="space-y-4">
+              <h3 className="font-semibold text-foreground">AI Image / Thumbnail Generator</h3>
+              <p className="text-sm text-muted-foreground">
+                Generate photorealistic thumbnails and images using AI. No extra API keys needed.
+              </p>
+
+              {/* Model selector */}
+              <Card className="border-muted">
+                <CardContent className="p-4 space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Wand2 className="w-4 h-4 text-muted-foreground" />
+                    <span className="text-sm font-medium">Image Quality</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      onClick={() => setImageModel('fast')}
+                      className={`p-3 rounded-xl border-2 text-left transition-all ${imageModel === 'fast' ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/30'}`}
+                    >
+                      <p className="text-sm font-medium">⚡ Fast</p>
+                      <p className="text-xs text-muted-foreground">Quick generation, good quality</p>
+                    </button>
+                    <button
+                      onClick={() => setImageModel('quality')}
+                      className={`p-3 rounded-xl border-2 text-left transition-all ${imageModel === 'quality' ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/30'}`}
+                    >
+                      <p className="text-sm font-medium">✨ High Quality</p>
+                      <p className="text-xs text-muted-foreground">Best results, slower</p>
+                    </button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Optional: Upload source image for editing */}
+              <Card className="border-muted">
+                <CardContent className="p-4 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium">Edit Existing Image (optional)</p>
+                      <p className="text-xs text-muted-foreground">Upload an image to modify with AI</p>
+                    </div>
+                    {imageEditSource && (
+                      <Button variant="ghost" size="sm" onClick={() => { setImageEditSource(null); setImageEditPreview(null); }}>
+                        <X className="w-4 h-4" />
+                      </Button>
+                    )}
+                  </div>
+                  <input
+                    ref={imageEditInputRef}
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) handleImageEditUpload(file);
+                    }}
+                  />
+                  {imageEditPreview ? (
+                    <div className="relative rounded-xl border-2 border-primary/30 overflow-hidden bg-muted">
+                      <img src={imageEditPreview} alt="Source for editing" className="w-full max-h-48 object-contain" />
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => imageEditInputRef.current?.click()}
+                      className="w-full border-2 border-dashed border-muted-foreground/30 rounded-xl p-4 text-center cursor-pointer hover:border-primary/50 hover:bg-primary/5 transition-all"
+                    >
+                      {isUploading ? (
+                        <Loader2 className="w-6 h-6 mx-auto text-primary animate-spin" />
+                      ) : (
+                        <ImageIcon className="w-6 h-6 mx-auto text-muted-foreground" />
+                      )}
+                      <p className="text-xs text-muted-foreground mt-1">Click to upload source image</p>
+                    </button>
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* Prompt input */}
+              <Textarea
+                placeholder={imageEditSource
+                  ? "Describe how to edit this image... (e.g., 'Add warm golden lighting and a sunset sky')"
+                  : "Describe the image you want... (e.g., 'A photorealistic thumbnail of a Greek temple at sunset with dramatic lighting, 16:9 aspect ratio')"
+                }
+                value={imagePrompt}
+                onChange={e => setImagePrompt(e.target.value)}
+                rows={4}
+              />
+
+              <Button
+                disabled={!imagePrompt.trim() || isGeneratingImage}
+                onClick={handleGenerateImage}
+                className="w-full gap-2"
+              >
+                {isGeneratingImage
+                  ? <><Loader2 className="w-4 h-4 animate-spin" /> Generating Image...</>
+                  : <><Wand2 className="w-4 h-4" /> Generate {imageEditSource ? 'Edited' : ''} Image</>
+                }
+              </Button>
+
+              {/* Generated image result */}
+              {generatedImageUrl && (
+                <Card className="border-primary/30">
+                  <CardContent className="p-4 space-y-3">
+                    <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-600" /> Generated Image
+                    </h4>
+                    <div className="rounded-xl overflow-hidden bg-muted border">
+                      <img src={generatedImageUrl} alt="AI Generated" className="w-full max-h-96 object-contain" />
+                    </div>
+                    <div className="flex gap-2 flex-wrap">
+                      <Button variant="outline" size="sm" asChild>
+                        <a href={generatedImageUrl} target="_blank" rel="noopener noreferrer" download className="gap-2">
+                          <Download className="w-3 h-3" /> Download
+                        </a>
+                      </Button>
+                      <Button variant="outline" size="sm" onClick={() => {
+                        setImageEditSource(generatedImageUrl);
+                        setImageEditPreview(generatedImageUrl);
+                        setGeneratedImageUrl(null);
+                        toast({ title: 'Image set as edit source', description: 'Modify your prompt to refine it.' });
+                      }} className="gap-2">
+                        <RefreshCw className="w-3 h-3" /> Refine This Image
+                      </Button>
+                      <Button variant="outline" size="sm" onClick={() => {
+                        setUploadedImageUrl(generatedImageUrl);
+                        setUploadedImagePreview(generatedImageUrl);
+                        setGenerationMode('image_to_video');
+                        toast({ title: 'Image ready for video', description: 'Switched to Image-to-Video mode.' });
+                      }} className="gap-2">
+                        <Play className="w-3 h-3" /> Use for Video
+                      </Button>
+                      <Button variant="outline" size="sm" onClick={() => {
+                        navigator.clipboard.writeText(generatedImageUrl);
+                        toast({ title: 'URL copied!' });
+                      }} className="gap-2">
+                        <Copy className="w-3 h-3" /> Copy URL
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
               )}
             </div>
           )}
