@@ -28,6 +28,7 @@ const LeadSegmentation = lazy(() => import("@/pages/admin/LeadSegmentation"));
 const MarketingDashboard = lazy(() => import("@/pages/admin/MarketingDashboard"));
 const NotificationPreferences = lazy(() => import("@/pages/NotificationPreferences"));
 const ChapterFinance = lazy(() => import("@/pages/ChapterFinance"));
+const ContentAgent = lazy(() => import("@/pages/ContentAgent"));
 
 const ProtectedPageWithLayout = ({ children }: { children: React.ReactNode }) => (
   <ProtectedRoute>
@@ -62,5 +63,6 @@ export const protectedRoutes = (
     <Route path="/forum" element={<ProtectedPageWithLayout><Forum /></ProtectedPageWithLayout>} />
     <Route path="/analytics" element={<ProtectedPageWithLayout><AnalyticsDashboard /></ProtectedPageWithLayout>} />
     <Route path="/notification-preferences" element={<ProtectedPageWithLayout><NotificationPreferences /></ProtectedPageWithLayout>} />
+    <Route path="/content-agent" element={<ProtectedPageWithLayout><ContentAgent /></ProtectedPageWithLayout>} />
   </>
 );

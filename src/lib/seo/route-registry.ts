@@ -610,6 +610,29 @@ export const routeRegistry: RouteConfig[] = [
     isProtected: false,
     structuredDataType: 'WebPage',
   },
+
+  // Blog
+  {
+    path: '/blog',
+    title: 'Blog | Sacred Greeks Life - Faith & Greek Life Articles',
+    description: 'Faith-centered articles for Christians in Greek life. Biblical perspectives, spiritual growth guides, and community insights.',
+    keywords: 'Sacred Greeks blog, Christian Greek life articles, faith fraternity blog, BGLO articles',
+    changefreq: 'weekly',
+    priority: 0.85,
+    isProtected: false,
+    structuredDataType: 'WebPage',
+  },
+
+  // Content Agent (admin, noindex)
+  {
+    path: '/content-agent',
+    title: 'AI Content Agent',
+    description: 'Generate and manage AI-drafted content for Sacred Greeks Life.',
+    changefreq: 'weekly',
+    priority: 0.4,
+    isProtected: true,
+    noindex: true,
+  },
 ];
 
 // Get route config by path
