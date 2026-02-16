@@ -81,7 +81,7 @@ export default function EBoardTraining() {
     <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 via-transparent to-purple-600/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 via-transparent to-purple-600/10 pointer-events-none" />
         <div className="container mx-auto px-4 py-8">
           <Link 
             to="/dashboard" 

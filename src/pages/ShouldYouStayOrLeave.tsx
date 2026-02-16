@@ -786,7 +786,7 @@ export default function ShouldYouStayOrLeave() {
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/20">
       {/* Hero Section */}
       <div className="relative overflow-hidden bg-gradient-to-r from-red-900/20 via-amber-900/20 to-orange-900/20 border-b">
-        <div className="absolute inset-0 bg-grid-white/5" />
+        <div className="absolute inset-0 bg-grid-white/5 pointer-events-none" />
         <div className="container mx-auto px-4 py-12 relative">
           {/* Back to Dashboard */}
           <div className="flex items-center justify-between mb-6">
