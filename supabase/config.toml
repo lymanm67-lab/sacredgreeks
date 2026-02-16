@@ -155,3 +155,6 @@ verify_jwt = false
 
 [functions.rss]
 verify_jwt = false
+
+[functions.video-studio]
+verify_jwt = false

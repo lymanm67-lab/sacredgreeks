@@ -3524,9 +3524,14 @@ export type Database = {
           blocked_reason: string | null
           captions_text: string | null
           created_at: string
+          custom_prompt: string | null
           description: string | null
           id: string
           input_content_ids: string[] | null
+          is_custom_content: boolean
+          parent_request_id: string | null
+          provider: string
+          provider_model: string | null
           scene_plan_json: Json | null
           script_json: Json | null
           status: string
@@ -3537,14 +3542,20 @@ export type Database = {
           transcript_text: string | null
           updated_at: string
           user_id: string
+          version_number: number
         }
         Insert: {
           blocked_reason?: string | null
           captions_text?: string | null
           created_at?: string
+          custom_prompt?: string | null
           description?: string | null
           id?: string
           input_content_ids?: string[] | null
+          is_custom_content?: boolean
+          parent_request_id?: string | null
+          provider?: string
+          provider_model?: string | null
           scene_plan_json?: Json | null
           script_json?: Json | null
           status?: string
@@ -3555,14 +3566,20 @@ export type Database = {
           transcript_text?: string | null
           updated_at?: string
           user_id: string
+          version_number?: number
         }
         Update: {
           blocked_reason?: string | null
           captions_text?: string | null
           created_at?: string
+          custom_prompt?: string | null
           description?: string | null
           id?: string
           input_content_ids?: string[] | null
+          is_custom_content?: boolean
+          parent_request_id?: string | null
+          provider?: string
+          provider_model?: string | null
           scene_plan_json?: Json | null
           script_json?: Json | null
           status?: string
@@ -3573,8 +3590,17 @@ export type Database = {
           transcript_text?: string | null
           updated_at?: string
           user_id?: string
+          version_number?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "video_requests_parent_request_id_fkey"
+            columns: ["parent_request_id"]
+            isOneToOne: false
+            referencedRelation: "video_requests"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       video_suggestions: {
         Row: {
