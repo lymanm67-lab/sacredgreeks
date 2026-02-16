@@ -405,7 +405,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
           <Button variant="ghost" size="icon" onClick={onBack}><ArrowLeft className="w-5 h-5" /></Button>
           <div>
             <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
-              <Film className="w-5 h-5 text-primary" /> Video Studio
+              <Film className="w-5 h-5 text-primary" /> Studio Agent
             </h2>
             <p className="text-sm text-muted-foreground">Generate AI videos{isAdmin ? ' — Admin: custom content unlocked' : ' from approved PROOF content'}</p>
           </div>

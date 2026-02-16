@@ -74,7 +74,7 @@ export function WorkerHub({ onSelectWorker, onViewHistory, onViewShowcase, onVie
         <div className="flex gap-2 flex-wrap">
           {onViewVideoStudio && (
             <Button variant="outline" size="sm" onClick={onViewVideoStudio} className="gap-2">
-              <Film className="w-4 h-4" /> Video Studio
+              <Film className="w-4 h-4" /> Studio Agent
             </Button>
           )}
           {onViewShowcase && (
@@ -142,7 +142,7 @@ export function WorkerHub({ onSelectWorker, onViewHistory, onViewShowcase, onVie
                 <Film className="w-6 h-6 text-violet-600 dark:text-violet-400" />
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-foreground">PROOF Video Studio</h3>
+                <h3 className="font-semibold text-foreground">PROOF Studio Agent</h3>
                 <p className="text-sm text-muted-foreground">Generate AI videos from approved content</p>
               </div>
               <Button variant="outline" size="sm">Create</Button>
