@@ -238,6 +238,11 @@ export function StudioPromptHero({
                       <SelectItem value="shotstack">ShotStack</SelectItem>
                     </SelectContent>
                   </Select>
+                  {selectedProvider === 'puter' && (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      ⏱️ Note: Puter.js generation takes 1–3 minutes per video and processes in-browser, so keep the tab open during generation.
+                    </p>
+                  )}
                 </div>
                 <div className="space-y-1.5">
                   <Label className="text-sm font-medium">Model</Label>
@@ -429,6 +434,11 @@ export function StudioPromptHero({
                       <SelectItem value="shotstack">ShotStack</SelectItem>
                     </SelectContent>
                   </Select>
+                  {selectedProvider === 'puter' && (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      ⏱️ Note: Puter.js generation takes 1–3 minutes per video and processes in-browser, so keep the tab open during generation.
+                    </p>
+                  )}
                 </div>
                 {selectedProvider === 'replicate' && (
                   <div className="space-y-1.5">
