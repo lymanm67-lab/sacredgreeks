@@ -141,11 +141,41 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
 
   const handlePuterSignIn = async () => {
     try {
-      await window.puter.auth.signIn();
-      setPuterSignedIn(true);
-      toast({ title: 'Signed in to Puter', description: 'You can now generate videos.' });
+      // Open Puter sign-in in a new window manually to avoid popup blockers in iframes
+      const width = 600, height = 700;
+      const left = window.screenX + (window.innerWidth - width) / 2;
+      const top = window.screenY + (window.innerHeight - height) / 2;
+      const authWindow = window.open(
+        'https://puter.com/login',
+        'puter-auth',
+        `width=${width},height=${height},left=${left},top=${top},toolbar=no,menubar=no`
+      );
+      if (!authWindow) {
+        toast({ title: 'Popup blocked', description: 'Please allow popups for this site, or open the published app directly to sign in to Puter.', variant: 'destructive' });
+        return;
+      }
+      // Poll for window close, then check auth
+      const pollInterval = setInterval(async () => {
+        if (authWindow.closed) {
+          clearInterval(pollInterval);
+          // After the user closes the login window, check if SDK picked up the session
+          if (window.puter?.auth?.isSignedIn?.()) {
+            setPuterSignedIn(true);
+            toast({ title: 'Signed in to Puter', description: 'You can now generate videos.' });
+          } else {
+            // Try calling signIn which may now work since user authenticated in browser
+            try {
+              await window.puter.auth.signIn();
+              setPuterSignedIn(true);
+              toast({ title: 'Signed in to Puter', description: 'You can now generate videos.' });
+            } catch {
+              toast({ title: 'Sign-in not detected', description: 'Please try again. Make sure you complete login on Puter.com.', variant: 'destructive' });
+            }
+          }
+        }
+      }, 1000);
     } catch {
-      toast({ title: 'Sign-in cancelled', description: 'You need a Puter.com account to generate videos.', variant: 'destructive' });
+      toast({ title: 'Sign-in failed', description: 'Could not open Puter login. Try the published app directly.', variant: 'destructive' });
     }
   };
 
