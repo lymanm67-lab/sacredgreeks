@@ -15,6 +15,12 @@ const SUGGESTIONS = [
   { label: '📖 Mini Teaching', prompt: 'Create a 2-minute mini teaching exploring the biblical perspective on fraternity rituals', template: 'mini_teaching' as const },
   { label: '🗣️ Conversation Prep', prompt: 'Create a conversation preparation video for talking to a friend about Greek life and faith', template: 'conversation_prep' as const },
   { label: '🙏 Weekly Devotional', prompt: 'Create a 60-second devotional connecting scripture to the Greek experience', template: 'weekly_devotional' as const },
+  { label: '🎓 New Member Testimony', prompt: 'Create a 90-second testimony video from a new member sharing their journey of faith and Greek life', template: 'new_member_testimony' as const },
+  { label: '📢 Social Media Reel', prompt: 'Create a 15-second eye-catching social media reel highlighting a key PROOF fact about Greek organizations', template: 'social_reel' as const },
+  { label: '🔥 Myth Buster', prompt: 'Create a 45-second myth-busting video debunking a common misconception about Greek life and Christianity', template: 'myth_buster' as const },
+  { label: '📚 Scripture Deep Dive', prompt: 'Create a 3-minute scripture deep dive examining what the Bible says about secret societies and covenant oaths', template: 'scripture_deep_dive' as const },
+  { label: '🤝 Chapter Workshop Intro', prompt: 'Create a 2-minute introductory video for a chapter workshop on aligning Greek values with biblical principles', template: 'workshop_intro' as const },
+  { label: '💡 Parent FAQ', prompt: 'Create a 2-minute FAQ video answering common questions parents have about Greek life and faith concerns', template: 'parent_faq' as const },
 ];
 
 const REPLICATE_MODELS = [
