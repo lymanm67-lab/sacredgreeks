@@ -129,6 +129,26 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [myVideos, setMyVideos] = useState<any[]>([]);
 
+  // Puter auth state
+  const [puterSignedIn, setPuterSignedIn] = useState(false);
+
+  // Check Puter sign-in status when SDK is ready
+  useEffect(() => {
+    if (puter.isReady && window.puter?.auth?.isSignedIn?.()) {
+      setPuterSignedIn(true);
+    }
+  }, [puter.isReady]);
+
+  const handlePuterSignIn = async () => {
+    try {
+      await window.puter.auth.signIn();
+      setPuterSignedIn(true);
+      toast({ title: 'Signed in to Puter', description: 'You can now generate videos.' });
+    } catch {
+      toast({ title: 'Sign-in cancelled', description: 'You need a Puter.com account to generate videos.', variant: 'destructive' });
+    }
+  };
+
   // Upload state
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
   const [uploadedImagePreview, setUploadedImagePreview] = useState<string | null>(null);
@@ -311,19 +331,12 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
       setStep('generate');
       try {
         // Ensure user is signed into Puter
-        if (!window.puter?.auth?.isSignedIn?.()) {
+        if (!puterSignedIn && !window.puter?.auth?.isSignedIn?.()) {
+          toast({ title: 'Puter sign-in required', description: 'Please click "Sign in to Puter" first, then try again.', variant: 'destructive' });
+          setIsLoading(false);
           setJobStatus(null);
           setStep('script');
-          try {
-            await window.puter.auth.signIn();
-          } catch {
-            toast({ title: 'Puter sign-in required', description: 'You need to sign in to your Puter.com account to generate videos.', variant: 'destructive' });
-            setIsLoading(false);
-            return;
-          }
-          // Re-enter generation after sign-in
-          setJobStatus('generating');
-          setStep('generate');
+          return;
         }
 
         // Build a combined prompt from the script data
@@ -523,6 +536,8 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
             onSceneCountChange={setSceneCount}
             outputDimensions={outputDimensions}
             onOutputDimensionsChange={setOutputDimensions}
+            puterSignedIn={puterSignedIn}
+            onPuterSignIn={handlePuterSignIn}
           />
 
           {/* Demo Overview - shown in demo mode */}
