@@ -103,7 +103,7 @@ export function StudioPromptHero({
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
-            FocusOS™ Studio Agent
+            Sacred Studio Agent
           </h1>
           <p className="text-muted-foreground text-sm mt-1">
             Create multi-scene videos with AI-powered storyboarding
