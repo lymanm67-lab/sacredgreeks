@@ -14,6 +14,7 @@ import { StudioGenerationProgress } from './studio/StudioGenerationProgress';
 import { StudioLibrary } from './studio/StudioLibrary';
 import { StudioContentPicker } from './studio/StudioContentPicker';
 import { StudioDemoOverview } from './studio/StudioDemoOverview';
+import { usePuter } from '@/hooks/usePuter';
 
 // Demo data for showcase when demo mode is active
 const DEMO_VIDEOS = [
@@ -86,7 +87,7 @@ const DEMO_VIDEOS = [
 ];
 
 type TemplateType = 'objection_short' | 'mini_teaching' | 'conversation_prep' | 'weekly_devotional' | 'custom';
-type ProviderType = 'runway' | 'replicate' | 'shotstack';
+type ProviderType = 'runway' | 'replicate' | 'shotstack' | 'puter';
 type GenerationMode = 'text_to_video' | 'image_to_video' | 'video_upload' | 'generate_image';
 type Step = 'prompt' | 'content' | 'script' | 'generate' | 'library';
 
@@ -98,6 +99,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
   const { user } = useAuth();
   const { toast } = useToast();
   const { isDemoMode } = useDemoMode();
+  const puter = usePuter();
 
   // Flow state
   const [step, setStep] = useState<Step>('prompt');
@@ -111,7 +113,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
   const [pendingTemplate, setPendingTemplate] = useState<TemplateType | null>(null);
 
   // Provider
-  const [selectedProvider, setSelectedProvider] = useState<ProviderType>('shotstack');
+  const [selectedProvider, setSelectedProvider] = useState<ProviderType>('puter');
   const [selectedModel, setSelectedModel] = useState('minimax/video-01-live');
   const [sceneCount, setSceneCount] = useState('6');
   const [outputDimensions, setOutputDimensions] = useState('1920x1080');
@@ -302,6 +304,63 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
       return;
     }
 
+    // === PUTER CLIENT-SIDE GENERATION ===
+    if (selectedProvider === 'puter') {
+      setIsLoading(true);
+      setJobStatus('generating');
+      setStep('generate');
+      try {
+        // Build a combined prompt from the script data
+        const sceneTexts = scriptEntries.map((s: any) => s.narration || s.visual || '').filter(Boolean);
+        const videoPrompt = sceneTexts.length > 0
+          ? sceneTexts.join('. ')
+          : scriptData?.title || prompt;
+
+        const truncatedPrompt = videoPrompt.slice(0, 500);
+        
+        let result;
+        if (generationMode === 'image_to_video' && uploadedImageUrl) {
+          result = await puter.generateImageToVideo(uploadedImageUrl, truncatedPrompt);
+        } else {
+          result = await puter.generateVideo(truncatedPrompt);
+        }
+
+        // Upload to Supabase storage
+        setJobStatus('uploading');
+        const fileName = `puter-${Date.now()}.mp4`;
+        const filePath = `${user!.id}/${fileName}`;
+        const { error: uploadError } = await supabase.storage
+          .from('proof-videos')
+          .upload(filePath, result.blob, { contentType: 'video/mp4', upsert: true });
+
+        if (uploadError) throw uploadError;
+
+        const { data: urlData } = supabase.storage.from('proof-videos').getPublicUrl(filePath);
+        const finalUrl = urlData.publicUrl;
+
+        // Update the video_request record
+        await supabase.from('video_requests').update({
+          status: 'completed',
+          video_url: finalUrl,
+          provider: 'puter',
+        }).eq('id', videoRequest.id);
+
+        setVideoUrl(finalUrl);
+        setJobStatus('completed');
+        toast({ title: '🎬 Video Ready!' });
+
+        // Clean up object URL
+        URL.revokeObjectURL(result.objectUrl);
+      } catch (e) {
+        setJobStatus('failed');
+        toast({ title: 'Video generation failed', description: e instanceof Error ? e.message : 'Failed', variant: 'destructive' });
+      } finally {
+        setIsLoading(false);
+      }
+      return;
+    }
+
+    // === EXISTING SERVER-SIDE PROVIDERS ===
     setIsLoading(true);
     setJobStatus('submitting');
     try {
