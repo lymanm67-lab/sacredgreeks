@@ -321,6 +321,8 @@ export function StudioPromptHero({
                   onClick={() => {
                     const built = `Create a video about "${topicTitle}"${audience ? ` for ${audience}` : ''}${tone ? ` in a ${tone} tone` : ''}${additionalNotes ? `. Notes: ${additionalNotes}` : ''}`;
                     onPromptChange(built);
+                    // Trigger actual AI generation after setting the prompt
+                    setTimeout(() => onGenerate(), 50);
                   }}
                 >
                   <Wand2 className="w-4 h-4" />
