@@ -111,7 +111,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
   const [pendingTemplate, setPendingTemplate] = useState<TemplateType | null>(null);
 
   // Provider
-  const [selectedProvider, setSelectedProvider] = useState<ProviderType>('runway');
+  const [selectedProvider, setSelectedProvider] = useState<ProviderType>('replicate');
   const [selectedModel, setSelectedModel] = useState('minimax/video-01-live');
 
   // Content selection

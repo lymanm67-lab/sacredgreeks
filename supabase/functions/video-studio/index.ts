@@ -65,6 +65,14 @@ const REPLICATE_MODELS: Record<string, { version: string; label: string }> = {
     version: 'luma/ray',
     label: 'Luma Ray',
   },
+  'kling-ai/kling-video': {
+    version: 'kling-ai/kling-video',
+    label: 'Kling Video',
+  },
+  'stability-ai/stable-video-diffusion': {
+    version: 'stability-ai/stable-video-diffusion',
+    label: 'Stable Video Diffusion',
+  },
 };
 
 // ===== PROVIDER ADAPTER INTERFACE =====
