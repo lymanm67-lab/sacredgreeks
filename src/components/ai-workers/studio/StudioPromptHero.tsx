@@ -75,6 +75,8 @@ interface StudioPromptHeroProps {
   onSceneCountChange?: (count: string) => void;
   outputDimensions?: string;
   onOutputDimensionsChange?: (dims: string) => void;
+  puterSignedIn?: boolean;
+  onPuterSignIn?: () => void;
 }
 
 export function StudioPromptHero({
@@ -84,6 +86,7 @@ export function StudioPromptHero({
   onShowLibrary, onShowAdmin,
   sceneCount = '6', onSceneCountChange,
   outputDimensions = '1920x1080', onOutputDimensionsChange,
+  puterSignedIn, onPuterSignIn,
 }: StudioPromptHeroProps) {
   const [selectedTemplate, setSelectedTemplate] = useState<string>('');
   const [showSteps, setShowSteps] = useState(false);
@@ -239,9 +242,19 @@ export function StudioPromptHero({
                     </SelectContent>
                   </Select>
                   {selectedProvider === 'puter' && (
-                    <p className="text-xs text-muted-foreground mt-1">
-                      ⏱️ Note: Puter.js generation takes 1–3 minutes per video and processes in-browser, so keep the tab open during generation.
-                    </p>
+                    <div className="mt-2 space-y-2">
+                      {!puterSignedIn && (
+                        <Button size="sm" variant="outline" onClick={onPuterSignIn} className="w-full">
+                          🔑 Sign in to Puter.com
+                        </Button>
+                      )}
+                      {puterSignedIn && (
+                        <p className="text-xs text-primary">✅ Signed in to Puter — ready to generate</p>
+                      )}
+                      <p className="text-xs text-muted-foreground">
+                        ⏱️ Note: Puter.js generation takes 1–3 minutes per video and processes in-browser, so keep the tab open during generation.
+                      </p>
+                    </div>
                   )}
                 </div>
                 <div className="space-y-1.5">
@@ -435,9 +448,19 @@ export function StudioPromptHero({
                     </SelectContent>
                   </Select>
                   {selectedProvider === 'puter' && (
-                    <p className="text-xs text-muted-foreground mt-1">
-                      ⏱️ Note: Puter.js generation takes 1–3 minutes per video and processes in-browser, so keep the tab open during generation.
-                    </p>
+                    <div className="mt-2 space-y-2">
+                      {!puterSignedIn && (
+                        <Button size="sm" variant="outline" onClick={onPuterSignIn} className="w-full">
+                          🔑 Sign in to Puter.com
+                        </Button>
+                      )}
+                      {puterSignedIn && (
+                        <p className="text-xs text-primary">✅ Signed in to Puter — ready to generate</p>
+                      )}
+                      <p className="text-xs text-muted-foreground">
+                        ⏱️ Note: Puter.js generation takes 1–3 minutes per video and processes in-browser, so keep the tab open during generation.
+                      </p>
+                    </div>
                   )}
                 </div>
                 {selectedProvider === 'replicate' && (
