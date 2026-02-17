@@ -112,7 +112,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
 
   // Provider
   const [selectedProvider, setSelectedProvider] = useState<ProviderType>('replicate');
-  const [selectedModel, setSelectedModel] = useState('luma/ray');
+  const [selectedModel, setSelectedModel] = useState('minimax/video-01-live');
   const [sceneCount, setSceneCount] = useState('6');
 
   // Content selection

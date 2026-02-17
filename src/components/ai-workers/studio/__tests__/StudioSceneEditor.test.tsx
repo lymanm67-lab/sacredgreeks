@@ -20,7 +20,7 @@ const mockScriptData = {
 const mockVideoRequest = {
   id: 'req-1',
   provider: 'replicate',
-  provider_model: 'luma/ray',
+  provider_model: 'minimax/video-01-live',
 };
 
 const defaultProps = {
@@ -46,7 +46,7 @@ describe('StudioSceneEditor', () => {
 
   it('renders model badge', () => {
     render(<StudioSceneEditor {...defaultProps} />);
-    expect(screen.getByText('luma/ray')).toBeInTheDocument();
+    expect(screen.getByText('minimax/video-01-live')).toBeInTheDocument();
   });
 
   it('renders Back button and calls onBack', () => {
