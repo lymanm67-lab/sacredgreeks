@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { ArrowLeft, Video } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -553,6 +553,17 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
               supabase.from('video_requests').select('*').eq('user_id', user.id)
                 .order('created_at', { ascending: false })
                 .then(({ data }) => setMyVideos(data || []));
+            }
+          }}
+          onViewVideo={(video) => {
+            if (video.video_url) {
+              setVideoUrl(video.video_url);
+              setScriptData(video.script_json || null);
+              setVideoRequest(video);
+              setJobStatus('completed');
+              setStep('generate');
+            } else {
+              toast({ title: 'No video available', description: 'This video has not finished generating yet.', variant: 'destructive' });
             }
           }}
         />

@@ -201,6 +201,43 @@ class ReplicateProvider implements VideoProvider {
   }
 }
 
+// ===== IMAGE GENERATION FOR SCENES =====
+async function generateSceneImage(visual: string, supabaseUrl: string, serviceKey: string): Promise<string | null> {
+  try {
+    const openaiKey = Deno.env.get('OPENAI_API_KEY');
+    if (!openaiKey) return null;
+
+    // Use Lovable AI (Gemini) to generate a photorealistic image
+    const imagePrompt = `Photorealistic, cinematic still frame for a short-form video scene. Scene description: ${visual}. Style: dramatic lighting, vibrant colors, 9:16 vertical aspect ratio, professional quality.`;
+    
+    const response = await fetch('https://api.lovable.dev/v1/images/generations', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${Deno.env.get('LOVABLE_API_KEY') || openaiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'google/gemini-3-pro-image-preview',
+        prompt: imagePrompt,
+        n: 1,
+        size: '768x1344',
+      }),
+    });
+
+    if (!response.ok) {
+      console.log('[SCENE-IMAGE] Image gen failed:', response.status);
+      return null;
+    }
+    
+    const data = await response.json();
+    const imageUrl = data?.data?.[0]?.url;
+    return imageUrl || null;
+  } catch (e) {
+    console.log('[SCENE-IMAGE] Error generating image:', e);
+    return null;
+  }
+}
+
 // ===== SHOTSTACK PROVIDER =====
 class ShotStackProvider implements VideoProvider {
   private apiKey: string;
@@ -213,40 +250,76 @@ class ShotStackProvider implements VideoProvider {
   async submitJob(prompt: string, options: Record<string, any>) {
     // Build a ShotStack Edit timeline from the scene plan
     const scenes = options.scenes || [];
-    const clips: any[] = [];
+    const imageTrackClips: any[] = [];
+    const textTrackClips: any[] = [];
     let currentStart = 0;
+
+    // Royalty-free background music from ShotStack's stock library
+    const backgroundMusicUrl = 'https://shotstack-assets.s3.ap-southeast-2.amazonaws.com/music/unminus/ambisax.mp3';
 
     if (scenes.length > 0) {
       // Build clips from scene plan
       for (const scene of scenes) {
         const durationSec = parseInt(scene.duration) || 5;
-        const clip: any = {
-          asset: {
-            type: 'html',
-            html: `<div style="padding:40px;color:white;font-family:sans-serif;font-size:36px;text-align:center;background:linear-gradient(135deg,#1a1a2e,#16213e);width:100%;height:100%;display:flex;align-items:center;justify-content:center;">${scene.textOverlay || scene.visual || ''}</div>`,
-            width: 720,
-            height: 1280,
-          },
-          start: currentStart,
-          length: durationSec,
-          effect: 'zoomIn',
-        };
-
-        // If scene has an image URL, use image asset instead
+        
+        // Image/background clip
         if (scene.imageUrl) {
-          clip.asset = {
-            type: 'image',
-            src: scene.imageUrl,
-          };
-          clip.fit = 'cover';
+          // Scene already has an image URL (e.g., user-uploaded)
+          imageTrackClips.push({
+            asset: { type: 'image', src: scene.imageUrl },
+            start: currentStart,
+            length: durationSec,
+            fit: 'cover',
+            effect: 'slowZoomIn',
+            transition: { in: 'fade', out: 'fade' },
+          });
+        } else {
+          // Use a gradient background card
+          const bgColors = [
+            'linear-gradient(135deg,#0f0c29,#302b63,#24243e)',
+            'linear-gradient(135deg,#1a1a2e,#16213e,#0f3460)',
+            'linear-gradient(135deg,#141E30,#243B55)',
+            'linear-gradient(135deg,#0D1117,#161B22,#21262D)',
+            'linear-gradient(135deg,#1B1B3A,#2D2D5E)',
+          ];
+          const bgColor = bgColors[(scene.sceneNumber || 1) % bgColors.length];
+          
+          imageTrackClips.push({
+            asset: {
+              type: 'html',
+              html: `<div style="width:100%;height:100%;background:${bgColor};"></div>`,
+              width: 720,
+              height: 1280,
+            },
+            start: currentStart,
+            length: durationSec,
+            effect: 'zoomIn',
+            transition: { in: 'fade', out: 'fade' },
+          });
         }
 
-        clips.push(clip);
+        // Text overlay clip (on a higher track so it appears on top)
+        const overlayText = scene.textOverlay || scene.visual || '';
+        if (overlayText) {
+          textTrackClips.push({
+            asset: {
+              type: 'html',
+              html: `<div style="padding:60px 40px;color:white;font-family:'Arial',sans-serif;font-size:42px;font-weight:bold;text-align:center;width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-shadow:2px 2px 8px rgba(0,0,0,0.8);background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,0.7) 100%);">${overlayText}</div>`,
+              width: 720,
+              height: 1280,
+            },
+            start: currentStart,
+            length: durationSec,
+            effect: 'zoomIn',
+            transition: { in: 'fade' },
+          });
+        }
+
         currentStart += durationSec;
       }
     } else {
       // Fallback: single title card from prompt
-      clips.push({
+      imageTrackClips.push({
         asset: {
           type: 'html',
           html: `<div style="padding:40px;color:white;font-family:sans-serif;font-size:36px;text-align:center;background:linear-gradient(135deg,#1a1a2e,#16213e);width:100%;height:100%;display:flex;align-items:center;justify-content:center;">${prompt.slice(0, 200)}</div>`,
@@ -260,12 +333,9 @@ class ShotStackProvider implements VideoProvider {
     }
 
     // If an input image is provided, use it as background
-    if (options.imageUrl && clips.length <= 1) {
-      clips[0] = {
-        asset: {
-          type: 'image',
-          src: options.imageUrl,
-        },
+    if (options.imageUrl && imageTrackClips.length <= 1) {
+      imageTrackClips[0] = {
+        asset: { type: 'image', src: options.imageUrl },
         start: 0,
         length: options.duration || 10,
         fit: 'cover',
@@ -273,13 +343,21 @@ class ShotStackProvider implements VideoProvider {
       };
     }
 
+    // Build tracks - text overlay on top, images below
+    const tracks: any[] = [];
+    if (textTrackClips.length > 0) {
+      tracks.push({ clips: textTrackClips });
+    }
+    tracks.push({ clips: imageTrackClips });
+
     const timeline: any = {
-      soundtrack: options.soundtrackUrl ? {
-        src: options.soundtrackUrl,
-        effect: 'fadeOut',
-      } : undefined,
+      soundtrack: {
+        src: options.soundtrackUrl || backgroundMusicUrl,
+        effect: 'fadeInFadeOut',
+        volume: 0.6,
+      },
       background: '#000000',
-      tracks: [{ clips }],
+      tracks,
     };
 
     const editPayload: any = {
@@ -294,6 +372,8 @@ class ShotStackProvider implements VideoProvider {
         },
       },
     };
+
+    console.log('[SHOTSTACK] Submitting render with', imageTrackClips.length, 'scene clips,', textTrackClips.length, 'text overlays, soundtrack enabled');
 
     const baseUrl = `https://api.shotstack.io/${this.env}`;
     const res = await fetch(`${baseUrl}/render`, {
