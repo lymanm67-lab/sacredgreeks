@@ -17,7 +17,7 @@ const TONE_OPTIONS = [
 ];
 
 type GenerationMode = 'text_to_video' | 'image_to_video' | 'video_upload' | 'generate_image';
-type ProviderType = 'runway' | 'replicate' | 'shotstack';
+type ProviderType = 'runway' | 'replicate' | 'shotstack' | 'puter';
 type StudioView = 'storyboard' | 'create_video' | 'image_to_video' | 'upload_edit' | 'ai_images' | 'library' | 'admin';
 
 const SUGGESTIONS = [
@@ -232,6 +232,7 @@ export function StudioPromptHero({
                   <Select value={selectedProvider} onValueChange={(v: ProviderType) => onProviderChange(v)}>
                     <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="puter">Puter / Wan AI (Free)</SelectItem>
                       <SelectItem value="replicate">Replicate</SelectItem>
                       <SelectItem value="runway">Runway Gen-4</SelectItem>
                       <SelectItem value="shotstack">ShotStack</SelectItem>
@@ -422,6 +423,7 @@ export function StudioPromptHero({
                   <Select value={selectedProvider} onValueChange={(v: ProviderType) => onProviderChange(v)}>
                     <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="puter">Puter / Wan AI (Free)</SelectItem>
                       <SelectItem value="runway">Runway Gen-4</SelectItem>
                       <SelectItem value="replicate">Replicate</SelectItem>
                       <SelectItem value="shotstack">ShotStack</SelectItem>
