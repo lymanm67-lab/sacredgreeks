@@ -22,6 +22,7 @@ interface VideoStudioRequest {
   videoUrl?: string;
   title?: string;
   description?: string;
+  outputDimensions?: string; // e.g. '1080x1920', '1920x1080', '1080x1080'
   // Image generation fields
   imagePrompt?: string;
   imageModel?: 'fast' | 'quality';
@@ -288,6 +289,18 @@ class ShotStackProvider implements VideoProvider {
     this.env = env;
   }
 
+  private parseDimensions(ratio: string): { aspectRatio: string; size: { width: number; height: number } } {
+    const [w, h] = ratio.split(':').map(Number);
+    const width = w || 720;
+    const height = h || 1280;
+    // Derive aspect ratio label
+    const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+    const g = gcd(width, height);
+    const arW = width / g;
+    const arH = height / g;
+    return { aspectRatio: `${arW}:${arH}`, size: { width, height } };
+  }
+
   async submitJob(prompt: string, options: Record<string, any>) {
     const scenes = options.scenes || [];
     const scriptEntries = options.scriptEntries || [];
@@ -412,8 +425,7 @@ class ShotStackProvider implements VideoProvider {
       timeline,
       output: {
         format: 'mp4', resolution: 'hd',
-        aspectRatio: options.ratio === '1920:1080' ? '16:9' : '9:16',
-        size: { width: options.ratio === '1920:1080' ? 1920 : 720, height: options.ratio === '1920:1080' ? 1080 : 1280 },
+        ...this.parseDimensions(options.ratio || '720:1280'),
       },
     };
 
@@ -826,8 +838,13 @@ Generate the complete script with scene plan, captions, and metadata.`;
         const scenes = (vr.scene_plan_json as any[]) || [];
         const scriptEntries = (script?.script as any[]) || [];
         console.log('[VIDEO-STUDIO] Submitting to', providerName, 'with', scenes.length, 'scenes,', scriptEntries.length, 'script entries');
+        // Parse output dimensions from request
+        const outputDims = (body as any).outputDimensions || '1080x1920';
+        const [dimW, dimH] = outputDims.split('x').map(Number);
+        const ratio = `${dimW || 720}:${dimH || 1280}`;
+
         const { jobId: providerJobId, rawResponse } = await provider.submitJob(textPrompt, {
-          ratio: '720:1280',
+          ratio,
           duration: 10,
           imageUrl: vr.input_image_url || undefined,
           scenes,
