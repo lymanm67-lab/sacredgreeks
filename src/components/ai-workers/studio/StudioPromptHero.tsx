@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { Sparkles, Film, ImageIcon, Upload, FileText, Wand2, ChevronDown, ChevronUp, Settings2, Loader2 } from 'lucide-react';
+import { Sparkles, Film, ImageIcon, Upload, FileText, Wand2, Settings2, Loader2, LayoutGrid } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
 
 type GenerationMode = 'text_to_video' | 'image_to_video' | 'video_upload' | 'generate_image';
 type ProviderType = 'runway' | 'replicate' | 'shotstack';
@@ -39,155 +41,207 @@ export function StudioPromptHero({
   onGenerate, isLoading, isAdmin,
   selectedProvider, onProviderChange, selectedModel, onModelChange,
 }: StudioPromptHeroProps) {
-  const [showSettings, setShowSettings] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState<string>('');
 
-  const modes = [
-    { mode: 'text_to_video' as GenerationMode, label: 'Text → Video', icon: FileText, active: true },
-    { mode: 'image_to_video' as GenerationMode, label: 'Image → Video', icon: ImageIcon, active: true },
-    { mode: 'generate_image' as GenerationMode, label: 'AI Thumbnails', icon: Wand2, active: true },
-    { mode: 'video_upload' as GenerationMode, label: 'Upload', icon: Upload, active: true },
+  const tabs = [
+    { mode: 'text_to_video' as GenerationMode, label: 'Create Video', icon: Film },
+    { mode: 'image_to_video' as GenerationMode, label: 'Image to Video', icon: ImageIcon },
+    { mode: 'video_upload' as GenerationMode, label: 'Upload & Edit', icon: Upload },
+    { mode: 'generate_image' as GenerationMode, label: 'AI Images', icon: Wand2 },
   ];
 
-  return (
-    <div className="relative">
-      {/* Ambient glow */}
-      <div className="absolute inset-0 -z-10 overflow-hidden rounded-3xl">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-gradient-to-r from-primary/10 via-accent/10 to-primary/5 rounded-full blur-3xl" />
-      </div>
+  const handleTemplateSelect = (value: string) => {
+    setSelectedTemplate(value);
+    const suggestion = SUGGESTIONS.find(s => s.template === value);
+    if (suggestion) {
+      onPromptChange(suggestion.prompt);
+    }
+  };
 
-      <div className="text-center space-y-6 py-8 px-4">
-        {/* Title */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-center gap-2">
-            <Film className="w-8 h-8 text-primary" />
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
-              Studio Agent
-            </h1>
-          </div>
-          <p className="text-muted-foreground text-sm max-w-md mx-auto">
-            Turn any idea into a video, thumbnail, or animation — powered by AI
+  return (
+    <div className="space-y-5">
+      {/* Header row */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
+            Studio Agent
+          </h1>
+          <p className="text-muted-foreground text-sm mt-1">
+            Create multi-scene videos with AI-powered storyboarding
           </p>
         </div>
-
-        {/* Mode pills */}
-        <div className="flex items-center justify-center gap-2 flex-wrap">
-          {modes.map(m => (
-            <button
-              key={m.mode}
-              onClick={() => onModeChange(m.mode)}
-              className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                generationMode === m.mode
-                  ? 'bg-primary text-primary-foreground shadow-md shadow-primary/25'
-                  : 'bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground'
-              }`}
-            >
-              <m.icon className="w-4 h-4" />
-              {m.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Main prompt area */}
-        {generationMode !== 'video_upload' && (
-          <div className="max-w-2xl mx-auto space-y-3">
-            <div className="relative">
-              <Textarea
-                placeholder={
-                  generationMode === 'generate_image'
-                    ? "Describe the image you want... e.g. 'A photorealistic Greek temple at sunset with dramatic lighting, 16:9'"
-                    : generationMode === 'image_to_video'
-                    ? "Describe the motion you want... e.g. 'Slow zoom in, clouds drifting, warm golden light'"
-                    : "Describe the video you want to create..."
-                }
-                value={prompt}
-                onChange={e => onPromptChange(e.target.value)}
-                rows={3}
-                className="text-base rounded-2xl border-2 border-border/50 bg-card/80 backdrop-blur-sm focus:border-primary/50 resize-none pr-28 shadow-sm"
-              />
-              <Button
-                disabled={!prompt.trim() || isLoading}
-                onClick={() => onGenerate()}
-                size="lg"
-                className="absolute bottom-3 right-3 rounded-xl gap-2 shadow-lg"
-              >
-                {isLoading ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  <Sparkles className="w-4 h-4" />
-                )}
-                {generationMode === 'generate_image' ? 'Generate' : 'Create'}
-              </Button>
-            </div>
-
-            {/* Suggestion chips */}
-            {generationMode === 'text_to_video' && (
-              <div className="flex flex-wrap items-center justify-center gap-2">
-                <span className="text-xs text-muted-foreground">Try:</span>
-                {SUGGESTIONS.map((s, i) => (
-                  <button
-                    key={i}
-                    onClick={() => {
-                      onPromptChange(s.prompt);
-                      onGenerate(s.template);
-                    }}
-                    className="text-xs px-3 py-1.5 rounded-full bg-card border border-border/50 text-muted-foreground hover:text-foreground hover:border-primary/30 hover:bg-primary/5 transition-all"
-                  >
-                    {s.label}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+        {isAdmin && (
+          <Badge variant="outline" className="text-xs bg-primary/10 text-primary border-primary/30 shrink-0">
+            <Settings2 className="w-3 h-3 mr-1" /> Admin
+          </Badge>
         )}
+      </div>
 
-        {/* Settings toggle */}
-        {generationMode !== 'video_upload' && generationMode !== 'generate_image' && (
-          <div className="max-w-2xl mx-auto">
-            <button
-              onClick={() => setShowSettings(!showSettings)}
-              className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <Settings2 className="w-3 h-3" />
-              Settings
-              {showSettings ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-            </button>
+      {/* Tab navigation */}
+      <div className="flex items-center gap-1 border-b border-border/50 overflow-x-auto">
+        {tabs.map(t => (
+          <button
+            key={t.mode}
+            onClick={() => onModeChange(t.mode)}
+            className={`inline-flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
+              generationMode === t.mode
+                ? 'border-primary text-foreground'
+                : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
+            }`}
+          >
+            <t.icon className="w-4 h-4" />
+            {t.label}
+          </button>
+        ))}
+      </div>
 
-            {showSettings && (
-              <div className="mt-3 p-4 rounded-xl bg-card border border-border/50 flex items-center gap-3 flex-wrap justify-center">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-muted-foreground">Provider:</span>
-                  <Select value={selectedProvider} onValueChange={(v: ProviderType) => onProviderChange(v)}>
-                    <SelectTrigger className="w-[160px] h-8 text-xs"><SelectValue /></SelectTrigger>
+      {/* Main content card */}
+      {generationMode !== 'video_upload' && (
+        <div className="rounded-xl border border-border/60 bg-card p-6 space-y-5">
+          {/* Card header */}
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              {generationMode === 'generate_image' ? (
+                <Wand2 className="w-5 h-5 text-primary" />
+              ) : (
+                <Film className="w-5 h-5 text-primary" />
+              )}
+              <h2 className="text-lg font-semibold text-foreground">
+                {generationMode === 'generate_image' ? 'Generate Image' : 'Create Your Video'}
+              </h2>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              {generationMode === 'generate_image'
+                ? 'Describe the image you want and AI will generate it.'
+                : 'Describe your video idea and AI will generate a full multi-scene storyboard.'}
+            </p>
+          </div>
+
+          {/* Form fields row */}
+          {generationMode === 'text_to_video' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <Label className="text-sm font-medium">Quick Start Template</Label>
+                <Select value={selectedTemplate} onValueChange={handleTemplateSelect}>
+                  <SelectTrigger className="h-10">
+                    <SelectValue placeholder="Choose a template or start from scratch..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {SUGGESTIONS.map(s => (
+                      <SelectItem key={s.template} value={s.template}>{s.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-sm font-medium">Provider</Label>
+                <Select value={selectedProvider} onValueChange={(v: ProviderType) => onProviderChange(v)}>
+                  <SelectTrigger className="h-10">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="runway">Runway Gen-4</SelectItem>
+                    <SelectItem value="replicate">Replicate</SelectItem>
+                    <SelectItem value="shotstack">ShotStack</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          )}
+
+          {/* Model selector for replicate */}
+          {generationMode === 'text_to_video' && selectedProvider === 'replicate' && (
+            <div className="space-y-1.5">
+              <Label className="text-sm font-medium">Model</Label>
+              <Select value={selectedModel} onValueChange={onModelChange}>
+                <SelectTrigger className="h-10">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {REPLICATE_MODELS.map(m => (
+                    <SelectItem key={m.id} value={m.id}>{m.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+
+          {/* Image-to-video provider settings */}
+          {generationMode === 'image_to_video' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <Label className="text-sm font-medium">Provider</Label>
+                <Select value={selectedProvider} onValueChange={(v: ProviderType) => onProviderChange(v)}>
+                  <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="runway">Runway Gen-4</SelectItem>
+                    <SelectItem value="replicate">Replicate</SelectItem>
+                    <SelectItem value="shotstack">ShotStack</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              {selectedProvider === 'replicate' && (
+                <div className="space-y-1.5">
+                  <Label className="text-sm font-medium">Model</Label>
+                  <Select value={selectedModel} onValueChange={onModelChange}>
+                    <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="runway">Runway Gen-4</SelectItem>
-                      <SelectItem value="replicate">Replicate</SelectItem>
-                      <SelectItem value="shotstack">ShotStack</SelectItem>
+                      {REPLICATE_MODELS.map(m => (
+                        <SelectItem key={m.id} value={m.id}>{m.label}</SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
-                {selectedProvider === 'replicate' && (
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-muted-foreground">Model:</span>
-                    <Select value={selectedModel} onValueChange={onModelChange}>
-                      <SelectTrigger className="w-[200px] h-8 text-xs"><SelectValue /></SelectTrigger>
-                      <SelectContent>
-                        {REPLICATE_MODELS.map(m => (
-                          <SelectItem key={m.id} value={m.id}>{m.label}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                )}
-                {isAdmin && (
-                  <Badge variant="outline" className="text-xs bg-primary/5 text-primary border-primary/20">
-                    Admin: Custom Content Unlocked
-                  </Badge>
-                )}
-              </div>
-            )}
+              )}
+            </div>
+          )}
+
+          {/* Main prompt textarea */}
+          <div className="space-y-1.5">
+            <Label className="text-sm font-medium">
+              {generationMode === 'generate_image'
+                ? 'Image Description'
+                : generationMode === 'image_to_video'
+                ? 'Motion Description'
+                : 'Video Description'}
+            </Label>
+            <Textarea
+              placeholder={
+                generationMode === 'generate_image'
+                  ? "Describe the image you want... e.g. 'A photorealistic Greek temple at sunset with dramatic lighting, 16:9'"
+                  : generationMode === 'image_to_video'
+                  ? "Describe the motion you want... e.g. 'Slow zoom in, clouds drifting, warm golden light'"
+                  : "Describe your video: topic, audience, key points, tone, and any specific visuals you want..."
+              }
+              value={prompt}
+              onChange={e => onPromptChange(e.target.value)}
+              rows={4}
+              className="text-sm resize-none"
+            />
           </div>
-        )}
-      </div>
+
+          {/* Generate button */}
+          <Button
+            disabled={!prompt.trim() || isLoading}
+            onClick={() => {
+              if (selectedTemplate) {
+                onGenerate(selectedTemplate);
+              } else {
+                onGenerate();
+              }
+            }}
+            size="lg"
+            className="w-full gap-2 h-12 text-base"
+          >
+            {isLoading ? (
+              <Loader2 className="w-5 h-5 animate-spin" />
+            ) : (
+              <Sparkles className="w-5 h-5" />
+            )}
+            {generationMode === 'generate_image' ? 'Generate Image' : 'Generate Storyboard'}
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
