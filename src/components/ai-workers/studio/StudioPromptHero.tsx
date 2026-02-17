@@ -252,7 +252,7 @@ export function StudioPromptHero({
                         <p className="text-xs text-primary">✅ Signed in to Puter — ready to generate</p>
                       )}
                       <p className="text-xs text-muted-foreground">
-                        ⏱️ Note: Puter.js generation takes 1–3 minutes per video and processes in-browser, so keep the tab open during generation.
+                        ⏱️ Puter.js takes 1–3 min per video, in-browser — keep the tab open. If sign-in popup is blocked, try the published app directly.
                       </p>
                     </div>
                   )}
@@ -458,7 +458,7 @@ export function StudioPromptHero({
                         <p className="text-xs text-primary">✅ Signed in to Puter — ready to generate</p>
                       )}
                       <p className="text-xs text-muted-foreground">
-                        ⏱️ Note: Puter.js generation takes 1–3 minutes per video and processes in-browser, so keep the tab open during generation.
+                        ⏱️ Puter.js takes 1–3 min per video, in-browser — keep the tab open. If sign-in popup is blocked, try the published app directly.
                       </p>
                     </div>
                   )}
