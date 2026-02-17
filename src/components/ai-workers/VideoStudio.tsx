@@ -114,7 +114,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
   const [selectedProvider, setSelectedProvider] = useState<ProviderType>('shotstack');
   const [selectedModel, setSelectedModel] = useState('minimax/video-01-live');
   const [sceneCount, setSceneCount] = useState('6');
-  const [outputDimensions, setOutputDimensions] = useState('1080x1920');
+  const [outputDimensions, setOutputDimensions] = useState('1920x1080');
 
   // Content selection
   const [availableContent, setAvailableContent] = useState<any[]>([]);
