@@ -310,6 +310,22 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
       setJobStatus('generating');
       setStep('generate');
       try {
+        // Ensure user is signed into Puter
+        if (!window.puter?.auth?.isSignedIn?.()) {
+          setJobStatus(null);
+          setStep('script');
+          try {
+            await window.puter.auth.signIn();
+          } catch {
+            toast({ title: 'Puter sign-in required', description: 'You need to sign in to your Puter.com account to generate videos.', variant: 'destructive' });
+            setIsLoading(false);
+            return;
+          }
+          // Re-enter generation after sign-in
+          setJobStatus('generating');
+          setStep('generate');
+        }
+
         // Build a combined prompt from the script data
         const sceneTexts = scriptEntries.map((s: any) => s.narration || s.visual || '').filter(Boolean);
         const videoPrompt = sceneTexts.length > 0
