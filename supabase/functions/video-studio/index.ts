@@ -213,7 +213,7 @@ async function generateSceneImage(visual: string): Promise<string | null> {
     const response = await fetch('https://ai.gateway.lovable.dev/v1/images/generations', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${lovableKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'nano-banana-pro', prompt: imagePrompt, n: 1, size: '768x1344' }),
+      body: JSON.stringify({ model: 'google/gemini-3-pro-image-preview', prompt: imagePrompt, n: 1, size: '768x1344' }),
     });
 
     if (!response.ok) {
@@ -229,7 +229,7 @@ async function generateSceneImage(visual: string): Promise<string | null> {
   }
 }
 
-// ===== TTS NARRATION FOR SCENES (via ElevenLabs) =====
+// ===== TTS NARRATION FOR SCENES (via ElevenLabs with retry) =====
 async function generateNarrationAudio(text: string): Promise<string | null> {
   try {
     const elevenLabsKey = Deno.env.get('ELEVENLABS_API_KEY');
@@ -237,43 +237,58 @@ async function generateNarrationAudio(text: string): Promise<string | null> {
 
     const voiceId = 'onwK4e9ZLuTAKqWW03F9'; // Daniel voice
 
-    const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
-      method: 'POST',
-      headers: {
-        'xi-api-key': elevenLabsKey,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        text,
-        model_id: 'eleven_multilingual_v2',
-        voice_settings: { stability: 0.5, similarity_boost: 0.75, style: 0.3 },
-      }),
-    });
+    // Retry up to 3 times with backoff for rate limits
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
+        method: 'POST',
+        headers: {
+          'xi-api-key': elevenLabsKey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          text,
+          model_id: 'eleven_multilingual_v2',
+          voice_settings: { stability: 0.5, similarity_boost: 0.75, style: 0.3 },
+        }),
+      });
 
-    if (!response.ok) {
+      if (response.ok) {
+
+        // Upload audio to Supabase storage for a public URL
+        const audioBuffer = await response.arrayBuffer();
+        const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+        const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+        const sb = createClient(supabaseUrl, serviceKey);
+
+        const fileName = `tts-${crypto.randomUUID()}.mp3`;
+        const { error: uploadError } = await sb.storage
+          .from('proof-videos')
+          .upload(`tts/${fileName}`, new Uint8Array(audioBuffer), { contentType: 'audio/mpeg', upsert: true });
+
+        if (uploadError) {
+          console.log('[TTS] Upload error:', uploadError.message);
+          return null;
+        }
+
+        const { data: urlData } = sb.storage.from('proof-videos').getPublicUrl(`tts/${fileName}`);
+        console.log('[TTS] Generated narration:', urlData.publicUrl);
+        return urlData.publicUrl;
+      }
+
+      // Rate limited — wait and retry
+      if (response.status === 429) {
+        const waitMs = (attempt + 1) * 2000; // 2s, 4s, 6s
+        console.log(`[TTS] Rate limited (429), retrying in ${waitMs}ms (attempt ${attempt + 1}/3)`);
+        await new Promise(r => setTimeout(r, waitMs));
+        continue;
+      }
+
       console.log('[TTS] ElevenLabs failed:', response.status);
       return null;
     }
 
-    // Upload audio to Supabase storage for a public URL
-    const audioBuffer = await response.arrayBuffer();
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const sb = createClient(supabaseUrl, serviceKey);
-
-    const fileName = `tts-${crypto.randomUUID()}.mp3`;
-    const { error: uploadError } = await sb.storage
-      .from('proof-videos')
-      .upload(`tts/${fileName}`, new Uint8Array(audioBuffer), { contentType: 'audio/mpeg', upsert: true });
-
-    if (uploadError) {
-      console.log('[TTS] Upload error:', uploadError.message);
-      return null;
-    }
-
-    const { data: urlData } = sb.storage.from('proof-videos').getPublicUrl(`tts/${fileName}`);
-    console.log('[TTS] Generated narration:', urlData.publicUrl);
-    return urlData.publicUrl;
+    console.log('[TTS] All retries exhausted');
+    return null;
   } catch (e) {
     console.log('[TTS] Error:', e);
     return null;
@@ -467,7 +482,7 @@ function getProvider(providerName: string, model?: string): VideoProvider {
   if (providerName === 'shotstack') {
     const apiKey = Deno.env.get('SHOTSTACK_API_KEY');
     if (!apiKey) throw new Error('ShotStack API key not configured');
-    return new ShotStackProvider(apiKey, 'v1');
+    return new ShotStackProvider(apiKey, 'stage');
   }
   if (providerName === 'replicate') {
     const apiKey = Deno.env.get('REPLICATE_API_KEY');
