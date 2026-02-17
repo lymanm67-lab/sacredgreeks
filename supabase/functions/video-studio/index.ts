@@ -710,10 +710,13 @@ Generate the complete script with scene plan, captions, and metadata.`;
 
       try {
         const provider = getProvider(providerName, model);
+        const scenes = (vr.scene_plan_json as any[]) || [];
+        console.log('[VIDEO-STUDIO] Submitting to', providerName, 'with', scenes.length, 'scenes');
         const { jobId: providerJobId, rawResponse } = await provider.submitJob(textPrompt, {
           ratio: '720:1280',
           duration: 10,
           imageUrl: vr.input_image_url || undefined,
+          scenes, // Pass scene plan to ShotStack
         });
 
         const { data: job } = await supabase.from('video_jobs').insert({
