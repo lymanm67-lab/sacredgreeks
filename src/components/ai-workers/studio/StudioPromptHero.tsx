@@ -42,11 +42,11 @@ const SCENE_OPTIONS = [
 ];
 
 const DIMENSION_OPTIONS = [
-  { value: '1080x1920', label: '1080×1920 (9:16 Portrait)', description: 'Reels, Shorts, TikTok' },
   { value: '1920x1080', label: '1920×1080 (16:9 Landscape)', description: 'YouTube, Presentations' },
+  { value: '1080x1920', label: '1080×1920 (9:16 Portrait)', description: 'Reels, Shorts, TikTok' },
   { value: '1080x1080', label: '1080×1080 (1:1 Square)', description: 'Instagram, Facebook' },
-  { value: '720x1280', label: '720×1280 (9:16 HD)', description: 'Portrait HD' },
   { value: '1280x720', label: '1280×720 (16:9 HD)', description: 'Landscape HD' },
+  { value: '720x1280', label: '720×1280 (9:16 HD)', description: 'Portrait HD' },
   { value: '480x854', label: '480×854 (9:16 SD)', description: 'Fast render, smaller file' },
 ];
 
@@ -83,7 +83,7 @@ export function StudioPromptHero({
   selectedProvider, onProviderChange, selectedModel, onModelChange,
   onShowLibrary, onShowAdmin,
   sceneCount = '6', onSceneCountChange,
-  outputDimensions = '1080x1920', onOutputDimensionsChange,
+  outputDimensions = '1920x1080', onOutputDimensionsChange,
 }: StudioPromptHeroProps) {
   const [selectedTemplate, setSelectedTemplate] = useState<string>('');
   const [showSteps, setShowSteps] = useState(false);
