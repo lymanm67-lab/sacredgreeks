@@ -1,18 +1,26 @@
 import { useState, useMemo } from 'react';
-import { Film, Play, Plus, Youtube, CheckSquare, Square, SquareCheck, X, ListChecks } from 'lucide-react';
+import { Film, Play, Plus, Youtube, CheckSquare, Square, SquareCheck, X, ListChecks, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { YouTubeUploadDialog } from '@/components/youtube/YouTubeUploadDialog';
 import { BulkYouTubeUploadDialog } from '@/components/youtube/BulkYouTubeUploadDialog';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 interface StudioLibraryProps {
   videos: any[];
   onNewVideo: () => void;
+  onVideosChanged?: () => void;
 }
 
-export function StudioLibrary({ videos, onNewVideo }: StudioLibraryProps) {
+export function StudioLibrary({ videos, onNewVideo, onVideosChanged }: StudioLibraryProps) {
+  const { toast } = useToast();
   const [ytDialogOpen, setYtDialogOpen] = useState(false);
   const [ytVideo, setYtVideo] = useState<any>(null);
 
@@ -20,7 +28,7 @@ export function StudioLibrary({ videos, onNewVideo }: StudioLibraryProps) {
   const [bulkMode, setBulkMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [bulkDialogOpen, setBulkDialogOpen] = useState(false);
-
+  const [deleteTarget, setDeleteTarget] = useState<any>(null);
   // Only completed videos with a URL are eligible for YouTube upload
   const eligibleVideos = useMemo(
     () => videos.filter(v => v.status === 'completed' && v.video_url),
@@ -65,6 +73,18 @@ export function StudioLibrary({ videos, onNewVideo }: StudioLibraryProps) {
     () => videos.filter(v => selectedIds.has(v.id) && v.video_url),
     [videos, selectedIds]
   );
+
+  const handleDeleteVideo = async () => {
+    if (!deleteTarget) return;
+    const { error } = await supabase.from('video_requests').delete().eq('id', deleteTarget.id);
+    if (error) {
+      toast({ title: 'Delete failed', description: error.message, variant: 'destructive' });
+    } else {
+      toast({ title: 'Video deleted' });
+      onVideosChanged?.();
+    }
+    setDeleteTarget(null);
+  };
 
   return (
     <div className="space-y-4">
@@ -196,6 +216,14 @@ export function StudioLibrary({ videos, onNewVideo }: StudioLibraryProps) {
                             )}
                           </>
                         )}
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="gap-1 rounded-lg text-destructive hover:text-destructive"
+                          onClick={() => setDeleteTarget(v)}
+                        >
+                          <Trash2 className="w-3 h-3" /> Delete
+                        </Button>
                       </div>
                     )}
                   </div>
@@ -228,6 +256,22 @@ export function StudioLibrary({ videos, onNewVideo }: StudioLibraryProps) {
         }}
         videos={selectedVideos}
       />
+      <AlertDialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete video?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently delete "{deleteTarget?.title}". This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDeleteVideo} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
