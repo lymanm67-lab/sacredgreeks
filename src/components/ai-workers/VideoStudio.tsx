@@ -306,13 +306,19 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
         method: 'POST', headers: await getAuthHeader(),
         body: JSON.stringify({ action: 'submit_video', videoRequestId: videoRequest.id, provider: selectedProvider, providerModel: selectedProvider === 'replicate' ? selectedModel : undefined }),
       });
-      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || 'Failed');
+      if (!res.ok) {
+        const errBody = await res.json().catch(() => ({}));
+        const errMsg = errBody.error || errBody.details || 'Failed';
+        const isCredits = typeof errMsg === 'string' && errMsg.toLowerCase().includes('credits');
+        throw new Error(isCredits ? 'Your Runway account has no credits remaining. Please add credits at runway.dev or switch to Replicate/ShotStack.' : errMsg);
+      }
       setJobStatus('submitted');
       setStep('generate');
       pollJobStatus(videoRequest.id);
     } catch (e) {
       setJobStatus('failed');
-      toast({ title: 'Error', description: e instanceof Error ? e.message : 'Failed', variant: 'destructive' });
+      setStep('script'); // Go back to script editor instead of blank screen
+      toast({ title: 'Video generation failed', description: e instanceof Error ? e.message : 'Failed', variant: 'destructive' });
     } finally { setIsLoading(false); }
   };
 
