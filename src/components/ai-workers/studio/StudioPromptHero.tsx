@@ -325,8 +325,17 @@ export function StudioPromptHero({
                     setTimeout(() => onGenerate(), 50);
                   }}
                 >
-                  <Wand2 className="w-4 h-4" />
-                  Generate Script with AI
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      AI is writing your script...
+                    </>
+                  ) : (
+                    <>
+                      <Wand2 className="w-4 h-4" />
+                      Generate Script with AI
+                    </>
+                  )}
                 </Button>
               )}
 
