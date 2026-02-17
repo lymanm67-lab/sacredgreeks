@@ -1,10 +1,20 @@
 import { useState } from 'react';
-import { Sparkles, Film, ImageIcon, Upload, Wand2, Settings2, Loader2, LayoutGrid, Play, SkipBack, SkipForward, ListChecks, Library, ShieldCheck } from 'lucide-react';
+import { Sparkles, Film, ImageIcon, Upload, Wand2, Settings2, Loader2, LayoutGrid, Play, SkipBack, SkipForward, ListChecks, Library, ShieldCheck, Video, PenTool } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+
+const TONE_OPTIONS = [
+  { value: 'professional', label: 'Professional' },
+  { value: 'conversational', label: 'Conversational' },
+  { value: 'inspirational', label: 'Inspirational' },
+  { value: 'educational', label: 'Educational' },
+  { value: 'urgent', label: 'Urgent' },
+  { value: 'empathetic', label: 'Empathetic' },
+];
 
 type GenerationMode = 'text_to_video' | 'image_to_video' | 'video_upload' | 'generate_image';
 type ProviderType = 'runway' | 'replicate' | 'shotstack';
@@ -65,6 +75,12 @@ export function StudioPromptHero({
 }: StudioPromptHeroProps) {
   const [selectedTemplate, setSelectedTemplate] = useState<string>('');
   const [showSteps, setShowSteps] = useState(false);
+  const [scriptMode, setScriptMode] = useState<'ai' | 'manual'>('ai');
+  const [topicTitle, setTopicTitle] = useState('');
+  const [audience, setAudience] = useState('');
+  const [tone, setTone] = useState('');
+  const [additionalNotes, setAdditionalNotes] = useState('');
+  const [manualScript, setManualScript] = useState('');
 
   // Map generation modes to studio view for tab highlighting
   const getActiveView = (): StudioView => {
@@ -169,24 +185,25 @@ export function StudioPromptHero({
                 <Film className="w-5 h-5 text-primary" />
               )}
               <h2 className="text-lg font-semibold text-foreground">
-                {generationMode === 'generate_image' ? 'Generate Image' : 'Create Your Video'}
+                {generationMode === 'generate_image' ? 'Generate Image' : 'New Video Request'}
               </h2>
             </div>
             <p className="text-sm text-muted-foreground">
               {generationMode === 'generate_image'
                 ? 'Describe the image you want and AI will generate it.'
-                : 'Describe your video idea and AI will generate a full multi-scene storyboard.'}
+                : 'Generate a training or content video using AI'}
             </p>
           </div>
 
-          {/* Form fields row — Template + Scenes */}
+          {/* === text_to_video expanded form === */}
           {generationMode === 'text_to_video' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-4">
+              {/* Template */}
               <div className="space-y-1.5">
-                <Label className="text-sm font-medium">Quick Start Template</Label>
+                <Label className="text-sm font-medium">Template</Label>
                 <Select value={selectedTemplate} onValueChange={handleTemplateSelect}>
                   <SelectTrigger className="h-10">
-                    <SelectValue placeholder="Choose a template or start from scratch..." />
+                    <SelectValue placeholder="Choose template..." />
                   </SelectTrigger>
                   <SelectContent>
                     {SUGGESTIONS.map(s => (
@@ -195,37 +212,20 @@ export function StudioPromptHero({
                   </SelectContent>
                 </Select>
               </div>
-              <div className="space-y-1.5">
-                <Label className="text-sm font-medium">Scenes</Label>
-                <Select value={sceneCount} onValueChange={v => onSceneCountChange?.(v)}>
-                  <SelectTrigger className="h-10">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {SCENE_OPTIONS.map(o => (
-                      <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          )}
 
-          {/* Image-to-video provider settings */}
-          {generationMode === 'image_to_video' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <Label className="text-sm font-medium">Provider</Label>
-                <Select value={selectedProvider} onValueChange={(v: ProviderType) => onProviderChange(v)}>
-                  <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="runway">Runway Gen-4</SelectItem>
-                    <SelectItem value="replicate">Replicate</SelectItem>
-                    <SelectItem value="shotstack">ShotStack</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              {selectedProvider === 'replicate' && (
+              {/* Provider + Model */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <Label className="text-sm font-medium">Provider</Label>
+                  <Select value={selectedProvider} onValueChange={(v: ProviderType) => onProviderChange(v)}>
+                    <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="replicate">Replicate</SelectItem>
+                      <SelectItem value="runway">Runway Gen-4</SelectItem>
+                      <SelectItem value="shotstack">ShotStack</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
                 <div className="space-y-1.5">
                   <Label className="text-sm font-medium">Model</Label>
                   <Select value={selectedModel} onValueChange={onModelChange}>
@@ -237,54 +237,218 @@ export function StudioPromptHero({
                     </SelectContent>
                   </Select>
                 </div>
+              </div>
+
+              {/* Topic / Title */}
+              <div className="space-y-1.5">
+                <Label className="text-sm font-medium">Topic / Title</Label>
+                <Input
+                  placeholder="e.g., How to Organize Your Evidence Binder"
+                  value={topicTitle}
+                  onChange={e => setTopicTitle(e.target.value)}
+                  className="h-10"
+                />
+              </div>
+
+              {/* Audience + Tone */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <Label className="text-sm font-medium">Audience (optional)</Label>
+                  <Input
+                    placeholder="e.g., New DSPs"
+                    value={audience}
+                    onChange={e => setAudience(e.target.value)}
+                    className="h-10"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-sm font-medium">Tone (optional)</Label>
+                  <Select value={tone} onValueChange={setTone}>
+                    <SelectTrigger className="h-10"><SelectValue placeholder="Select tone..." /></SelectTrigger>
+                    <SelectContent>
+                      {TONE_OPTIONS.map(t => (
+                        <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              {/* Additional Notes */}
+              <div className="space-y-1.5">
+                <Label className="text-sm font-medium">Additional Notes (optional)</Label>
+                <Textarea
+                  placeholder="Any specific points to cover..."
+                  value={additionalNotes}
+                  onChange={e => setAdditionalNotes(e.target.value)}
+                  rows={3}
+                  className="text-sm resize-none"
+                />
+              </div>
+
+              {/* AI Script / Manual Script toggle */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setScriptMode('ai')}
+                  className={`inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-full border transition-colors ${
+                    scriptMode === 'ai'
+                      ? 'border-primary/50 bg-primary/10 text-primary'
+                      : 'border-border/50 bg-muted/30 text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                  }`}
+                >
+                  <Wand2 className="w-3.5 h-3.5" />
+                  AI Script
+                </button>
+                <button
+                  onClick={() => setScriptMode('manual')}
+                  className={`inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-full border transition-colors ${
+                    scriptMode === 'manual'
+                      ? 'border-primary/50 bg-primary/10 text-primary'
+                      : 'border-border/50 bg-muted/30 text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                  }`}
+                >
+                  <PenTool className="w-3.5 h-3.5" />
+                  Manual Script
+                </button>
+              </div>
+
+              {/* Generate Script with AI button (AI mode) */}
+              {scriptMode === 'ai' && (
+                <Button
+                  variant="secondary"
+                  className="w-full gap-2 h-11"
+                  disabled={!topicTitle.trim() || isLoading}
+                  onClick={() => {
+                    const built = `Create a video about "${topicTitle}"${audience ? ` for ${audience}` : ''}${tone ? ` in a ${tone} tone` : ''}${additionalNotes ? `. Notes: ${additionalNotes}` : ''}`;
+                    onPromptChange(built);
+                  }}
+                >
+                  <Wand2 className="w-4 h-4" />
+                  Generate Script with AI
+                </Button>
               )}
+
+              {/* Script textarea */}
+              <div className="space-y-1.5">
+                <Label className="text-sm font-medium">Script</Label>
+                <Textarea
+                  placeholder="Your video narration script..."
+                  value={scriptMode === 'manual' ? manualScript : prompt}
+                  onChange={e => {
+                    if (scriptMode === 'manual') {
+                      setManualScript(e.target.value);
+                    } else {
+                      onPromptChange(e.target.value);
+                    }
+                  }}
+                  rows={5}
+                  className="text-sm resize-none"
+                />
+              </div>
+
+              {/* Generate Video button */}
+              <Button
+                disabled={
+                  (scriptMode === 'ai' ? !prompt.trim() : !manualScript.trim()) || isLoading
+                }
+                onClick={() => {
+                  if (scriptMode === 'manual' && manualScript.trim()) {
+                    onPromptChange(manualScript);
+                  }
+                  if (selectedTemplate) {
+                    onGenerate(selectedTemplate);
+                  } else {
+                    onGenerate();
+                  }
+                }}
+                size="lg"
+                className="w-full gap-2 h-12 text-base"
+              >
+                {isLoading ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <Video className="w-5 h-5" />
+                )}
+                Generate Video
+              </Button>
             </div>
           )}
 
-          {/* Main prompt textarea */}
-          <div className="space-y-1.5">
-            <Label className="text-sm font-medium">
-              {generationMode === 'generate_image'
-                ? 'Image Description'
-                : generationMode === 'image_to_video'
-                ? 'Motion Description'
-                : 'Video Description'}
-            </Label>
-            <Textarea
-              placeholder={
-                generationMode === 'generate_image'
-                  ? "Describe the image you want... e.g. 'A photorealistic Greek temple at sunset with dramatic lighting, 16:9'"
-                  : generationMode === 'image_to_video'
-                  ? "Describe the motion you want... e.g. 'Slow zoom in, clouds drifting, warm golden light'"
-                  : "Describe your video: topic, audience, key points, tone, and any specific visuals you want..."
-              }
-              value={prompt}
-              onChange={e => onPromptChange(e.target.value)}
-              rows={4}
-              className="text-sm resize-none"
-            />
-          </div>
+          {/* Image-to-video provider settings */}
+          {generationMode === 'image_to_video' && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <Label className="text-sm font-medium">Provider</Label>
+                  <Select value={selectedProvider} onValueChange={(v: ProviderType) => onProviderChange(v)}>
+                    <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="runway">Runway Gen-4</SelectItem>
+                      <SelectItem value="replicate">Replicate</SelectItem>
+                      <SelectItem value="shotstack">ShotStack</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                {selectedProvider === 'replicate' && (
+                  <div className="space-y-1.5">
+                    <Label className="text-sm font-medium">Model</Label>
+                    <Select value={selectedModel} onValueChange={onModelChange}>
+                      <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        {REPLICATE_MODELS.map(m => (
+                          <SelectItem key={m.id} value={m.id}>{m.label}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+              </div>
+              <div className="space-y-1.5">
+                <Label className="text-sm font-medium">Motion Description</Label>
+                <Textarea
+                  placeholder="Describe the motion you want... e.g. 'Slow zoom in, clouds drifting, warm golden light'"
+                  value={prompt}
+                  onChange={e => onPromptChange(e.target.value)}
+                  rows={4}
+                  className="text-sm resize-none"
+                />
+              </div>
+              <Button
+                disabled={!prompt.trim() || isLoading}
+                onClick={() => onGenerate()}
+                size="lg"
+                className="w-full gap-2 h-12 text-base"
+              >
+                {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Video className="w-5 h-5" />}
+                Generate Video
+              </Button>
+            </div>
+          )}
 
-          {/* Generate button */}
-          <Button
-            disabled={!prompt.trim() || isLoading}
-            onClick={() => {
-              if (selectedTemplate) {
-                onGenerate(selectedTemplate);
-              } else {
-                onGenerate();
-              }
-            }}
-            size="lg"
-            className="w-full gap-2 h-12 text-base"
-          >
-            {isLoading ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
-            ) : (
-              <Sparkles className="w-5 h-5" />
-            )}
-            {generationMode === 'generate_image' ? 'Generate Image' : 'Generate Storyboard'}
-          </Button>
+          {/* Generate image mode */}
+          {generationMode === 'generate_image' && (
+            <div className="space-y-4">
+              <div className="space-y-1.5">
+                <Label className="text-sm font-medium">Image Description</Label>
+                <Textarea
+                  placeholder="Describe the image you want... e.g. 'A photorealistic Greek temple at sunset with dramatic lighting, 16:9'"
+                  value={prompt}
+                  onChange={e => onPromptChange(e.target.value)}
+                  rows={4}
+                  className="text-sm resize-none"
+                />
+              </div>
+              <Button
+                disabled={!prompt.trim() || isLoading}
+                onClick={() => onGenerate()}
+                size="lg"
+                className="w-full gap-2 h-12 text-base"
+              >
+                {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-5 h-5" />}
+                Generate Image
+              </Button>
+            </div>
+          )}
         </div>
       )}
     </div>
