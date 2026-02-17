@@ -44,7 +44,7 @@ export function StudioSceneEditor({
             <h3 className="font-bold text-foreground text-lg">{scriptData?.title || 'Your Video'}</h3>
             <div className="flex items-center gap-2 mt-0.5">
               <Badge variant="outline" className="text-xs">
-                {videoRequest?.provider === 'replicate' ? 'Replicate' : 'Runway'}
+                {videoRequest?.provider === 'shotstack' ? 'ShotStack' : videoRequest?.provider === 'replicate' ? 'Replicate' : 'Runway'}
               </Badge>
               {videoRequest?.provider_model && (
                 <Badge variant="outline" className="text-xs">{videoRequest.provider_model}</Badge>

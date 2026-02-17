@@ -19,14 +19,14 @@ const mockScriptData = {
 
 const mockVideoRequest = {
   id: 'req-1',
-  provider: 'replicate',
+  provider: 'shotstack',
   provider_model: 'minimax/video-01-live',
 };
 
 const defaultProps = {
   scriptData: mockScriptData,
   videoRequest: mockVideoRequest,
-  selectedProvider: 'replicate',
+  selectedProvider: 'shotstack',
   onBack: vi.fn(),
   onRegenerate: vi.fn(),
   onSubmitVideo: vi.fn(),
@@ -41,7 +41,7 @@ describe('StudioSceneEditor', () => {
 
   it('renders provider badge', () => {
     render(<StudioSceneEditor {...defaultProps} />);
-    expect(screen.getByText('Replicate')).toBeInTheDocument();
+    expect(screen.getByText('ShotStack')).toBeInTheDocument();
   });
 
   it('renders model badge', () => {

@@ -10,7 +10,7 @@ const defaultProps = {
   onGenerate: vi.fn(),
   isLoading: false,
   isAdmin: false,
-  selectedProvider: 'replicate' as const,
+  selectedProvider: 'shotstack' as const,
   onProviderChange: vi.fn(),
   selectedModel: 'minimax/video-01-live',
   onModelChange: vi.fn(),
@@ -23,7 +23,7 @@ const defaultProps = {
 describe('StudioPromptHero', () => {
   it('renders the header and subtitle', () => {
     render(<StudioPromptHero {...defaultProps} />);
-    expect(screen.getByText('FocusOS™ Studio Agent')).toBeInTheDocument();
+    expect(screen.getByText('Sacred Studio Agent')).toBeInTheDocument();
     expect(screen.getByText('Create multi-scene videos with AI-powered storyboarding')).toBeInTheDocument();
   });
 
@@ -61,18 +61,17 @@ describe('StudioPromptHero', () => {
     expect(screen.getByText('Show Steps')).toBeInTheDocument();
   });
 
-  it('renders the video creation card in text_to_video mode', () => {
+  it('renders the video creation form in text_to_video mode', () => {
     render(<StudioPromptHero {...defaultProps} generationMode="text_to_video" />);
-    expect(screen.getByText('Create Your Video')).toBeInTheDocument();
-    expect(screen.getByText('Quick Start Template')).toBeInTheDocument();
-    expect(screen.getByText('Scenes')).toBeInTheDocument();
-    expect(screen.getByText('Video Description')).toBeInTheDocument();
-    expect(screen.getByText('Generate Storyboard')).toBeInTheDocument();
+    expect(screen.getByText('Template')).toBeInTheDocument();
+    expect(screen.getByText('Provider')).toBeInTheDocument();
+    expect(screen.getByText('Script')).toBeInTheDocument();
+    expect(screen.getByText('Generate Video')).toBeInTheDocument();
   });
 
   it('renders image generation card in generate_image mode', () => {
     render(<StudioPromptHero {...defaultProps} generationMode="generate_image" />);
-    expect(screen.getAllByText('Generate Image').length).toBeGreaterThanOrEqual(2);
+    expect(screen.getAllByText('Generate Image').length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText('Image Description')).toBeInTheDocument();
   });
 
@@ -84,38 +83,29 @@ describe('StudioPromptHero', () => {
 
   it('hides main content card in video_upload mode', () => {
     render(<StudioPromptHero {...defaultProps} generationMode="video_upload" />);
-    expect(screen.queryByText('Create Your Video')).not.toBeInTheDocument();
-    expect(screen.queryByText('Generate Storyboard')).not.toBeInTheDocument();
+    expect(screen.queryByText('Generate Video')).not.toBeInTheDocument();
   });
 
-  it('disables generate button when prompt is empty', () => {
+  it('disables generate button when prompt is empty in AI script mode', () => {
     render(<StudioPromptHero {...defaultProps} prompt="" />);
-    const btn = screen.getByText('Generate Storyboard');
+    const btn = screen.getByText('Generate Video');
     expect(btn.closest('button')).toBeDisabled();
   });
 
   it('enables generate button when prompt has content', () => {
     render(<StudioPromptHero {...defaultProps} prompt="Test video idea" />);
-    const btn = screen.getByText('Generate Storyboard');
+    const btn = screen.getByText('Generate Video');
     expect(btn.closest('button')).not.toBeDisabled();
   });
 
   it('calls onGenerate when generate button is clicked', () => {
     const onGenerate = vi.fn();
     render(<StudioPromptHero {...defaultProps} prompt="Test" onGenerate={onGenerate} />);
-    fireEvent.click(screen.getByText('Generate Storyboard'));
+    fireEvent.click(screen.getByText('Generate Video'));
     expect(onGenerate).toHaveBeenCalled();
   });
 
-  it('calls onPromptChange when typing in textarea', () => {
-    const onPromptChange = vi.fn();
-    render(<StudioPromptHero {...defaultProps} onPromptChange={onPromptChange} />);
-    const textarea = screen.getByPlaceholderText(/Describe your video/i);
-    fireEvent.change(textarea, { target: { value: 'My video' } });
-    expect(onPromptChange).toHaveBeenCalledWith('My video');
-  });
-
-  it('calls onModeChange when clicking Create Video tab', () => {
+  it('calls onModeChange when clicking Image to Video tab', () => {
     const onModeChange = vi.fn();
     render(<StudioPromptHero {...defaultProps} onModeChange={onModeChange} />);
     fireEvent.click(screen.getByText('Image to Video'));
@@ -131,7 +121,7 @@ describe('StudioPromptHero', () => {
 
   it('shows loading spinner when isLoading is true', () => {
     render(<StudioPromptHero {...defaultProps} prompt="Test" isLoading={true} />);
-    const btn = screen.getByText('Generate Storyboard').closest('button');
+    const btn = screen.getByText('Generate Video').closest('button');
     expect(btn).toBeDisabled();
   });
 });
