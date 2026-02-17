@@ -41,6 +41,15 @@ const SCENE_OPTIONS = [
   { value: '12', label: '12 scenes (2-3 min)' },
 ];
 
+const DIMENSION_OPTIONS = [
+  { value: '1080x1920', label: '1080×1920 (9:16 Portrait)', description: 'Reels, Shorts, TikTok' },
+  { value: '1920x1080', label: '1920×1080 (16:9 Landscape)', description: 'YouTube, Presentations' },
+  { value: '1080x1080', label: '1080×1080 (1:1 Square)', description: 'Instagram, Facebook' },
+  { value: '720x1280', label: '720×1280 (9:16 HD)', description: 'Portrait HD' },
+  { value: '1280x720', label: '1280×720 (16:9 HD)', description: 'Landscape HD' },
+  { value: '480x854', label: '480×854 (9:16 SD)', description: 'Fast render, smaller file' },
+];
+
 const REPLICATE_MODELS = [
   { id: 'minimax/video-01-live', label: 'MiniMax Video-01 (default)' },
   { id: 'luma/ray-2-540p', label: 'Luma Ray 2' },
@@ -64,6 +73,8 @@ interface StudioPromptHeroProps {
   onShowAdmin?: () => void;
   sceneCount?: string;
   onSceneCountChange?: (count: string) => void;
+  outputDimensions?: string;
+  onOutputDimensionsChange?: (dims: string) => void;
 }
 
 export function StudioPromptHero({
@@ -72,6 +83,7 @@ export function StudioPromptHero({
   selectedProvider, onProviderChange, selectedModel, onModelChange,
   onShowLibrary, onShowAdmin,
   sceneCount = '6', onSceneCountChange,
+  outputDimensions = '1080x1920', onOutputDimensionsChange,
 }: StudioPromptHeroProps) {
   const [selectedTemplate, setSelectedTemplate] = useState<string>('');
   const [showSteps, setShowSteps] = useState(false);
@@ -284,6 +296,22 @@ export function StudioPromptHero({
                   rows={3}
                   className="text-sm resize-none"
                 />
+              </div>
+
+              {/* Output Dimensions */}
+              <div className="space-y-1.5">
+                <Label className="text-sm font-medium">Output Dimensions</Label>
+                <Select value={outputDimensions} onValueChange={v => onOutputDimensionsChange?.(v)}>
+                  <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    {DIMENSION_OPTIONS.map(d => (
+                      <SelectItem key={d.value} value={d.value}>
+                        <span>{d.label}</span>
+                        <span className="ml-2 text-muted-foreground text-xs">— {d.description}</span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               {/* AI Script / Manual Script toggle */}

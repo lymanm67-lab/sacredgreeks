@@ -114,6 +114,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
   const [selectedProvider, setSelectedProvider] = useState<ProviderType>('shotstack');
   const [selectedModel, setSelectedModel] = useState('minimax/video-01-live');
   const [sceneCount, setSceneCount] = useState('6');
+  const [outputDimensions, setOutputDimensions] = useState('1080x1920');
 
   // Content selection
   const [availableContent, setAvailableContent] = useState<any[]>([]);
@@ -268,6 +269,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
           parentRequestId,
           generationMode,
           inputImageUrl: generationMode === 'image_to_video' ? uploadedImageUrl : undefined,
+          outputDimensions,
         }),
       });
       if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || 'Failed');
@@ -305,7 +307,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
     try {
       const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/video-studio`, {
         method: 'POST', headers: await getAuthHeader(),
-        body: JSON.stringify({ action: 'submit_video', videoRequestId: videoRequest.id, provider: selectedProvider, providerModel: selectedProvider === 'replicate' ? selectedModel : undefined }),
+        body: JSON.stringify({ action: 'submit_video', videoRequestId: videoRequest.id, provider: selectedProvider, providerModel: selectedProvider === 'replicate' ? selectedModel : undefined, outputDimensions }),
       });
       if (!res.ok) {
         const errBody = await res.json().catch(() => ({}));
@@ -444,6 +446,8 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
             onShowAdmin={() => {}}
             sceneCount={sceneCount}
             onSceneCountChange={setSceneCount}
+            outputDimensions={outputDimensions}
+            onOutputDimensionsChange={setOutputDimensions}
           />
 
           {/* Demo Overview - shown in demo mode */}
