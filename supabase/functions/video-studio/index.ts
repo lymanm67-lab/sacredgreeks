@@ -161,16 +161,16 @@ class ReplicateProvider implements VideoProvider {
       input.image_url = options.imageUrl; // some models use image_url
     }
 
-    const res = await fetch('https://api.replicate.com/v1/predictions', {
+    // Use the official model predictions endpoint (no version needed)
+    const modelPath = this.model; // e.g. "minimax/video-01-live"
+    const res = await fetch(`https://api.replicate.com/v1/models/${modelPath}/predictions`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${this.apiKey}`,
         'Content-Type': 'application/json',
+        'Prefer': 'wait',
       },
-      body: JSON.stringify({
-        model: this.model,
-        input,
-      }),
+      body: JSON.stringify({ input }),
     });
     if (!res.ok) {
       const errText = await res.text();
