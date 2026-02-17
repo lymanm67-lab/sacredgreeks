@@ -24,8 +24,8 @@ const SUGGESTIONS = [
 ];
 
 const REPLICATE_MODELS = [
+  { id: 'luma/ray', label: 'Luma Dream Machine (Recommended)' },
   { id: 'minimax/video-01-live', label: 'MiniMax Video-01-Live' },
-  { id: 'luma/ray', label: 'Luma Ray' },
   { id: 'kling-ai/kling-video', label: 'Kling Video' },
   { id: 'stability-ai/stable-video-diffusion', label: 'Stable Video Diffusion' },
 ];
