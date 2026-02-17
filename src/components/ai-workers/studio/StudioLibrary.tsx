@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { Film, Play, Plus, Youtube, CheckSquare, Square, SquareCheck, X, ListChecks, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -17,9 +17,10 @@ interface StudioLibraryProps {
   videos: any[];
   onNewVideo: () => void;
   onVideosChanged?: () => void;
+  onViewVideo?: (video: any) => void;
 }
 
-export function StudioLibrary({ videos, onNewVideo, onVideosChanged }: StudioLibraryProps) {
+export function StudioLibrary({ videos, onNewVideo, onVideosChanged, onViewVideo }: StudioLibraryProps) {
   const { toast } = useToast();
   const [ytDialogOpen, setYtDialogOpen] = useState(false);
   const [ytVideo, setYtVideo] = useState<any>(null);
@@ -201,7 +202,7 @@ export function StudioLibrary({ videos, onNewVideo, onVideosChanged }: StudioLib
                       <div className="flex flex-col gap-1 shrink-0">
                         {v.status === 'completed' && (
                           <>
-                            <Button size="sm" variant="outline" className="gap-1 rounded-lg">
+                            <Button size="sm" variant="outline" className="gap-1 rounded-lg" onClick={() => onViewVideo?.(v)}>
                               <Play className="w-3 h-3" /> View
                             </Button>
                             {v.video_url && (
