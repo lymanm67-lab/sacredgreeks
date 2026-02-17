@@ -201,39 +201,80 @@ class ReplicateProvider implements VideoProvider {
   }
 }
 
-// ===== IMAGE GENERATION FOR SCENES =====
-async function generateSceneImage(visual: string, supabaseUrl: string, serviceKey: string): Promise<string | null> {
+// ===== IMAGE GENERATION FOR SCENES (via Lovable AI) =====
+async function generateSceneImage(visual: string): Promise<string | null> {
   try {
-    const openaiKey = Deno.env.get('OPENAI_API_KEY');
-    if (!openaiKey) return null;
+    const lovableKey = Deno.env.get('LOVABLE_API_KEY');
+    if (!lovableKey) { console.log('[SCENE-IMAGE] No LOVABLE_API_KEY'); return null; }
 
-    // Use Lovable AI (Gemini) to generate a photorealistic image
-    const imagePrompt = `Photorealistic, cinematic still frame for a short-form video scene. Scene description: ${visual}. Style: dramatic lighting, vibrant colors, 9:16 vertical aspect ratio, professional quality.`;
-    
-    const response = await fetch('https://api.lovable.dev/v1/images/generations', {
+    const imagePrompt = `Photorealistic, cinematic still frame for a short-form vertical video. Scene: ${visual}. Style: dramatic lighting, vibrant colors, 9:16 portrait, professional cinematography, no text overlays.`;
+
+    const response = await fetch('https://ai.gateway.lovable.dev/v1/images/generations', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${lovableKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'nano-banana-pro', prompt: imagePrompt, n: 1, size: '768x1344' }),
+    });
+
+    if (!response.ok) {
+      console.log('[SCENE-IMAGE] Image gen failed:', response.status, await response.text().catch(() => ''));
+      return null;
+    }
+
+    const data = await response.json();
+    return data?.data?.[0]?.url || null;
+  } catch (e) {
+    console.log('[SCENE-IMAGE] Error:', e);
+    return null;
+  }
+}
+
+// ===== TTS NARRATION FOR SCENES (via ElevenLabs) =====
+async function generateNarrationAudio(text: string): Promise<string | null> {
+  try {
+    const elevenLabsKey = Deno.env.get('ELEVENLABS_API_KEY');
+    if (!elevenLabsKey) { console.log('[TTS] No ELEVENLABS_API_KEY'); return null; }
+
+    const voiceId = 'onwK4e9ZLuTAKqWW03F9'; // Daniel voice
+
+    const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${Deno.env.get('LOVABLE_API_KEY') || openaiKey}`,
+        'xi-api-key': elevenLabsKey,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'google/gemini-3-pro-image-preview',
-        prompt: imagePrompt,
-        n: 1,
-        size: '768x1344',
+        text,
+        model_id: 'eleven_multilingual_v2',
+        voice_settings: { stability: 0.5, similarity_boost: 0.75, style: 0.3 },
       }),
     });
 
     if (!response.ok) {
-      console.log('[SCENE-IMAGE] Image gen failed:', response.status);
+      console.log('[TTS] ElevenLabs failed:', response.status);
       return null;
     }
-    
-    const data = await response.json();
-    const imageUrl = data?.data?.[0]?.url;
-    return imageUrl || null;
+
+    // Upload audio to Supabase storage for a public URL
+    const audioBuffer = await response.arrayBuffer();
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const sb = createClient(supabaseUrl, serviceKey);
+
+    const fileName = `tts-${crypto.randomUUID()}.mp3`;
+    const { error: uploadError } = await sb.storage
+      .from('proof-videos')
+      .upload(`tts/${fileName}`, new Uint8Array(audioBuffer), { contentType: 'audio/mpeg', upsert: true });
+
+    if (uploadError) {
+      console.log('[TTS] Upload error:', uploadError.message);
+      return null;
+    }
+
+    const { data: urlData } = sb.storage.from('proof-videos').getPublicUrl(`tts/${fileName}`);
+    console.log('[TTS] Generated narration:', urlData.publicUrl);
+    return urlData.publicUrl;
   } catch (e) {
-    console.log('[SCENE-IMAGE] Error generating image:', e);
+    console.log('[TTS] Error:', e);
     return null;
   }
 }
@@ -241,40 +282,58 @@ async function generateSceneImage(visual: string, supabaseUrl: string, serviceKe
 // ===== SHOTSTACK PROVIDER =====
 class ShotStackProvider implements VideoProvider {
   private apiKey: string;
-  private env: string; // 'v1' for production, 'stage' for sandbox
+  private env: string;
   constructor(apiKey: string, env: string = 'v1') {
     this.apiKey = apiKey;
     this.env = env;
   }
 
   async submitJob(prompt: string, options: Record<string, any>) {
-    // Build a ShotStack Edit timeline from the scene plan
     const scenes = options.scenes || [];
+    const scriptEntries = options.scriptEntries || [];
     const imageTrackClips: any[] = [];
     const textTrackClips: any[] = [];
+    const audioTrackClips: any[] = [];
     let currentStart = 0;
 
-    // Royalty-free background music from ShotStack's stock library
     const backgroundMusicUrl = 'https://shotstack-assets.s3.ap-southeast-2.amazonaws.com/music/unminus/ambisax.mp3';
 
     if (scenes.length > 0) {
-      // Build clips from scene plan
-      for (const scene of scenes) {
+      // Generate images and narration in parallel (cap at 6 to avoid timeout)
+      const maxScenes = Math.min(scenes.length, 6);
+      console.log('[SHOTSTACK] Generating images + narration for', maxScenes, 'scenes...');
+
+      const imagePromises = scenes.slice(0, maxScenes).map((scene: any) =>
+        generateSceneImage(scene.visual || scene.textOverlay || 'cinematic scene')
+      );
+
+      const narrationPromises = scenes.slice(0, maxScenes).map((scene: any, i: number) => {
+        const narration = scriptEntries[i]?.narration || '';
+        return narration.trim() ? generateNarrationAudio(narration) : Promise.resolve(null);
+      });
+
+      const [imageResults, narrationResults] = await Promise.all([
+        Promise.all(imagePromises),
+        Promise.all(narrationPromises),
+      ]);
+
+      console.log('[SHOTSTACK] Images:', imageResults.filter(Boolean).length, '/', maxScenes);
+      console.log('[SHOTSTACK] Narrations:', narrationResults.filter(Boolean).length, '/', maxScenes);
+
+      for (let i = 0; i < scenes.length; i++) {
+        const scene = scenes[i];
         const durationSec = parseInt(scene.duration) || 5;
-        
+        const imageUrl = i < maxScenes ? imageResults[i] : null;
+        const narrationUrl = i < maxScenes ? narrationResults[i] : null;
+
         // Image/background clip
-        if (scene.imageUrl) {
-          // Scene already has an image URL (e.g., user-uploaded)
+        if (imageUrl || scene.imageUrl) {
           imageTrackClips.push({
-            asset: { type: 'image', src: scene.imageUrl },
-            start: currentStart,
-            length: durationSec,
-            fit: 'cover',
-            effect: 'slowZoomIn',
-            transition: { in: 'fade', out: 'fade' },
+            asset: { type: 'image', src: imageUrl || scene.imageUrl },
+            start: currentStart, length: durationSec, fit: 'cover',
+            effect: 'slowZoomIn', transition: { in: 'fade', out: 'fade' },
           });
         } else {
-          // Use a gradient background card
           const bgColors = [
             'linear-gradient(135deg,#0f0c29,#302b63,#24243e)',
             'linear-gradient(135deg,#1a1a2e,#16213e,#0f3460)',
@@ -282,79 +341,68 @@ class ShotStackProvider implements VideoProvider {
             'linear-gradient(135deg,#0D1117,#161B22,#21262D)',
             'linear-gradient(135deg,#1B1B3A,#2D2D5E)',
           ];
-          const bgColor = bgColors[(scene.sceneNumber || 1) % bgColors.length];
-          
           imageTrackClips.push({
             asset: {
               type: 'html',
-              html: `<div style="width:100%;height:100%;background:${bgColor};"></div>`,
-              width: 720,
-              height: 1280,
+              html: `<div style="width:100%;height:100%;background:${bgColors[i % bgColors.length]};"></div>`,
+              width: 720, height: 1280,
             },
-            start: currentStart,
-            length: durationSec,
-            effect: 'zoomIn',
+            start: currentStart, length: durationSec, effect: 'zoomIn',
             transition: { in: 'fade', out: 'fade' },
           });
         }
 
-        // Text overlay clip (on a higher track so it appears on top)
+        // Text overlay
         const overlayText = scene.textOverlay || scene.visual || '';
         if (overlayText) {
           textTrackClips.push({
             asset: {
               type: 'html',
               html: `<div style="padding:60px 40px;color:white;font-family:'Arial',sans-serif;font-size:42px;font-weight:bold;text-align:center;width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-shadow:2px 2px 8px rgba(0,0,0,0.8);background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,0.7) 100%);">${overlayText}</div>`,
-              width: 720,
-              height: 1280,
+              width: 720, height: 1280,
             },
-            start: currentStart,
-            length: durationSec,
-            effect: 'zoomIn',
-            transition: { in: 'fade' },
+            start: currentStart, length: durationSec, transition: { in: 'fade' },
+          });
+        }
+
+        // Narration audio clip
+        if (narrationUrl) {
+          audioTrackClips.push({
+            asset: { type: 'audio', src: narrationUrl, effect: 'fadeOut' },
+            start: currentStart, length: durationSec,
           });
         }
 
         currentStart += durationSec;
       }
     } else {
-      // Fallback: single title card from prompt
       imageTrackClips.push({
         asset: {
           type: 'html',
           html: `<div style="padding:40px;color:white;font-family:sans-serif;font-size:36px;text-align:center;background:linear-gradient(135deg,#1a1a2e,#16213e);width:100%;height:100%;display:flex;align-items:center;justify-content:center;">${prompt.slice(0, 200)}</div>`,
-          width: 720,
-          height: 1280,
+          width: 720, height: 1280,
         },
-        start: 0,
-        length: 10,
-        effect: 'zoomIn',
+        start: 0, length: 10, effect: 'zoomIn',
       });
     }
 
-    // If an input image is provided, use it as background
     if (options.imageUrl && imageTrackClips.length <= 1) {
       imageTrackClips[0] = {
         asset: { type: 'image', src: options.imageUrl },
-        start: 0,
-        length: options.duration || 10,
-        fit: 'cover',
-        effect: 'slowZoomIn',
+        start: 0, length: options.duration || 10, fit: 'cover', effect: 'slowZoomIn',
       };
     }
 
-    // Build tracks - text overlay on top, images below
     const tracks: any[] = [];
-    if (textTrackClips.length > 0) {
-      tracks.push({ clips: textTrackClips });
-    }
+    if (textTrackClips.length > 0) tracks.push({ clips: textTrackClips });
+    if (audioTrackClips.length > 0) tracks.push({ clips: audioTrackClips });
     tracks.push({ clips: imageTrackClips });
 
     const timeline: any = {
       soundtrack: {
         src: options.soundtrackUrl || backgroundMusicUrl,
         effect: 'fadeInFadeOut',
-        volume: 0.6,
+        volume: audioTrackClips.length > 0 ? 0.15 : 0.6,
       },
       background: '#000000',
       tracks,
@@ -363,25 +411,18 @@ class ShotStackProvider implements VideoProvider {
     const editPayload: any = {
       timeline,
       output: {
-        format: 'mp4',
-        resolution: 'hd',
+        format: 'mp4', resolution: 'hd',
         aspectRatio: options.ratio === '1920:1080' ? '16:9' : '9:16',
-        size: {
-          width: options.ratio === '1920:1080' ? 1920 : 720,
-          height: options.ratio === '1920:1080' ? 1080 : 1280,
-        },
+        size: { width: options.ratio === '1920:1080' ? 1920 : 720, height: options.ratio === '1920:1080' ? 1080 : 1280 },
       },
     };
 
-    console.log('[SHOTSTACK] Submitting render with', imageTrackClips.length, 'scene clips,', textTrackClips.length, 'text overlays, soundtrack enabled');
+    console.log('[SHOTSTACK] Submitting render:', imageTrackClips.length, 'scenes,', textTrackClips.length, 'text,', audioTrackClips.length, 'narrations');
 
     const baseUrl = `https://api.shotstack.io/${this.env}`;
     const res = await fetch(`${baseUrl}/render`, {
       method: 'POST',
-      headers: {
-        'x-api-key': this.apiKey,
-        'Content-Type': 'application/json',
-      },
+      headers: { 'x-api-key': this.apiKey, 'Content-Type': 'application/json' },
       body: JSON.stringify(editPayload),
     });
 
@@ -393,7 +434,6 @@ class ShotStackProvider implements VideoProvider {
     const data = await res.json();
     const renderId = data.response?.id;
     if (!renderId) throw new Error('ShotStack did not return a render ID');
-
     return { jobId: renderId, rawResponse: data };
   }
 
@@ -402,18 +442,11 @@ class ShotStackProvider implements VideoProvider {
     const res = await fetch(`${baseUrl}/render/${jobId}`, {
       headers: { 'x-api-key': this.apiKey },
     });
-
     if (!res.ok) throw new Error(`ShotStack status check failed [${res.status}]`);
     const data = await res.json();
     const status = data.response?.status;
-
-    if (status === 'done' && data.response?.url) {
-      return { status: 'completed' as const, videoUrl: data.response.url, rawResponse: data };
-    }
-    if (status === 'failed') {
-      return { status: 'failed' as const, error: data.response?.error || 'Render failed', rawResponse: data };
-    }
-    // queued, fetching, rendering, saving
+    if (status === 'done' && data.response?.url) return { status: 'completed' as const, videoUrl: data.response.url, rawResponse: data };
+    if (status === 'failed') return { status: 'failed' as const, error: data.response?.error || 'Render failed', rawResponse: data };
     return { status: 'processing' as const, progress: status === 'rendering' ? 0.5 : 0.2, rawResponse: data };
   }
 }
@@ -791,12 +824,14 @@ Generate the complete script with scene plan, captions, and metadata.`;
       try {
         const provider = getProvider(providerName, model);
         const scenes = (vr.scene_plan_json as any[]) || [];
-        console.log('[VIDEO-STUDIO] Submitting to', providerName, 'with', scenes.length, 'scenes');
+        const scriptEntries = (script?.script as any[]) || [];
+        console.log('[VIDEO-STUDIO] Submitting to', providerName, 'with', scenes.length, 'scenes,', scriptEntries.length, 'script entries');
         const { jobId: providerJobId, rawResponse } = await provider.submitJob(textPrompt, {
           ratio: '720:1280',
           duration: 10,
           imageUrl: vr.input_image_url || undefined,
-          scenes, // Pass scene plan to ShotStack
+          scenes,
+          scriptEntries, // Pass narration data for TTS
         });
 
         const { data: job } = await supabase.from('video_jobs').insert({
