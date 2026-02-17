@@ -113,6 +113,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
   // Provider
   const [selectedProvider, setSelectedProvider] = useState<ProviderType>('replicate');
   const [selectedModel, setSelectedModel] = useState('luma/ray');
+  const [sceneCount, setSceneCount] = useState('6');
 
   // Content selection
   const [availableContent, setAvailableContent] = useState<any[]>([]);
@@ -439,6 +440,10 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
             onProviderChange={setSelectedProvider}
             selectedModel={selectedModel}
             onModelChange={setSelectedModel}
+            onShowLibrary={() => setStep('library')}
+            onShowAdmin={() => {}}
+            sceneCount={sceneCount}
+            onSceneCountChange={setSceneCount}
           />
 
           {/* Demo Overview - shown in demo mode */}
