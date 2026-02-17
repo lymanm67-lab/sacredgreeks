@@ -42,10 +42,10 @@ const SCENE_OPTIONS = [
 ];
 
 const REPLICATE_MODELS = [
-  { id: 'luma/ray', label: 'Luma Dream Machine (Recommended)' },
-  { id: 'minimax/video-01-live', label: 'MiniMax Video-01-Live' },
+  { id: 'minimax/video-01-live', label: 'MiniMax Video-01 (default)' },
+  { id: 'luma/ray-2-540p', label: 'Luma Ray 2' },
+  { id: 'luma/ray-flash-2-540p', label: 'Luma Ray Flash 2 (Fast)' },
   { id: 'kling-ai/kling-video', label: 'Kling Video' },
-  { id: 'stability-ai/stable-video-diffusion', label: 'Stable Video Diffusion' },
 ];
 
 interface StudioPromptHeroProps {

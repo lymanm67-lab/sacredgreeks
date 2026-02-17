@@ -61,17 +61,17 @@ const REPLICATE_MODELS: Record<string, { version: string; label: string }> = {
     version: 'minimax/video-01-live',
     label: 'MiniMax Video-01-Live',
   },
-  'luma/ray': {
-    version: 'luma/ray',
-    label: 'Luma Ray',
+  'luma/ray-2-540p': {
+    version: 'luma/ray-2-540p',
+    label: 'Luma Ray 2',
+  },
+  'luma/ray-flash-2-540p': {
+    version: 'luma/ray-flash-2-540p',
+    label: 'Luma Ray Flash 2 (Fast)',
   },
   'kling-ai/kling-video': {
     version: 'kling-ai/kling-video',
     label: 'Kling Video',
-  },
-  'stability-ai/stable-video-diffusion': {
-    version: 'stability-ai/stable-video-diffusion',
-    label: 'Stable Video Diffusion',
   },
 };
 

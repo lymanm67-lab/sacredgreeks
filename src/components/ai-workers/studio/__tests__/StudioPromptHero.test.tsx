@@ -12,7 +12,7 @@ const defaultProps = {
   isAdmin: false,
   selectedProvider: 'replicate' as const,
   onProviderChange: vi.fn(),
-  selectedModel: 'luma/ray',
+  selectedModel: 'minimax/video-01-live',
   onModelChange: vi.fn(),
   onShowLibrary: vi.fn(),
   onShowAdmin: vi.fn(),
