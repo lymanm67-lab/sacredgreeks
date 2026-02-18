@@ -50,12 +50,6 @@ const DIMENSION_OPTIONS = [
   { value: '480x854', label: '480×854 (9:16 SD)', description: 'Fast render, smaller file' },
 ];
 
-const REPLICATE_MODELS = [
-  { id: 'minimax/video-01-live', label: 'MiniMax Video-01 (default)' },
-  { id: 'luma/ray-2-540p', label: 'Luma Ray 2' },
-  { id: 'luma/ray-flash-2-540p', label: 'Luma Ray Flash 2 (Fast)' },
-  { id: 'kling-ai/kling-video', label: 'Kling Video' },
-];
 
 interface StudioPromptHeroProps {
   generationMode: GenerationMode;
@@ -233,17 +227,6 @@ export function StudioPromptHero({
                     <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="invideo">InVideo.ai</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1.5">
-                  <Label className="text-sm font-medium">Model</Label>
-                  <Select value={selectedModel} onValueChange={onModelChange}>
-                    <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      {REPLICATE_MODELS.map(m => (
-                        <SelectItem key={m.id} value={m.id}>{m.label}</SelectItem>
-                      ))}
                     </SelectContent>
                   </Select>
                 </div>

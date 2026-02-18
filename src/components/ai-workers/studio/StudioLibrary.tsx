@@ -175,7 +175,7 @@ export function StudioLibrary({ videos, onNewVideo, onVideosChanged, onViewVideo
                       <p className="font-medium text-sm truncate">{v.title}</p>
                       <div className="flex items-center gap-1.5 mt-2 flex-wrap">
                         <Badge variant="outline" className="text-[10px]">{v.template_type}</Badge>
-                        <Badge variant="outline" className="text-[10px]">{v.provider || 'runway'}</Badge>
+                        <Badge variant="outline" className="text-[10px]">{v.provider || 'invideo'}</Badge>
                         {v.generation_mode === 'image_to_video' && (
                           <Badge className="bg-violet-500/10 text-violet-600 text-[10px] border-0">Image→Video</Badge>
                         )}
