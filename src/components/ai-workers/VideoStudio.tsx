@@ -442,8 +442,16 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
 
         // Clean up object URL
         URL.revokeObjectURL(result.objectUrl);
-      } catch (e) {
-        const errMsg = e instanceof Error ? e.message : String(e);
+      } catch (e: any) {
+        console.error('Puter video generation error:', e);
+        let errMsg = 'Unknown error';
+        if (e instanceof Error) {
+          errMsg = e.message;
+        } else if (typeof e === 'string') {
+          errMsg = e;
+        } else if (e && typeof e === 'object') {
+          errMsg = e.message || e.error || e.reason || JSON.stringify(e);
+        }
         const isAuthError = /auth|sign.?in|login|permission|unauthorized|forbidden|token|session/i.test(errMsg);
         setJobStatus('failed');
         if (isAuthError) {
@@ -451,7 +459,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
           setStep('prompt');
           toast({ title: 'Puter authentication error', description: 'Your Puter session expired or is invalid. Please sign in to Puter again.', variant: 'destructive' });
         } else {
-          toast({ title: 'Video generation failed', description: errMsg, variant: 'destructive' });
+          toast({ title: 'Video generation failed', description: errMsg.slice(0, 200), variant: 'destructive' });
         }
       } finally {
         setIsLoading(false);
