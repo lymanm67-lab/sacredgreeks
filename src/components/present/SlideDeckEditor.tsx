@@ -117,21 +117,32 @@ const PROMPT_IDEAS_DEFAULT = ["Abstract gradient background", "Elegant dark text
 function getPromptIdeas(title: string, content: string): string[] {
   const text = `${title} ${content}`.toLowerCase();
   const ideas: string[] = [];
-  if (text.includes("proof") || text.includes("framework"))
-    ideas.push("Golden shield with PROOF letters", "Ancient scroll with divine light", "Five pillars of faith illustration");
-  if (text.includes("providential") || text.includes("history") || text.includes("founder"))
-    ideas.push("Vintage sepia campus 1906", "Historical founders portrait style", "Timeline with golden milestones");
-  if (text.includes("ritual") || text.includes("ceremony") || text.includes("sacred"))
+  // P — Pledge Process
+  if (text.includes("pledge") || text.includes("process") || text.includes("intake") || text.includes("probate"))
+    ideas.push("Candidates crossing burning sands", "Pledge line silhouette at dawn", "Initiation ceremony candlelight");
+  // R — Rituals
+  if (text.includes("ritual") || text.includes("ceremony") || text.includes("sacred") || text.includes("tradition"))
     ideas.push("Candlelit ceremonial altar", "Sacred symbols on marble", "Stained glass Greek letters");
-  if (text.includes("oath") || text.includes("pledge") || text.includes("commitment"))
+  // O — Oaths
+  if (text.includes("oath") || text.includes("vow") || text.includes("commitment") || text.includes("covenant"))
     ideas.push("Hand on Bible swearing oath", "Parchment with calligraphy vows", "Unity hands circle");
-  if (text.includes("obscur") || text.includes("hidden") || text.includes("mystery"))
+  // O — Obscurity
+  if (text.includes("obscur") || text.includes("hidden") || text.includes("secret") || text.includes("mystery"))
     ideas.push("Fog-covered Gothic cathedral", "Hidden doorway with light", "Ancient manuscript close-up");
-  if (text.includes("prayer") || text.includes("faith") || text.includes("spiritual"))
+  // F — Founders
+  if (text.includes("founder") || text.includes("history") || text.includes("providential") || text.includes("1906"))
+    ideas.push("Vintage sepia campus 1906", "Historical founders portrait style", "Timeline with golden milestones");
+  // PROOF Framework overview
+  if (text.includes("proof") || text.includes("framework"))
+    ideas.push("Golden shield with P.R.O.O.F. letters", "Five pillars on ancient columns", "Framework diagram with divine light");
+  // Faith & spiritual
+  if (text.includes("prayer") || text.includes("faith") || text.includes("spiritual") || text.includes("bible") || text.includes("scripture"))
     ideas.push("Sunrise over mountains prayer", "Chapel with divine light rays", "Praying hands golden glow");
+  // Leadership & service
   if (text.includes("leader") || text.includes("service") || text.includes("community"))
     ideas.push("Diverse group serving community", "Leadership podium spotlight", "Hands building together");
-  if (text.includes("greek") || text.includes("fraternity") || text.includes("sorority"))
+  // Greek life general
+  if (text.includes("greek") || text.includes("fraternity") || text.includes("sorority") || text.includes("d9") || text.includes("divine nine"))
     ideas.push("Gold crest on marble", "Greek columns at sunset", "D9 organization shield mosaic");
   return ideas.length ? ideas.slice(0, 4) : PROMPT_IDEAS_DEFAULT;
 }
