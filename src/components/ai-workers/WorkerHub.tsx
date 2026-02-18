@@ -146,12 +146,12 @@ export function WorkerHub({ onSelectWorker, onViewHistory, onViewShowcase, onVie
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2">
-                  <h3 className="font-semibold text-foreground">PROOF Studio Agent</h3>
+                  <h3 className="font-semibold text-foreground">Script Writing Assistant</h3>
                   <Badge className="bg-primary/10 text-primary text-[10px] border-0 gap-1">
-                    <Crown className="w-3 h-3" /> Ministry
+                    <Crown className="w-3 h-3" /> Pro
                   </Badge>
                 </div>
-                <p className="text-sm text-muted-foreground">Generate AI videos from approved content</p>
+                <p className="text-sm text-muted-foreground">AI-powered video scripts for InVideo.ai</p>
               </div>
               <Button variant="outline" size="sm">Create</Button>
             </CardContent>
