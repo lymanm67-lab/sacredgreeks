@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -105,6 +106,7 @@ const categoryColors: Record<string, string> = {
 };
 
 export function SlideLibrary() {
+  const [, setSearchParams] = useSearchParams();
   const { user } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -289,7 +291,12 @@ export function SlideLibrary() {
                       </p>
                     </div>
                     <div className="flex gap-1.5">
-                      <Button size="sm" variant="outline" className="flex-1 gap-1 text-xs rounded-lg">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="flex-1 gap-1 text-xs rounded-lg"
+                        onClick={() => setSearchParams({ tab: "deck", deckId: deck.id })}
+                      >
                         <Edit2 className="w-3 h-3" /> Edit
                       </Button>
                       <Button
