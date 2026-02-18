@@ -40,7 +40,7 @@ serve(async (req: Request): Promise<Response> => {
 
     // Send notification email to admin
     const emailResponse = await resend.emails.send({
-      from: "Sacred Greeks <onboarding@resend.dev>",
+      from: "Sacred Greeks <noreply@sacredgreekslife.com>",
       to: [adminEmail],
       subject: `🎉 New Webinar Registration: ${webinarTitle}`,
       html: `

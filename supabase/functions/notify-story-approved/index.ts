@@ -108,7 +108,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log(`Sending approval notification to: ${authorEmail}`);
 
     const emailResponse = await resend.emails.send({
-      from: "Sacred Greeks <onboarding@resend.dev>",
+      from: "Sacred Greeks <noreply@sacredgreekslife.com>",
       to: [authorEmail],
       subject: isFeatured 
         ? "Your Healing Story is Now Featured!" 

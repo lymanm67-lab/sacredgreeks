@@ -38,7 +38,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send confirmation email to the user
     const userEmailResponse = await resend.emails.send({
-      from: "Sacred Greeks <onboarding@resend.dev>",
+      from: "Sacred Greeks <noreply@sacredgreekslife.com>",
       to: [email],
       subject: "Welcome to the Sacred Not Sinful Group Coaching Waitlist!",
       html: `
@@ -96,7 +96,7 @@ const handler = async (req: Request): Promise<Response> => {
     const adminEmail = Deno.env.get("ADMIN_EMAIL");
     if (adminEmail) {
       const adminEmailResponse = await resend.emails.send({
-        from: "Sacred Greeks <onboarding@resend.dev>",
+        from: "Sacred Greeks <noreply@sacredgreekslife.com>",
         to: [adminEmail],
         subject: `New Coaching Waitlist Signup: ${fullName}`,
         html: `

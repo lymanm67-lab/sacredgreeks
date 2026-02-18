@@ -124,7 +124,7 @@ const handler = async (req: Request): Promise<Response> => {
     const signupUrl = `${req.headers.get("origin") || "https://sacred-greeks.com"}/auth`;
 
     const emailResponse = await resend.emails.send({
-      from: "Sacred Greeks <onboarding@resend.dev>",
+      from: "Sacred Greeks <noreply@sacredgreekslife.com>",
       to: [recipientEmail],
       subject: `${inviterName} invited you to join Sacred Greeks`,
       html: `
