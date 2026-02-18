@@ -337,26 +337,26 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
       return;
     }
 
-    // All providers use server-side generation
+    // Use Replicate Wan 2.1 async video generation
     setIsLoading(true);
     setJobStatus('submitting');
     try {
       const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/video-studio`, {
         method: 'POST', headers: await getAuthHeader(),
-        body: JSON.stringify({ action: 'submit_video', videoRequestId: videoRequest.id, provider: selectedProvider, outputDimensions }),
+        body: JSON.stringify({ action: 'generate_video', videoRequestId: videoRequest.id, outputDimensions }),
       });
       if (!res.ok) {
         const errBody = await res.json().catch(() => ({}));
-        const errMsg = errBody.error || errBody.details || 'Failed';
-        const isCredits = typeof errMsg === 'string' && errMsg.toLowerCase().includes('credits');
-        throw new Error(isCredits ? 'Video generation failed. Please try again.' : errMsg);
+        throw new Error(errBody.error || errBody.details || 'Failed to start video generation');
       }
-      setJobStatus('submitted');
+      const result = await res.json();
+      setJobStatus('processing');
       setStep('generate');
+      toast({ title: '🎬 Video generation started', description: 'Using Wan 2.1 — typically takes 2-5 minutes.' });
       pollJobStatus(videoRequest.id);
     } catch (e) {
       setJobStatus('failed');
-      setStep('script'); // Go back to script editor instead of blank screen
+      setStep('script');
       toast({ title: 'Video generation failed', description: e instanceof Error ? e.message : 'Failed', variant: 'destructive' });
     } finally { setIsLoading(false); }
   };

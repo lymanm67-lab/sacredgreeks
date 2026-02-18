@@ -7,12 +7,12 @@ const corsHeaders = {
 };
 
 interface VideoStudioRequest {
-  action: 'generate_script' | 'submit_video' | 'check_status' | 'upload_video' | 'generate_image';
+  action: 'generate_script' | 'submit_video' | 'generate_video' | 'check_status' | 'upload_video' | 'generate_image';
   templateType?: string;
   contentIds?: string[];
   videoRequestId?: string;
   jobId?: string;
-  provider?: 'invideo';
+  provider?: 'invideo' | 'replicate';
   customPrompt?: string;
   isCustomContent?: boolean;
   parentRequestId?: string;
@@ -391,6 +391,114 @@ Generate the complete script with scene plan, captions, and metadata.`;
       }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
     }
 
+    // ========== ACTION: GENERATE VIDEO (Replicate Wan 2.1 — async webhook) ==========
+    if (action === 'generate_video') {
+      if (!videoRequestId) {
+        return new Response(JSON.stringify({ error: 'videoRequestId required' }), {
+          status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
+      const REPLICATE_API_KEY = Deno.env.get('REPLICATE_API_KEY');
+      if (!REPLICATE_API_KEY) {
+        return new Response(JSON.stringify({ error: 'Video generation service not configured. REPLICATE_API_KEY is missing.' }), {
+          status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
+      const { data: vr } = await supabase
+        .from('video_requests')
+        .select('*')
+        .eq('id', videoRequestId)
+        .eq('user_id', userId)
+        .single();
+
+      if (!vr) {
+        return new Response(JSON.stringify({ error: 'Video request not found' }), {
+          status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
+      if (vr.status === 'blocked') {
+        return new Response(JSON.stringify({ error: 'Video is blocked due to missing citations', blocked: true }), {
+          status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
+      // Build prompt from script data
+      const scriptJson = vr.script_json || {};
+      const scriptEntries = scriptJson.script || [];
+      const videoPrompt = scriptEntries.map((s: any) => s.visual || s.narration || '').filter(Boolean).join('. ');
+      const finalPrompt = videoPrompt.slice(0, 500) || vr.title || 'A professional video';
+
+      // Determine aspect ratio from outputDimensions
+      let aspectRatio = '16:9';
+      if (body.outputDimensions === '1080x1920') aspectRatio = '9:16';
+      else if (body.outputDimensions === '1080x1080') aspectRatio = '1:1';
+
+      // Build webhook URL
+      const webhookUrl = `${supabaseUrl}/functions/v1/video-webhook`;
+
+      // Call Replicate API to create a prediction
+      const replicatePayload: any = {
+        version: 'ea63a227bc87fcfaf21b71dcd6efe07e18c81c4cd89e4cc44a1692a5b225a949',
+        input: {
+          prompt: finalPrompt,
+          aspect_ratio: aspectRatio,
+          resolution: '480p',
+          frame_num: 81,
+          sample_steps: 30,
+        },
+        webhook: webhookUrl,
+        webhook_events_filter: ['completed'],
+      };
+
+      // If image_to_video mode, add the image
+      if (vr.generation_mode === 'image_to_video' && vr.input_image_url) {
+        // Wan 2.1 1.3b doesn't support image input; we use text prompt referencing the visual style
+        // For true image-to-video, you'd use a different model version
+        console.log('Note: Wan 2.1 1.3b is text-to-video only. Using prompt-based generation.');
+      }
+
+      console.log('Submitting to Replicate:', JSON.stringify({ prompt: finalPrompt, aspectRatio }));
+
+      const replicateRes = await fetch('https://api.replicate.com/v1/predictions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${REPLICATE_API_KEY}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'respond-async',
+        },
+        body: JSON.stringify(replicatePayload),
+      });
+
+      if (!replicateRes.ok) {
+        const errText = await replicateRes.text();
+        console.error('Replicate API error:', replicateRes.status, errText);
+        return new Response(JSON.stringify({ error: 'Video generation failed', details: `Replicate API error [${replicateRes.status}]: ${errText}` }), {
+          status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
+      const prediction = await replicateRes.json();
+      console.log('Replicate prediction created:', prediction.id, prediction.status);
+
+      // Update the video request with the prediction ID and set status to processing
+      await supabase.from('video_requests').update({
+        status: 'processing',
+        provider: 'replicate',
+        provider_model: 'wan-2.1',
+        provider_job_id: prediction.id,
+      }).eq('id', videoRequestId);
+
+      return new Response(JSON.stringify({
+        provider: 'replicate',
+        status: 'processing',
+        predictionId: prediction.id,
+        message: 'Video generation started with Wan 2.1. This typically takes 2-5 minutes.',
+      }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+    }
+
     // ========== ACTION: CHECK STATUS ==========
     if (action === 'check_status') {
       if (!videoRequestId) {
@@ -401,11 +509,15 @@ Generate the complete script with scene plan, captions, and metadata.`;
 
       const { data: vr } = await supabase
         .from('video_requests')
-        .select('status')
+        .select('status, video_url, blocked_reason')
         .eq('id', videoRequestId)
         .single();
 
-      return new Response(JSON.stringify({ status: vr?.status || 'unknown' }), {
+      return new Response(JSON.stringify({
+        status: vr?.status || 'unknown',
+        videoUrl: vr?.video_url || null,
+        error: vr?.blocked_reason || null,
+      }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
     }

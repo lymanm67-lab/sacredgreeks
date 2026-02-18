@@ -248,8 +248,19 @@ export function StudioSceneEditor({
       )}
 
       {/* Action buttons */}
-      {onExportToInVideo && (
-        <div className="flex flex-col sm:flex-row gap-3">
+      <div className="flex flex-col sm:flex-row gap-3">
+        <Button
+          onClick={onSubmitVideo}
+          disabled={isLoading || videoRequest?.status === 'blocked'}
+          className="flex-1 gap-2 h-12 text-base rounded-2xl shadow-lg"
+          size="lg"
+        >
+          {isLoading
+            ? <><Loader2 className="w-5 h-5 animate-spin" /> Generating...</>
+            : <><Play className="w-5 h-5" /> Generate Video (Wan 2.1)</>
+          }
+        </Button>
+        {onExportToInVideo && (
           <Button
             onClick={onExportToInVideo}
             variant="outline"
@@ -258,8 +269,8 @@ export function StudioSceneEditor({
           >
             <ExternalLink className="w-5 h-5" /> Export to InVideo.ai
           </Button>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
