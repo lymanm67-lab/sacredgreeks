@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { SlideLibrary } from "@/components/present/SlideLibrary";
+import { SlideDeckEditor } from "@/components/present/SlideDeckEditor";
 
 const tabs = [
   { value: "library", label: "Slide Library", icon: Layers },
@@ -77,12 +78,24 @@ export default function Present() {
         </TabsContent>
 
         <TabsContent value="deck" className="mt-6">
-          <ComingSoonTab
-            icon={Presentation}
-            label="Slide Deck Builder"
-            color="text-violet-500"
-            description="Create custom slide decks from templates or from scratch. Drag and drop slides, add notes, and organize your presentation flow."
-          />
+          {searchParams.get("deckId") ? (
+            <SlideDeckEditor
+              deckId={searchParams.get("deckId")!}
+              onBack={() => {
+                const params = new URLSearchParams(searchParams);
+                params.delete("deckId");
+                params.set("tab", "library");
+                setSearchParams(params);
+              }}
+            />
+          ) : (
+            <ComingSoonTab
+              icon={Presentation}
+              label="Slide Deck Builder"
+              color="text-violet-500"
+              description="Select a deck from the Slide Library to start editing."
+            />
+          )}
         </TabsContent>
 
         <TabsContent value="present" className="mt-6">
