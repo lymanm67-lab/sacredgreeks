@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { SlideLibrary } from "@/components/present/SlideLibrary";
 import { SlideDeckEditor } from "@/components/present/SlideDeckEditor";
+import { LivePolls } from "@/components/present/LivePolls";
 
 const tabs = [
   { value: "library", label: "Slide Library", icon: Layers },
@@ -69,12 +70,7 @@ export default function Present() {
         </TabsContent>
 
         <TabsContent value="polls" className="mt-6">
-          <ComingSoonTab
-            icon={BarChart3}
-            label="Live Audience Polls"
-            color="text-cyan-500"
-            description="Engage your audience in real-time with interactive polls and Q&A. Perfect for chapter meetings, workshops, and keynote presentations."
-          />
+          <LivePolls />
         </TabsContent>
 
         <TabsContent value="deck" className="mt-6">
