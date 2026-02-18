@@ -85,12 +85,23 @@ export default function Present() {
               }}
             />
           ) : (
-            <ComingSoonTab
-              icon={Presentation}
-              label="Slide Deck Builder"
-              color="text-violet-500"
-              description="Select a deck from the Slide Library to start editing."
-            />
+            <Card>
+              <CardContent className="text-center py-16 space-y-4">
+                <div className="w-16 h-16 rounded-2xl bg-violet-500/10 flex items-center justify-center mx-auto">
+                  <Presentation className="w-8 h-8 text-violet-500" />
+                </div>
+                <h3 className="text-lg font-semibold text-foreground">Slide Deck Builder</h3>
+                <p className="text-muted-foreground max-w-md mx-auto">
+                  Select a deck from the Slide Library to start editing, or create a new one.
+                </p>
+                <button
+                  onClick={() => setSearchParams({ tab: "library" })}
+                  className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
+                >
+                  <Layers className="w-4 h-4" /> Go to Slide Library
+                </button>
+              </CardContent>
+            </Card>
           )}
         </TabsContent>
 
