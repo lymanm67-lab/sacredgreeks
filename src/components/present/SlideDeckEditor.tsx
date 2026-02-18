@@ -5,7 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import {
   ArrowLeft, Plus, Trash2, ChevronUp, ChevronDown, Save, GripVertical,
-  Type, AlignLeft, Layout, Copy,
+  Type, AlignLeft, Layout, Copy, Wand2, Loader2, ImageIcon, X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -107,6 +107,80 @@ function ScaledSlide({
         <div className={cn("absolute bottom-6 right-10 text-lg", hasImage ? "text-white/50" : "text-muted-foreground/50")}>
           {index + 1}
         </div>
+      </div>
+    </div>
+  );
+}
+
+function SlideImageSection({
+  imageUrl,
+  onImageChange,
+}: {
+  imageUrl: string | null;
+  onImageChange: (url: string | null) => void;
+}) {
+  const [aiPrompt, setAiPrompt] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
+  const { toast } = useToast();
+
+  const generateImage = async () => {
+    if (!aiPrompt.trim()) return;
+    setIsGenerating(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("video-studio", {
+        body: { action: "generate_image", imagePrompt: aiPrompt, imageModel: "fast" },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      if (data?.imageUrl) {
+        onImageChange(data.imageUrl);
+        toast({ title: "Image generated!" });
+        setAiPrompt("");
+      }
+    } catch (err: any) {
+      toast({ title: "Generation failed", description: err.message, variant: "destructive" });
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  return (
+    <div>
+      <label className="text-xs font-medium text-muted-foreground flex items-center gap-1 mb-1">
+        <ImageIcon className="w-3 h-3" /> Background Image
+      </label>
+      {imageUrl && (
+        <div className="relative rounded-lg overflow-hidden mb-2 border border-border/50">
+          <img src={imageUrl} alt="" className="w-full h-20 object-cover" />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-1 right-1 w-5 h-5 bg-black/50 hover:bg-black/70 text-white rounded-full"
+            onClick={() => onImageChange(null)}
+          >
+            <X className="w-3 h-3" />
+          </Button>
+        </div>
+      )}
+      <div className="flex gap-1.5">
+        <Input
+          value={aiPrompt}
+          onChange={(e) => setAiPrompt(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && !isGenerating && generateImage()}
+          placeholder="Describe an image..."
+          className="h-7 text-xs flex-1"
+          disabled={isGenerating}
+        />
+        <Button
+          size="sm"
+          variant="outline"
+          className="h-7 text-xs gap-1 px-2 shrink-0"
+          onClick={generateImage}
+          disabled={!aiPrompt.trim() || isGenerating}
+        >
+          {isGenerating ? <Loader2 className="w-3 h-3 animate-spin" /> : <Wand2 className="w-3 h-3" />}
+          AI
+        </Button>
       </div>
     </div>
   );
@@ -380,6 +454,12 @@ export function SlideDeckEditor({
                 className="text-xs"
               />
             </div>
+
+            {/* Slide Background Image */}
+            <SlideImageSection
+              imageUrl={currentSlide.image_url || null}
+              onImageChange={(url) => updateSlide(activeIndex, { image_url: url || undefined })}
+            />
 
             <div>
               <label className="text-xs font-medium text-muted-foreground mb-1 block">
