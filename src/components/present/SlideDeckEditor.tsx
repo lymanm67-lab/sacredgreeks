@@ -16,7 +16,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 
-import type { SlideData } from "./slideTypes";
+import type { SlideData, ImageFit } from "./slideTypes";
 
 interface SlideDeck {
   id: string;
@@ -81,7 +81,14 @@ function ScaledSlide({
       >
         {hasImage && (
           <div className="absolute inset-0">
-            <img src={slide.image_url} alt="" className="w-full h-full object-cover" />
+            <img
+              src={slide.image_url}
+              alt=""
+              className="w-full h-full"
+              style={{
+                objectFit: slide.image_fit === "stretch" ? "fill" : (slide.image_fit || "cover"),
+              }}
+            />
             <div className="absolute inset-0 bg-black/50" />
           </div>
         )}
@@ -167,12 +174,16 @@ function getPromptIdeas(title: string, content: string): string[] {
 
 function SlideImageSection({
   imageUrl,
+  imageFit,
   onImageChange,
+  onImageFitChange,
   slideTitle,
   slideContent,
 }: {
   imageUrl: string | null;
+  imageFit: ImageFit;
   onImageChange: (url: string | null) => void;
+  onImageFitChange: (fit: ImageFit) => void;
   slideTitle: string;
   slideContent: string;
 }) {
@@ -201,22 +212,46 @@ function SlideImageSection({
     }
   };
 
+  const FIT_OPTIONS: { value: ImageFit; label: string }[] = [
+    { value: "cover", label: "Cover" },
+    { value: "contain", label: "Contain" },
+    { value: "stretch", label: "Stretch" },
+  ];
+
   return (
     <div>
       <label className="text-xs font-medium text-muted-foreground flex items-center gap-1 mb-1">
         <ImageIcon className="w-3 h-3" /> Background Image
       </label>
       {imageUrl && (
-        <div className="relative rounded-lg overflow-hidden mb-2 border border-border/50">
-          <img src={imageUrl} alt="" className="w-full h-20 object-cover" />
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute top-1 right-1 w-5 h-5 bg-black/50 hover:bg-black/70 text-white rounded-full"
-            onClick={() => onImageChange(null)}
-          >
-            <X className="w-3 h-3" />
-          </Button>
+        <div className="mb-2 space-y-1.5">
+          <div className="relative rounded-lg overflow-hidden border border-border/50">
+            <img src={imageUrl} alt="" className="w-full h-20 object-cover" />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute top-1 right-1 w-5 h-5 bg-black/50 hover:bg-black/70 text-white rounded-full"
+              onClick={() => onImageChange(null)}
+            >
+              <X className="w-3 h-3" />
+            </Button>
+          </div>
+          <div className="flex gap-1">
+            {FIT_OPTIONS.map((opt) => (
+              <button
+                key={opt.value}
+                onClick={() => onImageFitChange(opt.value)}
+                className={cn(
+                  "flex-1 px-2 py-1 rounded text-[10px] font-medium transition-colors border",
+                  imageFit === opt.value
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-muted/50 text-muted-foreground border-border/50 hover:bg-muted"
+                )}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
         </div>
       )}
       <div className="flex gap-1.5">
@@ -528,7 +563,9 @@ export function SlideDeckEditor({
             {/* Slide Background Image */}
             <SlideImageSection
               imageUrl={currentSlide.image_url || null}
+              imageFit={currentSlide.image_fit || "cover"}
               onImageChange={(url) => updateSlide(activeIndex, { image_url: url || undefined })}
+              onImageFitChange={(fit) => updateSlide(activeIndex, { image_fit: fit })}
               slideTitle={currentSlide.title}
               slideContent={currentSlide.content}
             />

@@ -37,7 +37,12 @@ function ScaledSlide({
       >
         {hasImage && (
           <div className="absolute inset-0">
-            <img src={slide.image_url} alt="" className="w-full h-full object-cover" />
+            <img
+              src={slide.image_url}
+              alt=""
+              className="w-full h-full"
+              style={{ objectFit: slide.image_fit === "stretch" ? "fill" : (slide.image_fit || "cover") }}
+            />
             <div className="absolute inset-0 bg-black/50" />
           </div>
         )}
