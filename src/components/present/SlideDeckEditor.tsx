@@ -112,12 +112,40 @@ function ScaledSlide({
   );
 }
 
+const PROMPT_IDEAS_DEFAULT = ["Abstract gradient background", "Elegant dark texture", "Soft bokeh lights", "Minimalist geometric shapes"];
+
+function getPromptIdeas(title: string, content: string): string[] {
+  const text = `${title} ${content}`.toLowerCase();
+  const ideas: string[] = [];
+  if (text.includes("proof") || text.includes("framework"))
+    ideas.push("Golden shield with PROOF letters", "Ancient scroll with divine light", "Five pillars of faith illustration");
+  if (text.includes("providential") || text.includes("history") || text.includes("founder"))
+    ideas.push("Vintage sepia campus 1906", "Historical founders portrait style", "Timeline with golden milestones");
+  if (text.includes("ritual") || text.includes("ceremony") || text.includes("sacred"))
+    ideas.push("Candlelit ceremonial altar", "Sacred symbols on marble", "Stained glass Greek letters");
+  if (text.includes("oath") || text.includes("pledge") || text.includes("commitment"))
+    ideas.push("Hand on Bible swearing oath", "Parchment with calligraphy vows", "Unity hands circle");
+  if (text.includes("obscur") || text.includes("hidden") || text.includes("mystery"))
+    ideas.push("Fog-covered Gothic cathedral", "Hidden doorway with light", "Ancient manuscript close-up");
+  if (text.includes("prayer") || text.includes("faith") || text.includes("spiritual"))
+    ideas.push("Sunrise over mountains prayer", "Chapel with divine light rays", "Praying hands golden glow");
+  if (text.includes("leader") || text.includes("service") || text.includes("community"))
+    ideas.push("Diverse group serving community", "Leadership podium spotlight", "Hands building together");
+  if (text.includes("greek") || text.includes("fraternity") || text.includes("sorority"))
+    ideas.push("Gold crest on marble", "Greek columns at sunset", "D9 organization shield mosaic");
+  return ideas.length ? ideas.slice(0, 4) : PROMPT_IDEAS_DEFAULT;
+}
+
 function SlideImageSection({
   imageUrl,
   onImageChange,
+  slideTitle,
+  slideContent,
 }: {
   imageUrl: string | null;
   onImageChange: (url: string | null) => void;
+  slideTitle: string;
+  slideContent: string;
 }) {
   const [aiPrompt, setAiPrompt] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
@@ -184,7 +212,7 @@ function SlideImageSection({
       </div>
       {!aiPrompt && (
         <div className="flex flex-wrap gap-1 mt-1.5">
-          {["Stained glass Greek letters", "Gold crest on marble", "Campus at sunset", "Abstract unity pattern", "Sacred geometry gold", "Mountain sunrise prayer"].map((idea) => (
+          {getPromptIdeas(slideTitle, slideContent).map((idea) => (
             <button
               key={idea}
               onClick={() => setAiPrompt(idea)}
@@ -472,6 +500,8 @@ export function SlideDeckEditor({
             <SlideImageSection
               imageUrl={currentSlide.image_url || null}
               onImageChange={(url) => updateSlide(activeIndex, { image_url: url || undefined })}
+              slideTitle={currentSlide.title}
+              slideContent={currentSlide.content}
             />
 
             <div>
