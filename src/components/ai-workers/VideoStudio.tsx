@@ -24,7 +24,7 @@ const DEMO_VIDEOS = [
     description: 'A 30-second PROOF objection response about secret oaths in Greek organizations.',
     template_type: 'objection_short',
     status: 'completed',
-    provider: 'runway',
+    provider: 'invideo',
     generation_mode: 'text_to_video',
     created_at: new Date(Date.now() - 2 * 86400000).toISOString(),
     tags: ['oaths', 'PROOF', 'objection'],
@@ -53,7 +53,7 @@ const DEMO_VIDEOS = [
     description: 'A mini teaching exploring the faith roots and Masonic connections of Greek letter organizations.',
     template_type: 'mini_teaching',
     status: 'completed',
-    provider: 'replicate',
+    provider: 'invideo',
     generation_mode: 'text_to_video',
     created_at: new Date(Date.now() - 5 * 86400000).toISOString(),
     tags: ['founders', 'history', 'masonry', 'teaching'],
@@ -72,7 +72,7 @@ const DEMO_VIDEOS = [
     description: 'A conversation prep video for discussing faith concerns with a close sorority sister.',
     template_type: 'conversation_prep',
     status: 'completed',
-    provider: 'shotstack',
+    provider: 'invideo',
     generation_mode: 'text_to_video',
     created_at: new Date(Date.now() - 1 * 86400000).toISOString(),
     tags: ['conversation', 'sorority', 'relationships'],
@@ -349,7 +349,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
         const errBody = await res.json().catch(() => ({}));
         const errMsg = errBody.error || errBody.details || 'Failed';
         const isCredits = typeof errMsg === 'string' && errMsg.toLowerCase().includes('credits');
-        throw new Error(isCredits ? 'Your Runway account has no credits remaining. Please add credits at runway.dev or switch to Replicate/ShotStack.' : errMsg);
+        throw new Error(isCredits ? 'Video generation failed. Please try again.' : errMsg);
       }
       setJobStatus('submitted');
       setStep('generate');

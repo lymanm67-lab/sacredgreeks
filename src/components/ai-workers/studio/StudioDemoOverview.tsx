@@ -50,11 +50,11 @@ const DEMO_PROCESS_STEPS = [
   {
     step: 5,
     title: 'Generate & Publish',
-    description: 'Choose a provider (Runway, Replicate, or ShotStack), hit Generate, and your video renders in the cloud. Auto-captions and transcripts included.',
+    description: 'Generate your AI script and storyboard, then export to InVideo.ai to render your video. Auto-captions and transcripts included.',
     icon: Clapperboard,
     color: 'text-rose-500',
     bgColor: 'bg-rose-500/10',
-    narration: `Step five: Generate and publish. Choose your rendering provider — Runway Gen-4 for AI-generated video, Replicate for models like MiniMax or Luma Ray, or ShotStack for timeline-based composition. Hit Generate and the system submits the job to the cloud. You can leave the page and come back — your video will be waiting in your library with automated SRT captions and a full transcript. From there, you can publish directly to YouTube.`,
+    narration: `Step five: Generate and publish. The system creates your AI script and storyboard with scene-by-scene direction, narration, and citations. Then export to InVideo.ai — the script is copied to your clipboard and you paste it into their editor to render your video. Your storyboard is saved in your library with automated SRT captions and a full transcript.`,
   },
 ];
 
