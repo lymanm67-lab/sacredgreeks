@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CheckCircle, AlertTriangle, Loader2, RotateCcw, Youtube } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
 import { YouTubeUploadDialog } from '@/components/youtube/YouTubeUploadDialog';
 
 interface StudioGenerationProgressProps {
@@ -15,11 +16,56 @@ interface StudioGenerationProgressProps {
   videoRequestId?: string;
 }
 
+const STAGES = [
+  { label: 'Submitting request…', minPct: 0, maxPct: 10 },
+  { label: 'Warming up Wan 2.1 model…', minPct: 10, maxPct: 25 },
+  { label: 'Generating frames…', minPct: 25, maxPct: 70 },
+  { label: 'Compositing & encoding…', minPct: 70, maxPct: 90 },
+  { label: 'Finalizing video…', minPct: 90, maxPct: 98 },
+];
+
 export function StudioGenerationProgress({
   jobStatus, videoUrl, onReset, onRegenerate, onBackToScript,
   videoTitle, videoDescription, videoRequestId,
 }: StudioGenerationProgressProps) {
   const [ytDialogOpen, setYtDialogOpen] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [elapsed, setElapsed] = useState(0);
+  const [stageIdx, setStageIdx] = useState(0);
+
+  const isProcessing = jobStatus !== 'completed' && jobStatus !== 'failed';
+
+  // Simulate progress over ~5 minutes
+  useEffect(() => {
+    if (!isProcessing) {
+      if (jobStatus === 'completed') setProgress(100);
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setElapsed(prev => prev + 1);
+      setProgress(prev => {
+        // Advance ~0.3% per second, slowing near the end
+        const target = Math.min(98, prev + (prev < 25 ? 0.5 : prev < 70 ? 0.35 : 0.15));
+        return target;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isProcessing, jobStatus]);
+
+  // Update stage based on progress
+  useEffect(() => {
+    const idx = STAGES.findIndex(s => progress >= s.minPct && progress < s.maxPct);
+    if (idx >= 0) setStageIdx(idx);
+    else if (progress >= 98) setStageIdx(STAGES.length - 1);
+  }, [progress]);
+
+  const formatTime = (s: number) => {
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return `${m}:${sec.toString().padStart(2, '0')}`;
+  };
 
   return (
     <div className="max-w-lg mx-auto text-center py-12 space-y-6">
@@ -77,13 +123,36 @@ export function StudioGenerationProgress({
             <Loader2 className="w-10 h-10 text-primary animate-spin" />
           </div>
           <h3 className="text-2xl font-bold">Generating Video...</h3>
-          <p className="text-muted-foreground">This may take 1–5 minutes. You can leave and come back.</p>
-          <div className="flex items-center justify-center gap-3">
-            <Badge variant="outline" className="animate-pulse">{jobStatus || 'Processing'}</Badge>
+          <p className="text-sm text-muted-foreground">
+            {STAGES[stageIdx]?.label || 'Processing…'}
+          </p>
+
+          {/* Progress bar */}
+          <div className="w-full max-w-sm mx-auto space-y-2">
+            <Progress value={progress} className="h-2.5" />
+            <div className="flex justify-between text-xs text-muted-foreground">
+              <span>{Math.round(progress)}%</span>
+              <span>Elapsed: {formatTime(elapsed)}</span>
+            </div>
           </div>
-          <div className="w-full max-w-xs mx-auto h-1.5 bg-muted rounded-full overflow-hidden">
-            <div className="h-full bg-primary rounded-full animate-pulse" style={{ width: '60%' }} />
+
+          {/* Stage indicators */}
+          <div className="flex justify-center gap-1.5 mt-2">
+            {STAGES.map((stage, i) => (
+              <div
+                key={i}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  i < stageIdx ? 'bg-primary' : i === stageIdx ? 'bg-primary animate-pulse' : 'bg-muted'
+                }`}
+                title={stage.label}
+              />
+            ))}
           </div>
+
+          <p className="text-xs text-muted-foreground mt-4">
+            Typically takes 2–5 minutes. You can leave and come back.
+          </p>
+          <Badge variant="outline" className="text-xs">{jobStatus || 'Processing'}</Badge>
         </>
       )}
     </div>
