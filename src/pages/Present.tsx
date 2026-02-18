@@ -12,9 +12,9 @@ import { PresentAudioGuide } from "@/components/present/PresentAudioGuide";
 
 const tabs = [
   { value: "library", label: "Slide Library", icon: Layers },
-  { value: "polls", label: "Live Polls", icon: BarChart3 },
   { value: "deck", label: "Slide Deck", icon: Presentation },
   { value: "present", label: "Present", icon: Monitor },
+  { value: "polls", label: "Live Polls", icon: BarChart3 },
   { value: "preview", label: "Live Preview", icon: Eye },
 ];
 
