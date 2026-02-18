@@ -209,12 +209,14 @@ function SlideImageSection({
   const [isGenerating, setIsGenerating] = useState(false);
   const { toast } = useToast();
 
-  const generateImage = async () => {
-    if (!aiPrompt.trim()) return;
+  const generateImage = async (promptOverride?: string) => {
+    const prompt = promptOverride || aiPrompt;
+    if (!prompt.trim()) return;
+    if (promptOverride) setAiPrompt(promptOverride);
     setIsGenerating(true);
     try {
       const { data, error } = await supabase.functions.invoke("video-studio", {
-        body: { action: "generate_image", imagePrompt: aiPrompt, imageModel: "fast" },
+        body: { action: "generate_image", imagePrompt: prompt, imageModel: "fast" },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
@@ -304,7 +306,7 @@ function SlideImageSection({
           size="sm"
           variant="outline"
           className="h-7 text-xs gap-1 px-2 shrink-0"
-          onClick={generateImage}
+          onClick={() => generateImage()}
           disabled={!aiPrompt.trim() || isGenerating}
         >
           {isGenerating ? <Loader2 className="w-3 h-3 animate-spin" /> : <Wand2 className="w-3 h-3" />}
@@ -316,8 +318,9 @@ function SlideImageSection({
           {getPromptIdeas(slideTitle, slideContent).map((idea) => (
             <button
               key={idea}
-              onClick={() => setAiPrompt(idea)}
-              className="px-2 py-0.5 rounded-full text-[10px] bg-muted hover:bg-primary/10 hover:text-primary text-muted-foreground transition-colors"
+              onClick={() => generateImage(idea)}
+              disabled={isGenerating}
+              className="px-2 py-0.5 rounded-full text-[10px] bg-muted hover:bg-primary/10 hover:text-primary text-muted-foreground transition-colors disabled:opacity-50"
             >
               {idea}
             </button>
