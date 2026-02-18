@@ -182,6 +182,19 @@ function SlideImageSection({
           AI
         </Button>
       </div>
+      {!aiPrompt && (
+        <div className="flex flex-wrap gap-1 mt-1.5">
+          {["Stained glass Greek letters", "Gold crest on marble", "Campus at sunset", "Abstract unity pattern", "Sacred geometry gold", "Mountain sunrise prayer"].map((idea) => (
+            <button
+              key={idea}
+              onClick={() => setAiPrompt(idea)}
+              className="px-2 py-0.5 rounded-full text-[10px] bg-muted hover:bg-primary/10 hover:text-primary text-muted-foreground transition-colors"
+            >
+              {idea}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
