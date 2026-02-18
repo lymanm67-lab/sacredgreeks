@@ -76,8 +76,9 @@ export function usePuter() {
       const objectUrl = URL.createObjectURL(blob);
       setProgress('');
       return { blob, objectUrl };
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Puter video generation failed';
+    } catch (err: any) {
+      console.error('Puter txt2vid error:', err);
+      const msg = err instanceof Error ? err.message : (typeof err === 'string' ? err : (err?.message || err?.error || JSON.stringify(err) || 'Puter video generation failed'));
       setError(msg);
       throw err;
     } finally {
@@ -106,8 +107,9 @@ export function usePuter() {
 
       setProgress('');
       return { blob, objectUrl };
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Puter image-to-video failed';
+    } catch (err: any) {
+      console.error('Puter img2vid error:', err);
+      const msg = err instanceof Error ? err.message : (typeof err === 'string' ? err : (err?.message || err?.error || JSON.stringify(err) || 'Puter image-to-video failed'));
       setError(msg);
       throw err;
     } finally {
