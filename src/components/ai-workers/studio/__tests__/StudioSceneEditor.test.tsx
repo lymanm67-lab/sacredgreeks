@@ -26,7 +26,7 @@ const mockVideoRequest = {
 const defaultProps = {
   scriptData: mockScriptData,
   videoRequest: mockVideoRequest,
-  selectedProvider: 'shotstack',
+  selectedProvider: 'invideo',
   onBack: vi.fn(),
   onRegenerate: vi.fn(),
   onSubmitVideo: vi.fn(),

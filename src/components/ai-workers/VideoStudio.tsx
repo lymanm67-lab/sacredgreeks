@@ -87,7 +87,7 @@ const DEMO_VIDEOS = [
 ];
 
 type TemplateType = 'objection_short' | 'mini_teaching' | 'conversation_prep' | 'weekly_devotional' | 'custom';
-type ProviderType = 'runway' | 'replicate' | 'shotstack' | 'invideo';
+type ProviderType = 'invideo';
 type GenerationMode = 'text_to_video' | 'image_to_video' | 'video_upload' | 'generate_image';
 type Step = 'prompt' | 'content' | 'script' | 'generate' | 'library';
 
@@ -300,7 +300,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
           isCustomContent: isCustom,
           customPrompt: prompt || undefined,
           provider: selectedProvider,
-          providerModel: selectedProvider === 'replicate' ? selectedModel : undefined,
+           providerModel: undefined,
           parentRequestId,
           generationMode,
           inputImageUrl: generationMode === 'image_to_video' ? uploadedImageUrl : undefined,
@@ -343,7 +343,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
     try {
       const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/video-studio`, {
         method: 'POST', headers: await getAuthHeader(),
-        body: JSON.stringify({ action: 'submit_video', videoRequestId: videoRequest.id, provider: selectedProvider, providerModel: selectedProvider === 'replicate' ? selectedModel : undefined, outputDimensions }),
+        body: JSON.stringify({ action: 'submit_video', videoRequestId: videoRequest.id, provider: selectedProvider, outputDimensions }),
       });
       if (!res.ok) {
         const errBody = await res.json().catch(() => ({}));

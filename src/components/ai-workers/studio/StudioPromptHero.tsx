@@ -17,7 +17,7 @@ const TONE_OPTIONS = [
 ];
 
 type GenerationMode = 'text_to_video' | 'image_to_video' | 'video_upload' | 'generate_image';
-type ProviderType = 'runway' | 'replicate' | 'shotstack' | 'invideo';
+type ProviderType = 'invideo';
 type StudioView = 'storyboard' | 'create_video' | 'image_to_video' | 'upload_edit' | 'ai_images' | 'library' | 'admin';
 
 const SUGGESTIONS = [
@@ -233,9 +233,6 @@ export function StudioPromptHero({
                     <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="invideo">InVideo.ai</SelectItem>
-                      <SelectItem value="shotstack">ShotStack</SelectItem>
-                      <SelectItem value="replicate">Replicate</SelectItem>
-                      <SelectItem value="runway">Runway Gen-4</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -424,25 +421,9 @@ export function StudioPromptHero({
                     <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="invideo">InVideo.ai</SelectItem>
-                      <SelectItem value="shotstack">ShotStack</SelectItem>
-                      <SelectItem value="runway">Runway Gen-4</SelectItem>
-                      <SelectItem value="replicate">Replicate</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
-                {selectedProvider === 'replicate' && (
-                  <div className="space-y-1.5">
-                    <Label className="text-sm font-medium">Model</Label>
-                    <Select value={selectedModel} onValueChange={onModelChange}>
-                      <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
-                      <SelectContent>
-                        {REPLICATE_MODELS.map(m => (
-                          <SelectItem key={m.id} value={m.id}>{m.label}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                )}
               </div>
               <div className="space-y-1.5">
                 <Label className="text-sm font-medium">Motion Description</Label>

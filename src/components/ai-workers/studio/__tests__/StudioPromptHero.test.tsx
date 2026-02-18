@@ -10,7 +10,7 @@ const defaultProps = {
   onGenerate: vi.fn(),
   isLoading: false,
   isAdmin: false,
-  selectedProvider: 'shotstack' as const,
+  selectedProvider: 'invideo' as const,
   onProviderChange: vi.fn(),
   selectedModel: 'minimax/video-01-live',
   onModelChange: vi.fn(),
