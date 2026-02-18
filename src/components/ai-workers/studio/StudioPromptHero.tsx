@@ -17,7 +17,7 @@ const TONE_OPTIONS = [
 ];
 
 type GenerationMode = 'text_to_video' | 'image_to_video' | 'video_upload' | 'generate_image';
-type ProviderType = 'invideo' | 'replicate';
+type ProviderType = 'invideo';
 type StudioView = 'storyboard' | 'create_video' | 'image_to_video' | 'upload_edit' | 'ai_images' | 'library' | 'admin';
 
 const SUGGESTIONS = [
@@ -227,7 +227,6 @@ export function StudioPromptHero({
                     <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="invideo">InVideo.ai (Export)</SelectItem>
-                      <SelectItem value="replicate">Wan 2.1 (Replicate)</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
