@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { SlideLibrary } from "@/components/present/SlideLibrary";
 import { SlideDeckEditor } from "@/components/present/SlideDeckEditor";
 import { LivePolls } from "@/components/present/LivePolls";
+import { PresentMode } from "@/components/present/PresentMode";
 
 const tabs = [
   { value: "library", label: "Slide Library", icon: Layers },
@@ -106,12 +107,7 @@ export default function Present() {
         </TabsContent>
 
         <TabsContent value="present" className="mt-6">
-          <ComingSoonTab
-            icon={Monitor}
-            label="Presentation Mode"
-            color="text-amber-500"
-            description="Enter full-screen presentation mode with speaker notes, slide navigation, and audience controls. Share your screen and present with confidence."
-          />
+          <PresentMode />
         </TabsContent>
 
         <TabsContent value="preview" className="mt-6">
