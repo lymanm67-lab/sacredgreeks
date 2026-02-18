@@ -1931,6 +1931,92 @@ export type Database = {
           },
         ]
       }
+      live_poll_responses: {
+        Row: {
+          created_at: string
+          id: string
+          is_answered: boolean
+          is_moderated: boolean
+          option_index: number | null
+          poll_id: string
+          question_text: string | null
+          upvotes: number
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_answered?: boolean
+          is_moderated?: boolean
+          option_index?: number | null
+          poll_id: string
+          question_text?: string | null
+          upvotes?: number
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_answered?: boolean
+          is_moderated?: boolean
+          option_index?: number | null
+          poll_id?: string
+          question_text?: string | null
+          upvotes?: number
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "live_poll_responses_poll_id_fkey"
+            columns: ["poll_id"]
+            isOneToOne: false
+            referencedRelation: "live_polls"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      live_polls: {
+        Row: {
+          allow_multiple: boolean
+          created_at: string
+          id: string
+          is_active: boolean
+          is_anonymous: boolean
+          options_json: Json
+          poll_type: string
+          share_code: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          allow_multiple?: boolean
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          is_anonymous?: boolean
+          options_json?: Json
+          poll_type?: string
+          share_code?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          allow_multiple?: boolean
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          is_anonymous?: boolean
+          options_json?: Json
+          poll_type?: string
+          share_code?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       media_inquiries: {
         Row: {
           admin_notes: string | null
