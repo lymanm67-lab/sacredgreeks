@@ -3074,6 +3074,48 @@ export type Database = {
         }
         Relationships: []
       }
+      slide_decks: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          is_public: boolean
+          is_template: boolean
+          slides_json: Json
+          template_category: string | null
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_public?: boolean
+          is_template?: boolean
+          slides_json?: Json
+          template_category?: string | null
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_public?: boolean
+          is_template?: boolean
+          slides_json?: Json
+          template_category?: string | null
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       speaking_requests: {
         Row: {
           additional_details: string | null
