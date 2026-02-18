@@ -16,7 +16,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 
-import type { SlideData, ImageFit } from "./slideTypes";
+import type { SlideData, ImageFit, ImageLayer } from "./slideTypes";
 
 interface SlideDeck {
   id: string;
@@ -79,7 +79,7 @@ function ScaledSlide({
           transformOrigin: "center center",
         }}
       >
-        {hasImage && (
+        {hasImage && (slide.image_layer || "behind") === "behind" && (
           <div className="absolute inset-0">
             <img
               src={slide.image_url}
@@ -93,22 +93,36 @@ function ScaledSlide({
           </div>
         )}
         {slide.layout === "title" ? (
-          <div className={cn("flex flex-col items-center justify-center h-full px-40 text-center relative z-10", hasImage && "text-white")}>
-            <h1 className={cn("text-7xl font-bold mb-8", hasImage ? "text-white drop-shadow-lg" : "text-foreground")}>{slide.title || "Untitled"}</h1>
-            <p className={cn("text-3xl whitespace-pre-wrap", hasImage ? "text-white/90 drop-shadow" : "text-muted-foreground")}>{slide.content}</p>
+          <div className={cn("flex flex-col items-center justify-center h-full px-40 text-center relative z-10", hasImage && (slide.image_layer || "behind") === "behind" && "text-white")}>
+            <h1 className={cn("text-7xl font-bold mb-8", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white drop-shadow-lg" : "text-foreground")}>{slide.title || "Untitled"}</h1>
+            <p className={cn("text-3xl whitespace-pre-wrap", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white/90 drop-shadow" : "text-muted-foreground")}>{slide.content}</p>
           </div>
         ) : slide.layout === "two-column" ? (
           <div className="flex flex-col h-full p-20 relative z-10">
-            <h2 className={cn("text-5xl font-bold mb-12", hasImage ? "text-white drop-shadow-lg" : "text-foreground")}>{slide.title || "Untitled"}</h2>
+            <h2 className={cn("text-5xl font-bold mb-12", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white drop-shadow-lg" : "text-foreground")}>{slide.title || "Untitled"}</h2>
             <div className="flex-1 grid grid-cols-2 gap-16">
-              <div className={cn("text-2xl whitespace-pre-wrap", hasImage ? "text-white/90" : "text-foreground/80")}>{slide.content}</div>
-              <div className={cn("text-2xl whitespace-pre-wrap", hasImage ? "text-white/90" : "text-foreground/80")}>{slide.notes || ""}</div>
+              <div className={cn("text-2xl whitespace-pre-wrap", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white/90" : "text-foreground/80")}>{slide.content}</div>
+              <div className={cn("text-2xl whitespace-pre-wrap", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white/90" : "text-foreground/80")}>{slide.notes || ""}</div>
             </div>
           </div>
         ) : (
           <div className="flex flex-col h-full p-20 relative z-10">
-            <h2 className={cn("text-5xl font-bold mb-12", hasImage ? "text-white drop-shadow-lg" : "text-foreground")}>{slide.title || "Untitled"}</h2>
-            <p className={cn("text-2xl whitespace-pre-wrap flex-1", hasImage ? "text-white/90" : "text-foreground/80")}>{slide.content}</p>
+            <h2 className={cn("text-5xl font-bold mb-12", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white drop-shadow-lg" : "text-foreground")}>{slide.title || "Untitled"}</h2>
+            <p className={cn("text-2xl whitespace-pre-wrap flex-1", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white/90" : "text-foreground/80")}>{slide.content}</p>
+          </div>
+        )}
+        {hasImage && slide.image_layer === "infront" && (
+          <div className="absolute inset-0 z-20 flex items-center justify-center p-20">
+            <img
+              src={slide.image_url}
+              alt=""
+              className="max-w-full max-h-full rounded-lg shadow-2xl"
+              style={{
+                objectFit: slide.image_fit === "stretch" ? "fill" : (slide.image_fit || "contain"),
+                width: slide.image_fit === "stretch" ? "100%" : undefined,
+                height: slide.image_fit === "stretch" ? "100%" : undefined,
+              }}
+            />
           </div>
         )}
         <div className={cn("absolute bottom-6 right-10 text-lg", hasImage ? "text-white/50" : "text-muted-foreground/50")}>
@@ -175,15 +189,19 @@ function getPromptIdeas(title: string, content: string): string[] {
 function SlideImageSection({
   imageUrl,
   imageFit,
+  imageLayer,
   onImageChange,
   onImageFitChange,
+  onImageLayerChange,
   slideTitle,
   slideContent,
 }: {
   imageUrl: string | null;
   imageFit: ImageFit;
+  imageLayer: ImageLayer;
   onImageChange: (url: string | null) => void;
   onImageFitChange: (fit: ImageFit) => void;
+  onImageLayerChange: (layer: ImageLayer) => void;
   slideTitle: string;
   slideContent: string;
 }) {
@@ -244,6 +262,25 @@ function SlideImageSection({
                 className={cn(
                   "flex-1 px-2 py-1 rounded text-[10px] font-medium transition-colors border",
                   imageFit === opt.value
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-muted/50 text-muted-foreground border-border/50 hover:bg-muted"
+                )}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+          <div className="flex gap-1">
+            {([
+              { value: "behind" as ImageLayer, label: "Behind Text" },
+              { value: "infront" as ImageLayer, label: "In Front" },
+            ]).map((opt) => (
+              <button
+                key={opt.value}
+                onClick={() => onImageLayerChange(opt.value)}
+                className={cn(
+                  "flex-1 px-2 py-1 rounded text-[10px] font-medium transition-colors border",
+                  imageLayer === opt.value
                     ? "bg-primary text-primary-foreground border-primary"
                     : "bg-muted/50 text-muted-foreground border-border/50 hover:bg-muted"
                 )}
@@ -564,8 +601,10 @@ export function SlideDeckEditor({
             <SlideImageSection
               imageUrl={currentSlide.image_url || null}
               imageFit={currentSlide.image_fit || "cover"}
+              imageLayer={currentSlide.image_layer || "behind"}
               onImageChange={(url) => updateSlide(activeIndex, { image_url: url || undefined })}
               onImageFitChange={(fit) => updateSlide(activeIndex, { image_fit: fit })}
+              onImageLayerChange={(layer) => updateSlide(activeIndex, { image_layer: layer })}
               slideTitle={currentSlide.title}
               slideContent={currentSlide.content}
             />
