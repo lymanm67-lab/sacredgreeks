@@ -290,6 +290,65 @@ const narrationScripts: Record<string, DemoNarrationScript> = {
     Admins can access Custom Content Mode to create videos beyond the P.R.O.O.F. framework. 
     Explore the demo library below to see what's possible, then create your own.`,
   },
+
+  'present-library': {
+    title: 'Slide Library Tour',
+    voice: 'onyx',
+    script: `Welcome to the Slide Library — your starting point for building presentations inside Sacred Greeks. 
+    Here you'll find ten pre-built templates organized by category: Framework, Devotional, Agenda, Onboarding, Service, Fundraising, Scripture, Leadership, Event, and Myth versus Truth. 
+    Each template comes with five to six slides already written, complete with speaker notes and multiple layout options like Title, Content, and Two-Column. 
+    To use a template, simply click Use This Template and it becomes a fully editable deck saved to your account. 
+    You can also create a custom deck from scratch using the Create New Deck button at the top. 
+    Your saved decks appear in the My Decks section where you can edit, duplicate, or delete them. 
+    Click Edit on any deck to open the Slide Deck Builder for full customization.`,
+  },
+
+  'present-polls': {
+    title: 'Live Polls Tour',
+    voice: 'onyx',
+    script: `Welcome to Live Polls — your real-time audience engagement tool. 
+    Create interactive polls that your audience can respond to instantly during presentations or chapter meetings. 
+    You can build two types: Multiple Choice polls where audience members vote on predefined options, and Q and A polls where they submit questions that others can upvote. 
+    Each poll gets a unique share code. Share this code with your audience and they can respond from their own devices. 
+    The results update in real-time — you'll see votes and questions appear live on your screen. 
+    Use the moderation toggle to review Q and A submissions before they appear publicly. 
+    Polls are perfect for chapter votes, icebreaker questions, feedback collection, and interactive teaching moments.`,
+  },
+
+  'present-deck': {
+    title: 'Slide Deck Builder Tour',
+    voice: 'onyx',
+    script: `Welcome to the Slide Deck Builder — your visual editor for creating polished presentations. 
+    The builder uses a scaled canvas approach, meaning every slide is designed at 1920 by 1080 resolution and automatically scales to fit your screen. 
+    Choose from three layout types for each slide: Title for big impact opening slides, Content for detailed information, and Two-Column for side-by-side comparisons. 
+    Edit any slide by clicking on it — change the title, body content, and speaker notes. The system auto-saves your changes every two seconds so you never lose work. 
+    Use the sidebar thumbnails to navigate between slides, reorder them by dragging, or add and delete slides as needed. 
+    When your deck is ready, head to the Present tab to go fullscreen with speaker notes and a built-in timer.`,
+  },
+
+  'present-present': {
+    title: 'Present Mode Tour',
+    voice: 'onyx',
+    script: `Welcome to Present Mode — your fullscreen presentation engine with professional speaker tools. 
+    Start by selecting a deck from your saved collection. Each card shows the deck title, description, slide count, and category. 
+    Once selected, click Present to enter fullscreen mode. Your slides render at full resolution with a clean, distraction-free view. 
+    Use arrow keys or spacebar to navigate between slides. Press N to toggle your speaker notes panel at the bottom. Press Escape to exit. 
+    The built-in timer tracks your presentation duration in real-time. Controls auto-hide after three seconds of inactivity for a clean audience view. 
+    Below the deck selector, you'll find the Share App Pages feature. This lets you broadcast any page of the Sacred Greeks app to your audience's devices in real-time — perfect for live demos and walkthroughs.`,
+  },
+
+  'present-preview': {
+    title: 'Live Preview Tour',
+    voice: 'onyx',
+    script: `Welcome to Live Preview — the audience side of the presentation experience. 
+    This is where your audience connects to follow along on their own devices. 
+    There are two ways to join: Join Slides syncs with a presenter's slide deck in real-time as they advance through their presentation. 
+    Join Page Share connects to a presenter who is broadcasting their app navigation — the audience sees the same pages the presenter visits, displayed in an embedded view. 
+    To join, simply enter the share code provided by your presenter and choose the session type. 
+    The connection uses real-time broadcast channels, so there's virtually no delay — slides and pages update instantly. 
+    A status badge shows whether you're connected and which slide or page you're currently viewing. 
+    This is perfect for conferences, chapter meetings, and training sessions where everyone needs to follow along.`,
+  },
 };
 
 export function getDemoNarration(pageKey: string): DemoNarrationScript | null {

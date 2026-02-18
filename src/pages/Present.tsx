@@ -8,6 +8,7 @@ import { SlideDeckEditor } from "@/components/present/SlideDeckEditor";
 import { LivePolls } from "@/components/present/LivePolls";
 import { PresentMode } from "@/components/present/PresentMode";
 import { LivePreview } from "@/components/present/LivePreview";
+import { PresentAudioGuide } from "@/components/present/PresentAudioGuide";
 
 const tabs = [
   { value: "library", label: "Slide Library", icon: Layers },
@@ -50,11 +51,14 @@ export default function Present() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-foreground">Presentation Tools</h1>
-        <p className="text-muted-foreground mt-1">
-          Build, present, and engage your audience with interactive slide decks
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-foreground">Presentation Tools</h1>
+          <p className="text-muted-foreground mt-1">
+            Build, present, and engage your audience with interactive slide decks
+          </p>
+        </div>
+        <PresentAudioGuide tabKey={activeTab} />
       </div>
 
       <Tabs value={activeTab} onValueChange={handleTabChange}>
