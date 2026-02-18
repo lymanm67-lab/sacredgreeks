@@ -141,12 +141,26 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
 
   const handlePuterSignIn = async () => {
     try {
-      // Open Puter sign-in in a new window manually to avoid popup blockers in iframes
+      // First try using the SDK's built-in signIn method
+      if (window.puter?.auth?.signIn) {
+        try {
+          await window.puter.auth.signIn();
+          if (window.puter?.auth?.isSignedIn?.()) {
+            setPuterSignedIn(true);
+            toast({ title: 'Signed in to Puter', description: 'You can now generate videos.' });
+            return;
+          }
+        } catch (sdkErr) {
+          console.warn('Puter SDK signIn failed, trying manual approach:', sdkErr);
+        }
+      }
+
+      // Fallback: open Puter signup page (not /login which redirects to /gui/ and errors)
       const width = 600, height = 700;
       const left = window.screenX + (window.innerWidth - width) / 2;
       const top = window.screenY + (window.innerHeight - height) / 2;
       const authWindow = window.open(
-        'https://puter.com/login',
+        'https://puter.com/?action=signup',
         'puter-auth',
         `width=${width},height=${height},left=${left},top=${top},toolbar=no,menubar=no`
       );
@@ -154,28 +168,36 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
         toast({ title: 'Popup blocked', description: 'Please allow popups for this site, or open the published app directly to sign in to Puter.', variant: 'destructive' });
         return;
       }
+      
+      toast({ title: 'Puter login opened', description: 'Complete sign-in in the popup window, then close it to continue.' });
+      
       // Poll for window close, then check auth
       const pollInterval = setInterval(async () => {
-        if (authWindow.closed) {
-          clearInterval(pollInterval);
-          // After the user closes the login window, check if SDK picked up the session
-          if (window.puter?.auth?.isSignedIn?.()) {
-            setPuterSignedIn(true);
-            toast({ title: 'Signed in to Puter', description: 'You can now generate videos.' });
-          } else {
-            // Try calling signIn which may now work since user authenticated in browser
-            try {
-              await window.puter.auth.signIn();
+        try {
+          if (authWindow.closed) {
+            clearInterval(pollInterval);
+            // After the user closes the login window, check if SDK picked up the session
+            if (window.puter?.auth?.isSignedIn?.()) {
               setPuterSignedIn(true);
               toast({ title: 'Signed in to Puter', description: 'You can now generate videos.' });
-            } catch {
-              toast({ title: 'Sign-in not detected', description: 'Please try again. Make sure you complete login on Puter.com.', variant: 'destructive' });
+            } else {
+              // Try calling signIn which may now work since user authenticated in browser
+              try {
+                await window.puter.auth.signIn();
+                setPuterSignedIn(true);
+                toast({ title: 'Signed in to Puter', description: 'You can now generate videos.' });
+              } catch {
+                toast({ title: 'Sign-in not detected', description: 'Please try again. If using the preview, try the published app at sacredgreekslife.com instead.', variant: 'destructive' });
+              }
             }
           }
+        } catch {
+          clearInterval(pollInterval);
         }
       }, 1000);
-    } catch {
-      toast({ title: 'Sign-in failed', description: 'Could not open Puter login. Try the published app directly.', variant: 'destructive' });
+    } catch (err) {
+      console.error('Puter sign-in error:', err);
+      toast({ title: 'Sign-in failed', description: 'Could not open Puter login. Try the published app at sacredgreekslife.com directly.', variant: 'destructive' });
     }
   };
 
