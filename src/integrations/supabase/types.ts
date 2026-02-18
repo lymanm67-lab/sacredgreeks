@@ -3534,6 +3534,7 @@ export type Database = {
           is_custom_content: boolean
           parent_request_id: string | null
           provider: string
+          provider_job_id: string | null
           provider_model: string | null
           scene_plan_json: Json | null
           script_json: Json | null
@@ -3546,6 +3547,7 @@ export type Database = {
           updated_at: string
           user_id: string
           version_number: number
+          video_url: string | null
         }
         Insert: {
           blocked_reason?: string | null
@@ -3561,6 +3563,7 @@ export type Database = {
           is_custom_content?: boolean
           parent_request_id?: string | null
           provider?: string
+          provider_job_id?: string | null
           provider_model?: string | null
           scene_plan_json?: Json | null
           script_json?: Json | null
@@ -3573,6 +3576,7 @@ export type Database = {
           updated_at?: string
           user_id: string
           version_number?: number
+          video_url?: string | null
         }
         Update: {
           blocked_reason?: string | null
@@ -3588,6 +3592,7 @@ export type Database = {
           is_custom_content?: boolean
           parent_request_id?: string | null
           provider?: string
+          provider_job_id?: string | null
           provider_model?: string | null
           scene_plan_json?: Json | null
           script_json?: Json | null
@@ -3600,6 +3605,7 @@ export type Database = {
           updated_at?: string
           user_id?: string
           version_number?: number
+          video_url?: string | null
         }
         Relationships: [
           {
