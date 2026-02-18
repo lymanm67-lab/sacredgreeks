@@ -11,6 +11,7 @@ import { useDemoMode } from "@/contexts/DemoModeContext";
 import { useAdminCheck } from "@/components/AdminRoute";
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { PresentationModeToggle } from "@/components/demo/PresentationModeToggle";
+import { PresentationModeBar } from "@/components/demo/PresentationModeBar";
 import { SalesDeckGenerator } from "@/components/demo/SalesDeckGenerator";
 import { PresentationSlideViewer, ReturnToPresentationButton } from "@/components/demo/presentation";
 import { cn } from "@/lib/utils";
@@ -139,6 +140,7 @@ function AppLayoutContent({
 
   return (
     <>
+      <PresentationModeBar />
       <div className={cn(
         "min-h-screen flex w-full max-w-[100vw] overflow-x-hidden",
         isRightSidebar && "flex-row-reverse",
