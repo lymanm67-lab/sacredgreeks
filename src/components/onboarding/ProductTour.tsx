@@ -146,18 +146,23 @@ export function ProductTour({ onComplete, onSkip }: ProductTourProps) {
   const Icon = step.icon;
 
   const content = (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center">
+    <div 
+      className="fixed inset-0 z-[9999] flex items-center justify-center"
+      style={{ pointerEvents: 'auto' }}
+    >
       {/* Backdrop - no click handler, skip only via buttons */}
       <div 
         className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        style={{ pointerEvents: 'none' }}
       />
       
       {/* Tour Card */}
       <Card 
         className={cn(
-          "relative z-10 w-full max-w-md mx-4 bg-slate-900 border-slate-700 shadow-2xl",
+          "relative w-full max-w-md mx-4 bg-slate-900 border-slate-700 shadow-2xl",
           "animate-in fade-in slide-in-from-bottom-4 duration-300"
         )}
+        style={{ zIndex: 10000, pointerEvents: 'auto' }}
       >
         <CardContent className="p-6">
           {/* Header */}
