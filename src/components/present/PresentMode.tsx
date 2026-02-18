@@ -12,7 +12,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
-import type { SlideData } from "./slideTypes";
+import type { SlideData, FontSize } from "./slideTypes";
+
+const FONT_SIZE_MAP: Record<FontSize, { title: string; titleTwo: string; content: string }> = {
+  sm: { title: "text-5xl", titleTwo: "text-4xl", content: "text-xl" },
+  md: { title: "text-7xl", titleTwo: "text-5xl", content: "text-2xl" },
+  lg: { title: "text-8xl", titleTwo: "text-6xl", content: "text-3xl" },
+  xl: { title: "text-9xl", titleTwo: "text-7xl", content: "text-4xl" },
+};
 
 interface SlideDeck {
   id: string;
@@ -39,6 +46,9 @@ function ScaledSlide({
 }) {
   const scale = Math.min(width / 1920, height / 1080);
   const hasImage = !!slide.image_url;
+  const fs = FONT_SIZE_MAP[slide.font_size || "md"];
+  const titleColor = slide.title_color || undefined;
+  const contentColor = slide.content_color || undefined;
 
   return (
     <div className="relative overflow-hidden" style={{ width, height }}>
@@ -63,21 +73,21 @@ function ScaledSlide({
         )}
         {slide.layout === "title" ? (
           <div className={cn("flex flex-col items-center justify-center h-full px-40 text-center relative z-10")}>
-            <h1 className={cn("text-7xl font-bold mb-8", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white drop-shadow-lg" : "text-foreground")}>{slide.title || "Untitled"}</h1>
-            <p className={cn("text-3xl whitespace-pre-wrap", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white/90 drop-shadow" : "text-muted-foreground")}>{slide.content}</p>
+            <h1 className={cn(fs.title, "font-bold mb-8", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white drop-shadow-lg" : "text-foreground")} style={titleColor ? { color: titleColor } : undefined}>{slide.title || "Untitled"}</h1>
+            <p className={cn(fs.content, "whitespace-pre-wrap", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white/90 drop-shadow" : "text-muted-foreground")} style={contentColor ? { color: contentColor } : undefined}>{slide.content}</p>
           </div>
         ) : slide.layout === "two-column" ? (
           <div className="flex flex-col h-full p-20 relative z-10">
-            <h2 className={cn("text-5xl font-bold mb-12", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white drop-shadow-lg" : "text-foreground")}>{slide.title || "Untitled"}</h2>
+            <h2 className={cn(fs.titleTwo, "font-bold mb-12", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white drop-shadow-lg" : "text-foreground")} style={titleColor ? { color: titleColor } : undefined}>{slide.title || "Untitled"}</h2>
             <div className="flex-1 grid grid-cols-2 gap-16">
-              <div className={cn("text-2xl whitespace-pre-wrap", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white/90" : "text-foreground/80")}>{slide.content}</div>
-              <div className={cn("text-2xl whitespace-pre-wrap", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white/90" : "text-foreground/80")}>{slide.notes || ""}</div>
+              <div className={cn(fs.content, "whitespace-pre-wrap", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white/90" : "text-foreground/80")} style={contentColor ? { color: contentColor } : undefined}>{slide.content}</div>
+              <div className={cn(fs.content, "whitespace-pre-wrap", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white/90" : "text-foreground/80")} style={contentColor ? { color: contentColor } : undefined}>{slide.notes || ""}</div>
             </div>
           </div>
         ) : (
           <div className="flex flex-col h-full p-20 relative z-10">
-            <h2 className={cn("text-5xl font-bold mb-12", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white drop-shadow-lg" : "text-foreground")}>{slide.title || "Untitled"}</h2>
-            <p className={cn("text-2xl whitespace-pre-wrap flex-1", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white/90" : "text-foreground/80")}>{slide.content}</p>
+            <h2 className={cn(fs.titleTwo, "font-bold mb-12", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white drop-shadow-lg" : "text-foreground")} style={titleColor ? { color: titleColor } : undefined}>{slide.title || "Untitled"}</h2>
+            <p className={cn(fs.content, "whitespace-pre-wrap flex-1", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white/90" : "text-foreground/80")} style={contentColor ? { color: contentColor } : undefined}>{slide.content}</p>
           </div>
         )}
         {hasImage && slide.image_layer === "infront" && (
