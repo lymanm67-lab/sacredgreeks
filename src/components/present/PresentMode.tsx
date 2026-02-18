@@ -12,12 +12,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
-interface SlideData {
-  title: string;
-  content: string;
-  notes?: string;
-  layout?: string;
-}
+import type { SlideData } from "./slideTypes";
 
 interface SlideDeck {
   id: string;
@@ -43,56 +38,44 @@ function ScaledSlide({
   total: number;
 }) {
   const scale = Math.min(width / 1920, height / 1080);
+  const hasImage = !!slide.image_url;
 
   return (
     <div className="relative overflow-hidden" style={{ width, height }}>
       <div
         className="absolute slide-content bg-background"
         style={{
-          width: 1920,
-          height: 1080,
-          left: "50%",
-          top: "50%",
-          marginLeft: -960,
-          marginTop: -540,
-          transform: `scale(${scale})`,
-          transformOrigin: "center center",
+          width: 1920, height: 1080,
+          left: "50%", top: "50%", marginLeft: -960, marginTop: -540,
+          transform: `scale(${scale})`, transformOrigin: "center center",
         }}
       >
+        {hasImage && (
+          <div className="absolute inset-0">
+            <img src={slide.image_url} alt="" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-black/50" />
+          </div>
+        )}
         {slide.layout === "title" ? (
-          <div className="flex flex-col items-center justify-center h-full px-40 text-center">
-            <h1 className="text-7xl font-bold text-foreground mb-8">
-              {slide.title || "Untitled"}
-            </h1>
-            <p className="text-3xl text-muted-foreground whitespace-pre-wrap">
-              {slide.content}
-            </p>
+          <div className={cn("flex flex-col items-center justify-center h-full px-40 text-center relative z-10")}>
+            <h1 className={cn("text-7xl font-bold mb-8", hasImage ? "text-white drop-shadow-lg" : "text-foreground")}>{slide.title || "Untitled"}</h1>
+            <p className={cn("text-3xl whitespace-pre-wrap", hasImage ? "text-white/90 drop-shadow" : "text-muted-foreground")}>{slide.content}</p>
           </div>
         ) : slide.layout === "two-column" ? (
-          <div className="flex flex-col h-full p-20">
-            <h2 className="text-5xl font-bold text-foreground mb-12">
-              {slide.title || "Untitled"}
-            </h2>
+          <div className="flex flex-col h-full p-20 relative z-10">
+            <h2 className={cn("text-5xl font-bold mb-12", hasImage ? "text-white drop-shadow-lg" : "text-foreground")}>{slide.title || "Untitled"}</h2>
             <div className="flex-1 grid grid-cols-2 gap-16">
-              <div className="text-2xl text-foreground/80 whitespace-pre-wrap">
-                {slide.content}
-              </div>
-              <div className="text-2xl text-foreground/80 whitespace-pre-wrap">
-                {slide.notes || ""}
-              </div>
+              <div className={cn("text-2xl whitespace-pre-wrap", hasImage ? "text-white/90" : "text-foreground/80")}>{slide.content}</div>
+              <div className={cn("text-2xl whitespace-pre-wrap", hasImage ? "text-white/90" : "text-foreground/80")}>{slide.notes || ""}</div>
             </div>
           </div>
         ) : (
-          <div className="flex flex-col h-full p-20">
-            <h2 className="text-5xl font-bold text-foreground mb-12">
-              {slide.title || "Untitled"}
-            </h2>
-            <p className="text-2xl text-foreground/80 whitespace-pre-wrap flex-1">
-              {slide.content}
-            </p>
+          <div className="flex flex-col h-full p-20 relative z-10">
+            <h2 className={cn("text-5xl font-bold mb-12", hasImage ? "text-white drop-shadow-lg" : "text-foreground")}>{slide.title || "Untitled"}</h2>
+            <p className={cn("text-2xl whitespace-pre-wrap flex-1", hasImage ? "text-white/90" : "text-foreground/80")}>{slide.content}</p>
           </div>
         )}
-        <div className="absolute bottom-6 right-10 text-lg text-muted-foreground/50">
+        <div className={cn("absolute bottom-6 right-10 text-lg", hasImage ? "text-white/50" : "text-muted-foreground/50")}>
           {index + 1} / {total}
         </div>
       </div>
