@@ -246,13 +246,14 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
       const filePath = `${user.id}/${Date.now()}_${type}.${ext}`;
       const { data, error } = await supabase.storage.from('video-studio-uploads').upload(filePath, file, { upsert: false });
       if (error) throw error;
-      const { data: urlData } = supabase.storage.from('video-studio-uploads').getPublicUrl(data.path);
+      const { data: urlData, error: urlError } = await supabase.storage.from('video-studio-uploads').createSignedUrl(data.path, 3600);
+      if (urlError || !urlData?.signedUrl) throw urlError || new Error('Failed to create signed URL');
       if (type === 'image') {
-        setUploadedImageUrl(urlData.publicUrl);
+        setUploadedImageUrl(urlData.signedUrl);
         setUploadedImagePreview(URL.createObjectURL(file));
         toast({ title: '📸 Image uploaded' });
       } else {
-        setUploadedVideoUrl(urlData.publicUrl);
+        setUploadedVideoUrl(urlData.signedUrl);
         setUploadedVideoPreview(URL.createObjectURL(file));
         toast({ title: '🎬 Video uploaded' });
       }
@@ -494,8 +495,9 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
       const filePath = `${user.id}/${Date.now()}_edit_source.${ext}`;
       const { data, error } = await supabase.storage.from('video-studio-uploads').upload(filePath, file, { upsert: false });
       if (error) throw error;
-      const { data: urlData } = supabase.storage.from('video-studio-uploads').getPublicUrl(data.path);
-      setImageEditSource(urlData.publicUrl);
+      const { data: urlData, error: urlError } = await supabase.storage.from('video-studio-uploads').createSignedUrl(data.path, 3600);
+      if (urlError || !urlData?.signedUrl) throw urlError || new Error('Failed to create signed URL');
+      setImageEditSource(urlData.signedUrl);
       setImageEditPreview(URL.createObjectURL(file));
     } catch (e) {
       toast({ title: 'Upload failed', variant: 'destructive' });

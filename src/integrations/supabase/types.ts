@@ -4129,6 +4129,57 @@ export type Database = {
           },
         ]
       }
+      greek_chapters_public: {
+        Row: {
+          chapter_name: string | null
+          city: string | null
+          created_at: string | null
+          description: string | null
+          id: string | null
+          is_faith_focused: boolean | null
+          latitude: number | null
+          longitude: number | null
+          organization: string | null
+          school_name: string | null
+          state: string | null
+          submitted_by: string | null
+          updated_at: string | null
+          website_url: string | null
+        }
+        Insert: {
+          chapter_name?: string | null
+          city?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          is_faith_focused?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          organization?: string | null
+          school_name?: string | null
+          state?: string | null
+          submitted_by?: string | null
+          updated_at?: string | null
+          website_url?: string | null
+        }
+        Update: {
+          chapter_name?: string | null
+          city?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          is_faith_focused?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          organization?: string | null
+          school_name?: string | null
+          state?: string | null
+          submitted_by?: string | null
+          updated_at?: string | null
+          website_url?: string | null
+        }
+        Relationships: []
+      }
       healing_stories_public: {
         Row: {
           created_at: string | null
@@ -4267,6 +4318,14 @@ export type Database = {
       get_submission_email_if_consented: {
         Args: { submission_id: string }
         Returns: string
+      }
+      get_youtube_connection_status: {
+        Args: never
+        Returns: {
+          channel_id: string
+          channel_title: string
+          connected: boolean
+        }[]
       }
       has_role: {
         Args: {
