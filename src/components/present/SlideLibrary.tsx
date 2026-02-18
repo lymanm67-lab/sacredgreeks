@@ -259,21 +259,23 @@ export function SlideLibrary() {
     },
   });
 
-  // Duplicate from template
+  // Duplicate from template and open in editor
   const duplicateTemplate = useMutation({
     mutationFn: async (template: typeof PROOF_TEMPLATES[0]) => {
-      const { error } = await supabase.from("slide_decks").insert({
+      const { data, error } = await supabase.from("slide_decks").insert({
         user_id: user!.id,
         title: template.title,
         description: template.description,
         template_category: template.template_category,
         slides_json: template.slides_json as unknown as any,
-      });
+      }).select("id").single();
       if (error) throw error;
+      return data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["slide-decks"] });
-      toast({ title: "Template added to your library!" });
+      toast({ title: "Template ready — opening editor..." });
+      setSearchParams({ tab: "deck", deckId: data.id });
     },
   });
 
