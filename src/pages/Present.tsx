@@ -7,6 +7,7 @@ import { SlideLibrary } from "@/components/present/SlideLibrary";
 import { SlideDeckEditor } from "@/components/present/SlideDeckEditor";
 import { LivePolls } from "@/components/present/LivePolls";
 import { PresentMode } from "@/components/present/PresentMode";
+import { LivePreview } from "@/components/present/LivePreview";
 
 const tabs = [
   { value: "library", label: "Slide Library", icon: Layers },
@@ -111,12 +112,7 @@ export default function Present() {
         </TabsContent>
 
         <TabsContent value="preview" className="mt-6">
-          <ComingSoonTab
-            icon={Eye}
-            label="Live Preview"
-            color="text-emerald-500"
-            description="Preview what your audience sees in real-time. Share the preview link so attendees can follow along on their own devices."
-          />
+          <LivePreview />
         </TabsContent>
       </Tabs>
     </div>

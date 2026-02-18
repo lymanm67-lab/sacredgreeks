@@ -137,9 +137,27 @@ function FullscreenPresentation({
   const timer = useTimer();
   const hideTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
 
-  // Start timer on mount
+  // Start timer & broadcast channel on mount
   useEffect(() => { timer.start(); }, []);
+
+  // Set up broadcast channel to sync with Live Preview audience
+  useEffect(() => {
+    const channel = supabase.channel(`present:${deck.id}`);
+    channel.subscribe((status) => {
+      if (status === "SUBSCRIBED") {
+        channel.send({ type: "broadcast", event: "slide-change", payload: { index } });
+      }
+    });
+    channelRef.current = channel;
+    return () => { supabase.removeChannel(channel); };
+  }, [deck.id]);
+
+  // Broadcast slide changes
+  useEffect(() => {
+    channelRef.current?.send({ type: "broadcast", event: "slide-change", payload: { index } });
+  }, [index]);
 
   // Resize
   useEffect(() => {
