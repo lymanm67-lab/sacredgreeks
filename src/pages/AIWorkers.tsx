@@ -7,6 +7,7 @@ import { WorkerOutputDisplay } from '@/components/ai-workers/WorkerOutputDisplay
 import { WorkerHistoryPanel } from '@/components/ai-workers/WorkerHistoryPanel';
 import { WorkerDemoShowcase } from '@/components/ai-workers/WorkerDemoShowcase';
 import { VideoStudio } from '@/components/ai-workers/VideoStudio';
+import { MinistryGate } from '@/components/MinistryGate';
 import { useDemoMode } from '@/contexts/DemoModeContext';
 
 export type WorkerType = 'ritual_oath_coach' | 'founders_guide' | 'conversation_coach' | 'study_navigator';
@@ -109,7 +110,9 @@ export default function AIWorkers() {
           />
         )}
         {view === 'video_studio' && (
-          <VideoStudio onBack={handleBack} />
+          <MinistryGate featureName="Sacred Studio Agent">
+            <VideoStudio onBack={handleBack} />
+          </MinistryGate>
         )}
       </div>
     </>

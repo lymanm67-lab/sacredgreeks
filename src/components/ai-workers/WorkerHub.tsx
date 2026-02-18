@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Shield, BookOpen, MessageSquareText, GraduationCap, History, Sparkles, Theater, Film } from 'lucide-react';
+import { Shield, BookOpen, MessageSquareText, GraduationCap, History, Sparkles, Theater, Film, Crown } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -145,7 +145,12 @@ export function WorkerHub({ onSelectWorker, onViewHistory, onViewShowcase, onVie
                 <Film className="w-6 h-6 text-violet-600 dark:text-violet-400" />
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-foreground">PROOF Studio Agent</h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="font-semibold text-foreground">PROOF Studio Agent</h3>
+                  <Badge className="bg-primary/10 text-primary text-[10px] border-0 gap-1">
+                    <Crown className="w-3 h-3" /> Ministry
+                  </Badge>
+                </div>
                 <p className="text-sm text-muted-foreground">Generate AI videos from approved content</p>
               </div>
               <Button variant="outline" size="sm">Create</Button>
