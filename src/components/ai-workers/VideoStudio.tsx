@@ -153,11 +153,12 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
     
     const fullScript = parts.join('\n');
     navigator.clipboard.writeText(fullScript).then(() => {
-      toast({ title: '📋 Script copied!', description: 'Paste it into InVideo.ai to create your video.' });
+      toast({ 
+        title: '📋 Script copied to clipboard!', 
+        description: 'Open ai.invideo.io in your browser and paste the script to create your video.',
+        duration: 8000,
+      });
     });
-    
-    // Open InVideo.ai in a new tab
-    window.open('https://ai.invideo.io/workspace', '_blank');
   };
 
   // Upload state
