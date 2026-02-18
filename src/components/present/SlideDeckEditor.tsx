@@ -112,39 +112,57 @@ function ScaledSlide({
   );
 }
 
-const PROMPT_IDEAS_DEFAULT = ["Abstract gradient background", "Elegant dark texture", "Soft bokeh lights", "Minimalist geometric shapes"];
+// Topic detection rules: [keywords[], image suggestions[]]
+const TOPIC_RULES: [string[], string[]][] = [
+  // PROOF pillars
+  [["pledge", "process", "intake", "probate", "membership", "joining", "candidate"], ["Candidates crossing burning sands", "Pledge line silhouette at dawn", "Initiation ceremony candlelight"]],
+  [["ritual", "ceremony", "sacred", "tradition", "rite", "symbolic", "liturgy"], ["Candlelit ceremonial altar", "Sacred symbols on marble", "Stained glass Greek letters"]],
+  [["oath", "vow", "commitment", "covenant", "promise", "swear", "allegiance"], ["Hand on Bible swearing oath", "Parchment with calligraphy vows", "Unity hands circle"]],
+  [["obscur", "hidden", "secret", "mystery", "esoteric", "conceal", "unknown"], ["Fog-covered Gothic cathedral", "Hidden doorway with light", "Ancient manuscript close-up"]],
+  [["founder", "history", "providential", "1906", "origin", "legacy", "heritage"], ["Vintage sepia campus 1906", "Historical founders portrait style", "Timeline with golden milestones"]],
+  [["proof", "framework"], ["Golden shield with P.R.O.O.F. letters", "Five pillars on ancient columns", "Framework diagram with divine light"]],
+  // Faith & spiritual
+  [["prayer", "faith", "spiritual", "bible", "scripture", "god", "christ", "worship", "devotion"], ["Sunrise over mountains prayer", "Chapel with divine light rays", "Praying hands golden glow"]],
+  // Leadership & accountability
+  [["leader", "leadership", "mentor", "guide", "role model", "shepherd"], ["Leader speaking to crowd at podium", "Torch being passed between hands", "Eagle soaring over mountains"]],
+  [["action", "corrective", "target", "deadline", "assign", "owner", "accountability", "responsible"], ["Checklist on clipboard with checkmarks", "Team at whiteboard planning strategy", "Clock with gears and targets"]],
+  [["gap", "audit", "assess", "evaluat", "review", "compliance", "measure", "benchmark"], ["Magnifying glass over data chart", "Bridge spanning a gap in canyon", "Scales of justice balanced"]],
+  [["goal", "vision", "mission", "purpose", "objective", "strategy", "plan"], ["Compass pointing north on map", "Mountain summit with flag", "Blueprint with architectural plans"]],
+  // Community & service
+  [["service", "community", "volunteer", "outreach", "philanthrop", "give back"], ["Diverse group serving community", "Hands planting a tree together", "Food bank volunteers working"]],
+  [["unity", "brother", "sister", "bond", "together", "fellowship", "solidar"], ["Linked arms in a circle", "Chain links in gold", "Group silhouette at sunset"]],
+  // Education & growth
+  [["education", "learn", "study", "scholar", "academic", "knowledge", "teach"], ["Open book with glowing pages", "Graduation caps thrown in air", "Library with golden light"]],
+  [["growth", "develop", "transform", "progress", "evolve", "journey", "path"], ["Seedling growing into oak tree", "Winding road through sunrise valley", "Butterfly emerging from cocoon"]],
+  // Greek life
+  [["greek", "fraternity", "sorority", "d9", "divine nine", "chapter", "nphc"], ["Gold crest on marble pedestal", "Greek columns at sunset", "D9 organization shield mosaic"]],
+  // Challenges
+  [["challenge", "obstacle", "struggle", "overcome", "persever", "resilien", "adversity"], ["Rock climber reaching summit", "Storm breaking into sunlight", "Phoenix rising from ashes"]],
+  // Wellness & healing
+  [["heal", "wellness", "mental health", "self-care", "restor", "hazing"], ["Calm lake reflecting mountains", "Hands holding broken chain", "Garden path with blooming flowers"]],
+  // Celebration
+  [["celebrat", "achievement", "accomplish", "success", "victory", "milestone", "award"], ["Confetti and golden trophy", "Fireworks over city skyline", "Medal on velvet cushion"]],
+  // Data & results
+  [["data", "result", "metric", "statistic", "survey", "finding", "report", "percent"], ["Infographic on digital screen", "Rising bar chart in gold", "Dashboard with glowing metrics"]],
+  // Call to action
+  [["next step", "call to action", "moving forward", "implement", "apply", "take action"], ["Open door with bright light beyond", "Footsteps on a path forward", "Rocket launching into sky"]],
+  // Welcome & intro
+  [["welcome", "introduc", "overview", "agenda", "today", "opening"], ["Sunrise over calm ocean", "Grand entrance with golden doors", "Warm handshake close-up"]],
+  // Closing
+  [["closing", "conclusion", "reflect", "summary", "takeaway", "final", "thank"], ["Sunset over peaceful landscape", "Candle flame in darkness", "Hands applauding"]],
+];
 
 function getPromptIdeas(title: string, content: string): string[] {
   const text = `${title} ${content}`.toLowerCase();
   const ideas: string[] = [];
-  // P — Pledge Process
-  if (text.includes("pledge") || text.includes("process") || text.includes("intake") || text.includes("probate"))
-    ideas.push("Candidates crossing burning sands", "Pledge line silhouette at dawn", "Initiation ceremony candlelight");
-  // R — Rituals
-  if (text.includes("ritual") || text.includes("ceremony") || text.includes("sacred") || text.includes("tradition"))
-    ideas.push("Candlelit ceremonial altar", "Sacred symbols on marble", "Stained glass Greek letters");
-  // O — Oaths
-  if (text.includes("oath") || text.includes("vow") || text.includes("commitment") || text.includes("covenant"))
-    ideas.push("Hand on Bible swearing oath", "Parchment with calligraphy vows", "Unity hands circle");
-  // O — Obscurity
-  if (text.includes("obscur") || text.includes("hidden") || text.includes("secret") || text.includes("mystery"))
-    ideas.push("Fog-covered Gothic cathedral", "Hidden doorway with light", "Ancient manuscript close-up");
-  // F — Founders
-  if (text.includes("founder") || text.includes("history") || text.includes("providential") || text.includes("1906"))
-    ideas.push("Vintage sepia campus 1906", "Historical founders portrait style", "Timeline with golden milestones");
-  // PROOF Framework overview
-  if (text.includes("proof") || text.includes("framework"))
-    ideas.push("Golden shield with P.R.O.O.F. letters", "Five pillars on ancient columns", "Framework diagram with divine light");
-  // Faith & spiritual
-  if (text.includes("prayer") || text.includes("faith") || text.includes("spiritual") || text.includes("bible") || text.includes("scripture"))
-    ideas.push("Sunrise over mountains prayer", "Chapel with divine light rays", "Praying hands golden glow");
-  // Leadership & service
-  if (text.includes("leader") || text.includes("service") || text.includes("community"))
-    ideas.push("Diverse group serving community", "Leadership podium spotlight", "Hands building together");
-  // Greek life general
-  if (text.includes("greek") || text.includes("fraternity") || text.includes("sorority") || text.includes("d9") || text.includes("divine nine"))
-    ideas.push("Gold crest on marble", "Greek columns at sunset", "D9 organization shield mosaic");
-  return ideas.length ? ideas.slice(0, 4) : PROMPT_IDEAS_DEFAULT;
+  for (const [keywords, suggestions] of TOPIC_RULES) {
+    if (keywords.some((kw) => text.includes(kw))) {
+      for (const s of suggestions) {
+        if (!ideas.includes(s)) ideas.push(s);
+      }
+    }
+  }
+  return ideas.length ? ideas.slice(0, 4) : ["Abstract gradient background", "Elegant dark texture", "Soft bokeh lights", "Minimalist geometric shapes"];
 }
 
 function SlideImageSection({
