@@ -43,6 +43,11 @@ import {
   QrCode,
   Bot,
   Film,
+  Presentation,
+  BarChart3,
+  Layers,
+  Monitor,
+  Eye,
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -144,6 +149,15 @@ const resourcesItems = [
   { title: "Church Leaders", url: "/church-leaders", icon: Church, featureId: null, iconColor: "text-lime-500", hasProgress: false },
 ];
 
+// Present section - presentation tools
+const presentItems = [
+  { title: "Slide Library", url: "/present?tab=library", icon: Layers, featureId: null, iconColor: "text-indigo-500", hasProgress: false },
+  { title: "Live Polls", url: "/present?tab=polls", icon: BarChart3, featureId: null, iconColor: "text-cyan-500", hasProgress: false },
+  { title: "Slide Deck", url: "/present?tab=deck", icon: Presentation, featureId: null, iconColor: "text-violet-500", hasProgress: false },
+  { title: "Presentation Mode", url: "/present?tab=present", icon: Monitor, featureId: null, iconColor: "text-amber-500", hasProgress: false },
+  { title: "Live Preview", url: "/present?tab=preview", icon: Eye, featureId: null, iconColor: "text-emerald-500", hasProgress: false },
+];
+
 // System section
 const systemItems = [
   { title: "Achievements", url: "/achievements", icon: Trophy, featureId: null, iconColor: "text-amber-400", hasProgress: false },
@@ -172,6 +186,7 @@ export function AppSidebar() {
   const [resourcesOpen, setResourcesOpen] = useState(() => {
     return resourcesItems.some(item => location.pathname === item.url || location.pathname.startsWith(item.url.split('?')[0]));
   });
+  const [presentOpen, setPresentOpen] = useState(false);
   const [systemOpen, setSystemOpen] = useState(false);
 
   const isActive = (path: string) => location.pathname === path;
@@ -191,6 +206,7 @@ export function AppSidebar() {
   const filteredAboutDrLyman = filterNavItems(aboutDrLymanItems);
   const filteredPodcast = filterNavItems(podcastItems);
   const filteredResources = filterNavItems(resourcesItems);
+  const filteredPresent = filterNavItems(presentItems);
   const filteredSystem = filterNavItems(systemItems);
 
   const getInitials = () => {
@@ -453,6 +469,32 @@ export function AppSidebar() {
                 <SidebarGroupContent>
                   <SidebarMenu>
                     {filteredResources.map((item) => (
+                      <NavItem key={item.url} item={item} />
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </CollapsibleContent>
+            </SidebarGroup>
+          </Collapsible>
+        )}
+
+        {/* Present Section */}
+        {filteredPresent.length > 0 && (
+          <Collapsible open={presentOpen} onOpenChange={setPresentOpen}>
+            <SidebarGroup>
+              <CollapsibleTrigger className="w-full">
+                <SidebarGroupLabel className="flex items-center justify-between cursor-pointer hover:text-foreground transition-colors">
+                  <span>Present</span>
+                  <ChevronDown className={cn(
+                    "h-4 w-4 transition-transform duration-200",
+                    presentOpen ? "rotate-0" : "-rotate-90"
+                  )} />
+                </SidebarGroupLabel>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {filteredPresent.map((item) => (
                       <NavItem key={item.url} item={item} />
                     ))}
                   </SidebarMenu>

@@ -90,7 +90,7 @@ export function StudioLibrary({ videos, onNewVideo, onVideosChanged, onViewVideo
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-2 flex-wrap">
-        <h3 className="text-lg font-bold text-foreground">My Videos</h3>
+        <h3 className="text-lg font-bold text-foreground">My Scripts</h3>
         <div className="flex items-center gap-2">
           {eligibleVideos.length > 0 && (
             <Button
@@ -138,7 +138,7 @@ export function StudioLibrary({ videos, onNewVideo, onVideosChanged, onViewVideo
           <div className="w-16 h-16 rounded-2xl bg-muted flex items-center justify-center mx-auto mb-4">
             <Film className="w-8 h-8 text-muted-foreground" />
           </div>
-          <p className="text-muted-foreground mb-4">No videos yet. Create your first one!</p>
+          <p className="text-muted-foreground mb-4">No scripts yet. Create your first one!</p>
           <Button onClick={onNewVideo} className="rounded-xl gap-2">
             <Plus className="w-4 h-4" /> Get Started
           </Button>
@@ -203,7 +203,7 @@ export function StudioLibrary({ videos, onNewVideo, onVideosChanged, onViewVideo
                         {v.status === 'completed' && (
                           <>
                             <Button size="sm" variant="outline" className="gap-1 rounded-lg" onClick={() => onViewVideo?.(v)}>
-                              <Play className="w-3 h-3" /> View
+                              <Play className="w-3 h-3" /> View Script
                             </Button>
                             {v.video_url && (
                               <Button
