@@ -23,8 +23,8 @@ const defaultProps = {
 describe('StudioPromptHero', () => {
   it('renders the header and subtitle', () => {
     render(<StudioPromptHero {...defaultProps} />);
-    expect(screen.getByText('Sacred Studio Agent')).toBeInTheDocument();
-    expect(screen.getByText('Create multi-scene videos with AI-powered storyboarding')).toBeInTheDocument();
+    expect(screen.getByText('Script Writing Assistant')).toBeInTheDocument();
+    expect(screen.getByText('AI-powered video scripts for InVideo.ai')).toBeInTheDocument();
   });
 
   it('renders all navigation tabs', () => {

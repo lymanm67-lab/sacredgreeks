@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
-import { ArrowLeft, Video } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ArrowLeft, Video, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -10,11 +10,9 @@ import { StudioPromptHero } from './studio/StudioPromptHero';
 import { StudioSceneEditor } from './studio/StudioSceneEditor';
 import { StudioImageGenerator } from './studio/StudioImageGenerator';
 import { StudioUploadZone } from './studio/StudioUploadZone';
-import { StudioGenerationProgress } from './studio/StudioGenerationProgress';
 import { StudioLibrary } from './studio/StudioLibrary';
 import { StudioContentPicker } from './studio/StudioContentPicker';
 import { StudioDemoOverview } from './studio/StudioDemoOverview';
-import { ExternalLink } from 'lucide-react';
 
 // Demo data for showcase when demo mode is active
 const DEMO_VIDEOS = [
@@ -89,7 +87,7 @@ const DEMO_VIDEOS = [
 type TemplateType = 'objection_short' | 'mini_teaching' | 'conversation_prep' | 'weekly_devotional' | 'custom';
 type ProviderType = 'invideo';
 type GenerationMode = 'text_to_video' | 'image_to_video' | 'video_upload' | 'generate_image';
-type Step = 'prompt' | 'content' | 'script' | 'generate' | 'library';
+type Step = 'prompt' | 'content' | 'script' | 'library';
 
 interface VideoStudioProps {
   onBack: () => void;
@@ -124,8 +122,6 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
   // Script & video
   const [scriptData, setScriptData] = useState<any>(null);
   const [videoRequest, setVideoRequest] = useState<any>(null);
-  const [jobStatus, setJobStatus] = useState<string | null>(null);
-  const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [myVideos, setMyVideos] = useState<any[]>([]);
 
   // InVideo.ai export handler
@@ -368,8 +364,6 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
     setStep('prompt');
     setScriptData(null);
     setVideoRequest(null);
-    setVideoUrl(null);
-    setJobStatus(null);
     setPrompt('');
     setSelectedContentIds([]);
     setPendingTemplate(null);
@@ -513,19 +507,6 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
         />
       )}
 
-      {/* ===== GENERATION PROGRESS ===== */}
-      {step === 'generate' && (
-        <StudioGenerationProgress
-          jobStatus={jobStatus}
-          videoUrl={videoUrl}
-          onReset={resetFlow}
-          onRegenerate={handleRegenerate}
-          onBackToScript={() => setStep('script')}
-          videoTitle={scriptData?.title || prompt || ''}
-          videoDescription={scriptData?.description || ''}
-          videoRequestId={videoRequest?.id}
-        />
-      )}
 
       {/* ===== LIBRARY ===== */}
       {step === 'library' && (
@@ -540,14 +521,12 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
             }
           }}
           onViewVideo={(video) => {
-            if (video.video_url) {
-              setVideoUrl(video.video_url);
-              setScriptData(video.script_json || null);
+            if (video.script_json) {
+              setScriptData(video.script_json);
               setVideoRequest(video);
-              setJobStatus('completed');
-              setStep('generate');
+              setStep('script');
             } else {
-              toast({ title: 'No video available', description: 'This video has not finished generating yet.', variant: 'destructive' });
+              toast({ title: 'No script available', description: 'This entry has no script data.', variant: 'destructive' });
             }
           }}
         />

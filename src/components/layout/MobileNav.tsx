@@ -118,7 +118,7 @@ const podcastItems = [
 // Resources section - matches AppSidebar
 const resourcesItems = [
   { title: "PROOF Command Center", url: "/ai-workers", icon: Bot, featureId: null, iconColor: "text-primary" },
-  { title: "Studio Agent", url: "/ai-workers?view=video-studio", icon: Film, featureId: null, iconColor: "text-violet-500" },
+  { title: "Script Assistant", url: "/ai-workers?view=video-studio", icon: Film, featureId: null, iconColor: "text-violet-500" },
   { title: "Financial Stewardship", url: "/financial-stewardship", icon: DollarSign, featureId: null, iconColor: "text-emerald-500" },
   { title: "Chaplain Toolkit", url: "/chaplain-toolkit", icon: Cross, featureId: null, iconColor: "text-sacred" },
   { title: "Worship Playlists", url: "/worship-playlists", icon: Music, featureId: null, iconColor: "text-purple-500" },

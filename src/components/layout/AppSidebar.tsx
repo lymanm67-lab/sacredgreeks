@@ -132,7 +132,7 @@ const podcastItems = [
 // Resources section
 const resourcesItems = [
   { title: "PROOF Command Center", url: "/ai-workers", icon: Bot, featureId: null, iconColor: "text-primary", hasProgress: false },
-  { title: "Studio Agent", url: "/ai-workers?view=video-studio", icon: Film, featureId: null, iconColor: "text-violet-500", hasProgress: false },
+  { title: "Script Assistant", url: "/ai-workers?view=video-studio", icon: Film, featureId: null, iconColor: "text-violet-500", hasProgress: false },
   { title: "Chaplain Toolkit", url: "/chaplain-toolkit", icon: Cross, featureId: null, iconColor: "text-sacred", hasProgress: false },
   { title: "Chapter Finance", url: "/chapter-finance", icon: DollarSign, featureId: null, iconColor: "text-emerald-500", hasProgress: false },
   { title: "Financial Stewardship", url: "/financial-stewardship", icon: Landmark, featureId: null, iconColor: "text-teal-500", hasProgress: false },

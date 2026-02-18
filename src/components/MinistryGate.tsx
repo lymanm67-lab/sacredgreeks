@@ -46,7 +46,7 @@ export function MinistryGate({ children, featureName = "this feature" }: Ministr
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-sm">
                 <Sparkles className="w-4 h-4 text-primary" />
-                <span>Sacred Studio Agent — AI video scripting</span>
+                <span>Script Writing Assistant — AI video scripting</span>
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <Sparkles className="w-4 h-4 text-primary" />

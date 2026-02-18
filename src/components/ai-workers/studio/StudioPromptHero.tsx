@@ -125,10 +125,10 @@ export function StudioPromptHero({
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
-            Sacred Studio Agent
+            Script Writing Assistant
           </h1>
           <p className="text-muted-foreground text-sm mt-1">
-            Create multi-scene videos with AI-powered storyboarding
+            AI-powered video scripts for InVideo.ai
           </p>
         </div>
       </div>
