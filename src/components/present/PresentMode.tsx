@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   Monitor, Play, ChevronLeft, ChevronRight, X, Maximize,
-  FileText, Clock, Layers,
+  FileText, Clock, Layers, Globe, Copy, Check, Share2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -281,13 +282,97 @@ function FullscreenPresentation({
   );
 }
 
+/* ─── Page Share Broadcaster ─── */
+function PageShareBroadcaster() {
+  const { user } = useAuth();
+  const location = useLocation();
+  const [sessionCode, setSessionCode] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+  const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
+
+  const startPageShare = () => {
+    const code = crypto.randomUUID().slice(0, 8);
+    setSessionCode(code);
+  };
+
+  // Set up broadcast channel and sync location
+  useEffect(() => {
+    if (!sessionCode) return;
+    const channel = supabase.channel(`page-share:${sessionCode}`);
+    channel.subscribe((status) => {
+      if (status === "SUBSCRIBED") {
+        channel.send({ type: "broadcast", event: "page-change", payload: { path: location.pathname + location.search } });
+      }
+    });
+    channelRef.current = channel;
+    return () => { supabase.removeChannel(channel); channelRef.current = null; };
+  }, [sessionCode]);
+
+  // Broadcast route changes
+  useEffect(() => {
+    if (!sessionCode || !channelRef.current) return;
+    channelRef.current.send({ type: "broadcast", event: "page-change", payload: { path: location.pathname + location.search } });
+  }, [location.pathname, location.search, sessionCode]);
+
+  const handleCopy = () => {
+    if (!sessionCode) return;
+    navigator.clipboard.writeText(sessionCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <Card>
+      <CardContent className="p-6">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+            <Globe className="w-5 h-5 text-primary" />
+          </div>
+          <div>
+            <h3 className="font-semibold text-foreground">Share App Pages</h3>
+            <p className="text-xs text-muted-foreground">
+              Broadcast your current page to audience devices in real-time
+            </p>
+          </div>
+        </div>
+
+        {sessionCode ? (
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/50">
+              <Share2 className="w-4 h-4 text-primary shrink-0" />
+              <span className="text-sm text-foreground">Session active — navigating the app broadcasts your page to viewers.</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium text-foreground">Share Code:</span>
+              <code className="px-2 py-1 rounded bg-muted text-sm font-mono text-foreground">{sessionCode}</code>
+              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={handleCopy}>
+                {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+              </Button>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Audience joins via Live Preview → "Join Page Share" with this code.
+            </p>
+            <Button variant="outline" size="sm" onClick={() => setSessionCode(null)}>
+              Stop Sharing
+            </Button>
+          </div>
+        ) : (
+          <Button onClick={startPageShare} className="gap-2">
+            <Globe className="w-4 h-4" />
+            Start Page Share Session
+          </Button>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
 /* ─── Present Mode Tab ─── */
 export function PresentMode() {
   const { user } = useAuth();
   const [selectedDeckId, setSelectedDeckId] = useState<string | null>(null);
   const [presenting, setPresenting] = useState(false);
 
-  // Load user's decks
   const { data: decks = [], isLoading } = useQuery({
     queryKey: ["slide-decks-for-present"],
     queryFn: async () => {
@@ -383,7 +468,6 @@ export function PresentMode() {
                 })}
               </div>
 
-              {/* Present button */}
               <div className="flex justify-center">
                 <Button
                   size="lg"
@@ -413,6 +497,9 @@ export function PresentMode() {
           )}
         </CardContent>
       </Card>
+
+      {/* Page Share section */}
+      <PageShareBroadcaster />
     </div>
   );
 }
