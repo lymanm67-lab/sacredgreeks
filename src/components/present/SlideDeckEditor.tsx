@@ -16,7 +16,32 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 
-import type { SlideData, ImageFit, ImageLayer } from "./slideTypes";
+import type { SlideData, ImageFit, ImageLayer, FontSize } from "./slideTypes";
+
+const FONT_SIZE_MAP: Record<FontSize, { title: string; titleTwo: string; content: string }> = {
+  sm: { title: "text-5xl", titleTwo: "text-4xl", content: "text-xl" },
+  md: { title: "text-7xl", titleTwo: "text-5xl", content: "text-2xl" },
+  lg: { title: "text-8xl", titleTwo: "text-6xl", content: "text-3xl" },
+  xl: { title: "text-9xl", titleTwo: "text-7xl", content: "text-4xl" },
+};
+
+const FONT_SIZE_OPTIONS: { value: FontSize; label: string }[] = [
+  { value: "sm", label: "S" },
+  { value: "md", label: "M" },
+  { value: "lg", label: "L" },
+  { value: "xl", label: "XL" },
+];
+
+const COLOR_PRESETS = [
+  { value: "", label: "Auto" },
+  { value: "#ffffff", label: "White" },
+  { value: "#000000", label: "Black" },
+  { value: "#f59e0b", label: "Gold" },
+  { value: "#3b82f6", label: "Blue" },
+  { value: "#ef4444", label: "Red" },
+  { value: "#10b981", label: "Green" },
+  { value: "#8b5cf6", label: "Purple" },
+];
 
 interface SlideDeck {
   id: string;
@@ -56,6 +81,9 @@ function ScaledSlide({
 }) {
   const scale = Math.min(containerWidth / 1920, containerHeight / 1080);
   const hasImage = !!slide.image_url;
+  const fs = FONT_SIZE_MAP[slide.font_size || "md"];
+  const titleColor = slide.title_color || undefined;
+  const contentColor = slide.content_color || undefined;
 
   return (
     <div
@@ -94,21 +122,21 @@ function ScaledSlide({
         )}
         {slide.layout === "title" ? (
           <div className={cn("flex flex-col items-center justify-center h-full px-40 text-center relative z-10", hasImage && (slide.image_layer || "behind") === "behind" && "text-white")}>
-            <h1 className={cn("text-7xl font-bold mb-8", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white drop-shadow-lg" : "text-foreground")}>{slide.title || "Untitled"}</h1>
-            <p className={cn("text-3xl whitespace-pre-wrap", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white/90 drop-shadow" : "text-muted-foreground")}>{slide.content}</p>
+            <h1 className={cn(fs.title, "font-bold mb-8", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white drop-shadow-lg" : "text-foreground")} style={titleColor ? { color: titleColor } : undefined}>{slide.title || "Untitled"}</h1>
+            <p className={cn(fs.content, "whitespace-pre-wrap", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white/90 drop-shadow" : "text-muted-foreground")} style={contentColor ? { color: contentColor } : undefined}>{slide.content}</p>
           </div>
         ) : slide.layout === "two-column" ? (
           <div className="flex flex-col h-full p-20 relative z-10">
-            <h2 className={cn("text-5xl font-bold mb-12", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white drop-shadow-lg" : "text-foreground")}>{slide.title || "Untitled"}</h2>
+            <h2 className={cn(fs.titleTwo, "font-bold mb-12", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white drop-shadow-lg" : "text-foreground")} style={titleColor ? { color: titleColor } : undefined}>{slide.title || "Untitled"}</h2>
             <div className="flex-1 grid grid-cols-2 gap-16">
-              <div className={cn("text-2xl whitespace-pre-wrap", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white/90" : "text-foreground/80")}>{slide.content}</div>
-              <div className={cn("text-2xl whitespace-pre-wrap", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white/90" : "text-foreground/80")}>{slide.notes || ""}</div>
+              <div className={cn(fs.content, "whitespace-pre-wrap", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white/90" : "text-foreground/80")} style={contentColor ? { color: contentColor } : undefined}>{slide.content}</div>
+              <div className={cn(fs.content, "whitespace-pre-wrap", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white/90" : "text-foreground/80")} style={contentColor ? { color: contentColor } : undefined}>{slide.notes || ""}</div>
             </div>
           </div>
         ) : (
           <div className="flex flex-col h-full p-20 relative z-10">
-            <h2 className={cn("text-5xl font-bold mb-12", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white drop-shadow-lg" : "text-foreground")}>{slide.title || "Untitled"}</h2>
-            <p className={cn("text-2xl whitespace-pre-wrap flex-1", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white/90" : "text-foreground/80")}>{slide.content}</p>
+            <h2 className={cn(fs.titleTwo, "font-bold mb-12", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white drop-shadow-lg" : "text-foreground")} style={titleColor ? { color: titleColor } : undefined}>{slide.title || "Untitled"}</h2>
+            <p className={cn(fs.content, "whitespace-pre-wrap flex-1", hasImage && (slide.image_layer || "behind") === "behind" ? "text-white/90" : "text-foreground/80")} style={contentColor ? { color: contentColor } : undefined}>{slide.content}</p>
           </div>
         )}
         {hasImage && slide.image_layer === "infront" && (
@@ -575,6 +603,78 @@ export function SlideDeckEditor({
                   ))}
                 </SelectContent>
               </Select>
+            </div>
+
+            <div>
+              <label className="text-xs font-medium text-muted-foreground flex items-center gap-1 mb-1">
+                <Type className="w-3 h-3" /> Font Size
+              </label>
+              <div className="flex gap-1">
+                {FONT_SIZE_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.value}
+                    onClick={() => updateSlide(activeIndex, { font_size: opt.value })}
+                    className={cn(
+                      "flex-1 px-2 py-1 rounded text-xs font-bold transition-colors border",
+                      (currentSlide.font_size || "md") === opt.value
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-muted/50 text-muted-foreground border-border/50 hover:bg-muted"
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="text-xs font-medium text-muted-foreground mb-1 block">Title Color</label>
+              <div className="flex gap-1 flex-wrap">
+                {COLOR_PRESETS.map((c) => (
+                  <button
+                    key={c.value || "auto"}
+                    onClick={() => updateSlide(activeIndex, { title_color: c.value })}
+                    title={c.label}
+                    className={cn(
+                      "w-6 h-6 rounded-full border-2 transition-all",
+                      (currentSlide.title_color || "") === c.value ? "border-primary scale-110" : "border-border/50 hover:border-border"
+                    )}
+                    style={{ background: c.value || "linear-gradient(135deg, #888 50%, #fff 50%)" }}
+                  />
+                ))}
+                <input
+                  type="color"
+                  value={currentSlide.title_color || "#ffffff"}
+                  onChange={(e) => updateSlide(activeIndex, { title_color: e.target.value })}
+                  className="w-6 h-6 rounded-full cursor-pointer border-0 p-0"
+                  title="Custom color"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-xs font-medium text-muted-foreground mb-1 block">Content Color</label>
+              <div className="flex gap-1 flex-wrap">
+                {COLOR_PRESETS.map((c) => (
+                  <button
+                    key={c.value || "auto"}
+                    onClick={() => updateSlide(activeIndex, { content_color: c.value })}
+                    title={c.label}
+                    className={cn(
+                      "w-6 h-6 rounded-full border-2 transition-all",
+                      (currentSlide.content_color || "") === c.value ? "border-primary scale-110" : "border-border/50 hover:border-border"
+                    )}
+                    style={{ background: c.value || "linear-gradient(135deg, #888 50%, #fff 50%)" }}
+                  />
+                ))}
+                <input
+                  type="color"
+                  value={currentSlide.content_color || "#ffffff"}
+                  onChange={(e) => updateSlide(activeIndex, { content_color: e.target.value })}
+                  className="w-6 h-6 rounded-full cursor-pointer border-0 p-0"
+                  title="Custom color"
+                />
+              </div>
             </div>
 
             <div>
