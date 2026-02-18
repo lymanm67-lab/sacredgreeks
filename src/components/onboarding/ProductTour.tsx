@@ -146,10 +146,10 @@ export function ProductTour({ onComplete, onSkip }: ProductTourProps) {
   const Icon = step.icon;
 
   const content = (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center" onClick={handleSkip}>
-      {/* Backdrop */}
+    <div className="fixed inset-0 z-[100] flex items-center justify-center">
+      {/* Backdrop - no click handler, skip only via buttons */}
       <div 
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm pointer-events-none"
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
       />
       
       {/* Tour Card */}
@@ -158,7 +158,6 @@ export function ProductTour({ onComplete, onSkip }: ProductTourProps) {
           "relative z-10 w-full max-w-md mx-4 bg-slate-900 border-slate-700 shadow-2xl",
           "animate-in fade-in slide-in-from-bottom-4 duration-300"
         )}
-        onClick={(e) => e.stopPropagation()}
       >
         <CardContent className="p-6">
           {/* Header */}
@@ -170,7 +169,8 @@ export function ProductTour({ onComplete, onSkip }: ProductTourProps) {
               variant="ghost"
               size="icon"
               className="h-8 w-8 text-slate-400 hover:text-white"
-              onClick={handleSkip}
+              onClick={(e) => { e.stopPropagation(); e.preventDefault(); handleSkip(); }}
+              type="button"
             >
               <X className="w-4 h-4" />
             </Button>
@@ -196,9 +196,10 @@ export function ProductTour({ onComplete, onSkip }: ProductTourProps) {
           <div className="flex items-center justify-between gap-3">
             <Button
               variant="ghost"
-              onClick={handlePrev}
+              onClick={(e) => { e.stopPropagation(); e.preventDefault(); handlePrev(); }}
               disabled={currentStep === 0}
               className="text-slate-400"
+              type="button"
             >
               <ChevronLeft className="w-4 h-4 mr-1" />
               Back
@@ -217,8 +218,9 @@ export function ProductTour({ onComplete, onSkip }: ProductTourProps) {
             </div>
 
             <Button
-              onClick={handleNext}
+              onClick={(e) => { e.stopPropagation(); e.preventDefault(); handleNext(); }}
               className="bg-sacred hover:bg-sacred/90"
+              type="button"
             >
               {currentStep === tourSteps.length - 1 ? "Get Started" : "Next"}
               <ChevronRight className="w-4 h-4 ml-1" />
@@ -228,8 +230,9 @@ export function ProductTour({ onComplete, onSkip }: ProductTourProps) {
           {/* Skip link */}
           {currentStep < tourSteps.length - 1 && (
             <button
-              onClick={handleSkip}
+              onClick={(e) => { e.stopPropagation(); e.preventDefault(); handleSkip(); }}
               className="w-full text-center text-sm text-slate-500 hover:text-slate-400 mt-4"
+              type="button"
             >
               Skip tour
             </button>
