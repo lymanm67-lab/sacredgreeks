@@ -110,7 +110,7 @@ export default function AIWorkers() {
           />
         )}
         {view === 'video_studio' && (
-          <PremiumGate featureName="Sacred Studio Agent">
+          <PremiumGate featureName="Script Writing Assistant">
             <VideoStudio onBack={handleBack} />
           </PremiumGate>
         )}
