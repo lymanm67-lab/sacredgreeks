@@ -17,7 +17,7 @@ const TONE_OPTIONS = [
 ];
 
 type GenerationMode = 'text_to_video' | 'image_to_video' | 'video_upload' | 'generate_image';
-type ProviderType = 'runway' | 'replicate' | 'shotstack' | 'puter';
+type ProviderType = 'runway' | 'replicate' | 'shotstack';
 type StudioView = 'storyboard' | 'create_video' | 'image_to_video' | 'upload_edit' | 'ai_images' | 'library' | 'admin';
 
 const SUGGESTIONS = [
@@ -75,8 +75,6 @@ interface StudioPromptHeroProps {
   onSceneCountChange?: (count: string) => void;
   outputDimensions?: string;
   onOutputDimensionsChange?: (dims: string) => void;
-  puterSignedIn?: boolean;
-  onPuterSignIn?: () => void;
 }
 
 export function StudioPromptHero({
@@ -86,7 +84,6 @@ export function StudioPromptHero({
   onShowLibrary, onShowAdmin,
   sceneCount = '6', onSceneCountChange,
   outputDimensions = '1920x1080', onOutputDimensionsChange,
-  puterSignedIn, onPuterSignIn,
 }: StudioPromptHeroProps) {
   const [selectedTemplate, setSelectedTemplate] = useState<string>('');
   const [showSteps, setShowSteps] = useState(false);
@@ -235,27 +232,11 @@ export function StudioPromptHero({
                   <Select value={selectedProvider} onValueChange={(v: ProviderType) => onProviderChange(v)}>
                     <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="puter">Puter / Wan AI (Free)</SelectItem>
+                      <SelectItem value="shotstack">ShotStack</SelectItem>
                       <SelectItem value="replicate">Replicate</SelectItem>
                       <SelectItem value="runway">Runway Gen-4</SelectItem>
-                      <SelectItem value="shotstack">ShotStack</SelectItem>
                     </SelectContent>
                   </Select>
-                  {selectedProvider === 'puter' && (
-                    <div className="mt-2 space-y-2">
-                      {!puterSignedIn && (
-                        <Button size="sm" variant="outline" onClick={onPuterSignIn} className="w-full">
-                          🔑 Sign in to Puter.com
-                        </Button>
-                      )}
-                      {puterSignedIn && (
-                        <p className="text-xs text-primary">✅ Signed in to Puter — ready to generate</p>
-                      )}
-                      <p className="text-xs text-muted-foreground">
-                        ⏱️ Puter.js takes 1–3 min per video, in-browser — keep the tab open. If sign-in popup is blocked, try the published app directly.
-                      </p>
-                    </div>
-                  )}
                 </div>
                 <div className="space-y-1.5">
                   <Label className="text-sm font-medium">Model</Label>
@@ -441,27 +422,11 @@ export function StudioPromptHero({
                   <Select value={selectedProvider} onValueChange={(v: ProviderType) => onProviderChange(v)}>
                     <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="puter">Puter / Wan AI (Free)</SelectItem>
+                      <SelectItem value="shotstack">ShotStack</SelectItem>
                       <SelectItem value="runway">Runway Gen-4</SelectItem>
                       <SelectItem value="replicate">Replicate</SelectItem>
-                      <SelectItem value="shotstack">ShotStack</SelectItem>
                     </SelectContent>
                   </Select>
-                  {selectedProvider === 'puter' && (
-                    <div className="mt-2 space-y-2">
-                      {!puterSignedIn && (
-                        <Button size="sm" variant="outline" onClick={onPuterSignIn} className="w-full">
-                          🔑 Sign in to Puter.com
-                        </Button>
-                      )}
-                      {puterSignedIn && (
-                        <p className="text-xs text-primary">✅ Signed in to Puter — ready to generate</p>
-                      )}
-                      <p className="text-xs text-muted-foreground">
-                        ⏱️ Puter.js takes 1–3 min per video, in-browser — keep the tab open. If sign-in popup is blocked, try the published app directly.
-                      </p>
-                    </div>
-                  )}
                 </div>
                 {selectedProvider === 'replicate' && (
                   <div className="space-y-1.5">
