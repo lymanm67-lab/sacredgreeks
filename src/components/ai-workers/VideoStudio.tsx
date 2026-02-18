@@ -87,7 +87,7 @@ const DEMO_VIDEOS = [
 ];
 
 type TemplateType = 'objection_short' | 'mini_teaching' | 'conversation_prep' | 'weekly_devotional' | 'custom';
-type ProviderType = 'invideo' | 'replicate';
+type ProviderType = 'invideo';
 type GenerationMode = 'text_to_video' | 'image_to_video' | 'video_upload' | 'generate_image';
 type Step = 'prompt' | 'content' | 'script' | 'generate' | 'library';
 
@@ -326,64 +326,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
     if (videoRequest?.id) generateScript(pendingTemplate || 'custom', videoRequest.id);
   };
 
-  const handleSubmitVideo = async () => {
-    if (!videoRequest?.id) return;
-
-    // Validate script has actual content before submitting
-    const scriptEntries = scriptData?.script || [];
-    const hasContent = scriptEntries.length > 0 && scriptEntries.some((s: any) => (s.narration || s.visual || '').trim());
-    if (!hasContent && !scriptData?.title && !prompt) {
-      toast({ title: 'No content', description: 'The script is empty. Please go back and provide a prompt or select content first.', variant: 'destructive' });
-      return;
-    }
-
-    // Use Replicate Wan 2.1 async video generation
-    setIsLoading(true);
-    setJobStatus('submitting');
-    try {
-      const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/video-studio`, {
-        method: 'POST', headers: await getAuthHeader(),
-        body: JSON.stringify({ action: 'generate_video', videoRequestId: videoRequest.id, outputDimensions }),
-      });
-      if (!res.ok) {
-        const errBody = await res.json().catch(() => ({}));
-        throw new Error(errBody.error || errBody.details || 'Failed to start video generation');
-      }
-      const result = await res.json();
-      setJobStatus('processing');
-      setStep('generate');
-      toast({ title: '🎬 Video generation started', description: 'Using Wan 2.1 — typically takes 2-5 minutes.' });
-      pollJobStatus(videoRequest.id);
-    } catch (e) {
-      setJobStatus('failed');
-      setStep('script');
-      toast({ title: 'Video generation failed', description: e instanceof Error ? e.message : 'Failed', variant: 'destructive' });
-    } finally { setIsLoading(false); }
-  };
-
-  const pollJobStatus = async (requestId: string) => {
-    const poll = async () => {
-      try {
-        const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/video-studio`, {
-          method: 'POST', headers: await getAuthHeader(),
-          body: JSON.stringify({ action: 'check_status', videoRequestId: requestId }),
-        });
-        const result = await res.json();
-        setJobStatus(result.status);
-        if (result.status === 'completed' && result.videoUrl) {
-          setVideoUrl(result.videoUrl);
-          toast({ title: '🎬 Video Ready!' });
-          return;
-        }
-        if (result.status === 'failed') {
-          toast({ title: 'Failed', description: result.error || 'Generation failed', variant: 'destructive' });
-          return;
-        }
-        setTimeout(poll, 5000);
-      } catch { setTimeout(poll, 10000); }
-    };
-    setTimeout(poll, 5000);
-  };
+  // No in-app video generation — InVideo export only
 
   // Image generation
   const handleGenerateImage = async () => {
@@ -559,13 +502,12 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
 
       {/* ===== SCENE EDITOR ===== */}
       {step === 'script' && scriptData && (
-        <StudioSceneEditor
+         <StudioSceneEditor
           scriptData={scriptData}
           videoRequest={videoRequest}
           selectedProvider={selectedProvider}
           onBack={() => setStep('prompt')}
           onRegenerate={handleRegenerate}
-          onSubmitVideo={handleSubmitVideo}
           onExportToInVideo={handleExportToInVideo}
           isLoading={isLoading}
         />
