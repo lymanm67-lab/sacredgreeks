@@ -219,17 +219,12 @@ export function StudioPromptHero({
                 </Select>
               </div>
 
-              {/* Provider + Model */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <Label className="text-sm font-medium">Provider</Label>
-                  <Select value={selectedProvider} onValueChange={(v: ProviderType) => onProviderChange(v)}>
-                    <SelectTrigger className="h-10"><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="invideo">InVideo.ai (Export)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+              {/* Provider */}
+              <div className="flex items-center gap-2">
+                <Badge variant="outline" className="text-xs gap-1">
+                  <Film className="w-3 h-3" />
+                  InVideo.ai (Copy &amp; Paste)
+                </Badge>
               </div>
 
               {/* Topic / Title */}

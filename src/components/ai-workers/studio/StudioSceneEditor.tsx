@@ -246,18 +246,42 @@ export function StudioSceneEditor({
         </Card>
       )}
 
-      {/* Action buttons */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        {onExportToInVideo && (
-          <Button
-            onClick={onExportToInVideo}
-            className="flex-1 gap-2 h-12 text-base rounded-2xl shadow-lg"
-            size="lg"
-          >
-            <ExternalLink className="w-5 h-5" /> Export to InVideo.ai
-          </Button>
-        )}
-      </div>
+      {/* Next Steps panel */}
+      <Card className="border-primary/20 bg-primary/5">
+        <CardContent className="p-5 space-y-4">
+          <div className="flex items-center gap-2">
+            <ExternalLink className="w-5 h-5 text-primary" />
+            <h4 className="font-semibold text-foreground">Next Steps</h4>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Your script is ready! Copy it below, then paste it into InVideo.ai to generate your video.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3">
+            {onExportToInVideo && (
+              <Button
+                onClick={onExportToInVideo}
+                className="flex-1 gap-2 h-12 text-base rounded-2xl shadow-lg"
+                size="lg"
+              >
+                <Copy className="w-5 h-5" /> Copy Script
+              </Button>
+            )}
+            <Button
+              asChild
+              variant="outline"
+              className="flex-1 gap-2 h-12 text-base rounded-2xl border-primary/30 hover:bg-primary/10"
+              size="lg"
+            >
+              <a href="https://ai.invideo.io" target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="w-5 h-5" /> Open InVideo.ai
+              </a>
+            </Button>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Tip: The "Open InVideo.ai" link works on your published site. It may be blocked in the Lovable preview.
+          </p>
+        </CardContent>
+      </Card>
     </div>
   );
 }
