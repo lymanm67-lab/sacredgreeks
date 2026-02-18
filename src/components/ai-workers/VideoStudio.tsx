@@ -135,7 +135,16 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
   // Check Puter sign-in status when SDK is ready
   useEffect(() => {
     if (puter.isReady && window.puter?.auth?.isSignedIn?.()) {
-      setPuterSignedIn(true);
+      // Verify the session is actually valid by checking user info
+      try {
+        const user = window.puter?.auth?.getUser?.();
+        if (user) {
+          setPuterSignedIn(true);
+        }
+      } catch {
+        // Session token may be stale — don't mark as signed in
+        setPuterSignedIn(false);
+      }
     }
   }, [puter.isReady]);
 
@@ -434,8 +443,16 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
         // Clean up object URL
         URL.revokeObjectURL(result.objectUrl);
       } catch (e) {
+        const errMsg = e instanceof Error ? e.message : String(e);
+        const isAuthError = /auth|sign.?in|login|permission|unauthorized|forbidden|token|session/i.test(errMsg);
         setJobStatus('failed');
-        toast({ title: 'Video generation failed', description: e instanceof Error ? e.message : 'Failed', variant: 'destructive' });
+        if (isAuthError) {
+          setPuterSignedIn(false);
+          setStep('prompt');
+          toast({ title: 'Puter authentication error', description: 'Your Puter session expired or is invalid. Please sign in to Puter again.', variant: 'destructive' });
+        } else {
+          toast({ title: 'Video generation failed', description: errMsg, variant: 'destructive' });
+        }
       } finally {
         setIsLoading(false);
       }
