@@ -87,7 +87,7 @@ const DEMO_VIDEOS = [
 ];
 
 type TemplateType = 'objection_short' | 'mini_teaching' | 'conversation_prep' | 'weekly_devotional' | 'custom';
-type ProviderType = 'invideo';
+type ProviderType = 'invideo' | 'replicate';
 type GenerationMode = 'text_to_video' | 'image_to_video' | 'video_upload' | 'generate_image';
 type Step = 'prompt' | 'content' | 'script' | 'generate' | 'library';
 
