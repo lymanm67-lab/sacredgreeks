@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Film, FileText, Sparkles, Copy, RotateCcw, Play, Loader2, AlertTriangle, ChevronLeft, Clock, CheckCircle } from 'lucide-react';
+import { Film, FileText, Sparkles, Copy, RotateCcw, Play, Loader2, AlertTriangle, ChevronLeft, Clock, CheckCircle, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -13,12 +13,13 @@ interface StudioSceneEditorProps {
   onBack: () => void;
   onRegenerate: () => void;
   onSubmitVideo: () => void;
+  onExportToInVideo?: () => void;
   isLoading: boolean;
 }
 
 export function StudioSceneEditor({
   scriptData, videoRequest, selectedProvider,
-  onBack, onRegenerate, onSubmitVideo, isLoading,
+  onBack, onRegenerate, onSubmitVideo, onExportToInVideo, isLoading,
 }: StudioSceneEditorProps) {
   const { toast } = useToast();
   const [activeSection, setActiveSection] = useState<'scenes' | 'script' | 'captions' | 'meta'>('scenes');
@@ -246,18 +247,30 @@ export function StudioSceneEditor({
         </Card>
       )}
 
-      {/* Generate button */}
-      <Button
-        onClick={onSubmitVideo}
-        disabled={isLoading || videoRequest?.status === 'blocked'}
-        className="w-full gap-2 h-12 text-base rounded-2xl shadow-lg"
-        size="lg"
-      >
-        {isLoading
-          ? <><Loader2 className="w-5 h-5 animate-spin" /> Submitting...</>
-          : <><Play className="w-5 h-5" /> Generate Video</>
-        }
-      </Button>
+      {/* Action buttons */}
+      <div className="flex flex-col sm:flex-row gap-3">
+        <Button
+          onClick={onSubmitVideo}
+          disabled={isLoading || videoRequest?.status === 'blocked'}
+          className="flex-1 gap-2 h-12 text-base rounded-2xl shadow-lg"
+          size="lg"
+        >
+          {isLoading
+            ? <><Loader2 className="w-5 h-5 animate-spin" /> Submitting...</>
+            : <><Play className="w-5 h-5" /> Generate Video</>
+          }
+        </Button>
+        {onExportToInVideo && (
+          <Button
+            onClick={onExportToInVideo}
+            variant="outline"
+            className="flex-1 gap-2 h-12 text-base rounded-2xl border-primary/30 hover:bg-primary/10"
+            size="lg"
+          >
+            <ExternalLink className="w-5 h-5" /> Export to InVideo.ai
+          </Button>
+        )}
+      </div>
     </div>
   );
 }

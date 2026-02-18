@@ -14,7 +14,7 @@ import { StudioGenerationProgress } from './studio/StudioGenerationProgress';
 import { StudioLibrary } from './studio/StudioLibrary';
 import { StudioContentPicker } from './studio/StudioContentPicker';
 import { StudioDemoOverview } from './studio/StudioDemoOverview';
-import { usePuter } from '@/hooks/usePuter';
+import { ExternalLink } from 'lucide-react';
 
 // Demo data for showcase when demo mode is active
 const DEMO_VIDEOS = [
@@ -87,7 +87,7 @@ const DEMO_VIDEOS = [
 ];
 
 type TemplateType = 'objection_short' | 'mini_teaching' | 'conversation_prep' | 'weekly_devotional' | 'custom';
-type ProviderType = 'runway' | 'replicate' | 'shotstack' | 'puter';
+type ProviderType = 'runway' | 'replicate' | 'shotstack';
 type GenerationMode = 'text_to_video' | 'image_to_video' | 'video_upload' | 'generate_image';
 type Step = 'prompt' | 'content' | 'script' | 'generate' | 'library';
 
@@ -99,7 +99,6 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
   const { user } = useAuth();
   const { toast } = useToast();
   const { isDemoMode } = useDemoMode();
-  const puter = usePuter();
 
   // Flow state
   const [step, setStep] = useState<Step>('prompt');
@@ -113,7 +112,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
   const [pendingTemplate, setPendingTemplate] = useState<TemplateType | null>(null);
 
   // Provider
-  const [selectedProvider, setSelectedProvider] = useState<ProviderType>('puter');
+  const [selectedProvider, setSelectedProvider] = useState<ProviderType>('shotstack');
   const [selectedModel, setSelectedModel] = useState('minimax/video-01-live');
   const [sceneCount, setSceneCount] = useState('6');
   const [outputDimensions, setOutputDimensions] = useState('1920x1080');
@@ -129,85 +128,36 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [myVideos, setMyVideos] = useState<any[]>([]);
 
-  // Puter auth state
-  const [puterSignedIn, setPuterSignedIn] = useState(false);
+  // InVideo.ai export handler
+  const handleExportToInVideo = () => {
+    if (!scriptData) return;
+    
+    // Build a formatted script for InVideo.ai
+    const scenes = scriptData.script || [];
+    const parts: string[] = [];
+    
+    if (scriptData.title) parts.push(`Title: ${scriptData.title}\n`);
+    if (scriptData.description) parts.push(`Description: ${scriptData.description}\n`);
+    
+    scenes.forEach((scene: any, i: number) => {
+      parts.push(`Scene ${i + 1}:`);
+      if (scene.narration) parts.push(`  Narration: ${scene.narration}`);
+      if (scene.visual) parts.push(`  Visual: ${scene.visual}`);
+      if (scene.timestamp) parts.push(`  Timing: ${scene.timestamp}`);
+      parts.push('');
+    });
 
-  // Check Puter sign-in status when SDK is ready
-  useEffect(() => {
-    if (puter.isReady && window.puter?.auth?.isSignedIn?.()) {
-      // Verify the session is actually valid by checking user info
-      try {
-        const user = window.puter?.auth?.getUser?.();
-        if (user) {
-          setPuterSignedIn(true);
-        }
-      } catch {
-        // Session token may be stale — don't mark as signed in
-        setPuterSignedIn(false);
-      }
+    if (scriptData.citationsUsed?.length) {
+      parts.push(`Sources: ${scriptData.citationsUsed.join(', ')}`);
     }
-  }, [puter.isReady]);
-
-  const handlePuterSignIn = async () => {
-    try {
-      // First try using the SDK's built-in signIn method
-      if (window.puter?.auth?.signIn) {
-        try {
-          await window.puter.auth.signIn();
-          if (window.puter?.auth?.isSignedIn?.()) {
-            setPuterSignedIn(true);
-            toast({ title: 'Signed in to Puter', description: 'You can now generate videos.' });
-            return;
-          }
-        } catch (sdkErr) {
-          console.warn('Puter SDK signIn failed, trying manual approach:', sdkErr);
-        }
-      }
-
-      // Fallback: open Puter signup page (not /login which redirects to /gui/ and errors)
-      const width = 600, height = 700;
-      const left = window.screenX + (window.innerWidth - width) / 2;
-      const top = window.screenY + (window.innerHeight - height) / 2;
-      const authWindow = window.open(
-        'https://puter.com/?action=signup',
-        'puter-auth',
-        `width=${width},height=${height},left=${left},top=${top},toolbar=no,menubar=no`
-      );
-      if (!authWindow) {
-        toast({ title: 'Popup blocked', description: 'Please allow popups for this site, or open the published app directly to sign in to Puter.', variant: 'destructive' });
-        return;
-      }
-      
-      toast({ title: 'Puter login opened', description: 'Complete sign-in in the popup window, then close it to continue.' });
-      
-      // Poll for window close, then check auth
-      const pollInterval = setInterval(async () => {
-        try {
-          if (authWindow.closed) {
-            clearInterval(pollInterval);
-            // After the user closes the login window, check if SDK picked up the session
-            if (window.puter?.auth?.isSignedIn?.()) {
-              setPuterSignedIn(true);
-              toast({ title: 'Signed in to Puter', description: 'You can now generate videos.' });
-            } else {
-              // Try calling signIn which may now work since user authenticated in browser
-              try {
-                await window.puter.auth.signIn();
-                setPuterSignedIn(true);
-                toast({ title: 'Signed in to Puter', description: 'You can now generate videos.' });
-              } catch {
-                toast({ title: 'Sign-in not detected', description: 'Please try again. If using the preview, try the published app at sacredgreekslife.com instead.', variant: 'destructive' });
-              }
-            }
-          }
-        } catch {
-          clearInterval(pollInterval);
-        }
-      }, 1000);
-    } catch (err) {
-      console.error('Puter sign-in error:', err);
-      toast({ title: 'Sign-in failed', description: 'Could not open Puter login. Try the published app at sacredgreekslife.com directly.', variant: 'destructive' });
-    }
+    
+    const fullScript = parts.join('\n');
+    navigator.clipboard.writeText(fullScript).then(() => {
+      toast({ title: '📋 Script copied!', description: 'Paste it into InVideo.ai to create your video.' });
+    });
+    
+    // Open InVideo.ai in a new tab
+    window.open('https://ai.invideo.io/workspace', '_blank');
   };
 
   // Upload state
@@ -386,88 +336,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
       return;
     }
 
-    // === PUTER CLIENT-SIDE GENERATION ===
-    if (selectedProvider === 'puter') {
-      setIsLoading(true);
-      setJobStatus('generating');
-      setStep('generate');
-      try {
-        // Ensure user is signed into Puter
-        if (!puterSignedIn && !window.puter?.auth?.isSignedIn?.()) {
-          toast({ title: 'Puter sign-in required', description: 'Please click "Sign in to Puter" first, then try again.', variant: 'destructive' });
-          setIsLoading(false);
-          setJobStatus(null);
-          setStep('script');
-          return;
-        }
-
-        // Build a combined prompt from the script data
-        const sceneTexts = scriptEntries.map((s: any) => s.narration || s.visual || '').filter(Boolean);
-        const videoPrompt = sceneTexts.length > 0
-          ? sceneTexts.join('. ')
-          : scriptData?.title || prompt;
-
-        const truncatedPrompt = videoPrompt.slice(0, 500);
-        
-        let result;
-        if (generationMode === 'image_to_video' && uploadedImageUrl) {
-          result = await puter.generateImageToVideo(uploadedImageUrl, truncatedPrompt);
-        } else {
-          result = await puter.generateVideo(truncatedPrompt);
-        }
-
-        // Upload to Supabase storage
-        setJobStatus('uploading');
-        const fileName = `puter-${Date.now()}.mp4`;
-        const filePath = `${user!.id}/${fileName}`;
-        const { error: uploadError } = await supabase.storage
-          .from('proof-videos')
-          .upload(filePath, result.blob, { contentType: 'video/mp4', upsert: true });
-
-        if (uploadError) throw uploadError;
-
-        const { data: urlData } = supabase.storage.from('proof-videos').getPublicUrl(filePath);
-        const finalUrl = urlData.publicUrl;
-
-        // Update the video_request record
-        await supabase.from('video_requests').update({
-          status: 'completed',
-          video_url: finalUrl,
-          provider: 'puter',
-        }).eq('id', videoRequest.id);
-
-        setVideoUrl(finalUrl);
-        setJobStatus('completed');
-        toast({ title: '🎬 Video Ready!' });
-
-        // Clean up object URL
-        URL.revokeObjectURL(result.objectUrl);
-      } catch (e: any) {
-        console.error('Puter video generation error:', e);
-        let errMsg = 'Unknown error';
-        if (e instanceof Error) {
-          errMsg = e.message;
-        } else if (typeof e === 'string') {
-          errMsg = e;
-        } else if (e && typeof e === 'object') {
-          errMsg = e.message || e.error || e.reason || JSON.stringify(e);
-        }
-        const isAuthError = /auth|sign.?in|login|permission|unauthorized|forbidden|token|session/i.test(errMsg);
-        setJobStatus('failed');
-        if (isAuthError) {
-          setPuterSignedIn(false);
-          setStep('prompt');
-          toast({ title: 'Puter authentication error', description: 'Your Puter session expired or is invalid. Please sign in to Puter again.', variant: 'destructive' });
-        } else {
-          toast({ title: 'Video generation failed', description: errMsg.slice(0, 200), variant: 'destructive' });
-        }
-      } finally {
-        setIsLoading(false);
-      }
-      return;
-    }
-
-    // === EXISTING SERVER-SIDE PROVIDERS ===
+    // All providers use server-side generation
     setIsLoading(true);
     setJobStatus('submitting');
     try {
@@ -615,8 +484,6 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
             onSceneCountChange={setSceneCount}
             outputDimensions={outputDimensions}
             onOutputDimensionsChange={setOutputDimensions}
-            puterSignedIn={puterSignedIn}
-            onPuterSignIn={handlePuterSignIn}
           />
 
           {/* Demo Overview - shown in demo mode */}
@@ -698,6 +565,7 @@ export function VideoStudio({ onBack }: VideoStudioProps) {
           onBack={() => setStep('prompt')}
           onRegenerate={handleRegenerate}
           onSubmitVideo={handleSubmitVideo}
+          onExportToInVideo={handleExportToInVideo}
           isLoading={isLoading}
         />
       )}
