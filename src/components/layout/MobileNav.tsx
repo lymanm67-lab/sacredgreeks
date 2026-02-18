@@ -45,6 +45,11 @@ import {
   QrCode,
   Bot,
   Film,
+  Presentation,
+  BarChart3,
+  Layers,
+  Monitor,
+  Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -127,6 +132,15 @@ const resourcesItems = [
   { title: "Parents & Family", url: "/parents-family", icon: Heart, featureId: null, iconColor: "text-rose-500" },
   { title: "Anti-Hazing", url: "/anti-hazing", icon: ShieldAlert, featureId: null, iconColor: "text-red-500" },
   { title: "Church Leaders", url: "/church-leaders", icon: Church, featureId: null, iconColor: "text-lime-500" },
+];
+
+// Present section - presentation tools
+const presentItems = [
+  { title: "Slide Library", url: "/present?tab=library", icon: Layers, featureId: null, iconColor: "text-indigo-500" },
+  { title: "Live Polls", url: "/present?tab=polls", icon: BarChart3, featureId: null, iconColor: "text-cyan-500" },
+  { title: "Slide Deck", url: "/present?tab=deck", icon: Presentation, featureId: null, iconColor: "text-violet-500" },
+  { title: "Presentation Mode", url: "/present?tab=present", icon: Monitor, featureId: null, iconColor: "text-amber-500" },
+  { title: "Live Preview", url: "/present?tab=preview", icon: Eye, featureId: null, iconColor: "text-emerald-500" },
 ];
 
 // System section - matches AppSidebar
@@ -216,6 +230,7 @@ export function MobileNav() {
   const filteredAboutDrLyman = filterNavItems(aboutDrLymanItems);
   const filteredPodcast = filterNavItems(podcastItems);
   const filteredResources = filterNavItems(resourcesItems);
+  const filteredPresent = filterNavItems(presentItems);
   const filteredSystem = filterNavItems(systemItems);
 
   const getInitials = () => {
@@ -286,6 +301,9 @@ export function MobileNav() {
             )}
             {filteredResources.length > 0 && (
               <NavSection title="Resources" items={filteredResources} defaultOpen={false} currentPath={location.pathname} onNavClick={handleNavClick} />
+            )}
+            {filteredPresent.length > 0 && (
+              <NavSection title="Present" items={filteredPresent} defaultOpen={false} currentPath={location.pathname} onNavClick={handleNavClick} />
             )}
             {filteredSystem.length > 0 && (
               <NavSection title="System" items={filteredSystem} defaultOpen={false} currentPath={location.pathname} onNavClick={handleNavClick} />
