@@ -113,7 +113,7 @@ const handler = async (req: Request): Promise<Response> => {
 
       try {
         const emailResponse = await resend.emails.send({
-          from: "Sacred Greeks <onboarding@resend.dev>",
+          from: "Sacred Greeks <noreply@sacredgreekslife.com>",
           to: [user.email],
           subject: "Continue Your Sacred, Not Sinful Study Journey ✨",
           html: `

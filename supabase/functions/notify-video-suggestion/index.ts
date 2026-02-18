@@ -149,7 +149,7 @@ serve(async (req: Request): Promise<Response> => {
     console.log(`Sending notification email to ${profile.email}`);
 
     const emailResponse = await resend.emails.send({
-      from: "Sacred Greeks <onboarding@resend.dev>",
+      from: "Sacred Greeks <noreply@sacredgreekslife.com>",
       to: [profile.email],
       subject: subject,
       html: html,

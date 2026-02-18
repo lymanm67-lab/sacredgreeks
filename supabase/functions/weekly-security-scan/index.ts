@@ -185,7 +185,7 @@ serve(async (req: Request): Promise<Response> => {
 
       try {
         const { data: emailData, error: emailError } = await resend.emails.send({
-          from: "Sacred Greeks Security <security@sacredgreeks.com>",
+          from: "Sacred Greeks Security <security@sacredgreekslife.com>",
           to: [adminEmail],
           subject: `${statusEmoji} Weekly Security Scan: ${statusText}`,
           html: emailHtml,

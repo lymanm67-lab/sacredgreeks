@@ -208,7 +208,7 @@ serve(async (req: Request): Promise<Response> => {
 
         try {
           await resend.emails.send({
-            from: "Sacred Greeks <onboarding@resend.dev>",
+            from: "Sacred Greeks <noreply@sacredgreekslife.com>",
             to: [lead.email],
             subject: template.subject,
             html: template.html,

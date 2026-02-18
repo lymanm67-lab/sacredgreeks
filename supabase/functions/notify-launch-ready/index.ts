@@ -105,7 +105,7 @@ const handler = async (req: Request): Promise<Response> => {
         "Authorization": `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "Sacred Greeks <onboarding@resend.dev>",
+        from: "Sacred Greeks <noreply@sacredgreekslife.com>",
         to: [adminEmail],
         subject: "🚀 Beta Launch Checklist Complete - Ready to Go Live!",
         html: emailHtml,

@@ -131,7 +131,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send notification to admin
     const adminEmailResponse = await resend.emails.send({
-      from: "Sacred Greeks <onboarding@resend.dev>",
+      from: "Sacred Greeks <noreply@sacredgreekslife.com>",
       to: [ADMIN_EMAIL],
       subject: "New Healing Story Submitted for Review",
       html: `
@@ -180,7 +180,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Send confirmation to the author if they provided an email
     if (authorEmail) {
       const authorEmailResponse = await resend.emails.send({
-        from: "Sacred Greeks <onboarding@resend.dev>",
+        from: "Sacred Greeks <noreply@sacredgreekslife.com>",
         to: [authorEmail],
         subject: "Thank You for Sharing Your Healing Story",
         html: `
