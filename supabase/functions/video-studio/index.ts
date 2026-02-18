@@ -12,8 +12,7 @@ interface VideoStudioRequest {
   contentIds?: string[];
   videoRequestId?: string;
   jobId?: string;
-  provider?: 'runway' | 'replicate' | 'shotstack';
-  providerModel?: string;
+  provider?: 'invideo';
   customPrompt?: string;
   isCustomContent?: boolean;
   parentRequestId?: string;
@@ -22,8 +21,7 @@ interface VideoStudioRequest {
   videoUrl?: string;
   title?: string;
   description?: string;
-  outputDimensions?: string; // e.g. '1080x1920', '1920x1080', '1080x1080'
-  // Image generation fields
+  outputDimensions?: string;
   imagePrompt?: string;
   imageModel?: 'fast' | 'quality';
   imageEditSource?: string;
@@ -57,445 +55,6 @@ const TEMPLATE_CONFIGS: Record<string, { durationRange: string; format: string; 
   },
 };
 
-const REPLICATE_MODELS: Record<string, { version: string; label: string }> = {
-  'minimax/video-01-live': {
-    version: 'minimax/video-01-live',
-    label: 'MiniMax Video-01-Live',
-  },
-  'luma/ray-2-540p': {
-    version: 'luma/ray-2-540p',
-    label: 'Luma Ray 2',
-  },
-  'luma/ray-flash-2-540p': {
-    version: 'luma/ray-flash-2-540p',
-    label: 'Luma Ray Flash 2 (Fast)',
-  },
-  'kling-ai/kling-video': {
-    version: 'kling-ai/kling-video',
-    label: 'Kling Video',
-  },
-};
-
-// ===== PROVIDER ADAPTER INTERFACE =====
-interface VideoProvider {
-  submitJob(prompt: string, options: Record<string, any>): Promise<{ jobId: string; rawResponse: any }>;
-  checkStatus(jobId: string): Promise<{ status: 'processing' | 'completed' | 'failed'; progress?: number; videoUrl?: string; error?: string; rawResponse?: any }>;
-}
-
-// Runway supports image_to_video natively
-class RunwayProvider implements VideoProvider {
-  private apiKey: string;
-  constructor(apiKey: string) { this.apiKey = apiKey; }
-
-  async submitJob(prompt: string, options: Record<string, any>) {
-    const body: Record<string, any> = {
-      model: 'gen4.5',
-      ratio: options.ratio || '720:1280',
-      duration: options.duration || 10,
-      promptText: prompt.slice(0, 500),
-    };
-
-    // If image URL is provided, use image_to_video endpoint with promptImage
-    if (options.imageUrl) {
-      body.promptImage = options.imageUrl;
-    }
-
-    // Choose endpoint based on whether we have an image
-    const endpoint = options.imageUrl
-      ? 'https://api.dev.runwayml.com/v1/image_to_video'
-      : 'https://api.dev.runwayml.com/v1/text_to_video';
-
-    const res = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${this.apiKey}`,
-        'Content-Type': 'application/json',
-        'X-Runway-Version': '2024-11-06',
-      },
-      body: JSON.stringify(body),
-    });
-    if (!res.ok) {
-      const errText = await res.text();
-      throw new Error(`Runway API error [${res.status}]: ${errText}`);
-    }
-    const data = await res.json();
-    return { jobId: data.id, rawResponse: data };
-  }
-
-  async checkStatus(jobId: string) {
-    const res = await fetch(`https://api.dev.runwayml.com/v1/tasks/${jobId}`, {
-      headers: {
-        'Authorization': `Bearer ${this.apiKey}`,
-        'X-Runway-Version': '2024-11-06',
-      },
-    });
-    if (!res.ok) throw new Error(`Runway status check failed [${res.status}]`);
-    const data = await res.json();
-
-    if (data.status === 'SUCCEEDED' && data.output?.length > 0) {
-      return { status: 'completed' as const, videoUrl: data.output[0], rawResponse: data };
-    }
-    if (data.status === 'FAILED') {
-      return { status: 'failed' as const, error: data.failure || 'Unknown error', rawResponse: data };
-    }
-    return { status: 'processing' as const, progress: data.progress || 0, rawResponse: data };
-  }
-}
-
-class ReplicateProvider implements VideoProvider {
-  private apiKey: string;
-  private model: string;
-  constructor(apiKey: string, model: string) {
-    this.apiKey = apiKey;
-    this.model = model;
-  }
-
-  async submitJob(prompt: string, options: Record<string, any>) {
-    const input: Record<string, any> = {
-      prompt: prompt.slice(0, 1000),
-      ...(options.replicateInput || {}),
-    };
-
-    // If image URL is provided, pass as image input
-    if (options.imageUrl) {
-      input.image = options.imageUrl;
-      input.image_url = options.imageUrl; // some models use image_url
-    }
-
-    // Use the official model predictions endpoint (no version needed)
-    const modelPath = this.model; // e.g. "minimax/video-01-live"
-    const res = await fetch(`https://api.replicate.com/v1/models/${modelPath}/predictions`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${this.apiKey}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'wait',
-      },
-      body: JSON.stringify({ input }),
-    });
-    if (!res.ok) {
-      const errText = await res.text();
-      throw new Error(`Replicate API error [${res.status}]: ${errText}`);
-    }
-    const data = await res.json();
-    return { jobId: data.id, rawResponse: data };
-  }
-
-  async checkStatus(jobId: string) {
-    const res = await fetch(`https://api.replicate.com/v1/predictions/${jobId}`, {
-      headers: { 'Authorization': `Bearer ${this.apiKey}` },
-    });
-    if (!res.ok) throw new Error(`Replicate status check failed [${res.status}]`);
-    const data = await res.json();
-
-    if (data.status === 'succeeded') {
-      const videoUrl = Array.isArray(data.output) ? data.output[0] : data.output;
-      return { status: 'completed' as const, videoUrl, rawResponse: data };
-    }
-    if (data.status === 'failed' || data.status === 'canceled') {
-      return { status: 'failed' as const, error: data.error || 'Generation failed', rawResponse: data };
-    }
-    const logs = data.logs || '';
-    const progressMatch = logs.match(/(\d+)%/);
-    const progress = progressMatch ? parseInt(progressMatch[1]) / 100 : 0;
-    return { status: 'processing' as const, progress, rawResponse: data };
-  }
-}
-
-// ===== IMAGE GENERATION FOR SCENES (via Lovable AI) =====
-async function generateSceneImage(visual: string): Promise<string | null> {
-  try {
-    const lovableKey = Deno.env.get('LOVABLE_API_KEY');
-    if (!lovableKey) { console.log('[SCENE-IMAGE] No LOVABLE_API_KEY'); return null; }
-
-    const imagePrompt = `Photorealistic, cinematic still frame for a short-form vertical video. Scene: ${visual}. Style: dramatic lighting, vibrant colors, 9:16 portrait, professional cinematography, no text overlays.`;
-
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/images/generations', {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${lovableKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'google/gemini-3-pro-image-preview', prompt: imagePrompt, n: 1, size: '768x1344' }),
-    });
-
-    if (!response.ok) {
-      console.log('[SCENE-IMAGE] Image gen failed:', response.status, await response.text().catch(() => ''));
-      return null;
-    }
-
-    const data = await response.json();
-    return data?.data?.[0]?.url || null;
-  } catch (e) {
-    console.log('[SCENE-IMAGE] Error:', e);
-    return null;
-  }
-}
-
-// ===== TTS NARRATION FOR SCENES (via ElevenLabs with retry) =====
-async function generateNarrationAudio(text: string): Promise<string | null> {
-  try {
-    const elevenLabsKey = Deno.env.get('ELEVENLABS_API_KEY');
-    if (!elevenLabsKey) { console.log('[TTS] No ELEVENLABS_API_KEY'); return null; }
-
-    const voiceId = 'onwK4e9ZLuTAKqWW03F9'; // Daniel voice
-
-    // Retry up to 3 times with backoff for rate limits
-    for (let attempt = 0; attempt < 3; attempt++) {
-      const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
-        method: 'POST',
-        headers: {
-          'xi-api-key': elevenLabsKey,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          text,
-          model_id: 'eleven_multilingual_v2',
-          voice_settings: { stability: 0.5, similarity_boost: 0.75, style: 0.3 },
-        }),
-      });
-
-      if (response.ok) {
-
-        // Upload audio to Supabase storage for a public URL
-        const audioBuffer = await response.arrayBuffer();
-        const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-        const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-        const sb = createClient(supabaseUrl, serviceKey);
-
-        const fileName = `tts-${crypto.randomUUID()}.mp3`;
-        const { error: uploadError } = await sb.storage
-          .from('proof-videos')
-          .upload(`tts/${fileName}`, new Uint8Array(audioBuffer), { contentType: 'audio/mpeg', upsert: true });
-
-        if (uploadError) {
-          console.log('[TTS] Upload error:', uploadError.message);
-          return null;
-        }
-
-        const { data: urlData } = sb.storage.from('proof-videos').getPublicUrl(`tts/${fileName}`);
-        console.log('[TTS] Generated narration:', urlData.publicUrl);
-        return urlData.publicUrl;
-      }
-
-      // Rate limited — wait and retry
-      if (response.status === 429) {
-        const waitMs = (attempt + 1) * 2000; // 2s, 4s, 6s
-        console.log(`[TTS] Rate limited (429), retrying in ${waitMs}ms (attempt ${attempt + 1}/3)`);
-        await new Promise(r => setTimeout(r, waitMs));
-        continue;
-      }
-
-      console.log('[TTS] ElevenLabs failed:', response.status);
-      return null;
-    }
-
-    console.log('[TTS] All retries exhausted');
-    return null;
-  } catch (e) {
-    console.log('[TTS] Error:', e);
-    return null;
-  }
-}
-
-// ===== SHOTSTACK PROVIDER =====
-class ShotStackProvider implements VideoProvider {
-  private apiKey: string;
-  private env: string;
-  constructor(apiKey: string, env: string = 'v1') {
-    this.apiKey = apiKey;
-    this.env = env;
-  }
-
-  private parseDimensions(ratio: string): { aspectRatio: string; size: { width: number; height: number } } {
-    const [w, h] = ratio.split(':').map(Number);
-    const width = w || 720;
-    const height = h || 1280;
-    // Derive aspect ratio label
-    const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
-    const g = gcd(width, height);
-    const arW = width / g;
-    const arH = height / g;
-    return { aspectRatio: `${arW}:${arH}`, size: { width, height } };
-  }
-
-  async submitJob(prompt: string, options: Record<string, any>) {
-    const scenes = options.scenes || [];
-    const scriptEntries = options.scriptEntries || [];
-    const imageTrackClips: any[] = [];
-    const textTrackClips: any[] = [];
-    const audioTrackClips: any[] = [];
-    let currentStart = 0;
-
-    const backgroundMusicUrl = 'https://shotstack-assets.s3.ap-southeast-2.amazonaws.com/music/unminus/ambisax.mp3';
-
-    if (scenes.length > 0) {
-      // Generate images and narration in parallel (cap at 6 to avoid timeout)
-      const maxScenes = Math.min(scenes.length, 6);
-      console.log('[SHOTSTACK] Generating images + narration for', maxScenes, 'scenes...');
-
-      const imagePromises = scenes.slice(0, maxScenes).map((scene: any) =>
-        generateSceneImage(scene.visual || scene.textOverlay || 'cinematic scene')
-      );
-
-      const narrationPromises = scenes.slice(0, maxScenes).map((scene: any, i: number) => {
-        const narration = scriptEntries[i]?.narration || '';
-        return narration.trim() ? generateNarrationAudio(narration) : Promise.resolve(null);
-      });
-
-      const [imageResults, narrationResults] = await Promise.all([
-        Promise.all(imagePromises),
-        Promise.all(narrationPromises),
-      ]);
-
-      console.log('[SHOTSTACK] Images:', imageResults.filter(Boolean).length, '/', maxScenes);
-      console.log('[SHOTSTACK] Narrations:', narrationResults.filter(Boolean).length, '/', maxScenes);
-
-      for (let i = 0; i < scenes.length; i++) {
-        const scene = scenes[i];
-        const durationSec = parseInt(scene.duration) || 5;
-        const imageUrl = i < maxScenes ? imageResults[i] : null;
-        const narrationUrl = i < maxScenes ? narrationResults[i] : null;
-
-        // Image/background clip
-        if (imageUrl || scene.imageUrl) {
-          imageTrackClips.push({
-            asset: { type: 'image', src: imageUrl || scene.imageUrl },
-            start: currentStart, length: durationSec, fit: 'cover',
-            effect: 'slowZoomIn', transition: { in: 'fade', out: 'fade' },
-          });
-        } else {
-          const bgColors = [
-            'linear-gradient(135deg,#0f0c29,#302b63,#24243e)',
-            'linear-gradient(135deg,#1a1a2e,#16213e,#0f3460)',
-            'linear-gradient(135deg,#141E30,#243B55)',
-            'linear-gradient(135deg,#0D1117,#161B22,#21262D)',
-            'linear-gradient(135deg,#1B1B3A,#2D2D5E)',
-          ];
-          imageTrackClips.push({
-            asset: {
-              type: 'html',
-              html: `<div style="width:100%;height:100%;background:${bgColors[i % bgColors.length]};"></div>`,
-              width: 720, height: 1280,
-            },
-            start: currentStart, length: durationSec, effect: 'zoomIn',
-            transition: { in: 'fade', out: 'fade' },
-          });
-        }
-
-        // Text overlay
-        const overlayText = scene.textOverlay || scene.visual || '';
-        if (overlayText) {
-          textTrackClips.push({
-            asset: {
-              type: 'html',
-              html: `<div style="padding:60px 40px;color:white;font-family:'Arial',sans-serif;font-size:42px;font-weight:bold;text-align:center;width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-shadow:2px 2px 8px rgba(0,0,0,0.8);background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,0.7) 100%);">${overlayText}</div>`,
-              width: 720, height: 1280,
-            },
-            start: currentStart, length: durationSec, transition: { in: 'fade' },
-          });
-        }
-
-        // Narration audio clip
-        if (narrationUrl) {
-          audioTrackClips.push({
-            asset: { type: 'audio', src: narrationUrl, effect: 'fadeOut' },
-            start: currentStart, length: durationSec,
-          });
-        }
-
-        currentStart += durationSec;
-      }
-    } else {
-      imageTrackClips.push({
-        asset: {
-          type: 'html',
-          html: `<div style="padding:40px;color:white;font-family:sans-serif;font-size:36px;text-align:center;background:linear-gradient(135deg,#1a1a2e,#16213e);width:100%;height:100%;display:flex;align-items:center;justify-content:center;">${prompt.slice(0, 200)}</div>`,
-          width: 720, height: 1280,
-        },
-        start: 0, length: 10, effect: 'zoomIn',
-      });
-    }
-
-    if (options.imageUrl && imageTrackClips.length <= 1) {
-      imageTrackClips[0] = {
-        asset: { type: 'image', src: options.imageUrl },
-        start: 0, length: options.duration || 10, fit: 'cover', effect: 'slowZoomIn',
-      };
-    }
-
-    const tracks: any[] = [];
-    if (textTrackClips.length > 0) tracks.push({ clips: textTrackClips });
-    if (audioTrackClips.length > 0) tracks.push({ clips: audioTrackClips });
-    tracks.push({ clips: imageTrackClips });
-
-    const timeline: any = {
-      soundtrack: {
-        src: options.soundtrackUrl || backgroundMusicUrl,
-        effect: 'fadeInFadeOut',
-        volume: audioTrackClips.length > 0 ? 0.15 : 0.6,
-      },
-      background: '#000000',
-      tracks,
-    };
-
-    const editPayload: any = {
-      timeline,
-      output: {
-        format: 'mp4', resolution: 'hd',
-        ...this.parseDimensions(options.ratio || '720:1280'),
-      },
-    };
-
-    console.log('[SHOTSTACK] Submitting render:', imageTrackClips.length, 'scenes,', textTrackClips.length, 'text,', audioTrackClips.length, 'narrations');
-
-    const baseUrl = `https://api.shotstack.io/${this.env}`;
-    const res = await fetch(`${baseUrl}/render`, {
-      method: 'POST',
-      headers: { 'x-api-key': this.apiKey, 'Content-Type': 'application/json' },
-      body: JSON.stringify(editPayload),
-    });
-
-    if (!res.ok) {
-      const errText = await res.text();
-      throw new Error(`ShotStack API error [${res.status}]: ${errText}`);
-    }
-
-    const data = await res.json();
-    const renderId = data.response?.id;
-    if (!renderId) throw new Error('ShotStack did not return a render ID');
-    return { jobId: renderId, rawResponse: data };
-  }
-
-  async checkStatus(jobId: string) {
-    const baseUrl = `https://api.shotstack.io/${this.env}`;
-    const res = await fetch(`${baseUrl}/render/${jobId}`, {
-      headers: { 'x-api-key': this.apiKey },
-    });
-    if (!res.ok) throw new Error(`ShotStack status check failed [${res.status}]`);
-    const data = await res.json();
-    const status = data.response?.status;
-    if (status === 'done' && data.response?.url) return { status: 'completed' as const, videoUrl: data.response.url, rawResponse: data };
-    if (status === 'failed') return { status: 'failed' as const, error: data.response?.error || 'Render failed', rawResponse: data };
-    return { status: 'processing' as const, progress: status === 'rendering' ? 0.5 : 0.2, rawResponse: data };
-  }
-}
-
-function getProvider(providerName: string, model?: string): VideoProvider {
-  if (providerName === 'shotstack') {
-    const apiKey = Deno.env.get('SHOTSTACK_API_KEY');
-    if (!apiKey) throw new Error('ShotStack API key not configured');
-    return new ShotStackProvider(apiKey, 'stage');
-  }
-  if (providerName === 'replicate') {
-    const apiKey = Deno.env.get('REPLICATE_API_KEY');
-    if (!apiKey) throw new Error('Replicate API key not configured');
-    const modelId = model || 'minimax/video-01-live';
-    return new ReplicateProvider(apiKey, modelId);
-  }
-  // Default: runway
-  const apiKey = Deno.env.get('RUNWAY_API_KEY');
-  if (!apiKey) throw new Error('Runway API key not configured');
-  return new RunwayProvider(apiKey);
-}
-
 // ===== CHECK ADMIN ROLE =====
 async function isAdmin(supabase: any, userId: string): Promise<boolean> {
   const { data } = await supabase
@@ -518,7 +77,7 @@ serve(async (req) => {
 
   try {
     const body = await req.json() as VideoStudioRequest;
-    const { action, templateType, contentIds, videoRequestId, jobId, provider: reqProvider, providerModel, customPrompt, isCustomContent, parentRequestId, generationMode, inputImageUrl, videoUrl: uploadVideoUrl, title: uploadTitle, description: uploadDescription, imagePrompt, imageModel, imageEditSource } = body;
+    const { action, templateType, contentIds, videoRequestId, customPrompt, isCustomContent, parentRequestId, generationMode, inputImageUrl, videoUrl: uploadVideoUrl, title: uploadTitle, description: uploadDescription, imagePrompt, imageModel, imageEditSource } = body;
 
     // Get user
     const authHeader = req.headers.get('Authorization');
@@ -541,7 +100,6 @@ serve(async (req) => {
     if (action === 'generate_script') {
       const useCustom = isCustomContent === true;
 
-      // Custom content requires admin
       if (useCustom) {
         const admin = await isAdmin(supabase, userId);
         if (!admin) {
@@ -557,7 +115,6 @@ serve(async (req) => {
       let contentContext = '';
       let allContent: any[] = [];
 
-      // If using PROOF content, retrieve from library
       if (!useCustom && contentIds?.length) {
         const { data: sources } = await supabase
           .from('golden_library_sources')
@@ -597,7 +154,6 @@ serve(async (req) => {
         });
       }
 
-      // Build prompt based on mode
       let systemPrompt: string;
       let userPrompt: string;
 
@@ -718,11 +274,9 @@ Generate the complete script with scene plan, captions, and metadata.`;
         scriptData = { title: 'Generated Script', script: [], parseError: true, rawContent };
       }
 
-      // Check for missing citations (only for PROOF content)
       const hasMissing = !useCustom && (scriptData.missingCitations || []).length > 0;
       const status = hasMissing ? 'blocked' : 'draft';
 
-      // Determine version number
       let versionNumber = 1;
       if (parentRequestId) {
         const { data: parentReq } = await supabase
@@ -732,8 +286,6 @@ Generate the complete script with scene plan, captions, and metadata.`;
           .single();
         versionNumber = (parentReq?.version_number || 0) + 1;
       }
-
-      const selectedProvider = reqProvider || 'runway';
 
       const { data: videoReq, error: insertError } = await supabase
         .from('video_requests')
@@ -751,8 +303,8 @@ Generate the complete script with scene plan, captions, and metadata.`;
           thumbnail_prompt: scriptData.thumbnailPrompt || '',
           status,
           blocked_reason: hasMissing ? `Missing citations: ${(scriptData.missingCitations || []).join(', ')}` : null,
-          provider: selectedProvider,
-          provider_model: providerModel || null,
+          provider: 'invideo',
+          provider_model: null,
           custom_prompt: useCustom ? customPrompt : null,
           is_custom_content: useCustom,
           version_number: versionNumber,
@@ -802,7 +354,7 @@ Generate the complete script with scene plan, captions, and metadata.`;
       }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
     }
 
-    // ========== ACTION: SUBMIT VIDEO ==========
+    // ========== ACTION: SUBMIT VIDEO (InVideo — clipboard-based) ==========
     if (action === 'submit_video') {
       if (!videoRequestId) {
         return new Response(JSON.stringify({ error: 'videoRequestId required' }), {
@@ -829,154 +381,33 @@ Generate the complete script with scene plan, captions, and metadata.`;
         });
       }
 
-      const providerName = reqProvider || vr.provider || 'runway';
-      const model = providerModel || vr.provider_model || undefined;
+      // InVideo is clipboard-based — we just mark the request as exported
+      await supabase.from('video_requests').update({ status: 'exported' }).eq('id', videoRequestId);
 
-      // Build text prompt from script, with fallback to title/description
-      const script = vr.script_json as any;
-      let textPrompt = (script?.script || [])
-        .map((s: any) => `${s.visual || ''} ${s.narration || ''}`.trim())
-        .filter(Boolean)
-        .join('. ')
-        .slice(0, 1000)
-        .trim();
-
-      // Fallback if script produced empty prompt
-      if (!textPrompt) {
-        textPrompt = (vr.title || vr.description || script?.title || script?.description || 'Generate a professional video').slice(0, 500);
-      }
-
-      console.log('[VIDEO-STUDIO] textPrompt length:', textPrompt.length, 'preview:', textPrompt.slice(0, 100));
-
-      try {
-        const provider = getProvider(providerName, model);
-        const scenes = (vr.scene_plan_json as any[]) || [];
-        const scriptEntries = (script?.script as any[]) || [];
-        console.log('[VIDEO-STUDIO] Submitting to', providerName, 'with', scenes.length, 'scenes,', scriptEntries.length, 'script entries');
-        // Parse output dimensions from request
-        const outputDims = (body as any).outputDimensions || '1080x1920';
-        const [dimW, dimH] = outputDims.split('x').map(Number);
-        const ratio = `${dimW || 720}:${dimH || 1280}`;
-
-        const { jobId: providerJobId, rawResponse } = await provider.submitJob(textPrompt, {
-          ratio,
-          duration: 10,
-          imageUrl: vr.input_image_url || undefined,
-          scenes,
-          scriptEntries, // Pass narration data for TTS
-        });
-
-        const { data: job } = await supabase.from('video_jobs').insert({
-          video_request_id: videoRequestId,
-          provider: providerName,
-          provider_job_id: providerJobId,
-          status: 'submitted',
-          metadata_json: rawResponse,
-        }).select().single();
-
-        await supabase.from('video_requests').update({ status: 'generating' }).eq('id', videoRequestId);
-
-        return new Response(JSON.stringify({
-          jobId: job?.id,
-          providerJobId,
-          provider: providerName,
-          status: 'submitted',
-        }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
-      } catch (error) {
-        console.error('Provider submit error:', error);
-        await supabase.from('video_jobs').insert({
-          video_request_id: videoRequestId,
-          provider: providerName,
-          status: 'failed',
-          error_message: error instanceof Error ? error.message : 'Unknown error',
-        });
-        await supabase.from('video_requests').update({ status: 'failed' }).eq('id', videoRequestId);
-        return new Response(JSON.stringify({ error: 'Video generation failed', details: error instanceof Error ? error.message : 'Unknown' }), {
-          status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        });
-      }
+      return new Response(JSON.stringify({
+        provider: 'invideo',
+        status: 'exported',
+        message: 'Script ready for InVideo.ai. Copy the script and paste it at ai.invideo.io to create your video.',
+      }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
     }
 
     // ========== ACTION: CHECK STATUS ==========
     if (action === 'check_status') {
-      if (!jobId && !videoRequestId) {
-        return new Response(JSON.stringify({ error: 'jobId or videoRequestId required' }), {
+      if (!videoRequestId) {
+        return new Response(JSON.stringify({ error: 'videoRequestId required' }), {
           status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
         });
       }
 
-      let job: any;
-      if (jobId) {
-        const { data } = await supabase.from('video_jobs').select('*').eq('id', jobId).single();
-        job = data;
-      } else {
-        const { data } = await supabase.from('video_jobs')
-          .select('*')
-          .eq('video_request_id', videoRequestId)
-          .order('created_at', { ascending: false })
-          .limit(1)
-          .single();
-        job = data;
-      }
+      const { data: vr } = await supabase
+        .from('video_requests')
+        .select('status')
+        .eq('id', videoRequestId)
+        .single();
 
-      if (!job || !job.provider_job_id) {
-        return new Response(JSON.stringify({ status: job?.status || 'unknown' }), {
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        });
-      }
-
-      try {
-        const provider = getProvider(job.provider || 'runway');
-        const result = await provider.checkStatus(job.provider_job_id);
-
-        if (result.status === 'completed' && result.videoUrl) {
-          await supabase.from('video_jobs').update({
-            status: 'completed',
-            metadata_json: result.rawResponse,
-          }).eq('id', job.id);
-
-          await supabase.from('video_assets').insert({
-            video_request_id: job.video_request_id,
-            video_url: result.videoUrl,
-            metadata_json: result.rawResponse,
-          });
-
-          await supabase.from('video_requests').update({ status: 'completed' }).eq('id', job.video_request_id);
-
-          return new Response(JSON.stringify({ status: 'completed', videoUrl: result.videoUrl }), {
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-          });
-        }
-
-        if (result.status === 'failed') {
-          await supabase.from('video_jobs').update({
-            status: 'failed',
-            error_message: result.error || 'Unknown error',
-            metadata_json: result.rawResponse,
-          }).eq('id', job.id);
-
-          await supabase.from('video_requests').update({ status: 'failed' }).eq('id', job.video_request_id);
-
-          return new Response(JSON.stringify({ status: 'failed', error: result.error }), {
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-          });
-        }
-
-        // Still processing
-        await supabase.from('video_jobs').update({
-          status: 'processing',
-          metadata_json: result.rawResponse,
-        }).eq('id', job.id);
-
-        return new Response(JSON.stringify({ status: 'processing', progress: result.progress || 0 }), {
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        });
-      } catch (error) {
-        console.error('Status check error:', error);
-        return new Response(JSON.stringify({ status: job.status, pollError: true }), {
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        });
-      }
+      return new Response(JSON.stringify({ status: vr?.status || 'unknown' }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
 
     // ========== ACTION: UPLOAD VIDEO ==========
@@ -1013,7 +444,6 @@ Generate the complete script with scene plan, captions, and metadata.`;
         });
       }
 
-      // Also create a video_assets entry
       await supabase.from('video_assets').insert({
         video_request_id: videoReq.id,
         video_url: uploadVideoUrl,
@@ -1042,7 +472,6 @@ Generate the complete script with scene plan, captions, and metadata.`;
 
       const model = imageModel === 'quality' ? 'google/gemini-3-pro-image-preview' : 'google/gemini-2.5-flash-image';
 
-      // Build messages — if editing an existing image, include it
       const messages: any[] = [];
       if (imageEditSource) {
         messages.push({
@@ -1099,7 +528,6 @@ Generate the complete script with scene plan, captions, and metadata.`;
 
       const imageDataUrl = images[0]?.image_url?.url || '';
 
-      // Upload the base64 image to storage
       let storedUrl = imageDataUrl;
       try {
         const base64Match = imageDataUrl.match(/^data:image\/(png|jpeg|jpg|webp);base64,(.+)$/);
