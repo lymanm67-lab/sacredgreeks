@@ -2017,6 +2017,68 @@ export type Database = {
         }
         Relationships: []
       }
+      marketing_runs: {
+        Row: {
+          blog_draft_id: string | null
+          completed_at: string | null
+          created_at: string
+          email_campaign_subject: string | null
+          email_sent_count: number | null
+          error_message: string | null
+          id: string
+          run_date: string
+          run_metadata: Json | null
+          social_facebook: string | null
+          social_linkedin: string | null
+          social_twitter: string | null
+          started_at: string | null
+          status: string
+          topic: string | null
+        }
+        Insert: {
+          blog_draft_id?: string | null
+          completed_at?: string | null
+          created_at?: string
+          email_campaign_subject?: string | null
+          email_sent_count?: number | null
+          error_message?: string | null
+          id?: string
+          run_date?: string
+          run_metadata?: Json | null
+          social_facebook?: string | null
+          social_linkedin?: string | null
+          social_twitter?: string | null
+          started_at?: string | null
+          status?: string
+          topic?: string | null
+        }
+        Update: {
+          blog_draft_id?: string | null
+          completed_at?: string | null
+          created_at?: string
+          email_campaign_subject?: string | null
+          email_sent_count?: number | null
+          error_message?: string | null
+          id?: string
+          run_date?: string
+          run_metadata?: Json | null
+          social_facebook?: string | null
+          social_linkedin?: string | null
+          social_twitter?: string | null
+          started_at?: string | null
+          status?: string
+          topic?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "marketing_runs_blog_draft_id_fkey"
+            columns: ["blog_draft_id"]
+            isOneToOne: false
+            referencedRelation: "content_drafts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       media_inquiries: {
         Row: {
           admin_notes: string | null
