@@ -57,7 +57,9 @@ export function SEOHead({
     : defaultMeta.title;
   
   const fullImage = image || defaultMeta.image;
-  const canonicalUrl = `${defaultMeta.baseUrl}${location.pathname}`;
+  // Normalize: strip trailing slash (except root) to avoid duplicate canonical URLs
+  const normalizedPath = location.pathname === '/' ? '/' : location.pathname.replace(/\/+$/, '');
+  const canonicalUrl = `${defaultMeta.baseUrl}${normalizedPath}`;
 
   useEffect(() => {
     // Update document title
