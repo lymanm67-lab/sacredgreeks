@@ -10,9 +10,10 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Sparkles, FileText, Megaphone, Share2, CheckCircle, XCircle, Edit, Eye, Globe, Lightbulb, TrendingUp, Target, Twitter, Instagram, Facebook, Hash, Link2, Copy, ExternalLink } from "lucide-react";
+import { Loader2, Sparkles, FileText, Megaphone, Share2, CheckCircle, XCircle, Edit, Eye, Globe, Lightbulb, TrendingUp, Target, Twitter, Instagram, Facebook, Hash, Link2, Copy, ExternalLink, Bot, Mail, Calendar, AlertCircle, Play, Linkedin } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { Progress } from "@/components/ui/progress";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 type ContentDraft = {
   id: string;
@@ -185,6 +186,50 @@ export default function ContentAgent() {
   const filterByStatus = (status: string) =>
     drafts?.filter((d) => d.status === status) || [];
 
+  // Weekly Marketing Agent queries
+  const { data: marketingRuns, isLoading: runsLoading } = useQuery({
+    queryKey: ["marketing-runs"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("marketing_runs")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(20);
+      if (error) throw error;
+      return data as any[];
+    },
+  });
+
+  const triggerAgentMutation = useMutation({
+    mutationFn: async () => {
+      const { data, error } = await supabase.functions.invoke("weekly-marketing-agent", {
+        body: { trigger: "manual" },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data;
+    },
+    onSuccess: (data) => {
+      toast({ title: "🤖 Marketing Agent Complete!", description: `Blog published, ${data.email_sent} emails sent.` });
+      queryClient.invalidateQueries({ queryKey: ["marketing-runs"] });
+      queryClient.invalidateQueries({ queryKey: ["content-drafts"] });
+    },
+    onError: (err: Error) => {
+      toast({ title: "Agent failed", description: err.message, variant: "destructive" });
+      queryClient.invalidateQueries({ queryKey: ["marketing-runs"] });
+    },
+  });
+
+  const getRunStatusBadge = (status: string) => {
+    const colors: Record<string, string> = {
+      completed: "bg-green-500/20 text-green-700 dark:text-green-400",
+      running: "bg-blue-500/20 text-blue-700 dark:text-blue-400",
+      failed: "bg-red-500/20 text-red-700 dark:text-red-400",
+      pending: "bg-yellow-500/20 text-yellow-700 dark:text-yellow-400",
+    };
+    return colors[status] || colors.pending;
+  };
+
   return (
     <div className="space-y-6">
       <div>
@@ -193,6 +238,138 @@ export default function ContentAgent() {
           Auto-draft blog posts, PR releases, and social media content. Review and approve before publishing.
         </p>
       </div>
+
+      {/* Weekly Marketing Agent */}
+      <Card className="border-2 border-emerald-500/30 bg-gradient-to-r from-emerald-500/5 to-transparent">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Bot className="w-5 h-5 text-emerald-500" />
+            Weekly Marketing Agent
+            <Badge variant="outline" className="ml-auto text-[10px]">
+              <Calendar className="w-3 h-3 mr-1" /> Mondays 9 AM ET
+            </Badge>
+          </CardTitle>
+          <CardDescription>
+            Fully automatic: picks a trending topic → publishes blog → sends email campaign → generates social posts.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center gap-3">
+            <Button
+              onClick={() => triggerAgentMutation.mutate()}
+              disabled={triggerAgentMutation.isPending}
+              className="bg-emerald-600 hover:bg-emerald-700"
+            >
+              {triggerAgentMutation.isPending ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Agent Running...
+                </>
+              ) : (
+                <>
+                  <Play className="w-4 h-4 mr-2" />
+                  Run Agent Now
+                </>
+              )}
+            </Button>
+            <span className="text-xs text-muted-foreground">
+              Or wait for next Monday's automatic run
+            </span>
+          </div>
+
+          {/* Run History */}
+          {runsLoading ? (
+            <div className="flex justify-center py-4">
+              <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
+            </div>
+          ) : marketingRuns && marketingRuns.length > 0 ? (
+            <div className="space-y-2">
+              <h4 className="text-sm font-semibold text-muted-foreground">Recent Runs</h4>
+              {marketingRuns.map((run: any) => (
+                <Card key={run.id} className="bg-muted/30">
+                  <CardContent className="p-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Badge className={getRunStatusBadge(run.status)}>{run.status}</Badge>
+                          <span className="text-xs text-muted-foreground">
+                            {new Date(run.created_at).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                          </span>
+                        </div>
+                        {run.topic && (
+                          <p className="text-sm font-medium truncate">{run.topic}</p>
+                        )}
+                        {run.status === "failed" && run.error_message && (
+                          <p className="text-xs text-destructive flex items-center gap-1 mt-1">
+                            <AlertCircle className="w-3 h-3" /> {run.error_message}
+                          </p>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-3 text-xs text-muted-foreground flex-shrink-0">
+                        {run.status === "completed" && (
+                          <>
+                            <span className="flex items-center gap-1" title="Emails sent">
+                              <Mail className="w-3.5 h-3.5" /> {run.email_sent_count}
+                            </span>
+                            {run.social_twitter && (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-6 w-6 p-0"
+                                onClick={() => {
+                                  const text = encodeURIComponent(run.social_twitter);
+                                  window.open(`https://x.com/intent/tweet?text=${text}`, "_blank", "width=550,height=420");
+                                }}
+                              >
+                                <Twitter className="w-3.5 h-3.5" />
+                              </Button>
+                            )}
+                            {run.run_metadata?.blog_url && (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-6 w-6 p-0"
+                                onClick={() => window.open(run.run_metadata.blog_url, "_blank")}
+                              >
+                                <ExternalLink className="w-3.5 h-3.5" />
+                              </Button>
+                            )}
+                          </>
+                        )}
+                      </div>
+                    </div>
+                    {/* Social posts expandable */}
+                    {run.status === "completed" && (run.social_linkedin || run.social_facebook) && (
+                      <div className="mt-2 pt-2 border-t space-y-2">
+                        {run.social_linkedin && (
+                          <div className="flex items-start gap-2">
+                            <Linkedin className="w-3.5 h-3.5 mt-0.5 text-blue-600 flex-shrink-0" />
+                            <p className="text-xs text-muted-foreground line-clamp-2">{run.social_linkedin.substring(0, 120)}...</p>
+                            <Button variant="ghost" size="sm" className="h-5 w-5 p-0 flex-shrink-0" onClick={() => { navigator.clipboard.writeText(run.social_linkedin); toast({ title: "LinkedIn post copied!" }); }}>
+                              <Copy className="w-3 h-3" />
+                            </Button>
+                          </div>
+                        )}
+                        {run.social_facebook && (
+                          <div className="flex items-start gap-2">
+                            <Facebook className="w-3.5 h-3.5 mt-0.5 text-blue-500 flex-shrink-0" />
+                            <p className="text-xs text-muted-foreground line-clamp-2">{run.social_facebook.substring(0, 120)}...</p>
+                            <Button variant="ghost" size="sm" className="h-5 w-5 p-0 flex-shrink-0" onClick={() => { navigator.clipboard.writeText(run.social_facebook); toast({ title: "Facebook post copied!" }); }}>
+                              <Copy className="w-3 h-3" />
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-muted-foreground text-center py-2">No runs yet. Click "Run Agent Now" to start.</p>
+          )}
+        </CardContent>
+      </Card>
 
       {/* Topic Suggestions */}
       <Card className="border-dashed border-2 border-primary/30">

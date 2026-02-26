@@ -164,3 +164,6 @@ verify_jwt = false
 
 [functions.video-webhook]
 verify_jwt = false
+
+[functions.weekly-marketing-agent]
+verify_jwt = false
