@@ -311,19 +311,6 @@ export default function ContentAgent() {
                             <span className="flex items-center gap-1" title="Emails sent">
                               <Mail className="w-3.5 h-3.5" /> {run.email_sent_count}
                             </span>
-                            {run.social_twitter && (
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-6 w-6 p-0"
-                                onClick={() => {
-                                  const text = encodeURIComponent(run.social_twitter);
-                                  window.open(`https://x.com/intent/tweet?text=${text}`, "_blank", "width=550,height=420");
-                                }}
-                              >
-                                <Twitter className="w-3.5 h-3.5" />
-                              </Button>
-                            )}
                             {run.run_metadata?.blog_url && (
                               <Button
                                 variant="ghost"
@@ -338,24 +325,42 @@ export default function ContentAgent() {
                         )}
                       </div>
                     </div>
-                    {/* Social posts expandable */}
-                    {run.status === "completed" && (run.social_linkedin || run.social_facebook) && (
+                    {/* Social posts with Copy & Share */}
+                    {run.status === "completed" && (run.social_twitter || run.social_linkedin || run.social_facebook) && (
                       <div className="mt-2 pt-2 border-t space-y-2">
+                        {run.social_twitter && (
+                          <div className="flex items-start gap-2">
+                            <Twitter className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
+                            <p className="text-xs text-muted-foreground line-clamp-2 flex-1">{run.social_twitter.substring(0, 120)}...</p>
+                            <Button variant="ghost" size="sm" className="h-5 w-5 p-0 flex-shrink-0" onClick={() => { navigator.clipboard.writeText(run.social_twitter); toast({ title: "Twitter post copied!" }); }}>
+                              <Copy className="w-3 h-3" />
+                            </Button>
+                            <Button variant="ghost" size="sm" className="h-5 w-5 p-0 flex-shrink-0" onClick={() => { const text = encodeURIComponent(run.social_twitter); window.open(`https://x.com/intent/tweet?text=${text}`, "_blank", "width=550,height=420"); }}>
+                              <ExternalLink className="w-3 h-3" />
+                            </Button>
+                          </div>
+                        )}
                         {run.social_linkedin && (
                           <div className="flex items-start gap-2">
                             <Linkedin className="w-3.5 h-3.5 mt-0.5 text-blue-600 flex-shrink-0" />
-                            <p className="text-xs text-muted-foreground line-clamp-2">{run.social_linkedin.substring(0, 120)}...</p>
+                            <p className="text-xs text-muted-foreground line-clamp-2 flex-1">{run.social_linkedin.substring(0, 120)}...</p>
                             <Button variant="ghost" size="sm" className="h-5 w-5 p-0 flex-shrink-0" onClick={() => { navigator.clipboard.writeText(run.social_linkedin); toast({ title: "LinkedIn post copied!" }); }}>
                               <Copy className="w-3 h-3" />
+                            </Button>
+                            <Button variant="ghost" size="sm" className="h-5 w-5 p-0 flex-shrink-0" onClick={() => { const text = encodeURIComponent(run.social_linkedin); window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://sacredgreeks.lovable.app')}&summary=${text}`, "_blank", "width=550,height=520"); }}>
+                              <ExternalLink className="w-3 h-3" />
                             </Button>
                           </div>
                         )}
                         {run.social_facebook && (
                           <div className="flex items-start gap-2">
                             <Facebook className="w-3.5 h-3.5 mt-0.5 text-blue-500 flex-shrink-0" />
-                            <p className="text-xs text-muted-foreground line-clamp-2">{run.social_facebook.substring(0, 120)}...</p>
+                            <p className="text-xs text-muted-foreground line-clamp-2 flex-1">{run.social_facebook.substring(0, 120)}...</p>
                             <Button variant="ghost" size="sm" className="h-5 w-5 p-0 flex-shrink-0" onClick={() => { navigator.clipboard.writeText(run.social_facebook); toast({ title: "Facebook post copied!" }); }}>
                               <Copy className="w-3 h-3" />
+                            </Button>
+                            <Button variant="ghost" size="sm" className="h-5 w-5 p-0 flex-shrink-0" onClick={() => { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://sacredgreeks.lovable.app')}&quote=${encodeURIComponent(run.social_facebook)}`, "_blank", "width=550,height=420"); }}>
+                              <ExternalLink className="w-3 h-3" />
                             </Button>
                           </div>
                         )}
