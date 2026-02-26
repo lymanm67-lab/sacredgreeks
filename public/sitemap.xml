@@ -74,8 +74,8 @@
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://sacredgreekslife.com/study</loc>
-    <lastmod>2026-02-02</lastmod>
+    <loc>https://sacredgreekslife.com/study-guide</loc>
+    <lastmod>2026-02-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -224,10 +224,10 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://sacredgreekslife.com/install-guide</loc>
-    <lastmod>2026-02-02</lastmod>
+    <loc>https://sacredgreekslife.com/install</loc>
+    <lastmod>2026-02-26</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://sacredgreekslife.com/share-toolkit</loc>
