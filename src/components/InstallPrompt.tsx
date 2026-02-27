@@ -19,8 +19,11 @@ export function InstallPrompt() {
       
       // Check if user has dismissed the prompt before
       const dismissed = localStorage.getItem('pwa-install-dismissed');
-      if (!dismissed) {
-        setShowPrompt(true);
+      // Don't show during onboarding or start-here flow
+      const onboardingDone = localStorage.getItem('sacred_greeks_onboarding_completed');
+      if (!dismissed && onboardingDone) {
+        // Delay to avoid competing with other UI elements
+        setTimeout(() => setShowPrompt(true), 5000);
       }
     };
 
@@ -65,6 +68,7 @@ export function InstallPrompt() {
               size="sm"
               onClick={handleDismiss}
               className="flex-shrink-0"
+              aria-label="Dismiss install prompt"
             >
               <X className="w-4 h-4" />
             </Button>

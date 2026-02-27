@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, lazy, Suspense } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -11,21 +11,15 @@ import { useOnboarding } from '@/hooks/use-onboarding';
 import { usePullToRefresh } from '@/hooks/use-pull-to-refresh';
 import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
 import { SEOHead, pageSEO } from '@/components/SEOHead';
-// FeaturedActions removed — Start Here Guide covers the same actions
 import { HeroSection } from '@/components/dashboard/HeroSection';
 import { OrgWelcomeCard } from '@/components/dashboard/OrgWelcomeCard';
 import { SubscriptionBadge } from '@/components/dashboard/SubscriptionBadge';
-import { GreekCommunitySection } from '@/components/dashboard/GreekCommunitySection';
 import { useDemoMode } from '@/contexts/DemoModeContext';
 import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
 import { prefetchCommonRoutes } from '@/hooks/use-prefetch';
 import { useRealtimeNotifications } from '@/hooks/use-realtime-notifications';
 import { SkeletonDashboard } from '@/components/ui/SkeletonCard';
-import { DashboardAIAssistant } from '@/components/dashboard/DashboardAIAssistant';
-import { LearningPathsMap } from '@/components/dashboard/LearningPathsMap';
-import { PathCompletionAchievements } from '@/components/dashboard/PathCompletionAchievements';
 import { StatsSection } from '@/components/dashboard/StatsSection';
-import { QuickLinksSection } from '@/components/dashboard/QuickLinksSection';
 import { DashboardAudioGuide } from '@/components/dashboard/DashboardAudioGuide';
 import { QuickJump } from '@/components/ui/quick-jump';
 import { StartHereFlow, PersonalizedPlan } from '@/components/onboarding/StartHereFlow';
@@ -33,6 +27,13 @@ import { useStartHereFlow } from '@/hooks/use-start-here-flow';
 import { ProductTour, useProductTour } from '@/components/onboarding/ProductTour';
 import { DemoPageBadge } from '@/components/demo/DemoPageBadge';
 import { StartHereGuide } from '@/components/dashboard/StartHereGuide';
+
+// Lazy-load heavy sections that appear below the fold or after user progresses
+const LearningPathsMap = lazy(() => import('@/components/dashboard/LearningPathsMap').then(m => ({ default: m.LearningPathsMap })));
+const PathCompletionAchievements = lazy(() => import('@/components/dashboard/PathCompletionAchievements').then(m => ({ default: m.PathCompletionAchievements })));
+const DashboardAIAssistant = lazy(() => import('@/components/dashboard/DashboardAIAssistant').then(m => ({ default: m.DashboardAIAssistant })));
+const GreekCommunitySection = lazy(() => import('@/components/dashboard/GreekCommunitySection').then(m => ({ default: m.GreekCommunitySection })));
+const QuickLinksSection = lazy(() => import('@/components/dashboard/QuickLinksSection').then(m => ({ default: m.QuickLinksSection })));
 
 interface DashboardStats {
   assessmentCount: number;
@@ -320,7 +321,7 @@ const Dashboard = () => {
 
           {/* 5-8: Progressive sections - only shown after user has explored at least 1 Start Here step */}
           {hasProgress && (
-            <>
+            <Suspense fallback={<div className="space-y-8">{[1,2,3].map(i => <div key={i} className="h-48 rounded-2xl bg-muted/50 animate-pulse" />)}</div>}>
               {/* 5. Learning Paths Map */}
               <div id="learning-paths" className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
                 <LearningPathsMap />
@@ -345,7 +346,7 @@ const Dashboard = () => {
               <div id="quick-links" className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
                 <QuickLinksSection />
               </div>
-            </>
+            </Suspense>
           )}
         </div>
       </main>
