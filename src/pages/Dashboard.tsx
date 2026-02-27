@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { LogOut, User, Sparkles, BarChart3, GraduationCap, Trophy, Users, Bot, Compass } from 'lucide-react';
+import { LogOut, User, BarChart3, GraduationCap, Trophy, Users, Bot, Compass } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import logo from '@/assets/sacred-greeks-logo.png';
 import { Onboarding } from '@/components/Onboarding';
@@ -11,7 +11,7 @@ import { useOnboarding } from '@/hooks/use-onboarding';
 import { usePullToRefresh } from '@/hooks/use-pull-to-refresh';
 import { PullToRefreshIndicator } from '@/components/ui/PullToRefreshIndicator';
 import { SEOHead, pageSEO } from '@/components/SEOHead';
-import { FeaturedActions } from '@/components/dashboard/FeaturedActions';
+// FeaturedActions removed — Start Here Guide covers the same actions
 import { HeroSection } from '@/components/dashboard/HeroSection';
 import { OrgWelcomeCard } from '@/components/dashboard/OrgWelcomeCard';
 import { SubscriptionBadge } from '@/components/dashboard/SubscriptionBadge';
@@ -64,6 +64,30 @@ const Dashboard = () => {
   });
   const [loading, setLoading] = useState(true);
   const [isDemoStats, setIsDemoStats] = useState(false);
+
+  // Check if user has started exploring (any Start Here steps completed)
+  const [hasProgress, setHasProgress] = useState(false);
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('sacred_greeks_start_guide');
+      if (stored) {
+        const data = JSON.parse(stored);
+        setHasProgress((data.completed || []).length > 0);
+      }
+    } catch { /* ignore */ }
+    // Also listen for storage changes so it updates when user completes a step and returns
+    const handler = () => {
+      try {
+        const stored = localStorage.getItem('sacred_greeks_start_guide');
+        if (stored) {
+          const data = JSON.parse(stored);
+          setHasProgress((data.completed || []).length > 0);
+        }
+      } catch { /* ignore */ }
+    };
+    window.addEventListener('storage', handler);
+    return () => window.removeEventListener('storage', handler);
+  }, []);
 
   useKeyboardShortcuts();
   useRealtimeNotifications({ showToasts: !isDemoMode });
@@ -255,21 +279,22 @@ const Dashboard = () => {
 
       <main className="w-full px-4 py-8 overflow-x-hidden">
         <div className="max-w-5xl mx-auto space-y-8 w-full overflow-hidden">
-          {/* Quick Jump Navigation */}
-          <QuickJump 
-            sections={[
-              { id: 'start-here-guide', label: 'Start Here', icon: <Compass className="w-3 h-3" /> },
-              { id: 'featured-actions', label: 'Get Started', icon: <Sparkles className="w-3 h-3" /> },
-              { id: 'stats-section', label: 'Your Progress', icon: <BarChart3 className="w-3 h-3" /> },
-              { id: 'learning-paths', label: 'Learning Paths', icon: <GraduationCap className="w-3 h-3" /> },
-              { id: 'achievements', label: 'Achievements', icon: <Trophy className="w-3 h-3" /> },
-              { id: 'community', label: 'Community', icon: <Users className="w-3 h-3" /> },
-              { id: 'ai-assistant', label: 'The Berean', icon: <Bot className="w-3 h-3" /> },
-              { id: 'quick-links', label: 'Explore More', icon: <Compass className="w-3 h-3" /> },
-            ]}
-            title="Jump to Section"
-            defaultOpen={false}
-          />
+          {/* Quick Jump Navigation - hidden for brand new users */}
+          {hasProgress && (
+            <QuickJump 
+              sections={[
+                { id: 'start-here-guide', label: 'Start Here', icon: <Compass className="w-3 h-3" /> },
+                { id: 'stats-section', label: 'Your Progress', icon: <BarChart3 className="w-3 h-3" /> },
+                { id: 'learning-paths', label: 'Learning Paths', icon: <GraduationCap className="w-3 h-3" /> },
+                { id: 'achievements', label: 'Achievements', icon: <Trophy className="w-3 h-3" /> },
+                { id: 'community', label: 'Community', icon: <Users className="w-3 h-3" /> },
+                { id: 'ai-assistant', label: 'The Berean', icon: <Bot className="w-3 h-3" /> },
+                { id: 'quick-links', label: 'Explore More', icon: <Compass className="w-3 h-3" /> },
+              ]}
+              title="Jump to Section"
+              defaultOpen={false}
+            />
+          )}
 
           <DemoPageBadge pageKey="dashboard" className="justify-center" />
 
@@ -288,40 +313,40 @@ const Dashboard = () => {
             <StartHereGuide />
           </div>
 
-          {/* 4. Featured Actions - Get Started / Core Tools */}
-          <div id="featured-actions" className="animate-fade-in" style={{ animationDelay: '0.15s' }}>
-            <FeaturedActions isLoading={loading} />
-          </div>
-
           {/* 4. Stats Section - Your Progress */}
           <div id="stats-section" className="animate-fade-in" style={{ animationDelay: '0.15s' }}>
             <StatsSection stats={stats} isDemoStats={isDemoStats} />
           </div>
 
-          {/* 5. Learning Paths Map - Training Roadmap */}
-          <div id="learning-paths" className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <LearningPathsMap />
-          </div>
+          {/* 5-8: Progressive sections - only shown after user has explored at least 1 Start Here step */}
+          {hasProgress && (
+            <>
+              {/* 5. Learning Paths Map */}
+              <div id="learning-paths" className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+                <LearningPathsMap />
+              </div>
 
-          {/* 6. Path Completion Achievements */}
-          <div id="achievements" className="animate-fade-in" style={{ animationDelay: '0.25s' }}>
-            <PathCompletionAchievements />
-          </div>
+              {/* 6. Path Completion Achievements */}
+              <div id="achievements" className="animate-fade-in" style={{ animationDelay: '0.25s' }}>
+                <PathCompletionAchievements />
+              </div>
 
-          {/* 7. Greek Community Section */}
-          <div id="community" className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
-            <GreekCommunitySection />
-          </div>
+              {/* 7. Greek Community Section */}
+              <div id="community" className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
+                <GreekCommunitySection />
+              </div>
 
-          {/* 8. AI Assistant */}
-          <div id="ai-assistant" className="animate-fade-in" style={{ animationDelay: '0.35s' }}>
-            <DashboardAIAssistant />
-          </div>
+              {/* 8. AI Assistant */}
+              <div id="ai-assistant" className="animate-fade-in" style={{ animationDelay: '0.35s' }}>
+                <DashboardAIAssistant />
+              </div>
 
-          {/* 9. Quick Links - Explore More */}
-          <div id="quick-links" className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
-            <QuickLinksSection />
-          </div>
+              {/* 9. Quick Links - Explore More */}
+              <div id="quick-links" className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
+                <QuickLinksSection />
+              </div>
+            </>
+          )}
         </div>
       </main>
 
