@@ -35,6 +35,7 @@ export const PDFViewer = ({ isOpen, onClose, pdfUrl, title }: PDFViewerProps) =>
                 onClick={() => setIsFullscreen(!isFullscreen)}
                 className="h-8 w-8"
                 title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
+                aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
               >
                 {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
               </Button>
@@ -44,6 +45,7 @@ export const PDFViewer = ({ isOpen, onClose, pdfUrl, title }: PDFViewerProps) =>
                 onClick={handleDownload}
                 className="h-8 w-8"
                 title="Download PDF"
+                aria-label="Download PDF"
               >
                 <Download className="h-4 w-4" />
               </Button>
@@ -52,6 +54,7 @@ export const PDFViewer = ({ isOpen, onClose, pdfUrl, title }: PDFViewerProps) =>
                 size="icon"
                 onClick={onClose}
                 className="h-8 w-8"
+                aria-label="Close PDF viewer"
               >
                 <X className="h-4 w-4" />
               </Button>

@@ -155,7 +155,7 @@ export const CommunityServiceChecklist = () => {
             className="w-24"
             step="0.5"
           />
-          <Button onClick={addItem} size="icon">
+          <Button onClick={addItem} size="icon" aria-label="Add service item">
             <Plus className="w-4 h-4" />
           </Button>
         </div>

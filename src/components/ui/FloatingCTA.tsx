@@ -47,6 +47,7 @@ export const FloatingCTA = ({ scrollThreshold = 600 }: FloatingCTAProps) => {
       <Button
         size="icon"
         variant="outline"
+        aria-label="Quick actions"
         className="h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm shadow-lg hover:bg-background"
         onClick={() => setIsDismissed(true)}
       >

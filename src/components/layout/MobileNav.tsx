@@ -334,6 +334,7 @@ export function MobileNav() {
               <Button
                 variant="ghost"
                 size="icon"
+                aria-label="Sign out"
                 onClick={() => {
                   signOut();
                   setOpen(false);
