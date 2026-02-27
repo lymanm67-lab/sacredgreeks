@@ -146,12 +146,16 @@ export function WhatsNewModal() {
 
     const lastSeenVersion = localStorage.getItem(VERSION_STORAGE_KEY);
     
+    // Don't show if onboarding or start-here haven't been completed yet
+    const onboardingDone = localStorage.getItem('sacred_greeks_onboarding_completed');
+    if (!onboardingDone) return;
+
     // Show modal if user hasn't seen the current version
     if (lastSeenVersion !== APP_VERSION) {
-      // Small delay to let the page load first
+      // Longer delay to avoid stacking with other modals
       const timer = setTimeout(() => {
         setIsOpen(true);
-      }, 1500);
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [user]);

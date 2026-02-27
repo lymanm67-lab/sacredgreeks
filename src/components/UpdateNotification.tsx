@@ -39,12 +39,19 @@ export function UpdateNotification() {
   useEffect(() => {
     const lastSeenVersion = localStorage.getItem(STORAGE_KEY);
     
-    // Show notification if user hasn't seen this version
+    // Don't show if the WhatsNew modal will be shown (same version key)
+    // Also don't show if onboarding hasn't been completed
+    const onboardingDone = localStorage.getItem('sacred_greeks_onboarding_completed');
+    const whatsNewSeen = localStorage.getItem('last-seen-version');
+    if (!onboardingDone) return;
+    // If WhatsNew modal hasn't been seen yet, let it show instead
+    if (whatsNewSeen !== CURRENT_VERSION) return;
+    
+    // Show notification if user hasn't seen this version via this channel
     if (lastSeenVersion !== CURRENT_VERSION) {
-      // Small delay to not interrupt initial load
       const timer = setTimeout(() => {
         setShowNotification(true);
-      }, 2000);
+      }, 4000);
       
       return () => clearTimeout(timer);
     }
