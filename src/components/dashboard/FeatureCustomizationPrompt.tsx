@@ -54,6 +54,7 @@ export function FeatureCustomizationPrompt() {
         size="icon"
         className="absolute top-2 right-2 h-6 w-6 text-muted-foreground hover:text-foreground z-10"
         onClick={handleDismiss}
+        aria-label="Dismiss customization prompt"
       >
         <X className="h-4 w-4" />
       </Button>

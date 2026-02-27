@@ -182,7 +182,7 @@ export function StartHereGuide() {
                   Great job! Keep growing with the P.R.O.O.F. Course and daily devotionals.
                 </p>
               </div>
-              <Button variant="ghost" size="icon" onClick={handleDismiss}>
+              <Button variant="ghost" size="icon" onClick={handleDismiss} aria-label="Dismiss completion card">
                 <X className="w-4 h-4" />
               </Button>
             </div>

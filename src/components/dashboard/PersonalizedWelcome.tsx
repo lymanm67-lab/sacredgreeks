@@ -61,7 +61,7 @@ export function PersonalizedWelcome({ personalization, userName }: PersonalizedW
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="shrink-0 hover:bg-sacred/10">
+                <Button variant="ghost" size="icon" className="shrink-0 hover:bg-sacred/10" aria-label="Welcome settings">
                   <Settings2 className="w-4 h-4 text-muted-foreground" />
                 </Button>
               </DropdownMenuTrigger>

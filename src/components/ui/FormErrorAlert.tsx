@@ -44,6 +44,7 @@ export function FormErrorAlert({
           size="icon"
           className="absolute top-2 right-2 h-6 w-6"
           onClick={onDismiss}
+          aria-label="Dismiss error"
         >
           <X className="h-4 w-4" />
         </Button>

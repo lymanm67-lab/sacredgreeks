@@ -472,6 +472,7 @@ export const DashboardAIAssistant = () => {
             disabled={!input.trim() || isLoading}
             size="icon"
             className="shrink-0"
+            aria-label="Send message"
           >
             {isLoading ? (
               <Loader2 className="w-4 h-4 animate-spin" />
