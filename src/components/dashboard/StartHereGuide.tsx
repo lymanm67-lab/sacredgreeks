@@ -229,12 +229,13 @@ export function StartHereGuide() {
                 size="icon"
                 onClick={() => setIsExpanded(!isExpanded)}
                 className="h-8 w-8"
+                aria-label={isExpanded ? "Collapse guide" : "Expand guide"}
               >
                 <motion.div animate={{ rotate: isExpanded ? 0 : -90 }}>
                   <ChevronRight className="w-4 h-4 rotate-90" />
                 </motion.div>
               </Button>
-              <Button variant="ghost" size="icon" onClick={handleDismiss} className="h-8 w-8">
+              <Button variant="ghost" size="icon" onClick={handleDismiss} className="h-8 w-8" aria-label="Dismiss guide">
                 <X className="w-4 h-4" />
               </Button>
             </div>

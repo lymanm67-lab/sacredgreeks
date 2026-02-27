@@ -10,7 +10,11 @@ export const CookieConsent = () => {
   useEffect(() => {
     const consent = localStorage.getItem('cookie-consent');
     if (!consent) {
-      setShowBanner(true);
+      // Delay cookie consent to avoid competing with onboarding overlays
+      const onboardingDone = localStorage.getItem('sacred_greeks_onboarding_completed');
+      const delay = onboardingDone ? 2000 : 8000;
+      const timer = setTimeout(() => setShowBanner(true), delay);
+      return () => clearTimeout(timer);
     }
   }, []);
 
@@ -50,6 +54,7 @@ export const CookieConsent = () => {
           <button
             onClick={declineCookies}
             className="text-muted-foreground hover:text-foreground ml-2"
+            aria-label="Dismiss cookie consent"
           >
             <X className="w-3 h-3" />
           </button>
