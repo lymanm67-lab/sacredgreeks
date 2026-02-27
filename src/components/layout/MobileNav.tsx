@@ -162,8 +162,10 @@ interface NavSectionProps {
   onNavClick: () => void;
 }
 
-function NavSection({ title, items, badge, defaultOpen = true, currentPath, onNavClick }: NavSectionProps) {
-  const [isOpen, setIsOpen] = useState(defaultOpen);
+function NavSection({ title, items, badge, defaultOpen = false, currentPath, onNavClick }: NavSectionProps) {
+  // Auto-expand if any child route is active
+  const hasActiveChild = items.some(item => currentPath === item.url || currentPath.startsWith(item.url.split('?')[0]));
+  const [isOpen, setIsOpen] = useState(defaultOpen || hasActiveChild);
   
   const isActive = (path: string) => currentPath === path;
   
@@ -294,19 +296,19 @@ export function MobileNav() {
               <NavSection title="Greek Community" items={filteredCommunity} currentPath={location.pathname} onNavClick={handleNavClick} />
             )}
             {filteredAboutDrLyman.length > 0 && (
-              <NavSection title="About Dr. Lyman" items={filteredAboutDrLyman} defaultOpen={false} currentPath={location.pathname} onNavClick={handleNavClick} />
+              <NavSection title="About Dr. Lyman" items={filteredAboutDrLyman} currentPath={location.pathname} onNavClick={handleNavClick} />
             )}
             {filteredPodcast.length > 0 && (
-              <NavSection title="Podcast" items={filteredPodcast} defaultOpen={false} currentPath={location.pathname} onNavClick={handleNavClick} />
+              <NavSection title="Podcast" items={filteredPodcast} currentPath={location.pathname} onNavClick={handleNavClick} />
             )}
             {filteredResources.length > 0 && (
-              <NavSection title="Resources" items={filteredResources} defaultOpen={false} currentPath={location.pathname} onNavClick={handleNavClick} />
+              <NavSection title="Resources" items={filteredResources} currentPath={location.pathname} onNavClick={handleNavClick} />
             )}
             {filteredPresent.length > 0 && (
-              <NavSection title="Present" items={filteredPresent} defaultOpen={false} currentPath={location.pathname} onNavClick={handleNavClick} />
+              <NavSection title="Present" items={filteredPresent} currentPath={location.pathname} onNavClick={handleNavClick} />
             )}
             {filteredSystem.length > 0 && (
-              <NavSection title="System" items={filteredSystem} defaultOpen={false} currentPath={location.pathname} onNavClick={handleNavClick} />
+              <NavSection title="System" items={filteredSystem} currentPath={location.pathname} onNavClick={handleNavClick} />
             )}
           </div>
         </ScrollArea>
