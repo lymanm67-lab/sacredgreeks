@@ -32,6 +32,7 @@ import { StartHereFlow, PersonalizedPlan } from '@/components/onboarding/StartHe
 import { useStartHereFlow } from '@/hooks/use-start-here-flow';
 import { ProductTour, useProductTour } from '@/components/onboarding/ProductTour';
 import { DemoPageBadge } from '@/components/demo/DemoPageBadge';
+import { StartHereGuide } from '@/components/dashboard/StartHereGuide';
 
 interface DashboardStats {
   assessmentCount: number;
@@ -257,6 +258,7 @@ const Dashboard = () => {
           {/* Quick Jump Navigation */}
           <QuickJump 
             sections={[
+              { id: 'start-here-guide', label: 'Start Here', icon: <Compass className="w-3 h-3" /> },
               { id: 'featured-actions', label: 'Get Started', icon: <Sparkles className="w-3 h-3" /> },
               { id: 'stats-section', label: 'Your Progress', icon: <BarChart3 className="w-3 h-3" /> },
               { id: 'learning-paths', label: 'Learning Paths', icon: <GraduationCap className="w-3 h-3" /> },
@@ -281,8 +283,13 @@ const Dashboard = () => {
             <OrgWelcomeCard />
           </div>
 
-          {/* 3. Featured Actions - Get Started / Core Tools */}
-          <div id="featured-actions" className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
+          {/* 3. Start Here Guide - Primary onboarding for new/conference users */}
+          <div id="start-here-guide" className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
+            <StartHereGuide />
+          </div>
+
+          {/* 4. Featured Actions - Get Started / Core Tools */}
+          <div id="featured-actions" className="animate-fade-in" style={{ animationDelay: '0.15s' }}>
             <FeaturedActions isLoading={loading} />
           </div>
 
@@ -320,7 +327,7 @@ const Dashboard = () => {
 
       {showOnboarding && <Onboarding open={showOnboarding} onComplete={completeOnboarding} />}
       
-      {/* Start Here guided flow for new users */}
+      {/* Start Here guided flow - only if onboarding is done AND no Start Here Guide visible */}
       {!showOnboarding && showStartHere && (
         <StartHereFlow 
           open={showStartHere} 
@@ -329,13 +336,7 @@ const Dashboard = () => {
         />
       )}
 
-      {/* Product Tour for first-time users */}
-      {!showOnboarding && !showStartHere && showTour && (
-        <ProductTour 
-          onComplete={completeTour}
-          onSkip={skipTour}
-        />
-      )}
+      {/* Product Tour - skip if Start Here Guide is present (avoids modal overload) */}
     </div>
   );
 };
