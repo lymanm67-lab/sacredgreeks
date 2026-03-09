@@ -320,6 +320,13 @@ const Dashboard = () => {
             <StatsSection stats={stats} isDemoStats={isDemoStats} />
           </div>
 
+          {/* 4b. Sacred Leaders Academy Widget */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.17s' }}>
+            <Suspense fallback={<div className="h-32 rounded-2xl bg-muted/50 animate-pulse" />}>
+              <DashboardMentorWidget />
+            </Suspense>
+          </div>
+
           {/* 5-8: Progressive sections - only shown after user has explored at least 1 Start Here step */}
           {hasProgress && (
             <Suspense fallback={<div className="space-y-8">{[1,2,3].map(i => <div key={i} className="h-48 rounded-2xl bg-muted/50 animate-pulse" />)}</div>}>
