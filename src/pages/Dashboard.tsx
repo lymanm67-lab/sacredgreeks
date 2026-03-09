@@ -34,6 +34,7 @@ const PathCompletionAchievements = lazy(() => import('@/components/dashboard/Pat
 const DashboardAIAssistant = lazy(() => import('@/components/dashboard/DashboardAIAssistant').then(m => ({ default: m.DashboardAIAssistant })));
 const GreekCommunitySection = lazy(() => import('@/components/dashboard/GreekCommunitySection').then(m => ({ default: m.GreekCommunitySection })));
 const QuickLinksSection = lazy(() => import('@/components/dashboard/QuickLinksSection').then(m => ({ default: m.QuickLinksSection })));
+const DashboardMentorWidget = lazy(() => import('@/components/dashboard/DashboardMentorWidget').then(m => ({ default: m.DashboardMentorWidget })));
 
 interface DashboardStats {
   assessmentCount: number;
