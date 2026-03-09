@@ -1,7 +1,8 @@
 // Enhanced Service Worker for PWA with offline support
 // Cache version - increment to force cache refresh on deploy
-const CACHE_NAME = 'sacred-greeks-v13';
+const CACHE_NAME = 'sacred-greeks-v14';
 const RUNTIME_CACHE = 'sacred-greeks-runtime';
+const API_CACHE = 'sacred-greeks-api';
 const IMAGE_CACHE = 'sacred-greeks-images';
 
 // Only cache actual static files that exist - NOT SPA routes
@@ -38,13 +39,12 @@ self.addEventListener('install', (event) => {
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
+  const validCaches = [CACHE_NAME, RUNTIME_CACHE, IMAGE_CACHE, API_CACHE];
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME && 
-              cacheName !== RUNTIME_CACHE && 
-              cacheName !== IMAGE_CACHE) {
+          if (!validCaches.includes(cacheName)) {
             return caches.delete(cacheName);
           }
         })
@@ -79,24 +79,37 @@ self.addEventListener('fetch', (event) => {
     }
   }
 
-  // Handle API requests with network-first strategy
+  // Handle API requests with network-first + offline fallback
   if (request.url.includes('/api/') || 
       request.url.includes('supabase') ||
       request.url.includes('/rest/') ||
       request.url.includes('/functions/')) {
+    
+    // Determine if this is a cacheable read request
+    const isCacheable = request.method === 'GET' && (
+      request.url.includes('daily_devotionals') ||
+      request.url.includes('daily_verses') ||
+      request.url.includes('ai_study_plans') ||
+      request.url.includes('achievements') ||
+      request.url.includes('golden_library_sources')
+    );
+
     event.respondWith(
       fetch(request)
         .then((response) => {
-          if (response.ok) {
+          if (response.ok && isCacheable) {
             const responseClone = response.clone();
-            caches.open(RUNTIME_CACHE).then((cache) => {
+            caches.open(API_CACHE).then((cache) => {
               cache.put(request, responseClone);
             });
           }
           return response;
         })
         .catch(() => {
-          return caches.match(request);
+          return caches.match(request).then(cached => {
+            if (cached) return cached;
+            return caches.open(RUNTIME_CACHE).then(c => c.match(request));
+          });
         })
     );
     return;

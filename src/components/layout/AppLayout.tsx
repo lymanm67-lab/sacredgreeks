@@ -18,6 +18,7 @@ import { cn } from "@/lib/utils";
 import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { PanelLeft } from "lucide-react";
+import { NotificationPrompt } from "@/components/notifications/NotificationPrompt";
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -200,6 +201,9 @@ function AppLayoutContent({
       
       {/* Return to Presentation Button (shown when viewing demo from presentation) */}
       <ReturnToPresentationButton />
+      
+      {/* Smart notification prompt */}
+      <NotificationPrompt />
       
       {/* Sales Deck Generator Dialog */}
       <SalesDeckGenerator 

@@ -11,6 +11,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { SEOHead } from '@/components/SEOHead';
+import { WeeklyDigestSettings } from '@/components/digest/WeeklyDigestSettings';
 
 interface NotificationPreferences {
   // Real-time notifications
@@ -284,6 +285,9 @@ export default function NotificationPreferences() {
             )}
           </CardContent>
         </Card>
+
+        {/* Weekly Email Digest (backed by database) */}
+        <WeeklyDigestSettings />
 
         {/* Email Notifications */}
         <Card>
