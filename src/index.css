@@ -24,7 +24,7 @@ All colors MUST be HSL.
     --secondary-foreground: 225 60% 15%;
 
     --muted: 220 20% 96%;
-    --muted-foreground: 225 30% 45%;
+    --muted-foreground: 225 25% 40%;
 
     --accent: 210 100% 45%;
     --accent-foreground: 0 0% 100%;
@@ -48,17 +48,17 @@ All colors MUST be HSL.
     --sacred-dark: 225 73% 35%;
     
     /* Status colors */
-    --status-high: 0 84% 60%;
-    --status-medium: 43 96% 56%;
-    --status-low: 142 71% 45%;
+    --status-high: 0 84% 50%;
+    --status-medium: 43 96% 42%;
+    --status-low: 142 71% 35%;
     
-    /* Badge colors */
+    /* Badge colors - WCAG AA compliant foreground on colored bg */
     --badge-success: 158 64% 42%;
-    --badge-success-foreground: 158 64% 20%;
-    --badge-warning: 43 96% 56%;
-    --badge-warning-foreground: 43 96% 25%;
-    --badge-danger: 0 84% 60%;
-    --badge-danger-foreground: 0 84% 30%;
+    --badge-success-foreground: 158 80% 12%;
+    --badge-warning: 43 96% 50%;
+    --badge-warning-foreground: 43 96% 15%;
+    --badge-danger: 0 84% 55%;
+    --badge-danger-foreground: 0 84% 15%;
     
     /* Warm accent colors */
     --gold: 220 10% 90%;
@@ -106,7 +106,7 @@ All colors MUST be HSL.
     --secondary-foreground: 0 0% 95%;
 
     --muted: 225 30% 18%;
-    --muted-foreground: 220 20% 70%;
+    --muted-foreground: 220 15% 65%;
 
     --accent: 210 100% 55%;
     --accent-foreground: 0 0% 100%;
@@ -130,13 +130,13 @@ All colors MUST be HSL.
     --gradient-sacred: linear-gradient(135deg, hsl(225 73% 47%) 0%, hsl(210 100% 55%) 100%);
     --gradient-warm: linear-gradient(135deg, hsl(225 73% 25%) 0%, hsl(225 50% 12%) 100%);
     
-    /* Badge colors (dark mode) */
+    /* Badge colors (dark mode) - WCAG AA compliant */
     --badge-success: 158 64% 52%;
-    --badge-success-foreground: 158 64% 85%;
+    --badge-success-foreground: 158 80% 92%;
     --badge-warning: 43 96% 60%;
-    --badge-warning-foreground: 43 96% 85%;
-    --badge-danger: 0 72% 55%;
-    --badge-danger-foreground: 0 72% 90%;
+    --badge-warning-foreground: 43 96% 10%;
+    --badge-danger: 0 72% 60%;
+    --badge-danger-foreground: 0 72% 95%;
     
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;

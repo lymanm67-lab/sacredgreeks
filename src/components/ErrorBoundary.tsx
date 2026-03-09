@@ -59,10 +59,17 @@ export class ErrorBoundary extends React.Component<Props, State> {
     // Call custom error handler if provided
     this.props.onError?.(error, errorInfo);
     
-    // Log to console in development
+    // Log to console in development, report in production
     if (!import.meta.env.PROD) {
       console.error('ErrorBoundary caught an error:', error, errorInfo);
     }
+    
+    // Report to production monitoring
+    import('@/lib/errorReporting').then(({ reportError }) => {
+      reportError(error, errorInfo.componentStack || undefined);
+    }).catch(() => {
+      // Reporting module failed to load
+    });
     
     // Store error in sessionStorage for debugging
     try {

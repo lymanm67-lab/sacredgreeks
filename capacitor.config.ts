@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'app.lovable.18c6b7208ab34377aee9d6e25c399d20',
-  appName: 'sacredgreeks',
+  appId: 'com.sacredgreeks.app',
+  appName: 'Sacred Greeks Life',
   webDir: 'dist',
   server: {
     url: 'https://18c6b720-8ab3-4377-aee9-d6e25c399d20.lovableproject.com?forceHideBadge=true',
@@ -10,20 +10,27 @@ const config: CapacitorConfig = {
   },
   plugins: {
     Browser: {
-      // Configure in-app browser for external links
       presentationStyle: 'popover'
-    }
+    },
+    SplashScreen: {
+      launchShowDuration: 2000,
+      backgroundColor: '#1a1a2e',
+      showSpinner: false,
+      androidScaleType: 'CENTER_CROP',
+    },
+    StatusBar: {
+      style: 'DARK',
+      backgroundColor: '#1a1a2e',
+    },
   },
   ios: {
-    // Enable background audio for iOS
-    backgroundMode: {
-      enabled: true,
-      types: ['audio']
-    }
+    scheme: 'Sacred Greeks Life',
+    contentInset: 'automatic',
+    backgroundColor: '#1a1a2e',
   },
   android: {
-    // Enable background audio for Android
-    allowMixedContent: true
+    allowMixedContent: true,
+    backgroundColor: '#1a1a2e',
   }
 };
 
