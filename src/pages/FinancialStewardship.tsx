@@ -285,6 +285,7 @@ const FinancialStewardship = () => {
           <TabsContent value="smsp" className="space-y-6">
             <SISPCalculator />
             <PrismBudgetPromo variant="smsp" />
+          </TabsContent>
 
           {/* Scenarios & Pitfalls Tab */}
           <TabsContent value="scenarios" className="space-y-6">
