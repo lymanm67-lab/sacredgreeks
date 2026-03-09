@@ -130,13 +130,13 @@ All colors MUST be HSL.
     --gradient-sacred: linear-gradient(135deg, hsl(225 73% 47%) 0%, hsl(210 100% 55%) 100%);
     --gradient-warm: linear-gradient(135deg, hsl(225 73% 25%) 0%, hsl(225 50% 12%) 100%);
     
-    /* Badge colors (dark mode) */
+    /* Badge colors (dark mode) - WCAG AA compliant */
     --badge-success: 158 64% 52%;
-    --badge-success-foreground: 158 64% 85%;
+    --badge-success-foreground: 158 80% 92%;
     --badge-warning: 43 96% 60%;
-    --badge-warning-foreground: 43 96% 85%;
-    --badge-danger: 0 72% 55%;
-    --badge-danger-foreground: 0 72% 90%;
+    --badge-warning-foreground: 43 96% 10%;
+    --badge-danger: 0 72% 60%;
+    --badge-danger-foreground: 0 72% 95%;
     
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
