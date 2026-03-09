@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { getCouncilContent, getFaithIntegrationTips, getCommonChallenges } from '@/data/orgSpecificContent';
 import { GREEK_COUNCILS } from '@/data/greekOrganizations';
+import { ChapterLeaderboard } from '@/components/chapter/ChapterLeaderboard';
 
 interface UserProfile {
   greek_council: string | null;
