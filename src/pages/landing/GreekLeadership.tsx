@@ -12,7 +12,13 @@ import {
   HandHeart,
   Lightbulb,
   Shield,
-  Star
+  Star,
+  GraduationCap,
+  Compass,
+  UserPlus,
+  CheckCircle2,
+  Layers,
+  MessageSquare
 } from "lucide-react";
 import { ListenButton } from "@/components/ListenButton";
 
@@ -63,14 +69,37 @@ const d9ServicePrograms = [
   { org: "Iota Phi Theta", program: "NAACP ACT-SO", impact: "Academic and artistic excellence" }
 ];
 
+const academyFeatures = [
+  {
+    icon: Layers,
+    title: "11 Training Tracks",
+    description: "From Servant Leadership to Financial Stewardship — structured courses with progress tracking."
+  },
+  {
+    icon: Users,
+    title: "Private Ministry Groups",
+    description: "Create invite-only groups for your youth ministry, Bible study, or chapter members."
+  },
+  {
+    icon: Award,
+    title: "4-Tier Leadership Progression",
+    description: "Explorer → Mentor → Shepherd → Kingdom Builder. Earn recognition as you grow."
+  },
+  {
+    icon: MessageSquare,
+    title: "Mentor Dashboard",
+    description: "Track student engagement, manage groups, and share resources from one hub."
+  }
+];
+
 const overviewText = `Welcome to Greek Leadership through a biblical lens. When you crossed those burning sands 
 or walked through those ivy doors, you committed to more than social connection—you committed to servant leadership. 
 Mark chapter 10 verse 43 reminds us: whoever wants to become great must first become a servant. 
-This is the heart of Greek leadership. Our Divine Nine organizations have centuries of combined service—
-from Alpha Phi Alpha's Go-to-High-School program to Delta Sigma Theta's days at the Capitol. 
-Sacred Greeks helps you lead with excellence by grounding your service in Scripture. 
-Whether you're a chapter president, committee chair, or simply a dedicated member, 
-your leadership matters. Let faith be the foundation of your fraternal journey.`;
+The Sacred Leaders Academy is our platform built for pastors, youth leaders, and chapter mentors 
+to train the next generation of faith-driven leaders. With 11 training tracks, private ministry groups, 
+and a 4-tier leadership progression, you have everything you need to equip your people. 
+Whether you're a chapter president, youth pastor, or campus ministry leader, 
+Sacred Greeks helps you lead with excellence by grounding your service in Scripture.`;
 
 export default function GreekLeadership() {
   return (
@@ -114,9 +143,9 @@ export default function GreekLeadership() {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-sacred hover:bg-sacred/90 text-white">
-                <Link to="/proof-course">
-                  Start P.R.O.O.F. Course
-                  <ArrowRight className="w-4 h-4 ml-2" />
+                <Link to="/leadership-academy">
+                  <GraduationCap className="w-4 h-4 mr-2" />
+                  Enter Sacred Leaders Academy
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="border-slate-600 text-slate-300 hover:bg-slate-800">
@@ -125,6 +154,121 @@ export default function GreekLeadership() {
                 </Link>
               </Button>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Sacred Leaders Academy Feature Section */}
+      <section className="py-16 lg:py-24 bg-gradient-to-b from-slate-900/50 to-transparent">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <Badge className="mb-4 bg-sacred/20 text-sacred border-sacred/30">
+              <GraduationCap className="w-3 h-3 mr-1" />
+              Sacred Leaders Academy
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Train the Next Generation of Leaders
+            </h2>
+            <p className="text-slate-400 max-w-2xl mx-auto">
+              Built for pastors, youth leaders, and chapter mentors — a complete platform 
+              to equip, track, and grow faith-driven leaders.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto mb-12">
+            {academyFeatures.map((feature) => (
+              <Card key={feature.title} className="bg-slate-800/50 border-slate-700 hover:border-sacred/50 transition-all text-center">
+                <CardContent className="pt-6 pb-6">
+                  <div className="p-3 rounded-xl bg-sacred/20 w-fit mx-auto mb-4">
+                    <feature.icon className="w-6 h-6 text-sacred" />
+                  </div>
+                  <h3 className="font-bold text-white mb-2">{feature.title}</h3>
+                  <p className="text-slate-400 text-sm">{feature.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Leadership Tiers */}
+          <Card className="max-w-4xl mx-auto bg-slate-800/30 border-slate-700">
+            <CardContent className="p-6 md:p-8">
+              <h3 className="text-xl font-bold text-white mb-6 text-center">Leadership Progression System</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { name: "Explorer", icon: Compass, points: "0+", color: "text-blue-400", bg: "bg-blue-500/10 border-blue-500/20" },
+                  { name: "Mentor", icon: Users, points: "200+", color: "text-violet-400", bg: "bg-violet-500/10 border-violet-500/20" },
+                  { name: "Shepherd", icon: Heart, points: "500+", color: "text-rose-400", bg: "bg-rose-500/10 border-rose-500/20" },
+                  { name: "Kingdom Builder", icon: Crown, points: "1000+", color: "text-sacred", bg: "bg-sacred/10 border-sacred/20" },
+                ].map((tier) => (
+                  <div key={tier.name} className={`p-4 rounded-xl border text-center ${tier.bg}`}>
+                    <tier.icon className={`w-8 h-8 mx-auto mb-2 ${tier.color}`} />
+                    <p className="font-semibold text-white text-sm">{tier.name}</p>
+                    <p className="text-xs text-slate-400">{tier.points} pts</p>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* For Pastors & Youth Leaders CTA */}
+      <section className="py-16 lg:py-20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
+            <Card className="bg-gradient-to-br from-purple-500/15 to-slate-800/50 border-purple-500/30">
+              <CardContent className="p-6 md:p-8">
+                <div className="p-3 rounded-xl bg-purple-500/20 w-fit mb-4">
+                  <BookOpen className="w-6 h-6 text-purple-400" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">For Pastors & Chaplains</h3>
+                <p className="text-slate-300 text-sm mb-4">
+                  Create private ministry groups for your congregation. Assign training tracks, 
+                  monitor progress, and mentor leaders — all from your dashboard.
+                </p>
+                <ul className="space-y-2 mb-6">
+                  {["Create private invite-only groups", "Track member engagement", "Share curated training paths", "Built-in accountability tools"].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-sm text-slate-300">
+                      <CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <Button asChild size="sm" className="bg-purple-600 hover:bg-purple-700 text-white">
+                  <Link to="/mentor-dashboard">
+                    Open Mentor Dashboard
+                    <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-sacred/15 to-slate-800/50 border-sacred/30">
+              <CardContent className="p-6 md:p-8">
+                <div className="p-3 rounded-xl bg-sacred/20 w-fit mb-4">
+                  <UserPlus className="w-6 h-6 text-sacred" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">For Youth Leaders</h3>
+                <p className="text-slate-300 text-sm mb-4">
+                  Equip young Greek leaders with structured faith-based training. 
+                  Share an invite code and your group is ready in seconds.
+                </p>
+                <ul className="space-y-2 mb-6">
+                  {["11 structured training courses", "Mobile-first — works on any device", "Gamified progression keeps students engaged", "Free — no cost for you or your members"].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-sm text-slate-300">
+                      <CheckCircle2 className="w-4 h-4 text-sacred shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <Button asChild size="sm" className="bg-sacred hover:bg-sacred/90 text-white">
+                  <Link to="/leadership-academy">
+                    Explore the Academy
+                    <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
@@ -209,23 +353,24 @@ export default function GreekLeadership() {
         <div className="container mx-auto px-4">
           <Card className="max-w-3xl mx-auto bg-gradient-to-r from-purple-500/20 to-sacred/20 border-purple-500/30">
             <CardContent className="p-8 md:p-12 text-center">
-              <Crown className="w-12 h-12 text-purple-400 mx-auto mb-6" />
+              <GraduationCap className="w-12 h-12 text-sacred mx-auto mb-6" />
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-                Ready to Lead With Purpose?
+                Ready to Equip Your Leaders?
               </h2>
               <p className="text-slate-300 mb-8 max-w-xl mx-auto">
-                Discover how to integrate your faith with your fraternal calling. 
-                The P.R.O.O.F. framework will transform how you lead.
+                The Sacred Leaders Academy gives you everything you need to train, track, and 
+                grow faith-driven leaders in your chapter, church, or youth group.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild size="lg" className="bg-white text-slate-900 hover:bg-slate-100">
-                  <Link to="/auth">
-                    Join Sacred Greeks
+                  <Link to="/leadership-academy">
+                    <GraduationCap className="w-4 h-4 mr-2" />
+                    Enter the Academy
                   </Link>
                 </Button>
                 <Button asChild variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10">
-                  <Link to="/snapshot">
-                    Take Faith Assessment
+                  <Link to="/mentor-dashboard">
+                    Open Mentor Dashboard
                   </Link>
                 </Button>
               </div>
@@ -244,8 +389,8 @@ export default function GreekLeadership() {
             <Link to="/faith-and-greek-life" className="hover:text-sacred transition-colors">
               Faith & Greek Identity
             </Link>
-            <Link to="/proof-course" className="hover:text-sacred transition-colors">
-              P.R.O.O.F. Course
+            <Link to="/leadership-academy" className="hover:text-sacred transition-colors">
+              Sacred Leaders Academy
             </Link>
             <Link to="/auth" className="hover:text-sacred transition-colors">
               Join Sacred Greeks
