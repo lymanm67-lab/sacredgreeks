@@ -121,6 +121,7 @@ const communityItems = [
   { title: "Member Network", url: "/network", icon: UserPlus, featureId: null, iconColor: "text-pink-500", hasProgress: false },
   { title: "Business Directory", url: "/business-directory", icon: Briefcase, featureId: null, iconColor: "text-emerald-500", hasProgress: false },
   { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null, iconColor: "text-indigo-500", hasProgress: false },
+  { title: "Mentor Dashboard", url: "/mentor-dashboard", icon: Crown, featureId: null, iconColor: "text-sacred", hasProgress: false },
   { title: "Group Coaching", url: "/community", icon: GraduationCap, featureId: null, iconColor: "text-orange-500", hasProgress: false },
 ];
 

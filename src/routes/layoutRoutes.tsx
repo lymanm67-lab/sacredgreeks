@@ -26,7 +26,8 @@ const EventsCalendar = lazy(() => import("@/pages/EventsCalendar"));
 const MemberNetwork = lazy(() => import("@/pages/MemberNetwork"));
 const EBoardTraining = lazy(() => import("@/pages/EBoardTraining"));
 const LeadershipAcademy = lazy(() => import("@/pages/LeadershipAcademy"));
-
+const MentorDashboard = lazy(() => import("@/pages/MentorDashboard"));
+const JoinGroup = lazy(() => import("@/pages/JoinGroup"));
 // Public pages with sidebar layout (no auth required)
 const PageWithLayout = ({ children }: { children: React.ReactNode }) => (
   <AppLayout>{children}</AppLayout>
@@ -58,5 +59,7 @@ export const layoutRoutes = (
     <Route path="/network" element={<MemberNetwork />} />
     <Route path="/eboard-training" element={<PageWithLayout><EBoardTraining /></PageWithLayout>} />
     <Route path="/leadership-academy" element={<PageWithLayout><LeadershipAcademy /></PageWithLayout>} />
+    <Route path="/mentor-dashboard" element={<PageWithLayout><MentorDashboard /></PageWithLayout>} />
+    <Route path="/join-group" element={<PageWithLayout><JoinGroup /></PageWithLayout>} />
   </>
 );
