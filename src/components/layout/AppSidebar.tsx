@@ -81,6 +81,9 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
+// Academy hub link
+const academyItem = { title: "Sacred Leaders Academy", url: "/leadership-academy", icon: GraduationCap, featureId: null, iconColor: "text-sacred", hasProgress: false };
+
 // Learning Path section - items with progress tracking
 const learningPathItems = [
   { title: "PROOF Course", url: "/proof-course", icon: Target, featureId: null, iconColor: "text-amber-500", hasProgress: true },
