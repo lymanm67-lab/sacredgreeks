@@ -473,6 +473,69 @@ export type Database = {
           },
         ]
       }
+      chapter_leaderboard: {
+        Row: {
+          chapter_id: string | null
+          chapter_name: string
+          created_at: string | null
+          devotionals_completed: number | null
+          id: string
+          member_count: number | null
+          organization: string
+          prayers_submitted: number | null
+          service_hours: number | null
+          study_plans_completed: number | null
+          total_points: number | null
+          updated_at: string | null
+          week_start: string
+        }
+        Insert: {
+          chapter_id?: string | null
+          chapter_name: string
+          created_at?: string | null
+          devotionals_completed?: number | null
+          id?: string
+          member_count?: number | null
+          organization: string
+          prayers_submitted?: number | null
+          service_hours?: number | null
+          study_plans_completed?: number | null
+          total_points?: number | null
+          updated_at?: string | null
+          week_start?: string
+        }
+        Update: {
+          chapter_id?: string | null
+          chapter_name?: string
+          created_at?: string | null
+          devotionals_completed?: number | null
+          id?: string
+          member_count?: number | null
+          organization?: string
+          prayers_submitted?: number | null
+          service_hours?: number | null
+          study_plans_completed?: number | null
+          total_points?: number | null
+          updated_at?: string | null
+          week_start?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chapter_leaderboard_chapter_id_fkey"
+            columns: ["chapter_id"]
+            isOneToOne: false
+            referencedRelation: "greek_chapters"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "chapter_leaderboard_chapter_id_fkey"
+            columns: ["chapter_id"]
+            isOneToOne: false
+            referencedRelation: "greek_chapters_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       chapter_meeting_notes: {
         Row: {
           action_items: string | null
@@ -1015,6 +1078,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      email_digest_preferences: {
+        Row: {
+          created_at: string | null
+          digest_enabled: boolean | null
+          frequency: string | null
+          id: string
+          last_sent_at: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          digest_enabled?: boolean | null
+          frequency?: string | null
+          id?: string
+          last_sent_at?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          digest_enabled?: boolean | null
+          frequency?: string | null
+          id?: string
+          last_sent_at?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
       }
       email_opens: {
         Row: {
@@ -2319,6 +2412,42 @@ export type Database = {
           source_ids?: string[] | null
           updated_at?: string
           version?: number
+        }
+        Relationships: []
+      }
+      og_share_cards: {
+        Row: {
+          content_id: string
+          content_type: string
+          created_at: string | null
+          description: string | null
+          id: string
+          image_url: string | null
+          share_url: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          content_id: string
+          content_type: string
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          share_url?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          content_id?: string
+          content_type?: string
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          share_url?: string | null
+          title?: string
+          updated_at?: string | null
         }
         Relationships: []
       }
