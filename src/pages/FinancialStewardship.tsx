@@ -42,6 +42,7 @@ import { SISPCalculator } from "@/components/financial/SISPCalculator";
 import { FinancialOverviewTTS } from "@/components/financial/FinancialOverviewTTS";
 import { BuildingWealthSection } from "@/components/financial/BuildingWealthSection";
 import { DebtStrategiesCalculator } from "@/components/financial/DebtStrategiesCalculator";
+import { PrismBudgetPromo } from "@/components/financial/PrismBudgetPromo";
 import { Link } from "react-router-dom";
 
 interface BudgetResults {
