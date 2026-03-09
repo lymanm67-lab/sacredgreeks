@@ -2244,6 +2244,74 @@ export type Database = {
         }
         Relationships: []
       }
+      ministry_group_members: {
+        Row: {
+          group_id: string
+          id: string
+          joined_at: string | null
+          role: string | null
+          user_id: string
+        }
+        Insert: {
+          group_id: string
+          id?: string
+          joined_at?: string | null
+          role?: string | null
+          user_id: string
+        }
+        Update: {
+          group_id?: string
+          id?: string
+          joined_at?: string | null
+          role?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ministry_group_members_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "ministry_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ministry_groups: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          invite_code: string
+          is_active: boolean | null
+          leader_id: string
+          max_members: number | null
+          name: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          invite_code?: string
+          is_active?: boolean | null
+          leader_id: string
+          max_members?: number | null
+          name: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          invite_code?: string
+          is_active?: boolean | null
+          leader_id?: string
+          max_members?: number | null
+          name?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       morning_notification_settings: {
         Row: {
           created_at: string | null
@@ -2754,6 +2822,7 @@ export type Database = {
           initiation_year: number | null
           member_status: string | null
           updated_at: string | null
+          user_type: string | null
         }
         Insert: {
           affiliation_type?: string | null
@@ -2767,6 +2836,7 @@ export type Database = {
           initiation_year?: number | null
           member_status?: string | null
           updated_at?: string | null
+          user_type?: string | null
         }
         Update: {
           affiliation_type?: string | null
@@ -2780,6 +2850,7 @@ export type Database = {
           initiation_year?: number | null
           member_status?: string | null
           updated_at?: string | null
+          user_type?: string | null
         }
         Relationships: []
       }
