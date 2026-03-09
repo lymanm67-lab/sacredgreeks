@@ -631,6 +631,7 @@ const FinancialStewardship = () => {
           {/* Wealth Building Tab */}
           <TabsContent value="wealth" className="space-y-6">
             <BuildingWealthSection />
+            <PrismBudgetPromo variant="wealth" />
           </TabsContent>
         </Tabs>
       </div>
