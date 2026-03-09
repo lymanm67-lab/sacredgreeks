@@ -1,10 +1,10 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { Home, BookOpen, Heart, BookHeart, Target } from "lucide-react";
+import { Home, BookOpen, Heart, BookHeart, GraduationCap } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
   { title: "Home", url: "/dashboard", icon: Home, iconColor: "text-blue-500" },
-  { title: "PROOF", url: "/proof-course", icon: Target, iconColor: "text-amber-500" },
+  { title: "Academy", url: "/leadership-academy", icon: GraduationCap, iconColor: "text-sacred" },
   { title: "Bible", url: "/bible-study", icon: BookOpen, iconColor: "text-blue-500" },
   { title: "Prayer", url: "/prayer-journal", icon: BookHeart, iconColor: "text-rose-500" },
   { title: "Wall", url: "/prayer-wall", icon: Heart, iconColor: "text-pink-500" },
