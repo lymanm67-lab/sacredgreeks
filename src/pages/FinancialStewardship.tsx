@@ -42,6 +42,7 @@ import { SISPCalculator } from "@/components/financial/SISPCalculator";
 import { FinancialOverviewTTS } from "@/components/financial/FinancialOverviewTTS";
 import { BuildingWealthSection } from "@/components/financial/BuildingWealthSection";
 import { DebtStrategiesCalculator } from "@/components/financial/DebtStrategiesCalculator";
+import { PrismBudgetPromo } from "@/components/financial/PrismBudgetPromo";
 import { Link } from "react-router-dom";
 
 interface BudgetResults {
@@ -283,6 +284,7 @@ const FinancialStewardship = () => {
           {/* SMSP Calculator Tab */}
           <TabsContent value="smsp" className="space-y-6">
             <SISPCalculator />
+            <PrismBudgetPromo variant="smsp" />
           </TabsContent>
 
           {/* Scenarios & Pitfalls Tab */}
@@ -334,6 +336,7 @@ const FinancialStewardship = () => {
 
             {/* New Debt Strategies Calculator */}
             <DebtStrategiesCalculator />
+            <PrismBudgetPromo variant="debt" />
           </TabsContent>
 
           {/* Budgeting Tab */}
@@ -546,6 +549,7 @@ const FinancialStewardship = () => {
                 </CardContent>
               </Card>
             </div>
+            <PrismBudgetPromo variant="budget" />
           </TabsContent>
 
           {/* Greek Costs Tab */}
@@ -630,6 +634,7 @@ const FinancialStewardship = () => {
           {/* Wealth Building Tab */}
           <TabsContent value="wealth" className="space-y-6">
             <BuildingWealthSection />
+            <PrismBudgetPromo variant="wealth" />
           </TabsContent>
         </Tabs>
       </div>
