@@ -34,6 +34,7 @@ const PathCompletionAchievements = lazy(() => import('@/components/dashboard/Pat
 const DashboardAIAssistant = lazy(() => import('@/components/dashboard/DashboardAIAssistant').then(m => ({ default: m.DashboardAIAssistant })));
 const GreekCommunitySection = lazy(() => import('@/components/dashboard/GreekCommunitySection').then(m => ({ default: m.GreekCommunitySection })));
 const QuickLinksSection = lazy(() => import('@/components/dashboard/QuickLinksSection').then(m => ({ default: m.QuickLinksSection })));
+const DashboardMentorWidget = lazy(() => import('@/components/dashboard/DashboardMentorWidget').then(m => ({ default: m.DashboardMentorWidget })));
 
 interface DashboardStats {
   assessmentCount: number;
@@ -317,6 +318,13 @@ const Dashboard = () => {
           {/* 4. Stats Section - Your Progress */}
           <div id="stats-section" className="animate-fade-in" style={{ animationDelay: '0.15s' }}>
             <StatsSection stats={stats} isDemoStats={isDemoStats} />
+          </div>
+
+          {/* 4b. Sacred Leaders Academy Widget */}
+          <div className="animate-fade-in" style={{ animationDelay: '0.17s' }}>
+            <Suspense fallback={<div className="h-32 rounded-2xl bg-muted/50 animate-pulse" />}>
+              <DashboardMentorWidget />
+            </Suspense>
           </div>
 
           {/* 5-8: Progressive sections - only shown after user has explored at least 1 Start Here step */}
