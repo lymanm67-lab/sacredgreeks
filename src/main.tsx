@@ -2,6 +2,10 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
+import { initErrorReporting } from "@/lib/errorReporting";
+
+// Initialize production error monitoring
+initErrorReporting();
 
 const container = document.getElementById("root");
 if (container) {
