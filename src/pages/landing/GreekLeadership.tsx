@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { SEOHead } from "@/components/SEOHead";
 import { 
   Users, 
   Heart, 
@@ -103,7 +104,19 @@ Sacred Greeks helps you lead with excellence by grounding your service in Script
 
 export default function GreekLeadership() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+    <>
+      <SEOHead 
+        title="Greek Leadership & Sacred Leaders Academy | Train Faith-Driven Leaders"
+        description="Equip pastors, youth leaders, and chapter mentors with the Sacred Leaders Academy. 11 training tracks, private ministry groups, 4-tier leadership progression, and mentor dashboard — all free. Built for Divine Nine and Greek organizations."
+        keywords="Greek leadership, Sacred Leaders Academy, youth leader training, pastor resources, Divine Nine leadership, servant leadership, Christian Greek life, mentor dashboard, ministry groups, faith-based leadership training"
+        type="website"
+        structuredDataType="WebPage"
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Greek Leadership', url: '/greek-leadership' }
+        ]}
+      />
+      <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-500/20 via-transparent to-transparent" />
@@ -398,6 +411,7 @@ export default function GreekLeadership() {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }
