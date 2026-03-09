@@ -169,10 +169,15 @@ function AppLayoutContent({
               <ThemeToggle />
             </div>
           </header>
-          <main className={cn(
-            "flex-1 overflow-y-auto overflow-x-hidden",
-            isMobile && "pb-20" // Add padding for bottom nav
-          )}>
+          <main
+            id="main-content"
+            role="main"
+            tabIndex={-1}
+            className={cn(
+              "flex-1 overflow-y-auto overflow-x-hidden focus:outline-none",
+              isMobile && "pb-20" // Add padding for bottom nav
+            )}
+          >
             {children}
           </main>
         </SidebarInset>

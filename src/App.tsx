@@ -29,6 +29,8 @@ import { GlobalSEO } from "@/components/GlobalSEO";
 import { UpdateNotification } from "@/components/UpdateNotification";
 import { Loader2 } from "lucide-react";
 import { composeProviders } from "@/lib/composeProviders";
+import { SkipToContent } from "@/components/ui/SkipToContent";
+import { RouteAnnouncer } from "@/components/ui/LiveRegion";
 
 // Split route definitions
 import { publicRoutes } from "@/routes/publicRoutes";
@@ -90,7 +92,9 @@ const App = () => (
     <InstallPrompt />
     <OfflineIndicator />
     <AIAssistantWidget />
+    <SkipToContent />
     <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <RouteAnnouncer />
       <GlobalSEO />
       <DemoBanner />
       <DemoOverlayWithTemplate />
