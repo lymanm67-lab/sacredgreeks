@@ -1,8 +1,10 @@
 import { Trophy, Star, Award } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
 import { useGamification } from "@/hooks/use-gamification";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getAcademyLevel } from "@/lib/academy-levels";
 
 export const GamificationBar = () => {
   const { stats, achievements, statsLoading, levelProgress, pointsToNextLevel } =
@@ -25,14 +27,17 @@ export const GamificationBar = () => {
 
   if (!stats) return null;
 
+  const academyLevel = getAcademyLevel(stats.total_points);
+  const LevelIcon = academyLevel.icon;
+
   return (
     <Card className="p-4 bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
       <div className="flex items-center gap-4">
         {/* Level Badge */}
         <div className="flex-shrink-0">
           <div className="relative">
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center shadow-lg">
-              <Star className="w-6 h-6 text-primary-foreground" />
+            <div className={`w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center shadow-lg`}>
+              <LevelIcon className="w-6 h-6 text-primary-foreground" />
             </div>
             <div className="absolute -bottom-1 -right-1 bg-background rounded-full px-2 py-0.5 border-2 border-primary">
               <span className="text-xs font-bold text-primary">
@@ -45,11 +50,16 @@ export const GamificationBar = () => {
         {/* Progress */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between mb-1">
-            <span className="text-sm font-semibold text-foreground">
-              Level {stats.current_level}
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-semibold text-foreground">
+                {academyLevel.name}
+              </span>
+              <Badge variant="outline" className="text-[10px] hidden sm:inline-flex">
+                Level {stats.current_level}
+              </Badge>
+            </div>
             <span className="text-xs text-muted-foreground">
-              {pointsToNextLevel} points to next level
+              {pointsToNextLevel} pts to next
             </span>
           </div>
           <Progress value={levelProgress} className="h-2" />
