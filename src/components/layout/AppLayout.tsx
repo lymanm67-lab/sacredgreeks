@@ -201,6 +201,9 @@ function AppLayoutContent({
       {/* Return to Presentation Button (shown when viewing demo from presentation) */}
       <ReturnToPresentationButton />
       
+      {/* Smart notification prompt */}
+      <NotificationPrompt />
+      
       {/* Sales Deck Generator Dialog */}
       <SalesDeckGenerator 
         isOpen={showSalesDeck} 
