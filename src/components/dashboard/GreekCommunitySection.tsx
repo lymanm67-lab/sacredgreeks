@@ -182,6 +182,9 @@ export const GreekCommunitySection = () => {
               </Link>
             </div>
 
+            {/* Chapter Leaderboard */}
+            <ChapterLeaderboard />
+
             {/* Link to full community */}
             <div className="flex justify-end">
               <Link to="/community">

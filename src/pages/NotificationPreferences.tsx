@@ -285,6 +285,9 @@ export default function NotificationPreferences() {
           </CardContent>
         </Card>
 
+        {/* Weekly Email Digest (backed by database) */}
+        <WeeklyDigestSettings />
+
         {/* Email Notifications */}
         <Card>
           <CardHeader>
