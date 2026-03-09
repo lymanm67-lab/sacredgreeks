@@ -335,7 +335,7 @@ const FinancialStewardship = () => {
 
             {/* New Debt Strategies Calculator */}
             <DebtStrategiesCalculator />
-          </TabsContent>
+            <PrismBudgetPromo variant="debt" />
 
           {/* Budgeting Tab */}
           <TabsContent value="budget" className="space-y-6">
