@@ -1,7 +1,8 @@
 // Enhanced Service Worker for PWA with offline support
 // Cache version - increment to force cache refresh on deploy
-const CACHE_NAME = 'sacred-greeks-v13';
+const CACHE_NAME = 'sacred-greeks-v14';
 const RUNTIME_CACHE = 'sacred-greeks-runtime';
+const API_CACHE = 'sacred-greeks-api';
 const IMAGE_CACHE = 'sacred-greeks-images';
 
 // Only cache actual static files that exist - NOT SPA routes
