@@ -39,13 +39,12 @@ self.addEventListener('install', (event) => {
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
+  const validCaches = [CACHE_NAME, RUNTIME_CACHE, IMAGE_CACHE, API_CACHE];
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME && 
-              cacheName !== RUNTIME_CACHE && 
-              cacheName !== IMAGE_CACHE) {
+          if (!validCaches.includes(cacheName)) {
             return caches.delete(cacheName);
           }
         })
