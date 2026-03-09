@@ -65,12 +65,11 @@ export class ErrorBoundary extends React.Component<Props, State> {
     }
     
     // Report to production monitoring
-    try {
-      const { reportError } = await import('@/lib/errorReporting');
+    import('@/lib/errorReporting').then(({ reportError }) => {
       reportError(error, errorInfo.componentStack || undefined);
-    } catch {
+    }).catch(() => {
       // Reporting module failed to load
-    }
+    });
     
     // Store error in sessionStorage for debugging
     try {
