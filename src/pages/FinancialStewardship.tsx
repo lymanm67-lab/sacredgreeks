@@ -547,7 +547,7 @@ const FinancialStewardship = () => {
                 </CardContent>
               </Card>
             </div>
-          </TabsContent>
+            <PrismBudgetPromo variant="budget" />
 
           {/* Greek Costs Tab */}
           <TabsContent value="greek" className="space-y-6">
