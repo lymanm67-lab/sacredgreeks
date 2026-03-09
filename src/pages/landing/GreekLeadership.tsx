@@ -411,6 +411,7 @@ export default function GreekLeadership() {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }
