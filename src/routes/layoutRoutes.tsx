@@ -25,6 +25,7 @@ const GreekWorshipPlaylists = lazy(() => import("@/pages/GreekWorshipPlaylists")
 const EventsCalendar = lazy(() => import("@/pages/EventsCalendar"));
 const MemberNetwork = lazy(() => import("@/pages/MemberNetwork"));
 const EBoardTraining = lazy(() => import("@/pages/EBoardTraining"));
+const LeadershipAcademy = lazy(() => import("@/pages/LeadershipAcademy"));
 
 // Public pages with sidebar layout (no auth required)
 const PageWithLayout = ({ children }: { children: React.ReactNode }) => (
