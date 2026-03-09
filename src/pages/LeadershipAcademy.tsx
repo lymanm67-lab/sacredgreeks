@@ -282,12 +282,20 @@ export default function LeadershipAcademy() {
 
       <div className="max-w-5xl mx-auto px-4 py-8 space-y-10">
         {/* Quick Actions */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
           <Link to="/proof-course">
             <Card className="hover:border-primary/30 transition-all cursor-pointer group">
               <CardContent className="p-4 flex flex-col items-center text-center gap-2">
                 <Play className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
                 <span className="text-xs font-medium">Start Learning</span>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link to="/mentor-dashboard">
+            <Card className="hover:border-sacred/30 transition-all cursor-pointer group">
+              <CardContent className="p-4 flex flex-col items-center text-center gap-2">
+                <Crown className="w-5 h-5 text-sacred group-hover:scale-110 transition-transform" />
+                <span className="text-xs font-medium">Mentor Hub</span>
               </CardContent>
             </Card>
           </Link>
