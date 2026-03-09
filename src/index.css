@@ -48,17 +48,17 @@ All colors MUST be HSL.
     --sacred-dark: 225 73% 35%;
     
     /* Status colors */
-    --status-high: 0 84% 60%;
-    --status-medium: 43 96% 56%;
-    --status-low: 142 71% 45%;
+    --status-high: 0 84% 50%;
+    --status-medium: 43 96% 42%;
+    --status-low: 142 71% 35%;
     
-    /* Badge colors */
+    /* Badge colors - WCAG AA compliant foreground on colored bg */
     --badge-success: 158 64% 42%;
-    --badge-success-foreground: 158 64% 20%;
-    --badge-warning: 43 96% 56%;
-    --badge-warning-foreground: 43 96% 25%;
-    --badge-danger: 0 84% 60%;
-    --badge-danger-foreground: 0 84% 30%;
+    --badge-success-foreground: 158 80% 12%;
+    --badge-warning: 43 96% 50%;
+    --badge-warning-foreground: 43 96% 15%;
+    --badge-danger: 0 84% 55%;
+    --badge-danger-foreground: 0 84% 15%;
     
     /* Warm accent colors */
     --gold: 220 10% 90%;
