@@ -49,21 +49,12 @@ const toolCategories = [
     tools: [
       {
         title: "Financial Stewardship",
-        description: "Biblical stewardship journey — budgets, credit, debt freedom, and wealth building",
+        description: "Biblical stewardship journey — budgets, credit, chapter finance, debt freedom, and wealth building",
         icon: DollarSign,
         gradient: "from-emerald-500/20 via-green-500/10 to-transparent",
         iconBg: "bg-gradient-to-br from-emerald-500 to-green-600",
         borderColor: "hover:border-emerald-500/40",
         path: "/financial-stewardship",
-      },
-      {
-        title: "Chapter Finance",
-        description: "Treasurer tools — track expenses, manage budgets, and approve reimbursements",
-        icon: Landmark,
-        gradient: "from-teal-500/20 via-cyan-500/10 to-transparent",
-        iconBg: "bg-gradient-to-br from-teal-500 to-cyan-600",
-        borderColor: "hover:border-teal-500/40",
-        path: "/chapter-finance",
       },
     ] as ToolItem[],
   },
