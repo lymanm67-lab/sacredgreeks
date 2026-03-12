@@ -36,7 +36,7 @@ import {
 import { FinancialScenarios } from "@/components/financial/FinancialScenarios";
 import { FinancialTools } from "@/components/financial/FinancialTools";
 import { FinancialExamples } from "@/components/financial/FinancialExamples";
-import { CreditRepairHub } from "@/components/financial/CreditRepairHub";
+
 import { StudentFinancialGuide } from "@/components/financial/StudentFinancialGuide";
 import { SISPCalculator } from "@/components/financial/SISPCalculator";
 import { FinancialOverviewTTS } from "@/components/financial/FinancialOverviewTTS";
