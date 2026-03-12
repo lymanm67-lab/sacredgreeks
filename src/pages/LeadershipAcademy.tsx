@@ -136,6 +136,18 @@ const categories: CourseCategory[] = [
         modules: 48,
         step: 5,
       },
+      {
+        title: "Symbol Guide",
+        description: "Explore Greek letters, symbols, and their historical and spiritual meanings",
+        icon: Compass,
+        gradient: "from-teal-500/20 via-emerald-500/10 to-transparent",
+        iconBg: "bg-gradient-to-br from-teal-500 to-emerald-500",
+        borderColor: "hover:border-teal-500/40",
+        path: "/symbol-guide",
+        progressKey: "/symbol-guide",
+        modules: 0,
+        step: 0,
+      },
     ],
   },
   {
