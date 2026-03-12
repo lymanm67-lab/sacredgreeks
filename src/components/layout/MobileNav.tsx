@@ -72,7 +72,6 @@ const practiceItems = [
 const connectItems = [
   { title: "Sacred Connections", url: "/contacts", icon: QrCode, featureId: null, iconColor: "text-sacred" },
   { title: "Member Network", url: "/network", icon: UserPlus, featureId: null, iconColor: "text-pink-500" },
-  { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null, iconColor: "text-indigo-500" },
   { title: "Toolkit", url: "/tools", icon: Bot, featureId: null, iconColor: "text-primary" },
 ];
 
@@ -81,6 +80,7 @@ const churchItems = [
   { title: "Church Leaders Hub", url: "/church-leaders", icon: Landmark, featureId: null, iconColor: "text-lime-500" },
   { title: "Chaplain Toolkit", url: "/chaplain-toolkit", icon: Cross, featureId: null, iconColor: "text-sacred" },
   { title: "Conversation Scripts", url: "/ai-workers", icon: MessageSquare, featureId: null, iconColor: "text-violet-500" },
+  { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null, iconColor: "text-indigo-500" },
 ];
 
 // ─── MORE ───
