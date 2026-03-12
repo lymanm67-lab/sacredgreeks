@@ -82,10 +82,8 @@ const assessItems = [
 
 // ─── PRACTICE: Daily spiritual habits ───
 const practiceItems = [
-  { title: "30-Day Journey", url: "/journey", icon: Calendar, featureId: null, iconColor: "text-cyan-500" },
-  { title: "Bible Study", url: "/bible-study", icon: BookOpen, featureId: null, iconColor: "text-purple-500" },
-  { title: "Prayer Journal", url: "/prayer-journal", icon: BookHeart, featureId: null, iconColor: "text-rose-500" },
-  { title: "Prayer Wall", url: "/prayer-wall", icon: Heart, featureId: null, iconColor: "text-pink-500" },
+  { title: "Daily Practice", url: "/daily-practice", icon: Calendar, featureId: null, iconColor: "text-cyan-500" },
+  { title: "Prayer", url: "/prayer", icon: BookHeart, featureId: null, iconColor: "text-rose-500" },
 ];
 
 // ─── CONNECT: Community & networking ───

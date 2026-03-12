@@ -67,10 +67,8 @@ const navigationItems = [
   { title: "Sacred Money Course", url: "/sacred-money-course", icon: DollarSign, keywords: ["money", "financial", "course"] },
   { title: "Assessments", url: "/assessments", icon: ClipboardCheck, keywords: ["quiz", "assessment", "snapshot", "proof", "masks", "test"] },
   // Practice
-  { title: "30-Day Journey", url: "/journey", icon: Calendar, keywords: ["progress", "spiritual", "journey"] },
-  { title: "Bible Study", url: "/bible-study", icon: Book, keywords: ["scripture", "word", "search"] },
-  { title: "Prayer Journal", url: "/prayer-journal", icon: BookHeart, keywords: ["prayers", "personal", "journal"] },
-  { title: "Prayer Wall", url: "/prayer-wall", icon: HandHeart, keywords: ["community", "requests", "prayer"] },
+  { title: "Daily Practice", url: "/daily-practice", icon: Calendar, keywords: ["journey", "bible", "study", "scripture", "30 day"] },
+  { title: "Prayer", url: "/prayer", icon: BookHeart, keywords: ["prayer", "journal", "wall", "requests", "community"] },
   // Connect
   { title: "Sacred Connections", url: "/contacts", icon: QrCode, keywords: ["contacts", "qr", "connect", "forum", "events", "chapters", "business", "directory"] },
   { title: "Member Network", url: "/network", icon: UserPlus, keywords: ["network", "members", "community", "parents", "family", "church", "leaders"] },
