@@ -44,6 +44,7 @@ import { BuildingWealthSection } from "@/components/financial/BuildingWealthSect
 import { DebtStrategiesCalculator } from "@/components/financial/DebtStrategiesCalculator";
 import { PrismBudgetPromo } from "@/components/financial/PrismBudgetPromo";
 import { SacredCapital } from "@/components/financial/SacredCapital";
+import { Micro2Scanner } from "@/components/financial/Micro2Scanner";
 import { Link } from "react-router-dom";
 
 interface BudgetResults {
