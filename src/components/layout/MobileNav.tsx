@@ -95,7 +95,6 @@ const SECTIONS: { key: string; label: string; items: typeof practiceItems; badge
   { key: "connect", label: "Connect", items: [...connectItems, ...churchItems.filter(i => i.url !== "/church-leaders")] },
   { key: "more", label: "More", items: moreItems },
 ];
-];
 
 interface NavSectionProps {
   title: string;
