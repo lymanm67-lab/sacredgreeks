@@ -43,6 +43,7 @@ import { FinancialOverviewTTS } from "@/components/financial/FinancialOverviewTT
 import { BuildingWealthSection } from "@/components/financial/BuildingWealthSection";
 import { DebtStrategiesCalculator } from "@/components/financial/DebtStrategiesCalculator";
 import { PrismBudgetPromo } from "@/components/financial/PrismBudgetPromo";
+import { SacredCapital } from "@/components/financial/SacredCapital";
 import { Link } from "react-router-dom";
 
 interface BudgetResults {
