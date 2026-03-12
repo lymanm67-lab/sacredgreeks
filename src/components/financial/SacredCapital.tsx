@@ -232,7 +232,10 @@ export function SacredCapital({ onNavigateTab }: SacredCapitalProps) {
           <TabsTrigger value="church" className="flex items-center gap-1.5 text-xs sm:text-sm">
             <Landmark className="w-3.5 h-3.5" />
             Church Capital
-            <Badge variant="secondary" className="ml-1 text-[10px] bg-amber-500/20 text-amber-400">New</Badge>
+          </TabsTrigger>
+          <TabsTrigger value="repair" className="flex items-center gap-1.5 text-xs sm:text-sm">
+            <FileText className="w-3.5 h-3.5" />
+            Credit Repair
           </TabsTrigger>
         </TabsList>
 
