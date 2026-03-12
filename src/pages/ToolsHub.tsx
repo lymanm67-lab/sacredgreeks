@@ -72,15 +72,6 @@ const toolCategories = [
     label: "Ministry & Worship",
     tools: [
       {
-        title: "Chaplain Toolkit",
-        description: "Generate prayers, devotionals, and theological resources as downloadable PDFs",
-        icon: Cross,
-        gradient: "from-sacred/20 via-sacred/5 to-transparent",
-        iconBg: "bg-gradient-to-br from-sacred to-sacred/70",
-        borderColor: "hover:border-sacred/40",
-        path: "/chaplain-toolkit",
-      },
-      {
         title: "Worship Playlists",
         description: "Curated worship music for chapter meetings, retreats, and personal devotion",
         icon: Music,
