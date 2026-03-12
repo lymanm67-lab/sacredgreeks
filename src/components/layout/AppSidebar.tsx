@@ -106,12 +106,12 @@ const moreItems = [
 ];
 
 // Section definitions for DRY rendering
-const SECTIONS: { key: string; label: string; items: typeof assessItems; badge?: string }[] = [
-  { key: "assess", label: "Assess", items: assessItems, badge: "Quizzes" },
-  { key: "practice", label: "Practice", items: practiceItems },
-  { key: "connect", label: "Connect", items: connectItems },
-  { key: "church", label: "Church Leaders", items: churchItems },
-  { key: "more", label: "More", items: moreItems },
+const SECTIONS: { key: string; label: string; items: typeof assessItems; badge?: string; icon: React.ComponentType<{ className?: string }>; iconColor: string }[] = [
+  { key: "assess", label: "Assess", items: assessItems, badge: "Quizzes", icon: ClipboardCheck, iconColor: "text-blue-500" },
+  { key: "practice", label: "Practice", items: practiceItems, icon: BookHeart, iconColor: "text-cyan-500" },
+  { key: "connect", label: "Connect", items: connectItems, icon: Users, iconColor: "text-pink-500" },
+  { key: "church", label: "Church Leaders", items: churchItems, icon: Landmark, iconColor: "text-lime-500" },
+  { key: "more", label: "More", items: moreItems, icon: Compass, iconColor: "text-slate-400" },
 ];
 
 export function AppSidebar() {
@@ -247,6 +247,7 @@ export function AppSidebar() {
                 <CollapsibleTrigger className="w-full">
                   <SidebarGroupLabel className="flex items-center justify-between cursor-pointer hover:text-foreground transition-colors">
                     <span className="flex items-center gap-2">
+                      <section.icon className={cn("h-3.5 w-3.5", section.iconColor)} />
                       {section.label}
                       {section.badge && (
                         <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 bg-primary/10 text-primary">
