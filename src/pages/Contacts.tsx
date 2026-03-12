@@ -166,11 +166,6 @@ export default function Contacts() {
             </Suspense>
           </TabsContent>
 
-          <TabsContent value="church" className="mt-6">
-            <Suspense fallback={<div className="text-center py-12 text-muted-foreground">Loading...</div>}>
-              <ChurchLeaders />
-            </Suspense>
-          </TabsContent>
 
           <TabsContent value="scan-qr" className="mt-6">
             <ContactScanner onScanSuccess={handleScanSuccess} />
