@@ -16,6 +16,7 @@ import { lazy, Suspense } from 'react';
 const Forum = lazy(() => import('@/pages/Forum'));
 const EventsCalendar = lazy(() => import('@/pages/EventsCalendar'));
 const ChapterFinder = lazy(() => import('@/pages/ChapterFinder'));
+const D9BusinessDirectory = lazy(() => import('@/pages/D9BusinessDirectory'));
 
 const TABS = [
   { value: 'my-card', label: 'My Card', icon: User },
