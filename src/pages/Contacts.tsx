@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, User, Scan, CreditCard, LogIn, Users, MessageSquare, CalendarDays, MapPin, Briefcase, Heart, Cross } from 'lucide-react';
+import { ArrowLeft, User, Scan, CreditCard, LogIn, Users, MessageSquare, CalendarDays, MapPin, Briefcase, Heart } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { MyDigitalCard } from '@/components/contacts/MyDigitalCard';
 import { ContactScanner } from '@/components/contacts/ContactScanner';
@@ -18,7 +18,6 @@ const EventsCalendar = lazy(() => import('@/pages/EventsCalendar'));
 const ChapterFinder = lazy(() => import('@/pages/ChapterFinder'));
 const D9BusinessDirectory = lazy(() => import('@/pages/D9BusinessDirectory'));
 const ParentsFamily = lazy(() => import('@/pages/ParentsFamily'));
-const ChurchLeaders = lazy(() => import('@/pages/ChurchLeaders'));
 
 const TABS = [
   { value: 'my-card', label: 'My Card', icon: User },
@@ -26,9 +25,7 @@ const TABS = [
   { value: 'forum', label: 'Forum', icon: MessageSquare },
   { value: 'events', label: 'Events', icon: CalendarDays },
   { value: 'chapters', label: 'Chapters', icon: MapPin },
-  { value: 'directory', label: 'Directory', icon: Briefcase },
   { value: 'parents', label: 'Parents', icon: Heart },
-  { value: 'church', label: 'Church Leaders', icon: Cross },
   { value: 'scan-qr', label: 'Scan QR', icon: Scan },
   { value: 'scan-card', label: 'Scan Card', icon: CreditCard },
 ] as const;
@@ -80,7 +77,7 @@ export default function Contacts() {
   };
 
   // Full-width tabs (forum, events, chapters) vs contained tabs
-  const isFullWidth = ['forum', 'events', 'chapters', 'directory', 'parents', 'church'].includes(activeTab);
+  const isFullWidth = ['forum', 'events', 'chapters', 'directory', 'parents'].includes(activeTab);
 
   return (
     <div className="min-h-screen bg-background p-4">
@@ -169,11 +166,6 @@ export default function Contacts() {
             </Suspense>
           </TabsContent>
 
-          <TabsContent value="church" className="mt-6">
-            <Suspense fallback={<div className="text-center py-12 text-muted-foreground">Loading...</div>}>
-              <ChurchLeaders />
-            </Suspense>
-          </TabsContent>
 
           <TabsContent value="scan-qr" className="mt-6">
             <ContactScanner onScanSuccess={handleScanSuccess} />
