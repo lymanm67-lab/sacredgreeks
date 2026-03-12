@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   GraduationCap,
@@ -27,6 +27,7 @@ import {
   Compass,
   Video,
   Wrench,
+  ChevronDown,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -50,6 +51,7 @@ interface AcademyTrack {
   tag?: string;
   step: number;
   isToolkit?: boolean;
+  quickLinks?: { label: string; step: number }[];
 }
 
 // ─── Category definitions with logical learning flow ───
@@ -219,6 +221,14 @@ const categories: CourseCategory[] = [
         step: 9,
         tag: "Tools",
         isToolkit: true,
+        quickLinks: [
+          { label: "Foundation", step: 1 },
+          { label: "Budget Calculator", step: 2 },
+          { label: "Credit & Sacred Capital", step: 3 },
+          { label: "Debt Freedom", step: 4 },
+          { label: "Build Wealth", step: 5 },
+          { label: "All Tools", step: 6 },
+        ],
       },
     ],
   },
@@ -303,69 +313,118 @@ function TrackCard({ track, progress, index }: { track: AcademyTrack; progress: 
   const completedModules = Math.round((progress / 100) * track.modules);
   const isComplete = progress >= 100;
   const isStarted = progress > 0;
+  const navigate = useNavigate();
+  const [showQuickLinks, setShowQuickLinks] = useState(false);
+
+  const handleQuickLink = useCallback((e: React.MouseEvent, step: number) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigate(track.path, { state: { initialStep: step } });
+  }, [navigate, track.path]);
+
+  const toggleDropdown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setShowQuickLinks(prev => !prev);
+  }, []);
 
   return (
-    <Link to={track.path}>
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: index * 0.05, type: "spring", stiffness: 260, damping: 20 }}
-        whileHover={{ y: -6, scale: 1.02 }}
-        whileTap={{ scale: 0.97 }}
-      >
-        <Card className={`h-full border-border/40 ${track.borderColor} transition-all duration-300 hover:shadow-xl group overflow-hidden relative ${track.isToolkit ? "border-dashed border-2" : ""}`}>
-          <div className={`absolute inset-0 bg-gradient-to-br ${track.gradient} opacity-60 group-hover:opacity-100 transition-opacity`} />
+    <div>
+      <Link to={track.path}>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: index * 0.05, type: "spring", stiffness: 260, damping: 20 }}
+          whileHover={{ y: -6, scale: 1.02 }}
+          whileTap={{ scale: 0.97 }}
+        >
+          <Card className={`h-full border-border/40 ${track.borderColor} transition-all duration-300 hover:shadow-xl group overflow-hidden relative ${track.isToolkit ? "border-dashed border-2" : ""}`}>
+            <div className={`absolute inset-0 bg-gradient-to-br ${track.gradient} opacity-60 group-hover:opacity-100 transition-opacity`} />
 
-          <CardContent className="p-5 relative">
-            <div className="flex items-start gap-4">
-              <div className="relative shrink-0">
-                {track.step > 0 && (
-                  <div className="absolute -top-1 -left-1 w-5 h-5 rounded-full bg-foreground/80 text-background text-[10px] font-bold flex items-center justify-center z-10">
-                    {track.step}
-                  </div>
-                )}
-                <div className={`p-3 rounded-2xl ${track.iconBg} shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                  <track.icon className="w-6 h-6 text-white drop-shadow-sm" />
-                </div>
-              </div>
-
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1.5">
-                  <h3 className="font-bold text-sm text-foreground truncate">{track.title}</h3>
-                  {track.tag && (
-                    <Badge variant="secondary" className={`text-[10px] px-1.5 py-0 shrink-0 ${track.isToolkit ? "bg-teal-500/15 text-teal-400 border-teal-500/20" : "bg-amber-500/15 text-amber-600 border-amber-500/20 animate-pulse"}`}>
-                      {track.tag}
-                    </Badge>
+            <CardContent className="p-5 relative">
+              <div className="flex items-start gap-4">
+                <div className="relative shrink-0">
+                  {track.step > 0 && (
+                    <div className="absolute -top-1 -left-1 w-5 h-5 rounded-full bg-foreground/80 text-background text-[10px] font-bold flex items-center justify-center z-10">
+                      {track.step}
+                    </div>
                   )}
-                  {isComplete && <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />}
+                  <div className={`p-3 rounded-2xl ${track.iconBg} shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                    <track.icon className="w-6 h-6 text-white drop-shadow-sm" />
+                  </div>
                 </div>
-                <p className="text-xs text-muted-foreground line-clamp-2 mb-3">{track.description}</p>
 
-                {track.isToolkit ? (
-                  <div className="flex items-center gap-2 text-[11px]">
-                    <div className="flex items-center gap-1 px-2 py-1 rounded-md bg-teal-500/10 text-teal-400 border border-teal-500/20">
-                      <Wrench className="w-3 h-3" />
-                      <span className="font-medium">{track.modules} tools</span>
-                    </div>
-                    <span className="text-muted-foreground">Interactive toolkit</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <h3 className="font-bold text-sm text-foreground truncate">{track.title}</h3>
+                    {track.tag && (
+                      <Badge variant="secondary" className={`text-[10px] px-1.5 py-0 shrink-0 ${track.isToolkit ? "bg-teal-500/15 text-teal-400 border-teal-500/20" : "bg-amber-500/15 text-amber-600 border-amber-500/20 animate-pulse"}`}>
+                        {track.tag}
+                      </Badge>
+                    )}
+                    {isComplete && <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />}
                   </div>
-                ) : (
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between text-[11px]">
-                      <span className="text-muted-foreground">{completedModules}/{track.modules} modules</span>
-                      <span className={isStarted ? "text-foreground font-semibold" : "text-muted-foreground"}>{progress}%</span>
+                  <p className="text-xs text-muted-foreground line-clamp-2 mb-3">{track.description}</p>
+
+                  {track.isToolkit ? (
+                    <div className="flex items-center gap-2 text-[11px]">
+                      <div className="flex items-center gap-1 px-2 py-1 rounded-md bg-teal-500/10 text-teal-400 border border-teal-500/20">
+                        <Wrench className="w-3 h-3" />
+                        <span className="font-medium">{track.modules} tools</span>
+                      </div>
+                      {track.quickLinks && (
+                        <button
+                          onClick={toggleDropdown}
+                          className="flex items-center gap-1 px-2 py-1 rounded-md bg-muted/60 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors text-[11px]"
+                        >
+                          Jump to…
+                          <ChevronDown className={`w-3 h-3 transition-transform ${showQuickLinks ? "rotate-180" : ""}`} />
+                        </button>
+                      )}
                     </div>
-                    <Progress value={progress} className="h-2" />
-                  </div>
-                )}
+                  ) : (
+                    <div className="space-y-1.5">
+                      <div className="flex justify-between text-[11px]">
+                        <span className="text-muted-foreground">{completedModules}/{track.modules} modules</span>
+                        <span className={isStarted ? "text-foreground font-semibold" : "text-muted-foreground"}>{progress}%</span>
+                      </div>
+                      <Progress value={progress} className="h-2" />
+                    </div>
+                  )}
+                </div>
+
+                <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 transition-all shrink-0 mt-1" />
               </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </Link>
 
-              <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 transition-all shrink-0 mt-1" />
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
-    </Link>
+      {/* Quick-jump dropdown */}
+      {showQuickLinks && track.quickLinks && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+          className="mt-2 rounded-xl border border-border/50 bg-card/95 backdrop-blur-sm overflow-hidden shadow-lg"
+        >
+          <div className="p-2 grid grid-cols-2 gap-1">
+            {track.quickLinks.map((link) => (
+              <button
+                key={link.step}
+                onClick={(e) => handleQuickLink(e, link.step)}
+                className="text-left px-3 py-2 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors flex items-center gap-2"
+              >
+                <span className="w-5 h-5 rounded-md bg-teal-500/15 text-teal-400 text-[10px] font-bold flex items-center justify-center shrink-0">
+                  {link.step}
+                </span>
+                {link.label}
+              </button>
+            ))}
+          </div>
+        </motion.div>
+      )}
+    </div>
   );
 }
 

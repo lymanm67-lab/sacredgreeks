@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -83,9 +84,17 @@ const budgetPercentages = {
 };
 
 const FinancialStewardship = () => {
-  const [currentStep, setCurrentStep] = useState(1);
+  const location = useLocation();
+  const initialStep = (location.state as any)?.initialStep;
+  const [currentStep, setCurrentStep] = useState(initialStep || 1);
   const [income, setIncome] = useState<string>("");
   const [budgetResults, setBudgetResults] = useState<BudgetResults | null>(null);
+
+  useEffect(() => {
+    if (initialStep && initialStep >= 1 && initialStep <= 6) {
+      setCurrentStep(initialStep);
+    }
+  }, [initialStep]);
 
   const calculateBudget = () => {
     const monthlyIncome = parseFloat(income);
