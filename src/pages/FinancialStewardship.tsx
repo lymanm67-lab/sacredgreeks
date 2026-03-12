@@ -279,10 +279,6 @@ const FinancialStewardship = () => {
             </Card>
           </TabsContent>
 
-          {/* Credit Repair Hub Tab */}
-          <TabsContent value="credit" className="space-y-6">
-            <CreditRepairHub />
-          </TabsContent>
 
           {/* Student Financial Guide Tab */}
           <TabsContent value="students" className="space-y-6">
