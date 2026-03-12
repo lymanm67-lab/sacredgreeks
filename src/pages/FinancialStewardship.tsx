@@ -641,10 +641,6 @@ const FinancialStewardship = () => {
             <SacredCapital onNavigateTab={setActiveTab} />
           </TabsContent>
 
-          {/* Micro2 Scanner Tab */}
-          <TabsContent value="micro2" className="space-y-6">
-            <Micro2Scanner />
-          </TabsContent>
         </Tabs>
       </div>
     </div>

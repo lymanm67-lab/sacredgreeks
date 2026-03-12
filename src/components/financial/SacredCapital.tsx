@@ -526,6 +526,11 @@ export function SacredCapital({ onNavigateTab }: SacredCapitalProps) {
         <TabsContent value="repair" className="space-y-6 mt-4">
           <CreditRepairHub />
         </TabsContent>
+
+        {/* Micro2 Scanner */}
+        <TabsContent value="micro2" className="space-y-6 mt-4">
+          <Micro2Scanner />
+        </TabsContent>
       </Tabs>
     </div>
   );
