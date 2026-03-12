@@ -24,6 +24,7 @@ const TABS = [
   { value: 'forum', label: 'Forum', icon: MessageSquare },
   { value: 'events', label: 'Events', icon: CalendarDays },
   { value: 'chapters', label: 'Chapters', icon: MapPin },
+  { value: 'directory', label: 'Directory', icon: Briefcase },
   { value: 'scan-qr', label: 'Scan QR', icon: Scan },
   { value: 'scan-card', label: 'Scan Card', icon: CreditCard },
 ] as const;
