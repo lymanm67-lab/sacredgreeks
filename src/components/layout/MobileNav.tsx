@@ -92,8 +92,7 @@ const moreItems = [
 
 const SECTIONS: { key: string; label: string; items: typeof practiceItems; badge?: string }[] = [
   { key: "practice", label: "Practice", items: practiceItems },
-  { key: "connect", label: "Connect", items: connectItems },
-  { key: "church", label: "Church Leaders", items: churchItems },
+  { key: "connect", label: "Connect", items: [...connectItems, ...churchItems.filter(i => i.url !== "/church-leaders")] },
   { key: "more", label: "More", items: moreItems },
 ];
 
