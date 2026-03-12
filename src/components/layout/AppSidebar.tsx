@@ -129,8 +129,8 @@ const moreItems = [
 ];
 
 // Section definitions for DRY rendering
-const SECTIONS: { key: string; label: string; items: typeof learnItems; badge?: string }[] = [
-  { key: "learn", label: "Learn", items: learnItems, badge: "Courses & Quizzes" },
+const SECTIONS: { key: string; label: string; items: typeof assessItems; badge?: string }[] = [
+  { key: "assess", label: "Assess", items: assessItems, badge: "Quizzes" },
   { key: "practice", label: "Practice", items: practiceItems },
   { key: "connect", label: "Connect", items: connectItems },
   { key: "tools", label: "Tools", items: toolsItems },
