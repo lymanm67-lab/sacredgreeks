@@ -77,14 +77,7 @@ const navigationItems = [
   { title: "Business Directory", url: "/business-directory", icon: Briefcase, keywords: ["business", "d9", "entrepreneur"] },
   { title: "Mentorship", url: "/coaching-application", icon: Users, keywords: ["mentor", "coaching", "application"] },
   // Tools
-  { title: "PROOF Command Center", url: "/ai-workers", icon: Bot, keywords: ["ai", "command", "workers", "assistant"] },
-  { title: "Financial Stewardship", url: "/financial-stewardship", icon: DollarSign, keywords: ["finance", "budget", "money", "credit"] },
-  { title: "Chapter Finance", url: "/chapter-finance", icon: Landmark, keywords: ["chapter", "treasurer", "expenses"] },
-  { title: "Chaplain Toolkit", url: "/chaplain-toolkit", icon: Cross, keywords: ["chaplain", "prayer", "ministry"] },
-  { title: "Present & Polls", url: "/present", icon: Presentation, keywords: ["slides", "presentation", "polls", "live"] },
-  { title: "Worship Playlists", url: "/worship-playlists", icon: Music, keywords: ["worship", "music", "spotify"] },
-  { title: "Symbol Guide", url: "/symbol-guide", icon: Compass, keywords: ["meanings", "greek", "symbols"] },
-  { title: "Video Library", url: "/video-library", icon: Video, keywords: ["watch", "training", "videos"] },
+  { title: "Toolkit", url: "/tools", icon: Bot, keywords: ["tools", "ai", "finance", "chaplain", "present", "worship", "video", "symbol"] },
   // More
   { title: "About Dr. Lyman", url: "/about-creator", icon: User, keywords: ["dr lyman", "author", "founder"] },
   { title: "Order Book", url: "/order-book", icon: ShoppingBag, keywords: ["sacred not sinful", "purchase", "amazon"] },
