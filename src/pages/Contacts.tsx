@@ -27,6 +27,8 @@ const TABS = [
   { value: 'events', label: 'Events', icon: CalendarDays },
   { value: 'chapters', label: 'Chapters', icon: MapPin },
   { value: 'directory', label: 'Directory', icon: Briefcase },
+  { value: 'parents', label: 'Parents', icon: Heart },
+  { value: 'church', label: 'Church Leaders', icon: Cross },
   { value: 'scan-qr', label: 'Scan QR', icon: Scan },
   { value: 'scan-card', label: 'Scan Card', icon: CreditCard },
 ] as const;
