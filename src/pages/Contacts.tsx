@@ -18,7 +18,6 @@ const EventsCalendar = lazy(() => import('@/pages/EventsCalendar'));
 const ChapterFinder = lazy(() => import('@/pages/ChapterFinder'));
 const D9BusinessDirectory = lazy(() => import('@/pages/D9BusinessDirectory'));
 const ParentsFamily = lazy(() => import('@/pages/ParentsFamily'));
-const ChurchLeaders = lazy(() => import('@/pages/ChurchLeaders'));
 
 const TABS = [
   { value: 'my-card', label: 'My Card', icon: User },
