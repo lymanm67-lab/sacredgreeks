@@ -224,12 +224,13 @@ export function AppSidebar() {
       <SidebarSeparator />
 
       <SidebarContent>
-        {/* Dashboard & Academy — always visible, no collapse */}
+        {/* Dashboard, Academy & Assessments — always visible, no collapse */}
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
               <NavItem item={{ title: "Dashboard", url: "/dashboard", icon: Home, iconColor: "text-blue-500" }} />
               <NavItem item={academyItem} />
+              <NavItem item={assessItem} />
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
