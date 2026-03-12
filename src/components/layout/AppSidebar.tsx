@@ -142,7 +142,7 @@ export function AppSidebar() {
 
   const isActive = (path: string) => location.pathname === path;
 
-  const filterNavItems = (items: typeof assessItems) =>
+  const filterNavItems = (items: typeof learnItems) =>
     items.filter(item => !item.featureId || isFeatureVisible(item.featureId));
 
   const getInitials = () => {
