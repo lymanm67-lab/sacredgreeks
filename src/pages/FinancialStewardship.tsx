@@ -59,6 +59,7 @@ interface BudgetResults {
 
 const FinancialStewardship = () => {
   const [income, setIncome] = useState<string>("");
+  const [activeTab, setActiveTab] = useState("foundation");
   const [budgetResults, setBudgetResults] = useState<BudgetResults | null>(null);
 
   // Zero-based budget percentages (must equal 100%)
