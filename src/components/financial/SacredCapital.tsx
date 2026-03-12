@@ -126,13 +126,6 @@ const campaignPhases = [
 // Quick Links to existing tools
 const quickLinks = [
   {
-    title: 'Credit Repair Hub',
-    description: 'Dispute letters, bureau links & FCRA guides',
-    tab: 'credit',
-    icon: Shield,
-    color: 'text-blue-500',
-  },
-  {
     title: 'Student Financial Defense',
     description: 'Avoid predatory lending & debt traps',
     tab: 'students',
