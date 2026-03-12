@@ -204,6 +204,18 @@ const categories: CourseCategory[] = [
         modules: 11,
         step: 8,
       },
+      {
+        title: "Financial Stewardship",
+        description: "Hands-on journey — budgets, credit building, debt freedom, chapter finance, and wealth building",
+        icon: Coins,
+        gradient: "from-teal-500/20 via-cyan-500/10 to-transparent",
+        iconBg: "bg-gradient-to-br from-teal-500 to-cyan-600",
+        borderColor: "hover:border-teal-500/40",
+        path: "/financial-stewardship",
+        progressKey: "/financial-stewardship",
+        modules: 7,
+        step: 9,
+      },
     ],
   },
   {
