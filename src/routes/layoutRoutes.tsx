@@ -7,6 +7,7 @@ const SymbolGuide = lazy(() => import("@/pages/SymbolGuide"));
 const OathsGuide = lazy(() => import("@/pages/OathsGuide"));
 const ProofCourse = lazy(() => import("@/pages/ProofCourse"));
 const ProofAssessment = lazy(() => import("@/pages/ProofAssessment"));
+const AssessmentsHub = lazy(() => import("@/pages/AssessmentsHub"));
 const ChurchLeaders = lazy(() => import("@/pages/ChurchLeaders"));
 const ParentsFamily = lazy(() => import("@/pages/ParentsFamily"));
 const FaithAuthority = lazy(() => import("@/pages/FaithAuthority"));
