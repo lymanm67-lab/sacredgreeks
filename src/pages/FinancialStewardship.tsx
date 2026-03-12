@@ -48,6 +48,7 @@ const JOURNEY_STEPS = [
   { label: "Credit", description: "Protect & build credit" },
   { label: "Debt Free", description: "Eliminate what holds you back" },
   { label: "Build Wealth", description: "Grow for generations" },
+  { label: "Chapter Finance", description: "Treasurer & expense tools" },
   { label: "Tools", description: "Resources & calculators" },
 ];
 
