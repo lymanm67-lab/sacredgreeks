@@ -58,6 +58,7 @@ import { cn } from "@/lib/utils";
 const pinnedItems = [
   { title: "Dashboard", url: "/dashboard", icon: Home, featureId: null, iconColor: "text-blue-500" },
   { title: "Sacred Leaders Academy", url: "/leadership-academy", icon: GraduationCap, featureId: null, iconColor: "text-sacred" },
+  { title: "Assessments", url: "/assessments", icon: ClipboardCheck, featureId: null, iconColor: "text-blue-500" },
 ];
 
 // ─── LEARN ───
@@ -70,7 +71,6 @@ const learnItems = [
   { title: "Saints or Sellouts?", url: "/saints-or-sellouts", icon: Crown, featureId: null, iconColor: "text-orange-500" },
   { title: "Hidden in Plain Sight", url: "/hidden-in-plain-sight", icon: Landmark, featureId: null, iconColor: "text-rose-500" },
   { title: "Sacred Money Course", url: "/sacred-money-course", icon: DollarSign, featureId: null, iconColor: "text-emerald-500" },
-  { title: "Assessments", url: "/assessments", icon: ClipboardCheck, featureId: null, iconColor: "text-blue-500" },
 ];
 
 // ─── PRACTICE ───
@@ -83,12 +83,8 @@ const practiceItems = [
 const connectItems = [
   { title: "Sacred Connections", url: "/contacts", icon: QrCode, featureId: null, iconColor: "text-sacred" },
   { title: "Member Network", url: "/network", icon: UserPlus, featureId: null, iconColor: "text-pink-500" },
-  { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null, iconColor: "text-indigo-500" },
-];
-
-// ─── CHURCH LEADERS ───
-const churchItems = [
   { title: "Church Leaders", url: "/church-leaders", icon: Users, featureId: null, iconColor: "text-lime-500" },
+  { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null, iconColor: "text-indigo-500" },
   { title: "Toolkit", url: "/tools", icon: Bot, featureId: null, iconColor: "text-primary" },
 ];
 
@@ -99,10 +95,9 @@ const moreItems = [
 ];
 
 const SECTIONS: { key: string; label: string; items: typeof learnItems; badge?: string }[] = [
-  { key: "learn", label: "Learn", items: learnItems, badge: "Courses & Quizzes" },
+  { key: "learn", label: "Learn", items: learnItems, badge: "Courses" },
   { key: "practice", label: "Practice", items: practiceItems },
   { key: "connect", label: "Connect", items: connectItems },
-  { key: "church", label: "Church Leaders", items: churchItems },
   { key: "more", label: "More", items: moreItems },
 ];
 
