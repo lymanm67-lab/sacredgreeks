@@ -155,6 +155,12 @@ export function AppSidebar() {
     return 'U';
   };
 
+  const getIconBg = (iconColor?: string, opacity = 15) => {
+    if (!iconColor) return '';
+    const base = iconColor.replace('text-', '');
+    return `bg-${base}/${opacity}`;
+  };
+
   const NavItem = ({ item }: { item: { title: string; url: string; icon: React.ComponentType<{ className?: string }>; iconColor?: string } }) => {
     const Icon = item.icon;
     return (
@@ -174,8 +180,7 @@ export function AppSidebar() {
           >
             <span className={cn(
               "flex items-center justify-center h-6 w-6 rounded-md shrink-0 transition-all",
-              item.iconColor?.replace('text-', 'bg-').replace('500', '500/15'),
-              isActive(item.url) && item.iconColor?.replace('text-', 'bg-').replace('500', '500/25'),
+              getIconBg(item.iconColor, isActive(item.url) ? 25 : 15),
               "group-hover:scale-110"
             )}>
               <Icon className={cn("h-4 w-4 drop-shadow-sm", item.iconColor)} />
