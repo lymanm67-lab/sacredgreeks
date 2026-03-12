@@ -12,16 +12,13 @@ import {
   MessageSquare,
   Users, 
   GraduationCap,
-  ShieldAlert,
   Compass,
   Zap,
   Trophy,
-  Award,
   FileText,
   Bell,
   Settings, 
   LogOut,
-  Church,
   Video,
   Building2,
   Landmark,
@@ -32,7 +29,6 @@ import {
   Mic,
   Sparkles,
   Drama,
-  History,
   Scale,
   Crown,
   CalendarDays,
@@ -44,12 +40,7 @@ import {
   ChevronDown,
   QrCode,
   Bot,
-  Film,
   Presentation,
-  BarChart3,
-  Layers,
-  Monitor,
-  Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -63,13 +54,14 @@ import { DemoModeControl } from "@/components/GlobalDemoIndicator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
 
-// Dashboard - Always first
-const dashboardItem = [
+// ─── Pinned ───
+const pinnedItems = [
   { title: "Dashboard", url: "/dashboard", icon: Home, featureId: null, iconColor: "text-blue-500" },
+  { title: "Sacred Leaders Academy", url: "/leadership-academy", icon: GraduationCap, featureId: null, iconColor: "text-sacred" },
 ];
 
-// Learning Path section - matches AppSidebar
-const learningPathItems = [
+// ─── LEARN ───
+const learnItems = [
   { title: "PROOF Course", url: "/proof-course", icon: Target, featureId: null, iconColor: "text-amber-500" },
   { title: "Greek Life & Guild", url: "/greek-life-training", icon: Building2, featureId: null, iconColor: "text-violet-500" },
   { title: "Myth Busters", url: "/myth-buster", icon: Zap, featureId: null, iconColor: "text-yellow-500" },
@@ -77,26 +69,22 @@ const learningPathItems = [
   { title: "Stay or Leave?", url: "/should-you-stay-or-leave", icon: Scale, featureId: null, iconColor: "text-teal-500" },
   { title: "Saints or Sellouts?", url: "/saints-or-sellouts", icon: Crown, featureId: null, iconColor: "text-orange-500" },
   { title: "Hidden in Plain Sight", url: "/hidden-in-plain-sight", icon: Landmark, featureId: null, iconColor: "text-rose-500" },
-];
-
-// Assessments section - matches AppSidebar
-const assessmentItems = [
+  { title: "Sacred Money Course", url: "/sacred-money-course", icon: DollarSign, featureId: null, iconColor: "text-emerald-500" },
   { title: "Faith Snapshot", url: "/snapshot", icon: Sparkles, featureId: null, iconColor: "text-blue-500" },
   { title: "PROOF Quiz", url: "/proof-assessment", icon: ClipboardCheck, featureId: null, iconColor: "text-emerald-500" },
   { title: "Shattered Masks", url: "/shattered-masks", icon: Drama, featureId: null, iconColor: "text-purple-500" },
-  { title: "Assessment History", url: "/assessment-history", icon: History, featureId: null, iconColor: "text-slate-500" },
 ];
 
-// Spiritual Practices section - matches AppSidebar
-const spiritualPracticesItems = [
+// ─── PRACTICE ───
+const practiceItems = [
   { title: "30-Day Journey", url: "/journey", icon: Calendar, featureId: null, iconColor: "text-cyan-500" },
   { title: "Bible Study", url: "/bible-study", icon: BookOpen, featureId: null, iconColor: "text-purple-500" },
   { title: "Prayer Journal", url: "/prayer-journal", icon: BookHeart, featureId: null, iconColor: "text-rose-500" },
+  { title: "Prayer Wall", url: "/prayer-wall", icon: Heart, featureId: null, iconColor: "text-pink-500" },
 ];
 
-// Community section - all community features merged (matches AppSidebar)
-const communityItems = [
-  { title: "Prayer Wall", url: "/prayer-wall", icon: Heart, featureId: null, iconColor: "text-pink-500" },
+// ─── CONNECT ───
+const connectItems = [
   { title: "Forum", url: "/forum", icon: MessageSquare, featureId: null, iconColor: "text-cyan-500" },
   { title: "Sacred Connections", url: "/contacts", icon: QrCode, featureId: null, iconColor: "text-sacred" },
   { title: "Events Calendar", url: "/events", icon: CalendarDays, featureId: null, iconColor: "text-purple-500" },
@@ -104,58 +92,46 @@ const communityItems = [
   { title: "Member Network", url: "/network", icon: UserPlus, featureId: null, iconColor: "text-pink-500" },
   { title: "Business Directory", url: "/business-directory", icon: Briefcase, featureId: null, iconColor: "text-emerald-500" },
   { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null, iconColor: "text-indigo-500" },
-  { title: "Group Coaching", url: "/community", icon: GraduationCap, featureId: null, iconColor: "text-orange-500" },
 ];
 
-// About Dr. Lyman section - matches AppSidebar
-const aboutDrLymanItems = [
-  { title: "About Creator", url: "/about-creator", icon: User, featureId: null, iconColor: "text-sacred" },
-  { title: "Order Book", url: "/order-book", icon: ShoppingBag, featureId: null, iconColor: "text-amber-500" },
-  { title: "Book Dr. Lyman", url: "/speaking-request", icon: Calendar, featureId: null, iconColor: "text-fuchsia-500" },
-];
-
-// Podcast section - matches AppSidebar
-const podcastItems = [
-  { title: "Podcast", url: "/podcast", icon: Headphones, featureId: null, iconColor: "text-purple-500" },
-  { title: "Be on Podcast", url: "/guest-panelist-application", icon: Mic, featureId: null, iconColor: "text-purple-500" },
-];
-
-// Resources section - matches AppSidebar
-const resourcesItems = [
+// ─── TOOLS ───
+const toolsItems = [
   { title: "PROOF Command Center", url: "/ai-workers", icon: Bot, featureId: null, iconColor: "text-primary" },
-  { title: "Script Assistant", url: "/ai-workers?view=video-studio", icon: Film, featureId: null, iconColor: "text-violet-500" },
   { title: "Financial Stewardship", url: "/financial-stewardship", icon: DollarSign, featureId: null, iconColor: "text-emerald-500" },
+  { title: "Chapter Finance", url: "/chapter-finance", icon: Landmark, featureId: null, iconColor: "text-teal-500" },
   { title: "Chaplain Toolkit", url: "/chaplain-toolkit", icon: Cross, featureId: null, iconColor: "text-sacred" },
+  { title: "Present & Polls", url: "/present", icon: Presentation, featureId: null, iconColor: "text-indigo-500" },
   { title: "Worship Playlists", url: "/worship-playlists", icon: Music, featureId: null, iconColor: "text-purple-500" },
   { title: "Symbol Guide", url: "/symbol-guide", icon: Compass, featureId: null, iconColor: "text-teal-500" },
   { title: "Video Library", url: "/video-library", icon: Video, featureId: null, iconColor: "text-sky-500" },
+];
+
+// ─── MORE ───
+const moreItems = [
+  { title: "About Dr. Lyman", url: "/about-creator", icon: User, featureId: null, iconColor: "text-sacred" },
+  { title: "Order Book", url: "/order-book", icon: ShoppingBag, featureId: null, iconColor: "text-amber-500" },
+  { title: "Book Dr. Lyman", url: "/speaking-request", icon: Calendar, featureId: null, iconColor: "text-fuchsia-500" },
+  { title: "Podcast", url: "/podcast", icon: Headphones, featureId: null, iconColor: "text-purple-500" },
+  { title: "Be on Podcast", url: "/guest-panelist-application", icon: Mic, featureId: null, iconColor: "text-purple-500" },
   { title: "Parents & Family", url: "/parents-family", icon: Heart, featureId: null, iconColor: "text-rose-500" },
-  { title: "Anti-Hazing", url: "/anti-hazing", icon: ShieldAlert, featureId: null, iconColor: "text-red-500" },
-  { title: "Church Leaders", url: "/church-leaders", icon: Church, featureId: null, iconColor: "text-lime-500" },
-];
-
-// Present section - presentation tools
-const presentItems = [
-  { title: "Slide Library", url: "/present?tab=library", icon: Layers, featureId: null, iconColor: "text-indigo-500" },
-  { title: "Live Polls", url: "/present?tab=polls", icon: BarChart3, featureId: null, iconColor: "text-cyan-500" },
-  { title: "Slide Deck", url: "/present?tab=deck", icon: Presentation, featureId: null, iconColor: "text-violet-500" },
-  { title: "Presentation Mode", url: "/present?tab=present", icon: Monitor, featureId: null, iconColor: "text-amber-500" },
-  { title: "Live Preview", url: "/present?tab=preview", icon: Eye, featureId: null, iconColor: "text-emerald-500" },
-];
-
-// System section - matches AppSidebar
-const systemItems = [
+  { title: "Church Leaders", url: "/church-leaders", icon: Users, featureId: null, iconColor: "text-lime-500" },
   { title: "Achievements", url: "/achievements", icon: Trophy, featureId: null, iconColor: "text-amber-400" },
-  { title: "Training Vault", url: "/training-vault", icon: Award, featureId: null, iconColor: "text-emerald-500" },
   { title: "Notifications", url: "/notification-preferences", icon: Bell, featureId: null, iconColor: "text-fuchsia-500" },
   { title: "Changelog", url: "/changelog", icon: FileText, featureId: null, iconColor: "text-sky-500" },
   { title: "Settings", url: "/profile", icon: Settings, featureId: null, iconColor: "text-slate-500" },
 ];
 
-// NavSection extracted as a proper component to avoid hooks violation
+const SECTIONS: { key: string; label: string; items: typeof learnItems; badge?: string }[] = [
+  { key: "learn", label: "Learn", items: learnItems, badge: "Courses & Quizzes" },
+  { key: "practice", label: "Practice", items: practiceItems },
+  { key: "connect", label: "Connect", items: connectItems },
+  { key: "tools", label: "Tools", items: toolsItems },
+  { key: "more", label: "More", items: moreItems },
+];
+
 interface NavSectionProps {
   title: string;
-  items: typeof dashboardItem;
+  items: typeof learnItems;
   badge?: string;
   defaultOpen?: boolean;
   currentPath: string;
@@ -163,10 +139,8 @@ interface NavSectionProps {
 }
 
 function NavSection({ title, items, badge, defaultOpen = false, currentPath, onNavClick }: NavSectionProps) {
-  // Auto-expand if any child route is active
   const hasActiveChild = items.some(item => currentPath === item.url || currentPath.startsWith(item.url.split('?')[0]));
   const [isOpen, setIsOpen] = useState(defaultOpen || hasActiveChild);
-  
   const isActive = (path: string) => currentPath === path;
   
   return (
@@ -217,23 +191,8 @@ export function MobileNav() {
   const { user, profile, signOut } = useAuth();
   const { isFeatureVisible } = useFeaturePreferences();
 
-  const filterNavItems = (items: typeof dashboardItem) => {
-    return items.filter(item => {
-      if (!item.featureId) return true;
-      return isFeatureVisible(item.featureId);
-    });
-  };
-
-  const filteredDashboard = filterNavItems(dashboardItem);
-  const filteredLearningPath = filterNavItems(learningPathItems);
-  const filteredAssessments = filterNavItems(assessmentItems);
-  const filteredSpiritualPractices = filterNavItems(spiritualPracticesItems);
-  const filteredCommunity = filterNavItems(communityItems);
-  const filteredAboutDrLyman = filterNavItems(aboutDrLymanItems);
-  const filteredPodcast = filterNavItems(podcastItems);
-  const filteredResources = filterNavItems(resourcesItems);
-  const filteredPresent = filterNavItems(presentItems);
-  const filteredSystem = filterNavItems(systemItems);
+  const filterNavItems = (items: typeof learnItems) =>
+    items.filter(item => !item.featureId || isFeatureVisible(item.featureId));
 
   const getInitials = () => {
     if (profile?.full_name) {
@@ -280,36 +239,41 @@ export function MobileNav() {
 
         <ScrollArea className="h-[calc(100vh-180px)]">
           <div className="p-4 space-y-2">
-            {filteredDashboard.length > 0 && (
-              <NavSection title="Dashboard" items={filteredDashboard} currentPath={location.pathname} onNavClick={handleNavClick} />
-            )}
-            {filteredLearningPath.length > 0 && (
-              <NavSection title="Learning Path" items={filteredLearningPath} currentPath={location.pathname} onNavClick={handleNavClick} />
-            )}
-            {filteredAssessments.length > 0 && (
-              <NavSection title="Assessments" items={filteredAssessments} badge="Earn Points" currentPath={location.pathname} onNavClick={handleNavClick} />
-            )}
-            {filteredSpiritualPractices.length > 0 && (
-              <NavSection title="Spiritual Practices" items={filteredSpiritualPractices} currentPath={location.pathname} onNavClick={handleNavClick} />
-            )}
-            {filteredCommunity.length > 0 && (
-              <NavSection title="Greek Community" items={filteredCommunity} currentPath={location.pathname} onNavClick={handleNavClick} />
-            )}
-            {filteredAboutDrLyman.length > 0 && (
-              <NavSection title="About Dr. Lyman" items={filteredAboutDrLyman} currentPath={location.pathname} onNavClick={handleNavClick} />
-            )}
-            {filteredPodcast.length > 0 && (
-              <NavSection title="Podcast" items={filteredPodcast} currentPath={location.pathname} onNavClick={handleNavClick} />
-            )}
-            {filteredResources.length > 0 && (
-              <NavSection title="Resources" items={filteredResources} currentPath={location.pathname} onNavClick={handleNavClick} />
-            )}
-            {filteredPresent.length > 0 && (
-              <NavSection title="Present" items={filteredPresent} currentPath={location.pathname} onNavClick={handleNavClick} />
-            )}
-            {filteredSystem.length > 0 && (
-              <NavSection title="System" items={filteredSystem} currentPath={location.pathname} onNavClick={handleNavClick} />
-            )}
+            {/* Pinned items — always visible, no collapse */}
+            <div className="space-y-1">
+              {pinnedItems.map(item => (
+                <NavLink
+                  key={item.url}
+                  to={item.url}
+                  onClick={handleNavClick}
+                  className={cn(
+                    "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors",
+                    location.pathname === item.url
+                      ? "bg-sacred/10 text-sacred font-medium"
+                      : "hover:bg-muted"
+                  )}
+                >
+                  <item.icon className={cn("h-5 w-5 shrink-0", item.iconColor)} />
+                  <span>{item.title}</span>
+                </NavLink>
+              ))}
+            </div>
+
+            {/* Collapsible sections */}
+            {SECTIONS.map(section => {
+              const filtered = filterNavItems(section.items);
+              if (filtered.length === 0) return null;
+              return (
+                <NavSection
+                  key={section.key}
+                  title={section.label}
+                  items={filtered}
+                  badge={section.badge}
+                  currentPath={location.pathname}
+                  onNavClick={handleNavClick}
+                />
+              );
+            })}
           </div>
         </ScrollArea>
 
