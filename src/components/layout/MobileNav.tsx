@@ -70,9 +70,7 @@ const learnItems = [
   { title: "Saints or Sellouts?", url: "/saints-or-sellouts", icon: Crown, featureId: null, iconColor: "text-orange-500" },
   { title: "Hidden in Plain Sight", url: "/hidden-in-plain-sight", icon: Landmark, featureId: null, iconColor: "text-rose-500" },
   { title: "Sacred Money Course", url: "/sacred-money-course", icon: DollarSign, featureId: null, iconColor: "text-emerald-500" },
-  { title: "Faith Snapshot", url: "/snapshot", icon: Sparkles, featureId: null, iconColor: "text-blue-500" },
-  { title: "PROOF Quiz", url: "/proof-assessment", icon: ClipboardCheck, featureId: null, iconColor: "text-emerald-500" },
-  { title: "Shattered Masks", url: "/shattered-masks", icon: Drama, featureId: null, iconColor: "text-purple-500" },
+  { title: "Assessments", url: "/assessments", icon: ClipboardCheck, featureId: null, iconColor: "text-blue-500" },
 ];
 
 // ─── PRACTICE ───
