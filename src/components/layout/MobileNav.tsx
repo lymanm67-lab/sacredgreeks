@@ -83,8 +83,7 @@ const moreItems = [
   { title: "Settings", url: "/profile", icon: Settings, featureId: null, iconColor: "text-slate-500" },
 ];
 
-const SECTIONS: { key: string; label: string; items: typeof learnItems; badge?: string }[] = [
-  { key: "learn", label: "Learn", items: learnItems, badge: "Courses" },
+const SECTIONS: { key: string; label: string; items: typeof practiceItems; badge?: string }[] = [
   { key: "practice", label: "Practice", items: practiceItems },
   { key: "connect", label: "Connect", items: connectItems },
   { key: "more", label: "More", items: moreItems },

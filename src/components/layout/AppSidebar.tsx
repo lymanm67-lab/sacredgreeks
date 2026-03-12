@@ -99,8 +99,7 @@ const moreItems = [
 ];
 
 // Section definitions for DRY rendering
-const SECTIONS: { key: string; label: string; items: typeof learnItems; badge?: string; icon: React.ComponentType<{ className?: string }>; iconColor: string }[] = [
-  { key: "learn", label: "Learn", items: learnItems, badge: "Courses", icon: GraduationCap, iconColor: "text-amber-500" },
+const SECTIONS: { key: string; label: string; items: typeof practiceItems; badge?: string; icon: React.ComponentType<{ className?: string }>; iconColor: string }[] = [
   { key: "practice", label: "Practice", items: practiceItems, icon: BookHeart, iconColor: "text-cyan-500" },
   { key: "connect", label: "Connect", items: connectItems, icon: Users, iconColor: "text-pink-500" },
   { key: "more", label: "More", items: moreItems, icon: Compass, iconColor: "text-slate-400" },
