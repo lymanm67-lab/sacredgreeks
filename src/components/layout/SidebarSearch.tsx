@@ -74,10 +74,7 @@ const navigationItems = [
   { title: "Prayer Journal", url: "/prayer-journal", icon: BookHeart, keywords: ["prayers", "personal", "journal"] },
   { title: "Prayer Wall", url: "/prayer-wall", icon: HandHeart, keywords: ["community", "requests", "prayer"] },
   // Connect
-  { title: "Forum", url: "/forum", icon: MessageSquare, keywords: ["discussions", "community", "chat"] },
-  { title: "Sacred Connections", url: "/contacts", icon: QrCode, keywords: ["contacts", "qr", "connect"] },
-  { title: "Events Calendar", url: "/events", icon: CalendarDays, keywords: ["events", "conference", "gathering"] },
-  { title: "Chapter Finder", url: "/chapters", icon: MapPin, keywords: ["chapters", "find", "school", "university"] },
+  { title: "Sacred Connections", url: "/contacts", icon: QrCode, keywords: ["contacts", "qr", "connect", "forum", "events", "chapters"] },
   { title: "Member Network", url: "/network", icon: UserPlus, keywords: ["network", "members", "community"] },
   { title: "Business Directory", url: "/business-directory", icon: Briefcase, keywords: ["business", "d9", "entrepreneur"] },
   { title: "Mentorship", url: "/coaching-application", icon: Users, keywords: ["mentor", "coaching", "application"] },

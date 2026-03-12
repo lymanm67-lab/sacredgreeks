@@ -92,10 +92,7 @@ const practiceItems = [
 
 // ─── CONNECT: Community & networking ───
 const connectItems = [
-  { title: "Forum", url: "/forum", icon: MessageSquare, featureId: null, iconColor: "text-cyan-500" },
   { title: "Sacred Connections", url: "/contacts", icon: QrCode, featureId: null, iconColor: "text-sacred" },
-  { title: "Events Calendar", url: "/events", icon: CalendarDays, featureId: null, iconColor: "text-purple-500" },
-  { title: "Chapter Finder", url: "/chapters", icon: MapPin, featureId: null, iconColor: "text-blue-500" },
   { title: "Member Network", url: "/network", icon: UserPlus, featureId: null, iconColor: "text-pink-500" },
   { title: "Business Directory", url: "/business-directory", icon: Briefcase, featureId: null, iconColor: "text-emerald-500" },
   { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null, iconColor: "text-indigo-500" },
