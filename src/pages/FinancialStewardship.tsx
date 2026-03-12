@@ -43,6 +43,7 @@ import { FinancialOverviewTTS } from "@/components/financial/FinancialOverviewTT
 import { BuildingWealthSection } from "@/components/financial/BuildingWealthSection";
 import { DebtStrategiesCalculator } from "@/components/financial/DebtStrategiesCalculator";
 import { PrismBudgetPromo } from "@/components/financial/PrismBudgetPromo";
+import { SacredCapital } from "@/components/financial/SacredCapital";
 import { Link } from "react-router-dom";
 
 interface BudgetResults {
@@ -58,6 +59,7 @@ interface BudgetResults {
 
 const FinancialStewardship = () => {
   const [income, setIncome] = useState<string>("");
+  const [activeTab, setActiveTab] = useState("foundation");
   const [budgetResults, setBudgetResults] = useState<BudgetResults | null>(null);
 
   // Zero-based budget percentages (must equal 100%)
@@ -167,7 +169,7 @@ const FinancialStewardship = () => {
         </div>
 
         {/* Main Tabs */}
-        <Tabs defaultValue="foundation" className="space-y-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="flex flex-wrap justify-start gap-2 h-auto bg-transparent">
             <TabsTrigger value="foundation" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <BookOpen className="w-4 h-4" />
@@ -212,6 +214,11 @@ const FinancialStewardship = () => {
             <TabsTrigger value="wealth" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <TrendingUp className="w-4 h-4" />
               Wealth Building
+            </TabsTrigger>
+            <TabsTrigger value="capital" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <Landmark className="w-4 h-4" />
+              Sacred Capital
+              <Badge className="ml-1 text-[10px] bg-amber-500/20 text-amber-400 border-0">New</Badge>
             </TabsTrigger>
           </TabsList>
 
@@ -635,6 +642,11 @@ const FinancialStewardship = () => {
           <TabsContent value="wealth" className="space-y-6">
             <BuildingWealthSection />
             <PrismBudgetPromo variant="wealth" />
+          </TabsContent>
+
+          {/* Sacred Capital Tab */}
+          <TabsContent value="capital" className="space-y-6">
+            <SacredCapital onNavigateTab={setActiveTab} />
           </TabsContent>
         </Tabs>
       </div>
