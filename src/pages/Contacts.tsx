@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, User, Scan, CreditCard, LogIn, Users, MessageSquare, CalendarDays, MapPin } from 'lucide-react';
+import { ArrowLeft, User, Scan, CreditCard, LogIn, Users, MessageSquare, CalendarDays, MapPin, Briefcase } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { MyDigitalCard } from '@/components/contacts/MyDigitalCard';
 import { ContactScanner } from '@/components/contacts/ContactScanner';
@@ -16,6 +16,7 @@ import { lazy, Suspense } from 'react';
 const Forum = lazy(() => import('@/pages/Forum'));
 const EventsCalendar = lazy(() => import('@/pages/EventsCalendar'));
 const ChapterFinder = lazy(() => import('@/pages/ChapterFinder'));
+const D9BusinessDirectory = lazy(() => import('@/pages/D9BusinessDirectory'));
 
 const TABS = [
   { value: 'my-card', label: 'My Card', icon: User },
@@ -23,6 +24,7 @@ const TABS = [
   { value: 'forum', label: 'Forum', icon: MessageSquare },
   { value: 'events', label: 'Events', icon: CalendarDays },
   { value: 'chapters', label: 'Chapters', icon: MapPin },
+  { value: 'directory', label: 'Directory', icon: Briefcase },
   { value: 'scan-qr', label: 'Scan QR', icon: Scan },
   { value: 'scan-card', label: 'Scan Card', icon: CreditCard },
 ] as const;
@@ -74,7 +76,7 @@ export default function Contacts() {
   };
 
   // Full-width tabs (forum, events, chapters) vs contained tabs
-  const isFullWidth = ['forum', 'events', 'chapters'].includes(activeTab);
+  const isFullWidth = ['forum', 'events', 'chapters', 'directory'].includes(activeTab);
 
   return (
     <div className="min-h-screen bg-background p-4">
@@ -148,6 +150,12 @@ export default function Contacts() {
           <TabsContent value="chapters" className="mt-6">
             <Suspense fallback={<div className="text-center py-12 text-muted-foreground">Loading Chapters...</div>}>
               <ChapterFinder />
+            </Suspense>
+          </TabsContent>
+
+          <TabsContent value="directory" className="mt-6">
+            <Suspense fallback={<div className="text-center py-12 text-muted-foreground">Loading Directory...</div>}>
+              <D9BusinessDirectory />
             </Suspense>
           </TabsContent>
 
