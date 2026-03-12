@@ -398,7 +398,7 @@ const FinancialStewardship = () => {
           <span className="text-sm text-muted-foreground hidden sm:block">
             Step {currentStep} of {JOURNEY_STEPS.length}: <strong>{JOURNEY_STEPS[currentStep - 1].label}</strong>
           </span>
-          {currentStep < 6 ? (
+          {currentStep < 7 ? (
             <Button onClick={goNext}>
               Next: {JOURNEY_STEPS[currentStep].label}
               <ArrowRight className="w-4 h-4 ml-2" />
