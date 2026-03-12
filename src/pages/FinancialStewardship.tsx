@@ -643,6 +643,11 @@ const FinancialStewardship = () => {
             <BuildingWealthSection />
             <PrismBudgetPromo variant="wealth" />
           </TabsContent>
+
+          {/* Sacred Capital Tab */}
+          <TabsContent value="capital" className="space-y-6">
+            <SacredCapital onNavigateTab={setActiveTab} />
+          </TabsContent>
         </Tabs>
       </div>
     </div>
