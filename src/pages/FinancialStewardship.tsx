@@ -350,8 +350,29 @@ const FinancialStewardship = () => {
               </div>
             )}
 
-            {/* ══════════ STEP 6: Tools & Resources ══════════ */}
+            {/* ══════════ STEP 6: Chapter Finance ══════════ */}
             {currentStep === 6 && (
+              <div className="space-y-6">
+                <Card className="bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border-teal-500/20">
+                  <CardContent className="pt-6 text-center">
+                    <Landmark className="w-10 h-10 mx-auto mb-3 text-teal-500" />
+                    <h3 className="text-lg font-bold mb-1">Chapter Finance Hub</h3>
+                    <p className="text-sm text-muted-foreground max-w-md mx-auto mb-4">
+                      Treasurer tools for tracking expenses, managing budgets, and handling reimbursements for your chapter.
+                    </p>
+                    <Link to="/chapter-finance">
+                      <Button>
+                        Open Chapter Finance
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+
+            {/* ══════════ STEP 7: Tools & Resources ══════════ */}
+            {currentStep === 7 && (
               <div className="space-y-6">
                 <Card className="bg-gradient-to-r from-emerald-500/10 to-primary/10 border-primary/20">
                   <CardContent className="pt-6 text-center">
