@@ -77,7 +77,7 @@ export default function Contacts() {
   };
 
   // Full-width tabs (forum, events, chapters) vs contained tabs
-  const isFullWidth = ['forum', 'events', 'chapters', 'directory', 'parents', 'church'].includes(activeTab);
+  const isFullWidth = ['forum', 'events', 'chapters', 'directory', 'parents'].includes(activeTab);
 
   return (
     <div className="min-h-screen bg-background p-4">
