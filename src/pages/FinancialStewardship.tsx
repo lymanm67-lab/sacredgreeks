@@ -169,7 +169,7 @@ const FinancialStewardship = () => {
         </div>
 
         {/* Main Tabs */}
-        <Tabs defaultValue="foundation" className="space-y-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="flex flex-wrap justify-start gap-2 h-auto bg-transparent">
             <TabsTrigger value="foundation" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <BookOpen className="w-4 h-4" />
