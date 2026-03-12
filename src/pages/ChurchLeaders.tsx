@@ -246,6 +246,13 @@ const guideResources = [
     link: "/the-book"
   },
   {
+    title: "Symbol Guide",
+    description: "Explore Greek letters, symbols, and their historical and spiritual meanings.",
+    action: "Explore Symbols",
+    icon: Briefcase,
+    link: "/symbol-guide"
+  },
+  {
     title: "Practical Frameworks & Checklists",
     description: "Guidance on how to sensitively and effectively address common questions and concerns.",
     action: "Download Resources",
