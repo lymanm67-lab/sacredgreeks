@@ -295,25 +295,12 @@ export default function ToolsHub() {
         </div>
       </div>
 
-      {/* Tools grid — 2x2 balanced */}
-      <div className="max-w-5xl mx-auto px-4 py-10">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="show"
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
-        >
-          {tools.map((tool, i) => (
-            <ToolCard key={tool.path} tool={tool} index={i} />
-          ))}
-        </motion.div>
-
-        {/* How to get the most out of your toolkit */}
+      {/* How to get the most out of your toolkit */}
+      <div className="max-w-5xl mx-auto px-4 pt-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-          className="mt-14"
+          transition={{ delay: 0.3 }}
         >
           <Card className="border-border/50 bg-gradient-to-br from-muted/30 to-muted/10 overflow-hidden relative">
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_hsl(var(--primary)/0.05),transparent)] pointer-events-none" />
@@ -372,6 +359,20 @@ export default function ToolsHub() {
               </div>
             </CardContent>
           </Card>
+        </motion.div>
+      </div>
+
+      {/* Tools grid — 2x2 balanced */}
+      <div className="max-w-5xl mx-auto px-4 py-10">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
+          {tools.map((tool, i) => (
+            <ToolCard key={tool.path} tool={tool} index={i} />
+          ))}
         </motion.div>
       </div>
     </div>
