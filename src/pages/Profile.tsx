@@ -348,6 +348,27 @@ const Profile = () => {
 
           <SocialMediaConnect />
 
+          <Card id="changelog">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <FileText className="h-5 w-5 text-sky-500" />
+                Changelog
+              </CardTitle>
+              <CardDescription>
+                See what's new and what's changed in Sacred Greeks
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Link to="/changelog">
+                <Button variant="outline" className="gap-2">
+                  <FileText className="h-4 w-4" />
+                  View Changelog
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+
+
           <Card id="account">
             <CardHeader>
               <CardTitle>Password Reset</CardTitle>
