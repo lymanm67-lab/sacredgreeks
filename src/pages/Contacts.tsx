@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, User, Scan, CreditCard, LogIn, Users, MessageSquare, CalendarDays, MapPin } from 'lucide-react';
+import { ArrowLeft, User, Scan, CreditCard, LogIn, Users, MessageSquare, CalendarDays, MapPin, Briefcase } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { MyDigitalCard } from '@/components/contacts/MyDigitalCard';
 import { ContactScanner } from '@/components/contacts/ContactScanner';
