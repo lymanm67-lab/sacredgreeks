@@ -219,7 +219,11 @@ const FinancialStewardship = () => {
             <TabsTrigger value="capital" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Landmark className="w-4 h-4" />
               Sacred Capital
-              <Badge className="ml-1 text-[10px] bg-amber-500/20 text-amber-400 border-0">New</Badge>
+            </TabsTrigger>
+            <TabsTrigger value="micro2" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <Target className="w-4 h-4" />
+              Micro2 Scanner
+              <Badge className="ml-1 text-[10px] bg-blue-500/20 text-blue-400 border-0">New</Badge>
             </TabsTrigger>
           </TabsList>
 
