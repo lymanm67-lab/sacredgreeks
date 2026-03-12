@@ -176,10 +176,6 @@ const FinancialStewardship = () => {
               <BookOpen className="w-4 h-4" />
               <span className="hidden sm:inline">Biblical</span> Foundation
             </TabsTrigger>
-            <TabsTrigger value="credit" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <Shield className="w-4 h-4" />
-              Credit Repair
-            </TabsTrigger>
             <TabsTrigger value="students" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <GraduationCap className="w-4 h-4" />
               Students
