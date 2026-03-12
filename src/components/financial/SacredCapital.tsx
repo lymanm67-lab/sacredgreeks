@@ -238,6 +238,11 @@ export function SacredCapital({ onNavigateTab }: SacredCapitalProps) {
             <FileText className="w-3.5 h-3.5" />
             Credit Repair
           </TabsTrigger>
+          <TabsTrigger value="micro2" className="flex items-center gap-1.5 text-xs sm:text-sm">
+            <Target className="w-3.5 h-3.5" />
+            Micro2 Scanner
+            <Badge variant="secondary" className="ml-1 text-[10px] bg-blue-500/20 text-blue-400">New</Badge>
+          </TabsTrigger>
         </TabsList>
 
         {/* Credit Basics Overview */}
