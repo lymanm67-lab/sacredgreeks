@@ -36,7 +36,7 @@ import {
 import { FinancialScenarios } from "@/components/financial/FinancialScenarios";
 import { FinancialTools } from "@/components/financial/FinancialTools";
 import { FinancialExamples } from "@/components/financial/FinancialExamples";
-import { CreditRepairHub } from "@/components/financial/CreditRepairHub";
+
 import { StudentFinancialGuide } from "@/components/financial/StudentFinancialGuide";
 import { SISPCalculator } from "@/components/financial/SISPCalculator";
 import { FinancialOverviewTTS } from "@/components/financial/FinancialOverviewTTS";
@@ -176,10 +176,6 @@ const FinancialStewardship = () => {
               <BookOpen className="w-4 h-4" />
               <span className="hidden sm:inline">Biblical</span> Foundation
             </TabsTrigger>
-            <TabsTrigger value="credit" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <Shield className="w-4 h-4" />
-              Credit Repair
-            </TabsTrigger>
             <TabsTrigger value="students" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <GraduationCap className="w-4 h-4" />
               Students
@@ -283,10 +279,6 @@ const FinancialStewardship = () => {
             </Card>
           </TabsContent>
 
-          {/* Credit Repair Hub Tab */}
-          <TabsContent value="credit" className="space-y-6">
-            <CreditRepairHub />
-          </TabsContent>
 
           {/* Student Financial Guide Tab */}
           <TabsContent value="students" className="space-y-6">

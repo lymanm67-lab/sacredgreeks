@@ -10,8 +10,9 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { 
   Shield, GraduationCap, Landmark, TrendingUp, CreditCard, 
   CheckCircle2, AlertTriangle, Target, BookOpen, Users,
-  ArrowRight, Star, Lightbulb, DollarSign, Heart
+  ArrowRight, Star, Lightbulb, DollarSign, Heart, FileText
 } from 'lucide-react';
+import { CreditRepairHub } from './CreditRepairHub';
 
 // Credit Score Ranges
 const creditRanges = [
@@ -125,13 +126,6 @@ const campaignPhases = [
 // Quick Links to existing tools
 const quickLinks = [
   {
-    title: 'Credit Repair Hub',
-    description: 'Dispute letters, bureau links & FCRA guides',
-    tab: 'credit',
-    icon: Shield,
-    color: 'text-blue-500',
-  },
-  {
     title: 'Student Financial Defense',
     description: 'Avoid predatory lending & debt traps',
     tab: 'students',
@@ -238,7 +232,10 @@ export function SacredCapital({ onNavigateTab }: SacredCapitalProps) {
           <TabsTrigger value="church" className="flex items-center gap-1.5 text-xs sm:text-sm">
             <Landmark className="w-3.5 h-3.5" />
             Church Capital
-            <Badge variant="secondary" className="ml-1 text-[10px] bg-amber-500/20 text-amber-400">New</Badge>
+          </TabsTrigger>
+          <TabsTrigger value="repair" className="flex items-center gap-1.5 text-xs sm:text-sm">
+            <FileText className="w-3.5 h-3.5" />
+            Credit Repair
           </TabsTrigger>
         </TabsList>
 
@@ -517,6 +514,11 @@ export function SacredCapital({ onNavigateTab }: SacredCapitalProps) {
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        {/* Credit Repair Hub (consolidated) */}
+        <TabsContent value="repair" className="space-y-6 mt-4">
+          <CreditRepairHub />
         </TabsContent>
       </Tabs>
     </div>
