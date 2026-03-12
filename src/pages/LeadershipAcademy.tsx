@@ -408,6 +408,12 @@ function TrackCard({ track, progress, index }: { track: AcademyTrack; progress: 
           exit={{ opacity: 0, height: 0 }}
           className="mt-2 rounded-xl border border-border/50 bg-card/95 backdrop-blur-sm overflow-hidden shadow-lg"
         >
+          <div className="flex items-center justify-between px-3 pt-2 pb-1">
+            <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Quick Jump</span>
+            <button onClick={toggleDropdown} className="p-1 rounded-md hover:bg-muted/60 text-muted-foreground hover:text-foreground transition-colors">
+              <ChevronDown className="w-3.5 h-3.5 rotate-180" />
+            </button>
+          </div>
           <div className="p-2 grid grid-cols-2 gap-1">
             {track.quickLinks.map((link) => (
               <button
