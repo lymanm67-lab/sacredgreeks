@@ -51,6 +51,7 @@ interface AcademyTrack {
   tag?: string;
   step: number;
   isToolkit?: boolean;
+  quickLinks?: { label: string; step: number }[];
 }
 
 // ─── Category definitions with logical learning flow ───
