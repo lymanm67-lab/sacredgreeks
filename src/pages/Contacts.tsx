@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, User, Scan, CreditCard, LogIn, Users, MessageSquare, CalendarDays, MapPin, Briefcase } from 'lucide-react';
+import { ArrowLeft, User, Scan, CreditCard, LogIn, Users, MessageSquare, CalendarDays, MapPin, Briefcase, Heart, Cross } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { MyDigitalCard } from '@/components/contacts/MyDigitalCard';
 import { ContactScanner } from '@/components/contacts/ContactScanner';
@@ -17,6 +17,8 @@ const Forum = lazy(() => import('@/pages/Forum'));
 const EventsCalendar = lazy(() => import('@/pages/EventsCalendar'));
 const ChapterFinder = lazy(() => import('@/pages/ChapterFinder'));
 const D9BusinessDirectory = lazy(() => import('@/pages/D9BusinessDirectory'));
+const ParentsFamily = lazy(() => import('@/pages/ParentsFamily'));
+const ChurchLeaders = lazy(() => import('@/pages/ChurchLeaders'));
 
 const TABS = [
   { value: 'my-card', label: 'My Card', icon: User },
