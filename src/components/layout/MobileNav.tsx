@@ -98,7 +98,6 @@ const SECTIONS: { key: string; label: string; items: typeof learnItems; badge?: 
   { key: "learn", label: "Learn", items: learnItems, badge: "Courses & Quizzes" },
   { key: "practice", label: "Practice", items: practiceItems },
   { key: "connect", label: "Connect", items: connectItems },
-  { key: "tools", label: "Tools", items: toolsItems },
   { key: "more", label: "More", items: moreItems },
 ];
 
