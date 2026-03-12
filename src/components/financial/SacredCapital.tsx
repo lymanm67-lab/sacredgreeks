@@ -10,8 +10,9 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { 
   Shield, GraduationCap, Landmark, TrendingUp, CreditCard, 
   CheckCircle2, AlertTriangle, Target, BookOpen, Users,
-  ArrowRight, Star, Lightbulb, DollarSign, Heart
+  ArrowRight, Star, Lightbulb, DollarSign, Heart, FileText
 } from 'lucide-react';
+import { CreditRepairHub } from './CreditRepairHub';
 
 // Credit Score Ranges
 const creditRanges = [
