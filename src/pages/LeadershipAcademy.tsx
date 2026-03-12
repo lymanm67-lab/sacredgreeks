@@ -312,7 +312,7 @@ function TrackCard({ track, progress, index }: { track: AcademyTrack; progress: 
         whileHover={{ y: -6, scale: 1.02 }}
         whileTap={{ scale: 0.97 }}
       >
-        <Card className={`h-full border-border/40 ${track.borderColor} transition-all duration-300 hover:shadow-xl group overflow-hidden relative`}>
+        <Card className={`h-full border-border/40 ${track.borderColor} transition-all duration-300 hover:shadow-xl group overflow-hidden relative ${track.isToolkit ? "border-dashed border-2" : ""}`}>
           <div className={`absolute inset-0 bg-gradient-to-br ${track.gradient} opacity-60 group-hover:opacity-100 transition-opacity`} />
 
           <CardContent className="p-5 relative">
@@ -332,20 +332,31 @@ function TrackCard({ track, progress, index }: { track: AcademyTrack; progress: 
                 <div className="flex items-center gap-2 mb-1.5">
                   <h3 className="font-bold text-sm text-foreground truncate">{track.title}</h3>
                   {track.tag && (
-                    <Badge variant="secondary" className="text-[10px] px-1.5 py-0 shrink-0 bg-amber-500/15 text-amber-600 border-amber-500/20 animate-pulse">
+                    <Badge variant="secondary" className={`text-[10px] px-1.5 py-0 shrink-0 ${track.isToolkit ? "bg-teal-500/15 text-teal-400 border-teal-500/20" : "bg-amber-500/15 text-amber-600 border-amber-500/20 animate-pulse"}`}>
                       {track.tag}
                     </Badge>
                   )}
                   {isComplete && <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />}
                 </div>
                 <p className="text-xs text-muted-foreground line-clamp-2 mb-3">{track.description}</p>
-                <div className="space-y-1.5">
-                  <div className="flex justify-between text-[11px]">
-                    <span className="text-muted-foreground">{completedModules}/{track.modules} modules</span>
-                    <span className={isStarted ? "text-foreground font-semibold" : "text-muted-foreground"}>{progress}%</span>
+
+                {track.isToolkit ? (
+                  <div className="flex items-center gap-2 text-[11px]">
+                    <div className="flex items-center gap-1 px-2 py-1 rounded-md bg-teal-500/10 text-teal-400 border border-teal-500/20">
+                      <Wrench className="w-3 h-3" />
+                      <span className="font-medium">{track.modules} tools</span>
+                    </div>
+                    <span className="text-muted-foreground">Interactive toolkit</span>
                   </div>
-                  <Progress value={progress} className="h-2" />
-                </div>
+                ) : (
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between text-[11px]">
+                      <span className="text-muted-foreground">{completedModules}/{track.modules} modules</span>
+                      <span className={isStarted ? "text-foreground font-semibold" : "text-muted-foreground"}>{progress}%</span>
+                    </div>
+                    <Progress value={progress} className="h-2" />
+                  </div>
+                )}
               </div>
 
               <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 transition-all shrink-0 mt-1" />
