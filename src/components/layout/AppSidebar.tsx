@@ -106,7 +106,6 @@ const SECTIONS: { key: string; label: string; items: typeof assessItems; badge?:
   { key: "assess", label: "Assess", items: assessItems, badge: "Quizzes" },
   { key: "practice", label: "Practice", items: practiceItems },
   { key: "connect", label: "Connect", items: connectItems },
-  { key: "tools", label: "Tools", items: toolsItems },
   { key: "more", label: "More", items: moreItems },
 ];
 

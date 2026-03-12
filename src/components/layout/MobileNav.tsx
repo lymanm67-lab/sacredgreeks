@@ -84,12 +84,8 @@ const connectItems = [
   { title: "Sacred Connections", url: "/contacts", icon: QrCode, featureId: null, iconColor: "text-sacred" },
   { title: "Member Network", url: "/network", icon: UserPlus, featureId: null, iconColor: "text-pink-500" },
   { title: "Church Leaders", url: "/church-leaders", icon: Users, featureId: null, iconColor: "text-lime-500" },
-  { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null, iconColor: "text-indigo-500" },
-];
-
-// ─── TOOLS ───
-const toolsItems = [
   { title: "Toolkit", url: "/tools", icon: Bot, featureId: null, iconColor: "text-primary" },
+  { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null, iconColor: "text-indigo-500" },
 ];
 
 // ─── MORE ───
