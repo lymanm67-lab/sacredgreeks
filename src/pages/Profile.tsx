@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Home, User, Users, RotateCcw, Bell, Settings, Palette } from 'lucide-react';
+import { Home, User, Users, RotateCcw, Bell, Settings, Palette, FileText } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
 import { NotificationSettings } from '@/components/NotificationSettings';
@@ -347,6 +347,27 @@ const Profile = () => {
           </Card>
 
           <SocialMediaConnect />
+
+          <Card id="changelog">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <FileText className="h-5 w-5 text-sky-500" />
+                Changelog
+              </CardTitle>
+              <CardDescription>
+                See what's new and what's changed in Sacred Greeks
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Link to="/changelog">
+                <Button variant="outline" className="gap-2">
+                  <FileText className="h-4 w-4" />
+                  View Changelog
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+
 
           <Card id="account">
             <CardHeader>

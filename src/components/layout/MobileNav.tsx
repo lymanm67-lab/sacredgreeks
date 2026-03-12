@@ -98,8 +98,6 @@ const toolsItems = [
 // ─── MORE ───
 const moreItems = [
   { title: "Dr. Lyman", url: "/dr-lyman", icon: User, featureId: null, iconColor: "text-sacred" },
-  { title: "Notifications", url: "/notification-preferences", icon: Bell, featureId: null, iconColor: "text-fuchsia-500" },
-  { title: "Changelog", url: "/changelog", icon: FileText, featureId: null, iconColor: "text-sky-500" },
   { title: "Settings", url: "/profile", icon: Settings, featureId: null, iconColor: "text-slate-500" },
 ];
 
