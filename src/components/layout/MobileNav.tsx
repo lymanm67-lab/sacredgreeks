@@ -97,14 +97,7 @@ const toolsItems = [
 
 // ─── MORE ───
 const moreItems = [
-  { title: "About Dr. Lyman", url: "/about-creator", icon: User, featureId: null, iconColor: "text-sacred" },
-  { title: "Order Book", url: "/order-book", icon: ShoppingBag, featureId: null, iconColor: "text-amber-500" },
-  { title: "Book Dr. Lyman", url: "/speaking-request", icon: Calendar, featureId: null, iconColor: "text-fuchsia-500" },
-  { title: "Podcast", url: "/podcast", icon: Headphones, featureId: null, iconColor: "text-purple-500" },
-  { title: "Be on Podcast", url: "/guest-panelist-application", icon: Mic, featureId: null, iconColor: "text-purple-500" },
-  { title: "Parents & Family", url: "/parents-family", icon: Heart, featureId: null, iconColor: "text-rose-500" },
-  { title: "Church Leaders", url: "/church-leaders", icon: Users, featureId: null, iconColor: "text-lime-500" },
-  { title: "Achievements", url: "/achievements", icon: Trophy, featureId: null, iconColor: "text-amber-400" },
+  { title: "Dr. Lyman", url: "/dr-lyman", icon: User, featureId: null, iconColor: "text-sacred" },
   { title: "Notifications", url: "/notification-preferences", icon: Bell, featureId: null, iconColor: "text-fuchsia-500" },
   { title: "Changelog", url: "/changelog", icon: FileText, featureId: null, iconColor: "text-sky-500" },
   { title: "Settings", url: "/profile", icon: Settings, featureId: null, iconColor: "text-slate-500" },

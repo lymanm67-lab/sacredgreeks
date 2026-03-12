@@ -78,12 +78,7 @@ const navigationItems = [
   // Tools
   { title: "Toolkit", url: "/tools", icon: Bot, keywords: ["tools", "ai", "finance", "chaplain", "present", "worship", "video", "symbol"] },
   // More
-  { title: "About Dr. Lyman", url: "/about-creator", icon: User, keywords: ["dr lyman", "author", "founder"] },
-  { title: "Order Book", url: "/order-book", icon: ShoppingBag, keywords: ["sacred not sinful", "purchase", "amazon"] },
-  { title: "Book Dr. Lyman", url: "/speaking-request", icon: Calendar, keywords: ["speak", "invite", "event"] },
-  { title: "Podcast", url: "/podcast", icon: Headphones, keywords: ["audio", "listen", "episodes"] },
-  { title: "Be on Podcast", url: "/guest-panelist-application", icon: Mic, keywords: ["apply", "speaker", "guest"] },
-  { title: "Achievements", url: "/achievements", icon: Trophy, keywords: ["badges", "rewards", "points"] },
+  { title: "Dr. Lyman", url: "/dr-lyman", icon: User, keywords: ["dr lyman", "author", "founder", "book", "podcast", "speaking", "order"] },
   { title: "Settings", url: "/profile", icon: Settings, keywords: ["account", "settings", "personal"] },
   { title: "Notifications", url: "/notification-preferences", icon: Bell, keywords: ["alerts", "notifications"] },
   { title: "Changelog", url: "/changelog", icon: FileText, keywords: ["updates", "new", "changes"] },
