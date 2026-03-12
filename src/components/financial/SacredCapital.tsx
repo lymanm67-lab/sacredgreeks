@@ -13,6 +13,7 @@ import {
   ArrowRight, Star, Lightbulb, DollarSign, Heart, FileText
 } from 'lucide-react';
 import { CreditRepairHub } from './CreditRepairHub';
+import { Micro2Scanner } from './Micro2Scanner';
 
 // Credit Score Ranges
 const creditRanges = [
