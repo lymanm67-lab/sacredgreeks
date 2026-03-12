@@ -91,7 +91,7 @@ const SECTIONS: { key: string; label: string; items: typeof practiceItems; badge
 
 interface NavSectionProps {
   title: string;
-  items: typeof learnItems;
+  items: typeof practiceItems;
   badge?: string;
   defaultOpen?: boolean;
   currentPath: string;
