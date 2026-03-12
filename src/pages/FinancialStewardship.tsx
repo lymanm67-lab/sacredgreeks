@@ -215,6 +215,11 @@ const FinancialStewardship = () => {
               <TrendingUp className="w-4 h-4" />
               Wealth Building
             </TabsTrigger>
+            <TabsTrigger value="capital" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <Landmark className="w-4 h-4" />
+              Sacred Capital
+              <Badge className="ml-1 text-[10px] bg-amber-500/20 text-amber-400 border-0">New</Badge>
+            </TabsTrigger>
           </TabsList>
 
           {/* Biblical Foundation Tab */}
