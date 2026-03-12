@@ -7,6 +7,8 @@ const Dashboard = lazy(() => import("@/pages/Dashboard"));
 const Devotional = lazy(() => import("@/pages/Devotional"));
 const PrayerJournal = lazy(() => import("@/pages/PrayerJournal"));
 const PrayerWall = lazy(() => import("@/pages/PrayerWall"));
+const PrayerHub = lazy(() => import("@/pages/PrayerHub"));
+const DailyPracticeHub = lazy(() => import("@/pages/DailyPracticeHub"));
 const AssessmentHistory = lazy(() => import("@/pages/AssessmentHistory"));
 const Profile = lazy(() => import("@/pages/Profile"));
 const Bookmarks = lazy(() => import("@/pages/Bookmarks"));
