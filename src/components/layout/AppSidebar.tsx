@@ -247,6 +247,7 @@ export function AppSidebar() {
                 <CollapsibleTrigger className="w-full">
                   <SidebarGroupLabel className="flex items-center justify-between cursor-pointer hover:text-foreground transition-colors">
                     <span className="flex items-center gap-2">
+                      <section.icon className={cn("h-3.5 w-3.5", section.iconColor)} />
                       {section.label}
                       {section.badge && (
                         <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 bg-primary/10 text-primary">
