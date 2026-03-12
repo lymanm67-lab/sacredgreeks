@@ -87,9 +87,15 @@ const practiceItems = [
 const connectItems = [
   { title: "Sacred Connections", url: "/contacts", icon: QrCode, featureId: null, iconColor: "text-sacred" },
   { title: "Member Network", url: "/network", icon: UserPlus, featureId: null, iconColor: "text-pink-500" },
-  { title: "Church Leaders", url: "/church-leaders", icon: Users, featureId: null, iconColor: "text-lime-500" },
   { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null, iconColor: "text-indigo-500" },
   { title: "Toolkit", url: "/tools", icon: Bot, featureId: null, iconColor: "text-primary" },
+];
+
+// ─── CHURCH LEADERS: Outreach & pastor tools ───
+const churchItems = [
+  { title: "Church Leaders Hub", url: "/church-leaders", icon: Landmark, featureId: null, iconColor: "text-lime-500" },
+  { title: "Chaplain Toolkit", url: "/chaplain-toolkit", icon: Cross, featureId: null, iconColor: "text-sacred" },
+  { title: "Conversation Scripts", url: "/ai-workers", icon: MessageSquare, featureId: null, iconColor: "text-violet-500" },
 ];
 
 // ─── MORE: Slimmed down ───
@@ -102,6 +108,7 @@ const moreItems = [
 const SECTIONS: { key: string; label: string; items: typeof practiceItems; badge?: string; icon: React.ComponentType<{ className?: string }>; iconColor: string }[] = [
   { key: "practice", label: "Practice", items: practiceItems, icon: BookHeart, iconColor: "text-cyan-500" },
   { key: "connect", label: "Connect", items: connectItems, icon: Users, iconColor: "text-pink-500" },
+  { key: "church", label: "Church Leaders", items: churchItems, icon: Landmark, iconColor: "text-lime-500" },
   { key: "more", label: "More", items: moreItems, icon: Compass, iconColor: "text-slate-400" },
 ];
 
