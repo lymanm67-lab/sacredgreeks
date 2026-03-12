@@ -13,6 +13,7 @@ import {
   ArrowRight, Star, Lightbulb, DollarSign, Heart, FileText
 } from 'lucide-react';
 import { CreditRepairHub } from './CreditRepairHub';
+import { Micro2Scanner } from './Micro2Scanner';
 
 // Credit Score Ranges
 const creditRanges = [
@@ -236,6 +237,11 @@ export function SacredCapital({ onNavigateTab }: SacredCapitalProps) {
           <TabsTrigger value="repair" className="flex items-center gap-1.5 text-xs sm:text-sm">
             <FileText className="w-3.5 h-3.5" />
             Credit Repair
+          </TabsTrigger>
+          <TabsTrigger value="micro2" className="flex items-center gap-1.5 text-xs sm:text-sm">
+            <Target className="w-3.5 h-3.5" />
+            Micro2 Scanner
+            <Badge variant="secondary" className="ml-1 text-[10px] bg-blue-500/20 text-blue-400">New</Badge>
           </TabsTrigger>
         </TabsList>
 
@@ -519,6 +525,11 @@ export function SacredCapital({ onNavigateTab }: SacredCapitalProps) {
         {/* Credit Repair Hub (consolidated) */}
         <TabsContent value="repair" className="space-y-6 mt-4">
           <CreditRepairHub />
+        </TabsContent>
+
+        {/* Micro2 Scanner */}
+        <TabsContent value="micro2" className="space-y-6 mt-4">
+          <Micro2Scanner />
         </TabsContent>
       </Tabs>
     </div>

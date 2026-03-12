@@ -44,7 +44,7 @@ import { BuildingWealthSection } from "@/components/financial/BuildingWealthSect
 import { DebtStrategiesCalculator } from "@/components/financial/DebtStrategiesCalculator";
 import { PrismBudgetPromo } from "@/components/financial/PrismBudgetPromo";
 import { SacredCapital } from "@/components/financial/SacredCapital";
-import { Micro2Scanner } from "@/components/financial/Micro2Scanner";
+
 import { Link } from "react-router-dom";
 
 interface BudgetResults {
@@ -215,11 +215,6 @@ const FinancialStewardship = () => {
             <TabsTrigger value="capital" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Landmark className="w-4 h-4" />
               Sacred Capital
-            </TabsTrigger>
-            <TabsTrigger value="micro2" className="flex items-center gap-2 py-2 px-3 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <Target className="w-4 h-4" />
-              Micro2 Scanner
-              <Badge className="ml-1 text-[10px] bg-blue-500/20 text-blue-400 border-0">New</Badge>
             </TabsTrigger>
           </TabsList>
 
@@ -646,10 +641,6 @@ const FinancialStewardship = () => {
             <SacredCapital onNavigateTab={setActiveTab} />
           </TabsContent>
 
-          {/* Micro2 Scanner Tab */}
-          <TabsContent value="micro2" className="space-y-6">
-            <Micro2Scanner />
-          </TabsContent>
         </Tabs>
       </div>
     </div>
