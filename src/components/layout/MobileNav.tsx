@@ -83,9 +83,13 @@ const practiceItems = [
 const connectItems = [
   { title: "Sacred Connections", url: "/contacts", icon: QrCode, featureId: null, iconColor: "text-sacred" },
   { title: "Member Network", url: "/network", icon: UserPlus, featureId: null, iconColor: "text-pink-500" },
+  { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null, iconColor: "text-indigo-500" },
+];
+
+// ─── CHURCH LEADERS ───
+const churchItems = [
   { title: "Church Leaders", url: "/church-leaders", icon: Users, featureId: null, iconColor: "text-lime-500" },
   { title: "Toolkit", url: "/tools", icon: Bot, featureId: null, iconColor: "text-primary" },
-  { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null, iconColor: "text-indigo-500" },
 ];
 
 // ─── MORE ───
@@ -98,6 +102,7 @@ const SECTIONS: { key: string; label: string; items: typeof learnItems; badge?: 
   { key: "learn", label: "Learn", items: learnItems, badge: "Courses & Quizzes" },
   { key: "practice", label: "Practice", items: practiceItems },
   { key: "connect", label: "Connect", items: connectItems },
+  { key: "church", label: "Church Leaders", items: churchItems },
   { key: "more", label: "More", items: moreItems },
 ];
 
