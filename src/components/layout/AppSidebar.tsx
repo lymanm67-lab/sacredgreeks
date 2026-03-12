@@ -75,11 +75,9 @@ import {
 // ─── Top-level pinned items ───
 const academyItem = { title: "Sacred Leaders Academy", url: "/leadership-academy", icon: GraduationCap, featureId: null, iconColor: "text-sacred" };
 
-// ─── ASSESS: Quizzes & Assessments (courses now live in Academy) ───
+// ─── ASSESS: Single hub for all assessments ───
 const assessItems = [
-  { title: "Faith Snapshot", url: "/snapshot", icon: Sparkles, featureId: null, iconColor: "text-blue-500" },
-  { title: "PROOF Quiz", url: "/proof-assessment", icon: ClipboardCheck, featureId: null, iconColor: "text-emerald-500" },
-  { title: "Shattered Masks", url: "/shattered-masks", icon: Drama, featureId: null, iconColor: "text-purple-500" },
+  { title: "Assessments", url: "/assessments", icon: ClipboardCheck, featureId: null, iconColor: "text-blue-500" },
 ];
 
 // ─── PRACTICE: Daily spiritual habits ───
