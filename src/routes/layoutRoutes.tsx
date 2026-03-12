@@ -41,6 +41,7 @@ export const layoutRoutes = (
     <Route path="/oaths" element={<PageWithLayout><OathsGuide /></PageWithLayout>} />
     <Route path="/proof-course" element={<PageWithLayout><ProofCourse /></PageWithLayout>} />
     <Route path="/proof-assessment" element={<PageWithLayout><ProofAssessment /></PageWithLayout>} />
+    <Route path="/assessments" element={<PageWithLayout><AssessmentsHub /></PageWithLayout>} />
     <Route path="/church-leaders" element={<PageWithLayout><ChurchLeaders /></PageWithLayout>} />
     <Route path="/parents-family" element={<PageWithLayout><ParentsFamily /></PageWithLayout>} />
     <Route path="/faith-authority" element={<PageWithLayout><FaithAuthority /></PageWithLayout>} />

@@ -65,9 +65,7 @@ const navigationItems = [
   { title: "Saints or Sellouts?", url: "/saints-or-sellouts", icon: Crown, keywords: ["saints", "sellouts", "integration"] },
   { title: "Hidden in Plain Sight", url: "/hidden-in-plain-sight", icon: Landmark, keywords: ["hidden", "pagan", "origins"] },
   { title: "Sacred Money Course", url: "/sacred-money-course", icon: DollarSign, keywords: ["money", "financial", "course"] },
-  { title: "Faith Snapshot", url: "/snapshot", icon: Sparkles, keywords: ["quiz", "assessment", "snapshot"] },
-  { title: "PROOF Quiz", url: "/proof-assessment", icon: ClipboardCheck, keywords: ["quiz", "proof", "test"] },
-  { title: "Shattered Masks", url: "/shattered-masks", icon: Drama, keywords: ["masks", "assessment", "identity"] },
+  { title: "Assessments", url: "/assessments", icon: ClipboardCheck, keywords: ["quiz", "assessment", "snapshot", "proof", "masks", "test"] },
   // Practice
   { title: "30-Day Journey", url: "/journey", icon: Calendar, keywords: ["progress", "spiritual", "journey"] },
   { title: "Bible Study", url: "/bible-study", icon: Book, keywords: ["scripture", "word", "search"] },
