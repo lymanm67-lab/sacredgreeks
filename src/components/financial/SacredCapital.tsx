@@ -515,6 +515,11 @@ export function SacredCapital({ onNavigateTab }: SacredCapitalProps) {
             </CardContent>
           </Card>
         </TabsContent>
+
+        {/* Credit Repair Hub (consolidated) */}
+        <TabsContent value="repair" className="space-y-6 mt-4">
+          <CreditRepairHub />
+        </TabsContent>
       </Tabs>
     </div>
   );
