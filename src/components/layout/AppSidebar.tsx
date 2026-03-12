@@ -75,16 +75,8 @@ import {
 // ─── Top-level pinned items ───
 const academyItem = { title: "Sacred Leaders Academy", url: "/leadership-academy", icon: GraduationCap, featureId: null, iconColor: "text-sacred" };
 
-// ─── LEARN: Courses + Assessments (natural pathway: learn → test knowledge) ───
-const learnItems = [
-  { title: "PROOF Course", url: "/proof-course", icon: Target, featureId: null, iconColor: "text-amber-500" },
-  { title: "Greek Life & Guild", url: "/greek-life-training", icon: Building2, featureId: null, iconColor: "text-violet-500" },
-  { title: "Myth Busters", url: "/myth-buster", icon: Zap, featureId: null, iconColor: "text-yellow-500" },
-  { title: "Faith & Authority", url: "/faith-authority", icon: BookOpen, featureId: null, iconColor: "text-amber-500" },
-  { title: "Stay or Leave?", url: "/should-you-stay-or-leave", icon: Scale, featureId: null, iconColor: "text-teal-500" },
-  { title: "Saints or Sellouts?", url: "/saints-or-sellouts", icon: Crown, featureId: null, iconColor: "text-orange-500" },
-  { title: "Hidden in Plain Sight", url: "/hidden-in-plain-sight", icon: Landmark, featureId: null, iconColor: "text-rose-500" },
-  { title: "Sacred Money Course", url: "/sacred-money-course", icon: DollarSign, featureId: null, iconColor: "text-emerald-500" },
+// ─── ASSESS: Quizzes & Assessments (courses now live in Academy) ───
+const assessItems = [
   { title: "Faith Snapshot", url: "/snapshot", icon: Sparkles, featureId: null, iconColor: "text-blue-500" },
   { title: "PROOF Quiz", url: "/proof-assessment", icon: ClipboardCheck, featureId: null, iconColor: "text-emerald-500" },
   { title: "Shattered Masks", url: "/shattered-masks", icon: Drama, featureId: null, iconColor: "text-purple-500" },
@@ -137,8 +129,8 @@ const moreItems = [
 ];
 
 // Section definitions for DRY rendering
-const SECTIONS: { key: string; label: string; items: typeof learnItems; badge?: string }[] = [
-  { key: "learn", label: "Learn", items: learnItems, badge: "Courses & Quizzes" },
+const SECTIONS: { key: string; label: string; items: typeof assessItems; badge?: string }[] = [
+  { key: "assess", label: "Assess", items: assessItems, badge: "Quizzes" },
   { key: "practice", label: "Practice", items: practiceItems },
   { key: "connect", label: "Connect", items: connectItems },
   { key: "tools", label: "Tools", items: toolsItems },
@@ -170,7 +162,7 @@ export function AppSidebar() {
 
   const isActive = (path: string) => location.pathname === path;
 
-  const filterNavItems = (items: typeof learnItems) =>
+  const filterNavItems = (items: typeof assessItems) =>
     items.filter(item => !item.featureId || isFeatureVisible(item.featureId));
 
   const getInitials = () => {
