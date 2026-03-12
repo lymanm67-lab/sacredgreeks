@@ -25,6 +25,7 @@ import {
   Search,
   Coins,
   Compass,
+  Video,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -246,6 +247,18 @@ const categories: CourseCategory[] = [
         path: "/prayer-journal",
         progressKey: "/prayer-journal",
         modules: 10,
+        step: 0,
+      },
+      {
+        title: "Video Library",
+        description: "Essential training videos for Christian Greeks navigating faith and fraternity life",
+        icon: Video,
+        gradient: "from-amber-500/20 via-orange-500/10 to-transparent",
+        iconBg: "bg-gradient-to-br from-amber-500 to-orange-600",
+        borderColor: "hover:border-amber-500/40",
+        path: "/video-library",
+        progressKey: "/video-library",
+        modules: 0,
         step: 0,
       },
     ],
