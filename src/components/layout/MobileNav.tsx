@@ -151,7 +151,7 @@ export function MobileNav() {
   const { user, profile, signOut } = useAuth();
   const { isFeatureVisible } = useFeaturePreferences();
 
-  const filterNavItems = (items: typeof learnItems) =>
+  const filterNavItems = (items: typeof practiceItems) =>
     items.filter(item => !item.featureId || isFeatureVisible(item.featureId));
 
   const getInitials = () => {
