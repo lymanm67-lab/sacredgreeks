@@ -73,7 +73,7 @@ const navigationItems = [
   { title: "Prayer Wall", url: "/prayer-wall", icon: HandHeart, keywords: ["community", "requests", "prayer"] },
   // Connect
   { title: "Sacred Connections", url: "/contacts", icon: QrCode, keywords: ["contacts", "qr", "connect", "forum", "events", "chapters", "business", "directory"] },
-  { title: "Member Network", url: "/network", icon: UserPlus, keywords: ["network", "members", "community"] },
+  { title: "Member Network", url: "/network", icon: UserPlus, keywords: ["network", "members", "community", "parents", "family", "church", "leaders"] },
   { title: "Mentorship", url: "/coaching-application", icon: Users, keywords: ["mentor", "coaching", "application"] },
   // Tools
   { title: "Toolkit", url: "/tools", icon: Bot, keywords: ["tools", "ai", "finance", "chaplain", "present", "worship", "video", "symbol"] },
