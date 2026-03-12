@@ -74,10 +74,18 @@ import {
 
 // ─── Top-level pinned items ───
 const academyItem = { title: "Sacred Leaders Academy", url: "/leadership-academy", icon: GraduationCap, featureId: null, iconColor: "text-sacred" };
+const assessItem = { title: "Assessments", url: "/assessments", icon: ClipboardCheck, featureId: null, iconColor: "text-blue-500" };
 
-// ─── ASSESS: Single hub for all assessments ───
-const assessItems = [
-  { title: "Assessments", url: "/assessments", icon: ClipboardCheck, featureId: null, iconColor: "text-blue-500" },
+// ─── LEARN: Courses & training ───
+const learnItems = [
+  { title: "PROOF Course", url: "/proof-course", icon: Target, featureId: null, iconColor: "text-amber-500" },
+  { title: "Greek Life & Guild", url: "/greek-life-training", icon: Building2, featureId: null, iconColor: "text-violet-500" },
+  { title: "Myth Busters", url: "/myth-buster", icon: Zap, featureId: null, iconColor: "text-yellow-500" },
+  { title: "Faith & Authority", url: "/faith-authority", icon: BookOpen, featureId: null, iconColor: "text-amber-500" },
+  { title: "Stay or Leave?", url: "/should-you-stay-or-leave", icon: Scale, featureId: null, iconColor: "text-teal-500" },
+  { title: "Saints or Sellouts?", url: "/saints-or-sellouts", icon: Crown, featureId: null, iconColor: "text-orange-500" },
+  { title: "Hidden in Plain Sight", url: "/hidden-in-plain-sight", icon: Landmark, featureId: null, iconColor: "text-rose-500" },
+  { title: "Sacred Money Course", url: "/sacred-money-course", icon: DollarSign, featureId: null, iconColor: "text-emerald-500" },
 ];
 
 // ─── PRACTICE: Daily spiritual habits ───
@@ -90,12 +98,8 @@ const practiceItems = [
 const connectItems = [
   { title: "Sacred Connections", url: "/contacts", icon: QrCode, featureId: null, iconColor: "text-sacred" },
   { title: "Member Network", url: "/network", icon: UserPlus, featureId: null, iconColor: "text-pink-500" },
-  { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null, iconColor: "text-indigo-500" },
-];
-
-// ─── CHURCH LEADERS: Dedicated section ───
-const churchItems = [
   { title: "Church Leaders", url: "/church-leaders", icon: Users, featureId: null, iconColor: "text-lime-500" },
+  { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null, iconColor: "text-indigo-500" },
   { title: "Toolkit", url: "/tools", icon: Bot, featureId: null, iconColor: "text-primary" },
 ];
 
@@ -106,11 +110,10 @@ const moreItems = [
 ];
 
 // Section definitions for DRY rendering
-const SECTIONS: { key: string; label: string; items: typeof assessItems; badge?: string; icon: React.ComponentType<{ className?: string }>; iconColor: string }[] = [
-  { key: "assess", label: "Assess", items: assessItems, badge: "Quizzes", icon: ClipboardCheck, iconColor: "text-blue-500" },
+const SECTIONS: { key: string; label: string; items: typeof learnItems; badge?: string; icon: React.ComponentType<{ className?: string }>; iconColor: string }[] = [
+  { key: "learn", label: "Learn", items: learnItems, badge: "Courses", icon: GraduationCap, iconColor: "text-amber-500" },
   { key: "practice", label: "Practice", items: practiceItems, icon: BookHeart, iconColor: "text-cyan-500" },
   { key: "connect", label: "Connect", items: connectItems, icon: Users, iconColor: "text-pink-500" },
-  { key: "church", label: "Church Leaders", items: churchItems, icon: Landmark, iconColor: "text-lime-500" },
   { key: "more", label: "More", items: moreItems, icon: Compass, iconColor: "text-slate-400" },
 ];
 
@@ -139,7 +142,7 @@ export function AppSidebar() {
 
   const isActive = (path: string) => location.pathname === path;
 
-  const filterNavItems = (items: typeof assessItems) =>
+  const filterNavItems = (items: typeof learnItems) =>
     items.filter(item => !item.featureId || isFeatureVisible(item.featureId));
 
   const getInitials = () => {
@@ -221,12 +224,13 @@ export function AppSidebar() {
       <SidebarSeparator />
 
       <SidebarContent>
-        {/* Dashboard & Academy — always visible, no collapse */}
+        {/* Dashboard, Academy & Assessments — always visible, no collapse */}
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
               <NavItem item={{ title: "Dashboard", url: "/dashboard", icon: Home, iconColor: "text-blue-500" }} />
               <NavItem item={academyItem} />
+              <NavItem item={assessItem} />
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
