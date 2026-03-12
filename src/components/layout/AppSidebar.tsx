@@ -165,22 +165,24 @@ export function AppSidebar() {
           asChild
           isActive={isActive(item.url)}
           tooltip={collapsed ? item.title : undefined}
+          className="data-[active=true]:bg-transparent data-[active=true]:text-foreground hover:bg-muted/50"
         >
           <NavLink 
             to={item.url} 
             className={cn(
               "flex items-center gap-2 !items-start !justify-start !text-left transition-colors py-1.5 px-2 rounded-md w-full group",
-              isActive(item.url) && "text-primary font-medium"
+              isActive(item.url) && "font-medium"
             )}
           >
             <span className={cn(
               "flex items-center justify-center h-6 w-6 rounded-md shrink-0 transition-all",
               item.iconColor?.replace('text-', 'bg-').replace('500', '500/15'),
+              isActive(item.url) && item.iconColor?.replace('text-', 'bg-').replace('500', '500/25'),
               "group-hover:scale-110"
             )}>
-              <Icon className={cn("h-4 w-4", item.iconColor, "drop-shadow-sm")} />
+              <Icon className={cn("h-4 w-4 drop-shadow-sm", item.iconColor)} />
             </span>
-            <span className="truncate text-sm">{item.title}</span>
+            <span className={cn("truncate text-sm", isActive(item.url) ? "text-foreground" : "text-muted-foreground")}>{item.title}</span>
           </NavLink>
         </SidebarMenuButton>
       </SidebarMenuItem>
