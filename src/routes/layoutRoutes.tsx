@@ -64,5 +64,6 @@ export const layoutRoutes = (
     <Route path="/leadership-academy" element={<PageWithLayout><LeadershipAcademy /></PageWithLayout>} />
     <Route path="/mentor-dashboard" element={<PageWithLayout><MentorDashboard /></PageWithLayout>} />
     <Route path="/join-group" element={<PageWithLayout><JoinGroup /></PageWithLayout>} />
+    <Route path="/tools" element={<PageWithLayout><ToolsHub /></PageWithLayout>} />
   </>
 );

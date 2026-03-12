@@ -91,14 +91,7 @@ const connectItems = [
 
 // ─── TOOLS ───
 const toolsItems = [
-  { title: "PROOF Command Center", url: "/ai-workers", icon: Bot, featureId: null, iconColor: "text-primary" },
-  { title: "Financial Stewardship", url: "/financial-stewardship", icon: DollarSign, featureId: null, iconColor: "text-emerald-500" },
-  { title: "Chapter Finance", url: "/chapter-finance", icon: Landmark, featureId: null, iconColor: "text-teal-500" },
-  { title: "Chaplain Toolkit", url: "/chaplain-toolkit", icon: Cross, featureId: null, iconColor: "text-sacred" },
-  { title: "Present & Polls", url: "/present", icon: Presentation, featureId: null, iconColor: "text-indigo-500" },
-  { title: "Worship Playlists", url: "/worship-playlists", icon: Music, featureId: null, iconColor: "text-purple-500" },
-  { title: "Symbol Guide", url: "/symbol-guide", icon: Compass, featureId: null, iconColor: "text-teal-500" },
-  { title: "Video Library", url: "/video-library", icon: Video, featureId: null, iconColor: "text-sky-500" },
+  { title: "Toolkit", url: "/tools", icon: Bot, featureId: null, iconColor: "text-primary" },
 ];
 
 // ─── MORE ───
