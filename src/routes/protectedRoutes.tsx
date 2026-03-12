@@ -49,6 +49,8 @@ export const protectedRoutes = (
     <Route path="/devotional" element={<ProtectedPageWithLayout><Devotional /></ProtectedPageWithLayout>} />
     <Route path="/prayer-journal" element={<ProtectedPageWithLayout><PrayerJournal /></ProtectedPageWithLayout>} />
     <Route path="/prayer-wall" element={<ProtectedPageWithLayout><PrayerWall /></ProtectedPageWithLayout>} />
+    <Route path="/prayer" element={<ProtectedPageWithLayout><PrayerHub /></ProtectedPageWithLayout>} />
+    <Route path="/daily-practice" element={<ProtectedPageWithLayout><DailyPracticeHub /></ProtectedPageWithLayout>} />
     <Route path="/assessment-history" element={<ProtectedPageWithLayout><AssessmentHistory /></ProtectedPageWithLayout>} />
     <Route path="/profile" element={<ProtectedPageWithLayout><Profile /></ProtectedPageWithLayout>} />
     <Route path="/bookmarks" element={<ProtectedPageWithLayout><Bookmarks /></ProtectedPageWithLayout>} />
