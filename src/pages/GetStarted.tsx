@@ -146,7 +146,7 @@ export default function GetStarted() {
     if (isPlaying === "welcome") {
       stop();
     } else {
-      speak(WELCOME_SCRIPT, "welcome", "onyx");
+      speak(WELCOME_SCRIPT, "welcome", "nova");
     }
   };
 
@@ -155,7 +155,7 @@ export default function GetStarted() {
     if (isPlaying === id) {
       stop();
     } else {
-      speak(step.ttsScript, id, "onyx");
+      speak(step.ttsScript, id, "nova");
     }
   };
 
