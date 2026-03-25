@@ -155,7 +155,7 @@ export default function GetStarted() {
     if (isPlaying === id) {
       stop();
     } else {
-      speak(step.ttsScript, id, "nova");
+      speak(step.ttsScript, id, "jessica");
     }
   };
 
