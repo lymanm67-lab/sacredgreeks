@@ -31,6 +31,7 @@ const MentorDashboard = lazy(() => import("@/pages/MentorDashboard"));
 const JoinGroup = lazy(() => import("@/pages/JoinGroup"));
 const ToolsHub = lazy(() => import("@/pages/ToolsHub"));
 const DrLymanHub = lazy(() => import("@/pages/DrLymanHub"));
+const GetStarted = lazy(() => import("@/pages/GetStarted"));
 // Public pages with sidebar layout (no auth required)
 const PageWithLayout = ({ children }: { children: React.ReactNode }) => (
   <AppLayout>{children}</AppLayout>
@@ -67,5 +68,6 @@ export const layoutRoutes = (
     <Route path="/join-group" element={<PageWithLayout><JoinGroup /></PageWithLayout>} />
     <Route path="/tools" element={<PageWithLayout><ToolsHub /></PageWithLayout>} />
     <Route path="/dr-lyman" element={<PageWithLayout><DrLymanHub /></PageWithLayout>} />
+    <Route path="/get-started" element={<PageWithLayout><GetStarted /></PageWithLayout>} />
   </>
 );
