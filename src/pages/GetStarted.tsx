@@ -146,7 +146,7 @@ export default function GetStarted() {
     if (isPlaying === "welcome") {
       stop();
     } else {
-      speak(WELCOME_SCRIPT, "welcome", "nova");
+      speak(WELCOME_SCRIPT, "welcome", "jessica");
     }
   };
 
