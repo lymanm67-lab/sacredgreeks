@@ -195,13 +195,20 @@ export default function GetStarted() {
               {isPlaying === "welcome" ? "Stop Welcome Tour" : "Listen to Welcome Tour"}
             </Button>
 
-            <div className="flex items-center gap-3 w-full sm:w-auto">
-              <Progress value={progress} className="w-32 h-2" />
-              <span className="text-xs text-muted-foreground whitespace-nowrap">
-                {completedSteps.size}/{STEPS.length} completed
-              </span>
+            <div className="flex flex-col gap-3">
+              <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
+                <div className="flex items-center gap-3 w-full sm:w-auto">
+                  <Progress value={progress} className="w-32 h-2" />
+                  <span className="text-xs text-muted-foreground whitespace-nowrap">
+                    {completedSteps.size}/{STEPS.length} completed
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-xs text-muted-foreground">Voice:</span>
+                <BrowserVoicePicker />
+              </div>
             </div>
-          </div>
         </div>
       </div>
 
