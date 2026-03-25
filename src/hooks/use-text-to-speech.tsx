@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { getBestBrowserVoice } from "@/components/BrowserVoicePicker";
 import { toast } from "sonner";
 import { useBackgroundAudio } from "./use-background-audio";
 
