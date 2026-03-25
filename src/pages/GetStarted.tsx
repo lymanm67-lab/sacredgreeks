@@ -7,6 +7,7 @@ import {
   ChevronRight, CheckCircle2, Sparkles, Play
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { BrowserVoicePicker } from "@/components/BrowserVoicePicker";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
