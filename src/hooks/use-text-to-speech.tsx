@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { getBestBrowserVoice } from "@/components/BrowserVoicePicker";
 import { toast } from "sonner";
 import { useBackgroundAudio } from "./use-background-audio";
 
@@ -25,7 +26,7 @@ const numberToWords = (num: string): string => {
   return num; // fallback to number string
 };
 
-// Browser Speech Synthesis fallback
+// Browser Speech Synthesis fallback with smart voice selection
 const speakWithBrowserTTS = (text: string, itemId: string): Promise<void> => {
   return new Promise((resolve, reject) => {
     if (!('speechSynthesis' in window)) {
@@ -36,12 +37,9 @@ const speakWithBrowserTTS = (text: string, itemId: string): Promise<void> => {
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
     
-    const voices = window.speechSynthesis.getVoices();
-    const preferredVoice = voices.find(v => 
-      v.lang.startsWith('en') && (v.name.includes('Male') || v.name.includes('Daniel') || v.name.includes('Google'))
-    ) || voices.find(v => v.lang.startsWith('en')) || voices[0];
+    const bestVoice = getBestBrowserVoice();
+    if (bestVoice) utterance.voice = bestVoice;
     
-    if (preferredVoice) utterance.voice = preferredVoice;
     utterance.rate = 0.95;
     utterance.pitch = 1;
     utterance.volume = 1;
@@ -49,7 +47,8 @@ const speakWithBrowserTTS = (text: string, itemId: string): Promise<void> => {
     utterance.onend = () => resolve();
     utterance.onerror = (event) => reject(new Error(`Speech error: ${event.error}`));
 
-    toast.info('Using browser voice (premium voice unavailable)');
+    const voiceName = bestVoice?.name || 'default';
+    toast.info(`Playing with browser voice: ${voiceName.replace(/^(Microsoft |Google |Apple )/, '')}`);
     window.speechSynthesis.speak(utterance);
   });
 };
