@@ -179,36 +179,36 @@ export default function GetStarted() {
           </div>
 
           {/* Welcome TTS + Progress */}
-          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-            <Button
-              variant="outline"
-              onClick={handlePlayWelcome}
-              className="gap-2 border-sacred/30 hover:bg-sacred/10"
-            >
-              {isLoading && isPlaying === "welcome" ? (
-                <Loader2 className="h-4 w-4 animate-spin text-sacred" />
-              ) : isPlaying === "welcome" ? (
-                <VolumeX className="h-4 w-4 text-sacred" />
-              ) : (
-                <Volume2 className="h-4 w-4 text-sacred" />
-              )}
-              {isPlaying === "welcome" ? "Stop Welcome Tour" : "Listen to Welcome Tour"}
-            </Button>
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+              <Button
+                variant="outline"
+                onClick={handlePlayWelcome}
+                className="gap-2 border-sacred/30 hover:bg-sacred/10"
+              >
+                {isLoading && isPlaying === "welcome" ? (
+                  <Loader2 className="h-4 w-4 animate-spin text-sacred" />
+                ) : isPlaying === "welcome" ? (
+                  <VolumeX className="h-4 w-4 text-sacred" />
+                ) : (
+                  <Volume2 className="h-4 w-4 text-sacred" />
+                )}
+                {isPlaying === "welcome" ? "Stop Welcome Tour" : "Listen to Welcome Tour"}
+              </Button>
 
-            <div className="flex flex-col gap-3">
-              <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
-                <div className="flex items-center gap-3 w-full sm:w-auto">
-                  <Progress value={progress} className="w-32 h-2" />
-                  <span className="text-xs text-muted-foreground whitespace-nowrap">
-                    {completedSteps.size}/{STEPS.length} completed
-                  </span>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs text-muted-foreground">Voice:</span>
-                <BrowserVoicePicker />
+              <div className="flex items-center gap-3 w-full sm:w-auto">
+                <Progress value={progress} className="w-32 h-2" />
+                <span className="text-xs text-muted-foreground whitespace-nowrap">
+                  {completedSteps.size}/{STEPS.length} completed
+                </span>
               </div>
             </div>
+
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-xs text-muted-foreground">Voice:</span>
+              <BrowserVoicePicker />
+            </div>
+          </div>
         </div>
       </div>
 
