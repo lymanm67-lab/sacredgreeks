@@ -222,6 +222,7 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
+              <NavItem item={{ title: "Get Started", url: "/get-started", icon: Sparkles, iconColor: "text-sacred" }} />
               <NavItem item={{ title: "Dashboard", url: "/dashboard", icon: Home, iconColor: "text-blue-500" }} />
               <NavItem item={academyItem} />
               <NavItem item={{ title: "Church Leaders", url: "/church-leaders", icon: Landmark, iconColor: "text-lime-500" }} />

@@ -56,6 +56,7 @@ import { cn } from "@/lib/utils";
 
 // ─── Pinned ───
 const pinnedItems = [
+  { title: "Get Started", url: "/get-started", icon: Sparkles, featureId: null, iconColor: "text-sacred" },
   { title: "Dashboard", url: "/dashboard", icon: Home, featureId: null, iconColor: "text-blue-500" },
   { title: "Sacred Leaders Academy", url: "/leadership-academy", icon: GraduationCap, featureId: null, iconColor: "text-sacred" },
   { title: "Church Leaders", url: "/church-leaders", icon: Landmark, featureId: null, iconColor: "text-lime-500" },
