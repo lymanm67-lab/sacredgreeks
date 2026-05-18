@@ -67,7 +67,7 @@ export const routeRegistry: RouteConfig[] = [
   {
     path: '/devotional',
     title: 'Daily Devotionals for Greek Life Christians | Scripture Reflections',
-    description: 'Start each day with faith-building devotionals designed for fraternity and sorority members. Scripture-based reflections, practical applications, and spiritual growth for Christians navigating Greek life.',
+    description: 'Daily faith-building devotionals for fraternity and sorority members. Scripture-based reflections and spiritual growth for Christians in Greek life.',
     keywords: 'daily devotional Greek life, Christian devotional fraternity, sorority scripture reflection, college devotional, BGLO daily devotion, Divine Nine spiritual growth, faith reflection Greek',
     changefreq: 'daily',
     priority: 0.9,
