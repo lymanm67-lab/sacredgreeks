@@ -77,7 +77,7 @@ export const routeRegistry: RouteConfig[] = [
   {
     path: '/prayer-wall',
     title: 'Prayer Wall | Greek Life Christian Prayer Community',
-    description: 'Join our prayer community for Christians in fraternities and sororities. Share prayer requests anonymously, pray for brothers and sisters, and celebrate answered prayers together.',
+    description: 'Prayer community for Christians in fraternities and sororities. Share requests anonymously, pray for brothers and sisters, and celebrate answered prayers.',
     keywords: 'Greek life prayer wall, Christian fraternity prayer, sorority prayer requests, BGLO prayer community, Divine Nine prayer support, faith community Greek life',
     changefreq: 'daily',
     priority: 0.85,
