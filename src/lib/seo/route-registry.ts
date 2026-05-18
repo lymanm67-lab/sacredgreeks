@@ -18,8 +18,8 @@ export const routeRegistry: RouteConfig[] = [
   // Public high-priority pages
   {
     path: '/',
-    title: 'Sacred Greeks Life - #1 Christian Greek Life App | Faith & Fraternity Guide',
-    description: 'The leading faith-based app for Christians in Greek life. Daily devotionals, P.R.O.O.F. framework guidance, prayer tools & Bible study for Divine Nine, NPHC & all Greek organizations. Free app by Dr. Lyman Montgomery.',
+    title: 'Sacred Greeks Life | Christian Greek Life App',
+    description: 'Faith-based app for Christians in Greek life. Daily devotionals, P.R.O.O.F. framework, prayer tools & Bible study for Divine Nine, NPHC & all Greek organizations.',
     keywords: 'Christian Greek life app, faith and fraternity, Christian sorority resources, Divine Nine faith, BGLO Christian, NPHC spiritual growth, P.R.O.O.F. framework, Greek life biblical guidance, faith-based Greek organization, Sacred Not Sinful, Dr Lyman Montgomery',
     changefreq: 'weekly',
     priority: 1.0,
@@ -67,7 +67,7 @@ export const routeRegistry: RouteConfig[] = [
   {
     path: '/devotional',
     title: 'Daily Devotionals for Greek Life Christians | Scripture Reflections',
-    description: 'Start each day with faith-building devotionals designed for fraternity and sorority members. Scripture-based reflections, practical applications, and spiritual growth for Christians navigating Greek life.',
+    description: 'Daily faith-building devotionals for fraternity and sorority members. Scripture-based reflections and spiritual growth for Christians in Greek life.',
     keywords: 'daily devotional Greek life, Christian devotional fraternity, sorority scripture reflection, college devotional, BGLO daily devotion, Divine Nine spiritual growth, faith reflection Greek',
     changefreq: 'daily',
     priority: 0.9,
@@ -77,7 +77,7 @@ export const routeRegistry: RouteConfig[] = [
   {
     path: '/prayer-wall',
     title: 'Prayer Wall | Greek Life Christian Prayer Community',
-    description: 'Join our prayer community for Christians in fraternities and sororities. Share prayer requests anonymously, pray for brothers and sisters, and celebrate answered prayers together.',
+    description: 'Prayer community for Christians in fraternities and sororities. Share requests anonymously, pray for brothers and sisters, and celebrate answered prayers.',
     keywords: 'Greek life prayer wall, Christian fraternity prayer, sorority prayer requests, BGLO prayer community, Divine Nine prayer support, faith community Greek life',
     changefreq: 'daily',
     priority: 0.85,

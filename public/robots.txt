@@ -1,5 +1,5 @@
 # Robots.txt for Sacred Greeks Life
-# https://sacredgreekslife.com
+# https://www.sacredgreekslife.com
 # Last Updated: 2026-02-02
 
 # ===========================================
@@ -142,11 +142,11 @@ Disallow: /api/
 # SITEMAP & AI INFORMATION
 # ===========================================
 
-Sitemap: https://sacredgreekslife.com/sitemap.xml
+Sitemap: https://www.sacredgreekslife.com/sitemap.xml
 
 # AI/LLM Information File
 # Provides structured information for AI assistants
-# See: https://sacredgreekslife.com/llms.txt
+# See: https://www.sacredgreekslife.com/llms.txt
 
 # ===========================================
 # SITE INFORMATION
