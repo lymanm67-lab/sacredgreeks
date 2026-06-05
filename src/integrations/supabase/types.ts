@@ -4711,6 +4711,7 @@ export type Database = {
         Returns: Json
       }
       get_email_send_recipient: { Args: { send_id: string }; Returns: string }
+      get_founding_member_count: { Args: never; Returns: number }
       get_submission_email_if_consented: {
         Args: { submission_id: string }
         Returns: string
