@@ -633,6 +633,26 @@ export const routeRegistry: RouteConfig[] = [
     isProtected: true,
     noindex: true,
   },
+  {
+    path: '/free-resources',
+    title: 'Free Christian Greek Life Resources | Sacred Greeks',
+    description: 'Free downloads, guides, and tools for Christians in fraternities and sororities. PROOF framework, chaplain toolkit, oath discernment, devotionals — 100% free.',
+    keywords: 'free Christian Greek life resources, fraternity faith downloads, sorority Bible study, chaplain toolkit, PROOF framework',
+    changefreq: 'weekly',
+    priority: 0.9,
+    isProtected: false,
+    structuredDataType: 'WebPage',
+  },
+  {
+    path: '/chaplain-council',
+    title: 'Chaplain Council | Sacred Greeks Spiritual Advisor Network',
+    description: 'A free network for fraternity and sorority chaplains. Shared liturgy, peer cohort, monthly calls with Dr. Lyman, crisis care protocols, and chaplain certification.',
+    keywords: 'fraternity chaplain, sorority chaplain, Greek life chaplain network, BGLO chaplain, NPHC chaplain certification, Christian Greek advisor',
+    changefreq: 'monthly',
+    priority: 0.8,
+    isProtected: false,
+    structuredDataType: 'WebPage',
+  },
 ];
 
 // Get route config by path
