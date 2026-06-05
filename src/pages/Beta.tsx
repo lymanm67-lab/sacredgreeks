@@ -67,10 +67,8 @@ export default function Beta() {
   }, []);
 
   const loadMemberCount = async () => {
-    const { count } = await supabase
-      .from("founding_members")
-      .select("*", { count: "exact", head: true });
-    setMemberCount(count || 0);
+    const { data } = await supabase.rpc("get_founding_member_count");
+    setMemberCount((data as number) || 0);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
