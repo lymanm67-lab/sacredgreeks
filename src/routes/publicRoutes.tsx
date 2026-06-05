@@ -63,6 +63,8 @@ const Blog = lazy(() => import("@/pages/Blog"));
 const BlogPost = lazy(() => import("@/pages/BlogPost"));
 const YouTubeCallback = lazy(() => import("@/pages/YouTubeCallback"));
 const Team = lazy(() => import("@/pages/Team"));
+const FreeResources = lazy(() => import("@/pages/FreeResources"));
+const ChaplainCouncil = lazy(() => import("@/pages/ChaplainCouncil"));
 
 export const publicRoutes = (
   <>
@@ -138,6 +140,9 @@ export const publicRoutes = (
     <Route path="/blog/:slug" element={<BlogPost />} />
     <Route path="/youtube-callback" element={<YouTubeCallback />} />
     <Route path="/team" element={<Team />} />
+    <Route path="/free-resources" element={<FreeResources />} />
+    <Route path="/free-stuff" element={<Navigate to="/free-resources" replace />} />
+    <Route path="/chaplain-council" element={<ChaplainCouncil />} />
     <Route path="*" element={<NotFound />} />
   </>
 );

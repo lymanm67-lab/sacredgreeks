@@ -62,7 +62,6 @@ export default function ChaplainCouncil() {
       <SEOHead
         title="Chaplain Council | Sacred Greeks Spiritual Advisor Network"
         description="A free network for fraternity and sorority chaplains. Shared liturgy, peer cohort, monthly calls with Dr. Lyman, crisis care protocols, and chaplain certification."
-        canonicalUrl="https://sacredgreekslife.com/chaplain-council"
       />
 
       {/* Hero */}

@@ -186,7 +186,6 @@ export default function FreeResources() {
       <SEOHead
         title="Free Christian Greek Life Resources | Sacred Greeks"
         description="Free downloads, guides, and tools for Christians in fraternities and sororities. PROOF framework, chaplain toolkit, oath discernment, devotionals — 100% free."
-        canonicalUrl="https://sacredgreekslife.com/free-resources"
       />
 
       {/* Hero */}
