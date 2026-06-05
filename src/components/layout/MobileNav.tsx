@@ -81,6 +81,8 @@ const connectItems = [
 const churchItems = [
   { title: "Church Leaders Hub", url: "/church-leaders", icon: Landmark, featureId: null, iconColor: "text-lime-500" },
   { title: "Chaplain Toolkit", url: "/chaplain-toolkit", icon: Cross, featureId: null, iconColor: "text-sacred" },
+  { title: "Chaplain Council", url: "/chaplain-council", icon: Users, featureId: null, iconColor: "text-amber-500" },
+  { title: "Free Resources", url: "/free-resources", icon: Sparkles, featureId: null, iconColor: "text-emerald-500" },
   { title: "Conversation Scripts", url: "/ai-workers", icon: MessageSquare, featureId: null, iconColor: "text-violet-500" },
   { title: "Mentorship", url: "/coaching-application", icon: Users, featureId: null, iconColor: "text-indigo-500" },
 ];
