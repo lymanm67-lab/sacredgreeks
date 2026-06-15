@@ -87,8 +87,7 @@ interface FeatureCardProps {
 const FeatureCard = ({ feature, index, baseDelay = 0 }: FeatureCardProps) => (
   <motion.div
     initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
+    animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5, delay: baseDelay + index * 0.15 }}
     className="group relative"
   >
@@ -147,8 +146,7 @@ export function DashboardPreview() {
       <div className="text-center mb-8 sm:mb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-4">
@@ -177,8 +175,7 @@ export function DashboardPreview() {
       {/* Explore More Button */}
       <motion.div
         initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.5 }}
         className="flex justify-center mt-8"
       >
@@ -221,8 +218,7 @@ export function DashboardPreview() {
       {/* Bottom social proof */}
       <motion.div
         initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.6 }}
         className="mt-10 sm:mt-14 text-center"
       >
