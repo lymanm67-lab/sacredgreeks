@@ -218,8 +218,7 @@ export function DashboardPreview() {
       {/* Bottom social proof */}
       <motion.div
         initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.6 }}
         className="mt-10 sm:mt-14 text-center"
       >
