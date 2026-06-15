@@ -248,27 +248,55 @@ function BusinessCard({ business }: { business: Business }) {
               </a>
             </Button>
           )}
-          {business.phone && (
-            <Button variant="outline" size="sm" asChild>
-              <a href={`tel:${business.phone}`}>
-                <Phone className="w-3 h-3 mr-1" />
-                Call
-              </a>
-            </Button>
-          )}
-          {business.email && (
-            <Button variant="outline" size="sm" asChild>
-              <a href={`mailto:${business.email}`}>
-                <Mail className="w-3 h-3 mr-1" />
-                Email
-              </a>
-            </Button>
-          )}
+          <RevealContactButtons businessId={business.id} />
         </div>
       </CardContent>
     </Card>
   );
 }
+
+function RevealContactButtons({ businessId }: { businessId: string }) {
+  const [contact, setContact] = useState<{ email: string | null; phone: string | null } | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const reveal = async () => {
+    setLoading(true);
+    const { data, error } = await supabase.rpc('get_business_contact_details', { business_id: businessId });
+    setLoading(false);
+    if (!error && data) setContact(data as { email: string | null; phone: string | null });
+  };
+
+  if (!contact) {
+    return (
+      <Button variant="outline" size="sm" onClick={reveal} disabled={loading}>
+        <Mail className="w-3 h-3 mr-1" />
+        {loading ? 'Loading…' : 'Show contact'}
+      </Button>
+    );
+  }
+
+  return (
+    <>
+      {contact.phone && (
+        <Button variant="outline" size="sm" asChild>
+          <a href={`tel:${contact.phone}`}>
+            <Phone className="w-3 h-3 mr-1" />
+            Call
+          </a>
+        </Button>
+      )}
+      {contact.email && (
+        <Button variant="outline" size="sm" asChild>
+          <a href={`mailto:${contact.email}`}>
+            <Mail className="w-3 h-3 mr-1" />
+            Email
+          </a>
+        </Button>
+      )}
+    </>
+  );
+}
+
 
 export default function D9BusinessDirectory() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -280,16 +308,16 @@ export default function D9BusinessDirectory() {
     queryKey: ['d9-businesses'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('d9_business_directory')
+        .from('d9_business_directory_public' as any)
         .select('*')
-        .eq('is_active', true)
         .order('featured', { ascending: false })
         .order('created_at', { ascending: false });
       
       if (error) throw error;
-      return data as Business[];
+      return data as unknown as Business[];
     }
   });
+
 
   // Use DB data if available, otherwise use sample data
   const businesses = dbBusinesses && dbBusinesses.length > 0 ? dbBusinesses : sampleBusinesses;
