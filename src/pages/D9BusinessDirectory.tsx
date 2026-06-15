@@ -308,16 +308,16 @@ export default function D9BusinessDirectory() {
     queryKey: ['d9-businesses'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('d9_business_directory')
+        .from('d9_business_directory_public' as any)
         .select('*')
-        .eq('is_active', true)
         .order('featured', { ascending: false })
         .order('created_at', { ascending: false });
       
       if (error) throw error;
-      return data as Business[];
+      return data as unknown as Business[];
     }
   });
+
 
   // Use DB data if available, otherwise use sample data
   const businesses = dbBusinesses && dbBusinesses.length > 0 ? dbBusinesses : sampleBusinesses;
