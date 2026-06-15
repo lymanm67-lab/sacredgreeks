@@ -248,27 +248,55 @@ function BusinessCard({ business }: { business: Business }) {
               </a>
             </Button>
           )}
-          {business.phone && (
-            <Button variant="outline" size="sm" asChild>
-              <a href={`tel:${business.phone}`}>
-                <Phone className="w-3 h-3 mr-1" />
-                Call
-              </a>
-            </Button>
-          )}
-          {business.email && (
-            <Button variant="outline" size="sm" asChild>
-              <a href={`mailto:${business.email}`}>
-                <Mail className="w-3 h-3 mr-1" />
-                Email
-              </a>
-            </Button>
-          )}
+          <RevealContactButtons businessId={business.id} />
         </div>
       </CardContent>
     </Card>
   );
 }
+
+function RevealContactButtons({ businessId }: { businessId: string }) {
+  const [contact, setContact] = useState<{ email: string | null; phone: string | null } | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const reveal = async () => {
+    setLoading(true);
+    const { data, error } = await supabase.rpc('get_business_contact_details', { business_id: businessId });
+    setLoading(false);
+    if (!error && data) setContact(data as { email: string | null; phone: string | null });
+  };
+
+  if (!contact) {
+    return (
+      <Button variant="outline" size="sm" onClick={reveal} disabled={loading}>
+        <Mail className="w-3 h-3 mr-1" />
+        {loading ? 'Loading…' : 'Show contact'}
+      </Button>
+    );
+  }
+
+  return (
+    <>
+      {contact.phone && (
+        <Button variant="outline" size="sm" asChild>
+          <a href={`tel:${contact.phone}`}>
+            <Phone className="w-3 h-3 mr-1" />
+            Call
+          </a>
+        </Button>
+      )}
+      {contact.email && (
+        <Button variant="outline" size="sm" asChild>
+          <a href={`mailto:${contact.email}`}>
+            <Mail className="w-3 h-3 mr-1" />
+            Email
+          </a>
+        </Button>
+      )}
+    </>
+  );
+}
+
 
 export default function D9BusinessDirectory() {
   const [searchQuery, setSearchQuery] = useState("");
